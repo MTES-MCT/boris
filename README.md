@@ -1,4 +1,4 @@
-# BoRis
+# BoRiS
 
 ## Environnement technique
 
