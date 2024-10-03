@@ -1,0 +1,33 @@
+node_modules
+
+# Output
+.output
+/build
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# GLOBAL
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules
+.tool-versions
+
+# CLIENT
+/client/build
+/client/.svelte-kit
+/client/e2e/test-results
+/client/e2e/**/.setup/
+
+# Logs
+logs
+*.log
