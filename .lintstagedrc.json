@@ -1,0 +1,3 @@
+{
+  "*": ["npm run format -s", "npm run lint -s"]
+}
