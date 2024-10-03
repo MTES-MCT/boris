@@ -1,9 +1,9 @@
 <script lang="ts">
-	import '@gouvfr/dsfr/dist/dsfr.main.min.css';
+  import '@gouvfr/dsfr/dist/dsfr.main.min.css';
 
-	import type { Snippet } from 'svelte';
+  import type { Snippet } from 'svelte';
 
-	const { children }: { children: Snippet } = $props();
+  const { children }: { children: Snippet } = $props();
 </script>
 
 {@render children()}
