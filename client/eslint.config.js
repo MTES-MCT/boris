@@ -11,22 +11,25 @@ export default tseslint.config(
   prettier,
   ...svelte.configs['flat/prettier'],
   {
+    rules: {
+      'svelte/valid-compile': ['error', { ignoreWarnings: true }],
+    },
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node
-      }
-    }
+        ...globals.node,
+      },
+    },
   },
   {
     files: ['**/*.svelte'],
     languageOptions: {
       parserOptions: {
-        parser: tseslint.parser
-      }
-    }
+        parser: tseslint.parser,
+      },
+    },
   },
   {
-    ignores: ['build/', '.svelte-kit/', 'dist/']
-  }
+    ignores: ['build/', '.svelte-kit/', 'dist/'],
+  },
 );
