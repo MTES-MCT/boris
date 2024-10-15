@@ -3,7 +3,7 @@
   import '@gouvfr/dsfr/dist/utility/icons/icons.min.css';
 
   onMount(async () => {
-    await import('@gouvfr/dsfr/dist/dsfr.module.min');
+    // await import('@gouvfr/dsfr/dist/dsfr.module.min');
   });
 
   import Header from '$lib/components/Header/Header.svelte';
