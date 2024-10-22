@@ -13,20 +13,22 @@ npm.
 
 1. Cloner le repository
 
-```
-git clone git@github.com:MTES-MCT/boris.git
-```
+    ```
+    git clone git@github.com:MTES-MCT/boris.git
+    ```
 
 2. Installer les dépendances
 
-```
-npm install
-```
+    ```
+    npm install
+    ```
 
 ## Client
 
 Lancer le server de développement
 
 ```
+
 npm run dev -w client
+
 ```
