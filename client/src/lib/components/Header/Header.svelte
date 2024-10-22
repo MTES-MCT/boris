@@ -7,14 +7,18 @@
         <div class="fr-header__brand fr-enlarge-link">
           <div class="fr-header__brand-top">
             <div class="fr-header__logo">
-              <p class="fr-logo">BoRiS</p>
+              <p class="fr-logo">
+                Ministère <br />
+                chargé du
+                <br />
+                logement
+              </p>
             </div>
             <div class="fr-header__navbar">
               <button
                 class="fr-btn--menu fr-btn"
                 data-fr-opened="false"
-                aria-controls="modal-499"
-                id="button-500"
+                aria-controls="menu-mobile"
                 title="Menu">
                 Menu
               </button>
@@ -23,7 +27,7 @@
           <div class="fr-header__service">
             <a
               href="/"
-              title="Accueil - [À MODIFIER - Nom du site / service] - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)">
+              title="Accueil - Boris - Ministère chargé du logement">
               <p class="fr-header__service-title">BoRiS</p>
             </a>
           </div>
@@ -34,23 +38,21 @@
               <li>
                 <a
                   class="fr-btn fr-icon-questionnaire-line"
-                  href="[url - à modifier]">
-                  <!-- TODO-->
+                  href="/notre-demarche">
                   Notre démarche
                 </a>
               </li>
               <li>
                 <a
                   class="fr-btn fr-icon-community-line"
-                  href="[url - à modifier]">
-                  <!-- TODO-->
+                  href="/tout-savoir-sur-le-BRS">
                   Tout savoir sur le BRS
                 </a>
               </li>
               <li>
                 <a
                   class="fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-parent-line"
-                  href="[url - à modifier]">
+                  href="/simuler-mon-eligibilite">
                   Simuler mon éligibilité
                 </a>
               </li>
@@ -62,12 +64,12 @@
   </div>
   <div
     class="fr-header__menu fr-modal"
-    id="modal-499"
+    id="menu-mobile"
     aria-labelledby="button-500">
     <div class="fr-container">
       <button
         class="fr-btn--close fr-btn"
-        aria-controls="modal-499"
+        aria-controls="menu-mobile"
         title="Fermer">
         Fermer
       </button>

@@ -1,18 +1,15 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/dsfr.min.css';
   import '@gouvfr/dsfr/dist/utility/utility.min.css';
+  import { onMount, type Snippet } from 'svelte';
 
   onMount(async () => {
     // @ts-expect-error: no declaration file
     await import('@gouvfr/dsfr/dist/dsfr.module.min');
-    // @ts-expect-error: no declaration file
-    await import('@gouvfr/dsfr/dist/dsfr.nomodule.min');
   });
 
   import Header from '$lib/components/Header/Header.svelte';
   import Footer from '$lib/components/Footer/Footer.svelte';
-
-  import { onMount, type Snippet } from 'svelte';
 
   const { children }: { children: Snippet } = $props();
 </script>
