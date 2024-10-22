@@ -2,10 +2,12 @@
 
 ## Environnement technique
 
-Le projet est un monorepo, utilisant le système de [workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces) de npm.
+Le projet est un monorepo, utilisant le système de [workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces) de
+npm.
 
 - [Svelte](https://svelte.dev/docs/introduction): [version 5](https://svelte-5-preview.vercel.app/docs/introduction)
 - [SvelteKit](https://kit.svelte.dev/docs/introduction)
+- [Commits conventionnel](https://www.conventionalcommits.org/en/v1.0.0/)
 
 ## Installation
 
