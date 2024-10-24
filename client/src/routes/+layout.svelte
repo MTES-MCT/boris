@@ -8,20 +8,16 @@
     await import('@gouvfr/dsfr/dist/dsfr.module.min');
   });
 
-  import Header from '$lib/components/Header/Header.svelte';
-  import Footer from '$lib/components/Footer/Footer.svelte';
+  import Header from '$lib/components/header/header.svelte';
+  import Footer from '$lib/components/footer/footer.svelte';
 
   const { children }: { children: Snippet } = $props();
 </script>
 
 <Header />
 
-<main class="fr-container">
-  <div class="fr-grid-row">
-    <div class="fr-col fr-py-3w fr-py-md-6w">
-      {@render children()}
-    </div>
-  </div>
+<main>
+  {@render children()}
 </main>
 
 <Footer />
