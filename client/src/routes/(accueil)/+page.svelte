@@ -45,7 +45,7 @@
 </Section>
 
 <Section
-  title="Organismes fonciers solidaires"
+  title="Le Bail Réel Solidaire ?"
   titleElement="h2"
   backgroundClass="fr-background-alt--red-marianne">
   <p>
