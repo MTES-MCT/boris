@@ -21,6 +21,10 @@ const config = {
       strict: true,
     }),
   },
+  onwarn: (warning, handler) => {
+    if (warning.code === 'a11y_no_redundant_roles') return;
+    handler(warning);
+  },
 };
 
 export default config;

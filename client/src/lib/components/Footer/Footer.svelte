@@ -38,7 +38,7 @@
       <div class="fr-footer__brand fr-enlarge-link">
         <a
           id="footer-operator"
-          href="/client/static"
+          href="/"
           title="Retour à l’accueil du site - Boris (ministère chargé du logement)">
           <p class="fr-logo">
             Ministère <br />
