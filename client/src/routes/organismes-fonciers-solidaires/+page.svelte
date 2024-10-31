@@ -12,10 +12,14 @@
   titleElement="h1">
   <div class="fr-accordions-group">
     {#each regions as region}
-      <Accordion label={region.name}>
+      {@const regionLabel = `${region.name} (${region.totalOFSs})`}
+
+      <Accordion label={regionLabel}>
         <div class="fr-accordions-group">
           {#each region.departements as departement}
-            <Accordion label={departement.name}>
+            {@const departementLabel = `${departement.name} (${departement.totalOFSs})`}
+
+            <Accordion label={departementLabel}>
               <ul>
                 {#each departement.OFSs as ofs}
                   <li>

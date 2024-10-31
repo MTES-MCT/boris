@@ -10,6 +10,7 @@ export const formatOFSs = (OFSs: OFS[]): Region[] => {
   const regionsList = [...new Set(OFSs.map((ofs) => ofs.region))];
 
   regionsList.forEach((region) => {
+    let totalRegionnalOFSs = 0;
     const regionnalOFSs: OFS[] = OFSs.filter((ofs) => ofs.region === region);
 
     const departementsNames = [
@@ -28,10 +29,16 @@ export const formatOFSs = (OFSs: OFS[]): Region[] => {
         ofs.departements.includes(departementName),
       );
 
-      departements.push({ name: departementName, OFSs: departementalOFSs });
+      departements.push({
+        name: departementName,
+        OFSs: departementalOFSs,
+        totalOFSs: departementalOFSs.length,
+      });
+
+      totalRegionnalOFSs += departementalOFSs.length;
     });
 
-    regions.push({ name: region, departements });
+    regions.push({ name: region, departements, totalOFSs: totalRegionnalOFSs });
   });
 
   return regions;

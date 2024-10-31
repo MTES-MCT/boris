@@ -7,11 +7,13 @@ export type OFS = {
 
 export type Departement = {
   name: string;
+  totalOFSs: number;
   OFSs: OFS[];
 };
 
 export type Region = {
   name: string;
+  totalOFSs: number;
   departements: Departement[];
 };
 
