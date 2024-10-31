@@ -1,5 +1,6 @@
 // @ts-expect-error: no module
 import Papa from 'papaparse';
+import { formatOFSs } from '$lib/utils/formatters';
 
 export const load = async () => {
   const response = await fetch(
@@ -11,9 +12,11 @@ export const load = async () => {
   const csvFile = await fetch(document.meta.download_url);
   const csvFileContent = await csvFile.text();
 
-  const ofsList = await Papa.parse(csvFileContent, { header: true });
+  const OFSs = await Papa.parse(csvFileContent, { header: true });
+
+  const regions = formatOFSs(OFSs.data);
 
   return {
-    ofsList: ofsList.data,
+    regions,
   };
 };
