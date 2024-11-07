@@ -8,6 +8,11 @@ npm.
 - [Svelte](https://svelte.dev/docs/introduction): [version 5](https://svelte-5-preview.vercel.app/docs/introduction)
 - [SvelteKit](https://kit.svelte.dev/docs/introduction)
 - [Commits conventionnel](https://www.conventionalcommits.org/en/v1.0.0/)
+- [Talisman](https://github.com/thoughtworks/talisman)
+
+## Pré-requis
+
+- [Talisman](https://github.com/thoughtworks/talisman) doit être installé localement sur votre machine.
 
 ## Installation
 
