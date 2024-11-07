@@ -1,1 +1,2 @@
+talisman --githook pre-commit
 npx lint-staged
