@@ -2,7 +2,7 @@ import type {
   Departement,
   OFS,
   Region,
-} from '../../routes/organismes-fonciers-solidaires/definitions';
+} from '$routes/organismes-fonciers-solidaires/definitions';
 
 export const formatOFSs = (OFSs: OFS[]): Region[] => {
   const regions: Region[] = [];

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Props } from './definitions';
-  import Section from '$lib/components/section/section.svelte';
+  import Section from '$components/section/section.svelte';
   import { onMount } from 'svelte';
 
   const { data }: Props = $props();

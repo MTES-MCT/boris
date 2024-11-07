@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Section from '$lib/components/section/section.svelte';
-  import Accordion from '$lib/components/accordion/accordion.svelte';
+  import Section from '$components/section/section.svelte';
+  import Accordion from '$components/accordion/accordion.svelte';
   import type { Props } from './definitions';
 
   const { data }: Props = $props();

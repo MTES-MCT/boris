@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Section from '$lib/components/section/section.svelte';
+  import Section from '$components/section/section.svelte';
 </script>
 
 <svelte:head>

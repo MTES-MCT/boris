@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Props } from '$lib/components/accordion/definitions';
+  import type { Props } from '$components/accordion/definitions';
   import { nanoid } from 'nanoid';
 
   const { label, labelElement = 'h3', children }: Props = $props();
