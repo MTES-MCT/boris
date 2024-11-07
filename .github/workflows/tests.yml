@@ -21,6 +21,8 @@ jobs:
 
   client-test-e2e:
     runs-on: ubuntu-latest
+    env:
+      LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
     strategy:
       matrix:
         node-version: [20.x]
