@@ -8,8 +8,8 @@
     await import('@gouvfr/dsfr/dist/dsfr.module.min');
   });
 
-  import Header from '$lib/components/header/header.svelte';
-  import Footer from '$lib/components/footer/footer.svelte';
+  import Header from '$components/header/header.svelte';
+  import Footer from '$components/footer/footer.svelte';
 
   const { children }: { children: Snippet } = $props();
 </script>

@@ -25,7 +25,7 @@ node_modules
 # CLIENT
 /client/build
 /client/.svelte-kit
-/client/e2e/test-results
+/client/test-results/
 /client/e2e/**/.setup/
 
 # Logs
