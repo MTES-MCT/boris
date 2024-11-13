@@ -15,6 +15,7 @@ const config = {
     alias: {
       $routes: 'src/routes',
       $components: 'src/lib/components',
+      $tests: 'tests/',
     },
   },
   onwarn: (warning, handler) => {
