@@ -1,9 +1,12 @@
 <script lang="ts">
-  import { getDetailedDate } from '$lib/utils/dates';
   import type { Props } from './definition';
 
   const { title, description, firstPublishedAt, slug }: Props = $props();
-  const { day, time } = getDetailedDate(firstPublishedAt);
+
+  const publishedAt = new Intl.DateTimeFormat('fr-FR', {
+    dateStyle: 'long',
+    timeStyle: 'short',
+  }).format(new Date(firstPublishedAt));
 </script>
 
 <div class="fr-card fr-enlarge-link">
@@ -15,7 +18,7 @@
       <p class="fr-card__desc">{description}</p>
       <div class="fr-card__end">
         <p class="fr-card__detail fr-icon-warning-fill">
-          Publié le {day} à {time}
+          Publié le {publishedAt}
         </p>
       </div>
     </div>
