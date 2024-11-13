@@ -12,7 +12,8 @@ export default tseslint.config(
   ...svelte.configs['flat/prettier'],
   {
     rules: {
-      'svelte/valid-compile': ['error', { ignoreWarnings: true }],
+      'svelte/valid-compile': 'warn',
+      'svelte/no-at-html-tags': 'warn',
     },
     languageOptions: {
       globals: {

@@ -113,3 +113,40 @@ export type BackgroundClasss =
   | 'fr-background-action-low--brown-caramel'
   | 'fr-background-action-low--brown-opera'
   | 'fr-background-action-low--beige-gris-galet';
+
+export type WagtailApiItemsResponse = {
+  meta: {
+    total_count: number;
+  };
+  items: WagtailApiItemResponse[];
+};
+
+export type WagtailApiItemResponse = {
+  id: number;
+  meta: {
+    type: string;
+    slug: string;
+    first_published_at: string;
+    search_description: string;
+  };
+  title: string;
+  body?: [
+    {
+      type: string;
+      value: string;
+    },
+  ];
+};
+
+export type BlogPost = {
+  title: string;
+  description: string;
+  firstPublishedAt: string;
+  slug: string;
+  body?: [
+    {
+      type: string;
+      value: string;
+    },
+  ];
+};
