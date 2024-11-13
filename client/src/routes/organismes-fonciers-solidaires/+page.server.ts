@@ -4,26 +4,18 @@ import { formatOFSs } from '$lib/utils/formatters';
 import { BORIS_CMS_URL } from '$env/static/private';
 
 export const load = async () => {
-  try {
-    const response = await fetch(`${BORIS_CMS_URL}/api/v2/documents`);
-    const data = await response.json();
+  const response = await fetch(`${BORIS_CMS_URL}/api/v2/documents`);
+  const data = await response.json();
 
-    const document = data.items[0];
-    const csvFile = await fetch(document.meta.download_url);
-    const csvFileContent = await csvFile.text();
+  const document = data.items[0];
+  const csvFile = await fetch(document.meta.download_url);
+  const csvFileContent = await csvFile.text();
 
-    const OFSs = await Papa.parse(csvFileContent, { header: true });
+  const OFSs = await Papa.parse(csvFileContent, { header: true });
 
-    const regions = formatOFSs(OFSs.data);
+  const regions = formatOFSs(OFSs.data);
 
-    return {
-      regions,
-    };
-  } catch (e) {
-    console.log(e);
-
-    return {
-      regions: [],
-    };
-  }
+  return {
+    regions,
+  };
 };
