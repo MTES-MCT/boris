@@ -37,7 +37,7 @@
               <ul>
                 {#each departement.OFSs as ofs}
                   <li>
-                    {ofs.nom}
+                    {ofs.nom} - {ofs.telephone}
                   </li>
                 {/each}
               </ul>

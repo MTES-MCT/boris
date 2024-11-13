@@ -3,6 +3,7 @@ export type OFS = {
   region: string;
   departements: string;
   lien: string;
+  telephone: string;
 };
 
 export type Departement = {
