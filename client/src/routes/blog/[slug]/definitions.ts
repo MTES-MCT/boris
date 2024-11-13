@@ -1,5 +1,7 @@
+import type { BlogPost } from '$lib/utils/definitions';
+
 export type Data = {
-  slug: string;
+  blogPost: BlogPost;
 };
 
 export type Props = {

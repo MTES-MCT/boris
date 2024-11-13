@@ -4,8 +4,6 @@
   import BlogPost from '$lib/components/blogPost/blogPost.svelte';
 
   const { data }: Props = $props();
-
-  console.log(data.blogPosts);
 </script>
 
 <Section

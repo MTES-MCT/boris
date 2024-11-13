@@ -144,7 +144,12 @@ export type BlogPost = {
   description: string;
   firstPublishedAt: string;
   slug: string;
-  body?: string;
+  body?: [
+    {
+      type: string;
+      value: string;
+    },
+  ];
 };
 
 export type DetailedDate = {

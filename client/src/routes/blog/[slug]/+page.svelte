@@ -1,7 +1,17 @@
 <script lang="ts">
+  import Section from '$components/section/section.svelte';
   import type { Props } from './definitions';
 
   const { data }: Props = $props();
+  const { blogPost } = data;
 </script>
 
-<h1>{data.slug}</h1>
+<Section
+  title={blogPost.title}
+  titleElement="h1">
+  {#if blogPost.body}
+    {#each blogPost.body as element}
+      {@html element.value}
+    {/each}
+  {/if}
+</Section>
