@@ -125,7 +125,6 @@ export type WagtailApiItemResponse = {
   id: number;
   meta: {
     type: string;
-    detail_url: string;
     slug: string;
     first_published_at: string;
     search_description: string;
@@ -150,9 +149,4 @@ export type BlogPost = {
       value: string;
     },
   ];
-};
-
-export type DetailedDate = {
-  day: string;
-  time: string;
 };

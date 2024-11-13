@@ -19,15 +19,12 @@ export const load: PageServerLoad = async ({
   const blogPostResponse = await fetch(`${BORIS_CMS_URL}/api/v2/pages/${id}`);
   const blogPostData: WagtailApiItemResponse = await blogPostResponse.json();
 
-  const { title, body } = blogPostData;
-  const { first_published_at, search_description } = blogPostData.meta;
-
   const blogPost: BlogPost = {
-    title,
-    description: search_description,
-    firstPublishedAt: first_published_at,
+    title: blogPostData.title,
+    description: blogPostData.meta.search_description,
+    firstPublishedAt: blogPostData.meta.first_published_at,
     slug,
-    body,
+    body: blogPostData.body,
   };
 
   return {
