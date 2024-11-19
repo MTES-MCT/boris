@@ -51,6 +51,13 @@
               </li>
               <li>
                 <a
+                  class="fr-btn fr-icon-draft-line"
+                  href="/blog">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a
                   class="fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-parent-line"
                   href="/simuler-mon-eligibilite">
                   Simuler mon éligibilité
