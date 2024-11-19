@@ -1,10 +1,10 @@
 // @ts-expect-error: no module
 import Papa from 'papaparse';
 import { formatOFSs } from '$lib/utils/formatters';
-import { BORIS_CMS_URL } from '$env/static/private';
+import { PUBLIC_BORIS_CMS_URL } from '$env/static/public';
 
 export const load = async () => {
-  const response = await fetch(`${BORIS_CMS_URL}/api/v2/documents`);
+  const response = await fetch(`${PUBLIC_BORIS_CMS_URL}/api/v2/documents`);
   const data = await response.json();
 
   const document = data.items[0];

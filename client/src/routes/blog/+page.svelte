@@ -6,6 +6,10 @@
   const { data }: Props = $props();
 </script>
 
+<svelte:head>
+  <title>Boris - Blog</title>
+</svelte:head>
+
 <Section
   title="Blog"
   titleElement="h1">

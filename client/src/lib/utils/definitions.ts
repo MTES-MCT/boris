@@ -128,14 +128,17 @@ export type WagtailApiItemResponse = {
     slug: string;
     first_published_at: string;
     search_description: string;
+    download_url: string;
   };
   title: string;
-  body?: [
-    {
-      type: string;
-      value: string;
-    },
-  ];
+  body?: WagtailApiItemResponseBody[];
+};
+
+export type WagtailApiItemResponseBody = {
+  id: string;
+  type: 'paragraph' | 'image';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
 };
 
 export type BlogPost = {
@@ -143,10 +146,5 @@ export type BlogPost = {
   description: string;
   firstPublishedAt: string;
   slug: string;
-  body?: [
-    {
-      type: string;
-      value: string;
-    },
-  ];
+  body?: WagtailApiItemResponseBody[];
 };
