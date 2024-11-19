@@ -2,6 +2,10 @@
   import Section from '$components/section/section.svelte';
 </script>
 
+<svelte:head>
+  <title>Boris - Accessibilité</title>
+</svelte:head>
+
 <Section
   title="Déclaration d’accessibilité"
   titleElement="h1">

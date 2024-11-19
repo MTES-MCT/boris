@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
-      BORIS_CMS_URL: ${{ secrets.BORIS_CMS_URL }}
+      BORIS_CMS_URL: ${{ secrets.PUBLIC_BORIS_CMS_URL }}
     strategy:
       matrix:
         node-version: [20.x]

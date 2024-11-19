@@ -2,3 +2,8 @@ fileignoreconfig:
 - filename: client/.env.example
   checksum: 5485a66c90dd5c80f3ff88ca6c3fd44c7d3b12e8fe4734aa94d9f1fcd4a22863
 version: ""
+
+fileignoreconfig:
+- filename: client/.env.example
+  checksum: c4c0d731e14cffee9b695b7786f330e12fbf51661bbbbe17df45321795d64a08
+version: ""
