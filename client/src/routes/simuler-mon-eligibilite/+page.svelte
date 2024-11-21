@@ -27,11 +27,18 @@
     différents dispositifs, il vous aiguillera également vers d'autres outils ou
     des aides vous concernant.
   </p>
-  <div id="landbot"></div>
+  <div
+    id="landbot"
+    class="fr-my-3w fr-my-md-6w background-alt-raised-grey">
+  </div>
 </Section>
+
+<Section title="Plafonds de ressources d'éligibilité au BRS">bonjour</Section>
 
 <style>
   #landbot {
-    height: 1000px;
+    height: 800px;
+    background: var(--background-alt-blue-cumulus);
+    border-radius: var(--border-radius);
   }
 </style>
