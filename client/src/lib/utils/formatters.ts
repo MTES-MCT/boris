@@ -48,3 +48,14 @@ export const formatOFSs = (OFSs: OFS[]): Region[] => {
 
   return regions;
 };
+
+export const formatEuro = (amount: number) => {
+  return new Intl.NumberFormat('fr-FR', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 0,
+  })
+    .format(amount)
+    .replace(/\u202f/g, ' ')
+    .replace(/\u00a0/g, ' ');
+};

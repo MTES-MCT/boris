@@ -148,3 +148,15 @@ export type BlogPost = {
   slug: string;
   body?: WagtailApiItemResponseBody[];
 };
+
+export type EligibilityData = {
+  category: {
+    small: string;
+    long: string;
+  };
+  zoneAandAbis: number;
+  zoneB1: number;
+  zoneB2andC: number;
+  content: string;
+  contentHtml?: string;
+};

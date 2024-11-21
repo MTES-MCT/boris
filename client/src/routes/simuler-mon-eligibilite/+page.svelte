@@ -2,7 +2,7 @@
   import type { Props } from './definitions';
   import { onMount } from 'svelte';
   import Section from '$components/section/section.svelte';
-  import EligibilityTable from '$components/eligibilityTable/eligibilityTable.svelte';
+  import Data from '$components/simuler-mon-eligibilite/data.svelte';
 
   const { data }: Props = $props();
 
@@ -39,7 +39,7 @@
 </Section>
 
 <Section title="Plafonds de ressources d'éligibilité au BRS">
-  <EligibilityTable />
+  <Data />
 </Section>
 
 <style>
