@@ -102,7 +102,7 @@
         <li class="fr-footer__bottom-item">
           <a
             class="fr-footer__bottom-link"
-            href="/plan-du-site">
+            href="/sitemap.xml">
             Plan du site
           </a>
         </li>
