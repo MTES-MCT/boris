@@ -34,7 +34,7 @@
   </p>
   <div
     id="landbot"
-    class="fr-my-3w fr-my-md-6w background-alt-raised-grey">
+    class="fr-mt-3w fr-mt-md-6w background-alt-raised-grey">
   </div>
 </Section>
 

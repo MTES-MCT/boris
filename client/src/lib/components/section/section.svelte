@@ -9,7 +9,7 @@
   }: Props = $props();
 </script>
 
-<section class={backgroundClass}>
+<section class={`section ${backgroundClass}`}>
   <div class="fr-container">
     <div class="fr-col-12">
       <svelte:element this={titleElement}>{title}</svelte:element>
@@ -20,7 +20,7 @@
 </section>
 
 <style lang="postcss">
-  :global(section) {
+  :global(.section) {
     padding-block: var(--4w);
 
     &:nth-child(1) {
