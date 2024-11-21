@@ -14,6 +14,6 @@ test('accessibilite page has correct title', async () => {
   expect(await page.title()).toBe('Boris - Accessibilité');
 });
 
-test('accessibilite page has expected h1', async ({ page }) => {
+test('accessibilite page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
 });

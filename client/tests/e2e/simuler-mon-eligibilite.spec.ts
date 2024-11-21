@@ -14,6 +14,7 @@ test('simuler-mon-eligibilite page has correct title', async () => {
   expect(await page.title()).toBe('Boris - Simuler mon éligibilité');
 });
 
-test('simuler-mon-eligibilite page has expected h1', async ({ page }) => {
+test('simuler-mon-eligibilite page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
+  await expect(page.locator('h1')).toHaveText('Simuler mon eligibilité');
 });
