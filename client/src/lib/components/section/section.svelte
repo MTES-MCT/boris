@@ -21,14 +21,26 @@
 
 <style lang="postcss">
   :global(.section) {
-    padding-block: var(--4w);
+    padding-block: var(--2w);
 
     &:nth-child(1) {
-      padding-block-start: calc(2 * var(--4w));
+      padding-block-start: var(--4w);
     }
 
     &:nth-last-child(1) {
-      padding-block-end: calc(2 * var(--4w));
+      padding-block-end: var(--4w);
+    }
+
+    @media (--sm-viewport) {
+      padding-block: var(--4w);
+
+      &:nth-child(1) {
+        padding-block-start: var(--8w);
+      }
+
+      &:nth-last-child(1) {
+        padding-block-end: var(--8w);
+      }
     }
   }
 </style>

@@ -42,10 +42,14 @@
   <Data />
 </Section>
 
-<style>
+<style lang="postcss">
   #landbot {
-    height: 800px;
+    height: calc(100vh - var(--12w));
     background: var(--background-alt-blue-cumulus);
     border-radius: var(--border-radius);
+  }
+
+  @media (--sm-viewport) {
+    height: 800px;
   }
 </style>

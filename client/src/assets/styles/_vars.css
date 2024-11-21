@@ -6,6 +6,8 @@
   --2w: calc(2 * var(--1w));
   --3w: calc(3 * var(--1w));
   --4w: calc(4 * var(--1w));
+  --8w: calc(8 * var(--1w));
+  --12w: calc(12 * var(--1w));
 
   /* BREAKING POINTS */
   @custom-media --xs-viewport (min-width: 36rem); /* 576px  */
