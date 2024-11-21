@@ -17,7 +17,7 @@
 
 <Header />
 
-<main class="fr-container fr-grid-row fr-py-6w fr-py-md-12w">
+<main>
   {@render children()}
 </main>
 
