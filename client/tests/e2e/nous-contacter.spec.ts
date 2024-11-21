@@ -7,13 +7,14 @@ test.beforeAll(async () => {
   const browser = await chromium.launch();
   page = await browser.newPage();
 
-  await page.goto('/accessibilite');
+  await page.goto('/nous-contacter');
 });
 
-test('accessibilite page has correct title', async () => {
-  expect(await page.title()).toBe('Boris - Accessibilité');
+test('nous-contacter page has correct title', async () => {
+  expect(await page.title()).toBe('Boris - Nous contacter');
 });
 
-test('accessibilite page has expected h1', async () => {
+test('nous-contacter page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
+  await expect(page.locator('h1')).toHaveText('Nous contacter');
 });

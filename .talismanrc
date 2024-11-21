@@ -7,3 +7,18 @@ fileignoreconfig:
 - filename: client/.env.example
   checksum: c4c0d731e14cffee9b695b7786f330e12fbf51661bbbbe17df45321795d64a08
 version: ""
+
+fileignoreconfig:
+- filename: package-lock.json
+  checksum: 215df59241d790f987f59357830b074da927931017b6ff77eb1b32c7e1ce1437
+version: ""
+
+fileignoreconfig:
+- filename: package-lock.json
+  checksum: 4288d656c8b0efc4302057ba71a86301971a291bc76ed77d6db36f1ed5486652
+version: ""
+
+fileignoreconfig:
+- filename: client/src/lib/components/simuler-mon-eligibilite/table.svelte
+  checksum: 2db7880d3b1ced627761752d475fe0ad7bc68c3c9ed79a766012a22baf32ca01
+version: ""

@@ -14,7 +14,7 @@ test('home page has correct title', async () => {
   expect(await page.title()).toBe('Boris');
 });
 
-test('home page has expected h1', async ({ page }) => {
-  await page.goto('/');
+test('home page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
+  await expect(page.locator('h1')).toHaveText('Simuler mon éligibilité');
 });

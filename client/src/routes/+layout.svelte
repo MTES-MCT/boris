@@ -1,6 +1,7 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/dsfr.min.css';
   import '@gouvfr/dsfr/dist/utility/utility.min.css';
+  import '$assets/styles/main.css';
   import { onMount, type Snippet } from 'svelte';
 
   onMount(async () => {
@@ -21,3 +22,13 @@
 </main>
 
 <Footer />
+
+<style lang="postcss">
+  main {
+    gap: var(--3w);
+
+    @media (--sm-viewport) {
+      gap: var(--4w);
+    }
+  }
+</style>

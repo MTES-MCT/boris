@@ -7,13 +7,14 @@ test.beforeAll(async () => {
   const browser = await chromium.launch();
   page = await browser.newPage();
 
-  await page.goto('/accessibilite');
+  await page.goto('/gestion-cookies');
 });
 
-test('accessibilite page has correct title', async () => {
-  expect(await page.title()).toBe('Boris - Accessibilité');
+test('gestion-cookies page has correct title', async () => {
+  expect(await page.title()).toBe('Boris - Gestion des cookies');
 });
 
-test('accessibilite page has expected h1', async () => {
+test('gestion-cookies has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
+  await expect(page.locator('h1')).toHaveText('Gestion des cookies');
 });

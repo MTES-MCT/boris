@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { Props } from './definitions';
-  import Section from '$components/section/section.svelte';
   import { onMount } from 'svelte';
+  import Section from '$components/section/section.svelte';
+  import Data from '$components/simuler-mon-eligibilite/data.svelte';
 
   const { data }: Props = $props();
 
@@ -18,6 +19,10 @@
   });
 </script>
 
+<svelte:head>
+  <title>Boris - Simuler mon éligibilité</title>
+</svelte:head>
+
 <Section
   title="Simuler mon eligibilité"
   titleElement="h1">
@@ -27,11 +32,24 @@
     différents dispositifs, il vous aiguillera également vers d'autres outils ou
     des aides vous concernant.
   </p>
-  <div id="landbot"></div>
+  <div
+    id="landbot"
+    class="fr-mt-3w fr-mt-md-6w background-alt-raised-grey">
+  </div>
 </Section>
 
-<style>
+<Section title="Plafonds de ressources d'éligibilité au BRS">
+  <Data />
+</Section>
+
+<style lang="postcss">
   #landbot {
-    height: 1000px;
+    height: calc(100vh - var(--12w));
+    background: var(--background-alt-blue-cumulus);
+    border-radius: var(--border-radius);
+  }
+
+  @media (--sm-viewport) {
+    height: 800px;
   }
 </style>
