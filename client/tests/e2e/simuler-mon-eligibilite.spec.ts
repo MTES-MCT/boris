@@ -7,13 +7,13 @@ test.beforeAll(async () => {
   const browser = await chromium.launch();
   page = await browser.newPage();
 
-  await page.goto('/accessibilite');
+  await page.goto('/simuler-mon-eligibilite');
 });
 
-test('accessibilite page has correct title', async () => {
-  expect(await page.title()).toBe('Boris - Accessibilité');
+test('simuler-mon-eligibilite page has correct title', async () => {
+  expect(await page.title()).toBe('Boris - Simuler mon éligibilité');
 });
 
-test('accessibilite page has expected h1', async ({ page }) => {
+test('simuler-mon-eligibilite page has expected h1', async ({ page }) => {
   await expect(page.locator('h1')).toBeVisible();
 });
