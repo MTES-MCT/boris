@@ -28,7 +28,7 @@
                 <td class="menage-category-datacell">
                   <span>{data.category.small}</span>
                   {#if data.contentHtml}
-                    <Tooltip>{data.contentHtml}</Tooltip>
+                    <Tooltip>{@html data.contentHtml}</Tooltip>
                   {/if}
                 </td>
                 <td>{formatEuro(data.zoneAandAbis)}</td>
