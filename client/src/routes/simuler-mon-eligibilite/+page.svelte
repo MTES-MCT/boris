@@ -45,7 +45,6 @@
 <style lang="postcss">
   #landbot {
     height: calc(100vh - var(--12w));
-    background: var(--background-alt-blue-cumulus);
     border-radius: var(--border-radius);
   }
 
