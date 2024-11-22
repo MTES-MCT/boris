@@ -16,5 +16,5 @@ test('notre-demarche page has correct title', async () => {
 
 test('notre-demarche page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
-  await expect(page.locator('h1')).toHaveText('Boris - Notre démarche');
+  await expect(page.locator('h1')).toHaveText('Notre démarche');
 });
