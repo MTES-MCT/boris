@@ -1,0 +1,11 @@
+.fr-icon-sofa-line::before,
+.fr-icon-sofa-line::after {
+  -webkit-mask-image: url('$assets/icons/sofa.svg');
+  mask-image: url('$assets/icons/sofa.svg');
+}
+
+.fr-icon-service-line::before,
+.fr-icon-service-line::after {
+  -webkit-mask-image: url('$assets/icons/service.svg');
+  mask-image: url('$assets/icons/service.svg');
+}

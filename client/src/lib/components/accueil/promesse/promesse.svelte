@@ -1,5 +1,7 @@
 <script>
   import Section from '$components/section/section.svelte';
+  import Logo from '$components/accueil/promesse/logo.svelte';
+  import { default as MascotteWaving } from '$assets/icons/mascotte-waving.svg?raw';
 </script>
 
 <Section backgroundClass="fr-background-alt--green-archipel">
@@ -48,7 +50,7 @@
         <div>
           <div class="icon">
             <span
-              class="fr-icon-france-line"
+              class="fr-icon-sofa-line"
               aria-hidden="true">
             </span>
           </div>
@@ -67,7 +69,7 @@
         <div>
           <div class="icon">
             <span
-              class="fr-icon-france-line"
+              class="fr-icon-service-line"
               aria-hidden="true">
             </span>
           </div>
@@ -83,6 +85,14 @@
         </a>
       </div>
     </div>
+  </div>
+
+  <div class="disclaimer">
+    <div class="mascotte-waving">
+      {@html MascotteWaving}
+    </div>
+    <Logo />
+    <p>la clef pour devenir propriétaire en BRS.</p>
   </div>
 </Section>
 
@@ -135,6 +145,25 @@
     }
   }
 
+  .disclaimer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .mascotte-waving {
+      position: absolute;
+      width: 82px;
+      top: -50px;
+      left: calc(50%);
+    }
+
+    p {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+  }
+
   @media (--sm-viewport) {
     .fr-container {
       max-width: 576px;
@@ -142,6 +171,12 @@
 
     .column {
       margin-block: var(--3w);
+    }
+
+    .disclaimer {
+      p {
+        font-size: 1.5rem;
+      }
     }
   }
 
@@ -157,6 +192,12 @@
 
     .column {
       margin-block: var(--5w);
+    }
+
+    .disclaimer {
+      p {
+        font-size: 2rem;
+      }
     }
   }
 </style>
