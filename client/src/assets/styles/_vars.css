@@ -18,9 +18,11 @@
   --12w: calc(12 * var(--1w));
   --15w: calc(15 * var(--1w));
   --19w: calc(19 * var(--1w));
+  --26w: calc(26 * var(--1w));
   --34w: calc(34 * var(--1w));
 
   /* BREAKING POINTS */
+  @custom-media --xxs-viewport (min-width: 28rem); /* 448px  */
   @custom-media --xs-viewport (min-width: 36rem); /* 576px  */
   @custom-media --sm-viewport (min-width: 48rem); /* 768px  */
   @custom-media --md-viewport (min-width: 62rem); /* 992px  */
