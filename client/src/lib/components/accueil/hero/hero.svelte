@@ -107,25 +107,7 @@
   }
 
   @media (--sm-viewport) {
-    padding-block-start: var(--15w);
-    padding-block-end: var(--34w);
-  }
-
-  @media (--md-viewport) {
-    .hero {
-      display: flex;
-    }
-
     .text-container {
-      width: 50%;
-      justify-content: center;
-      align-items: flex-end;
-      padding-block-start: var(--15w);
-      padding-block-end: var(--34w);
-      padding-inline: 0;
-      background: white;
-      z-index: 2;
-
       h1 {
         font-size: 3rem;
         line-height: 5rem;
@@ -144,6 +126,22 @@
         line-height: 2.25rem;
         margin: var(--title-spacing);
       }
+    }
+  }
+
+  @media (--md-viewport) {
+    .hero {
+      display: flex;
+    }
+
+    .text-container {
+      width: 50%;
+      justify-content: center;
+      align-items: flex-end;
+      padding-block-start: var(--10w);
+      padding-block-end: var(--26w);
+      padding-inline: 0;
+      background: white;
 
       .title {
         align-self: flex-end;
@@ -160,15 +158,15 @@
       width: 50%;
       display: flex;
       justify-content: center;
-      padding-block-start: var(--8w);
+      padding-block-start: var(--5w);
       background-image: url('$assets/images/home-hero.jpg');
       background-size: cover;
       background-position: center;
 
       &::before {
         content: '';
-        width: 424px;
-        height: 571px;
+        width: 400px;
+        height: 540px;
         background-image: url('$assets/illustrations/home-hero-trim.svg');
         background-size: 100%;
         background-repeat: no-repeat;

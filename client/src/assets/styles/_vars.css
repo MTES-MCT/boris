@@ -2,15 +2,17 @@
   /* COLORS */
   --color-red-primary: #ff5655;
   --color-red-light: #ffeded;
-  --color-blue-light: #e5fbfd;
+  --color-blue-primary: #000091;
+  --color-blue-light: #ececfe;
 
   /* DIMENSIONS */
-  --border-radius: 6px;
+  --border-radius: var(--1w);
   --1v: 4px;
   --1w: calc(2 * var(--1v));
   --2w: calc(2 * var(--1w));
   --3w: calc(3 * var(--1w));
   --4w: calc(4 * var(--1w));
+  --5w: calc(5 * var(--1w));
   --7w: calc(7 * var(--1w));
   --8w: calc(8 * var(--1w));
   --9w: calc(9 * var(--1w));
@@ -19,7 +21,7 @@
   --15w: calc(15 * var(--1w));
   --19w: calc(19 * var(--1w));
   --26w: calc(26 * var(--1w));
-  --34w: calc(34 * var(--1w));
+  --30w: calc(30 * var(--1w));
 
   /* BREAKING POINTS */
   @custom-media --xxs-viewport (min-width: 28rem); /* 448px  */

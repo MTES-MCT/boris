@@ -12,7 +12,9 @@
 <section class={`section ${backgroundClass}`}>
   <div class="fr-container">
     <div class="fr-col-12">
-      <svelte:element this={titleElement}>{title}</svelte:element>
+      {#if title}
+        <svelte:element this={titleElement}>{title}</svelte:element>
+      {/if}
 
       {@render children()}
     </div>
