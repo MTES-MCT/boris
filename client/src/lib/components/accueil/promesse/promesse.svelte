@@ -163,6 +163,7 @@
     p {
       font-size: 1.25rem;
       font-weight: 700;
+      margin-top: var(--1v);
     }
   }
 

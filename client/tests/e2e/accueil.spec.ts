@@ -11,7 +11,7 @@ test.beforeAll(async () => {
 });
 
 test('home page has correct title', async () => {
-  expect(await page.title()).toBe('Boris');
+  expect(await page.title()).toBe("Boris - Page d'accueil");
 });
 
 test('home page has expected h1', async () => {
