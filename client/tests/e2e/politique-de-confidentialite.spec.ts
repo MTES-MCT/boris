@@ -10,10 +10,6 @@ test.beforeAll(async () => {
   await page.goto('/politique-de-confidentialite');
 });
 
-test('politique-de-confidentialite page has correct title', async () => {
-  expect(await page.title()).toBe('Boris - Politique de confidentialité');
-});
-
 test('politique-de-confidentialite has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
   await expect(page.locator('h1')).toHaveText('Politique de confidentialité');

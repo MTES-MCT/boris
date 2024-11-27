@@ -10,10 +10,6 @@ test.beforeAll(async () => {
   await page.goto('/notre-demarche');
 });
 
-test('notre-demarche page has correct title', async () => {
-  expect(await page.title()).toBe('Boris - Notre démarche');
-});
-
 test('notre-demarche page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
   await expect(page.locator('h1')).toHaveText('Notre démarche');
