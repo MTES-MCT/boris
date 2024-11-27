@@ -7,10 +7,10 @@ test.beforeAll(async () => {
   const browser = await chromium.launch();
   page = await browser.newPage();
 
-  await page.goto('/statistiques');
+  await page.goto('/politique-de-confidentialite');
 });
 
-test('statistiques page has expected h1', async () => {
+test('politique-de-confidentialite has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
-  await expect(page.locator('h1')).toHaveText('Statistiques');
+  await expect(page.locator('h1')).toHaveText('Politique de confidentialité');
 });

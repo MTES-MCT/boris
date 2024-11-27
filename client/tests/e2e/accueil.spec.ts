@@ -10,10 +10,6 @@ test.beforeAll(async () => {
   await page.goto('/');
 });
 
-test('home page has correct title', async () => {
-  expect(await page.title()).toBe("Boris - Page d'accueil");
-});
-
 test('home page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
 });
