@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Cta from '$components/accueil/cta/cta.svelte';
   import Hero from '$components/accueil/hero/hero.svelte';
   import Infos from '$components/accueil/infos/infos.svelte';
   import Promesse from '$components/accueil/promesse/promesse.svelte';
@@ -15,4 +16,5 @@
   <Promesse />
   <Infos />
   <Verbatims />
+  <Cta />
 </div>

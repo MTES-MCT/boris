@@ -59,7 +59,6 @@
 
 <style lang="postcss">
   .card-container {
-    --path-thickness: 4px;
     --absolute-inline-offset: calc(-1 * var(--path-thickness));
 
     position: relative;
