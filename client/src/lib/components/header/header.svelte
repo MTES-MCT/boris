@@ -1,3 +1,7 @@
+<script lang="ts">
+  import { default as Logo } from '$assets/illustrations/logo.svg?raw';
+</script>
+
 <header
   role="banner"
   class="fr-header">
@@ -9,10 +13,15 @@
             <div class="fr-header__logo">
               <p class="fr-logo">
                 Ministère <br />
-                chargé du
+                du logement
                 <br />
-                logement
+                et de la rénovation
+                <br />
+                urbaine
               </p>
+            </div>
+            <div class="fr-header__operator">
+              {@html Logo}
             </div>
             <div class="fr-header__navbar">
               <button
@@ -27,43 +36,12 @@
           <div class="fr-header__service">
             <a
               href="/"
-              title="Accueil - Boris - Ministère chargé du logement">
+              title="Accueil - Boris - Ministère du logement et de la rénovation urbaine">
               <p class="fr-header__service-title">BoRiS</p>
             </a>
-          </div>
-        </div>
-        <div class="fr-header__tools">
-          <div class="fr-header__tools-links">
-            <ul class="fr-btns-group">
-              <li>
-                <a
-                  class="fr-btn fr-icon-questionnaire-line"
-                  href="/notre-demarche">
-                  Notre démarche
-                </a>
-              </li>
-              <li>
-                <a
-                  class="fr-btn fr-icon-community-line"
-                  href="/tout-savoir-sur-le-BRS">
-                  Tout savoir sur le BRS
-                </a>
-              </li>
-              <li>
-                <a
-                  class="fr-btn fr-icon-draft-line"
-                  href="/blog">
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a
-                  class="fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-parent-line"
-                  href="/simuler-mon-eligibilite">
-                  Simuler mon éligibilité
-                </a>
-              </li>
-            </ul>
+            <p class="fr-header__service-tagline">
+              Ensemble, facilitons l’accès à la propriété pour tous·tes
+            </p>
           </div>
         </div>
       </div>
@@ -72,7 +50,7 @@
   <div
     class="fr-header__menu fr-modal"
     id="menu-mobile"
-    aria-labelledby="button-500">
+    aria-labelledby="menu-mobile">
     <div class="fr-container">
       <button
         class="fr-btn--close fr-btn"
@@ -81,6 +59,46 @@
         Fermer
       </button>
       <div class="fr-header__menu-links"></div>
+      <nav
+        class="fr-nav"
+        id="navigation-494"
+        role="navigation"
+        aria-label="Menu principal">
+        <ul class="fr-nav__list">
+          <li class="fr-nav__item">
+            <a
+              class="fr-nav__link"
+              href="/simuler-mon-eligibilite"
+              target="_self">
+              Le simulateur BoRiS
+            </a>
+          </li>
+          <li class="fr-nav__item">
+            <a
+              class="fr-nav__link"
+              href="/organismes-fonciers-solidaires"
+              target="_self">
+              La liste des OFS
+            </a>
+          </li>
+          <li class="fr-nav__item">
+            <a
+              class="fr-nav__link"
+              href="/tout-savoir-sur-le-BRS"
+              target="_self">
+              Qu'est ce que le BRS ?
+            </a>
+          </li>
+          <li class="fr-nav__item">
+            <a
+              class="fr-nav__link"
+              href="/blog"
+              target="_self">
+              Le blog
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </header>

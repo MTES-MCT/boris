@@ -23,7 +23,7 @@
         accompagnent tout au long du processus, découvrez leurs offres !
       </p>
       <button class="fr-btn fr-btn--lg">
-        <a href="/organismes-fonciers-solidaires">VOir la liste des OFS</a>
+        <a href="/organismes-fonciers-solidaires">Voir la liste des OFS</a>
       </button>
     </div>
   </div>
