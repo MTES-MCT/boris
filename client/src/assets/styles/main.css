@@ -1,1 +1,10 @@
 @import url('./_vars.css');
+@import url('./_icons.css');
+
+.background-gradient {
+  background: linear-gradient(
+    180deg,
+    var(--color-teal-light) 0%,
+    var(--color-red-light) 100%
+  );
+}
