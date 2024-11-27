@@ -100,7 +100,8 @@
   .fr-container {
     position: relative;
     max-width: 400px;
-    transform: translateY(calc(-1 * var(--19w)));
+    margin-block-start: calc(-1 * var(--19w));
+    margin-block-end: var(--12w);
     background-color: white;
     border-radius: var(--border-radius-sm);
     border: solid 1px var(--color-blue-primary);
