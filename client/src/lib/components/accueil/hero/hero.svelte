@@ -65,9 +65,8 @@
       margin-bottom: var(--1w);
 
       span {
-        border: solid 3px var(--color-blue-primary);
-        border-radius: var(--border-radius-md);
-        padding-inline: var(--1v);
+        font-weight: 700;
+        text-decoration: underline;
       }
     }
 
@@ -137,12 +136,6 @@
         font-size: 1.75rem;
         line-height: 2.25rem;
         margin: var(--title-spacing);
-
-        span {
-          border: solid 5px var(--color-blue-primary);
-          border-radius: var(--border-radius-lg);
-          padding-inline: var(--1w);
-        }
       }
     }
   }
@@ -160,6 +153,7 @@
       padding-block-end: var(--26w);
       padding-inline: 0;
       background: white;
+      border-right: solid var(--path-thickness) var(--color-blue-primary);
 
       .title {
         align-self: flex-end;
