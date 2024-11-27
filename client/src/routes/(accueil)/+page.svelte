@@ -2,6 +2,7 @@
   import Hero from '$components/accueil/hero/hero.svelte';
   import Infos from '$components/accueil/infos/infos.svelte';
   import Promesse from '$components/accueil/promesse/promesse.svelte';
+  import Verbatims from '$components/accueil/verbatims/verbatims.svelte';
 </script>
 
 <svelte:head>
@@ -13,4 +14,5 @@
 <div class="background-gradient">
   <Promesse />
   <Infos />
+  <Verbatims />
 </div>

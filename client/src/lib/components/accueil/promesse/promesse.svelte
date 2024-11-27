@@ -202,7 +202,7 @@
     }
 
     .disclaimer {
-      margin-block-end: var(--15w);
+      margin-block-end: var(--8w);
 
       p {
         font-size: 2rem;
