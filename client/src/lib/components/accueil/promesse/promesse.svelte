@@ -21,9 +21,10 @@
             terrain.
           </p>
         </div>
+        <!-- TODO: change hrefs -->
         <a
           class="fr-link"
-          href="#">
+          href="/organismes-fonciers-solidaires">
           En savoir plus
         </a>
       </div>
@@ -59,9 +60,10 @@
             et à condition d’être éligible au dispositif.
           </p>
         </div>
+        <!-- TODO: change hrefs -->
         <a
           class="fr-link"
-          href="#">
+          href="/organismes-fonciers-solidaires">
           En savoir plus
         </a>
       </div>
@@ -78,9 +80,10 @@
             auprès de l’OFS avec qui vous partagez la propriété.
           </p>
         </div>
+        <!-- TODO: change hrefs -->
         <a
           class="fr-link"
-          href="#">
+          href="/organismes-fonciers-solidaires">
           En savoir plus
         </a>
       </div>
