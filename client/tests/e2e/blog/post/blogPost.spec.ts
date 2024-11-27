@@ -7,14 +7,20 @@ test.beforeAll(async () => {
   const browser = await chromium.launch();
   page = await browser.newPage();
 
-  await page.goto('/blog/le-brs-kesako-3');
+  await page.goto(
+    '/blog/un-exemple-pour-vous-projeter-dans-votre-achat-en-brs',
+  );
 });
 
 test('blog post page has correct title', async () => {
-  expect(await page.title()).toBe('Le BRS, kesako #3 ?');
+  expect(await page.title()).toBe(
+    'Un exemple pour vous projeter dans votre achat en BRS',
+  );
 });
 
 test('blog post page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
-  await expect(page.locator('h1')).toHaveText('Le BRS, kesako #3 ?');
+  await expect(page.locator('h1')).toHaveText(
+    'Un exemple pour vous projeter dans votre achat en BRS',
+  );
 });

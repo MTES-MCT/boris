@@ -24,6 +24,13 @@
             <li>
               <a
                 class="fr-footer__top-link"
+                href="/notre-demarche">
+                Notre démarche
+              </a>
+            </li>
+            <li>
+              <a
+                class="fr-footer__top-link"
                 href="/statistiques">
                 Statistiques
               </a>
@@ -99,13 +106,13 @@
     </div>
     <div class="fr-footer__bottom">
       <ul class="fr-footer__bottom-list">
-        <li class="fr-footer__bottom-item">
+        <!-- <li class="fr-footer__bottom-item">
           <a
             class="fr-footer__bottom-link"
             href="/plan-du-site">
             Plan du site
           </a>
-        </li>
+        </li> -->
         <li class="fr-footer__bottom-item">
           <a
             class="fr-footer__bottom-link"
@@ -123,15 +130,15 @@
         <li class="fr-footer__bottom-item">
           <a
             class="fr-footer__bottom-link"
-            href="/donnees-personnelles">
-            Données personnelles
+            href="/conditions-generales-d-utilisation">
+            Conditions générales d'utilisation
           </a>
         </li>
         <li class="fr-footer__bottom-item">
           <a
             class="fr-footer__bottom-link"
-            href="/gestion-cookies">
-            Gestion des cookies
+            href="/politique-de-confidentialite">
+            Politique de confidentialite
           </a>
         </li>
       </ul>

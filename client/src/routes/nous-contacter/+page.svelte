@@ -9,7 +9,10 @@
 <Section
   title="Nous contacter"
   titleElement="h1">
-  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti nihil
-  consectetur soluta quod maxime praesentium labore ipsa reiciendis aliquid
-  facere, eveniet dolor sunt unde nemo explicabo qui odit expedita velit.
+  <p>
+    Si vous avez des questions concernant le BRS, vous pouvez nous contacter à
+    l'adresse courriel suivante: <a href="mailto:nathan.gaudelet@beta.gouv.fr">
+      nathan.gaudelet@beta.gouv.fr
+    </a>
+  </p>
 </Section>
