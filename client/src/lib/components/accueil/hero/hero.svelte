@@ -6,7 +6,9 @@
         <br />
         <span>30 à 50% moins cher</span>
       </h1>
-      <h2 class="caption">Avec le BRS c’est possible !</h2>
+      <h2 class="caption">
+        Avec le BRS <span>c’est possible !</span>
+      </h2>
     </div>
 
     <div class="cta">
@@ -38,29 +40,35 @@
 
     h1 {
       font-size: 1.5rem;
-    }
 
-    span {
-      position: relative;
-      display: inline-block;
-      padding-inline: var(--1v);
+      span {
+        position: relative;
+        display: inline-block;
+        padding-inline: var(--1v);
 
-      &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 4px;
-        width: 100%;
-        height: calc(100% - 8px);
-        background-color: var(--color-red-primary);
-        z-index: -1;
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 4px;
+          width: 100%;
+          height: calc(100% - 8px);
+          background-color: var(--color-red-primary);
+          z-index: -1;
+        }
       }
     }
 
     .caption {
-      font-size: 1.125rem;
+      font-size: 1rem;
       font-weight: 400;
-      margin-bottom: 0;
+      margin-bottom: var(--1w);
+
+      span {
+        border: solid 3px var(--color-blue-primary);
+        border-radius: var(--border-radius-md);
+        padding-inline: var(--1v);
+      }
     }
 
     .title {
@@ -99,6 +107,10 @@
       h1 {
         font-size: 2rem;
       }
+
+      .caption {
+        font-size: 1.125rem;
+      }
     }
 
     .title {
@@ -125,6 +137,12 @@
         font-size: 1.75rem;
         line-height: 2.25rem;
         margin: var(--title-spacing);
+
+        span {
+          border: solid 5px var(--color-blue-primary);
+          border-radius: var(--border-radius-lg);
+          padding-inline: var(--1w);
+        }
       }
     }
   }

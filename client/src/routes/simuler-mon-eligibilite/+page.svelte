@@ -45,7 +45,7 @@
 <style lang="postcss">
   #landbot {
     height: calc(100vh - var(--12w));
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-sm);
   }
 
   @media (--sm-viewport) {

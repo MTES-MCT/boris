@@ -102,7 +102,7 @@
     max-width: 400px;
     transform: translateY(calc(-1 * var(--19w)));
     background-color: white;
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-sm);
     border: solid 1px var(--color-blue-primary);
     padding-block: var(--2w);
   }
@@ -150,6 +150,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 
     .mascotte-waving {
       position: absolute;
