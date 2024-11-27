@@ -9,5 +9,8 @@
 </svelte:head>
 
 <Hero />
-<Promesse />
-<Infos />
+
+<div class="background-gradient">
+  <Promesse />
+  <Infos />
+</div>

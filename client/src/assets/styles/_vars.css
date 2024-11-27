@@ -4,6 +4,7 @@
   --color-red-light: #ffeded;
   --color-blue-primary: #3917b3;
   --color-blue-light: #ececfe;
+  --color-teal-light: #e5fbfd;
 
   /* DIMENSIONS */
   --1v: 4px;
@@ -22,6 +23,7 @@
   --26w: calc(26 * var(--1w));
   --30w: calc(30 * var(--1w));
 
+  --border-radius-xs: var(--1v);
   --border-radius-sm: var(--1w);
   --border-radius-md: calc(var(--1w) + var(--1v));
   --border-radius-lg: var(--2w);

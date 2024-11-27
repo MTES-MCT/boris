@@ -1,11 +1,22 @@
 <script lang="ts">
   import type { Props } from './definitions';
 
-  const { title, content, imgSrc, linkLabel, href }: Props = $props();
+  const {
+    title,
+    content,
+    imgSrc,
+    photographer,
+    linkLabel,
+    href,
+    style = '',
+    reversed = false,
+  }: Props = $props();
 </script>
 
 <div
-  class="fr-card fr-enlarge-link fr-card--horizontal fr-card--horizontal-half">
+  {style}
+  class="fr-card fr-enlarge-link fr-card--horizontal fr-card--horizontal-half fr-card--no-border"
+  class:reversed>
   <div class="fr-card__body">
     <div class="fr-card__content">
       <h3 class="fr-card__title">
@@ -29,12 +40,23 @@
         class="fr-responsive-img"
         src={imgSrc}
         alt="" />
+      <span>Photo par {photographer}</span>
     </div>
   </div>
 </div>
 
 <style lang="postcss">
-  .fr-card.fr-enlarge-link {
+  .fr-card {
+    overflow: hidden;
+
+    &.reversed {
+      flex-direction: column;
+
+      @media (--sm-viewport) {
+        flex-direction: row-reverse;
+      }
+    }
+
     .fr-card__title {
       a::after {
         display: none;
@@ -45,6 +67,7 @@
   .fr-card__body {
     height: auto;
     align-items: flex-end;
+    background-color: white;
 
     .fr-card__content {
       order: 0;
@@ -63,6 +86,16 @@
       &::before {
         --icon-size: 1rem;
       }
+    }
+  }
+
+  .fr-card__img {
+    span {
+      position: absolute;
+      bottom: var(--1w);
+      left: var(--1w);
+      font-size: 0.75rem;
+      color: black;
     }
   }
 

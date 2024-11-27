@@ -4,7 +4,7 @@
   import { default as MascotteWaving } from '$assets/icons/mascotte-waving.svg?raw';
 </script>
 
-<Section backgroundClass="fr-background-alt--green-archipel">
+<Section>
   <div class="fr-container">
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="column fr-col-12 fr-col-md-6 fr-col-lg-3">
@@ -152,6 +152,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    margin-block-end: var(--5w);
 
     .mascotte-waving {
       position: absolute;
@@ -198,6 +199,8 @@
     }
 
     .disclaimer {
+      margin-block-end: var(--15w);
+
       p {
         font-size: 2rem;
       }
