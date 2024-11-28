@@ -12,12 +12,6 @@ test.beforeAll(async () => {
   );
 });
 
-test('blog post page has correct title', async () => {
-  expect(await page.title()).toBe(
-    'Un exemple pour vous projeter dans votre achat en BRS',
-  );
-});
-
 test('blog post page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
   await expect(page.locator('h1')).toHaveText(

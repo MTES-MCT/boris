@@ -11,9 +11,12 @@
 
   import Header from '$components/header/header.svelte';
   import Footer from '$components/footer/footer.svelte';
+  import GoogleAnalytics from '$components/google-analytics/googleAnalytics.svelte';
 
   const { children }: { children: Snippet } = $props();
 </script>
+
+<GoogleAnalytics />
 
 <Header />
 
