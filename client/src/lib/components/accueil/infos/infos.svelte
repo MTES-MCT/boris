@@ -27,12 +27,12 @@
       {@html MascotteThinking}
     </div>
     <HorizontalCard
-      title="Accédez à une information qualifiée."
-      content="Le Bail Réel Solidaire (BRS) est un dispositif permettant à des ménages ne pouvant plus acheter dans le marché libre de devenir propriétaire. Il dispose de nombreux avantages mais aussi beaucoup de particularités à connaître. BoRiS vous propose des renseignements officiels et travaillés de sorte à rendre la propriété accessibles pour tous·tes."
-      href="/tout-savoir-sur-le-BRS"
+      title="Vérifiez si vous êtes éligibles !"
+      content="BoRiS vous accompagne notamment grâce à son simulateur. Découvrez maintenant si vous pouvez prétendre au dispositif !"
+      href="/simuler-mon-eligibilite"
       imgSrc={card2}
       photographer="Julian Bock"
-      linkLabel="Découvrir le BRS et débuter mon parcours"
+      linkLabel="Vérifier mon éligibilité"
       style="border-bottom-right-radius: var(--border-radius-md)"
       reversed />
   </div>
@@ -40,12 +40,12 @@
   <div class="card-container">
     <div class="border-box"></div>
     <HorizontalCard
-      title="Accédez à une information qualifiée."
-      content="Le Bail Réel Solidaire (BRS) est un dispositif permettant à des ménages ne pouvant plus acheter dans le marché libre de devenir propriétaire. Il dispose de nombreux avantages mais aussi beaucoup de particularités à connaître. BoRiS vous propose des renseignements officiels et travaillés de sorte à rendre la propriété accessibles pour tous·tes."
-      href="/tout-savoir-sur-le-BRS"
+      title="BoRiS vous met en relation avec des organismes dans votre zone de recherche."
+      content="BoRiS est en lien avec les Organismes de Foncier Solidaires (OFS) agréés par l’Etat qui font construire des logements en BRS et présentent actuellement des programmes en cours de commercialisation."
+      href="/organismes-fonciers-solidaires"
       imgSrc={card3}
       photographer="Hannah Busing"
-      linkLabel="Découvrir le BRS et débuter mon parcours"
+      linkLabel="Trouvez votre logement en BRS"
       style="border-bottom-left-radius: var(--border-radius-md);" />
   </div>
 

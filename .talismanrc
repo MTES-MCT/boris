@@ -22,3 +22,12 @@ fileignoreconfig:
 - filename: client/src/lib/components/simuler-mon-eligibilite/table.svelte
   checksum: 2db7880d3b1ced627761752d475fe0ad7bc68c3c9ed79a766012a22baf32ca01
 version: ""
+
+fileignoreconfig:
+- filename: client/src/routes/tout-savoir-sur-le-BRS/je-cherche-des-financements/+page.svelte
+  checksum: 16ecdc38ed5fe2abd75a0359ac447d8251ce7280943c7c3e3842e222e3de0c96
+- filename: client/src/routes/tout-savoir-sur-le-BRS/je-deviens-proprietaire/+page.svelte
+  checksum: f2bdb584c881d16a7735c9f870df540891237b065a7700b9d6bd3abcd50fcde1
+- filename: client/src/routes/tout-savoir-sur-le-BRS/je-decouvre-le-dispositif/+page.svelte
+  checksum: ace9ada5a101d07062663b1b6440623e25d8cea32b3fe79a6dae0b1f9f1a0070
+version: ""

@@ -5,7 +5,7 @@
     title,
     content,
     imgSrc,
-    photographer,
+    photographer = '',
     linkLabel,
     href,
     style = '',
@@ -40,7 +40,9 @@
         class="fr-responsive-img"
         src={imgSrc}
         alt="" />
-      <span>Photo par {photographer}</span>
+      {#if photographer}
+        <span>Photo par {photographer}</span>
+      {/if}
     </div>
   </div>
 </div>
@@ -51,6 +53,10 @@
 
     &.reversed {
       flex-direction: column;
+
+      .fr-card__body {
+        align-items: flex-start;
+      }
 
       @media (--sm-viewport) {
         flex-direction: row-reverse;
