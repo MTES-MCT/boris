@@ -38,7 +38,36 @@
       {@const regionLabel = `${region.name} (${region.totalOFSs})`}
 
       <Accordion label={regionLabel}>
-        <div class="fr-accordions-group">
+        <!-- --------------------------------------- 
+        TEMPORAIRE: À SUPPRIMER QUAND NOUS AURONS TOUS LES DEPARTEMENTS
+        --------------------------------------- -->
+        <ul>
+          {#each region.OFSs as ofs}
+            <li>
+              <p class="fr-text__lead fr-mb-0"><b>{ofs.nom}</b></p>
+              {#if ofs.commercialisateur}
+                <p class="fr-mb-0">
+                  Commercialisateur: {ofs.commercialisateur}
+                </p>
+              {/if}
+              {#if ofs.lien}
+                <a
+                  class="fr-link"
+                  target="_blank"
+                  href={ofs.lien}>
+                  Site web
+                </a>
+              {/if}
+              <p></p>
+            </li>
+          {/each}
+        </ul>
+        <!-- --------------------------------------- -->
+
+        <!-- --------------------------------------- 
+        TEMPORAIRE: À REMETTRE QUAND NOUS AURONS TOUS LES DEPARTEMENTS
+        --------------------------------------- -->
+        <!-- <div class="fr-accordions-group">
           {#each region.departements as departement}
             {@const departementLabel = `${departement.name} (${departement.totalOFSs})`}
 
@@ -52,7 +81,8 @@
               </ul>
             </Accordion>
           {/each}
-        </div>
+        </div> -->
+        <!-- --------------------------------------- -->
       </Accordion>
     {/each}
   </div>

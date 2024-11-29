@@ -1,5 +1,9 @@
 import type {
-  Departement,
+  // ---------------------------------------
+  // TEMPORAIRE: À REMETTRE QUAND NOUS AURONS TOUS LES DEPARTEMENTS
+  // ---------------------------------------
+  // Departement,
+  // ---------------------------------------
   OFS,
   Region,
 } from '$routes/organismes-fonciers-solidaires/definitions';
@@ -11,39 +15,61 @@ export const formatOFSs = (OFSs: OFS[]): Region[] => {
 
   regionNames.forEach((regionName) => {
     let totalOFSsInRegion = 0;
-    const departements: Departement[] = [];
+
+    // ---------------------------------------
+    // TEMPORAIRE: À REMETTRE QUAND NOUS AURONS TOUS LES DEPARTEMENTS
+    // ---------------------------------------
+    // const departements: Departement[] = [];
+    // ---------------------------------------
 
     const regionnalOFSs: OFS[] = OFSs.filter(
       (ofs) => ofs.region === regionName,
     );
 
-    let departementsNames = [
-      ...new Set(regionnalOFSs.map((ofs) => ofs.departements.split(', '))),
-    ]
-      .flat()
-      .filter((departement) => departement.length);
-
-    departementsNames = [...new Set(departementsNames)];
-
-    departementsNames.forEach((departementName) => {
-      const departementalOFSs = regionnalOFSs.filter((ofs) =>
-        ofs.departements.includes(departementName),
-      );
-
-      departements.push({
-        name: departementName,
-        OFSs: departementalOFSs,
-        totalOFSs: departementalOFSs.length,
-      });
-
-      totalOFSsInRegion += departementalOFSs.length;
-    });
+    // ---------------------------------------
+    // -- TEMPORAIRE À SUPPRIMER QUAND NOUS AURONS TOUS LES DÉPARTEMENTS.
+    // ---------------------------------------
+    totalOFSsInRegion = regionnalOFSs.length;
 
     regions.push({
       name: regionName,
-      departements,
+      OFSs: regionnalOFSs,
       totalOFSs: totalOFSsInRegion,
     });
+    // ---------------------------------------
+    //
+
+    // ---------------------------------------
+    // TEMPORAIRE: À REMETTRE QUAND NOUS AURONS TOUS LES DEPARTEMENTS
+    // ---------------------------------------
+    // let departementsNames = [
+    //   ...new Set(regionnalOFSs.map((ofs) => ofs.departements.split(', '))),
+    // ]
+    //   .flat()
+    //   .filter((departement) => departement.length);
+
+    // departementsNames = [...new Set(departementsNames)];
+
+    // departementsNames.forEach((departementName) => {
+    //   const departementalOFSs = regionnalOFSs.filter((ofs) =>
+    //     ofs.departements.includes(departementName),
+    //   );
+
+    //   departements.push({
+    //     name: departementName,
+    //     OFSs: departementalOFSs,
+    //     totalOFSs: departementalOFSs.length,
+    //   });
+
+    //   totalOFSsInRegion += departementalOFSs.length;
+    // });
+
+    // regions.push({
+    //   name: regionName,
+    //   departements,
+    //   totalOFSs: totalOFSsInRegion,
+    // });
+    // ---------------------------------------
   });
 
   return regions;
