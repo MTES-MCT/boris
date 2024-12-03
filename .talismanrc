@@ -31,3 +31,14 @@ fileignoreconfig:
 - filename: client/src/routes/tout-savoir-sur-le-BRS/je-decouvre-le-dispositif/+page.svelte
   checksum: ace9ada5a101d07062663b1b6440623e25d8cea32b3fe79a6dae0b1f9f1a0070
 version: ""
+
+fileignoreconfig:
+- filename: client/.env.example
+  checksum: c333800c9154144cbe1de09a476e03760eaa5136e47408bbaa65dfb101332430
+- filename: client/src/hooks.client.ts
+  checksum: af6ee16b6c0e8e88b23a106a2906963cb49fba1b2a1acc6d9f3295cb3cd5ac69
+- filename: client/src/hooks.server.ts
+  checksum: 21826e4b81df01823d3944fed2451976e5dd0cd76b7ea65dcbecfb9141dd434c
+- filename: package-lock.json
+  checksum: ceeedb91d421fca5ed86358878f34fee1355fedd6e834e59587a90f8ac0397b9
+version: ""
