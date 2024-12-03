@@ -2,7 +2,7 @@
   import type { Props } from './definitions';
   import { onMount } from 'svelte';
   import Section from '$components/section/section.svelte';
-  import Data from '$components/simuler-mon-eligibilite/data.svelte';
+  import Data from '$components/simulateur-eligibilite/data.svelte';
 
   const { data }: Props = $props();
 
@@ -38,7 +38,9 @@
   </div>
 </Section>
 
-<Section title="Plafonds de ressources d'éligibilité au BRS">
+<Section
+  id="tableau-ressources"
+  title="Plafonds de ressources d'éligibilité au BRS">
   <Data />
 </Section>
 

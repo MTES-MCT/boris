@@ -59,7 +59,7 @@
     Vous souhaitez savoir si vous y avez droit ? Utilisez notre simulateur :
   </p>
   <button class="fr-btn fr-btn--lg">
-    <a href="/simuler-mon-eligibilite">Suis-je éligible ?</a>
+    <a href="/simulateur-eligibilite">Suis-je éligible ?</a>
   </button>
   <p></p>
 

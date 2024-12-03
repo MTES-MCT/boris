@@ -23,7 +23,7 @@
         </div>
         <a
           class="fr-link"
-          href="/tout-savoir-sur-le-BRS">
+          href="/tout-savoir-sur-le-bail-reel-solidaire-brs">
           En savoir plus
         </a>
       </div>
@@ -61,7 +61,7 @@
         </div>
         <a
           class="fr-link"
-          href="/tout-savoir-sur-le-BRS">
+          href="/tout-savoir-sur-le-bail-reel-solidaire-brs">
           En savoir plus
         </a>
       </div>
@@ -80,7 +80,7 @@
         </div>
         <a
           class="fr-link"
-          href="/tout-savoir-sur-le-BRS">
+          href="/tout-savoir-sur-le-bail-reel-solidaire-brs">
           En savoir plus
         </a>
       </div>

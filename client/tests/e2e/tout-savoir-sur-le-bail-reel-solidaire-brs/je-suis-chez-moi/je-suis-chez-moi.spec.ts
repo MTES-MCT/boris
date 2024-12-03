@@ -7,7 +7,9 @@ test.beforeAll(async () => {
   const browser = await chromium.launch();
   page = await browser.newPage();
 
-  await page.goto('/tout-savoir-sur-le-BRS/je-suis-chez-moi');
+  await page.goto(
+    '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-suis-chez-moi',
+  );
 });
 
 test('je-suis-chez-moi page has expected h1', async () => {

@@ -68,7 +68,7 @@
           <li class="fr-nav__item">
             <a
               class="fr-nav__link"
-              href="/simuler-mon-eligibilite"
+              href="/simulateur-eligibilite"
               target="_self">
               Le simulateur BoRiS
             </a>
@@ -84,7 +84,7 @@
           <li class="fr-nav__item">
             <a
               class="fr-nav__link"
-              href="/tout-savoir-sur-le-BRS"
+              href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
               target="_self">
               Qu'est ce que le BRS ?
             </a>
