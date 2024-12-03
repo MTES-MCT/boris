@@ -22,7 +22,6 @@
     "lint-staged": "^15.2.5",
     "prettier": "^3.1.1",
     "typescript": "5.6.3",
-    "typescript-eslint": "^8.0.0",
-    "@sentry/sveltekit": "^8.42.0"
+    "typescript-eslint": "^8.0.0"
   }
 }
