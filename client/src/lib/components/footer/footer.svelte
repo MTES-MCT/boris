@@ -17,7 +17,7 @@
             <li>
               <a
                 class="fr-footer__top-link"
-                href="/tout-savoir-sur-le-BRS">
+                href="/tout-savoir-sur-le-bail-reel-solidaire-brs">
                 Les étapes du BRS
               </a>
             </li>

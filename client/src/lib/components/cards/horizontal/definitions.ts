@@ -5,6 +5,7 @@ export type Props = {
   photographer?: string;
   linkLabel: string;
   href: string;
+  id?: string;
   style?: string;
   reversed?: boolean;
 };

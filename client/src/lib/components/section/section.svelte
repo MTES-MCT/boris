@@ -6,10 +6,13 @@
     children,
     titleElement = 'h2',
     backgroundClass = '',
+    id,
   }: Props = $props();
 </script>
 
-<section class={`section ${backgroundClass}`}>
+<section
+  {id}
+  class={`section ${backgroundClass}`}>
   <div class="fr-container">
     <div class="fr-col-12">
       {#if title}

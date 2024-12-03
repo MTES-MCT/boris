@@ -10,11 +10,13 @@
     href,
     style = '',
     reversed = false,
+    id,
   }: Props = $props();
 </script>
 
 <div
   {style}
+  {id}
   class="fr-card fr-enlarge-link fr-card--horizontal fr-card--horizontal-half fr-card--no-border"
   class:reversed>
   <div class="fr-card__body">

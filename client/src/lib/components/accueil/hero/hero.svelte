@@ -19,7 +19,7 @@
         Et vous ?
       </p>
       <button class="fr-btn fr-btn--lg">
-        <a href="/simuler-mon-eligibilite">Vérifier mon éligibilité</a>
+        <a href="/simulateur-eligibilite">Vérifier mon éligibilité</a>
       </button>
     </div>
   </div>

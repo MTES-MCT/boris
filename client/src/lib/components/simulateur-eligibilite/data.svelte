@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Table from '$components/simuler-mon-eligibilite/table.svelte';
-  import Accordions from '$components/simuler-mon-eligibilite/accordions.svelte';
+  import Table from '$components/simulateur-eligibilite/table.svelte';
+  import Accordions from '$components/simulateur-eligibilite/accordions.svelte';
 </script>
 
 <div class="table">

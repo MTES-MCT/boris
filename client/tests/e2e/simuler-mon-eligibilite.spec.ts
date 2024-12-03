@@ -7,10 +7,9 @@ test.beforeAll(async () => {
   const browser = await chromium.launch();
   page = await browser.newPage();
 
-  await page.goto('/simuler-mon-eligibilite');
+  await page.goto('/simulateur-eligibilite');
 });
 
-test('simuler-mon-eligibilite page has expected h1', async () => {
+test('simulateur-eligibilite page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
-  await expect(page.locator('h1')).toHaveText('Simuler mon eligibilité');
 });

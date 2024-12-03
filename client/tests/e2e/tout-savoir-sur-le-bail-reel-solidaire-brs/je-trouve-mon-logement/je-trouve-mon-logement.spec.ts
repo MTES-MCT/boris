@@ -7,10 +7,11 @@ test.beforeAll(async () => {
   const browser = await chromium.launch();
   page = await browser.newPage();
 
-  await page.goto('/tout-savoir-sur-le-BRS');
+  await page.goto(
+    '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement',
+  );
 });
 
-test('tout-savoir-sur-le-BRS page has expected h1', async () => {
+test('je-trouve-mon-logement page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
-  await expect(page.locator('h1')).toHaveText('Tout savoir sur le BRS');
 });

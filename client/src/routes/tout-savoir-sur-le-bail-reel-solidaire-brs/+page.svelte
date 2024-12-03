@@ -59,39 +59,44 @@
     titleElement="h2">
     <div class="cards-container">
       <HorizontalCard
+        id="etape1"
         title="Etape 1 : je découvre le dispositif"
         content="Découvrez les informations relatives au Bail Réel solidaire et testez votre éligibilité."
-        href="/tout-savoir-sur-le-BRS/je-decouvre-le-dispositif"
+        href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif"
         imgSrc={brsEtape1}
         linkLabel="En savoir plus" />
 
       <HorizontalCard
+        id="etape2"
         title="Etape 2 : je trouve mon logement"
         content="Trouvez le logement de vos rêves en BRS et candidatez pour l'obtenir."
-        href="/tout-savoir-sur-le-BRS/je-trouve-mon-logement"
+        href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement"
         imgSrc={brsEtape2}
         linkLabel="En savoir plus"
         reversed />
 
       <HorizontalCard
+        id="etape3"
         title="Étape 3 : je cherche des financements"
         content="Assurez-vous de pouvoir financer votre achat grâce à vos fonds propres, un emprunt bancaire et des aides éventuelles."
-        href="/tout-savoir-sur-le-BRS/je-cherche-des-financements"
+        href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-cherche-des-financements"
         imgSrc={brsEtape3}
         linkLabel="En savoir plus" />
 
       <HorizontalCard
+        id="etape4"
         title="Étape 4 : je deviens propriétaire"
         content="Une fois tous les éléments finalisés, vous pouvez signer l'acte de vente chez le notaire."
-        href="/tout-savoir-sur-le-BRS/je-deviens-proprietaire"
+        href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-deviens-proprietaire"
         imgSrc={brsEtape4}
         linkLabel="En savoir plus"
         reversed />
 
       <HorizontalCard
+        id="etape5"
         title="Étape 5 : je suis chez moi"
         content="Profitez de votre logement et assurez-vous de bien connaître les spécificités liées au BRS."
-        href="/tout-savoir-sur-le-BRS/je-suis-chez-moi"
+        href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-suis-chez-moi"
         imgSrc={brsEtape5}
         linkLabel="En savoir plus" />
     </div>

@@ -14,7 +14,7 @@
     <HorizontalCard
       title="Accédez à une information qualifiée."
       content="Le Bail Réel Solidaire (BRS) est un dispositif permettant à des ménages ne pouvant plus acheter dans le marché libre de devenir propriétaire. Il dispose de nombreux avantages mais aussi beaucoup de particularités à connaître. BoRiS vous propose des renseignements officiels et travaillés de sorte à rendre la propriété accessibles pour tous·tes."
-      href="/tout-savoir-sur-le-BRS"
+      href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
       imgSrc={card1}
       photographer="David Hellmann"
       linkLabel="Découvrir le BRS et débuter mon parcours"
@@ -29,7 +29,7 @@
     <HorizontalCard
       title="Vérifiez si vous êtes éligibles !"
       content="BoRiS vous accompagne notamment grâce à son simulateur. Découvrez maintenant si vous pouvez prétendre au dispositif !"
-      href="/simuler-mon-eligibilite"
+      href="/simulateur-eligibilite"
       imgSrc={card2}
       photographer="Julian Bock"
       linkLabel="Vérifier mon éligibilité"
