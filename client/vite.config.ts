@@ -9,6 +9,7 @@ export default defineConfig({
         org: 'boris',
         project: 'client',
         url: 'https://sentry.incubateur.net/',
+        adapter: 'node',
       },
     }),
     sveltekit(),
