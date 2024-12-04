@@ -22,10 +22,10 @@
     "lint-staged": "^15.2.5",
     "prettier": "^3.1.1",
     "typescript": "5.6.3",
-    "typescript-eslint": "^8.0.0"
+    "typescript-eslint": "^8.0.0",
+    "@opentelemetry/api": "1.9.0"
   },
   "dependencies": {
-    "@opentelemetry/api": "1.9.0",
     "@sentry/core": "8.41.0",
     "@sentry/node": "8.41.0",
     "@sentry/sveltekit": "8.41.0"
