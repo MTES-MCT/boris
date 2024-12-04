@@ -57,3 +57,8 @@ fileignoreconfig:
 - filename: package-lock.json
   checksum: 0781c3e541d5896a5ee7a91fc89f9c2171b9d7d3857cac2e81082541c5c349de
 version: ""
+
+fileignoreconfig:
+- filename: package-lock.json
+  checksum: 07e5df0934bbb03759bda025a02c8fa0925010806d3a54ccea5c3dfad5633769
+version: ""
