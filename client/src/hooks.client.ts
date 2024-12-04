@@ -18,5 +18,14 @@ Sentry.init({
   integrations: [replayIntegration()],
 });
 
+const clientExceptions = (error: {
+  status: number;
+  message: string | undefined;
+}) => {
+  if (String(error.status).startsWith('4')) {
+    Sentry.captureException(error);
+  }
+};
+
 // If you have a custom error handler, pass it to `handleErrorWithSentry`
-export const handleError = handleErrorWithSentry();
+export const handleError = handleErrorWithSentry(clientExceptions);
