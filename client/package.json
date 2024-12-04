@@ -40,8 +40,9 @@
     "vitest": "^2.0.0"
   },
   "dependencies": {
-    "@sentry/sveltekit": "^8.42.0",
-    "@sentry/node": "^8.41.0"
+    "@sentry/core": "^8.42.0",
+    "@sentry/node": "^8.42.0",
+    "@sentry/sveltekit": "^8.42.0"
   },
   "type": "module"
 }
