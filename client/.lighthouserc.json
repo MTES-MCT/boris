@@ -1,0 +1,15 @@
+{
+  "ci": {
+    "collect": {
+      "numberOfRuns": 1,
+      "url": ["https://boris.beta.gouv.fr"]
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": "off",
+        "categories:pwa": "off",
+        "categories:accesssibility": ["error", { "minScore": 1 }]
+      }
+    }
+  }
+}
