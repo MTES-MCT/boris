@@ -151,9 +151,7 @@
                   <a
                     href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-suis-chez-moi"
                     aria-current={pathname ===
-                    '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-suis-chez-moi'
-                      ? 'page'
-                      : 'false'}
+                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-suis-chez-moi'}
                     class="fr-nav__link">
                     Je suis chez moi
                   </a>
