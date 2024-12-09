@@ -1,5 +1,12 @@
 <script lang="ts">
+  import { page } from '$app/stores';
   import { default as Logo } from '$assets/illustrations/logo.svg?raw';
+
+  let pathname = $state($page.url.pathname);
+
+  $effect(() => {
+    pathname = $page.url.pathname;
+  });
 </script>
 
 <header
@@ -61,14 +68,13 @@
       <div class="fr-header__menu-links"></div>
       <nav
         class="fr-nav"
-        id="navigation-494"
-        role="navigation"
         aria-label="Menu principal">
         <ul class="fr-nav__list">
           <li class="fr-nav__item">
             <a
               class="fr-nav__link"
               href="/simulateur-eligibilite"
+              aria-current={pathname === '/simulateur-eligibilite'}
               target="_self">
               Le simulateur BoRiS
             </a>
@@ -77,22 +83,87 @@
             <a
               class="fr-nav__link"
               href="/organismes-fonciers-solidaires"
+              aria-current={pathname === '/organismes-fonciers-solidaires'}
               target="_self">
               La liste des OFS
             </a>
           </li>
           <li class="fr-nav__item">
-            <a
-              class="fr-nav__link"
-              href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
-              target="_self">
+            <button
+              aria-expanded="false"
+              aria-controls="tout-savoir-sur-le-bail-reel-solidaire-brs-dropdown"
+              aria-current={pathname.includes(
+                '/tout-savoir-sur-le-bail-reel-solidaire-brs',
+              )}
+              class="fr-nav__btn">
               Qu'est ce que le BRS ?
-            </a>
+            </button>
+            <div
+              class="fr-collapse fr-menu"
+              id="tout-savoir-sur-le-bail-reel-solidaire-brs-dropdown">
+              <ul class="fr-menu__list">
+                <li>
+                  <a
+                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
+                    aria-current={pathname ===
+                      '/tout-savoir-sur-le-bail-reel-solidaire-brs'}
+                    class="fr-nav__link">
+                    Les étapes du parcours d'achat
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif"
+                    aria-current={pathname ===
+                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif'}
+                    class="fr-nav__link">
+                    Je découvre le dispositif
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement"
+                    aria-current={pathname ===
+                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement'}
+                    class="fr-nav__link">
+                    Je trouve mon logement en BRS
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-cherche-des-financements"
+                    aria-current={pathname ===
+                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-cherche-des-financements'}
+                    class="fr-nav__link">
+                    Je cherche des financements
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-deviens-proprietaire"
+                    aria-current={pathname ===
+                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-deviens-proprietaire'}
+                    class="fr-nav__link">
+                    Je deviens propriétaire
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-suis-chez-moi"
+                    aria-current={pathname ===
+                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-suis-chez-moi'}
+                    class="fr-nav__link">
+                    Je suis chez moi
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
           <li class="fr-nav__item">
             <a
               class="fr-nav__link"
               href="/blog"
+              aria-current={pathname === '/blog'}
               target="_self">
               Le blog
             </a>
