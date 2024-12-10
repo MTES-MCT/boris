@@ -14,6 +14,7 @@
   --3w: calc(3 * var(--1w));
   --4w: calc(4 * var(--1w));
   --5w: calc(5 * var(--1w));
+  --6w: calc(6 * var(--1w));
   --7w: calc(7 * var(--1w));
   --8w: calc(8 * var(--1w));
   --9w: calc(9 * var(--1w));

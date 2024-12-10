@@ -6,6 +6,8 @@
   import brsEtape3 from '$assets/images/brs-etape-3.jpg';
   import brsEtape4 from '$assets/images/brs-etape-4.jpg';
   import brsEtape5 from '$assets/images/brs-etape-5.jpg';
+  import Hero from '$components/tout-savoir-sur-le-bail-reel-solidaire-brs/hero/hero.svelte';
+  import Promesse from '$components/tout-savoir-sur-le-bail-reel-solidaire-brs/promesse/promesse.svelte';
 </script>
 
 <svelte:head>
@@ -13,46 +15,8 @@
 </svelte:head>
 
 <div class="background-gradient">
-  <Section
-    title="Tout savoir sur le BRS"
-    titleElement="h1">
-    <p>
-      Le Bail Réel Solidaire (BRS) est un dispositif mis en place par l’État
-      permettant à des ménages qui ne pourraient pas devenir propriétaires d'un
-      logement au prix du marché d’accéder à la propriété de leur <b>
-        résidence principale.
-      </b>
-    </p>
-
-    <p>
-      En effet, les logements mis en vente en BRS sont <b>
-        30 à 50% moins chers
-      </b>
-      que ceux mis en vente dans le marché traditionnel. Les prix sont
-      <b>encadrés et contrôlés par l'État</b>
-      . Cela est rendu possible notamment parce que les propriétaires d'un logement
-      en BRS achètent leur logement à 100%, mais pas le terrain sur lequel celui-ci
-      est construit. En échange, les propriétaires d'un logement d'un BRS s'acquittent
-      d'une redevance mensuelle contenue.
-    </p>
-
-    <p>
-      En tant que propriétaire d'un logement en BRS, vous disposez de <b>
-        tous les droits d'un·e propriétaire
-      </b>
-      , et pouvez notamment revendre votre logement (avec une plus-value toutefois
-      encadrée) ou le transmettre à vos proches. Le dispositif se veut ainsi solidaire
-      car il permet aux générations futures d'accéder à la propriété dans des conditions
-      similaires, de manière abordable.
-    </p>
-
-    <p>
-      Le BRS existe depuis 2017 et les acquéreurs sont <b>
-        accompagnés tout au long de leur procédure
-      </b>
-      d'achat par un organisme dédié.
-    </p>
-  </Section>
+  <Hero />
+  <Promesse />
 
   <Section
     title="Les étapes du BRS"
