@@ -8,6 +8,7 @@
   import brsEtape5 from '$assets/images/brs-etape-5.jpg';
   import Hero from '$components/tout-savoir-sur-le-bail-reel-solidaire-brs/hero/hero.svelte';
   import Promesse from '$components/tout-savoir-sur-le-bail-reel-solidaire-brs/promesse/promesse.svelte';
+  import PageCta from '$components/pageCta/pageCta.svelte';
 </script>
 
 <svelte:head>
@@ -65,6 +66,8 @@
         linkLabel="En savoir plus" />
     </div>
   </Section>
+
+  <PageCta />
 </div>
 
 <style lang="postcss">
