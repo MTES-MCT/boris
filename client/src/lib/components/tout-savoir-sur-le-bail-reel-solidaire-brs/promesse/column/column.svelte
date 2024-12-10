@@ -1,6 +1,6 @@
 <script lang="ts">
   import { default as Star } from '$assets/icons/star.svg?raw';
-  import type { Props } from '$lib/components/tout-savoir-sur-le-bail-reel-solidaire-brs/promesse/definitions';
+  import type { Props } from '$lib/components/tout-savoir-sur-le-bail-reel-solidaire-brs/promesse/column/definitions';
 
   export const { children }: Props = $props();
 </script>

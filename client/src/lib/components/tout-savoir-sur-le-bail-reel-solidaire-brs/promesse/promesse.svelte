@@ -1,5 +1,5 @@
 <script>
-  import Column from '$lib/components/tout-savoir-sur-le-bail-reel-solidaire-brs/promesse/column.svelte';
+  import Column from '$components/tout-savoir-sur-le-bail-reel-solidaire-brs/promesse/column/column.svelte';
 </script>
 
 <section class="fr-container promesse">
