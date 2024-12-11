@@ -42,6 +42,10 @@
     }
   }
 
+  .illustration {
+    display: none;
+  }
+
   @media (--xxs-viewport) {
     h1 {
       font-size: 2rem;

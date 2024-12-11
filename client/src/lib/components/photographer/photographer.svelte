@@ -10,6 +10,7 @@
 
 <style lang="postcss">
   span {
+    display: inherit;
     position: absolute;
     font-size: 0.75rem;
     background-color: rgba(255, 255, 255, 0.6);
