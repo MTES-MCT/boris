@@ -12,5 +12,7 @@ test.beforeAll(async () => {
 
 test('tout-savoir-sur-le-bail-reel-solidaire-brs page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
-  await expect(page.locator('h1')).toHaveText('Tout savoir sur le BRS');
+  await expect(page.locator('h1')).toHaveText(
+    "Qu'est ce que le  Bail Réel Solidaire ?",
+  );
 });
