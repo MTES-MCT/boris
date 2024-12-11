@@ -5,4 +5,5 @@ export type Props = {
   href: string;
   linkLabel: string;
   position: number;
+  isLast: boolean;
 };

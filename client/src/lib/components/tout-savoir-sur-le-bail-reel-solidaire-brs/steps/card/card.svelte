@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Props } from '$components/tout-savoir-sur-le-bail-reel-solidaire-brs/steps/card/definitions';
+  import { default as EndOfPath } from '$assets/icons/end-of-path.svg?raw';
 
   export const {
     illustration,
@@ -8,6 +9,7 @@
     href,
     linkLabel,
     position,
+    isLast,
   }: Props = $props();
 </script>
 
@@ -36,6 +38,12 @@
       </div>
     </div>
   </div>
+
+  {#if isLast}
+    <div class="end-of-path">
+      {@html EndOfPath}
+    </div>
+  {/if}
 </article>
 
 <style lang="postcss">
@@ -112,11 +120,17 @@
         padding-block-start: var(--3w);
       }
     }
+
+    .end-of-path {
+      margin-top: var(--2w);
+      margin-left: 3px;
+    }
   }
 
   @media (--md-viewport) {
     article {
       --illustration-max-height: 162px;
+      position: relative;
       margin: 0;
       max-width: 100%;
       display: flex;
@@ -162,6 +176,12 @@
             height: calc(50% - 32px);
           }
         }
+      }
+
+      .end-of-path {
+        position: absolute;
+        bottom: calc(-1 * var(--7w));
+        margin-left: 1px;
       }
     }
 

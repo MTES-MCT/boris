@@ -46,7 +46,8 @@
     illustration={BrsEtape5}
     linkLabel="Découvrez les spécificités pour l’après achat"
     href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-suis-chez-moi"
-    position={5} />
+    position={5}
+    isLast />
 </section>
 
 <style lang="postcss">
@@ -59,6 +60,7 @@
     @media (--md-viewport) {
       gap: 0;
       margin-block-start: var(--15w);
+      margin-block-end: var(--10w);
     }
   }
 </style>
