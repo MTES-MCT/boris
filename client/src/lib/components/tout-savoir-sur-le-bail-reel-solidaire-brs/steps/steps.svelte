@@ -57,6 +57,7 @@
     margin-block-start: var(--10w);
 
     @media (--md-viewport) {
+      gap: 0;
       margin-block-start: var(--15w);
     }
   }

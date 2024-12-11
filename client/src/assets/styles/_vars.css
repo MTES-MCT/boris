@@ -21,6 +21,7 @@
   --10w: calc(10 * var(--1w));
   --12w: calc(12 * var(--1w));
   --15w: calc(15 * var(--1w));
+  --16w: calc(16 * var(--1w));
   --19w: calc(19 * var(--1w));
   --26w: calc(26 * var(--1w));
   --30w: calc(30 * var(--1w));
