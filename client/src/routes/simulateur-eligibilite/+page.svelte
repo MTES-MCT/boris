@@ -1,8 +1,7 @@
 <script lang="ts">
   import type { Props } from './definitions';
   import { onMount } from 'svelte';
-  import Section from '$components/section/section.svelte';
-  import Data from '$components/simulateur-eligibilite/data.svelte';
+  import Hero from '$components/simulateur-eligibilite/hero/hero.svelte';
 
   const { data }: Props = $props();
 
@@ -23,26 +22,14 @@
   <title>Boris - Simuler mon éligibilité</title>
 </svelte:head>
 
-<Section
-  title="Simuler mon eligibilité"
-  titleElement="h1">
-  <p>
-    Voici BoRiS. En vous posant quelques questions, il pourra vous indiquer
-    votre éligibilité au Bail Réel Solidaire (BRS). Grâce à sa connaissance des
-    différents dispositifs, il vous aiguillera également vers d'autres outils ou
-    des aides vous concernant.
-  </p>
+<div class="background-gradient">
+  <Hero />
+
   <div
     id="landbot"
     class="fr-mt-3w fr-mt-md-6w background-alt-raised-grey">
   </div>
-</Section>
-
-<Section
-  id="tableau-ressources"
-  title="Plafonds de ressources d'éligibilité au BRS">
-  <Data />
-</Section>
+</div>
 
 <style lang="postcss">
   #landbot {
