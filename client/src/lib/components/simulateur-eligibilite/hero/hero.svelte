@@ -4,7 +4,7 @@
 
 <section class="fr-container">
   <h1>
-    Acec BoRiS, <br />
+    Avec BoRiS, <br />
     découvrez si vous êtes
     <br />
     éligible au
