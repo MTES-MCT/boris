@@ -13,6 +13,29 @@
       href="https://www.service-public.fr/simulateur/calcul/zonage-abc">
       Pour connaître votre zone
     </a>
+    <div class="fr-select-group fr-mt-3w">
+      <label
+        class="fr-label"
+        for="select">
+        A quelle catégorie de ménage appartenez-vous ?
+      </label>
+      <select
+        class="fr-select"
+        id="select"
+        name="select">
+        <option
+          value=""
+          selected
+          disabled
+          hidden>
+          Sélectionner votre catégorie de ménage
+        </option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+        <option value="4">Option 4</option>
+      </select>
+    </div>
   </div>
 </section>
 
@@ -30,6 +53,7 @@
     border-top-left-radius: var(--border-radius-lg);
     border-top-right-radius: var(--border-radius-lg);
     background-color: white;
+    transform-style: preserve-3d;
 
     &::before {
       content: '';
@@ -39,12 +63,30 @@
       height: var(--15w);
       width: var(--path-thickness);
       background-color: var(--color-blue-primary);
+      transform: translateZ(-2px);
     }
   }
 
   @media (--sm-viewport) {
     h3 {
       font-size: 1.5rem;
+    }
+
+    .content {
+      transform-style: preserve-3d;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: var(--3w);
+        right: var(--3w);
+        width: 100%;
+        height: 100%;
+        border-top-left-radius: var(--border-radius-lg);
+        border-top-right-radius: var(--border-radius-lg);
+        background-color: var(--color-teal-light);
+        transform: translateZ(-1px);
+      }
     }
   }
 </style>
