@@ -77,7 +77,7 @@
   .landbot {
     height: calc(75vh);
     border-radius: var(--border-radius-lg);
-    /* box-shadow: 0 12px 24px rgba(134, 144, 162, 0.35); */
+    box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
   }
 
   @media (--sm-viewport) {
