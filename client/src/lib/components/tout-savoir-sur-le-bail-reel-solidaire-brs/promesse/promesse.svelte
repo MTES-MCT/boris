@@ -28,13 +28,10 @@
       <Column>
         <p>
           <b>
-            En tant que propriétaire d'un logement en BRS, vous disposez de tous
-            les droits d'un·e propriétaire.
+            En tant que propriétaire d'un logement en BRS, bous pouvez notamment
+            revendre votre logement (avec une plus-value toutefois encadrée) ou
+            le transmettre à vos proches.
           </b>
-        </p>
-        <p>
-          Vous pouvez notamment revendre votre logement (avec une plus-value
-          toutefois encadrée) ou le transmettre à vos proches.
         </p>
         <p>
           Le dispositif se veut ainsi solidaire car il permet aux générations
