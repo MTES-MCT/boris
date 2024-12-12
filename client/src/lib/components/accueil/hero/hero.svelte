@@ -32,7 +32,7 @@
     flex-direction: column;
     justify-content: flex-start;
     padding-inline: var(--1w);
-    padding-block-start: var(--10w);
+    padding-block-start: var(--8w);
     padding-block-end: var(--26w);
     background-image: url('$assets/images/home-hero.jpg');
     background-size: cover;
@@ -149,7 +149,7 @@
       width: 50%;
       justify-content: center;
       align-items: flex-end;
-      padding-block-start: var(--10w);
+      padding-block-start: var(--15w);
       padding-block-end: var(--26w);
       padding-inline: 0;
       background: white;

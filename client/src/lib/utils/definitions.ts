@@ -150,13 +150,10 @@ export type BlogPost = {
 };
 
 export type EligibilityData = {
-  category: {
-    small: string;
-    long: string;
-  };
+  category: string;
+  value: number;
+  options: string[];
   zoneAandAbis: number;
   zoneB1: number;
   zoneB2andC: number;
-  content: string;
-  contentHtml?: string;
 };

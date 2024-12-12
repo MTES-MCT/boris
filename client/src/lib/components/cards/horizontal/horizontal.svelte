@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Photographer from '$components/photographer/photographer.svelte';
   import type { Props } from './definitions';
 
   const {
@@ -43,7 +44,9 @@
         src={imgSrc}
         alt="" />
       {#if photographer}
-        <span>Photo par {photographer}</span>
+        <Photographer
+          position="bottom-left"
+          {photographer} />
       {/if}
     </div>
   </div>

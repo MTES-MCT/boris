@@ -4,6 +4,7 @@
   --color-red-light: #ffeded;
   --color-blue-primary: #3917b3;
   --color-blue-light: #ececfe;
+  --color-blue-deep: #f5f5fe;
   --color-teal-primary: #60e0eb;
   --color-teal-light: #e5fbfd;
 
@@ -20,6 +21,7 @@
   --9w: calc(9 * var(--1w));
   --10w: calc(10 * var(--1w));
   --12w: calc(12 * var(--1w));
+  --13w: calc(13 * var(--1w));
   --15w: calc(15 * var(--1w));
   --16w: calc(16 * var(--1w));
   --19w: calc(19 * var(--1w));
