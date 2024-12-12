@@ -75,13 +75,14 @@
   }
 
   .landbot {
-    height: calc(100vh - var(--12w));
-    border-radius: var(--border-radius-sm);
+    height: calc(75vh);
+    border-radius: var(--border-radius-lg);
+    /* box-shadow: 0 12px 24px rgba(134, 144, 162, 0.35); */
   }
 
   @media (--sm-viewport) {
     section {
-      transform: translateY(calc(-1 * var(--13w)));
+      margin-block-start: calc(-1 * var(--13w));
     }
 
     h2 {
