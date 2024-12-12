@@ -2,7 +2,7 @@
   import { eligibilityData } from '$lib/utils/constants';
   import Grid from '$lib/components/simulateur-eligibilite/simulator/grid.svelte';
 
-  let value = $state<number | undefined>(2);
+  let value = $state<number | undefined>(undefined);
 </script>
 
 <section class="fr-container">
