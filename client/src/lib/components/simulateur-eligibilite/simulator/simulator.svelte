@@ -1,3 +1,10 @@
+<script lang="ts">
+  import { eligibilityData } from '$lib/utils/constants';
+  import Grid from '$lib/components/simulateur-eligibilite/simulator/grid.svelte';
+
+  let value = $state<number | undefined>(2);
+</script>
+
 <section class="fr-container">
   <div class="content">
     <h3>Les plafonds de ressources d’éligibilité au Bail Réel Solidaire.</h3>
@@ -22,7 +29,8 @@
       <select
         class="fr-select"
         id="select"
-        name="select">
+        name="select"
+        bind:value>
         <option
           value=""
           selected
@@ -30,12 +38,22 @@
           hidden>
           Sélectionner votre catégorie de ménage
         </option>
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
-        <option value="4">Option 4</option>
+        {#each eligibilityData as eligibility}
+          {#each eligibility.options as option}
+            <option value={eligibility.value}>
+              {`${eligibility.category} - ${option}`}
+            </option>
+          {/each}
+          {#if eligibility.options.length === 0}
+            <option value={eligibility.value}>{eligibility.category}</option>
+          {/if}
+        {/each}
       </select>
     </div>
+
+    {#if value}
+      <Grid {value} />
+    {/if}
   </div>
 </section>
 
@@ -54,6 +72,7 @@
     border-top-right-radius: var(--border-radius-lg);
     background-color: white;
     transform-style: preserve-3d;
+    z-index: 2;
 
     &::before {
       content: '';
