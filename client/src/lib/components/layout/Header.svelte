@@ -168,6 +168,15 @@
               Le blog
             </a>
           </li>
+          <li class="fr-nav__item">
+            <a
+              class="fr-nav__link"
+              href="/notre-mission"
+              aria-current={pathname === '/notre-mission'}
+              target="_self">
+              Notre mission
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
