@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Hero from '$components/tout-savoir-sur-le-bail-reel-solidaire-brs/hero/hero.svelte';
-  import Promesse from '$components/tout-savoir-sur-le-bail-reel-solidaire-brs/promesse/promesse.svelte';
-  import PageCta from '$components/pageCta/pageCta.svelte';
-  import Steps from '$components/tout-savoir-sur-le-bail-reel-solidaire-brs/steps/steps.svelte';
+  import Hero from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/Hero.svelte';
+  import Promesse from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/Promesses.svelte';
+  import Steps from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/Steps.svelte';
+  import PageCta from '$components/common/PageCta.svelte';
 </script>
 
 <svelte:head>

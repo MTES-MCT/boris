@@ -1,9 +1,9 @@
 <script lang="ts">
-  import PageCta from '$components/pageCta/pageCta.svelte';
-  import Hero from '$components/accueil/hero/hero.svelte';
-  import Infos from '$components/accueil/infos/infos.svelte';
-  import Promesse from '$components/accueil/promesse/promesse.svelte';
-  import Verbatims from '$components/accueil/verbatims/verbatims.svelte';
+  import PageCta from '$components/common/PageCta.svelte';
+  import Hero from '$components/pages/accueil/Hero.svelte';
+  import Infos from '$components/pages/accueil/Infos.svelte';
+  import Promesse from '$components/pages/accueil/Promesses.svelte';
+  import Verbatims from '$components/pages/accueil/Verbatims.svelte';
 </script>
 
 <svelte:head>

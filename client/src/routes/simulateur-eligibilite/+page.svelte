@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { Props } from './definitions';
-  import Hero from '$components/simulateur-eligibilite/hero/hero.svelte';
-  import Chatbot from '$components/simulateur-eligibilite/chatbot/chatbot.svelte';
-  import Simulator from '$components/simulateur-eligibilite/simulator/simulator.svelte';
-  import PageCta from '$components/pageCta/pageCta.svelte';
+  import Hero from '$components/pages/simulateur-eligibilite/Hero.svelte';
+  import Chatbot from '$components/pages/simulateur-eligibilite/Chatbot.svelte';
+  import Simulator from '$components/pages/simulateur-eligibilite/Simulator.svelte';
+  import PageCta from '$components/common/PageCta.svelte';
 
   const { data }: Props = $props();
 </script>
