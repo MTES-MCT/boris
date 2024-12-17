@@ -12,10 +12,12 @@
   import Header from '$components/header/header.svelte';
   import Footer from '$components/footer/footer.svelte';
   import GoogleAnalytics from '$components/google-analytics/googleAnalytics.svelte';
+  import Favicon from '$components/Favicon.svelte';
 
   const { children }: { children: Snippet } = $props();
 </script>
 
+<Favicon />
 <GoogleAnalytics />
 
 <Header />
@@ -25,13 +27,3 @@
 </main>
 
 <Footer />
-
-<style lang="postcss">
-  main {
-    gap: var(--3w);
-
-    @media (--sm-viewport) {
-      gap: var(--4w);
-    }
-  }
-</style>
