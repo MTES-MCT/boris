@@ -173,3 +173,11 @@
     </div>
   </div>
 </header>
+
+<style lang="postcss">
+  @media (--xxs-viewport) {
+    .fr-header__operator {
+      padding-inline: var(--5w);
+    }
+  }
+</style>

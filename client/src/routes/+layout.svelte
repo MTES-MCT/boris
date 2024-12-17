@@ -9,7 +9,7 @@
     await import('@gouvfr/dsfr/dist/dsfr.module.min');
   });
 
-  import Header from '$components/header/header.svelte';
+  import Header from '$components/Header.svelte';
   import Footer from '$components/footer/footer.svelte';
   import GoogleAnalytics from '$components/google-analytics/googleAnalytics.svelte';
   import Favicon from '$components/Favicon.svelte';
