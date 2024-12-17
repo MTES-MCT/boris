@@ -1,20 +1,20 @@
 <script lang="ts">
   import type { Props } from './definitions';
-  import Section from '$components/section/section.svelte';
+  import Section from '$components/common/Section.svelte';
 
   const { data }: Props = $props();
-  const { blogPost } = data;
+  const { article } = data;
 </script>
 
 <svelte:head>
-  <title>{blogPost.title}</title>
+  <title>{article.title}</title>
 </svelte:head>
 
 <Section
-  title={blogPost.title}
+  title={article.title}
   titleElement="h1">
-  {#if blogPost.body}
-    {#each blogPost.body as { type, value }}
+  {#if article.body}
+    {#each article.body as { type, value }}
       {#if type === 'paragraph'}
         {@html value}
       {:else if type === 'image'}

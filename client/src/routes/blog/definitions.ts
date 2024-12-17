@@ -1,7 +1,7 @@
-import type { BlogPost } from '$lib/utils/definitions';
+import type { Article } from '$lib/utils/definitions';
 
 export type Data = {
-  blogPosts: BlogPost[];
+  articles: Article[];
 };
 
 export type Props = {

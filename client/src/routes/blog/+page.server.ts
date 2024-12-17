@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { PUBLIC_BORIS_CMS_URL } from '$env/static/public';
-import type { BlogPost, WagtailApiItemsResponse } from '$lib/utils/definitions';
+import type { Article, WagtailApiItemsResponse } from '$lib/utils/definitions';
 import type { Data } from './definitions';
 
 export const load: PageServerLoad = async ({ fetch }): Promise<Data> => {
@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ fetch }): Promise<Data> => {
   );
   const data: WagtailApiItemsResponse = await response.json();
 
-  const blogPosts: BlogPost[] = data.items.map((item) => ({
+  const articles: Article[] = data.items.map((item) => ({
     title: item.title,
     description: item.meta.search_description,
     firstPublishedAt: item.meta.first_published_at,
@@ -17,6 +17,6 @@ export const load: PageServerLoad = async ({ fetch }): Promise<Data> => {
   }));
 
   return {
-    blogPosts,
+    articles,
   };
 };
