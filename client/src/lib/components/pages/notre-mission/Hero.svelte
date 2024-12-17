@@ -46,3 +46,9 @@
     !
   </p>
 </Section>
+
+<style lang="postcss">
+  a {
+    color: var(--color-blue-primary);
+  }
+</style>
