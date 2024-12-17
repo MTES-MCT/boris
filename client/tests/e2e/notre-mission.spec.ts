@@ -12,5 +12,7 @@ test.beforeAll(async () => {
 
 test('notre-mission page has expected h1', async () => {
   await expect(page.locator('h1')).toBeVisible();
-  await expect(page.locator('h1')).toHaveText('Notre mission');
+  await expect(page.locator('h1')).toHaveText(
+    'Ensemble,  facilitons l’accès à la propriété  pour tous·tes.',
+  );
 });
