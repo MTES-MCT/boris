@@ -24,14 +24,14 @@
             <li>
               <a
                 class="fr-footer__top-link"
-                href="/notre-demarche">
-                Notre démarche
+                href="/notre-mission">
+                Notre mission
               </a>
             </li>
             <li>
               <a
                 class="fr-footer__top-link"
-                href="/statistiques">
+                href="/notre-mission#statistiques">
                 Statistiques
               </a>
             </li>

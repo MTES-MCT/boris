@@ -10,54 +10,60 @@
 </script>
 
 <Section>
-  <div class="card-container">
-    <HorizontalCard
-      title="Accédez à une information qualifiée."
-      content="Le Bail Réel Solidaire (BRS) est un dispositif permettant à des ménages ne pouvant plus acheter dans le marché libre de devenir propriétaire. Il dispose de nombreux avantages mais aussi beaucoup de particularités à connaître. BoRiS vous propose des renseignements officiels et travaillés de sorte à rendre la propriété accessibles pour tous·tes."
-      href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
-      imgSrc={card1}
-      photograph="David Hellmann"
-      linkLabel="Découvrir le BRS et débuter mon parcours"
-      style="border-bottom-left-radius: var(--border-radius-md);" />
-  </div>
-
-  <div class="card-container">
-    <div class="border-box"></div>
-    <div class="mascotte">
-      {@html MascotteThinking}
+  <div class="content">
+    <div class="card-container">
+      <HorizontalCard
+        title="Accédez à une information qualifiée."
+        content="Le Bail Réel Solidaire (BRS) est un dispositif permettant à des ménages ne pouvant plus acheter dans le marché libre de devenir propriétaire. Il dispose de nombreux avantages mais aussi beaucoup de particularités à connaître. BoRiS vous propose des renseignements officiels et travaillés de sorte à rendre la propriété accessibles pour tous·tes."
+        href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
+        imgSrc={card1}
+        photograph="David Hellmann"
+        linkLabel="Découvrir le BRS et débuter mon parcours"
+        style="border-bottom-left-radius: var(--border-radius-md);" />
     </div>
-    <HorizontalCard
-      title="Vérifiez si vous êtes éligibles !"
-      content="BoRiS vous accompagne notamment grâce à son simulateur. Découvrez maintenant si vous pouvez prétendre au dispositif !"
-      href="/simulateur-eligibilite"
-      imgSrc={card2}
-      photograph="Julian Bock"
-      linkLabel="Vérifier mon éligibilité"
-      style="border-bottom-right-radius: var(--border-radius-md)"
-      reversed />
-  </div>
 
-  <div class="card-container">
-    <div class="border-box"></div>
-    <HorizontalCard
-      title="BoRiS vous met en relation avec des organismes dans votre zone de recherche."
-      content="BoRiS est en lien avec les Organismes de Foncier Solidaires (OFS) agréés par l’Etat qui font construire des logements en BRS et présentent actuellement des programmes en cours de commercialisation."
-      href="/organismes-fonciers-solidaires"
-      imgSrc={card3}
-      photograph="Hannah Busing"
-      linkLabel="Trouvez votre logement en BRS"
-      style="border-bottom-left-radius: var(--border-radius-md);" />
-  </div>
-
-  <div class="end">
-    <div class="mascotte">
-      {@html MascotteCelebrating}
+    <div class="card-container">
+      <div class="border-box"></div>
+      <div class="mascotte">
+        {@html MascotteThinking}
+      </div>
+      <HorizontalCard
+        title="Vérifiez si vous êtes éligibles !"
+        content="BoRiS vous accompagne notamment grâce à son simulateur. Découvrez maintenant si vous pouvez prétendre au dispositif !"
+        href="/simulateur-eligibilite"
+        imgSrc={card2}
+        photograph="Julian Bock"
+        linkLabel="Vérifier mon éligibilité"
+        style="border-bottom-right-radius: var(--border-radius-md)"
+        reversed />
     </div>
-    {@html EndOfPath}
+
+    <div class="card-container">
+      <div class="border-box"></div>
+      <HorizontalCard
+        title="BoRiS vous met en relation avec des organismes dans votre zone de recherche."
+        content="BoRiS est en lien avec les Organismes de Foncier Solidaires (OFS) agréés par l’Etat qui font construire des logements en BRS et présentent actuellement des programmes en cours de commercialisation."
+        href="/organismes-fonciers-solidaires"
+        imgSrc={card3}
+        photograph="Hannah Busing"
+        linkLabel="Trouvez votre logement en BRS"
+        style="border-bottom-left-radius: var(--border-radius-md);" />
+    </div>
+
+    <div class="end">
+      <div class="mascotte">
+        {@html MascotteCelebrating}
+      </div>
+      {@html EndOfPath}
+    </div>
   </div>
 </Section>
 
 <style lang="postcss">
+  .content {
+    margin-block-start: var(--5w);
+  }
+
   .card-container {
     --absolute-inline-offset: calc(-1 * var(--path-thickness));
 
@@ -177,6 +183,12 @@
       position: absolute;
       top: var(--5w);
       left: calc(50% + var(--2w));
+    }
+  }
+
+  @media (--md-viewport) {
+    .content {
+      margin-block-start: var(--8w);
     }
   }
 </style>

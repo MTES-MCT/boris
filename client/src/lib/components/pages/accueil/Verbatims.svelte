@@ -4,7 +4,7 @@
   <div class="fr-container">
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="fr-col-12 fr-col-md-4">
-        <div class="column">
+        <div class="column fr-background-default--grey">
           <div>
             <div class="icon">
               <span
@@ -24,7 +24,7 @@
       </div>
 
       <div class="fr-col-12 fr-col-md-4">
-        <div class="column">
+        <div class="column fr-background-default--grey">
           <div>
             <div class="icon">
               <span
@@ -43,7 +43,7 @@
       </div>
 
       <div class="fr-col-12 fr-col-md-4">
-        <div class="column">
+        <div class="column fr-background-default--grey">
           <div>
             <div class="icon">
               <span
@@ -76,7 +76,6 @@
     justify-content: space-between;
     height: 100%;
     border-radius: var(--border-radius-lg);
-    background-color: white;
     padding: var(--5w);
   }
 

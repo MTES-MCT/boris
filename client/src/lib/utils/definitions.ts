@@ -43,3 +43,9 @@ export type EligibilityData = {
   zoneB1: number;
   zoneB2andC: number;
 };
+
+export type Statistic = {
+  number: number;
+  subtitle: string;
+  content: string;
+};

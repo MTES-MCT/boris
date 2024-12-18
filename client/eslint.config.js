@@ -13,7 +13,7 @@ export default tseslint.config(
   {
     rules: {
       'svelte/valid-compile': 'warn',
-      'svelte/no-at-html-tags': 'warn',
+      'svelte/no-at-html-tags': 'off',
     },
     languageOptions: {
       globals: {

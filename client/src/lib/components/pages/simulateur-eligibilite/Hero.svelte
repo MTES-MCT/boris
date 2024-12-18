@@ -29,8 +29,6 @@
   h1 {
     width: 100%;
     display: inline-block;
-    border-top-right-radius: var(--border-radius-md);
-    border-top-left-radius: var(--border-radius-md);
     font-size: 1.5rem;
     line-height: 2rem;
 

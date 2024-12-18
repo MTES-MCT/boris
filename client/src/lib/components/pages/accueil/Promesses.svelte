@@ -1,10 +1,10 @@
 <script>
   import Section from '$components/common/Section.svelte';
-  import { default as MascotteWaving } from '$assets/icons/mascotte-waving.svg?raw';
+  import Disclaimer from '$components/common/Disclaimer.svelte';
 </script>
 
 <Section>
-  <div class="fr-container">
+  <div class="fr-container fr-background-default--grey">
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="column fr-col-12 fr-col-md-6 fr-col-lg-3">
         <div>
@@ -86,20 +86,7 @@
     </div>
   </div>
 
-  <div class="disclaimer">
-    <div class="mascotte-waving">
-      {@html MascotteWaving}
-    </div>
-    <p class="brand">
-      <span>B</span>
-      <span>o</span>
-      <span>R</span>
-      <span>i</span>
-      <span>S</span>
-    </p>
-
-    <p>la clef pour devenir propriétaire en BRS.</p>
-  </div>
+  <Disclaimer content="la clef pour devenir propriétaire en BRS." />
 </Section>
 
 <style lang="postcss">
@@ -108,7 +95,6 @@
     max-width: 400px;
     margin-block-start: calc(-1 * var(--19w));
     margin-block-end: var(--12w);
-    background-color: white;
     border-radius: var(--border-radius-sm);
     border: solid 1px var(--color-blue-primary);
     padding-block: var(--2w);
@@ -152,42 +138,6 @@
     }
   }
 
-  .disclaimer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-block-end: var(--5w);
-
-    .mascotte-waving {
-      position: absolute;
-      width: 82px;
-      top: -50px;
-      left: calc(50%);
-    }
-
-    .brand {
-      display: inline-block;
-      font-size: 2rem;
-      padding-block: var(--1w);
-      padding-inline: var(--2w);
-      background-color: var(--color-red-primary);
-      margin: 0;
-      font-weight: normal;
-
-      span:nth-child(odd) {
-        font-weight: 900;
-      }
-    }
-
-    p {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-top: var(--1v);
-    }
-  }
-
   @media (--sm-viewport) {
     .fr-container {
       max-width: 576px;
@@ -195,12 +145,6 @@
 
     .column {
       margin-block: var(--3w);
-    }
-
-    .disclaimer {
-      p {
-        font-size: 1.5rem;
-      }
     }
   }
 
@@ -216,14 +160,6 @@
 
     .column {
       margin-block: var(--5w);
-    }
-
-    .disclaimer {
-      margin-block-end: var(--8w);
-
-      p {
-        font-size: 2rem;
-      }
     }
   }
 </style>

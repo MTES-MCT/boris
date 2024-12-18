@@ -1,4 +1,4 @@
-import type { EligibilityData } from './definitions';
+import type { EligibilityData, Statistic } from '$lib/utils/definitions';
 
 export const eligibilityData: EligibilityData[] = [
   {
@@ -76,5 +76,29 @@ export const eligibilityData: EligibilityData[] = [
     zoneAandAbis: 13116,
     zoneB1: 12005,
     zoneB2andC: 9368,
+  },
+];
+
+export const statistics: Statistic[] = [
+  {
+    number: 600,
+    subtitle: 'simulations',
+    content: 'dont 87% concernent des ménages éligibles dans toute la France.',
+  },
+  {
+    number: 200,
+    subtitle: 'mises en relation avec des ménages intéressés',
+    content:
+      'dont 66% qui ne connaissaient pas le BRS avant. 45% en région PACA / 20% en région IDF / 10% dans le 69 et le 74 / 25% dilués dans le reste de la France.',
+  },
+  {
+    number: 90,
+    subtitle: 'échanges téléphoniques',
+    content: '',
+  },
+  {
+    number: 20,
+    subtitle: 'ménages en chemin vers l’accession',
+    content: '',
   },
 ];
