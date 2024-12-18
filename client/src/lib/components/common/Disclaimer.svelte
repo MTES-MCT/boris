@@ -30,13 +30,13 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-block-end: var(--5w);
+    padding-block-start: 52px;
 
     .mascotte {
       position: absolute;
       width: 82px;
-      top: -50px;
-      left: calc(50%);
+      top: 0px;
+      left: 50%;
     }
 
     .brand {
@@ -70,8 +70,6 @@
 
   @media (--md-viewport) {
     .disclaimer {
-      margin-block-end: var(--8w);
-
       p {
         font-size: 2rem;
       }
