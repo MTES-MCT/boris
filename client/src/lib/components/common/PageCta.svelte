@@ -11,7 +11,6 @@
       {@html MascotteShowing}
     </div>
   </div>
-  <!-- <div class="border-top-left"></div> -->
   <div class="fr-container">
     <div class="content">
       <h3>
@@ -27,7 +26,6 @@
       </button>
     </div>
   </div>
-  <!-- <div class="border-top-right"></div> -->
   <div class="border-bottom-left"></div>
 </section>
 

@@ -6,7 +6,7 @@
 </script>
 
 <section class="fr-container">
-  <div class="content">
+  <div class="content rounded-box-lg">
     <h3>Les plafonds de ressources d’éligibilité au Bail Réel Solidaire.</h3>
     <p>
       Les plafonds en vigueur depuis janvier 2024 sont définis à partir de votre
@@ -68,8 +68,6 @@
     max-width: 588px;
     margin: var(--15w) auto var(--10w) auto;
     padding: 24px;
-    border-top-left-radius: var(--border-radius-lg);
-    border-top-right-radius: var(--border-radius-lg);
     background-color: white;
     transform-style: preserve-3d;
     z-index: 2;
@@ -101,8 +99,7 @@
         right: var(--3w);
         width: 100%;
         height: 100%;
-        border-top-left-radius: var(--border-radius-lg);
-        border-top-right-radius: var(--border-radius-lg);
+        border-radius: inherit;
         background-color: var(--color-teal-light);
         transform: translateZ(-1px);
       }

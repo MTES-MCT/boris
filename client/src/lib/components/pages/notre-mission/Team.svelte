@@ -13,7 +13,7 @@
 
   <div class="fr-grid-row fr-grid-row--gutters">
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content">
+      <div class="content rounded-box-md fr-background-default--grey">
         <div class="picture">
           <img
             src={alizee}
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content">
+      <div class="content rounded-box-md fr-background-default--grey">
         <div class="picture">
           <img
             src={arthur}
@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content">
+      <div class="content rounded-box-md fr-background-default--grey">
         <div class="picture">
           <img
             src={benoit}
@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content">
+      <div class="content rounded-box-md fr-background-default--grey">
         <div class="picture">
           <img
             src={nathan}
@@ -103,12 +103,8 @@
   .content {
     position: relative;
     display: flex;
-    height: 128px;
     align-items: center;
-    display: flex;
-    background-color: white;
-    border-top-left-radius: var(--border-radius-md);
-    border-top-right-radius: var(--border-radius-md);
+    height: 128px;
     overflow: hidden;
   }
 
