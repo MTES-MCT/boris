@@ -5,7 +5,7 @@
   import { statistics } from '$lib/utils/constants';
 </script>
 
-<Section>
+<Section id="statistiques">
   <div class="content rounded-box-md fr-background-default--grey">
     <Disclaimer content="en chiffres clés" />
 
