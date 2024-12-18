@@ -11,7 +11,9 @@ import type {
 export const formatOFSs = (OFSs: OFS[]): Region[] => {
   const regions: Region[] = [];
 
-  const regionNames = [...new Set(OFSs.map((ofs) => ofs.region))];
+  const regionNames = [
+    ...new Set(OFSs.map((ofs) => ofs.region.split(', ')).flat()),
+  ];
 
   regionNames.forEach((regionName) => {
     let totalOFSsInRegion = 0;
@@ -22,8 +24,8 @@ export const formatOFSs = (OFSs: OFS[]): Region[] => {
     // const departements: Departement[] = [];
     // ---------------------------------------
 
-    const regionnalOFSs: OFS[] = OFSs.filter(
-      (ofs) => ofs.region === regionName,
+    const regionnalOFSs: OFS[] = OFSs.filter((ofs) =>
+      ofs.region.includes(regionName),
     );
 
     // ---------------------------------------
