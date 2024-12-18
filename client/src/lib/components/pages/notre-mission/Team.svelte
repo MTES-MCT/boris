@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content">
+      <div class="content rounded-box-md fr-background-default--grey">
         <div class="picture">
           <img
             src={mathieu}
@@ -78,7 +78,7 @@
       </div>
     </div>
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content">
+      <div class="content rounded-box-md fr-background-default--grey">
         <div class="picture">
           <img
             src={amandine}
