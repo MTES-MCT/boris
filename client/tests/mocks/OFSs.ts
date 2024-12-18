@@ -36,6 +36,14 @@ export const OFSs: OFS[] = [
     telephone: '123456789',
     commercialisateur: 'commercialisateur',
   },
+  {
+    nom: 'OFS5',
+    region: 'Ile de france, bretagne',
+    departements: 'Paris, Seinte saint Denis',
+    lien: 'https://ofs.random',
+    telephone: '123456789',
+    commercialisateur: 'commercialisateur',
+  },
 ];
 // ---------------------------------------
 
@@ -59,8 +67,16 @@ export const expectedResult = [
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
       },
+      {
+        nom: 'OFS5',
+        region: 'Ile de france, bretagne',
+        departements: 'Paris, Seinte saint Denis',
+        lien: 'https://ofs.random',
+        telephone: '123456789',
+        commercialisateur: 'commercialisateur',
+      },
     ],
-    totalOFSs: 2,
+    totalOFSs: 3,
   },
   {
     name: 'Ile de france',
@@ -81,8 +97,16 @@ export const expectedResult = [
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
       },
+      {
+        nom: 'OFS5',
+        region: 'Ile de france, bretagne',
+        departements: 'Paris, Seinte saint Denis',
+        lien: 'https://ofs.random',
+        telephone: '123456789',
+        commercialisateur: 'commercialisateur',
+      },
     ],
-    totalOFSs: 2,
+    totalOFSs: 3,
   },
 ];
 
