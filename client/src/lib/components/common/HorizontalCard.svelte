@@ -89,7 +89,6 @@
   .fr-card__body {
     height: auto;
     align-items: flex-end;
-    background-color: white;
 
     .fr-card__content {
       order: 0;

@@ -4,7 +4,7 @@
 </script>
 
 <Section>
-  <div class="fr-container">
+  <div class="fr-container fr-background-default--grey">
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="column fr-col-12 fr-col-md-6 fr-col-lg-3">
         <div>
@@ -95,7 +95,6 @@
     max-width: 400px;
     margin-block-start: calc(-1 * var(--19w));
     margin-block-end: var(--12w);
-    background-color: white;
     border-radius: var(--border-radius-sm);
     border: solid 1px var(--color-blue-primary);
     padding-block: var(--2w);

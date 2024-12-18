@@ -22,7 +22,7 @@
 </script>
 
 <section class="fr-container">
-  <div class="disclaimer rounded-box-lg">
+  <div class="disclaimer rounded-box-lg fr-background-default--grey">
     <div class="mascotte">
       {@html MascotteWaving}
     </div>
@@ -51,7 +51,6 @@
     margin: 0 auto;
     margin-block-end: var(--10w);
     padding: 24px;
-    background-color: white;
 
     &::after {
       content: '';

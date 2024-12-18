@@ -1,6 +1,6 @@
 <section class="hero">
   <div class="column text-container">
-    <div class="title">
+    <div class="title fr-background-default--grey">
       <h1>
         Acheter son logement
         <br />
@@ -11,7 +11,7 @@
       </h2>
     </div>
 
-    <div class="cta">
+    <div class="cta fr-background-default--grey">
       <p>
         <strong>87% des ménages</strong>
         sont éligibles.
@@ -76,7 +76,6 @@
       padding-inline-start: var(--1w);
       padding-inline-end: var(--4w);
       clip-path: var(--clip-path-home-title);
-      background-color: white;
     }
 
     .cta {
@@ -84,7 +83,6 @@
       margin-block-start: var(--9w);
       margin-inline-end: var(--3w);
       display: inline-block;
-      background: white;
       padding: var(--2w);
       border-radius: var(--1w);
 
@@ -153,6 +151,7 @@
       padding-block-end: var(--26w);
       padding-inline: 0;
       background: white;
+      background-image: none;
       border-right: solid var(--path-thickness) var(--color-blue-primary);
 
       .title {

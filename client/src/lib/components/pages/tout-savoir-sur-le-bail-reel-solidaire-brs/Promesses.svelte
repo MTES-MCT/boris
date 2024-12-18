@@ -3,7 +3,7 @@
 </script>
 
 <section class="fr-container promesse">
-  <div class="content rounded-box-md">
+  <div class="content rounded-box-md fr-background-default--grey">
     <h2>Le BRS en 3 points clés.</h2>
 
     <div class="fr-grid-row fr-grid-row--gutters">
@@ -76,7 +76,6 @@
       padding-block-start: var(--7w);
       padding-block-end: var(--3w);
       padding-inline: var(--2w);
-      background-color: white;
 
       h2 {
         font-size: 1.5rem;
