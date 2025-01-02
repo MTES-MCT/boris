@@ -1,6 +1,15 @@
 @import url('./_vars.css');
 @import url('./_icons.css');
 
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}
+
+ul {
+  list-style: none;
+}
+
 .background-gradient {
   background: linear-gradient(
     180deg,
