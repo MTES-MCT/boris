@@ -105,6 +105,7 @@
     ul {
       padding: var(--3w) 0;
       margin: 0;
+      list-style: none;
     }
 
     li {

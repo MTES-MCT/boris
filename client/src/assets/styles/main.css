@@ -3,11 +3,6 @@
 
 html {
   scroll-behavior: smooth;
-  scrollbar-gutter: stable;
-}
-
-ul {
-  list-style: none;
 }
 
 .background-gradient {
