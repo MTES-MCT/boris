@@ -49,3 +49,9 @@ export type Statistic = {
   subtitle: string;
   content: string;
 };
+
+export type StepSection = {
+  id: string;
+  title: string;
+  content: string;
+};

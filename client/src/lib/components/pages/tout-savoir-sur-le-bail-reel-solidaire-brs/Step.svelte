@@ -39,6 +39,7 @@
           </h3>
           <p>{content}</p>
           <a
+            rel="noopener"
             class="fr-link fr-icon-arrow-right-line fr-link--icon-right"
             {href}>
             {linkLabel}
