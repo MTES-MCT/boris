@@ -33,3 +33,5 @@ logs
 *.log
 
 .idea/
+
+.talismanrc
