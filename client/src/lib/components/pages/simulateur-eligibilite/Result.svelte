@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Tooltip from '$components/common/Tooltip.svelte';
   import { eligibilityData } from '$lib/utils/constants';
   import type { EligibilityData } from '$lib/utils/definitions';
   import { formatEuro } from '$lib/utils/formatters';
@@ -19,6 +20,12 @@
   });
 </script>
 
+<div class="category">
+  <h5 class="fr-mb-0">Catégorie 1</h5>
+  <Tooltip>
+    <p>hello</p>
+  </Tooltip>
+</div>
 <div class="grid">
   <div class="row">
     <p class="zone fr-mb-0"><b>Zones A et Abis</b></p>
@@ -52,23 +59,46 @@
   }
 
   p {
-    padding: var(--1w) 0;
     text-align: center;
     font-size: 0.875rem;
   }
 
+  .category {
+    background-color: var(--color-blue-deep);
+    padding: var(--1w) 0;
+    margin-block-end: var(--1v);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--2w);
+  }
+
+  h5 {
+    display: inline;
+    text-align: center;
+  }
+
   .zone {
     background-color: var(--color-blue-deep);
+    padding: var(--1w) 0;
   }
 
   .value {
     background-color: var(--grey-975-75);
+    padding: var(--1w) 0;
   }
 
   @media (--xxs-viewport) {
     p {
-      padding: var(--1w) var(--2w);
       font-size: 1rem;
+    }
+
+    .zone {
+      padding: var(--1w) var(--2w);
+    }
+
+    .value {
+      padding: var(--1w) var(--2w);
     }
   }
 
