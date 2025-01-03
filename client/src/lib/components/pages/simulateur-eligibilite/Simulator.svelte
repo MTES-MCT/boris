@@ -7,7 +7,9 @@
 
 <section class="fr-container">
   <div class="content rounded-box-lg fr-background-default--grey">
-    <h3>Les plafonds de ressources d’éligibilité au Bail Réel Solidaire.</h3>
+    <h4 aria-level="3">
+      Les plafonds de ressources d’éligibilité au Bail Réel Solidaire.
+    </h4>
     <p>
       Les plafonds en vigueur depuis janvier 2024 sont définis à partir de votre
       catégorie de ménage et la zone de votre futur bien. Elle correspond à la
@@ -58,8 +60,7 @@
 </section>
 
 <style lang="postcss">
-  h3 {
-    font-size: 1.25rem;
+  h4 {
     color: var(--color-blue-primary);
   }
 
@@ -84,10 +85,6 @@
   }
 
   @media (--sm-viewport) {
-    h3 {
-      font-size: 1.5rem;
-    }
-
     .content {
       transform-style: preserve-3d;
 

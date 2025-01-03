@@ -49,11 +49,9 @@
           title="Retour à l’accueil du site - Boris (ministère chargé du logement)">
           <p class="fr-logo">
             Ministère <br />
+            chargé
+            <br />
             du logement
-            <br />
-            et de la rénovation
-            <br />
-            urbaine
           </p>
         </a>
       </div>

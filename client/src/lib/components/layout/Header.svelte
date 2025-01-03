@@ -20,11 +20,9 @@
             <div class="fr-header__logo">
               <p class="fr-logo">
                 Ministère <br />
+                chargé
+                <br />
                 du logement
-                <br />
-                et de la rénovation
-                <br />
-                urbaine
               </p>
             </div>
             <div class="fr-header__operator">
@@ -43,7 +41,7 @@
           <div class="fr-header__service">
             <a
               href="/"
-              title="Accueil - Boris - Ministère du logement et de la rénovation urbaine">
+              title="Accueil - Boris - Ministère chargé du logement">
               <p class="fr-header__service-title">BoRiS</p>
             </a>
             <p class="fr-header__service-tagline">

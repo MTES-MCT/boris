@@ -11,11 +11,11 @@
   titleElement="h1">
   <p>Dernière mise à jour : 14/12/2023</p>
   <p>
-    Bienvenue sur la plateforme BoRiS ("BoRiS"), un service fourni par Le
-    ministère du logement. La présente Politique de Confidentialité a pour
-    objectif de vous informer sur la manière dont nous collectons, utilisons,
-    partageons et protégeons vos informations lors de votre utilisation de
-    BoRiS.
+    Bienvenue sur la plateforme BoRiS ("BoRiS"), un service fourni par le
+    ministère chargé du logement. La présente Politique de Confidentialité a
+    pour objectif de vous informer sur la manière dont nous collectons,
+    utilisons, partageons et protégeons vos informations lors de votre
+    utilisation de BoRiS.
   </p>
 
   <h2>Informations collectées</h2>

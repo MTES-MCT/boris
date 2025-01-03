@@ -10,8 +10,8 @@
   title="Conditions générales d'utilisation"
   titleElement="h1">
   <p>
-    Bienvenue sur BoRiS, une plateforme en ligne fournie par le Ministère du
-    Logement. En accédant ou en utilisant notre site web, vous acceptez les
+    Bienvenue sur BoRiS, une plateforme en ligne fournie par le Ministère chargé
+    du Logement. En accédant ou en utilisant notre site web, vous acceptez les
     termes et conditions énoncés ci-dessous.
   </p>
 
@@ -50,7 +50,7 @@
 
   <h2>Propriété intellectuelle</h2>
   <p>
-    Ce site est la propriété exclusive du Ministère du Logement. Toute
+    Ce site est la propriété exclusive du Ministère chargé du Logement. Toute
     reproduction ou représentation, qu'elle soit totale ou partielle, de ce site
     sans l'autorisation expresse du propriétaire est strictement interdite et
     constituerait une violation des dispositions de l’article L. 335-2 du Code
