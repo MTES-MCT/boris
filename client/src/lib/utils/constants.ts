@@ -2,7 +2,7 @@ import type { EligibilityData, Statistic } from '$lib/utils/definitions';
 
 export const eligibilityData: EligibilityData[] = [
   {
-    category: 'Cat 1',
+    category: 'Catégorie 1',
     value: 1,
     options: ['1 seule personne'],
     zoneAandAbis: 38508,
@@ -10,7 +10,7 @@ export const eligibilityData: EligibilityData[] = [
     zoneB2andC: 33479,
   },
   {
-    category: 'Cat 2',
+    category: 'Catégorie 2',
     value: 2,
     options: [
       '2 personnes ne comportant aucune personne à charge hors jeunes ménages',
@@ -21,7 +21,7 @@ export const eligibilityData: EligibilityData[] = [
     zoneB2andC: 44710,
   },
   {
-    category: 'Cat 3',
+    category: 'Catégorie 3',
     value: 3,
     options: [
       '3 personnes',
@@ -34,7 +34,7 @@ export const eligibilityData: EligibilityData[] = [
     zoneB2andC: 53766,
   },
   {
-    category: 'Cat 4',
+    category: 'Catégorie 4',
     value: 4,
     options: [
       '4 personnes',
@@ -46,7 +46,7 @@ export const eligibilityData: EligibilityData[] = [
     zoneB2andC: 64910,
   },
   {
-    category: 'Cat 5',
+    category: 'Catégorie 5',
     value: 5,
     options: [
       '5 personnes',
@@ -58,7 +58,7 @@ export const eligibilityData: EligibilityData[] = [
     zoneB2andC: 76357,
   },
   {
-    category: 'Cat 6',
+    category: 'Catégorie 6',
     value: 6,
     options: [
       '6 personnes',
