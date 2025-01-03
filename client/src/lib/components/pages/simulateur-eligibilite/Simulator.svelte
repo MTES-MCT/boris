@@ -1,8 +1,5 @@
 <script lang="ts">
-  import { eligibilityData } from '$lib/utils/constants';
-  import Result from '$components/pages/simulateur-eligibilite/Result.svelte';
-
-  let value = $state<number | undefined>(undefined);
+  import Data from '$components/pages/simulateur-eligibilite/Data.svelte';
 </script>
 
 <section class="fr-container">
@@ -13,7 +10,7 @@
         Les plafonds de ressources d’éligibilité au Bail Réel Solidaire.
       </h4>
       <p>
-        Les plafonds en vigueur depuis janvier 2024 sont définis à partir de
+        Les plafonds en vigueur depuis janvier 2025 sont définis à partir de
         votre catégorie de ménage et la zone de votre futur bien. Elle
         correspond à la tension immobilière, du plus tendu où les prix sont les
         plus haut, Abis, au moins tendu, C.
@@ -24,40 +21,10 @@
         href="https://www.service-public.fr/simulateur/calcul/zonage-abc">
         Pour connaître votre zone
       </a>
-      <div class="fr-select-group fr-mt-3w">
-        <label
-          class="fr-label"
-          for="select">
-          A quelle catégorie de ménage appartenez-vous ?
-        </label>
-        <select
-          class="fr-select"
-          id="select"
-          name="select"
-          bind:value>
-          <option
-            value=""
-            selected
-            disabled
-            hidden>
-            Sélectionner votre catégorie de ménage
-          </option>
-          {#each eligibilityData as eligibility}
-            {#each eligibility.options as option}
-              <option value={eligibility.value}>
-                {`${eligibility.category} - ${option}`}
-              </option>
-            {/each}
-            {#if eligibility.options.length === 0}
-              <option value={eligibility.value}>{eligibility.category}</option>
-            {/if}
-          {/each}
-        </select>
-      </div>
+      <p></p>
+      <p>A quelle catégorie de ménage appartenez-vous ?</p>
 
-      {#if value}
-        <Result {value} />
-      {/if}
+      <Data />
     </div>
   </div>
 </section>
