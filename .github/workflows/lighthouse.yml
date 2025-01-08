@@ -21,5 +21,4 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build -w client
-      - run: npm run preview -w client
-      - run: npm run lighthouse -w client
+      - run: npm run preview -w client & npm run lighthouse -w client
