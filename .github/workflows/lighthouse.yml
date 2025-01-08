@@ -23,18 +23,6 @@ jobs:
       - run: npm ci
       - run: npm run build -w client
       - run: npm run preview -w client & npm run lighthouse -w client
-      - name: pwd
-        if: always()
-        run: pwd
-      - name: ls -la
-        if: always()
-        run: ls -la
-      - name: ls -la client/
-        if: always()
-        run: ls -la client/
-      - name: ls -la client/.lighthouseci/
-        if: always()
-        run: ls -la client/.lighthouseci/
       - name: Upload Lighthouse Report
         if: always()
         uses: actions/upload-artifact@v4
