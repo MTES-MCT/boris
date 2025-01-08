@@ -63,11 +63,7 @@
       </aside>
 
       <section class="fr-col-12 fr-col-md-9 content">
-        <h3
-          aria-level="1"
-          class="fr-mb-0">
-          {title}
-        </h3>
+        <h1 class="fr-h3 fr-mb-0">{title}</h1>
 
         {@render nav(sections, 'fr-col-12 fr-unhidden fr-hidden-md')}
 
