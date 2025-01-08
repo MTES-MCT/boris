@@ -114,7 +114,7 @@
   }
 
   @media (--md-viewport) {
-    h3 {
+    .heading {
       margin-block: var(--10w);
     }
 
