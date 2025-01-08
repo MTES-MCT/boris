@@ -87,3 +87,12 @@ export const formatEuro = (amount: number) => {
     .replace(/\u202f/g, ' ')
     .replace(/\u00a0/g, ' ');
 };
+
+export const formatPublishedAt = (date: string) => {
+  const formattedDate = new Intl.DateTimeFormat('fr-FR', {
+    dateStyle: 'long',
+    timeStyle: 'short',
+  }).format(new Date(date));
+
+  return `Publié le ${formattedDate}`;
+};

@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Props } from './definitions';
   import Section from '$components/common/Section.svelte';
+  import { formatPublishedAt } from '$lib/utils/formatters';
 
   const { data }: Props = $props();
   const { article } = data;
@@ -13,6 +14,9 @@
 <Section
   title={article.title}
   titleElement="h1">
+  <p class="fr-card__detail fr-icon-calendar-2-line">
+    {formatPublishedAt(article.firstPublishedAt)}
+  </p>
   {#if article.body}
     {#each article.body as { type, value }}
       {#if type === 'paragraph'}
@@ -29,5 +33,11 @@
 <style>
   img {
     max-width: 100%;
+  }
+
+  .fr-card__detail {
+    display: flex;
+    align-items: center;
+    margin-block-end: var(--3w);
   }
 </style>

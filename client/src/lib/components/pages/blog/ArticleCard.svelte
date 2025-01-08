@@ -1,13 +1,9 @@
 <script lang="ts">
   import type { Article } from '$lib/utils/definitions';
+  import { formatPublishedAt } from '$lib/utils/formatters';
   type Props = Article;
 
   const { title, description, firstPublishedAt, slug }: Props = $props();
-
-  const publishedAt = new Intl.DateTimeFormat('fr-FR', {
-    dateStyle: 'long',
-    timeStyle: 'short',
-  }).format(new Date(firstPublishedAt));
 </script>
 
 <div class="fr-card fr-enlarge-link">
@@ -19,7 +15,7 @@
       <p class="fr-card__desc">{description}</p>
       <div class="fr-card__end">
         <p class="fr-card__detail fr-icon-calendar-2-line">
-          Publié le {publishedAt}
+          {formatPublishedAt(firstPublishedAt)}
         </p>
       </div>
     </div>
