@@ -29,6 +29,12 @@ jobs:
       - name: ls -la
         if: always()
         run: ls -la
+      - name: ls -la client/
+        if: always()
+        run: ls -la client/
+      - name: ls -la client/.lighthouseci/
+        if: always()
+        run: ls -la client/.lighthouseci/
       - name: Upload Lighthouse Report
         if: always()
         uses: actions/upload-artifact@v4
