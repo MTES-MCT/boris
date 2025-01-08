@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Props } from './definitions';
   import Section from '$components/common/Section.svelte';
-  import BlogPost from '$components/common/ArticleCard.svelte';
+  import ArticleCard from '$components/pages/blog/ArticleCard.svelte';
 
   const { data }: Props = $props();
 </script>
@@ -16,7 +16,7 @@
   <div class="fr-grid-row fr-grid-row--gutters">
     {#each data.articles as { title, description, firstPublishedAt, slug }}
       <div class="fr-col-12 fr-col-md-6">
-        <BlogPost
+        <ArticleCard
           {title}
           {description}
           {slug}

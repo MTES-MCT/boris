@@ -30,7 +30,7 @@
         {@html illustration}
       </div>
       <div class="content">
-        <div class="position">
+        <div class="position color-blue-primary">
           <span><b>{position}</b></span>
         </div>
         <div class="text">
@@ -98,7 +98,6 @@
         justify-content: center;
         border-radius: 20px;
         border: solid 2px var(--color-blue-primary);
-        color: var(--color-blue-primary);
 
         &::before,
         &::after {

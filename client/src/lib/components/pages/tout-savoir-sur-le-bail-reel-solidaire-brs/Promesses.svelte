@@ -4,7 +4,7 @@
 
 <section class="fr-container promesse">
   <div class="content rounded-box-md fr-background-default--grey">
-    <h2>Le BRS en 3 points clés.</h2>
+    <h2 class="color-blue-primary">Le BRS en 3 points clés.</h2>
 
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="fr-col-12 fr-col-lg-4 column">
@@ -80,7 +80,6 @@
       h2 {
         font-size: 1.5rem;
         text-align: center;
-        color: var(--color-blue-primary);
         margin-block-end: var(--6w);
       }
     }

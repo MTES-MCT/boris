@@ -9,7 +9,7 @@
 </script>
 
 <Section>
-  <h3 aria-level="2">L’équipe derrière BoRiS.</h3>
+  <h2 class="fr-h3 heading color-blue-primary">L’équipe derrière BoRiS.</h2>
 
   <div class="fr-grid-row fr-grid-row--gutters">
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
@@ -94,8 +94,7 @@
 </Section>
 
 <style lang="postcss">
-  h3 {
-    color: var(--color-blue-primary);
+  .heading {
     text-align: center;
     margin-block-end: var(--5w);
   }
@@ -136,7 +135,7 @@
   }
 
   @media (--md-viewport) {
-    h3 {
+    .heading {
       margin-block-end: var(--10w);
     }
   }

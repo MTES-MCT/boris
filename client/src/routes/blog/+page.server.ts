@@ -20,3 +20,5 @@ export const load: PageServerLoad = async ({ fetch }): Promise<Data> => {
     articles,
   };
 };
+
+export const prerender = false;

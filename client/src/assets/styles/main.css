@@ -22,3 +22,7 @@ html {
   border-top-left-radius: var(--border-radius-lg);
   border-top-right-radius: var(--border-radius-lg);
 }
+
+.color-blue-primary {
+  color: var(--color-blue-primary);
+}

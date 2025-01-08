@@ -3,7 +3,9 @@
 </script>
 
 <Section>
-  <h3 aria-level="2">Les grandes étapes de notre projet.</h3>
+  <h2 class="fr-h3 heading color-blue-primary">
+    Les grandes étapes de notre projet.
+  </h2>
 
   <div class="grid">
     <div class="column">
@@ -64,8 +66,7 @@
 </Section>
 
 <style lang="postcss">
-  h3 {
-    color: var(--color-blue-primary);
+  .heading {
     text-align: center;
     margin-block: var(--5w);
   }
@@ -113,7 +114,7 @@
   }
 
   @media (--md-viewport) {
-    h3 {
+    .heading {
       margin-block: var(--10w);
     }
 
