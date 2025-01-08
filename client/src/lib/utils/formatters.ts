@@ -92,6 +92,7 @@ export const formatPublishedAt = (date: string) => {
   const formattedDate = new Intl.DateTimeFormat('fr-FR', {
     dateStyle: 'long',
     timeStyle: 'short',
+    timeZone: 'Europe/Paris',
   }).format(new Date(date));
 
   return `Publié le ${formattedDate}`;
