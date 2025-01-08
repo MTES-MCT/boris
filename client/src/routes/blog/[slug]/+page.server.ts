@@ -47,3 +47,5 @@ export const load: PageServerLoad = async ({
     article,
   };
 };
+
+export const prerender = false;
