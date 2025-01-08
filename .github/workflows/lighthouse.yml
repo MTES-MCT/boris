@@ -22,3 +22,9 @@ jobs:
       - run: npm ci
       - run: npm run build -w client
       - run: npm run preview -w client & npm run lighthouse -w client
+
+      - name: Upload Lighthouse Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: lighthouse-report
+          path: './.lighthouseci/*'
