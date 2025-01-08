@@ -40,4 +40,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-report-${{ matrix.runs-on }}
-          path: 'client/.lighthouseci/'
+          path: '${{ github.workspace }}/client/.lighthouseci/'
