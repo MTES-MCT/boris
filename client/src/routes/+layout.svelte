@@ -10,13 +10,13 @@
   import Footer from '$components/layout/Footer.svelte';
   import Analytics from '$components/layout/Analytics.svelte';
 
+  type Props = { children: Snippet };
+  const { children }: Props = $props();
+
   onMount(async () => {
     // @ts-expect-error: no declaration file
     await import('@gouvfr/dsfr/dist/dsfr.module.min');
   });
-
-  type Props = { children: Snippet };
-  const { children }: Props = $props();
 </script>
 
 <Favicon />
@@ -24,7 +24,7 @@
 
 <Header />
 
-<main>
+<main id="main">
   {@render children()}
 </main>
 

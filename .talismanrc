@@ -31,3 +31,8 @@ fileignoreconfig:
 - filename: client/src/routes/tout-savoir-sur-le-BRS/je-decouvre-le-dispositif/+page.svelte
   checksum: ace9ada5a101d07062663b1b6440623e25d8cea32b3fe79a6dae0b1f9f1a0070
 version: ""
+
+fileignoreconfig:
+- filename: client/src/routes/tout-savoir-sur-le-bail-reel-solidaire-brs/(etapes)/je-decouvre-le-dispositif/content.ts
+  checksum: 29b885be0c304ce70930fdfbfc81c1635173f6e9da538a0bb568ab82e0814d69
+version: ""
