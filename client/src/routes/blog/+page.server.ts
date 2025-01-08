@@ -1,9 +1,9 @@
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 import { PUBLIC_BORIS_CMS_URL } from '$env/static/public';
 import type { Article, WagtailApiItemsResponse } from '$lib/utils/definitions';
 import type { Data } from './definitions';
 
-export const load: PageLoad = async ({ fetch }): Promise<Data> => {
+export const load: PageServerLoad = async ({ fetch }): Promise<Data> => {
   const response = await fetch(
     `${PUBLIC_BORIS_CMS_URL}/api/v2/pages?type=blog.BlogEntryPage&fields=*,-body&order=-first_published_at`,
   );
@@ -20,3 +20,5 @@ export const load: PageLoad = async ({ fetch }): Promise<Data> => {
     articles,
   };
 };
+
+export const prerender = false;
