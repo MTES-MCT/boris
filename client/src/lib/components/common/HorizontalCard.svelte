@@ -40,7 +40,7 @@
       </h3>
       <p class="fr-card__desc">{content}</p>
     </div>
-    <span class="cta">
+    <span class="cta color-blue-primary">
       {linkLabel}
       <span
         class="fr-icon-arrow-right-line"
@@ -100,23 +100,12 @@
     margin-block-end: 2rem;
     font-size: 0.875rem;
     font-weight: 400;
-    color: var(--color-blue-primary);
     text-decoration: underline;
 
     span {
       &::before {
         --icon-size: 1rem;
       }
-    }
-  }
-
-  .fr-card__img {
-    span {
-      position: absolute;
-      bottom: var(--1w);
-      left: var(--1w);
-      font-size: 0.75rem;
-      color: black;
     }
   }
 

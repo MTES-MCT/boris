@@ -6,9 +6,9 @@
   <div class="wrapper">
     <div class="blue-overlay rounded-box-lg"></div>
     <div class="content rounded-box-lg fr-background-default--grey">
-      <h4 aria-level="3">
+      <h3 class="fr-h4 heading color-blue-primary">
         Les plafonds de ressources d’éligibilité au Bail Réel Solidaire.
-      </h4>
+      </h3>
       <p>
         Les plafonds en vigueur depuis janvier 2025 sont définis à partir de
         votre catégorie de ménage et la zone de votre futur bien. Elle
@@ -30,10 +30,6 @@
 </section>
 
 <style lang="postcss">
-  h4 {
-    color: var(--color-blue-primary);
-  }
-
   .wrapper {
     position: relative;
     max-width: 588px;

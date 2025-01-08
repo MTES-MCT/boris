@@ -39,16 +39,12 @@
   </p>
 
   <p>
-    Vous constatez une erreur ? Vous avez un conseil ? N'hésitez pas à <a
+    Vous constatez une erreur ? Vous avez un conseil ? N'hésitez pas à
+    <a
+      class="color-blue-primary"
       href="/nous-contacter">
       nous contacter
     </a>
     !
   </p>
 </Section>
-
-<style lang="postcss">
-  a {
-    color: var(--color-blue-primary);
-  }
-</style>

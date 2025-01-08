@@ -20,7 +20,7 @@
 {#snippet stat({ number, subtitle, content }: Statistic)}
   <li>
     <div class="numbers">
-      <h2 aria-level="3">{number}</h2>
+      <h3 class="fr-h2 fr-mb-0 heading">{number}</h3>
       <p class="fr-mb-0 subtitle"><b>{subtitle}</b></p>
     </div>
     <p class="text">{content}</p>
@@ -34,7 +34,7 @@
     padding: var(--2w);
   }
 
-  h2 {
+  .heading {
     margin: 0;
     display: inline;
     margin-inline-end: var(--1w);
@@ -69,7 +69,11 @@
       align-items: center;
     }
 
-    h2,
+    .heading {
+      margin-inline-end: 0;
+      display: block;
+    }
+
     .subtitle {
       display: block;
     }

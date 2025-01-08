@@ -10,7 +10,7 @@
         <div>
           <div class="icon">
             <span
-              class="fr-icon-community-line"
+              class="fr-icon-community-line color-blue-primary"
               aria-hidden="true">
             </span>
           </div>
@@ -30,7 +30,7 @@
         <div>
           <div class="icon">
             <span
-              class="fr-icon-france-line"
+              class="fr-icon-france-line color-blue-primary"
               aria-hidden="true">
             </span>
           </div>
@@ -49,7 +49,7 @@
         <div>
           <div class="icon">
             <span
-              class="fr-icon-sofa-line"
+              class="fr-icon-sofa-line color-blue-primary"
               aria-hidden="true">
             </span>
           </div>
@@ -68,7 +68,7 @@
         <div>
           <div class="icon">
             <span
-              class="fr-icon-service-line"
+              class="fr-icon-service-line color-blue-primary"
               aria-hidden="true">
             </span>
           </div>
@@ -121,10 +121,6 @@
     align-items: center;
     height: var(--5w);
     margin-bottom: var(--2w);
-
-    span {
-      color: var(--color-blue-primary);
-    }
 
     &::before {
       content: '';

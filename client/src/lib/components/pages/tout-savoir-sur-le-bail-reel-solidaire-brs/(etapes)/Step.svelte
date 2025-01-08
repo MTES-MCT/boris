@@ -9,7 +9,7 @@
 </script>
 
 <article {id}>
-  <h5 aria-level="3">{title}</h5>
+  <h3 class="fr-h5 heading">{title}</h3>
   {@html content}
 </article>
 
@@ -23,7 +23,7 @@
     }
   }
 
-  h5 {
+  .heading {
     padding-block-start: var(--5w);
   }
 
@@ -32,7 +32,7 @@
       padding-block-end: var(--4w);
     }
 
-    h5 {
+    .heading {
       padding-block-start: var(--6w);
     }
   }
