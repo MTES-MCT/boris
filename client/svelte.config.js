@@ -18,6 +18,17 @@ const config = {
       $routes: 'src/routes',
       $tests: 'tests/',
     },
+    prerender: {
+      handleHttpError: ({ path, message }) => {
+        // ignore deliberate link to shiny 404 page
+        if (path.includes('/blog')) {
+          return;
+        }
+
+        // otherwise fail the build
+        throw new Error(message);
+      },
+    },
   },
   onwarn: (warning, handler) => {
     if (warning.code === 'a11y_no_redundant_roles') return;
