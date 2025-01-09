@@ -45,7 +45,7 @@ export type EligibilityData = {
 };
 
 export type Statistic = {
-  number: number;
+  amount: string;
   subtitle: string;
   content: string;
 };
