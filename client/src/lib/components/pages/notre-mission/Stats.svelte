@@ -17,10 +17,10 @@
   </div>
 </Section>
 
-{#snippet stat({ number, subtitle, content }: Statistic)}
+{#snippet stat({ amount, subtitle, content }: Statistic)}
   <li>
     <div class="numbers">
-      <h3 class="fr-h2 fr-mb-0 heading">{number}</h3>
+      <h3 class="fr-h2 fr-mb-0 heading">{amount}</h3>
       <p class="fr-mb-0 subtitle"><b>{subtitle}</b></p>
     </div>
     <p class="text">{content}</p>
@@ -29,7 +29,7 @@
 
 <style lang="postcss">
   .content {
-    max-width: 792px;
+    max-width: 768px;
     margin: 0 auto;
     padding: var(--2w);
   }
@@ -43,6 +43,7 @@
   ul {
     margin: 0;
     padding: 0;
+    list-style: none;
   }
 
   .subtitle {

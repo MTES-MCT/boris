@@ -81,24 +81,24 @@ export const eligibilityData: EligibilityData[] = [
 
 export const statistics: Statistic[] = [
   {
-    number: 600,
-    subtitle: 'simulations',
-    content: 'dont 87% concernent des ménages éligibles dans toute la France.',
-  },
-  {
-    number: 200,
-    subtitle: 'mises en relation avec des ménages intéressés',
-    content:
-      'dont 66% qui ne connaissaient pas le BRS avant. 45% en région PACA / 20% en région IDF / 10% dans le 69 et le 74 / 25% dilués dans le reste de la France.',
-  },
-  {
-    number: 90,
-    subtitle: 'échanges téléphoniques',
+    amount: '199 000 €',
+    subtitle: 'd’argent public investi sur notre plateforme.',
     content: '',
   },
   {
-    number: 20,
-    subtitle: 'ménages en chemin vers l’accession',
+    amount: '4 750',
+    subtitle: 'simulations',
+    content: 'dont 75% concernent des ménages éligibles.',
+  },
+  {
+    amount: '1 275',
+    subtitle: 'ménages recontactés',
+    content:
+      'après simulation d’éligibilité pour avoir les clés de la poursuite de leur projets (dont 61% ne connaissait pas le BRS avant BoRiS)',
+  },
+  {
+    amount: '40',
+    subtitle: 'organismes de foncier solidaire partenaires',
     content: '',
   },
 ];
