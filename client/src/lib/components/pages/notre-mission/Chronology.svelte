@@ -38,7 +38,7 @@
     </div>
     <div class="column">
       <div class="content">
-        <p class="date">Aout 2024 - Aujourd’hui</p>
+        <p class="date">Août 2024 - Aujourd’hui</p>
         <p class="title"><b>Phase d’accélération</b></p>
         <p>
           Notre équipe s’est renforcée avec l’arrivée de notre chargée de
