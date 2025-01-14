@@ -70,11 +70,6 @@
     gap: var(--2w);
   }
 
-  h5 {
-    display: inline;
-    text-align: center;
-  }
-
   .zone {
     border: solid 2px var(--color-blue-deep);
     padding: var(--1w) 0;
