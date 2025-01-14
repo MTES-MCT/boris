@@ -7,6 +7,10 @@
   const { regions } = data;
 </script>
 
+<svelte:head>
+  <title>Organismes Foncier Solidaires - Boris</title>
+</svelte:head>
+
 <Section
   title="Voici la liste des Organismes Foncier Solidaires (OFS) répertoriés par région"
   titleElement="h1">

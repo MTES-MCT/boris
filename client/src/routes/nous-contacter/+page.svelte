@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Boris - Nous contacter</title>
+  <title>Nous contacter - Boris</title>
 </svelte:head>
 
 <Section

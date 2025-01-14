@@ -3,6 +3,10 @@
   import { sections } from './content';
 </script>
 
+<svelte:head>
+  <title>Je découvre le dispositif - Boris</title>
+</svelte:head>
+
 <div class="background-gradient">
   <Page
     title="Je découvre le dispositif"

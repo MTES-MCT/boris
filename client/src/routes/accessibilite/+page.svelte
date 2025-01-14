@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Boris - Accessibilité</title>
+  <title>Accessibilité - Boris</title>
 </svelte:head>
 
 <Section

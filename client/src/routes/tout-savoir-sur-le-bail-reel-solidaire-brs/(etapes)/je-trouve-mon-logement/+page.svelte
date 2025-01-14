@@ -3,6 +3,10 @@
   import { sections } from './content';
 </script>
 
+<svelte:head>
+  <title>Je trouve mon logement - Boris</title>
+</svelte:head>
+
 <div class="background-gradient">
   <Page
     title="Je trouve mon logement"

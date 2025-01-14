@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Boris - Conditions générales d'utilisation</title>
+  <title>Conditions générales d'utilisation - Blog</title>
 </svelte:head>
 
 <Section

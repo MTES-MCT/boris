@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-  <title>Boris - Blog</title>
+  <title>Blog - Boris</title>
 </svelte:head>
 
 <Section

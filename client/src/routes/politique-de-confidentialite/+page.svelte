@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Boris - Politique de confidentialité</title>
+  <title>Politique de confidentialité - Boris</title>
 </svelte:head>
 
 <Section
