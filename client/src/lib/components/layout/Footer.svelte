@@ -1,6 +1,6 @@
 <footer
   class="fr-footer"
-  role="contentinfo">
+  id="footer">
   <div class="fr-footer__top">
     <div class="fr-container">
       <div class="fr-grid-row fr-grid-row--start fr-grid-row--gutters">

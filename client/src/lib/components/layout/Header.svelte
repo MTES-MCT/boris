@@ -10,8 +10,8 @@
 </script>
 
 <header
-  role="banner"
-  class="fr-header">
+  class="fr-header"
+  id="header">
   <div class="fr-header__body">
     <div class="fr-container">
       <div class="fr-header__body-row">
