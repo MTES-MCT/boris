@@ -18,8 +18,7 @@
         href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
         imgSrc={card1}
         photograph="David Hellmann"
-        linkLabel="Découvrir le BRS et débuter mon parcours"
-        style="border-bottom-left-radius: var(--border-radius-md);" />
+        linkLabel="Découvrir le BRS et débuter mon parcours" />
     </div>
 
     <div class="card-container">
@@ -34,7 +33,6 @@
         imgSrc={card2}
         photograph="Julian Bock"
         linkLabel="Vérifier mon éligibilité"
-        style="border-bottom-right-radius: var(--border-radius-md)"
         reversed />
     </div>
 
@@ -46,8 +44,7 @@
         href="/organismes-fonciers-solidaires"
         imgSrc={card3}
         photograph="Hannah Busing"
-        linkLabel="Trouvez votre logement en BRS"
-        style="border-bottom-left-radius: var(--border-radius-md);" />
+        linkLabel="Trouvez votre logement en BRS" />
     </div>
 
     <div class="end">
