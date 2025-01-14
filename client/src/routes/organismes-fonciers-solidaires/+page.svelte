@@ -41,7 +41,9 @@
     {#each regions as region}
       {@const regionLabel = `${region.name} (${region.totalOFSs})`}
 
-      <Accordion label={regionLabel}>
+      <Accordion
+        label={regionLabel}
+        labelElement="h2">
         <!-- --------------------------------------- 
         TEMPORAIRE: À SUPPRIMER QUAND NOUS AURONS TOUS LES DEPARTEMENTS
         --------------------------------------- -->

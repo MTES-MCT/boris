@@ -19,10 +19,10 @@
 
 {#snippet stat({ amount, subtitle, content }: Statistic)}
   <li>
-    <div class="numbers">
-      <h3 class="fr-h2 fr-mb-0 heading">{amount}</h3>
-      <p class="fr-mb-0 subtitle"><b>{subtitle}</b></p>
-    </div>
+    <h3 class="numbers fr-mb-0">
+      <span class="fr-h2 fr-mb-0 heading">{amount}</span>
+      <span class="fr-text--md fr-mb-0 subtitle"><b>{subtitle}</b></span>
+    </h3>
     <p class="text">{content}</p>
   </li>
 {/snippet}
