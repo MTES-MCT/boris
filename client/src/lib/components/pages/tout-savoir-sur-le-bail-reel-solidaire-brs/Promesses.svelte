@@ -3,7 +3,7 @@
 </script>
 
 <section class="fr-container promesse">
-  <div class="content rounded-box-md fr-background-default--grey">
+  <div class="content rounded-box-md background-color-white">
     <h2 class="color-blue-primary">Le BRS en 3 points clés.</h2>
 
     <div class="fr-grid-row fr-grid-row--gutters">

@@ -1,6 +1,25 @@
 <script lang="ts">
+  import '@gouvfr/dsfr/dist/component/link/link.main.min.css';
+  import '@gouvfr/dsfr/dist/component/button/button.min.css';
+  import '@gouvfr/dsfr/dist/component/logo/logo.min.css';
+  import '@gouvfr/dsfr/dist/component/navigation/navigation.min.css';
+  import '@gouvfr/dsfr/dist/component/modal/modal.min.css';
+  import '@gouvfr/dsfr/dist/component/header/header.min.css';
+
+  onMount(async () => {
+    // @ts-expect-error: no declaration file
+    await import('@gouvfr/dsfr/dist/core/core.module.min');
+    await import(
+      // @ts-expect-error: no declaration file
+      '@gouvfr/dsfr/dist/component/navigation/navigation.module.min'
+    );
+    // @ts-expect-error: no declaration file
+    await import('@gouvfr/dsfr/dist/component/modal/modal.module.min.js');
+  });
+
   import { page } from '$app/stores';
   import { default as Logo } from '$assets/illustrations/logo.svg?raw';
+  import { onMount } from 'svelte';
 
   let pathname = $state($page.url.pathname);
 

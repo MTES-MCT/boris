@@ -6,7 +6,7 @@
 </script>
 
 <Section id="statistiques">
-  <div class="content rounded-box-md fr-background-default--grey">
+  <div class="content rounded-box-md background-color-white">
     <Disclaimer content="en chiffres clés" />
 
     <ul>

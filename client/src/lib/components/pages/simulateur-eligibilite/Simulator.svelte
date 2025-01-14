@@ -5,7 +5,7 @@
 <section class="fr-container">
   <div class="wrapper">
     <div class="blue-overlay rounded-box-lg"></div>
-    <div class="content rounded-box-lg fr-background-default--grey">
+    <div class="content rounded-box-lg background-color-white">
       <h3 class="fr-h4 heading color-blue-primary">
         Les plafonds de ressources d’éligibilité au Bail Réel Solidaire.
       </h3>
