@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-  <title>Boris - Simuler mon éligibilité</title>
+  <title>Simuler mon éligibilité - Boris</title>
 </svelte:head>
 
 <div class="background-gradient">

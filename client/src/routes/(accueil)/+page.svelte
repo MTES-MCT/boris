@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-  <title>Boris - Page d'accueil</title>
+  <title>Accueil - Boris</title>
 </svelte:head>
 
 <Hero />

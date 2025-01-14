@@ -9,9 +9,9 @@
 <div class="fr-card fr-enlarge-link">
   <div class="fr-card__body">
     <div class="fr-card__content">
-      <h3 class="fr-card__title">
+      <h2 class="fr-card__title">
         <a href={`/blog/${slug}`}>{title}</a>
-      </h3>
+      </h2>
       <p class="fr-card__desc">{description}</p>
       <div class="fr-card__end">
         <p class="fr-card__detail fr-icon-calendar-2-line">

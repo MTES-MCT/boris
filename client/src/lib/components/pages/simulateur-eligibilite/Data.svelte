@@ -6,7 +6,7 @@
 
 {#each eligibilityData as data}
   <div class="category">
-    <h5 class="fr-mb-0">{data.category}</h5>
+    <h4 class="fr-mb-0">{data.category}</h4>
     {#if data.options.length}
       <Tooltip>
         <ul>
@@ -68,11 +68,6 @@
     justify-content: center;
     align-items: center;
     gap: var(--2w);
-  }
-
-  h5 {
-    display: inline;
-    text-align: center;
   }
 
   .zone {

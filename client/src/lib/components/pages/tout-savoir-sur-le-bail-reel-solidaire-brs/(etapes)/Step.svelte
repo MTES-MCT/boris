@@ -9,7 +9,7 @@
 </script>
 
 <article {id}>
-  <h3 class="fr-h5 heading">{title}</h3>
+  <h2 class="fr-h5 heading">{title}</h2>
   {@html content}
 </article>
 

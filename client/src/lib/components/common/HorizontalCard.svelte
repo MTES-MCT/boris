@@ -20,14 +20,12 @@
     photograph = '',
     linkLabel,
     href,
-    style = '',
     reversed = false,
     id,
   }: Props = $props();
 </script>
 
 <div
-  {style}
   {id}
   class="fr-card fr-enlarge-link fr-card--horizontal fr-card--horizontal-half fr-card--no-border"
   class:reversed>
@@ -56,7 +54,7 @@
         alt="" />
       {#if photograph}
         <Photograph
-          position="bottom-left"
+          position={reversed ? 'bottom-left' : 'bottom-right'}
           {photograph} />
       {/if}
     </div>
@@ -65,13 +63,20 @@
 
 <style lang="postcss">
   .fr-card {
-    overflow: hidden;
+    background-color: transparent;
+
+    .fr-card__body {
+      overflow: hidden;
+      border-bottom-left-radius: var(--border-radius-md);
+    }
 
     &.reversed {
       flex-direction: column;
 
       .fr-card__body {
         align-items: flex-start;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: var(--border-radius-md);
       }
 
       @media (--sm-viewport) {
@@ -89,6 +94,7 @@
   .fr-card__body {
     height: auto;
     align-items: flex-end;
+    background-color: white;
 
     .fr-card__content {
       order: 0;
@@ -105,6 +111,30 @@
     span {
       &::before {
         --icon-size: 1rem;
+      }
+    }
+  }
+
+  @media (--sm-viewport) {
+    .fr-card {
+      .fr-card__header {
+        overflow: hidden;
+        border-bottom-left-radius: var(--border-radius-md);
+      }
+
+      .fr-card__body {
+        border-bottom-left-radius: 0;
+      }
+
+      &.reversed {
+        .fr-card__header {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: var(--border-radius-md);
+        }
+
+        .fr-card__body {
+          border-bottom-right-radius: 0;
+        }
       }
     }
   }

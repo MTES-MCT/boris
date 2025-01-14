@@ -75,7 +75,7 @@
   }
 
   .landbot {
-    height: calc(75vh);
+    height: calc(90vh);
     border-radius: var(--border-radius-lg);
     box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
   }

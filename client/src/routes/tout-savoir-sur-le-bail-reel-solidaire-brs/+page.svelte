@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-  <title>Boris - Tout savoir sur le BRS</title>
+  <title>Tout savoir sur le BRS - Boris</title>
 </svelte:head>
 
 <div class="background-gradient">

@@ -9,6 +9,7 @@
   import Header from '$components/layout/Header.svelte';
   import Footer from '$components/layout/Footer.svelte';
   import Analytics from '$components/layout/Analytics.svelte';
+  import SkipLinks from '$components/common/SkipLinks.svelte';
 
   type Props = { children: Snippet };
   const { children }: Props = $props();
@@ -21,7 +22,7 @@
 
 <Favicon />
 <Analytics />
-
+<SkipLinks />
 <Header />
 
 <main id="main">

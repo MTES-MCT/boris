@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Boris - Mentions légales</title>
+  <title>Mentions légales - Boris</title>
 </svelte:head>
 
 <Section

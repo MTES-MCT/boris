@@ -7,6 +7,10 @@
   const { regions } = data;
 </script>
 
+<svelte:head>
+  <title>Organismes Foncier Solidaires - Boris</title>
+</svelte:head>
+
 <Section
   title="Voici la liste des Organismes Foncier Solidaires (OFS) répertoriés par région"
   titleElement="h1">
@@ -37,7 +41,9 @@
     {#each regions as region}
       {@const regionLabel = `${region.name} (${region.totalOFSs})`}
 
-      <Accordion label={regionLabel}>
+      <Accordion
+        label={regionLabel}
+        labelElement="h2">
         <!-- --------------------------------------- 
         TEMPORAIRE: À SUPPRIMER QUAND NOUS AURONS TOUS LES DEPARTEMENTS
         --------------------------------------- -->
