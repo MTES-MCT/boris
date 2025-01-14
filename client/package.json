@@ -18,7 +18,8 @@
     "format": "prettier --write .",
     "test:e2e": "playwright test",
     "test:unit": "vitest",
-    "lighthouse": "lhci autorun"
+    "lighthouse-mobile": "lhci autorun --config=./.lighthouse-mobile.json",
+    "lighthouse-desktop": "lhci autorun --config=./.lighthouse-desktop.json"
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "^3.0.0",

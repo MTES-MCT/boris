@@ -1,7 +1,7 @@
 <script lang="ts">
-  // import '@gouvfr/dsfr/dist/component/link/link.min.css';
-  // import '@gouvfr/dsfr/dist/component/logo/logo.min.css';
-  // import '@gouvfr/dsfr/dist/component/footer/footer.min.css';
+  import '@gouvfr/dsfr/dist/component/link/link.min.css';
+  import '@gouvfr/dsfr/dist/component/logo/logo.min.css';
+  import '@gouvfr/dsfr/dist/component/footer/footer.min.css';
 </script>
 
 <footer
