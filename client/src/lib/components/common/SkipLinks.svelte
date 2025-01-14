@@ -18,13 +18,6 @@
       <li>
         <a
           class="fr-link"
-          href="#header">
-          Menu
-        </a>
-      </li>
-      <li>
-        <a
-          class="fr-link"
           href="#footer">
           Pied de page
         </a>
