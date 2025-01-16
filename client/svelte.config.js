@@ -31,7 +31,6 @@ const config = {
   },
   onwarn: (warning, handler) => {
     if (warning.code === 'a11y_no_redundant_roles') return;
-    if (warning.code === 'css_unused_selector') return;
     handler(warning);
   },
 };
