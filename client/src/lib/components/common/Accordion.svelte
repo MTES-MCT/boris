@@ -1,4 +1,5 @@
 <script lang="ts">
+  import '@gouvfr/dsfr/dist/component/accordion/accordion.min.css';
   import type { Heading } from '$lib/utils/definitions';
   import { nanoid } from 'nanoid';
   import type { Snippet } from 'svelte';

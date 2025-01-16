@@ -15,6 +15,8 @@
     );
     // @ts-expect-error: no declaration file
     await import('@gouvfr/dsfr/dist/component/modal/modal.module.min.js');
+    // @ts-expect-error: no declaration file
+    await import('@gouvfr/dsfr/dist/component/header/header.module.min.js');
   });
 
   import { page } from '$app/stores';

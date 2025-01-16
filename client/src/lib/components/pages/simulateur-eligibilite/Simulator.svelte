@@ -16,7 +16,7 @@
         plus haut, Abis, au moins tendu, C.
       </p>
       <a
-        class="fr-link fr-icon-arrow-right-line fr-link--icon-right"
+        class="fr-link fr-link--icon-right"
         target="_blank"
         href="https://www.service-public.fr/simulateur/calcul/zonage-abc">
         Pour connaître votre zone

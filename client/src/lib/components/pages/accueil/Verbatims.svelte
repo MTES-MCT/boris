@@ -1,3 +1,7 @@
+<script lang="ts">
+  import '@gouvfr/dsfr/dist/utility/icons/icons-communication/icons-communication.min.css';
+</script>
+
 <section>
   <h3>Ils en parlent mieux que nous !</h3>
 

@@ -70,6 +70,8 @@
 
 <style lang="postcss">
   .promesse {
+    position: relative;
+    z-index: 10;
     max-width: 992px;
 
     .content {

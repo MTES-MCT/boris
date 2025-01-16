@@ -1,4 +1,5 @@
 <script lang="ts">
+  import '@gouvfr/dsfr/dist/utility/icons/icons-business/icons-business.min.css';
   import type { Props } from './definitions';
   import Section from '$components/common/Section.svelte';
   import { formatPublishedAt } from '$lib/utils/formatters';
@@ -39,5 +40,9 @@
     display: flex;
     align-items: center;
     margin-block-end: var(--3w);
+
+    &::before {
+      --icon-size: 1rem;
+    }
   }
 </style>
