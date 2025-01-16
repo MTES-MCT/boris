@@ -9,10 +9,10 @@ test.beforeAll(async () => {
   const context = await browser.newContext();
   page = await context.newPage();
 
-  await page.goto('/');
+  await page.goto('/simulateur-eligibilite');
 });
 
-test.describe('accueil', () => {
+test.describe('simulateur-eligibilite', () => {
   test('should not have any a11y issue', async () => {
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze(); // 4
 

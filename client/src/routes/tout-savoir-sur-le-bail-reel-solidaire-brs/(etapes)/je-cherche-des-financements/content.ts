@@ -65,13 +65,13 @@ export const sections: StepSection[] = [
         </a>
         .
       </p>
-      <button class="fr-btn fr-btn--lg">
-        <a
-          href="https://www.calcul-ptz.fr/lissage.php"
-          target="_blank">
-          Simulateur prêt normal + PTZ
-        </a>
-      </button>
+      <a
+        class="fr-btn fr-btn--lg"
+        href="https://www.calcul-ptz.fr/lissage.php"
+        target="_blank"
+        >
+        Simulateur prêt normal + PTZ
+      </a>
     `,
   },
   {
