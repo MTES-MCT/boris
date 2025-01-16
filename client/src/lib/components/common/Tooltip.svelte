@@ -1,6 +1,15 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte';
+  import '@gouvfr/dsfr/dist/component/tooltip/tooltip.min.css';
+  import '@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css';
+  import { onMount, type Snippet } from 'svelte';
   import { nanoid } from 'nanoid';
+
+  onMount(async () => {
+    await import(
+      // @ts-expect-error: no declaration file
+      '@gouvfr/dsfr/dist/component/tooltip/tooltip.module.min'
+    );
+  });
 
   type Props = {
     children: Snippet;

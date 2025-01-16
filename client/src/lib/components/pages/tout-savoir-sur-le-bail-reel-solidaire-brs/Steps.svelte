@@ -54,8 +54,8 @@
   section {
     display: flex;
     flex-direction: column;
-    gap: var(--10w);
-    margin-block-start: var(--10w);
+    gap: var(--8w);
+    margin-block-start: var(--8w);
 
     @media (--md-viewport) {
       gap: 0;

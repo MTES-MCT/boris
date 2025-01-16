@@ -99,9 +99,10 @@
     border-bottom: solid 1px var(--color-grey-default);
 
     ul {
-      padding: var(--3w) 0;
       margin: 0;
       list-style: none;
+      padding-block-end: var(--3w);
+      padding-inline-start: 0;
     }
 
     li {

@@ -5,7 +5,7 @@
 <section class="fr-container">
   <div class="wrapper">
     <div class="blue-overlay rounded-box-lg"></div>
-    <div class="content rounded-box-lg fr-background-default--grey">
+    <div class="content rounded-box-lg background-color-white">
       <h3 class="fr-h4 heading color-blue-primary">
         Les plafonds de ressources d’éligibilité au Bail Réel Solidaire.
       </h3>
@@ -16,7 +16,7 @@
         plus haut, Abis, au moins tendu, C.
       </p>
       <a
-        class="fr-link fr-icon-arrow-right-line fr-link--icon-right"
+        class="fr-link fr-link--icon-right"
         target="_blank"
         href="https://www.service-public.fr/simulateur/calcul/zonage-abc">
         Pour connaître votre zone

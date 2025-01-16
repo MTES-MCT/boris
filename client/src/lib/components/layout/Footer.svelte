@@ -1,3 +1,9 @@
+<script lang="ts">
+  import '@gouvfr/dsfr/dist/component/link/link.min.css';
+  import '@gouvfr/dsfr/dist/component/logo/logo.min.css';
+  import '@gouvfr/dsfr/dist/component/footer/footer.min.css';
+</script>
+
 <footer
   class="fr-footer"
   id="footer">
@@ -106,13 +112,6 @@
     </div>
     <div class="fr-footer__bottom">
       <ul class="fr-footer__bottom-list">
-        <!-- <li class="fr-footer__bottom-item">
-          <a
-            class="fr-footer__bottom-link"
-            href="/plan-du-site">
-            Plan du site
-          </a>
-        </li> -->
         <li class="fr-footer__bottom-item">
           <a
             class="fr-footer__bottom-link"

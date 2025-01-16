@@ -1,4 +1,7 @@
 <script lang="ts">
+  import '@gouvfr/dsfr/dist/component/card/card.min.css';
+  import '@gouvfr/dsfr/dist/utility/icons/icons-business/icons-business.min.css';
+
   import type { Article } from '$lib/utils/definitions';
   import { formatPublishedAt } from '$lib/utils/formatters';
   type Props = Article;

@@ -27,27 +27,29 @@
 </section>
 
 <style lang="postcss">
-  :global(.section) {
+  .section {
     padding-block: var(--2w);
+  }
 
-    &:nth-child(1) {
-      padding-block-start: var(--4w);
-    }
+  .section:nth-last-child(1) {
+    padding-block-end: var(--4w);
+  }
 
-    &:nth-last-child(1) {
-      padding-block-end: var(--4w);
-    }
+  .section:nth-child(1) {
+    padding-block-start: var(--4w);
+  }
 
-    @media (--sm-viewport) {
+  @media (--sm-viewport) {
+    .section {
       padding-block: var(--4w);
+    }
 
-      &:nth-child(1) {
-        padding-block-start: var(--8w);
-      }
+    .section:nth-child(1) {
+      padding-block-start: var(--8w);
+    }
 
-      &:nth-last-child(1) {
-        padding-block-end: var(--8w);
-      }
+    .section:nth-last-child(1) {
+      padding-block-end: var(--8w);
     }
   }
 </style>

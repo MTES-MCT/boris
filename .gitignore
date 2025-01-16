@@ -27,6 +27,7 @@ node_modules
 /client/.svelte-kit
 /client/test-results/
 /client/e2e/**/.setup/
+/client/.lighthouseci/
 
 # Logs
 logs

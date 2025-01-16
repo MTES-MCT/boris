@@ -22,7 +22,7 @@
 </script>
 
 <section class="fr-container">
-  <div class="disclaimer rounded-box-lg fr-background-default--grey">
+  <div class="disclaimer rounded-box-lg background-color-white">
     <div class="mascotte">
       {@html MascotteWaving}
     </div>

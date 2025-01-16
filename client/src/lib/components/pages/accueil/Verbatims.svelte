@@ -1,10 +1,14 @@
+<script lang="ts">
+  import '@gouvfr/dsfr/dist/utility/icons/icons-communication/icons-communication.min.css';
+</script>
+
 <section>
   <h3>Ils en parlent mieux que nous !</h3>
 
   <div class="fr-container">
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="fr-col-12 fr-col-md-4">
-        <div class="column fr-background-default--grey">
+        <div class="column background-color-white">
           <div>
             <div class="icon">
               <span
@@ -24,7 +28,7 @@
       </div>
 
       <div class="fr-col-12 fr-col-md-4">
-        <div class="column fr-background-default--grey">
+        <div class="column background-color-white">
           <div>
             <div class="icon">
               <span
@@ -43,7 +47,7 @@
       </div>
 
       <div class="fr-col-12 fr-col-md-4">
-        <div class="column fr-background-default--grey">
+        <div class="column background-color-white">
           <div>
             <div class="icon">
               <span

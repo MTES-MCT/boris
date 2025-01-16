@@ -1,5 +1,6 @@
 <script lang="ts">
   import { default as EndOfPath } from '$assets/icons/end-of-path.svg?raw';
+  import '@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css';
 
   type Props = {
     illustration: string;
@@ -154,19 +155,19 @@
       }
 
       .column {
-        &:nth-child(1) {
-          width: calc(50% - 32px);
-        }
-
-        &:nth-child(2) {
-          width: calc(50% + 32px);
-          display: flex;
-          flex-direction: column;
-        }
-
         .column-container {
           max-width: 500px;
         }
+      }
+
+      .column:nth-child(1) {
+        width: calc(50% - 32px);
+      }
+
+      .column:nth-child(2) {
+        width: calc(50% + 32px);
+        display: flex;
+        flex-direction: column;
       }
 
       .content {
@@ -245,10 +246,8 @@
     .step-4 {
       flex-direction: row-reverse;
 
-      .column {
-        &:nth-child(2) {
-          align-items: flex-end;
-        }
+      .column:nth-child(2) {
+        align-items: flex-end;
       }
 
       .content {

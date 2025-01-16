@@ -11,7 +11,6 @@
 </svelte:head>
 
 <Hero />
-
 <div class="background-gradient">
   <Promesse />
   <Infos />

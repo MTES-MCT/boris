@@ -1,10 +1,13 @@
 <script>
+  import '@gouvfr/dsfr/dist/utility/icons/icons-buildings/icons-buildings.min.css';
+  import '@gouvfr/dsfr/dist/utility/icons/icons-map/icons-map.min.css';
+
   import Section from '$components/common/Section.svelte';
   import Disclaimer from '$components/common/Disclaimer.svelte';
 </script>
 
 <Section>
-  <div class="fr-container fr-background-default--grey">
+  <div class="fr-container background-color-white">
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="column fr-col-12 fr-col-md-6 fr-col-lg-3">
         <div>
