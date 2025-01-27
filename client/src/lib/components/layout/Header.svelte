@@ -139,9 +139,9 @@
                 </li>
                 <li>
                   <a
-                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement"
+                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement-en-BRS"
                     aria-current={pathname ===
-                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement'}
+                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement-en-BRS'}
                     class="fr-nav__link">
                     Je trouve mon logement en BRS
                   </a>

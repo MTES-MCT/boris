@@ -1,12 +1,20 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import Step from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/(etapes)/Step.svelte';
+  import Step from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/Step.svelte';
   import type { StepSection } from '$lib/utils/definitions';
   import Section from '$components/common/Section.svelte';
 
   type Props = {
     title: string;
     sections: StepSection[];
+    previousStep?: {
+      title: string;
+      slug: string;
+    };
+    nextStep?: {
+      title: string;
+      slug: string;
+    };
   };
 
   type ObservableSection = {
@@ -14,7 +22,7 @@
     isVisible: boolean;
   };
 
-  const { title, sections }: Props = $props();
+  const { title, sections, previousStep, nextStep }: Props = $props();
 
   let observableSections = $state<ObservableSection[]>(
     sections.map((section) => ({
@@ -28,6 +36,10 @@
   );
 
   onMount(() => {
+    console.log('onMount');
+
+    scrollTo(0, 0);
+
     const options = {
       root: null,
       rootMargin: '0px',
@@ -42,6 +54,7 @@
         const index = observableSections.findIndex(
           (section) => section.id === id,
         );
+
         observableSections[index].isVisible = isVisible;
       });
     };
@@ -55,25 +68,45 @@
   });
 </script>
 
-<Section>
-  <div class="wrapper">
-    <div class="fr-grid-row">
-      <div class="fr-col-12 fr-col-sm-3 fr-hidden fr-unhidden-md">
-        {@render nav(sections, '')}
+<div class="background-gradient">
+  <Section>
+    <div class="wrapper">
+      <div class="fr-grid-row">
+        <div class="fr-col-12 fr-col-sm-3 fr-hidden fr-unhidden-md menu">
+          {@render nav(sections, '')}
+        </div>
+
+        <div class="fr-col-12 fr-col-md-9 content">
+          <h1 class="fr-h3 fr-mb-0">{title}</h1>
+
+          {@render nav(sections, 'fr-col-12 fr-unhidden fr-hidden-md')}
+
+          {#each sections as section}
+            <Step {...section} />
+          {/each}
+        </div>
+
+        <div>
+          <div>
+            {#if previousStep}
+              <a href={previousStep.slug}>
+                {previousStep.title}
+              </a>
+            {/if}
+          </div>
+
+          <div>
+            {#if nextStep}
+              <a href={nextStep.slug}>
+                {nextStep.title}
+              </a>
+            {/if}
+          </div>
+        </div>
       </div>
-
-      <section class="fr-col-12 fr-col-md-9 content">
-        <h1 class="fr-h3 fr-mb-0">{title}</h1>
-
-        {@render nav(sections, 'fr-col-12 fr-unhidden fr-hidden-md')}
-
-        {#each sections as section}
-          <Step {...section} />
-        {/each}
-      </section>
     </div>
-  </div>
-</Section>
+  </Section>
+</div>
 
 {#snippet nav(sections: StepSection[], className: string)}
   <nav
@@ -115,7 +148,7 @@
   }
 
   @media (--sm-viewport) {
-    aside {
+    .menu {
       display: flex;
       align-items: flex-start;
     }

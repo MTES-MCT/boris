@@ -21,7 +21,7 @@
     content="Définissez votre projet d’achat, trouvez le logement de vos rêves en BRS, construisez votre dossier et candidatez pour l'obtenir."
     illustration={BrsEtape2}
     linkLabel="Construire son projet immobilier"
-    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement"
+    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement-en-BRS"
     position={2} />
 
   <Card
