@@ -8,11 +8,13 @@
   import Analytics from '$components/layout/Analytics.svelte';
   import Header from '$components/layout/Header.svelte';
   import Footer from '$components/layout/Footer.svelte';
+  import NoScrollOnNavigation from '$components/layout/NoScrollOnNavigation.svelte';
 
   type Props = { children: Snippet };
   const { children }: Props = $props();
 </script>
 
+<NoScrollOnNavigation />
 <Favicon />
 <Analytics />
 <SkipLinks />

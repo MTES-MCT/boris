@@ -1,5 +1,4 @@
 <script lang="ts">
-  import NoScrollOnNavigation from '$components/common/NoScrollOnNavigation.svelte';
   import Page from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/Page.svelte';
 
   const { data } = $props();
@@ -9,8 +8,6 @@
 <svelte:head>
   <title>{title} - Boris</title>
 </svelte:head>
-
-<NoScrollOnNavigation />
 
 {#key title}
   <Page
