@@ -88,7 +88,9 @@
             <Step {...section} />
           {/each}
 
-          <nav class="step-links">
+          <nav
+            class="step-links"
+            aria-label="liens vers les autres étapes du BRS">
             {#if previousStep}
               <StepLink
                 title={previousStep.title}
