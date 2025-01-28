@@ -93,9 +93,7 @@ export const steps: Step[] = [
           <p>
             Vous souhaitez savoir si vous y avez droit ? Utilisez notre simulateur :
           </p>
-          <button class="fr-btn fr-btn--lg">
-            <a href="/simulateur-eligibilite">Suis-je éligible ?</a>
-          </button>
+          <a class="fr-btn fr-btn--lg" href="/simulateur-eligibilite">Suis-je éligible ?</a>
         `,
       },
       {
@@ -130,11 +128,9 @@ export const steps: Step[] = [
             réhabilitation des logements. C’est à l’OFS que vous verserez une redevance
             mensuelle.
           </p>
-          <button class="fr-btn fr-btn--lg">
-            <a href="/organismes-fonciers-solidaires">
-              Prendre contact pour trouver un logement en BRS
-            </a>
-          </button>
+          <a class="fr-btn fr-btn--lg" href="/organismes-fonciers-solidaires">
+            Prendre contact pour trouver un logement en BRS
+          </a>
         `,
       },
     ],
@@ -187,11 +183,9 @@ export const steps: Step[] = [
             sommes en lien direct avec des professionnel.lles spécialisé.es dans le Bail
             Réel Solidaire.
           </p>
-          <button class="fr-btn fr-btn--lg">
-            <a href="/organismes-fonciers-solidaires">
-              Prendre contact pour trouver un logement en BRS
-            </a>
-          </button>  
+          <a class="fr-btn fr-btn--lg" href="/organismes-fonciers-solidaires">
+            Prendre contact pour trouver un logement en BRS
+          </a>
         `,
       },
       {
@@ -294,13 +288,12 @@ export const steps: Step[] = [
             </a>
             .
           </p>
-          <button class="fr-btn fr-btn--lg">
-            <a
-              href="https://www.calcul-ptz.fr/lissage.php"
-              target="_blank">
-              Simulateur prêt normal + PTZ
-            </a>
-          </button>
+          <a
+            class="fr-btn fr-btn--lg"
+            href="https://www.calcul-ptz.fr/lissage.php"
+            target="_blank">
+            Simulateur prêt normal + PTZ
+          </a>
         `,
       },
       {
