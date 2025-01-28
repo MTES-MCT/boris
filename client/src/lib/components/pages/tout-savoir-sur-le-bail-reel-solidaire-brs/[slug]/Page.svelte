@@ -3,6 +3,8 @@
   import Step from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/Step.svelte';
   import type { StepSection } from '$lib/utils/definitions';
   import Section from '$components/common/Section.svelte';
+  import Nav from './Nav.svelte';
+  import StepLink from './StepLink.svelte';
 
   type Props = {
     title: string;
@@ -36,10 +38,6 @@
   );
 
   onMount(() => {
-    console.log('onMount');
-
-    scrollTo(0, 0);
-
     const options = {
       root: null,
       rootMargin: '0px',
@@ -73,78 +71,55 @@
     <div class="wrapper">
       <div class="fr-grid-row">
         <div class="fr-col-12 fr-col-sm-3 fr-hidden fr-unhidden-md menu">
-          {@render nav(sections, '')}
+          <Nav
+            {sections}
+            activeSectionId={activeSection?.id} />
         </div>
 
         <div class="fr-col-12 fr-col-md-9 content">
           <h1 class="fr-h3 fr-mb-0">{title}</h1>
 
-          {@render nav(sections, 'fr-col-12 fr-unhidden fr-hidden-md')}
+          <Nav
+            {sections}
+            className="fr-col-12 fr-unhidden fr-hidden-md"
+            activeSectionId={activeSection?.id} />
 
           {#each sections as section}
             <Step {...section} />
           {/each}
-        </div>
 
-        <div>
-          <div>
+          <nav class="step-links">
             {#if previousStep}
-              <a href={previousStep.slug}>
-                {previousStep.title}
-              </a>
+              <StepLink
+                title={previousStep.title}
+                label="Étape précédente"
+                href={previousStep.slug} />
+            {:else}
+              <div></div>
             {/if}
-          </div>
 
-          <div>
             {#if nextStep}
-              <a href={nextStep.slug}>
-                {nextStep.title}
-              </a>
+              <StepLink
+                title={nextStep.title}
+                label="Étape suivante"
+                href={nextStep.slug} />
+            {:else}
+              <div></div>
             {/if}
-          </div>
+          </nav>
         </div>
       </div>
     </div>
   </Section>
 </div>
 
-{#snippet nav(sections: StepSection[], className: string)}
-  <nav
-    class={className}
-    id="navigation">
-    <ul>
-      {#each sections as section}
-        <li>
-          <a
-            href={`#${section.id}`}
-            class="fr-link"
-            class:active={activeSection?.id === section.id}>
-            {section.title}
-          </a>
-        </li>
-      {/each}
-    </ul>
-  </nav>
-{/snippet}
-
 <style lang="postcss">
-  nav {
-    border-bottom: solid 1px var(--color-grey-default);
-
-    ul {
-      margin: 0;
-      list-style: none;
-      padding-block-end: var(--3w);
-      padding-inline-start: 0;
-    }
-
-    li {
-      margin-block: var(--1w);
-    }
-
-    a {
-      font-weight: 700;
-    }
+  .step-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--3w);
+    padding-block-start: var(--5w);
+    padding-block-end: var(--1w);
   }
 
   @media (--sm-viewport) {
@@ -153,60 +128,17 @@
       align-items: flex-start;
     }
 
-    nav {
-      position: sticky;
-      top: var(--6w);
-      padding-inline-end: var(--3w);
-      border-right: solid 1px var(--color-grey-default);
-      border-bottom: none;
-
-      li {
-        margin-block-end: var(--3w);
-
-        &:nth-last-child(1) {
-          margin-block-end: 0;
-        }
-      }
-
-      a {
-        position: relative;
-        display: block;
-        background: none;
-        color: black;
-        transition: color 0.1s 0.02s;
-
-        &::before {
-          content: '';
-          position: absolute;
-          left: calc(-1 * var(--1w));
-          top: 0;
-          height: 100%;
-          width: 2px;
-          background-color: var(--text-active-blue-france);
-          opacity: 0;
-          transition: opacity 0.2s 0.1s;
-        }
-
-        &.active {
-          color: var(--text-active-blue-france);
-
-          &::before {
-            opacity: 1;
-          }
-        }
-      }
-    }
-
     .content {
       padding-inline-start: var(--6w);
+    }
+
+    .step-links {
+      flex-direction: row;
+      justify-content: space-between;
     }
   }
 
   @media (--md-viewport) {
-    nav {
-      padding-inline-end: var(--6w);
-    }
-
     .content {
       padding-inline-start: var(--12w);
     }

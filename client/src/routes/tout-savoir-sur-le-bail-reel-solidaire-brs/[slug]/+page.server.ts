@@ -9,8 +9,6 @@ export const load: PageServerLoad = async ({ params }): Promise<Step> => {
 
   const step = steps.find((step) => step.slug === slug);
 
-  console.log(step?.title);
-
   if (!step) {
     redirect(301, '/not-found');
   } else {
