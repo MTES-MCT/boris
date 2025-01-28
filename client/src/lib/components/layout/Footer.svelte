@@ -16,6 +16,13 @@
             <li>
               <a
                 class="fr-footer__top-link"
+                href="/sitemap.xml">
+                Plan du site
+              </a>
+            </li>
+            <li>
+              <a
+                class="fr-footer__top-link"
                 href="/nous-contacter">
                 Nous contacter
               </a>

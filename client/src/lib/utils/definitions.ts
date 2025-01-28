@@ -55,3 +55,17 @@ export type StepSection = {
   title: string;
   content: string;
 };
+
+export type Step = {
+  title: string;
+  slug: string;
+  sections: StepSection[];
+  previousStep?: {
+    title: string;
+    slug: string;
+  };
+  nextStep?: {
+    title: string;
+    slug: string;
+  };
+};
