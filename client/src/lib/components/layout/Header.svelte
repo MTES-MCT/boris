@@ -22,6 +22,7 @@
   import { page } from '$app/stores';
   import { default as Logo } from '$assets/illustrations/logo.svg?raw';
   import { onMount } from 'svelte';
+  import { steps } from '$routes/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/content';
 
   let pathname = $state($page.url.pathname);
 
@@ -128,51 +129,18 @@
                     Les étapes du parcours d'achat
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif"
-                    aria-current={pathname ===
-                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif'}
-                    class="fr-nav__link">
-                    Je découvre le dispositif
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement"
-                    aria-current={pathname ===
-                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement'}
-                    class="fr-nav__link">
-                    Je trouve mon logement en BRS
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-cherche-des-financements"
-                    aria-current={pathname ===
-                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-cherche-des-financements'}
-                    class="fr-nav__link">
-                    Je cherche des financements
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-deviens-proprietaire"
-                    aria-current={pathname ===
-                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-deviens-proprietaire'}
-                    class="fr-nav__link">
-                    Je deviens propriétaire
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-suis-chez-moi"
-                    aria-current={pathname ===
-                      '/tout-savoir-sur-le-bail-reel-solidaire-brs/je-suis-chez-moi'}
-                    class="fr-nav__link">
-                    Je suis chez moi
-                  </a>
-                </li>
+                {#each steps as step}
+                  {@const href = `/tout-savoir-sur-le-bail-reel-solidaire-brs/${step.slug}`}
+
+                  <li>
+                    <a
+                      {href}
+                      aria-current={pathname === href}
+                      class="fr-nav__link">
+                      {step.title}
+                    </a>
+                  </li>
+                {/each}
               </ul>
             </div>
           </li>

@@ -1,7 +1,7 @@
 @import url('./_vars.css');
 @import url('./_icons.css');
 
-html {
+.scroll-behavior-smooth {
   scroll-behavior: smooth;
 }
 

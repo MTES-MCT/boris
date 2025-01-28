@@ -5,6 +5,7 @@
   import { default as BrsEtape4 } from '$assets/illustrations/brs-etape-4.svg?raw';
   import { default as BrsEtape5 } from '$assets/illustrations/brs-etape-5.svg?raw';
   import Card from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/Step.svelte';
+  import { steps } from '$routes/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/content';
 </script>
 
 <section class="fr-container">
@@ -13,7 +14,7 @@
     content="Découvrez les informations relatives au Bail Réel Solidaire : les avantages du BRS, les contreparties, les critères d’éligibilité et les parties prenantes d’un projet en BRS."
     illustration={BrsEtape1}
     linkLabel="Tout savoir sur le BRS"
-    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif"
+    href={`/tout-savoir-sur-le-bail-reel-solidaire-brs/${steps[0].slug}`}
     position={1} />
 
   <Card
@@ -21,7 +22,7 @@
     content="Définissez votre projet d’achat, trouvez le logement de vos rêves en BRS, construisez votre dossier et candidatez pour l'obtenir."
     illustration={BrsEtape2}
     linkLabel="Construire son projet immobilier"
-    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-trouve-mon-logement"
+    href={`/tout-savoir-sur-le-bail-reel-solidaire-brs/${steps[1].slug}`}
     position={2} />
 
   <Card
@@ -29,7 +30,7 @@
     content="Assurez-vous de pouvoir financer votre achat, payer les frais en tant que propriétaire en BRS grâce à vos fonds propres, un emprunt bancaire et des aides éventuelles et projetez-vous à plus long terme."
     illustration={BrsEtape3}
     linkLabel="Définir son projet financier"
-    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-cherche-des-financements"
+    href={`/tout-savoir-sur-le-bail-reel-solidaire-brs/${steps[2].slug}`}
     position={3} />
 
   <Card
@@ -37,7 +38,7 @@
     content="Vérifiez toutes les étapes après avoir trouvé un logement, les documents à fournir ainsi que comment choisir son ou sa notaire pour signer l'acte de vente."
     illustration={BrsEtape4}
     linkLabel="S'assurer du bon déroulement de l'achat"
-    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-deviens-proprietaire"
+    href={`/tout-savoir-sur-le-bail-reel-solidaire-brs/${steps[3].slug}`}
     position={4} />
 
   <Card
@@ -45,7 +46,7 @@
     content="Profitez de votre logement et assurez-vous de bien connaître les spécificités liées au BRS : l’assurance logement BRS, réalisation des travaux, la vie en copropriété et la revente du logement."
     illustration={BrsEtape5}
     linkLabel="Découvrez les spécificités pour l’après achat"
-    href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-suis-chez-moi"
+    href={`/tout-savoir-sur-le-bail-reel-solidaire-brs/${steps[4].slug}`}
     position={5}
     isLast />
 </section>

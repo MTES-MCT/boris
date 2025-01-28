@@ -17,10 +17,6 @@
   article {
     padding-block-end: var(--3w);
     border-bottom: solid 1px var(--color-grey-default);
-
-    &:nth-last-child(1) {
-      border-bottom: none;
-    }
   }
 
   .heading {

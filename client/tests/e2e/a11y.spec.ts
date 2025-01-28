@@ -13,6 +13,7 @@ test('a11y', async ({ page }) => {
   const urls = xml.urlset.url.map((url: { loc: string }) => url.loc);
 
   for (const url of urls) {
+    console.log(url);
     await page.goto(url);
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
