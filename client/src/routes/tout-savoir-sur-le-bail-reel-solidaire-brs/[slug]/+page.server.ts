@@ -19,5 +19,3 @@ export const load: PageServerLoad = async ({ params }): Promise<Step> => {
 export const entries: EntryGenerator = () => {
   return steps.map((step) => ({ slug: step.slug }));
 };
-
-export const prerender = false;
