@@ -65,9 +65,7 @@ export const sections: StepSection[] = [
       <p>
         Vous souhaitez savoir si vous y avez droit ? Utilisez notre simulateur :
       </p>
-      <button class="fr-btn fr-btn--lg">
-        <a href="/simulateur-eligibilite">Suis-je éligible ?</a>
-      </button>
+      <a href="/simulateur-eligibilite" class="fr-btn fr-btn--lg">Suis-je éligible ?</a>
     `,
   },
   {
@@ -102,11 +100,9 @@ export const sections: StepSection[] = [
         réhabilitation des logements. C’est à l’OFS que vous verserez une redevance
         mensuelle.
       </p>
-      <button class="fr-btn fr-btn--lg">
-        <a href="/organismes-fonciers-solidaires">
-          Prendre contact pour trouver un logement en BRS
-        </a>
-      </button>
+      <a href="/organismes-fonciers-solidaires" class="fr-btn fr-btn--lg">
+        Prendre contact pour trouver un logement en BRS
+      </a>
     `,
   },
 ];

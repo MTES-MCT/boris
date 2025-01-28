@@ -45,11 +45,9 @@ export const sections: StepSection[] = [
         sommes en lien direct avec des professionnel.lles spécialisé.es dans le Bail
         Réel Solidaire.
       </p>
-      <button class="fr-btn fr-btn--lg">
-        <a href="/organismes-fonciers-solidaires">
-          Prendre contact pour trouver un logement en BRS
-        </a>
-      </button>  
+      <a href="/organismes-fonciers-solidaires" class="fr-btn fr-btn--lg">
+        Prendre contact pour trouver un logement en BRS
+      </a>
     `,
   },
   {

@@ -58,9 +58,9 @@
 <Section>
   <div class="wrapper">
     <div class="fr-grid-row">
-      <aside class="fr-col-12 fr-col-sm-3 fr-hidden fr-unhidden-md">
+      <div class="fr-col-12 fr-col-sm-3 fr-hidden fr-unhidden-md">
         {@render nav(sections, '')}
-      </aside>
+      </div>
 
       <section class="fr-col-12 fr-col-md-9 content">
         <h1 class="fr-h3 fr-mb-0">{title}</h1>
