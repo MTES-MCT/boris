@@ -1,4 +1,5 @@
 import type {
+  FormattedCommercialisateurs,
   // ---------------------------------------
   // TEMPORAIRE: À REMETTRE QUAND NOUS AURONS TOUS LES DEPARTEMENTS
   // ---------------------------------------
@@ -6,7 +7,7 @@ import type {
   // ---------------------------------------
   OFS,
   Region,
-} from '$routes/organismes-fonciers-solidaires/definitions';
+} from '$lib/utils/definitions';
 
 export const formatOFSs = (OFSs: OFS[]): Region[] => {
   const regions: Region[] = [];
@@ -26,7 +27,24 @@ export const formatOFSs = (OFSs: OFS[]): Region[] => {
 
     const regionnalOFSs: OFS[] = OFSs.filter((ofs) =>
       ofs.region.includes(regionName),
-    );
+    ).map((ofs) => {
+      const liens = ofs.lien.split(',');
+      const noms = ofs.commercialisateur.split(',');
+
+      const formattedCommercialisateurs: FormattedCommercialisateurs[] = [];
+
+      liens.forEach((lien, index) => {
+        formattedCommercialisateurs.push({
+          lien: lien.replace(/^\s+|\s+$|\s+(?=\s)/g, ''),
+          nom: noms[index].replace(/^\s+|\s+$|\s+(?=\s)/g, ''),
+        });
+      });
+
+      return {
+        ...ofs,
+        formattedCommercialisateurs,
+      };
+    });
 
     // ---------------------------------------
     // -- TEMPORAIRE À SUPPRIMER QUAND NOUS AURONS TOUS LES DÉPARTEMENTS.

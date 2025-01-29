@@ -9,6 +9,8 @@ import { expectedResult, OFSs } from '$tests/mocks/OFSs';
 describe('formatOFSs', () => {
   it('should format an OFS list to a region based list', () => {
     const result = formatOFSs(OFSs);
+    console.log(result[0].OFSs[0].formattedCommercialisateurs);
+
     expect(result).toStrictEqual(expectedResult);
   });
 
