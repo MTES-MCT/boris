@@ -1,4 +1,4 @@
-import type { OFS } from '$routes/organismes-fonciers-solidaires/definitions';
+import type { OFS } from '$lib/utils/definitions';
 
 // ---------------------------------------
 // TEMPORAIRE: À SUPPRIMER QUAND NOUS AURONS TOUS LES DEPARTEMENTS
@@ -44,6 +44,14 @@ export const OFSs: OFS[] = [
     telephone: '123456789',
     commercialisateur: 'commercialisateur',
   },
+  {
+    nom: 'OFS6',
+    region: 'Occitanie',
+    departements: 'Gard',
+    lien: 'https://ofs.random1, https://ofs.random2',
+    telephone: '123456789',
+    commercialisateur: 'commercialisateur1, commercialisateur2',
+  },
 ];
 // ---------------------------------------
 
@@ -58,6 +66,12 @@ export const expectedResult = [
         lien: 'https://ofs.random',
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
+        formattedCommercialisateurs: [
+          {
+            lien: 'https://ofs.random',
+            nom: 'commercialisateur',
+          },
+        ],
       },
       {
         nom: 'OFS2',
@@ -66,6 +80,12 @@ export const expectedResult = [
         lien: 'https://ofs.random',
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
+        formattedCommercialisateurs: [
+          {
+            lien: 'https://ofs.random',
+            nom: 'commercialisateur',
+          },
+        ],
       },
       {
         nom: 'OFS5',
@@ -74,6 +94,12 @@ export const expectedResult = [
         lien: 'https://ofs.random',
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
+        formattedCommercialisateurs: [
+          {
+            lien: 'https://ofs.random',
+            nom: 'commercialisateur',
+          },
+        ],
       },
     ],
     totalOFSs: 3,
@@ -88,6 +114,12 @@ export const expectedResult = [
         lien: 'https://ofs.random',
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
+        formattedCommercialisateurs: [
+          {
+            lien: 'https://ofs.random',
+            nom: 'commercialisateur',
+          },
+        ],
       },
       {
         nom: 'OFS4',
@@ -96,6 +128,12 @@ export const expectedResult = [
         lien: 'https://ofs.random',
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
+        formattedCommercialisateurs: [
+          {
+            lien: 'https://ofs.random',
+            nom: 'commercialisateur',
+          },
+        ],
       },
       {
         nom: 'OFS5',
@@ -104,9 +142,39 @@ export const expectedResult = [
         lien: 'https://ofs.random',
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
+        formattedCommercialisateurs: [
+          {
+            lien: 'https://ofs.random',
+            nom: 'commercialisateur',
+          },
+        ],
       },
     ],
     totalOFSs: 3,
+  },
+  {
+    name: 'Occitanie',
+    OFSs: [
+      {
+        nom: 'OFS6',
+        region: 'Occitanie',
+        departements: 'Gard',
+        lien: 'https://ofs.random1, https://ofs.random2',
+        telephone: '123456789',
+        commercialisateur: 'commercialisateur1, commercialisateur2',
+        formattedCommercialisateurs: [
+          {
+            lien: 'https://ofs.random1',
+            nom: 'commercialisateur1',
+          },
+          {
+            lien: 'https://ofs.random2',
+            nom: 'commercialisateur2',
+          },
+        ],
+      },
+    ],
+    totalOFSs: 1,
   },
 ];
 

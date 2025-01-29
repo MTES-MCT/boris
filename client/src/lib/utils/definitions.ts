@@ -69,3 +69,35 @@ export type Step = {
     slug: string;
   };
 };
+
+export type OFS = {
+  nom: string;
+  region: string;
+  departements: string;
+  commercialisateur: string;
+  lien: string;
+  telephone: string;
+  formattedCommercialisateurs?: FormattedCommercialisateurs[];
+};
+
+export type FormattedCommercialisateurs = {
+  nom: string;
+  lien: string;
+};
+
+export type Departement = {
+  name: string;
+  totalOFSs: number;
+  OFSs: OFS[];
+};
+
+export type Region = {
+  name: string;
+  totalOFSs: number;
+  // TEMPORAIRE À SUPPRIMER QUAND NOUS AURONS TOUS LES DÉPARTEMENTS.
+  OFSs: OFS[];
+  //
+
+  // TEMPORAIRE: À REMETTRE QUAND NOUS AURONS TOUS LES DEPARTEMENTS
+  // departements: Departement[];
+};

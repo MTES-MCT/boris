@@ -1,10 +1,18 @@
 <script lang="ts">
   import Section from '$components/common/Section.svelte';
   import Accordion from '$components/common/Accordion.svelte';
-  import type { Props } from './definitions';
+  import type { Region } from '$lib/utils/definitions';
+
+  type Props = {
+    data: {
+      regions: Region[];
+    };
+  };
 
   const { data }: Props = $props();
   const { regions } = data;
+
+  console.log(regions);
 </script>
 
 <svelte:head>
@@ -51,20 +59,27 @@
           {#each region.OFSs as ofs}
             <li>
               <p class="fr-text__lead fr-mb-0"><b>{ofs.nom}</b></p>
-              {#if ofs.commercialisateur}
-                <p class="fr-mb-0">
-                  Commercialisateur: {ofs.commercialisateur}
-                </p>
-              {/if}
-              {#if ofs.lien}
-                <a
-                  class="fr-link"
-                  target="_blank"
-                  href={ofs.lien}>
-                  Site web
-                </a>
-              {/if}
-              <p></p>
+              <ul class="commercialisateurs">
+                {#if ofs.formattedCommercialisateurs}
+                  {#each ofs.formattedCommercialisateurs as commercialisateur}
+                    <li>
+                      {#if commercialisateur.nom}
+                        <p class="fr-mb-0">
+                          Commercialisateur: {commercialisateur.nom}
+                        </p>
+                      {/if}
+                      {#if commercialisateur.lien}
+                        <a
+                          class="fr-link"
+                          target="_blank"
+                          href={commercialisateur.lien}>
+                          Site web
+                        </a>
+                      {/if}
+                    </li>
+                  {/each}
+                {/if}
+              </ul>
             </li>
           {/each}
         </ul>
@@ -93,3 +108,12 @@
     {/each}
   </div>
 </Section>
+
+<style lang="postcss">
+  .commercialisateurs {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--1w);
+  }
+</style>
