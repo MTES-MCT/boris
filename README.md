@@ -2,8 +2,7 @@
 
 ## Environnement technique
 
-Le projet est un monorepo, utilisant le système de [workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces) de
-npm.
+Le projet est un monorepo, utilisant le système de [workspaces](https://yarnpkg.com/features/workspaces)
 
 - [Svelte](https://svelte.dev/docs/introduction): [version 5](https://svelte-5-preview.vercel.app/docs/introduction)
 - [SvelteKit](https://kit.svelte.dev/docs/introduction)
@@ -33,7 +32,7 @@ npm.
 3. Installer les dépendances
 
    ```
-   npm install
+   yarn
    ```
 
 ## Client
@@ -41,7 +40,5 @@ npm.
 Lancer le server de développement
 
 ```
-
-npm run dev -w client
-
+yarn workspace @boris/client dev
 ```

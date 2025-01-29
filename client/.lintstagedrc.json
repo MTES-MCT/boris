@@ -1,3 +1,6 @@
 {
-  "*": ["npm run format -w client", "npm run lint -w client"]
+  "*": [
+    "yarn workspace @boris/client format",
+    "yarn workspace @boris/client lint"
+  ]
 }

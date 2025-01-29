@@ -4,14 +4,14 @@
   "private": true,
   "engines": {
     "node": "20.18.0",
-    "npm": "10"
+    "yarn": "1.22"
   },
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
     "start": "node build",
     "preview": "vite preview",
-    "test": "npm run test:integration && npm run test:unit",
+    "test": "yarn test:integration && yarn test:unit",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check . && eslint .",
