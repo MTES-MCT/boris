@@ -3,8 +3,14 @@
 </script>
 
 <Section title="Oups...">
-  <p>La page que vous cherchez n'existe pas.</p>
-  <button class="fr-btn fr-btn--lg">
-    <a href="/">Retour à la page d'accueil</a>
-  </button>
+  <p
+    aria-level="1"
+    role="heading">
+    La page que vous cherchez n'existe pas.
+  </p>
+  <a
+    href="/"
+    class="fr-btn fr-btn--lg">
+    Retour à la page d'accueil
+  </a>
 </Section>

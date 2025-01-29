@@ -28,7 +28,6 @@
     "@gouvfr/dsfr": "^1.12.1",
     "@lhci/cli": "^0.14.0",
     "@playwright/test": "^1.28.1",
-    "@sentry/sveltekit": "^8",
     "@sveltejs/adapter-node": "^5.2.9",
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
@@ -47,5 +46,8 @@
     "vite": "^5.0.3",
     "vitest": "^2.0.0"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@sentry/sveltekit": "^8"
+  }
 }
