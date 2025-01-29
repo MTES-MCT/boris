@@ -2,6 +2,10 @@
   "name": "@boris/client",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "20.18",
+    "yarn": "1.22"
+  },
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
