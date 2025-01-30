@@ -21,7 +21,6 @@ Thumbs.db
 !.env.example
 node_modules
 .tool-versions
-.talismanrc
 
 # CLIENT
 /client/build
