@@ -1,37 +1,27 @@
 <script lang="ts">
-  import '@gouvfr/dsfr/dist/dsfr.min.css';
-  import '@gouvfr/dsfr/dist/utility/utility.min.css';
+  import '@gouvfr/dsfr/dist/core/core.min.css';
   import '$assets/styles/main.css';
-  import { onMount, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
 
-  onMount(async () => {
-    // @ts-expect-error: no declaration file
-    await import('@gouvfr/dsfr/dist/dsfr.module.min');
-  });
+  import Favicon from '$components/layout/Favicon.svelte';
+  import SkipLinks from '$components/layout/SkipLinks.svelte';
+  import Analytics from '$components/layout/Analytics.svelte';
+  import Header from '$components/layout/Header.svelte';
+  import Footer from '$components/layout/Footer.svelte';
+  import NoScrollOnNavigation from '$components/layout/NoScrollOnNavigation.svelte';
 
-  import Header from '$components/header/header.svelte';
-  import Footer from '$components/footer/footer.svelte';
-  import GoogleAnalytics from '$components/google-analytics/googleAnalytics.svelte';
-
-  const { children }: { children: Snippet } = $props();
+  type Props = { children: Snippet };
+  const { children }: Props = $props();
 </script>
 
-<GoogleAnalytics />
-
+<NoScrollOnNavigation />
+<Favicon />
+<Analytics />
+<SkipLinks />
 <Header />
 
-<main>
+<main id="main">
   {@render children()}
 </main>
 
 <Footer />
-
-<style lang="postcss">
-  main {
-    gap: var(--3w);
-
-    @media (--sm-viewport) {
-      gap: var(--4w);
-    }
-  }
-</style>

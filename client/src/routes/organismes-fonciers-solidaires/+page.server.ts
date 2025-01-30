@@ -19,3 +19,5 @@ export const load = async () => {
     regions,
   };
 };
+
+export const prerender = false;

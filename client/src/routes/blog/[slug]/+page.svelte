@@ -1,20 +1,25 @@
 <script lang="ts">
+  import '@gouvfr/dsfr/dist/utility/icons/icons-business/icons-business.min.css';
   import type { Props } from './definitions';
-  import Section from '$components/section/section.svelte';
+  import Section from '$components/common/Section.svelte';
+  import { formatPublishedAt } from '$lib/utils/formatters';
 
   const { data }: Props = $props();
-  const { blogPost } = data;
+  const { article } = data;
 </script>
 
 <svelte:head>
-  <title>{blogPost.title}</title>
+  <title>{article.title}</title>
 </svelte:head>
 
 <Section
-  title={blogPost.title}
+  title={article.title}
   titleElement="h1">
-  {#if blogPost.body}
-    {#each blogPost.body as { type, value }}
+  <p class="fr-card__detail fr-icon-calendar-2-line">
+    {formatPublishedAt(article.firstPublishedAt)}
+  </p>
+  {#if article.body}
+    {#each article.body as { type, value }}
       {#if type === 'paragraph'}
         {@html value}
       {:else if type === 'image'}
@@ -29,5 +34,15 @@
 <style>
   img {
     max-width: 100%;
+  }
+
+  .fr-card__detail {
+    display: flex;
+    align-items: center;
+    margin-block-end: var(--3w);
+
+    &::before {
+      --icon-size: 1rem;
+    }
   }
 </style>

@@ -6,7 +6,6 @@ const config = {
   // Consult https://kit.svelte.dev/docs/integrations#preprocessors
   // for more information about preprocessors
   preprocess: vitePreprocess(),
-
   kit: {
     // adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
     // If your environment is not supported, or you settled on a specific environment, switch out the adapter.
@@ -17,6 +16,17 @@ const config = {
       $components: 'src/lib/components',
       $routes: 'src/routes',
       $tests: 'tests/',
+    },
+    prerender: {
+      handleHttpError: ({ path, message }) => {
+        // ignore deliberate link to shiny 404 page
+        if (path.includes('/blog')) {
+          return;
+        }
+
+        // otherwise fail the build
+        throw new Error(message);
+      },
     },
   },
   onwarn: (warning, handler) => {

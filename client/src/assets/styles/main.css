@@ -1,10 +1,32 @@
 @import url('./_vars.css');
 @import url('./_icons.css');
 
+.scroll-behavior-smooth {
+  scroll-behavior: smooth;
+}
+
 .background-gradient {
   background: linear-gradient(
     180deg,
     var(--color-teal-light) 0%,
     var(--color-red-light) 100%
   );
+}
+
+.rounded-box-md {
+  border-top-left-radius: var(--border-radius-md);
+  border-top-right-radius: var(--border-radius-md);
+}
+
+.rounded-box-lg {
+  border-top-left-radius: var(--border-radius-lg);
+  border-top-right-radius: var(--border-radius-lg);
+}
+
+.color-blue-primary {
+  color: var(--color-blue-primary);
+}
+
+.background-color-white {
+  background-color: white;
 }

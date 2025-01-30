@@ -1,9 +1,9 @@
 <script>
-  import Section from '$components/section/section.svelte';
+  import Section from '$components/common/Section.svelte';
 </script>
 
 <svelte:head>
-  <title>Boris - Accessibilité</title>
+  <title>Accessibilité - Boris</title>
 </svelte:head>
 
 <Section
