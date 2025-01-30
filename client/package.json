@@ -46,5 +46,9 @@
     "vite": "^5.0.3",
     "vitest": "^2.0.0"
   },
+  "dependencies": {
+    "@sentry/node": "^8.42.0",
+    "@sentry/sveltekit": "^8.42.0"
+  },
   "type": "module"
 }
