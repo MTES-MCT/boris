@@ -27,8 +27,6 @@ async function transformHtml() {
           $this.remove();
         });
 
-        console.log($.html());
-
         await fs.outputFile(file, $.html());
       } catch (error) {
         console.error(error);
