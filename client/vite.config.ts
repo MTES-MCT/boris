@@ -3,6 +3,9 @@ import { imagetools } from '@zerodevx/svelte-img/vite';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  build: {
+    modulePreload: false,
+  },
   plugins: [
     sveltekit(),
     imagetools({
