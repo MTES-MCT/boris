@@ -1,10 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import Step from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/Step.svelte';
   import type { StepSection } from '$lib/utils/definitions';
+
+  import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Section from '$components/common/Section.svelte';
-  import Nav from './Nav.svelte';
-  import StepLink from './StepLink.svelte';
+  import Step from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/Step.svelte';
+  import Nav from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/Nav.svelte';
+  import StepLink from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/StepLink.svelte';
 
   type Props = {
     title: string;
@@ -66,7 +68,7 @@
   });
 </script>
 
-<div class="background-gradient">
+<GradientBackgroundWrapper>
   <Section>
     <div class="wrapper">
       <div class="fr-grid-row">
@@ -113,7 +115,7 @@
       </div>
     </div>
   </Section>
-</div>
+</GradientBackgroundWrapper>
 
 <style lang="postcss">
   .step-links {

@@ -1,3 +1,8 @@
+<script lang="ts">
+  import Img from '@zerodevx/svelte-img';
+  import HomeHero from '$assets/images/home-hero.jpg?as=run';
+</script>
+
 <section class="hero">
   <div class="column text-container">
     <div class="title background-color-white">
@@ -25,10 +30,21 @@
       </a>
     </div>
   </div>
-  <div class="column illustration-container"></div>
+  <div class="column illustration-container">
+    <Img
+      class="fr-responsive-img"
+      src={HomeHero}
+      loading="eager"
+      alt="" />
+  </div>
 </section>
 
 <style lang="postcss">
+  .hero {
+    position: relative;
+    max-height: 772px;
+  }
+
   .text-container {
     display: flex;
     flex-direction: column;
@@ -36,9 +52,6 @@
     padding-inline: var(--1w);
     padding-block-start: var(--8w);
     padding-block-end: var(--26w);
-    background-image: url('$assets/images/home-hero.jpg');
-    background-size: cover;
-    background-position: center;
 
     h1 {
       font-size: 1.5rem;
@@ -96,7 +109,21 @@
   }
 
   .illustration-container {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+    :global(img) {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    :global(picture) {
+      width: 100%;
+    }
   }
 
   @media (--xxs-viewport) {
@@ -168,16 +195,16 @@
     }
 
     .illustration-container {
-      width: 50%;
+      position: relative;
       display: flex;
       justify-content: center;
-      padding-block-start: var(--5w);
-      background-image: url('$assets/images/home-hero.jpg');
-      background-size: cover;
-      background-position: center;
+      width: 50%;
+      height: auto;
 
-      &::before {
+      &::after {
         content: '';
+        position: absolute;
+        top: var(--8w);
         width: 400px;
         height: 540px;
         background-image: url('$assets/illustrations/home-hero-trim.svg');

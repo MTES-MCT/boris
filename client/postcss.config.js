@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'development') {
   plugins.push(
     purgeCSSPlugin({
       content: ['./src/**/*.svelte', './src/**/*.html'],
-      safelist: [/svelte-/, /placement/, /modal/],
+      safelist: [/svelte-/, /placement/, /modal/, /global/],
     }),
   );
 }
