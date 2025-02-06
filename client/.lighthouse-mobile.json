@@ -2,11 +2,26 @@
   "ci": {
     "collect": {
       "url": ["http://localhost:4173"],
-      "numberOfRuns": 1
+      "numberOfRuns": 1,
+      "settings": {
+        "maxWaitForLoad": 15000,
+        "formFactor": "mobile",
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Mobile Safari/537.36",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823
+        },
+        "throttling": {
+          "rttMs": "150",
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562
+        }
+      }
     },
     "assert": {
       "assertions": {
-        "categories:performance": ["error", { "minScore": 0.1 }],
+        "categories:performance": ["error", { "minScore": 0.8 }],
         "categories:accessibility": ["error", { "minScore": 1 }]
       }
     }
