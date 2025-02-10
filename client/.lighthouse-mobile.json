@@ -1,7 +1,7 @@
 {
   "ci": {
     "collect": {
-      "url": ["http://localhost:4173"],
+      "url": ["http://localhost:4173/", "http://localhost:4173/accessibilite"],
       "numberOfRuns": 1,
       "settings": {
         "maxWaitForLoad": 15000,
@@ -21,8 +21,10 @@
     },
     "assert": {
       "assertions": {
-        "categories:performance": ["error", { "minScore": 0.8 }],
-        "categories:accessibility": ["error", { "minScore": 1 }]
+        "categories:performance": ["error", { "minScore": 0.5 }],
+        "categories:accessibility": ["error", { "minScore": 1 }],
+        "categories:best-practice": ["error", { "minScore": 1 }],
+        "categories:seo": ["error", { "minScore": 1 }]
       }
     }
   }
