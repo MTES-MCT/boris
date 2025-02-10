@@ -9,6 +9,9 @@
 
 <svelte:head>
   <title>Accueil - Boris</title>
+  <meta
+    name="description"
+    content="BoRiS aide à l'accès à la propriété en Bail Réel Solidaire (BRS)" />
 </svelte:head>
 
 <Hero />

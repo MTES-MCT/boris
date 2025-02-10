@@ -8,6 +8,9 @@
 
 <svelte:head>
   <title>Notre mission - Boris</title>
+  <meta
+    name="description"
+    content="Découvrez la mission de Boris, plateforme dédiée au Bail Réel Solidaire, qui facilite l'accès à la propriété pour tous en accompagnant les ménages dans leur parcours vers l'achat." />
 </svelte:head>
 
 <GradientBackgroundWrapper>

@@ -4,6 +4,9 @@
 
 <svelte:head>
   <title>Conditions générales d'utilisation - Boris</title>
+  <meta
+    name="description"
+    content="Consultez les conditions générales d'utilisation du site Boris, plateforme officielle dédiée au Bail Réel Solidaire, régissant l'accès et l'utilisation des services en ligne." />
 </svelte:head>
 
 <Section
