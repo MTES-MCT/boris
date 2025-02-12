@@ -37,7 +37,7 @@
         <div>
           <p>
             <b>
-              En tant que propriétaire d'un logement en BRS, bous pouvez
+              En tant que propriétaire d'un logement en BRS, vous pouvez
               notamment revendre votre logement (avec une plus-value toutefois
               encadrée) ou le transmettre à vos proches.
             </b>
