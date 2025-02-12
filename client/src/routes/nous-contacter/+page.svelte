@@ -4,6 +4,9 @@
 
 <svelte:head>
   <title>Nous contacter - Boris</title>
+  <meta
+    name="description"
+    content="Contactez-nous pour toute question concernant le Bail Réel Solidaire (BRS) et obtenez de l'aide pour votre parcours vers l'achat d'un logement." />
 </svelte:head>
 
 <Section

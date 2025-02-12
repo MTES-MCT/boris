@@ -3,26 +3,36 @@ import type { Step } from '$lib/utils/definitions';
 const step1 = {
   title: 'Je découvre le dispositif',
   slug: 'je-decouvre-le-dispositif',
+  description:
+    "Découvrez le Bail Réel Solidaire (BRS) et ses avantages : un dispositif pour faciliter l'accès à la propriété, réduire les coûts d'achat et favoriser la construction de patrimoine.",
 };
 
 const step2 = {
   title: 'Je trouve mon logement en BRS',
   slug: 'je-trouve-mon-logement-en-BRS',
+  description:
+    "Découvrez comment trouver votre logement en Bail Réel Solidaire (BRS) : conseils pour définir votre projet, rechercher un bien et préparer votre dossier d'achat. BoRiS vous accompagne dans toutes les étapes.",
 };
 
 const step3 = {
   title: 'Je cherche des financements',
   slug: 'je-cherche-des-financements',
+  description:
+    "Découvrez les solutions de financement disponibles pour l'achat d'un logement en Bail Réel Solidaire (BRS) : prêts, aides, et conseils pour établir un plan de financement adapté à votre projet immobilier.",
 };
 
 const step4 = {
   title: 'Je deviens propriétaire',
   slug: 'je-deviens-proprietaire',
+  description:
+    "Devenez propriétaire d'un logement en Bail Réel Solidaire (BRS) : suivez les étapes clés après avoir trouvé votre bien, de la signature du compromis à l'acte de vente chez le notaire, et préparez votre dossier pour finaliser l'achat.",
 };
 
 const step5 = {
   title: 'Je suis chez moi',
   slug: 'je-suis-chez-moi',
+  description:
+    'Une fois installé dans votre logement en Bail Réel Solidaire (BRS), découvrez vos droits et obligations : assurance, réalisation de travaux, gestion de la copropriété et conditions de revente pour garantir une expérience de vie sereine.',
 };
 
 export const steps: Step[] = [

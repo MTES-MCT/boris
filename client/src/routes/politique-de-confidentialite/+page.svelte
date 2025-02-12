@@ -4,6 +4,9 @@
 
 <svelte:head>
   <title>Politique de confidentialité - Boris</title>
+  <meta
+    name="description"
+    content="Consultez la politique de confidentialité de Boris, qui décrit la collecte, l'utilisation et la protection de vos données personnelles lors de l'utilisation de la plateforme dédiée au Bail Réel Solidaire." />
 </svelte:head>
 
 <Section
