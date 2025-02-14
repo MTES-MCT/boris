@@ -12,6 +12,7 @@
   "scripts": {
     "prepare": "husky"
   },
+  "packageManager": "yarn@4.6.0",
   "devDependencies": {
     "@eslint/js": "^9.12.0",
     "@types/eslint": "^9.6.0",

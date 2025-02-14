@@ -4,6 +4,9 @@
 
 <svelte:head>
   <title>Mentions légales - Boris</title>
+  <meta
+    name="description"
+    content="Consultez les mentions légales du site Boris, régissant l'utilisation de la plateforme dédiée au Bail Réel Solidaire, et les informations légales concernant son exploitation." />
 </svelte:head>
 
 <Section

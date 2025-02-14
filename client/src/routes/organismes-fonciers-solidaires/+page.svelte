@@ -11,12 +11,13 @@
 
   const { data }: Props = $props();
   const { regions } = data;
-
-  console.log(regions);
 </script>
 
 <svelte:head>
   <title>Organismes Foncier Solidaires - Boris</title>
+  <meta
+    name="description"
+    content="Découvrez les Organismes Foncier Solidaire (OFS) en France, acteurs clés du dispositif du Bail Réel Solidaire." />
 </svelte:head>
 
 <Section

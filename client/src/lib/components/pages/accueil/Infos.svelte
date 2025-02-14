@@ -1,9 +1,9 @@
 <script>
   import HorizontalCard from '$components/common/HorizontalCard.svelte';
   import Section from '$components/common/Section.svelte';
-  import card1 from '$assets/images/home-card-1.jpg';
-  import card2 from '$assets/images/home-card-2.jpg';
-  import card3 from '$assets/images/home-card-3.jpg';
+  import card1 from '$assets/images/home-card-1.jpg?as=run';
+  import card2 from '$assets/images/home-card-2.jpg?as=run';
+  import card3 from '$assets/images/home-card-3.jpg?as=run';
   import { default as MascotteThinking } from '$assets/icons/mascotte-thinking.svg?raw';
   import { default as MascotteCelebrating } from '$assets/icons/mascotte-celebrating.svg?raw';
   import { default as EndOfPath } from '$assets/icons/end-of-path.svg?raw';

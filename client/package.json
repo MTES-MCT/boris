@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "vite build && node ./scripts/postBuild.cjs",
     "start": "node build",
     "preview": "vite preview",
     "test": "npm run test:integration && npm run test:unit",
@@ -21,6 +21,7 @@
     "lighthouse-mobile": "lhci autorun --config=./.lighthouse-mobile.json",
     "lighthouse-desktop": "lhci autorun --config=./.lighthouse-desktop.json"
   },
+  "packageManager": "yarn@4.6.0",
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
     "@csstools/postcss-global-data": "^3.0.0",
@@ -31,6 +32,7 @@
     "@sveltejs/adapter-node": "^5.2.9",
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
+    "@zerodevx/svelte-img": "^2.1.2",
     "cssnano": "^7.0.6",
     "eslint-plugin-svelte": "^2.36.0",
     "globals": "^15.0.0",
@@ -48,7 +50,9 @@
   },
   "dependencies": {
     "@sentry/node": "^8.42.0",
-    "@sentry/sveltekit": "^8.42.0"
+    "@sentry/sveltekit": "^8.42.0",
+    "cheerio": "^1.0.0",
+    "glob-promise": "^6.0.7"
   },
   "type": "module"
 }

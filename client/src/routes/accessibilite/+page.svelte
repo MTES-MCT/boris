@@ -4,6 +4,9 @@
 
 <svelte:head>
   <title>Accessibilité - Boris</title>
+  <meta
+    name="description"
+    content="Déclaration d'accessibilité du site Boris et découvrez les actions pour garantir un accès inclusif aux services du Bail Réel Solidaire." />
 </svelte:head>
 
 <Section

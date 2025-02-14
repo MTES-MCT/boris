@@ -10,6 +10,9 @@
 
 <svelte:head>
   <title>{article.title}</title>
+  <meta
+    name="description"
+    content={article.description} />
 </svelte:head>
 
 <Section
