@@ -7,7 +7,7 @@
     "npm": "10"
   },
   "workspaces": [
-    "client"
+    "packages/frontend"
   ],
   "scripts": {
     "prepare": "husky"

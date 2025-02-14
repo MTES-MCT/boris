@@ -23,11 +23,11 @@ node_modules
 .tool-versions
 
 # CLIENT
-/client/build
-/client/.svelte-kit
-/client/test-results/
-/client/e2e/**/.setup/
-/client/.lighthouseci/
+/packages/frontend/build
+/packages/frontend/.svelte-kit
+/packages/frontend/test-results/
+/packages/frontend/e2e/**/.setup/
+/packages/frontend/.lighthouseci/
 
 # Logs
 logs

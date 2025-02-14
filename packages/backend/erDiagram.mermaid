@@ -1,0 +1,64 @@
+erDiagram
+    %% -------------------
+    %% |  RELATIONSHIPS  |
+    %% -------------------
+
+    OFS ||--|{ OFS_REGION : "se situe"
+    OFS_REGION }|--|| REGION : "se situe"
+    OFS ||--|{ OFS_DEPARTEMENT : "se situe"
+    OFS_DEPARTEMENT }|--|| DEPARTEMENT : "se situe"
+    DEPARTEMENT }|--|| REGION : "se situe"
+    DISTRIBUTOR }o--|| OFS : "est membre"
+
+    %% todo: confirmer le type de relation entre DISTRIBUTOR et OFS
+
+    %% -------------------
+    %% |    ENTITIES     |
+    %% -------------------
+
+    OFS {
+        string id PK
+        string name
+        string phone
+        string website_link
+    }
+
+    REGION {
+      string id PK
+      string name
+    }
+
+    OFS_REGION {
+      string id PK
+      string ofs_id FK
+      string region_id FK
+    }
+
+    DEPARTEMENT {
+      string id PK
+      string name
+      number zipcode
+      string region_id FK
+    }
+
+    OFS_DEPARTEMENT {
+      string id PK
+      string ofs_id FK
+      string departement_id FK
+    }
+
+    DISTRIBUTOR {
+      string id PK
+      string name
+      string website_link
+      string ofs_id FK
+    }
+
+    USER {
+      string id PK
+      string email
+      string password
+      string first_name
+      string last_name
+      string role
+    }

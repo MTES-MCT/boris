@@ -1,0 +1,1 @@
+export { default as component } from "../../../../src/routes/tout-savoir-sur-le-bail-reel-solidaire-brs/+page.svelte";
