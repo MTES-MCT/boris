@@ -1,0 +1,55 @@
+{
+	"/(accueil)": [
+		"src/routes/+layout.ts"
+	],
+	"/": [
+		"src/routes/+layout.ts"
+	],
+	"/accessibilite": [
+		"src/routes/+layout.ts"
+	],
+	"/api/blog/articles": [
+		"src/routes/api/blog/articles/+server.ts"
+	],
+	"/blog": [
+		"src/routes/blog/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/blog/[slug]": [
+		"src/routes/blog/[slug]/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/conditions-generales-d-utilisation": [
+		"src/routes/+layout.ts"
+	],
+	"/mentions-legales": [
+		"src/routes/+layout.ts"
+	],
+	"/notre-mission": [
+		"src/routes/+layout.ts"
+	],
+	"/nous-contacter": [
+		"src/routes/+layout.ts"
+	],
+	"/organismes-fonciers-solidaires": [
+		"src/routes/organismes-fonciers-solidaires/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/politique-de-confidentialite": [
+		"src/routes/+layout.ts"
+	],
+	"/simulateur-eligibilite": [
+		"src/routes/simulateur-eligibilite/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/sitemap.xml": [
+		"src/routes/sitemap.xml/+server.ts"
+	],
+	"/tout-savoir-sur-le-bail-reel-solidaire-brs": [
+		"src/routes/+layout.ts"
+	],
+	"/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]": [
+		"src/routes/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/+page.server.ts",
+		"src/routes/+layout.ts"
+	]
+}

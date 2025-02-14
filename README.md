@@ -45,3 +45,7 @@ Lancer le server de développement
 npm run dev -w client
 
 ```
+
+## Backend
+
+[Schéma entités/relations](./packages//backend//erDiagram.mermaid)
