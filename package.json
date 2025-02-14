@@ -4,15 +4,14 @@
   "private": true,
   "engines": {
     "node": "20.18.0",
-    "npm": "10"
+    "npm": "10.8.2"
+  },
+  "scripts": {
+    "prepare": "husky"
   },
   "workspaces": [
     "client"
   ],
-  "scripts": {
-    "prepare": "husky"
-  },
-  "packageManager": "yarn@4.6.0",
   "devDependencies": {
     "@eslint/js": "^9.12.0",
     "@types/eslint": "^9.6.0",
@@ -24,9 +23,5 @@
     "prettier": "^3.1.1",
     "typescript": "5.6.3",
     "typescript-eslint": "^8.0.0"
-  },
-  "dependencies": {
-    "@sentry/node": "^8.41.0",
-    "@sentry/sveltekit": "^8.41.0"
   }
 }

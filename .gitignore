@@ -36,12 +36,3 @@ logs
 .idea/
 
 .talismanrc
-
-# YARN
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
