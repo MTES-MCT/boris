@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && node ./scripts/postBuild.cjs",
+    "build": "vite build",
     "start": "node build",
     "preview": "vite preview",
     "test": "npm run test:integration && npm run test:unit",
