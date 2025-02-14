@@ -4,7 +4,7 @@
   "private": true,
   "engines": {
     "node": "20.18.0",
-    "npm": "10"
+    "yarn": "4.6.0"
   },
   "scripts": {
     "dev": "vite dev",
@@ -21,7 +21,6 @@
     "lighthouse-mobile": "lhci autorun --config=./.lighthouse-mobile.json",
     "lighthouse-desktop": "lhci autorun --config=./.lighthouse-desktop.json"
   },
-  "packageManager": "yarn@4.6.0",
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
     "@csstools/postcss-global-data": "^3.0.0",
