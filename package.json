@@ -8,7 +8,7 @@
   },
   "scripts": {
     "prepare": "husky",
-    "scalingo-postbuild": "npm run build -w client"
+    "scalingo-postbuild": "bash scripts/postbuild.sh"
   },
   "workspaces": [
     "client"

@@ -3,8 +3,6 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { imagetools } from '@zerodevx/svelte-img/vite';
 import { defineConfig } from 'vitest/config';
 
-console.log(process.env);
-
 export default defineConfig({
   build: {
     modulePreload: false,
