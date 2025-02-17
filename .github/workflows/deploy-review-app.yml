@@ -21,8 +21,7 @@ jobs:
       - name: Deploy review app
         if: always()
         run: |
-          curl
-            -H "Accept: application/json" -H "Content-Type: application/json" \
+          curl -H "Accept: application/json" -H "Content-Type: application/json" \
             - H "Authorization: Bearer $api_token" \
             -X POST https://$SCALINGO_API_URL/v1/apps/$APP_NAME/scm_repo_link/manual_review_app \
             -d '{
