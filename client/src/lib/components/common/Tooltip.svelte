@@ -37,40 +37,36 @@
   .tooltip {
     position: relative;
     cursor: pointer;
+  }
 
-    .tooltip-content {
+  .tooltip .tooltip-content {
+    position: absolute;
+    bottom: var(--1w);
+    transform: translateX(calc(-50% - var(--1w) - var(--1v)));
+    background: white;
+    z-index: 10;
+    display: inline;
+    width: max-content;
+    max-width: 300px;
+    box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
+    display: none;
+
+    &::after {
+      content: '';
       position: absolute;
-      bottom: var(--1w);
-      transform: translateX(calc(-50% - var(--1w) - var(--1v)));
-      background: white;
-      z-index: 10;
-      display: inline;
-      width: max-content;
-      max-width: 300px;
-      box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
-      display: none;
-
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: calc(-1 * var(--1w));
-        left: calc(50% - var(--1v));
-        width: 0px;
-        height: 0px;
-        border-style: solid;
-        border-width: var(--1w) var(--1w) 0 var(--1w);
-        border-color: white transparent transparent transparent;
-      }
-
-      &:first-child {
-        margin-block-end: 0;
-      }
+      bottom: calc(-1 * var(--1w));
+      left: calc(50% - var(--1v));
+      width: 0px;
+      height: 0px;
+      border-style: solid;
+      border-width: var(--1w) var(--1w) 0 var(--1w);
+      border-color: white transparent transparent transparent;
     }
+  }
 
-    &:hover {
-      .tooltip-content {
-        display: inline;
-      }
+  .tooltip:hover {
+    .tooltip-content {
+      display: inline;
     }
   }
 </style>
