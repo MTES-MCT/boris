@@ -3,6 +3,8 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { imagetools } from '@zerodevx/svelte-img/vite';
 import { defineConfig } from 'vitest/config';
 
+console.log(process.env);
+
 export default defineConfig({
   build: {
     modulePreload: false,
@@ -14,6 +16,7 @@ export default defineConfig({
         org: 'boris',
         project: 'client',
         url: 'https://sentry.incubateur.net/',
+        authToken: process.env.SENTRY_AUTH_TOKEN,
       },
       adapter: 'node',
     }),

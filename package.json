@@ -8,8 +8,7 @@
   },
   "scripts": {
     "prepare": "husky",
-    "scalingo-postbuild": "npm run build -w client",
-    "postinstall": "npm install --prefix client"
+    "scalingo-postbuild": "npm run build -w client"
   },
   "workspaces": [
     "client"
