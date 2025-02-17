@@ -48,7 +48,7 @@
     "vitest": "^2.0.0"
   },
   "dependencies": {
-    "@sentry/sveltekit": "^8.42.0",
+    "@sentry/sveltekit": "^9.0.0",
     "cheerio": "^1.0.0",
     "glob-promise": "^6.0.7"
   },
