@@ -14,14 +14,6 @@
     content="BoRiS aide à l'accès à la propriété en Bail Réel Solidaire (BRS)" />
 </svelte:head>
 
-<button
-  on:click={() => {
-    throw new Error('Sentry Frontend Error');
-  }}>
-  Throw error
-</button>
-;
-
 <Hero />
 
 <GradientBackgroundWrapper>
