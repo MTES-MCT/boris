@@ -1,15 +1,7 @@
 <script lang="ts">
-  import '@gouvfr/dsfr/dist/component/tooltip/tooltip.min.css';
   import '@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css';
-  import { onMount, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
   import { nanoid } from 'nanoid';
-
-  onMount(async () => {
-    await import(
-      // @ts-expect-error: no declaration file
-      '@gouvfr/dsfr/dist/component/tooltip/tooltip.module.min'
-    );
-  });
 
   type Props = {
     children: Snippet;
@@ -19,30 +11,66 @@
   const id = nanoid(10);
 </script>
 
-<span
-  class="fr-icon-question-line"
-  aria-hidden="true"
-  aria-describedby={id}>
-</span>
-<span
-  class="fr-tooltip fr-placement"
-  {id}
-  role="tooltip"
-  aria-hidden="true">
-  {@render children()}
-</span>
+<div class="tooltip">
+  <span
+    class="fr-icon-question-line"
+    aria-describedby={id}>
+  </span>
+  <div
+    class="tooltip-content fr-text--xs"
+    {id}
+    role="tooltip"
+    aria-hidden="true">
+    {@render children()}
+  </div>
+</div>
 
 <style>
   .fr-icon-question-line {
     color: var(--text-action-high-blue-france);
-    cursor: pointer;
 
     &::before {
       --icon-size: var(--2w);
     }
   }
 
-  .fr-tooltip {
-    text-align: center;
+  .tooltip {
+    position: relative;
+    cursor: pointer;
+
+    .tooltip-content {
+      position: absolute;
+      bottom: var(--1w);
+      transform: translateX(calc(-50% - var(--1w) - var(--1v)));
+      background: white;
+      z-index: 10;
+      display: inline;
+      width: max-content;
+      max-width: 300px;
+      box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
+      display: none;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: calc(-1 * var(--1w));
+        left: calc(50% - var(--1v));
+        width: 0px;
+        height: 0px;
+        border-style: solid;
+        border-width: var(--1w) var(--1w) 0 var(--1w);
+        border-color: white transparent transparent transparent;
+      }
+
+      &:first-child {
+        margin-block-end: 0;
+      }
+    }
+
+    &:hover {
+      .tooltip-content {
+        display: inline;
+      }
+    }
   }
 </style>
