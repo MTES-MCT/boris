@@ -27,7 +27,7 @@ jobs:
             -X POST https://$SCALINGO_API_URL/v1/apps/$APP_NAME-pr${{ github.event.number }}/deployments -d \
             '{
               "deployment": {
-                "git_ref": "deploy-review-apps-from-github-actions",
-                "source_url": "https://github.com/MTES-MCT/boris/archive/$BRANCH_NAME.tar.gz"
+                "git_ref": "pr${{ github.event.number }}",
+                "source_url": "https://github.com/MTES-MCT/boris/archive/feat/deploy-review-apps-from-github-actions.tar.gz"
               }
             }'
