@@ -12,7 +12,6 @@ jobs:
       region: 'osc-fr1'
       api_token: ${{ secrets.SCALINGO_API_TOKEN }}
       SCALINGO_BEARER_TOKEN: ${{ secrets.SCALINGO_BEARER_TOKEN }}
-      BRANCH_NAME: ${{ github.head_ref }}
 
     steps:
       - name: Create review app
@@ -28,6 +27,6 @@ jobs:
             '{
               "deployment": {
                 "git_ref": "pr${{ github.event.number }}",
-                "source_url": "https://github.com/MTES-MCT/boris/archive/feat/deploy-review-apps-from-github-actions.tar.gz"
+                "source_url": "https://github.com/MTES-MCT/boris/archive/${{ github.head_ref }}.tar.gz"
               }
             }'
