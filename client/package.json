@@ -4,11 +4,11 @@
   "private": true,
   "engines": {
     "node": "20.18.0",
-    "npm": "10"
+    "npm": "10.8.2"
   },
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && node ./scripts/postBuild.cjs",
+    "build": "svelte-kit sync && vite build",
     "start": "node build",
     "preview": "vite preview",
     "test": "npm run test:integration && npm run test:unit",
@@ -29,7 +29,7 @@
     "@lhci/cli": "^0.14.0",
     "@playwright/test": "^1.28.1",
     "@sveltejs/adapter-node": "^5.2.9",
-    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/kit": "^2.17.1",
     "@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
     "@zerodevx/svelte-img": "^2.1.2",
     "cssnano": "^7.0.6",
@@ -47,9 +47,10 @@
     "vite": "^5.0.3",
     "vitest": "^2.0.0"
   },
-  "type": "module",
   "dependencies": {
+    "@sentry/sveltekit": "^8.42.0",
     "cheerio": "^1.0.0",
     "glob-promise": "^6.0.7"
-  }
+  },
+  "type": "module"
 }

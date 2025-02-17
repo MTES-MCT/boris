@@ -1,2 +1,2 @@
-talisman --githook pre-commit
+talisman --checksum="*.lock" --githook pre-commit
 npx lint-staged
