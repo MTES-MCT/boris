@@ -21,9 +21,9 @@ jobs:
       - name: Deploy review app
         if: always()
         run: |
-          curl -H "Accept: application/json" -H "Content-Type: application/json" \
-            - H "Authorization: Bearer $api_token" \
+          curl
             -X POST https://$SCALINGO_API_URL/v1/apps/$APP_NAME/scm_repo_link/manual_review_app \
+            -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer $BEARER_TOKEN" \
             -d '{
               "pull_request_id": ${{ github.event.number }}
             }'
