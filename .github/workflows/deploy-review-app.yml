@@ -9,9 +9,10 @@ jobs:
     env:
       APP_NAME: 'boris-staging'
 
+    continue-on-error: true
+
     steps:
       - name: Create review app
-        continue-on-error: true
         uses: scalingo-community/setup-scalingo@v0.1.1
         with:
           region: 'osc-fr1'
