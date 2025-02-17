@@ -9,8 +9,6 @@ jobs:
     env:
       APP_NAME: 'boris-staging'
 
-    continue-on-error: true
-
     steps:
       - name: Create review app
         uses: scalingo-community/setup-scalingo@v0.1.1
@@ -21,6 +19,7 @@ jobs:
       - run: scalingo --app $APP_NAME integration-link-manual-review-app ${{ github.event.number }}
 
       - name: Deploy review app
+        if: always()
         uses: scalingo-community/setup-scalingo@v0.1.1
         with:
           region: 'osc-fr1'
