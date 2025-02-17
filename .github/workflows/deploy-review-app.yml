@@ -7,6 +7,7 @@ jobs:
   deploy-review-app:
     runs-on: ubuntu-latest
     env:
+      SCALINGO_API_URL: api.osc-fr1.scalingo.com
       APP_NAME: 'boris-staging'
       region: 'osc-fr1'
       api_token: ${{ secrets.SCALINGO_API_TOKEN }}
@@ -19,4 +20,11 @@ jobs:
 
       - name: Deploy review app
         if: always()
-        run: scalingo --app $APP_NAME integration-link-manual-deploy ${{ github.head_ref }}
+        run: |
+          curl
+            -H "Accept: application/json" -H "Content-Type: application/json" \
+            - H "Authorization: Bearer $api_token" \
+            -X POST https://$SCALINGO_API_URL/v1/apps/$APP_NAME/scm_repo_link/manual_review_app \
+            -d '{
+              "pull_request_id": ${{ github.event.number }}
+            }'
