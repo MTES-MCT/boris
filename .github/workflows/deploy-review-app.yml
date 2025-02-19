@@ -5,25 +5,27 @@ on:
 
 jobs:
   deploy-review-app:
+    # skip for now
+    if: false
     runs-on: ubuntu-latest
     env:
-      SCALINGO_API_URL: api.osc-fr1.scalingo.com
-      APP_NAME: 'boris-staging'
+      scalingo_api_url: api.osc-fr1.scalingo.com
+      app_name: 'boris-staging'
       region: 'osc-fr1'
       api_token: ${{ secrets.SCALINGO_API_TOKEN }}
-      SCALINGO_BEARER_TOKEN: ${{ secrets.SCALINGO_BEARER_TOKEN }}
+      scalingo_bearer_token: ${{ secrets.SCALINGO_BEARER_TOKEN }}
 
     steps:
       - name: Create review app
         uses: scalingo-community/setup-scalingo@v0.1.1
-      - run: scalingo --app $APP_NAME integration-link-manual-review-app ${{ github.event.number }}
+      - run: scalingo --app $app_name integration-link-manual-review-app ${{ github.event.number }}
         continue-on-error: true
 
       - name: Deploy review app
         if: always()
         run: |
-          curl -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer $SCALINGO_BEARER_TOKEN" \
-            -X POST https://$SCALINGO_API_URL/v1/apps/$APP_NAME-pr${{ github.event.number }}/deployments -d \
+          curl -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer $scalingo_bearer_token" \
+            -X POST https://$scalingo_api_url/v1/apps/$app_name-pr${{ github.event.number }}/deployments -d \
             '{
               "deployment": {
                 "git_ref": "pr${{ github.event.number }}",

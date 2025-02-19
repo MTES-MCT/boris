@@ -48,6 +48,13 @@
                 Statistiques
               </a>
             </li>
+            <li>
+              <a
+                class="fr-footer__top-link"
+                href="/espace-presse">
+                Espace presse
+              </a>
+            </li>
           </ul>
         </div>
       </div>
