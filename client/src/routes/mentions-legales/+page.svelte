@@ -1,5 +1,6 @@
 <script lang="ts">
   import Section from '$components/common/Section.svelte';
+  import ContentPageSubtitle from '$components/common/ContentPageSubtitle.svelte';
 </script>
 
 <svelte:head>
@@ -12,28 +13,28 @@
 <Section
   title="Mentions légales"
   titleElement="h1">
-  <h2>Editeur du site</h2>
+  <ContentPageSubtitle title="Editeur du site" />
   <p>
     Ministère de la Transition Ecologique et de la Cohésion des Territoires
     (MTECT)
-  </p>
-  <p>
+    <br />
     Direction Générale de l'Aménagement, du Logement et de la Nature (DGALN)
-  </p>
-  <p>Direction de l'Habitat et de l'Urbanisme (DHUP)</p>
-  <p>1 place Carpeaux, 92800 Puteaux, France +33 1 40 81 21 22</p>
-  <p>
-    Directeur de la publication : Damien Botteghi, directeur de l'Habitat, de
-    l'Urbanisme et des Paysages
+    <br />
+    Direction de l'Habitat et de l'Urbanisme (DHUP)
+    <br />
+    1 place Carpeaux, 92800 Puteaux, France +33 1 40 81 21 22
+    <br />
+    Directeur de la publication : Damien Botteghi, directeur de l'Habitat, de l'Urbanisme
+    et des Paysages
   </p>
 
-  <h2>Hébergement</h2>
+  <ContentPageSubtitle title="Hébergement" />
   <p>
     Ce site est hébergé en France par l'entreprise Scalingo, domiciliée au 15
     avenue du Rhin 67000 Strasbourg.
   </p>
 
-  <h2>Chatbot</h2>
+  <ContentPageSubtitle title="Chatbot" />
   <p>
     Landbot Hello Umi S.L Av. Josep Tarradellas, 20, Floor 6, CP 08029B
     Barcelona Spain

@@ -1,5 +1,6 @@
 <script lang="ts">
   import Section from '$components/common/Section.svelte';
+  import ContentPageSubtitle from '$components/common/ContentPageSubtitle.svelte';
 </script>
 
 <svelte:head>
@@ -21,7 +22,7 @@
     utilisation de BoRiS.
   </p>
 
-  <h2>Informations collectées</h2>
+  <ContentPageSubtitle title="Informations collectées" />
   <p>
     Nous collectons des informations vous concernant lorsque vous utilisez le
     simulateur d'éligibilité BoRiS, notamment vos données personnelles telles
@@ -31,7 +32,7 @@
     d'autres informations personnelles que vous consentez à nous transmettre.
   </p>
 
-  <h2>Utilisation et partage des informations</h2>
+  <ContentPageSubtitle title="Utilisation et partage des informations" />
   <p>
     Les informations collectées sont utilisées dans le but d’améliorer BoRiS et
     peuvent être transmises à des entités tierces (Organismes de Foncier
@@ -51,14 +52,14 @@
     </a>
   </p>
 
-  <h2>Sécurité des informations</h2>
+  <ContentPageSubtitle title="Sécurité des informations" />
   <p>
     Nous mettons en œuvre des mesures de sécurité techniques et
     organisationnelles pour protéger vos informations contre tout accès non
     autorisé, toute divulgation, toute altération et toute destruction.
   </p>
 
-  <h2>Cookies et technologies similaires</h2>
+  <ContentPageSubtitle title="Cookies et technologies similaires" />
   <p>
     BoRiS peut utiliser des cookies et d'autres technologies similaires pour
     améliorer votre expérience utilisateur et analyser la manière dont vous
@@ -66,7 +67,8 @@
     les cookies, mais cela pourrait affecter certaines fonctionnalités de BoRiS.
   </p>
 
-  <h2>Modifications de la politique de confidentialité</h2>
+  <ContentPageSubtitle
+    title="Modifications de la politique de confidentialité" />
   <p>
     Nous nous réservons le droit de mettre à jour cette Politique de
     Confidentialité à tout moment. Les modifications seront publiées sur cette
@@ -75,7 +77,7 @@
     modifications.
   </p>
 
-  <h2>Contact</h2>
+  <ContentPageSubtitle title="Contact" />
   <p>
     Si vous avez des questions concernant cette Politique de Confidentialité,
     vous pouvez nous contacter à l'adresse courriel suivante
