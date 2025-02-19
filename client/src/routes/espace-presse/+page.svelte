@@ -3,6 +3,12 @@
   import Section from '$components/common/Section.svelte';
 </script>
 
+<svelte:head>
+  <meta
+    name="description"
+    content="Découvrez l’espace presse de BoRiS, avec nos communiqués et dossiers de presse sur le Bail Réel Solidaire (BRS)." />
+</svelte:head>
+
 <Section
   title="Espace presse"
   titleElement="h1">
