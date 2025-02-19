@@ -5,6 +5,8 @@ on:
 
 jobs:
   deploy-review-app:
+    # skip for now
+    if: false
     runs-on: ubuntu-latest
     env:
       scalingo_api_url: api.osc-fr1.scalingo.com
