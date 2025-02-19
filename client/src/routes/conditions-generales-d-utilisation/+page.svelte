@@ -10,6 +10,13 @@
     content="Consultez les conditions générales d'utilisation du site Boris, plateforme officielle dédiée au Bail Réel Solidaire, régissant l'accès et l'utilisation des services en ligne." />
 </svelte:head>
 
+<button
+  onclick={() => {
+    throw new Error('Error for sentry');
+  }}>
+  throw error
+</button>
+
 <Section
   title="Conditions générales d'utilisation"
   titleElement="h1">

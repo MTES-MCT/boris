@@ -6,6 +6,7 @@ Sentry.init({
   dsn: 'https://a08d74bb41ceec5e916f126744df60ea@sentry.incubateur.net/207',
 
   tracesSampleRate: 1.0,
+  enabled: process.env.NODE_ENV !== 'development',
 
   // uncomment the line below to enable Spotlight (https://spotlightjs.com)
   // spotlight: import.meta.env.DEV,
