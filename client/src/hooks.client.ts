@@ -1,8 +1,6 @@
 import { handleErrorWithSentry } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
 
-console.log(location.host.includes('localhost'));
-
 Sentry.init({
   dsn: 'https://a08d74bb41ceec5e916f126744df60ea@sentry.incubateur.net/207',
 
