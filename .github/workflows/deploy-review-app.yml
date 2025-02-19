@@ -9,6 +9,7 @@ jobs:
     env:
       SCALINGO_API_URL: api.osc-fr1.scalingo.com
       APP_NAME: 'boris-staging'
+      SCALINGO_REGION: 'osc-fr1'
       region: 'osc-fr1'
       api_token: ${{ secrets.SCALINGO_API_TOKEN }}
       SCALINGO_BEARER_TOKEN: ${{ secrets.SCALINGO_BEARER_TOKEN }}
