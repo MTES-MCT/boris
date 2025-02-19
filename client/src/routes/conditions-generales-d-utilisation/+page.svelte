@@ -1,5 +1,6 @@
 <script lang="ts">
   import Section from '$components/common/Section.svelte';
+  import ContentPageSubtitle from '$components/common/ContentPageSubtitle.svelte';
 </script>
 
 <svelte:head>
@@ -18,7 +19,7 @@
     termes et conditions énoncés ci-dessous.
   </p>
 
-  <h2>Présentation de la plateforme</h2>
+  <ContentPageSubtitle title="Présentation de la plateforme" />
   <p>
     BoRiS est la plateforme officielle d’information sur le dispositif relatif
     aux Organismes de Foncier Solidaire et au Bail Réel Solidaire. Cette
@@ -30,7 +31,7 @@
     les Organismes de Foncier Solidaire et facilite leur mise en relation.
   </p>
 
-  <h2>Qualité des informations publiées</h2>
+  <ContentPageSubtitle title="Qualité des informations publiées" />
   <p>
     Nous donnons accès sur BoRiS à des informations publiques. Cependant, seules
     les publications légales font foi, notamment au Journal officiel de la
@@ -51,7 +52,7 @@
     nathan.gaudelet@beta.gouv.fr.
   </p>
 
-  <h2>Propriété intellectuelle</h2>
+  <ContentPageSubtitle title="Propriété intellectuelle" />
   <p>
     Ce site est la propriété exclusive du Ministère chargé du Logement. Toute
     reproduction ou représentation, qu'elle soit totale ou partielle, de ce site
@@ -75,7 +76,7 @@
     articles L. 716-1 et suivants du code de la propriété intellectuelle.
   </p>
 
-  <h2>Limitation de la responsabilité</h2>
+  <ContentPageSubtitle title="Limitation de la responsabilité" />
   <p>
     BoRiS ne saurait être tenu responsable des éventuelles difficultés de
     fonctionnement du service, ni être engagé directement ou indirectement
@@ -88,7 +89,7 @@
     cas d’incident relatif à une faille de sécurité.
   </p>
 
-  <h2>Disponibilité du site</h2>
+  <ContentPageSubtitle title="Disponibilité du site" />
   <p>
     Le ministère peut suspendre l’accès à BoRiS sans information préalable ni
     préavis, notamment pour des raisons de maintenance. Le ministère met

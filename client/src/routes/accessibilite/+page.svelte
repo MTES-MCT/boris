@@ -1,4 +1,5 @@
 <script>
+  import ContentPageSubtitle from '$components/common/ContentPageSubtitle.svelte';
   import Section from '$components/common/Section.svelte';
 </script>
 
@@ -32,7 +33,8 @@
     </span>
     .
   </p>
-  <h2>État de conformité</h2>
+
+  <ContentPageSubtitle title="État de conformité" />
   <p>
     <strong>Boris</strong>
     est
@@ -47,12 +49,13 @@
       <br />
     </span>
   </p>
-  <h2>Contenus non accessibles</h2>
+
+  <ContentPageSubtitle title="Contenus non accessibles" />
   <p>
     Les contenus listés ci-dessous ne sont pas accessibles pour les raisons
     suivantes.
   </p>
-  <h3>Non conformité</h3>
+  <p><b>Non conformité</b></p>
   <p>
     Malgré nos efforts, certains contenus sont inaccessibles. Vous trouverez
     ci-dessous une liste des limitations connues et des solutions
@@ -65,13 +68,15 @@
       . .
     </li>
   </ol>
-  <h2>Établissement de cette déclaration d’accessibilité</h2>
+
+  <ContentPageSubtitle
+    title="Établissement de cette déclaration d’accessibilité" />
   <p>
     Cette déclaration a été établie le
     <span>19 novembre 2024</span>
     .
   </p>
-  <h3>Technologies utilisées</h3>
+  <p><b>Technologies utilisées</b></p>
   <p>
     L’accessibilité de
     <span>Boris</span>
@@ -82,7 +87,8 @@
     <li>CSS</li>
     <li>JavaScript</li>
   </ul>
-  <h2>Amélioration et contact</h2>
+
+  <ContentPageSubtitle title="Amélioration et contact" />
   <p>
     Si vous n’arrivez pas à accéder à un contenu ou à un service, vous pouvez
     contacter le responsable de
@@ -96,7 +102,8 @@
       <a href="mailto:boris@beta.gouv.fr">boris@beta.gouv.fr</a>
     </li>
   </ul>
-  <h2>Voie de recours</h2>
+
+  <ContentPageSubtitle title="Voie de recours" />
   <p>
     Cette procédure est à utiliser dans le cas suivant&nbsp;: vous avez signalé
     au responsable du site internet un défaut d’accessibilité qui vous empêche
