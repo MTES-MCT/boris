@@ -8,6 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2023",
     "sourceMap": true,
+    "types": ["node"],
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
