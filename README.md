@@ -54,4 +54,4 @@ npm run dev -w apps/backend
 
 ### Schéma entités/relations
 
-[Schéma entités/relations](/apps/backend/doc/entityies-relationships.mermaid)
+[Schéma entités/relations](/apps/backend/doc/entities-relationships-diagram.mermaid)
