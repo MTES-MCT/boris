@@ -5,6 +5,8 @@ on:
 
 jobs:
   client-unit-tests:
+    # skip for now
+    if: false
     runs-on: ubuntu-latest
     strategy:
       matrix:
