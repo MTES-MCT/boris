@@ -7,7 +7,6 @@
     "npm": "10.8.2"
   },
   "scripts": {
-    "prepare": "husky",
     "scalingo-postbuild": "bash scripts/postbuild.sh"
   },
   "workspaces": [
