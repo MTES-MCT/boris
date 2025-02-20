@@ -1,3 +1,0 @@
-{
-  "*": ["npm run format -w client", "npm run lint -w client"]
-}

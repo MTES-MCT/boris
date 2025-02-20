@@ -2,7 +2,8 @@ node_modules
 
 # Output
 .output
-/build
+build
+dist
 
 # OS
 .DS_Store
@@ -22,17 +23,50 @@ Thumbs.db
 node_modules
 .tool-versions
 
-# CLIENT
+# client
 /client/build
 /client/.svelte-kit
 /client/test-results/
 /client/e2e/**/.setup/
 /client/.lighthouseci/
 
+# apps/backend
+apps/backend/coverage
+apps/backend/.nyc_output
+
 # Logs
 logs
 *.log
-
-.idea/
-
+npm-debug.log*
 .talismanrc
+
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# temp directory
+.temp
+.tmp
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+

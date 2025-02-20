@@ -7,12 +7,8 @@ npm.
 
 - [Svelte](https://svelte.dev/docs/introduction): [version 5](https://svelte-5-preview.vercel.app/docs/introduction)
 - [SvelteKit](https://kit.svelte.dev/docs/introduction)
+- [NestJS](https://nestjs.com/)
 - [Commits conventionnel](https://www.conventionalcommits.org/en/v1.0.0/)
-- [Talisman](https://github.com/thoughtworks/talisman)
-
-## Pré-requis
-
-- [Talisman](https://github.com/thoughtworks/talisman) doit être installé localement sur votre machine.
 
 ## Installation
 
@@ -36,12 +32,26 @@ npm.
    npm install
    ```
 
-## Client
+## Frontend
 
-Lancer le server de développement
+### Lancer le server de développement
 
 ```
 
 npm run dev -w client
 
 ```
+
+## Backend
+
+### Lancer le server de développement
+
+```
+
+npm run dev -w apps/backend
+
+```
+
+### Schéma entités/relations
+
+[Schéma entités/relations](/apps/backend/doc/entityies-relationships.mermaid)
