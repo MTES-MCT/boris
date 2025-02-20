@@ -11,7 +11,8 @@
     "scalingo-postbuild": "bash scripts/postbuild.sh"
   },
   "workspaces": [
-    "client"
+    "client",
+    "apps/backend"
   ],
   "devDependencies": {
     "@eslint/js": "^9.12.0",
