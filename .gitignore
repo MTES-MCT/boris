@@ -23,12 +23,12 @@ Thumbs.db
 node_modules
 .tool-versions
 
-# client
-/client/build
-/client/.svelte-kit
-/client/test-results/
-/client/e2e/**/.setup/
-/client/.lighthouseci/
+# apps/frontend
+/apps/frontend/build
+/apps/frontend/.svelte-kit
+/apps/frontend/test-results/
+/apps/frontend/e2e/**/.setup/
+/apps/frontend/.lighthouseci/
 
 # apps/backend
 apps/backend/coverage
