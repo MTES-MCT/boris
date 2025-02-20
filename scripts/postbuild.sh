@@ -4,5 +4,6 @@ if [ "$APP_NAME" = "frontend" ] ; then
   npm run build -w @boris/client
 elif [ "$APP_NAME" = "backend" ] ; then
   npm i -g @nestjs/cli
+  npm i --save-dev @types/node
   npm run build -w @boris/backend
 fi
