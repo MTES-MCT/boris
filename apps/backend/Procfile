@@ -1,1 +1,1 @@
-web: ls /dist && npm run start:prod
+web: ls /dist && node dist/main
