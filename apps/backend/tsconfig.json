@@ -8,7 +8,6 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2023",
     "sourceMap": true,
-    "types": ["node"],
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
@@ -18,8 +17,5 @@
     "noImplicitAny": true,
     "strictBindCallApply": true,
     "noFallthroughCasesInSwitch": true
-  },
-  "include": [
-    "src/**/*.ts"
-  ],
+  }
 }
