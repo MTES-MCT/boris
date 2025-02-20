@@ -1,0 +1,1 @@
+web: echo "Hello from Procfile" && npm run start
