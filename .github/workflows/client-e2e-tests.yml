@@ -5,8 +5,6 @@ on:
 
 jobs:
   client-e2e-tests:
-    # skip for now
-    if: false
     runs-on: ubuntu-latest
     env:
       LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
