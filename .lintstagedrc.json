@@ -1,0 +1,7 @@
+{
+  "*": [
+    "npm run format -w client",
+    "npm run lint -w client",
+    "npm run lint -w apps/backend"
+  ]
+}
