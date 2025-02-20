@@ -1,8 +1,8 @@
 {
   "*": [
-    "npm run format -w client",
-    "npm run lint -w client",
-    "npm run format -w apps/backend",
-    "npm run lint -w apps/backend"
+    "npm run format -w @boris/frontend",
+    "npm run lint -w @boris/frontend",
+    "npm run format -w @boris/backend",
+    "npm run lint -w @boris/backend"
   ]
 }

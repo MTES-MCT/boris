@@ -10,7 +10,7 @@
     "scalingo-postbuild": "bash scripts/postbuild.sh"
   },
   "workspaces": [
-    "client",
+    "apps/frontend",
     "apps/backend"
   ],
   "devDependencies": {
