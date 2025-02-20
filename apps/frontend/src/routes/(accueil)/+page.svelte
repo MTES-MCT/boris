@@ -14,6 +14,12 @@
     content="BoRiS aide à l'accès à la propriété en Bail Réel Solidaire (BRS)" />
 </svelte:head>
 
+<button
+  onclick={() => {
+    throw new Error('Error from sentryyyyyyy');
+  }}>
+</button>
+
 <Hero />
 
 <GradientBackgroundWrapper>
