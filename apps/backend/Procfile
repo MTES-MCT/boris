@@ -1,1 +1,1 @@
-web: ls /dist && node dist/main
+web: echo "hello"
