@@ -1,1 +1,1 @@
-web: echo "hello"
+web: npm install && npm run start:prod
