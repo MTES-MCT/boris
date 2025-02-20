@@ -12,7 +12,7 @@ export default defineConfig({
     sentrySvelteKit({
       sourceMapsUploadOptions: {
         org: 'boris',
-        project: 'client',
+        project: 'apps/client',
         url: 'https://sentry.incubateur.net/',
         authToken: process.env.SENTRY_AUTH_TOKEN,
       },

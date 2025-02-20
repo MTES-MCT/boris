@@ -6,11 +6,8 @@
     "node": "20.18.0",
     "npm": "10.8.2"
   },
-  "scripts": {
-    "scalingo-postbuild": "bash scripts/postbuild.sh"
-  },
   "workspaces": [
-    "client",
+    "apps/frontend",
     "apps/backend"
   ],
   "devDependencies": {

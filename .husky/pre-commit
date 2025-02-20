@@ -1,2 +1,2 @@
-rm -rf client/build
+rm -rf apps/frontend/build
 npx lint-staged

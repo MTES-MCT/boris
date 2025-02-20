@@ -21,7 +21,7 @@ npm.
 2. Mettre en place les variables d'environnement
 
    ```
-   cp client/.env.example client/.env
+   cp apps/frontend/.env.example apps/frontend/.env
    ```
 
    Demander à une personne de l'équipe dev les valeurs des variables d'environnement à saisir dans le fichier `.env`
@@ -38,7 +38,7 @@ npm.
 
 ```
 
-npm run dev -w client
+npm run dev -w @boris/frontend
 
 ```
 
