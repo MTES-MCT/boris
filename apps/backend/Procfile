@@ -1,1 +1,1 @@
-web: echo "Hello from Procfile" && npm run start
+web: echo "Hello from Procfile" && pwd && ls && node dist/main.js
