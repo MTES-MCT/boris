@@ -1,12 +1,9 @@
 node_modules
 
 # Output
-.output
-*/.output
+/.output
 /build
-*/build
 /dist
-*/dist
 
 # OS
 .DS_Store
