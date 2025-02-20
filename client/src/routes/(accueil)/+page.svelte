@@ -5,6 +5,7 @@
   import Infos from '$components/pages/accueil/Infos.svelte';
   import Verbatims from '$components/pages/accueil/Verbatims.svelte';
   import PageCta from '$components/common/PageCta.svelte';
+  console.log('hello');
 </script>
 
 <svelte:head>
