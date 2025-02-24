@@ -1,4 +1,4 @@
-.svelte-kit
+.svelte-kit/
 package-lock.json
 Makefile
 .env.example

@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  database:
+    image: postgres:16
+    container_name: boris-database
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-boris}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-boris}
+      POSTGRES_DB: ${POSTGRES_DB:-boris}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local

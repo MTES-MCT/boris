@@ -1,0 +1,19 @@
+import { RegionInterface } from 'src/domain/region/region.interface';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { DepartementEntity } from '../departement/departement.entity';
+
+@Entity('region')
+export class RegionEntity implements RegionInterface {
+  @PrimaryGeneratedColumn('uuid')
+  public readonly id: string;
+
+  @Column({ type: 'varchar', nullable: false })
+  public name: string;
+
+  @OneToMany(() => DepartementEntity, (department) => department.region)
+  public departments: DepartementEntity[];
+
+  constructor(name: string) {
+    this.name = name;
+  }
+}

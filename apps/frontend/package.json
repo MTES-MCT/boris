@@ -7,7 +7,7 @@
     "npm": "10.8.2"
   },
   "scripts": {
-    "dev": "vite dev",
+    "start:dev": "vite dev",
     "build": "svelte-kit sync && vite build",
     "start": "node build",
     "preview": "vite preview",
