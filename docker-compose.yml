@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   database:
-    image: postgres:16
+    image: postgres:17
     container_name: boris-database
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-boris}
