@@ -1,4 +1,4 @@
-import { DepartementInterface } from 'src/domain/department/department.interface';
+import { DepartementInterface } from 'src/domain/departement/departement.interface';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { RegionEntity } from '../region/region.entity';
 
@@ -13,7 +13,7 @@ export class DepartementEntity implements DepartementInterface {
   @Column({ type: 'integer', nullable: false })
   public zipcode: number;
 
-  @ManyToOne(() => RegionEntity, (region) => region.departments)
+  @ManyToOne(() => RegionEntity, (region) => region.departements)
   region: RegionEntity;
 
   constructor(name: string, zipcode: number, region: RegionEntity) {
