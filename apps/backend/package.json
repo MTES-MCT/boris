@@ -18,10 +18,13 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:unit": "jest --testPathPattern=unit-spec.ts$",
+    "test:integration": "jest --testPathPattern=integration-spec.ts$",
+    "test:e2e": "jest --testPathPattern=e2e-spec.ts$",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "npm run typeorm -- migration:generate -d src/infrastructure/persistence/typeorm.config.ts",
-    "migration:migrate": "npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm.config.ts"
+    "migration:migrate": "npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm.config.ts",
+    "migration:migrate:test": "NODE_ENV=test npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm.config.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -57,15 +60,28 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
+    "setupFiles": [
+      "dotenv/config"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/config/setup.integration.ts"
+    ],
+    "moduleNameMapper": {
+      "^src/(.*)": "<rootDir>/src/$1",
+      "^test/(.*)": "<rootDir>/test/$1"
+    },
+    "testRegex": ".*\\-spec\\.ts$",
     "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
+      "^.+\\.ts$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "<rootDir>/src/**/*.ts"
     ],
-    "coverageDirectory": "../coverage",
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/main.ts",
+      "<rootDir>/src/infrastructure/persistence/migrations/"
+    ],
+    "coverageDirectory": "./coverage",
     "testEnvironment": "node"
   }
 }

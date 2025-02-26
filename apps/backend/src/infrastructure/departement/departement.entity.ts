@@ -14,9 +14,9 @@ export class DepartementEntity implements DepartementInterface {
   public zipcode: number;
 
   @ManyToOne(() => RegionEntity, (region) => region.departements)
-  region: RegionEntity;
+  region: RegionEntity | undefined;
 
-  constructor(name: string, zipcode: number, region: RegionEntity) {
+  constructor(name: string, zipcode: number, region?: RegionEntity) {
     this.name = name;
     this.zipcode = zipcode;
     this.region = region;

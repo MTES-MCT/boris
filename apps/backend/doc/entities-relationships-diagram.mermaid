@@ -8,7 +8,7 @@ erDiagram
     OFS ||--|{ OFS_DEPARTEMENT : "se situe"
     OFS_DEPARTEMENT }|--|| DEPARTEMENT : "se situe"
     DEPARTEMENT }|--|| REGION : "se situe"
-    DISTRIBUTOR }o--|| OFS : "est membre"
+    DISTRIBUTOR }o--|{ OFS : "travaille pour"
 
     %% todo: confirmer le type de relation entre DISTRIBUTOR et OFS
 

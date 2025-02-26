@@ -1,5 +1,5 @@
-import { DepartementInterface } from './departement.interface';
+import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 
 export interface DepartementRepositoryInterface {
-  save(departement: DepartementInterface): Promise<DepartementInterface>;
+  save(departement: DepartementEntity): Promise<DepartementEntity>;
 }

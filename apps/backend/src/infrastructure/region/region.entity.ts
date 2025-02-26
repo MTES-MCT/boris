@@ -11,9 +11,10 @@ export class RegionEntity implements RegionInterface {
   public name: string;
 
   @OneToMany(() => DepartementEntity, (departement) => departement.region)
-  public departements: DepartementEntity[];
+  public departements: DepartementEntity[] | undefined;
 
-  constructor(name: string) {
+  constructor(name: string, departements?: DepartementEntity[]) {
     this.name = name;
+    this.departements = departements;
   }
 }

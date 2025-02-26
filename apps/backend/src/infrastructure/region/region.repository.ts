@@ -12,7 +12,11 @@ export class RegionRepository implements RegionRepositoryInterface {
     private readonly repository: Repository<RegionEntity>,
   ) {}
 
-  public save(region: RegionInterface): Promise<RegionInterface> {
+  public save(region: RegionInterface): Promise<RegionEntity> {
     return this.repository.save(region);
+  }
+
+  public async findByName(name: string): Promise<RegionEntity | null> {
+    return this.repository.findOneBy({ name });
   }
 }
