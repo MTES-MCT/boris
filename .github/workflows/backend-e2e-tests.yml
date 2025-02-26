@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - name: Vérifier la connexion PostgreSQL
-        run: PGPASSWORD=boris psql -h localhost -p 5433 -U borus -d boris-test -c "SELECT 'Connexion réussie !';"
+        run: PGPASSWORD=boris psql -h localhost -p 5433 -U boris -d boris-test -c "SELECT 'Connexion réussie !';"
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
