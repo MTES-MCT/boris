@@ -5,10 +5,10 @@ on:
 
 env:
   POSTGRES_HOST: localhost
-  POSTGRES_PORT: 5432
+  POSTGRES_PORT: 5433
   POSTGRES_USER: boris
   POSTGRES_PASSWORD: boris
-  POSTGRES_DB: boris
+  POSTGRES_DB: boris-test
 
 jobs:
   backend-e2e-tests:
@@ -22,7 +22,12 @@ jobs:
       postgres:
         image: postgres:16
         ports:
-          - 5432:5432
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U boris-test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - uses: actions/checkout@v4
