@@ -30,7 +30,7 @@ jobs:
         run: npm run build -w @boris/frontend
 
       - name: Start server
-        run: npm run preview -w @boris/frontend
+        run: npm run preview -w @boris/frontend &
 
       - name: Run lighthouse desktop
         run: npm run lighthouse-desktop -w @boris/frontend
