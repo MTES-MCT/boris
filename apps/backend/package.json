@@ -24,7 +24,8 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "npm run typeorm -- migration:generate -d src/infrastructure/persistence/typeorm.config.ts",
     "migration:migrate": "npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm.config.ts",
-    "migration:migrate:test": "NODE_ENV=test npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm.config.ts"
+    "migration:migrate:test": "NODE_ENV=test npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm.config.ts",
+    "seed:regions-departements": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/regions-departements/run.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

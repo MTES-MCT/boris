@@ -1,6 +1,6 @@
 import { RegionInterface } from 'src/domain/region/region.interface';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { DepartementEntity } from '../departement/departement.entity';
+import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 
 @Entity('region')
 export class RegionEntity implements RegionInterface {
