@@ -1,22 +1,22 @@
-name: Backend e2e tests
+name: Backend tests
 
 on:
   pull_request:
 
-env:
-  POSTGRES_HOST: localhost
-  POSTGRES_PORT: 5433
-  POSTGRES_USER: boris
-  POSTGRES_PASSWORD: boris
-  POSTGRES_DB: boris
-
 jobs:
-  backend-e2e-tests:
+  backend-specs:
     runs-on: ubuntu-latest
+
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5433
+      POSTGRES_USER: boris
+      POSTGRES_PASSWORD: boris
+      POSTGRES_DB: boris
 
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [20.18.0]
 
     services:
       postgres:
@@ -34,13 +34,18 @@ jobs:
           --health-retries 5
 
     steps:
-      - name: Vérifier la connexion PostgreSQL
-        run: PGPASSWORD=boris psql -h localhost -p 5433 -U boris -d boris-test -c "SELECT 'Connexion réussie !';"
       - uses: actions/checkout@v4
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+
       - run: npm ci
-      - run: npm run test:e2e -w @boris/backend
+
+      - name: Backend unit tests
+        run: npm run test:unit -w @boris/backend
+
+      - name: Backend e2e tests
+        run: npm run test:e2e -w @boris/backend
