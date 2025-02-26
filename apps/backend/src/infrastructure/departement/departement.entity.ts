@@ -10,15 +10,15 @@ export class DepartementEntity implements DepartementInterface {
   @Column({ type: 'varchar', nullable: false })
   public name: string;
 
-  @Column({ type: 'integer', nullable: false })
-  public zipcode: number;
+  @Column({ type: 'varchar', nullable: false })
+  public code: string;
 
   @ManyToOne(() => RegionEntity, (region) => region.departements)
   region: RegionEntity | undefined;
 
-  constructor(name: string, zipcode: number, region?: RegionEntity) {
+  constructor(name: string, code: string, region?: RegionEntity) {
     this.name = name;
-    this.zipcode = zipcode;
+    this.code = code;
     this.region = region;
   }
 }

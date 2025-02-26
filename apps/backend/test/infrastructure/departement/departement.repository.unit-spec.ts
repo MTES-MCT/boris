@@ -45,15 +45,15 @@ describe('DepartementRepository', () => {
     });
   });
 
-  it('should find a departement by zipcode and return its data', async () => {
+  it('should find a departement by code and return its data', async () => {
     mockDepartementRepository.findOneBy.mockResolvedValue(finistere);
 
-    const result = await departementRepository.findOneByZipcode(29);
+    const result = await departementRepository.findOneByCode('29');
 
     expect(result).toMatchObject(finistere);
     expect(mockDepartementRepository.findOneBy).toHaveBeenCalledTimes(1);
     expect(mockDepartementRepository.findOneBy).toHaveBeenCalledWith({
-      zipcode: 29,
+      code: '29',
     });
   });
 });
