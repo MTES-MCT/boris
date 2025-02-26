@@ -8,7 +8,7 @@ env:
   POSTGRES_PORT: 5433
   POSTGRES_USER: boris
   POSTGRES_PASSWORD: boris
-  POSTGRES_DB: boris-test
+  POSTGRES_DB: boris
 
 jobs:
   backend-e2e-tests:
