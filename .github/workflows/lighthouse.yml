@@ -1,10 +1,10 @@
-name: Lighthouse desktop
+name: Lighthouse
 
 on:
   pull_request:
 
 jobs:
-  lighthouse-desktop:
+  lighthouse:
     runs-on: ubuntu-latest
 
     env:
