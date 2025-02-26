@@ -36,7 +36,7 @@
     "@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
     "@zerodevx/svelte-img": "^2.1.2",
     "cssnano": "^7.0.6",
-    "eslint-plugin-svelte": "^2.36.0",
+    "eslint-plugin-svelte": "^3.0.0",
     "nanoid": "^5.0.8",
     "papaparse": "^5.4.1",
     "postcss": "^8.4.49",
