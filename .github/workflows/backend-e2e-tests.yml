@@ -8,7 +8,7 @@ env:
   POSTGRES_PORT: 5433
   POSTGRES_USER: boris
   POSTGRES_PASSWORD: boris
-  POSTGRES_DB: boris
+  POSTGRES_DB: boris-test
 
 jobs:
   backend-e2e-tests:
@@ -34,6 +34,8 @@ jobs:
           --health-retries 5
 
     steps:
+      - name: Vérifier la connexion PostgreSQL
+        run: PGPASSWORD=boris psql -h localhost -p 5433 -U borus -d boris-test -c "SELECT 'Connexion réussie !';"
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
