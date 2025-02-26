@@ -5,45 +5,49 @@
 // @ts-nocheck
 
 import { Test, TestingModule } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
+// import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppModule } from 'src/app.module';
-import { bretagne } from 'test/mocks/region';
-import { DataSource, QueryRunner } from 'typeorm';
+// import { bretagne } from 'test/mocks/region';
+// import { DataSource, QueryRunner } from 'typeorm';
 
-const { POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } =
-  process.env;
+// const { POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } =
+//   process.env;
 
-const dbInfo = {
-  type: 'postgres',
-  host: POSTGRES_HOST,
-  port: 5433,
-  username: POSTGRES_USER,
-  password: POSTGRES_PASSWORD,
-  database: `${POSTGRES_DB}-test`,
-};
+// const dbInfo = {
+//   type: 'postgres',
+//   host: POSTGRES_HOST,
+//   port: 5433,
+//   username: POSTGRES_USER,
+//   password: POSTGRES_PASSWORD,
+//   database: `${POSTGRES_DB}-test`,
+// };
 
-let appDataSource: DataSource;
-let queryRunner: QueryRunner;
+// let appDataSource: DataSource;
+// let queryRunner: QueryRunner;
 
-global.beforeAll(async () => {
-  const dataSource: DataSource = new DataSource(dbInfo);
+// global.beforeAll(async () => {
+//   const dataSource: DataSource = new DataSource(dbInfo);
 
-  appDataSource = await dataSource.initialize();
-  queryRunner = appDataSource.createQueryRunner();
-  await queryRunner.manager.query(
-    `
-          INSERT INTO region (name) VALUES
-            ($1)
-          `,
-    [bretagne.name],
-  );
+//   appDataSource = await dataSource.initialize();
+//   queryRunner = appDataSource.createQueryRunner();
+//   await queryRunner.manager.query(
+//     `
+//           INSERT INTO region (name) VALUES
+//             ($1)
+//           `,
+//     [bretagne.name],
+//   );
+// });
+
+global.beforeEach(() => {
+  jest.resetAllMocks();
 });
 
-global.afterAll(async () => {
-  await queryRunner.manager.query(`DELETE FROM region`);
-  await appDataSource.destroy();
-  await global.app?.close();
-});
+// global.afterAll(async () => {
+//   await queryRunner.manager.query(`DELETE FROM region`);
+//   await appDataSource.destroy();
+//   await global.app?.close();
+// });
 
 global.setAppModule = async (
   entity,
@@ -54,11 +58,11 @@ global.setAppModule = async (
 ) => {
   const module: TestingModule = await Test.createTestingModule({
     imports: [
-      TypeOrmModule.forRoot({
-        ...dbInfo,
-        entities: [entity],
-      }),
-      TypeOrmModule.forFeature([entity]),
+      // TypeOrmModule.forRoot({
+      //   ...dbInfo,
+      //   entities: [entity],
+      // }),
+      // TypeOrmModule.forFeature([entity]),
       AppModule,
     ],
     providers: [

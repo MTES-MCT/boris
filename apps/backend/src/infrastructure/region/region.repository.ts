@@ -16,7 +16,7 @@ export class RegionRepository implements RegionRepositoryInterface {
     return this.repository.save(region);
   }
 
-  public async findByName(name: string): Promise<RegionEntity | null> {
+  public findOneByName(name: string): Promise<RegionEntity | null> {
     return this.repository.findOneBy({ name });
   }
 }

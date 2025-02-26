@@ -12,9 +12,15 @@ export class DepartementRepository implements DepartementRepositoryInterface {
     private readonly repository: Repository<DepartementEntity>,
   ) {}
 
-  public save(
-    departement: DepartementInterface,
-  ): Promise<DepartementInterface> {
+  public save(departement: DepartementInterface): Promise<DepartementEntity> {
     return this.repository.save(departement);
+  }
+
+  public findOneByName(name: string): Promise<DepartementEntity | null> {
+    return this.repository.findOneBy({ name });
+  }
+
+  public findOneByZipcode(zipcode: number): Promise<DepartementEntity | null> {
+    return this.repository.findOneBy({ zipcode });
   }
 }

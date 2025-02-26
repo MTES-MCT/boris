@@ -34,7 +34,7 @@ describe('RegionRepository', () => {
   it('should find a region by name and return its data', async () => {
     mockRegionRepository.findOneBy.mockResolvedValue(bretagne);
 
-    const result = await regionRepository.findByName('bretagne');
+    const result = await regionRepository.findOneByName('bretagne');
 
     expect(result).toMatchObject(bretagne);
     expect(mockRegionRepository.findOneBy).toHaveBeenCalledTimes(1);

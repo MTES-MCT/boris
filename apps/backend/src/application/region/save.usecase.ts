@@ -9,11 +9,11 @@ export class SaveRegionUsecase {
   ) {}
 
   public async execute(region: RegionEntity): Promise<RegionEntity> {
-    const regionAlreadyExists = await this.regionRepository.findByName(
+    const existingRegion = await this.regionRepository.findOneByName(
       region.name,
     );
 
-    if (regionAlreadyExists) {
+    if (existingRegion) {
       throw new ConflictException();
     }
 

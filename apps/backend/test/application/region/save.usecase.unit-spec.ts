@@ -26,27 +26,29 @@ describe('SaveRegionUsecase', () => {
 
   it('should save a region and return its data', async () => {
     mockRegionRepository.save.mockResolvedValue(bretagne);
-    mockRegionRepository.findByName.mockResolvedValue(null);
+    mockRegionRepository.findOneByName.mockResolvedValue(null);
 
     const result = await useCase.execute(bretagne);
 
     expect(result).toMatchObject(bretagne);
-    expect(mockRegionRepository.findByName).toHaveBeenCalledTimes(1);
-    expect(mockRegionRepository.findByName).toHaveBeenCalledWith(bretagne.name);
+    expect(mockRegionRepository.findOneByName).toHaveBeenCalledTimes(1);
+    expect(mockRegionRepository.findOneByName).toHaveBeenCalledWith(
+      bretagne.name,
+    );
     expect(mockRegionRepository.save).toHaveBeenCalledTimes(1);
     expect(mockRegionRepository.save).toHaveBeenCalledWith(bretagne);
   });
 
   it('should fail if a region with the same name already exists', async () => {
     mockRegionRepository.save.mockResolvedValue(bretagne);
-    mockRegionRepository.findByName.mockResolvedValue(bretagne);
+    mockRegionRepository.findOneByName.mockResolvedValue(bretagne);
 
     try {
       await useCase.execute(bretagne);
     } catch (e) {
       expect(e).toBeInstanceOf(ConflictException);
-      expect(mockRegionRepository.findByName).toHaveBeenCalledTimes(1);
-      expect(mockRegionRepository.findByName).toHaveBeenCalledWith(
+      expect(mockRegionRepository.findOneByName).toHaveBeenCalledTimes(1);
+      expect(mockRegionRepository.findOneByName).toHaveBeenCalledWith(
         bretagne.name,
       );
       expect(mockRegionRepository.save).toHaveBeenCalledTimes(0);

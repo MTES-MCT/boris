@@ -6,5 +6,5 @@ export const ileDeFrance = new RegionEntity('Île de France');
 export const mockRegionRepository = {
   save: jest.fn(),
   findOneBy: jest.fn(),
-  findByName: jest.fn(),
+  findOneByName: jest.fn(),
 };
