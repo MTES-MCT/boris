@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  backend-specs:
+  backend-tests:
     runs-on: ubuntu-latest
 
     env:
