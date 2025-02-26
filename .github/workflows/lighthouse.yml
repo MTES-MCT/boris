@@ -1,0 +1,58 @@
+name: Lighthouse
+
+on:
+  pull_request:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+
+    env:
+      LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
+      PUBLIC_BORIS_CMS_URL: ${{ secrets.PUBLIC_BORIS_CMS_URL }}
+
+    strategy:
+      matrix:
+        node-version: [20.18.0]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - run: npm ci
+
+      - name: Build frontend
+        run: npm run build -w @boris/frontend
+
+      - name: Start server
+        run: npm run preview -w @boris/frontend &
+
+      - name: Run lighthouse desktop
+        run: npm run lighthouse-desktop -w @boris/frontend
+
+      - name: Upload lighthouse desktop report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          include-hidden-files: true
+          name: lighthouse-report-ubuntu-latest
+          path: ${{ github.workspace }}/apps/frontend/.lighthouseci/*
+
+      - name: Run lighthouse mobile
+        # skip for now
+        if: false
+        run: npm run lighthouse-mobile -w @boris/frontend
+
+      - name: Upload lighthouse mobile report
+        # skip for now
+        if: false
+        uses: actions/upload-artifact@v4
+        with:
+          include-hidden-files: true
+          name: lighthouse-report-ubuntu-latest
+          path: ${{ github.workspace }}/apps/frontend/.lighthouseci/*

@@ -4,3 +4,4 @@ Makefile
 .env.example
 .prettierignore
 Procfile
+*.mermaid
