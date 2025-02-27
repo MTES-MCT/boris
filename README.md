@@ -71,10 +71,23 @@ npm run dev -w apps/backend
 make migration-generate NAME=nom_de_la_migration
 ```
 
-### Éxécuter les migration
+### Exécuter les migration
 
 ```
 make migration-migrate
+```
+
+### Exécuter un seed sur une instance Scalingo
+
+```
+# Connexion à l'instance
+scalingo --app app-name run bash
+
+# Installation de ts-node
+npm install ts-node
+
+# Exécution du seed
+npm run seed:seed-name
 ```
 
 ### Schéma entités/relations
