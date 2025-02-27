@@ -18,6 +18,7 @@ export const typeormConfig: DataSourceOptions = {
   migrations: ['dist/infrastructure/persistence/migrations/**/*{.ts,.js}'],
   synchronize: false,
   migrationsTableName: 'migrations',
+  poolSize: 5,
 };
 
 export default new DataSource(typeormConfig);
