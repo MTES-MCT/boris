@@ -22,9 +22,10 @@
     "test:integration": "jest --testPathPattern=integration-spec.ts$",
     "test:e2e": "jest --testPathPattern=e2e-spec.ts$ --testTimeout=30000",
     "typeorm": "typeorm-ts-node-commonjs",
-    "migration:generate": "npm run typeorm -- migration:generate -d src/infrastructure/persistence/typeorm.config.ts",
-    "migration:migrate": "npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm.config.ts",
-    "migration:migrate:test": "NODE_ENV=test npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm.config.ts"
+    "migration:generate": "npm run typeorm -- migration:generate -d src/infrastructure/persistence/typeorm-cli.config.ts",
+    "migration:migrate": "npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm-cli.config.ts",
+    "migration:migrate:test": "NODE_ENV=test  npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm-cli.config.ts",
+    "seed:regions-departements": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/regions-departements/run.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

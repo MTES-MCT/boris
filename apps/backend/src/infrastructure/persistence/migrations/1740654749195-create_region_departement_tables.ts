@@ -1,13 +1,13 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateRegionDepartementTables1740411808812
+export class CreateRegionDepartementTables1740654749195
   implements MigrationInterface
 {
-  name = 'CreateRegionDepartementTables1740411808812';
+  name = 'CreateRegionDepartementTables1740654749195';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TABLE "departement" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "zipcode" integer NOT NULL, "regionId" uuid, CONSTRAINT "PK_f32f7be16ef46566fececc35a34" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "departement" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "code" character varying NOT NULL, "regionId" uuid, CONSTRAINT "PK_f32f7be16ef46566fececc35a34" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "region" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, CONSTRAINT "PK_5f48ffc3af96bc486f5f3f3a6da" PRIMARY KEY ("id"))`,

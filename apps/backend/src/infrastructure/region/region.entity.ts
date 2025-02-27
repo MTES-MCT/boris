@@ -1,6 +1,6 @@
 import { RegionInterface } from 'src/domain/region/region.interface';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { DepartementEntity } from '../departement/departement.entity';
+import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 
 @Entity('region')
 export class RegionEntity implements RegionInterface {
@@ -10,7 +10,9 @@ export class RegionEntity implements RegionInterface {
   @Column({ type: 'varchar', nullable: false })
   public name: string;
 
-  @OneToMany(() => DepartementEntity, (departement) => departement.region)
+  @OneToMany(() => DepartementEntity, (departement) => departement.region, {
+    cascade: true,
+  })
   public departements: DepartementEntity[] | undefined;
 
   constructor(name: string, departements?: DepartementEntity[]) {

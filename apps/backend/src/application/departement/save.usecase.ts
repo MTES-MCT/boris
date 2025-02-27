@@ -19,8 +19,8 @@ export class SaveDepartementUsecase {
       throw new ConflictException();
     }
 
-    existingDepartement = await this.departementRepository.findOneByZipcode(
-      departement.zipcode,
+    existingDepartement = await this.departementRepository.findOneByCode(
+      departement.code,
     );
 
     if (existingDepartement) {

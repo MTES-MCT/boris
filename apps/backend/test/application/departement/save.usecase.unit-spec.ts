@@ -23,7 +23,7 @@ describe('SaveDepartementUsecase', () => {
   it('should save a departement and return its data', async () => {
     mockDepartementRepository.save.mockReturnValue(finistere);
     mockDepartementRepository.findOneByName.mockReturnValue(null);
-    mockDepartementRepository.findOneByZipcode.mockReturnValue(null);
+    mockDepartementRepository.findOneByCode.mockReturnValue(null);
 
     const result = await useCase.execute(finistere);
 
@@ -32,9 +32,9 @@ describe('SaveDepartementUsecase', () => {
     expect(mockDepartementRepository.findOneByName).toHaveBeenCalledWith(
       finistere.name,
     );
-    expect(mockDepartementRepository.findOneByZipcode).toHaveBeenCalledTimes(1);
-    expect(mockDepartementRepository.findOneByZipcode).toHaveBeenCalledWith(
-      finistere.zipcode,
+    expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledTimes(1);
+    expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledWith(
+      finistere.code,
     );
     expect(mockDepartementRepository.save).toHaveBeenCalledTimes(1);
     expect(mockDepartementRepository.save).toHaveBeenCalledWith(finistere);
@@ -43,7 +43,7 @@ describe('SaveDepartementUsecase', () => {
   it('should fail if a departement with the same name already exists', async () => {
     mockDepartementRepository.save.mockReturnValue(finistere);
     mockDepartementRepository.findOneByName.mockReturnValue(finistere);
-    mockDepartementRepository.findOneByZipcode.mockReturnValue(null);
+    mockDepartementRepository.findOneByCode.mockReturnValue(null);
 
     try {
       await useCase.execute(finistere);
@@ -53,17 +53,15 @@ describe('SaveDepartementUsecase', () => {
       expect(mockDepartementRepository.findOneByName).toHaveBeenCalledWith(
         finistere.name,
       );
-      expect(mockDepartementRepository.findOneByZipcode).toHaveBeenCalledTimes(
-        0,
-      );
+      expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledTimes(0);
       expect(mockDepartementRepository.save).toHaveBeenCalledTimes(0);
     }
   });
 
-  it('should fail if a departement with the same zipcode already exists', async () => {
+  it('should fail if a departement with the same code already exists', async () => {
     mockDepartementRepository.save.mockReturnValue(finistere);
     mockDepartementRepository.findOneByName.mockReturnValue(null);
-    mockDepartementRepository.findOneByZipcode.mockReturnValue(finistere);
+    mockDepartementRepository.findOneByCode.mockReturnValue(finistere);
 
     try {
       await useCase.execute(finistere);
@@ -73,11 +71,9 @@ describe('SaveDepartementUsecase', () => {
       expect(mockDepartementRepository.findOneByName).toHaveBeenCalledWith(
         finistere.name,
       );
-      expect(mockDepartementRepository.findOneByZipcode).toHaveBeenCalledTimes(
-        1,
-      );
-      expect(mockDepartementRepository.findOneByZipcode).toHaveBeenCalledWith(
-        finistere.zipcode,
+      expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledTimes(1);
+      expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledWith(
+        finistere.code,
       );
       expect(mockDepartementRepository.save).toHaveBeenCalledTimes(0);
     }

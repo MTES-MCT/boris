@@ -20,7 +20,7 @@ export class DepartementRepository implements DepartementRepositoryInterface {
     return this.repository.findOneBy({ name });
   }
 
-  public findOneByZipcode(zipcode: number): Promise<DepartementEntity | null> {
-    return this.repository.findOneBy({ zipcode });
+  public findOneByCode(code: string): Promise<DepartementEntity | null> {
+    return this.repository.findOneBy({ code });
   }
 }
