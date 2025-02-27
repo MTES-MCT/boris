@@ -1,7 +1,5 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
-import { RegionEntity } from '../region/region.entity';
-import { DepartementEntity } from '../departement/departement.entity';
 dotenv.config();
 
 const test = process.env.NODE_ENV === 'test';
@@ -14,7 +12,7 @@ export const typeormConfig: DataSourceOptions = {
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: !test ? process.env.POSTGRES_DB : `${process.env.POSTGRES_DB}-test`,
-  entities: [RegionEntity, DepartementEntity],
+  entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/infrastructure/persistence/migrations/**/*{.ts,.js}'],
   synchronize: false,
   migrationsTableName: 'migrations',

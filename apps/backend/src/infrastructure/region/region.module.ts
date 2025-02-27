@@ -11,8 +11,6 @@ import { SaveRegionUsecase } from 'src/application/region/save.usecase';
     { provide: 'RegionRepositoryInterface', useClass: RegionRepository },
     SaveRegionUsecase,
   ],
-  exports: [
-    { provide: 'RegionRepositoryInterface', useClass: RegionRepository },
-  ],
+  exports: [SaveRegionUsecase],
 })
 export class RegionModule {}

@@ -10,7 +10,9 @@ export class RegionEntity implements RegionInterface {
   @Column({ type: 'varchar', nullable: false })
   public name: string;
 
-  @OneToMany(() => DepartementEntity, (departement) => departement.region)
+  @OneToMany(() => DepartementEntity, (departement) => departement.region, {
+    cascade: true,
+  })
   public departements: DepartementEntity[] | undefined;
 
   constructor(name: string, departements?: DepartementEntity[]) {

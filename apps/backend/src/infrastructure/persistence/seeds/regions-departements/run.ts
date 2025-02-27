@@ -6,7 +6,7 @@ async function run() {
   const app = await NestFactory.create(RegionsDepartementsSeedModule);
   const seed = app.get(RegionsDepartementsSeed);
 
-  seed.seed();
+  await seed.seed();
 
   await app.close();
 }

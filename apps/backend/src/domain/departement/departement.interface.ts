@@ -1,5 +1,5 @@
 export interface DepartementInterface {
-  id: string;
+  id?: string;
   name: string;
   code: string;
 }
