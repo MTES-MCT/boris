@@ -1,3 +1,8 @@
+import { Injectable } from '@nestjs/common';
+import { SaveRegionUsecase } from 'src/application/region/save.usecase';
+import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
+import { RegionEntity } from 'src/infrastructure/region/region.entity';
+
 const regions = [
   {
     nom: 'Auvergne-Rhône-Alpes',
@@ -212,10 +217,7 @@ const regions = [
   },
 ];
 
-import { SaveRegionUsecase } from 'src/application/region/save.usecase';
-import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
-import { RegionEntity } from 'src/infrastructure/region/region.entity';
-
+@Injectable()
 export class RegionsDepartementsSeed {
   constructor(private readonly saveRegionUseCase: SaveRegionUsecase) {}
 
