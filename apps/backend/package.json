@@ -18,14 +18,26 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:unit": "jest --testPathPattern=unit-spec.ts$",
+    "test:integration": "jest --testPathPattern=integration-spec.ts$",
+    "test:e2e": "jest --testPathPattern=e2e-spec.ts$ --testTimeout=30000",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:generate": "npm run typeorm -- migration:generate -d src/infrastructure/persistence/typeorm-cli.config.ts",
+    "migration:migrate": "npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm-cli.config.ts",
+    "migration:migrate:test": "NODE_ENV=test  npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm-cli.config.ts",
+    "seed:regions-departements": "ts-node -r tsconfig-paths/register src/seed.regions-departements.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/typeorm": "^11.0.0",
+    "pg": "^8.13.3",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.20",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.0",
@@ -41,9 +53,7 @@
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
-    "ts-loader": "^9.5.2",
-    "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0"
+    "ts-loader": "^9.5.2"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -51,15 +61,28 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
+    "setupFiles": [
+      "dotenv/config"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/config/setup.integration.ts"
+    ],
+    "moduleNameMapper": {
+      "^src/(.*)": "<rootDir>/src/$1",
+      "^test/(.*)": "<rootDir>/test/$1"
+    },
+    "testRegex": ".*\\-spec\\.ts$",
     "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
+      "^.+\\.ts$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "<rootDir>/src/**/*.ts"
     ],
-    "coverageDirectory": "../coverage",
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/main.ts",
+      "<rootDir>/src/infrastructure/persistence/migrations/"
+    ],
+    "coverageDirectory": "./coverage",
     "testEnvironment": "node"
   }
 }

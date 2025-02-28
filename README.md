@@ -22,6 +22,7 @@ npm.
 
    ```
    cp apps/frontend/.env.example apps/frontend/.env
+   cp apps/backend/.env.example apps/backend/.env
    ```
 
    Demander à une personne de l'équipe dev les valeurs des variables d'environnement à saisir dans le fichier `.env`
@@ -32,14 +33,26 @@ npm.
    npm install
    ```
 
-## Frontend
+## Docker
 
-### Lancer le server de développement
+La base de données locale PostgreSQL se trouve dans un container docker.
+
+### Lancer le container de la base de données
 
 ```
+make docker-start
+```
 
-npm run dev -w @boris/frontend
+### Arrêter le container de la base de données
 
+```
+make docker-stop
+```
+
+### Accéder au container de la base de données en ligne de commande
+
+```
+make psql
 ```
 
 ## Backend
@@ -52,6 +65,41 @@ npm run dev -w apps/backend
 
 ```
 
+### Générer une migration
+
+```
+make migration-generate NAME=nom_de_la_migration
+```
+
+### Exécuter les migration
+
+```
+make migration-migrate
+```
+
+### Exécuter un seed sur une instance Scalingo
+
+```
+# Connexion à l'instance
+scalingo --app app-name run bash
+
+# Installation de ts-node
+npm install ts-node
+
+# Exécution du seed
+npm run seed:seed-name
+```
+
 ### Schéma entités/relations
 
-[Schéma entités/relations](/apps/backend/doc/entityies-relationships.mermaid)
+[Schéma entités/relations](/apps/backend/doc/entities-relationships-diagram.mermaid)
+
+## Frontend
+
+### Lancer le server de développement
+
+```
+
+npm run dev -w @boris/frontend
+
+```

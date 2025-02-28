@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  database_dev:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: boris
+      POSTGRES_USER: ${POSTGRES_USER:-boris}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-boris}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+
+  database_test:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: boris-test
+      POSTGRES_USER: ${POSTGRES_USER:-boris}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-boris}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_dev_data:
+  postgres_test_data:
