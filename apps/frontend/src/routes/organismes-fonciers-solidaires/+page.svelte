@@ -53,27 +53,37 @@
       <Accordion
         label={regionLabel}
         labelElement="h2">
-        <!-- --------------------------------------- 
-        TEMPORAIRE: À SUPPRIMER QUAND NOUS AURONS TOUS LES DEPARTEMENTS
-        --------------------------------------- -->
         <ul>
           {#each region.OFSs as ofs}
             <li>
               <p class="fr-text__lead fr-mb-0"><b>{ofs.nom}</b></p>
+              {#if ofs.departements}
+                <p class="fr-mb-0"><i>{ofs.departements}</i></p>
+              {/if}
               <ul class="commercialisateurs">
                 {#if ofs.formattedCommercialisateurs}
-                  {#each ofs.formattedCommercialisateurs as commercialisateur}
+                  {#each ofs.formattedCommercialisateurs as { nom, lien }}
+                    {@const hasName = Boolean(nom)}
+                    {@const hasLink = Boolean(lien)}
+
                     <li>
-                      {#if commercialisateur.nom}
+                      {#if hasName && hasLink}
                         <p class="fr-mb-0">
-                          Commercialisateur: {commercialisateur.nom}
+                          Commercialisateur: {nom} &nbsp;-&nbsp;
+                          <a
+                            class="fr-link"
+                            target="_blank"
+                            href={lien}>
+                            Site web
+                          </a>
                         </p>
-                      {/if}
-                      {#if commercialisateur.lien}
+                      {:else if hasName}
+                        <p class="fr-mb-0">{nom}</p>
+                      {:else if hasLink}
                         <a
                           class="fr-link"
                           target="_blank"
-                          href={commercialisateur.lien}>
+                          href={lien}>
                           Site web
                         </a>
                       {/if}
@@ -84,27 +94,6 @@
             </li>
           {/each}
         </ul>
-        <!-- --------------------------------------- -->
-
-        <!-- --------------------------------------- 
-        TEMPORAIRE: À REMETTRE QUAND NOUS AURONS TOUS LES DEPARTEMENTS
-        --------------------------------------- -->
-        <!-- <div class="fr-accordions-group">
-          {#each region.departements as departement}
-            {@const departementLabel = `${departement.name} (${departement.totalOFSs})`}
-
-            <Accordion label={departementLabel}>
-              <ul>
-                {#each departement.OFSs as ofs}
-                  <li>
-                    {ofs.nom} - {ofs.telephone}
-                  </li>
-                {/each}
-              </ul>
-            </Accordion>
-          {/each}
-        </div> -->
-        <!-- --------------------------------------- -->
       </Accordion>
     {/each}
   </div>
@@ -116,5 +105,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--1w);
+    padding-inline-start: 0;
+    margin-block-end: var(--3w);
   }
 </style>
