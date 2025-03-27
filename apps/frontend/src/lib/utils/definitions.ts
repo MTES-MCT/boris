@@ -95,10 +95,5 @@ export type Departement = {
 export type Region = {
   name: string;
   totalOFSs: number;
-  // TEMPORAIRE À SUPPRIMER QUAND NOUS AURONS TOUS LES DÉPARTEMENTS.
   OFSs: OFS[];
-  //
-
-  // TEMPORAIRE: À REMETTRE QUAND NOUS AURONS TOUS LES DEPARTEMENTS
-  // departements: Departement[];
 };
