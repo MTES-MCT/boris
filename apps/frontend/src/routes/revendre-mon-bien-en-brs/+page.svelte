@@ -4,7 +4,7 @@
   import Promesses from '$components/pages/step-pages/Promesses.svelte';
   import Steps from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/Steps.svelte';
   import PageCta from '$components/common/PageCta.svelte';
-  import { toutSavoirSurLeBRSPromesses } from '$lib/utils/constants';
+  import { reventePromesses } from '$lib/utils/constants';
 </script>
 
 <svelte:head>
@@ -15,17 +15,25 @@
 </svelte:head>
 
 <GradientBackgroundWrapper>
-  <Hero title="Qu'est ce que le Bail Réel Solidaire ?">
+  <Hero title="Revendre mon bien en BRS">
     <p class="fr-mb-0">
-      Le Bail Réel Solidaire (BRS) est un dispositif mis en place par l’État
-      permettant à des ménages qui ne pourraient pas devenir propriétaires d'un
-      logement au prix du marché d’accéder à la propriété de leur résidence
-      principale.
+      Vous souhaitez revendre votre bien en BRS ? BoRiS est là pour vous guider
+      à chacune des phases ! Notre équipe du Ministère du logement peut même
+      vous accompagner gratuitement dans ce projet. Cela vous intéresse ?
+      Contactez-nous
+      <a
+        href="/nous-contacter"
+        class="fr-link">
+        ici
+      </a>
+      <br />
+      <br />
+      Sur cette page, vous découvrirez chaque étape jusqu’à la vente.
     </p>
   </Hero>
   <Promesses
-    title="Le BRS en 3 points clés."
-    promesses={toutSavoirSurLeBRSPromesses} />
+    title="La revente en 3 points clés"
+    promesses={reventePromesses} />
   <Steps />
   <PageCta />
 </GradientBackgroundWrapper>
