@@ -32,7 +32,7 @@
     "@lhci/cli": "^0.14.0",
     "@playwright/test": "^1.28.1",
     "@sveltejs/adapter-node": "^5.2.9",
-    "@sveltejs/kit": "^2.17.1",
+    "@sveltejs/kit": "^2.20.6",
     "@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
     "@zerodevx/svelte-img": "^2.1.2",
     "cssnano": "^7.0.6",
