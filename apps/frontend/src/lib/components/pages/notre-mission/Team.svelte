@@ -1,6 +1,6 @@
 <script lang="ts">
   import Section from '$components/common/Section.svelte';
-  import alizee from '$assets/images/alizee.jpg';
+  import laure from '$assets/images/laure.jpg';
   import amandine from '$assets/images/amandine.jpg';
   import arthur from '$assets/images/arthur.jpg';
   import benoit from '$assets/images/benoit.jpg';
@@ -16,12 +16,12 @@
       <div class="content rounded-box-md background-color-white">
         <div class="picture">
           <img
-            src={alizee}
+            src={laure}
             alt="" />
         </div>
         <div class="text">
           <p class="title">Chargée de déploiement</p>
-          <p class="name fr-mb-0">Alizée Breton</p>
+          <p class="name fr-mb-0">Laure Magdelain</p>
         </div>
       </div>
     </div>
