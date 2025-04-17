@@ -1,10 +1,11 @@
 <script lang="ts">
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
-  import Hero from '$components/pages/step-pages/Hero.svelte';
-  import Promesses from '$components/pages/step-pages/Promesses.svelte';
-  import Steps from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/Steps.svelte';
+  import Hero from '$components/pages/step-page/Hero.svelte';
+  import Promesses from '$components/pages/step-page/Promesses.svelte';
+  import Steps from '$components/pages/step-page/Steps.svelte';
   import PageCta from '$components/common/PageCta.svelte';
   import { reventePromesses } from '$lib/utils/constants';
+  import { steps } from './content';
 </script>
 
 <svelte:head>
@@ -34,6 +35,6 @@
   <Promesses
     title="La revente en 3 points clés"
     promesses={reventePromesses} />
-  <Steps />
+  <Steps {steps} />
   <PageCta />
 </GradientBackgroundWrapper>
