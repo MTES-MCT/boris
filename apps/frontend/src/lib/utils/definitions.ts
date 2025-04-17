@@ -59,8 +59,8 @@ export type StepSection = {
 export type Step = {
   title: string;
   description: string;
-  slug: string;
-  sections: StepSection[];
+  slug?: string;
+  sections?: StepSection[];
   previousStep?: {
     title: string;
     slug: string;
