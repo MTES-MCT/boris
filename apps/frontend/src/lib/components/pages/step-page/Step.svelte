@@ -41,9 +41,9 @@
           <span><b>{position}</b></span>
         </div>
         <div class="text">
-          <h3 class="fr-mb-0">
+          <h2>
             {title}
-          </h3>
+          </h2>
           {@render children()}
           {#if href}
             <a
@@ -71,10 +71,6 @@
     /* max-width: 500px; */
     margin: 0 auto;
     display: block;
-
-    h3 {
-      font-size: 1.5rem;
-    }
 
     a {
       font-size: 0.875rem;

@@ -256,13 +256,15 @@
         Comme dans le cas d’une vente d’un appartement dans le marché libre,
         l’étape cruciale est de trouver un acheteur ! La seule différence est
         que celui-ci doit être éligible au BRS. Cette éligibilité peut être
-        vérifiée rapidement en utilisant <a
-          href="/simulateur-eligibilite"
-          class="fr-link">
-          notre simulateur
-        </a>
-        . Celle-ci devra ensuite être vérifiée officiellement par l’OFS.
+        vérifiée rapidement en utilisant notre simulateur . Celle-ci devra
+        ensuite être vérifiée officiellement par l’OFS.
       </p>
+      <a
+        href="/simulateur-eligibilite"
+        class="fr-btn fr-btn--lg">
+        Simuler mon éligibilité
+      </a>
+      <p></p>
       <p>
         Votre acheteur achète dans les mêmes conditions que vous à l’époque : il
         faut que ce logement devienne sa résidence principale, sa plus-value
@@ -312,13 +314,14 @@
         offre préalable de cession, qui précise toutes les modalités de l’achat
         en BRS. Un conseil, faites vous-aider par votre OFS ! Nous pouvons
         également vous accompagner dans cette démarche, alors n’hésitez pas à
-        nous contacter <a
-          href="/nous-contacter"
-          class="fr-link">
-          ici
-        </a>
-        .
+        nous contacter.
       </p>
+      <a
+        href="/nous-contacter"
+        class="fr-btn fr-btn--lg">
+        Nous contacter
+      </a>
+      <p></p>
       <p>
         Une fois l’offre préalable de cession faite à l’acquéreur, votre OFS
         doit se charger de vérifier que celui-ci est bien éligible au dispositif
