@@ -1,13 +1,13 @@
 <script lang="ts">
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Details from '$components/common/Details.svelte';
-  import Hero from '$components/pages/step-page/Hero.svelte';
-  import Promesses from '$components/pages/step-page/Promesses.svelte';
-  import Steps from '$components/pages/step-page/Steps.svelte';
+  import Hero from '$components/common/StepPage/Hero.svelte';
+  import Promesses from '$components/common/StepPage/Promesses.svelte';
+  import Steps from '$components/common/StepPage/Steps.svelte';
   import PageCta from '$components/common/PageCta.svelte';
-  import Promess from '$components/pages/step-page/Promess.svelte';
-  import Step from '$components/pages/step-page/Step.svelte';
-  import Warning from '$components/pages/step-page/Warning.svelte';
+  import Promess from '$components/common/StepPage/Promess.svelte';
+  import Step from '$components/common/StepPage/Step.svelte';
+  import Warning from '$components/common/StepPage/Warning.svelte';
 </script>
 
 <svelte:head>

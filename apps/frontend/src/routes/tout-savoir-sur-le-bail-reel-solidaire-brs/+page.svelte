@@ -1,9 +1,9 @@
 <script lang="ts">
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
-  import Hero from '$components/pages/step-page/Hero.svelte';
-  import Promesses from '$components/pages/step-page/Promesses.svelte';
-  import Promess from '$components/pages/step-page/Promess.svelte';
-  import Steps from '$components/pages/step-page/Steps.svelte';
+  import Hero from '$components/common/StepPage/Hero.svelte';
+  import Promesses from '$components/common/StepPage/Promesses.svelte';
+  import Promess from '$components/common/StepPage/Promess.svelte';
+  import Steps from '$components/common/StepPage/Steps.svelte';
   import PageCta from '$components/common/PageCta.svelte';
 
   import { default as BrsEtape1 } from '$assets/illustrations/brs-etape-1.svg?raw';
@@ -11,7 +11,7 @@
   import { default as BrsEtape3 } from '$assets/illustrations/brs-etape-3.svg?raw';
   import { default as BrsEtape4 } from '$assets/illustrations/brs-etape-4.svg?raw';
   import { default as BrsEtape5 } from '$assets/illustrations/brs-etape-5.svg?raw';
-  import Step from '$components/pages/step-page/Step.svelte';
+  import Step from '$components/common/StepPage/Step.svelte';
   import { steps } from './[slug]/content';
 </script>
 

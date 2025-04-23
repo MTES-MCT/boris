@@ -60,7 +60,7 @@ export type Step = {
   title: string;
   description: string;
   slug?: string;
-  sections?: StepSection[];
+  sections: StepSection[];
   previousStep?: {
     title: string;
     slug: string;

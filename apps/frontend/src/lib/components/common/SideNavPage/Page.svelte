@@ -4,9 +4,9 @@
 
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Section from '$components/common/Section.svelte';
-  import Step from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/Step.svelte';
-  import Nav from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/Nav.svelte';
-  import StepLink from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/StepLink.svelte';
+  import Step from '$components/common/SideNavPage/Step.svelte';
+  import Nav from '$components/common/SideNavPage/Nav.svelte';
+  import StepLink from '$components/common/SideNavPage/StepLink.svelte';
 
   type Props = {
     title: string;
