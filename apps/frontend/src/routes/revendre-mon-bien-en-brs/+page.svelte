@@ -11,10 +11,10 @@
 </script>
 
 <svelte:head>
-  <title>Tout savoir sur le BRS - Boris</title>
+  <title>Revendre mon bien en BRS - Boris</title>
   <meta
     name="description"
-    content="Découvrez le Bail Réel Solidaire (BRS), un dispositif qui permet d'accéder à la propriété à un prix abordable grâce à un partenariat avec des organismes fonciers solidaires. Apprenez-en plus sur ses avantages, critères et fonctionnement." />
+    content=": Découvrez les étapes clés pour revendre votre logement en Bail Réel Solidaire (BRS). BoRiS vous guide dans ce processus encadré : conditions d’éligibilité des acheteurs, prix plafonné, rôle de l’OFS, diagnostics obligatoires et accompagnement gratuit par le Ministère du Logement." />
 </svelte:head>
 
 <GradientBackgroundWrapper>
