@@ -1,26 +1,15 @@
 <script lang="ts">
-  import Card from '$components/pages/step-page/Step.svelte';
-
-  import type { Step } from '$lib/utils/definitions';
+  import type { Snippet } from 'svelte';
 
   type Props = {
-    steps: Step[];
+    children: Snippet;
   };
 
-  const { steps }: Props = $props();
+  const { children }: Props = $props();
 </script>
 
 <section class="fr-container">
-  {#each steps as { title, description }, index}
-    <Card
-      {title}
-      linkLabel="Tout savoir sur le BRS"
-      href={`/tout-savoir-sur-le-bail-reel-solidaire-brs/${steps[0].slug}`}
-      position={index + 1}
-      isLast={index === steps.length - 1}>
-      {@html description}
-    </Card>
-  {/each}
+  {@render children()}
 </section>
 
 <style lang="postcss">

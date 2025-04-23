@@ -1,54 +1,5 @@
 import type { Step } from '$lib/utils/definitions';
 
-export const hero = `
-  <p class="fr-mb-0">
-    Vous souhaitez revendre votre bien en BRS ? BoRiS est là pour vous guider
-    à chacune des phases ! Notre équipe du Ministère du logement peut même
-    vous accompagner gratuitement dans ce projet. Cela vous intéresse ?
-    Contactez-nous
-    <a
-      href="/nous-contacter"
-      class="fr-link">
-      ici
-    </a>
-    <br />
-    <br />
-    Sur cette page, vous découvrirez chaque étape jusqu’à la vente.
-  </p>
-`;
-
-export const promesses: string[] = [
-  `
-    <p>
-      <b>Vous êtes libre de vendre votre bien à tout moment.</b>
-    </p>
-    <p>
-      Que ce soit pour changer de ville ou trouver un nouveau logement plus approprié à vos besoins, c’est vous qui décidez quand vous partez !
-    </p>
-  `,
-  `
-    <p>
-      <b>
-        La revente d’un bien en BRS est encadrée :
-      </b>
-    </p>
-    <p>
-      Vous ne pouvez pas le vendre à n’importe qui : le ménage acheteur doit respecter les conditions d’éligibilité au BRS (c’est le cas de 87% des foyers !)
-    </p>
-    <p>
-      Le prix de revente est encadré : vous pouvez faire une plus value à hauteur de l’inflation depuis votre achat. Le BRS est un dispositif non spéculatif.
-    </p>
-  `,
-  `
-    <p>
-      <b>Il faut impliquer l’OFS dans le processus.</b>
-    </p>
-    <p>
-      D’abord parce qu’il a un droit de préemption (il peut racheter le bien avant qu’il soit proposé à d’autres personnes) ; ensuite parce qu’il doit donner son agrément ;  parce qu’il doit être impliqué dans la rédaction du contrat de vente ; enfin parce qu’il peut vous aider à trouver un acheteur !
-    </p>
-  `,
-];
-
 export const steps: Step[] = [
   {
     title:

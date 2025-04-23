@@ -6,20 +6,21 @@
   type Props = {
     title: string;
     children: Snippet;
-    href: string;
-    linkLabel: string;
     position: number;
     isLast: boolean;
+    large: boolean;
+    href?: string;
+    linkLabel?: string;
     illustration?: string;
   };
 
   export const {
     title,
     children,
-    href,
-    linkLabel,
     position,
     isLast,
+    href = undefined,
+    linkLabel = undefined,
     illustration = undefined,
   }: Props = $props();
 </script>
@@ -44,12 +45,14 @@
             {title}
           </h3>
           {@render children()}
-          <a
-            rel="noopener"
-            class="fr-link fr-icon-arrow-right-line fr-link--icon-right"
-            {href}>
-            {linkLabel}
-          </a>
+          {#if href}
+            <a
+              rel="noopener"
+              class="fr-link fr-icon-arrow-right-line fr-link--icon-right"
+              {href}>
+              {linkLabel}
+            </a>
+          {/if}
         </div>
       </div>
     </div>
@@ -65,7 +68,7 @@
 <style lang="postcss">
   article {
     --illustration-max-height: 150px;
-    max-width: 500px;
+    /* max-width: 500px; */
     margin: 0 auto;
     display: block;
 
@@ -124,6 +127,7 @@
       }
 
       .text {
+        font-size: 0.875rem;
         position: relative;
         flex: 1;
         margin-inline-start: var(--3w);
@@ -152,7 +156,7 @@
 
       .column {
         .column-container {
-          max-width: 500px;
+          /* max-width: 500px; */
         }
       }
 

@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { default as Star } from '$assets/icons/star.svg?raw';
+  import type { Snippet } from 'svelte';
 
   type Props = {
     title: string;
-    promesses: string[];
+    children: Snippet;
   };
 
-  const { title, promesses }: Props = $props();
+  const { title, children }: Props = $props();
 </script>
 
 <section class="fr-container promesse">
@@ -14,16 +14,7 @@
     <h2 class="color-blue-primary">{title}</h2>
 
     <div class="fr-grid-row fr-grid-row--gutters">
-      {#each promesses as promess}
-        <div class="fr-col-12 fr-col-lg-4 column">
-          <div>
-            {@html Star}
-          </div>
-          <div>
-            {@html promess}
-          </div>
-        </div>
-      {/each}
+      {@render children()}
     </div>
   </div>
 </section>
@@ -43,16 +34,6 @@
         font-size: 1.5rem;
         text-align: center;
         margin-block-end: var(--6w);
-      }
-    }
-
-    .column {
-      display: flex;
-      gap: var(--2w);
-
-      :global(svg) {
-        width: var(--4w);
-        height: var(--4w);
       }
     }
   }
@@ -78,10 +59,6 @@
           border: solid 3px var(--color-red-primary);
           border-radius: inherit;
           transform: translateZ(-1px);
-        }
-
-        .column {
-          gap: var(--2w);
         }
       }
     }
