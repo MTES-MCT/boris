@@ -3,7 +3,8 @@ import type { Step } from '$lib/utils/definitions';
 const step1 = {
   title: 'Revendre mon bien en BRS',
   slug: 'revendre-mon-bien-en-brs',
-  description: 'Revendre mon bien en BRS',
+  description:
+    'Découvrez les étapes clés pour revendre votre logement en Bail Réel Solidaire (BRS). BoRiS vous guide dans ce processus encadré : conditions d’éligibilité des acheteurs, prix plafonné, rôle de l’OFS, diagnostics obligatoires et accompagnement gratuit par le Ministère du Logement.',
 };
 
 export const steps: Step[] = [
