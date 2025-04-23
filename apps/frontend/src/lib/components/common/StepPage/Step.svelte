@@ -1,50 +1,58 @@
 <script lang="ts">
   import { default as EndOfPath } from '$assets/icons/end-of-path.svg?raw';
   import '@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css';
+  import type { Snippet } from 'svelte';
 
   type Props = {
-    illustration: string;
     title: string;
-    content: string;
-    href: string;
-    linkLabel: string;
+    children: Snippet;
     position: number;
     isLast: boolean;
+    large: boolean;
+    href?: string;
+    linkLabel?: string;
+    illustration?: string;
   };
 
   export const {
-    illustration,
     title,
-    content,
-    href,
-    linkLabel,
+    children,
     position,
     isLast,
+    href = undefined,
+    linkLabel = undefined,
+    illustration = undefined,
   }: Props = $props();
 </script>
 
-<article class={`step-${position}`}>
+<article
+  class={`step-${position}`}
+  style={!illustration ? `--illustration-max-height: 0px` : ``}>
   <div class="fr-hidden fr-unhidden-lg column"></div>
   <div class="column">
     <div class="column-container">
-      <div class="illustration">
-        {@html illustration}
-      </div>
+      {#if illustration}
+        <div class="illustration">
+          {@html illustration}
+        </div>
+      {/if}
       <div class="content">
         <div class="position color-blue-primary">
           <span><b>{position}</b></span>
         </div>
         <div class="text">
-          <h3 class="fr-mb-0">
+          <h2>
             {title}
-          </h3>
-          <p>{content}</p>
-          <a
-            rel="noopener"
-            class="fr-link fr-icon-arrow-right-line fr-link--icon-right"
-            {href}>
-            {linkLabel}
-          </a>
+          </h2>
+          {@render children()}
+          {#if href}
+            <a
+              rel="noopener"
+              class="fr-link fr-icon-arrow-right-line fr-link--icon-right"
+              {href}>
+              {linkLabel}
+            </a>
+          {/if}
         </div>
       </div>
     </div>
@@ -60,18 +68,9 @@
 <style lang="postcss">
   article {
     --illustration-max-height: 150px;
-    max-width: 500px;
+    /* max-width: 500px; */
     margin: 0 auto;
     display: block;
-
-    h3 {
-      font-size: 1.5rem;
-    }
-
-    p {
-      font-size: 0.875rem;
-      margin-block-end: var(--3w);
-    }
 
     a {
       font-size: 0.875rem;
@@ -124,6 +123,7 @@
       }
 
       .text {
+        font-size: 0.875rem;
         position: relative;
         flex: 1;
         margin-inline-start: var(--3w);
@@ -146,17 +146,13 @@
       display: flex;
       justify-content: center;
 
-      p {
-        margin-block-end: var(--5w);
-      }
-
       .illustration {
         justify-content: flex-start;
       }
 
       .column {
         .column-container {
-          max-width: 500px;
+          /* max-width: 500px; */
         }
       }
 

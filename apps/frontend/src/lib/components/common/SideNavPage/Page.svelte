@@ -1,16 +1,18 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import type { StepSection } from '$lib/utils/definitions';
+  import { onMount, type Snippet } from 'svelte';
+  import type { Heading, StepSection } from '$lib/utils/definitions';
 
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Section from '$components/common/Section.svelte';
-  import Step from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/Step.svelte';
-  import Nav from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/Nav.svelte';
-  import StepLink from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/StepLink.svelte';
+  import Step from '$components/common/SideNavPage/Step.svelte';
+  import Nav from '$components/common/SideNavPage/Nav.svelte';
+  import StepLink from '$components/common/SideNavPage/StepLink.svelte';
 
   type Props = {
     title: string;
     sections: StepSection[];
+    titleElement?: Heading;
+    children?: Snippet;
     previousStep?: {
       title: string;
       slug: string;
@@ -26,7 +28,16 @@
     isVisible: boolean;
   };
 
-  const { title, sections, previousStep, nextStep }: Props = $props();
+  const {
+    title,
+    sections,
+    titleElement = 'h1',
+    previousStep,
+    nextStep,
+    children = undefined,
+  }: Props = $props();
+
+  console.log(children);
 
   let observableSections = $state<ObservableSection[]>(
     sections.map((section) => ({
@@ -69,6 +80,11 @@
 </script>
 
 <GradientBackgroundWrapper>
+  {#if children}
+    <div class="children">
+      {@render children()}
+    </div>
+  {/if}
   <Section>
     <div class="wrapper">
       <div class="fr-grid-row">
@@ -79,7 +95,11 @@
         </div>
 
         <div class="fr-col-12 fr-col-md-9 content">
-          <h1 class="fr-h3 fr-mb-0">{title}</h1>
+          <svelte:element
+            this={titleElement}
+            class="fr-h3">
+            {title}
+          </svelte:element>
 
           <Nav
             {sections}
@@ -118,12 +138,20 @@
 </GradientBackgroundWrapper>
 
 <style lang="postcss">
+  .children {
+    margin-block-end: var(--6w);
+  }
+
   .step-links {
     display: flex;
     flex-direction: column;
     gap: var(--3w);
     padding-block-start: var(--5w);
     padding-block-end: var(--1w);
+  }
+
+  h1 {
+    margin-block-end: var(--5w);
   }
 
   @media (--sm-viewport) {
@@ -143,6 +171,14 @@
   }
 
   @media (--md-viewport) {
+    h1 {
+      margin-block-end: var(--6w);
+    }
+
+    .children {
+      margin-block-end: var(--12w);
+    }
+
     .content {
       padding-inline-start: var(--12w);
     }

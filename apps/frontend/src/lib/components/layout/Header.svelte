@@ -147,6 +147,15 @@
           <li class="fr-nav__item">
             <a
               class="fr-nav__link"
+              href="/revendre-mon-bien-en-brs"
+              aria-current={pathname === '/revendre-mon-bien-en-brs'}
+              target="_self">
+              Revendre mon bien en brs
+            </a>
+          </li>
+          <li class="fr-nav__item">
+            <a
+              class="fr-nav__link"
               href="/blog"
               aria-current={pathname === '/blog'}
               target="_self">
