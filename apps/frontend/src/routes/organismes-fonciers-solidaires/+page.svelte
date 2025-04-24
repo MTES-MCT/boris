@@ -14,14 +14,14 @@
 </script>
 
 <svelte:head>
-  <title>Organismes Foncier Solidaires - Boris</title>
+  <title>Organismes de Foncier Solidaires - Boris</title>
   <meta
     name="description"
-    content="Découvrez les Organismes Foncier Solidaire (OFS) en France, acteurs clés du dispositif du Bail Réel Solidaire." />
+    content="Découvrez les Organismes de Foncier Solidaire (OFS) en France, acteurs clés du dispositif du Bail Réel Solidaire." />
 </svelte:head>
 
 <Section
-  title="Voici la liste des Organismes Foncier Solidaires (OFS) répertoriés par région"
+  title="Voici la liste des Organismes de Foncier Solidaires (OFS) répertoriés par région"
   titleElement="h1">
   <p>
     Les OFS jouent un rôle clé dans l'accès au dispositif de Bail Réel Solidaire
