@@ -4,7 +4,7 @@ export const OFSs: OFS[] = [
   {
     nom: 'OFS1',
     region: 'bretagne',
-    departements: "Cotes d'armor, finistere, ",
+    departements: "Cotes d'armor, finistere",
     lien: 'https://ofs.random',
     telephone: '123456789',
     commercialisateur: 'commercialisateur',
@@ -50,7 +50,6 @@ export const OFSs: OFS[] = [
     commercialisateur: 'commercialisateur1, commercialisateur2',
   },
 ];
-// ---------------------------------------
 
 export const expectedResult = [
   {
@@ -59,7 +58,7 @@ export const expectedResult = [
       {
         nom: 'OFS1',
         region: 'bretagne',
-        departements: "Cotes d'armor, finistere, ",
+        departements: "BRS Cotes d'armor, BRS finistere",
         lien: 'https://ofs.random',
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
@@ -73,7 +72,7 @@ export const expectedResult = [
       {
         nom: 'OFS2',
         region: 'bretagne',
-        departements: 'morbihan',
+        departements: 'BRS morbihan',
         lien: 'https://ofs.random',
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
@@ -87,7 +86,7 @@ export const expectedResult = [
       {
         nom: 'OFS5',
         region: 'Ile de france, bretagne',
-        departements: 'Paris, Seinte saint Denis',
+        departements: 'BRS Paris, BRS Seinte saint Denis',
         lien: 'https://ofs.random',
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
@@ -107,7 +106,7 @@ export const expectedResult = [
       {
         nom: 'OFS3',
         region: 'Ile de france',
-        departements: 'Paris',
+        departements: 'BRS Paris',
         lien: 'https://ofs.random',
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
@@ -121,7 +120,7 @@ export const expectedResult = [
       {
         nom: 'OFS4',
         region: 'Ile de france',
-        departements: 'Paris, Seinte saint Denis',
+        departements: 'BRS Paris, BRS Seinte saint Denis',
         lien: 'https://ofs.random',
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
@@ -135,7 +134,7 @@ export const expectedResult = [
       {
         nom: 'OFS5',
         region: 'Ile de france, bretagne',
-        departements: 'Paris, Seinte saint Denis',
+        departements: 'BRS Paris, BRS Seinte saint Denis',
         lien: 'https://ofs.random',
         telephone: '123456789',
         commercialisateur: 'commercialisateur',
@@ -155,7 +154,7 @@ export const expectedResult = [
       {
         nom: 'OFS6',
         region: 'Occitanie',
-        departements: 'Gard',
+        departements: 'BRS Gard',
         lien: 'https://ofs.random1, https://ofs.random2',
         telephone: '123456789',
         commercialisateur: 'commercialisateur1, commercialisateur2',

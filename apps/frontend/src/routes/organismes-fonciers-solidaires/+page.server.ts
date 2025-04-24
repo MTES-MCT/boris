@@ -2,6 +2,7 @@
 import Papa from 'papaparse';
 import { formatOFSs } from '$lib/utils/formatters';
 import { PUBLIC_BORIS_CMS_URL } from '$env/static/public';
+import type { Region } from '$lib/utils/definitions';
 
 export const load = async () => {
   const response = await fetch(`${PUBLIC_BORIS_CMS_URL}/api/v2/documents`);
@@ -13,7 +14,7 @@ export const load = async () => {
 
   const OFSs = await Papa.parse(csvFileContent, { header: true });
 
-  const regions = formatOFSs(OFSs.data);
+  const regions: Region[] = formatOFSs(OFSs.data);
 
   return {
     regions,
