@@ -67,7 +67,7 @@
   <p>
     Le principe du bail réel solidaire (BRS) est la dissociation du foncier et
     du bâti qui permet de baisser le prix des logements : vous achetez
-    uniquement le logement et vous “louez” le terrain à un Organisme Foncier
+    uniquement le logement et vous “louez” le terrain à un Organisme de Foncier
     Solidaire (OFS) pour une redevance mensuelle.
   </p>
   <p>
