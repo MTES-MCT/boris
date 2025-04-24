@@ -31,6 +31,7 @@ export const formatOFSs = (OFSs: OFS[]): Region[] => {
 
       return {
         ...ofs,
+        departements: formatDepartements(ofs.departements),
         formattedCommercialisateurs,
       };
     });
@@ -66,4 +67,15 @@ export const formatPublishedAt = (date: string) => {
   }).format(new Date(date));
 
   return `Publié le ${formattedDate}`;
+};
+
+export const formatDepartements = (departements: string) => {
+  if (departements.length === 0) {
+    return '';
+  } else {
+    return departements
+      .split(', ')
+      .map((departement) => `BRS ${departement}`)
+      .join(', ');
+  }
 };

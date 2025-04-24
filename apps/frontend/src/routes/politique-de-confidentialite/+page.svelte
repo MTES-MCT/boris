@@ -13,7 +13,7 @@
 <Section
   title="Politique de confidentialité"
   titleElement="h1">
-  <p>Dernière mise à jour : 15/01/2025</p>
+  <p>Dernière mise à jour : 23/04/2025</p>
   <p>
     Bienvenue sur la plateforme BoRiS ("BoRiS"), un service fourni par le
     ministère chargé du logement. La présente Politique de Confidentialité a
@@ -47,7 +47,9 @@
     Vous avez, à tout moment, la possibilité de vous rétracter et de demander à
     ce que l’ensemble des informations que vous avez renseigné soit retirées de
     nos bases de données. La demande doit être formulée auprès de cette adresse
-    : <a href="mailto:nathan.gaudelet@beta.gouv.fr">
+    : <a
+      href="mailto:nathan.gaudelet@beta.gouv.fr"
+      class="fr-link">
       nathan.gaudelet@beta.gouv.fr
     </a>
   </p>
@@ -66,6 +68,21 @@
     utilisez la plateforme. Vous pouvez configurer votre navigateur pour refuser
     les cookies, mais cela pourrait affecter certaines fonctionnalités de BoRiS.
   </p>
+  <p>
+    BoRiS utilise Google Analytics, un service d’analyse fourni par Google, pour
+    mieux comprendre la manière dont les utilisateurs interagissent avec la
+    plateforme. Les informations collectées via cet outil (comme les pages
+    visitées ou la durée des visites) sont anonymisées et utilisées uniquement à
+    des fins statistiques. Vous pouvez désactiver ce suivi en installant le
+    module complémentaire de navigateur pour la désactivation de Google
+    Analytics disponible à cette adresse : <a
+      href="https://tools.google.com/dlpage/gaoptout"
+      class="fr-link"
+      target="_blank"
+      rel="noopener">
+      https://tools.google.com/dlpage/gaoptout
+    </a>
+  </p>
 
   <ContentPageSubtitle
     title="Modifications de la politique de confidentialité" />
@@ -81,7 +98,9 @@
   <p>
     Si vous avez des questions concernant cette Politique de Confidentialité,
     vous pouvez nous contacter à l'adresse courriel suivante
-    <a href="mailto:nathan.gaudelet@beta.gouv.fr">
+    <a
+      href="mailto:nathan.gaudelet@beta.gouv.fr"
+      class="fr-link">
       nathan.gaudelet@beta.gouv.fr
     </a>
   </p>
