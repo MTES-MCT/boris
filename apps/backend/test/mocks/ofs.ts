@@ -9,3 +9,7 @@ export const ofs1 = new OfsEntity(
   [finistere, paris],
   [bretagne],
 );
+
+export const mockOfsRepository = {
+  save: jest.fn(),
+};
