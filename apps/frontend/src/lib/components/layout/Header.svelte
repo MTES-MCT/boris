@@ -150,7 +150,7 @@
               href="/revendre-mon-bien-en-brs"
               aria-current={pathname === '/revendre-mon-bien-en-brs'}
               target="_self">
-              Revendre mon bien en brs
+              Revendre mon bien en BRS
             </a>
           </li>
           <li class="fr-nav__item">
