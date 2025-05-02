@@ -68,7 +68,6 @@
 <style lang="postcss">
   article {
     --illustration-max-height: 150px;
-    /* max-width: 500px; */
     margin: 0 auto;
     display: block;
 
@@ -148,12 +147,6 @@
 
       .illustration {
         justify-content: flex-start;
-      }
-
-      .column {
-        .column-container {
-          /* max-width: 500px; */
-        }
       }
 
       .column:nth-child(1) {

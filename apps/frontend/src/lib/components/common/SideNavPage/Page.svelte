@@ -37,8 +37,6 @@
     children = undefined,
   }: Props = $props();
 
-  console.log(children);
-
   let observableSections = $state<ObservableSection[]>(
     sections.map((section) => ({
       id: section.id,
