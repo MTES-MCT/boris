@@ -2,7 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 import { DepartementRepository } from 'src/infrastructure/departement/departement.repository';
-import { finistere, mockDepartementRepository } from 'test/mocks/departement';
+import {
+  finistere,
+  mockDepartementRepository,
+  paris,
+} from 'test/mocks/departement';
+import { In } from 'typeorm';
 
 describe('DepartementRepository', () => {
   let departementRepository: DepartementRepository;
@@ -54,6 +59,21 @@ describe('DepartementRepository', () => {
     expect(mockDepartementRepository.findOneBy).toHaveBeenCalledTimes(1);
     expect(mockDepartementRepository.findOneBy).toHaveBeenCalledWith({
       code: '29',
+    });
+  });
+
+  it('should find departements by names', async () => {
+    mockDepartementRepository.findBy.mockResolvedValue([finistere, paris]);
+
+    const result = await departementRepository.findManyByNames([
+      'Finistère',
+      'Paris',
+    ]);
+
+    expect(result).toMatchObject([finistere, paris]);
+    expect(mockDepartementRepository.findBy).toHaveBeenCalledTimes(1);
+    expect(mockDepartementRepository.findBy).toHaveBeenCalledWith({
+      name: In(['Finistère', 'Paris']),
     });
   });
 });

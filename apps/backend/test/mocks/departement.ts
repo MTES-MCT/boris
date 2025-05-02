@@ -7,6 +7,8 @@ export const paris = new DepartementEntity('Paris', '75', bretagne);
 export const mockDepartementRepository = {
   save: jest.fn(),
   findOneBy: jest.fn(),
+  findBy: jest.fn(),
   findOneByName: jest.fn(),
   findOneByCode: jest.fn(),
+  findManyByNames: jest.fn(),
 };
