@@ -3,17 +3,10 @@
     "collect": {
       "url": [
         "http://localhost:4173/",
-        "http://localhost:4173/accessibilite",
-        "http://localhost:4173/conditions-generales-d-utilisation",
-        "http://localhost:4173/mentions-legales",
         "http://localhost:4173/notre-mission",
-        "http://localhost:4173/nous-contacter",
         "http://localhost:4173/organismes-fonciers-solidaires",
-        "http://localhost:4173/politique-de-confidentialite",
         "http://localhost:4173/tout-savoir-sur-le-bail-reel-solidaire-brs",
-        "http://localhost:4173/blog/puis-je-acheter-un-logement-en-brs-si-je-suis-deja-proprietaire",
-        "http://localhost:4173/blog/acheter-son-logement-sans-se-ruiner-3-solutions-a-connaitre-absolument",
-        "http://localhost:4173/blog/un-exemple-pour-vous-projeter-dans-votre-achat-en-brs"
+        "http://localhost:4173/blog/puis-je-acheter-un-logement-en-brs-si-je-suis-deja-proprietaire"
       ],
       "numberOfRuns": 1,
       "settings": {

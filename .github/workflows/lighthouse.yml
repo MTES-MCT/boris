@@ -2,6 +2,8 @@ name: Lighthouse
 
 on:
   pull_request:
+    branches:
+      - main
 
 jobs:
   lighthouse:
