@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Page from '$components/pages/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/Page.svelte';
+  import Page from '$components/common/SideNavPage/Page.svelte';
 
   const { data } = $props();
   const { title, description, sections, previousStep, nextStep } =
