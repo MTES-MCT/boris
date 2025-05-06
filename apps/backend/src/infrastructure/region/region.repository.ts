@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { RegionRepositoryInterface } from 'src/domain/region/region.repository.interface';
 import { RegionEntity } from './region.entity';
 import { RegionInterface } from 'src/domain/region/region.interface';
@@ -18,5 +18,11 @@ export class RegionRepository implements RegionRepositoryInterface {
 
   public findOneByName(name: string): Promise<RegionEntity | null> {
     return this.repository.findOneBy({ name });
+  }
+
+  public findManyByNames(names: string[]): Promise<RegionEntity[] | []> {
+    return this.repository.findBy({
+      name: In(names),
+    });
   }
 }

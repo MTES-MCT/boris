@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
 import { DepartementEntity } from './departement.entity';
 import { DepartementInterface } from 'src/domain/departement/departement.interface';
@@ -22,5 +22,11 @@ export class DepartementRepository implements DepartementRepositoryInterface {
 
   public findOneByCode(code: string): Promise<DepartementEntity | null> {
     return this.repository.findOneBy({ code });
+  }
+
+  public findManyByNames(names: string[]): Promise<DepartementEntity[] | []> {
+    return this.repository.findBy({
+      name: In(names),
+    });
   }
 }

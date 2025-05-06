@@ -1,240 +1,244 @@
 import { Injectable } from '@nestjs/common';
+import { SaveDepartementUsecase } from 'src/application/departement/save.usecase';
 import { SaveRegionUsecase } from 'src/application/region/save.usecase';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 import { RegionEntity } from 'src/infrastructure/region/region.entity';
 
 const regions = [
   {
-    nom: 'Auvergne-Rhône-Alpes',
+    name: 'Auvergne-Rhône-Alpes',
     departements: [
-      { nom: 'Ain', code: '01' },
-      { nom: 'Allier', code: '03' },
-      { nom: 'Ardèche', code: '07' },
-      { nom: 'Cantal', code: '15' },
-      { nom: 'Drôme', code: '26' },
-      { nom: 'Isère', code: '38' },
-      { nom: 'Loire', code: '42' },
-      { nom: 'Haute-Loire', code: '43' },
-      { nom: 'Puy-de-Dôme', code: '63' },
-      { nom: 'Rhône', code: '69' },
-      { nom: 'Savoie', code: '73' },
-      { nom: 'Haute-Savoie', code: '74' },
+      { name: 'Ain', code: '01' },
+      { name: 'Allier', code: '03' },
+      { name: 'Ardèche', code: '07' },
+      { name: 'Cantal', code: '15' },
+      { name: 'Drôme', code: '26' },
+      { name: 'Isère', code: '38' },
+      { name: 'Loire', code: '42' },
+      { name: 'Haute-Loire', code: '43' },
+      { name: 'Puy-de-Dôme', code: '63' },
+      { name: 'Rhône', code: '69' },
+      { name: 'Savoie', code: '73' },
+      { name: 'Haute-Savoie', code: '74' },
     ],
   },
   {
-    nom: 'Bourgogne-Franche-Comté',
+    name: 'Bourgogne-Franche-Comté',
     departements: [
-      { nom: "Côte-d'Or", code: '21' },
-      { nom: 'Doubs', code: '25' },
-      { nom: 'Jura', code: '39' },
-      { nom: 'Nièvre', code: '58' },
-      { nom: 'Haute-Saône', code: '70' },
-      { nom: 'Saône-et-Loire', code: '71' },
-      { nom: 'Yonne', code: '89' },
-      { nom: 'Territoire de Belfort', code: '90' },
+      { name: "Côte-d'Or", code: '21' },
+      { name: 'Doubs', code: '25' },
+      { name: 'Jura', code: '39' },
+      { name: 'Nièvre', code: '58' },
+      { name: 'Haute-Saône', code: '70' },
+      { name: 'Saône-et-Loire', code: '71' },
+      { name: 'Yonne', code: '89' },
+      { name: 'Territoire de Belfort', code: '90' },
     ],
   },
   {
-    nom: 'Bretagne',
+    name: 'Bretagne',
     departements: [
-      { nom: "Côtes-d'Armor", code: '22' },
-      { nom: 'Finistère', code: '29' },
-      { nom: 'Ille-et-Vilaine', code: '35' },
-      { nom: 'Morbihan', code: '56' },
+      { name: "Côtes-d'Armor", code: '22' },
+      { name: 'Finistère', code: '29' },
+      { name: 'Ille-et-Vilaine', code: '35' },
+      { name: 'Morbihan', code: '56' },
     ],
   },
   {
-    nom: 'Centre-Val de Loire',
+    name: 'Centre-Val de Loire',
     departements: [
-      { nom: 'Cher', code: '18' },
-      { nom: 'Eure-et-Loir', code: '28' },
-      { nom: 'Indre', code: '36' },
-      { nom: 'Indre-et-Loire', code: '37' },
-      { nom: 'Loir-et-Cher', code: '41' },
-      { nom: 'Loiret', code: '45' },
+      { name: 'Cher', code: '18' },
+      { name: 'Eure-et-Loir', code: '28' },
+      { name: 'Indre', code: '36' },
+      { name: 'Indre-et-Loire', code: '37' },
+      { name: 'Loir-et-Cher', code: '41' },
+      { name: 'Loiret', code: '45' },
     ],
   },
   {
-    nom: 'Corse',
+    name: 'Corse',
     departements: [
-      { nom: 'Corse-du-Sud', code: '2A' },
-      { nom: 'Haute-Corse', code: '2B' },
+      { name: 'Corse-du-Sud', code: '2A' },
+      { name: 'Haute-Corse', code: '2B' },
     ],
   },
   {
-    nom: 'Grand Est',
+    name: 'Grand Est',
     departements: [
-      { nom: 'Ardennes', code: '08' },
-      { nom: 'Aube', code: '10' },
-      { nom: 'Marne', code: '51' },
-      { nom: 'Haute-Marne', code: '52' },
-      { nom: 'Meurthe-et-Moselle', code: '54' },
-      { nom: 'Meuse', code: '55' },
-      { nom: 'Moselle', code: '57' },
-      { nom: 'Bas-Rhin', code: '67' },
-      { nom: 'Haut-Rhin', code: '68' },
-      { nom: 'Vosges', code: '88' },
+      { name: 'Ardennes', code: '08' },
+      { name: 'Aube', code: '10' },
+      { name: 'Marne', code: '51' },
+      { name: 'Haute-Marne', code: '52' },
+      { name: 'Meurthe-et-Moselle', code: '54' },
+      { name: 'Meuse', code: '55' },
+      { name: 'Moselle', code: '57' },
+      { name: 'Bas-Rhin', code: '67' },
+      { name: 'Haut-Rhin', code: '68' },
+      { name: 'Vosges', code: '88' },
     ],
   },
   {
-    nom: 'Hauts-de-France',
+    name: 'Hauts-de-France',
     departements: [
-      { nom: 'Aisne', code: '02' },
-      { nom: 'Nord', code: '59' },
-      { nom: 'Oise', code: '60' },
-      { nom: 'Pas-de-Calais', code: '62' },
-      { nom: 'Somme', code: '80' },
+      { name: 'Aisne', code: '02' },
+      { name: 'Nord', code: '59' },
+      { name: 'Oise', code: '60' },
+      { name: 'Pas-de-Calais', code: '62' },
+      { name: 'Somme', code: '80' },
     ],
   },
   {
-    nom: 'Île-de-France',
+    name: 'Île-de-France',
     departements: [
-      { nom: 'Paris', code: '75' },
-      { nom: 'Seine-et-Marne', code: '77' },
-      { nom: 'Yvelines', code: '78' },
-      { nom: 'Essonne', code: '91' },
-      { nom: 'Hauts-de-Seine', code: '92' },
-      { nom: 'Seine-Saint-Denis', code: '93' },
-      { nom: 'Val-de-Marne', code: '94' },
-      { nom: "Val-d'Oise", code: '95' },
+      { name: 'Paris', code: '75' },
+      { name: 'Seine-et-Marne', code: '77' },
+      { name: 'Yvelines', code: '78' },
+      { name: 'Essonne', code: '91' },
+      { name: 'Hauts-de-Seine', code: '92' },
+      { name: 'Seine-Saint-Denis', code: '93' },
+      { name: 'Val-de-Marne', code: '94' },
+      { name: "Val-d'Oise", code: '95' },
     ],
   },
   {
-    nom: 'Normandie',
+    name: 'Normandie',
     departements: [
-      { nom: 'Calvados', code: '14' },
-      { nom: 'Eure', code: '27' },
-      { nom: 'Manche', code: '50' },
-      { nom: 'Orne', code: '61' },
-      { nom: 'Seine-Maritime', code: '76' },
+      { name: 'Calvados', code: '14' },
+      { name: 'Eure', code: '27' },
+      { name: 'Manche', code: '50' },
+      { name: 'Orne', code: '61' },
+      { name: 'Seine-Maritime', code: '76' },
     ],
   },
   {
-    nom: 'Nouvelle-Aquitaine',
+    name: 'Nouvelle-Aquitaine',
     departements: [
-      { nom: 'Charente', code: '16' },
-      { nom: 'Charente-Maritime', code: '17' },
-      { nom: 'Corrèze', code: '19' },
-      { nom: 'Creuse', code: '23' },
-      { nom: 'Deux-Sèvres', code: '79' },
-      { nom: 'Dordogne', code: '24' },
-      { nom: 'Gironde', code: '33' },
-      { nom: 'Landes', code: '40' },
-      { nom: 'Lot-et-Garonne', code: '47' },
-      { nom: 'Pyrénées-Atlantiques', code: '64' },
-      { nom: 'Haute-Vienne', code: '87' },
-      { nom: 'Vienne', code: '86' },
-      { nom: 'Corrèze', code: '19' },
+      { name: 'Charente', code: '16' },
+      { name: 'Charente-Maritime', code: '17' },
+      { name: 'Corrèze', code: '19' },
+      { name: 'Creuse', code: '23' },
+      { name: 'Deux-Sèvres', code: '79' },
+      { name: 'Dordogne', code: '24' },
+      { name: 'Gironde', code: '33' },
+      { name: 'Landes', code: '40' },
+      { name: 'Lot-et-Garonne', code: '47' },
+      { name: 'Pyrénées-Atlantiques', code: '64' },
+      { name: 'Haute-Vienne', code: '87' },
+      { name: 'Vienne', code: '86' },
     ],
   },
   {
-    nom: 'Occitanie',
+    name: 'Occitanie',
     departements: [
-      { nom: 'Ariège', code: '09' },
-      { nom: 'Aude', code: '11' },
-      { nom: 'Aveyron', code: '12' },
-      { nom: 'Gard', code: '30' },
-      { nom: 'Haute-Garonne', code: '31' },
-      { nom: 'Gers', code: '32' },
-      { nom: 'Hérault', code: '34' },
-      { nom: 'Lot', code: '46' },
-      { nom: 'Lozère', code: '48' },
-      { nom: 'Pyrénées-Orientales', code: '66' },
-      { nom: 'Tarn', code: '81' },
-      { nom: 'Tarn-et-Garonne', code: '82' },
+      { name: 'Ariège', code: '09' },
+      { name: 'Aude', code: '11' },
+      { name: 'Aveyron', code: '12' },
+      { name: 'Gard', code: '30' },
+      { name: 'Haute-Garonne', code: '31' },
+      { name: 'Gers', code: '32' },
+      { name: 'Hérault', code: '34' },
+      { name: 'Lot', code: '46' },
+      { name: 'Lozère', code: '48' },
+      { name: 'Pyrénées-Orientales', code: '66' },
+      { name: 'Tarn', code: '81' },
+      { name: 'Tarn-et-Garonne', code: '82' },
     ],
   },
   {
-    nom: 'Pays de la Loire',
+    name: 'Pays de la Loire',
     departements: [
-      { nom: 'Loire-Atlantique', code: '44' },
-      { nom: 'Maine-et-Loire', code: '49' },
-      { nom: 'Mayenne', code: '53' },
-      { nom: 'Sarthe', code: '72' },
-      { nom: 'Vendée', code: '85' },
+      { name: 'Loire-Atlantique', code: '44' },
+      { name: 'Maine-et-Loire', code: '49' },
+      { name: 'Mayenne', code: '53' },
+      { name: 'Sarthe', code: '72' },
+      { name: 'Vendée', code: '85' },
     ],
   },
   {
-    nom: "Provence-Alpes-Côte d'Azur",
+    name: "Provence-Alpes-Côte d'Azur",
     departements: [
-      { nom: 'Alpes-de-Haute-Provence', code: '04' },
-      { nom: 'Hautes-Alpes', code: '05' },
-      { nom: 'Alpes-Maritimes', code: '06' },
-      { nom: 'Bouches-du-Rhône', code: '13' },
-      { nom: 'Var', code: '83' },
-      { nom: 'Vaucluse', code: '84' },
+      { name: 'Alpes-de-Haute-Provence', code: '04' },
+      { name: 'Hautes-Alpes', code: '05' },
+      { name: 'Alpes-Maritimes', code: '06' },
+      { name: 'Bouches-du-Rhône', code: '13' },
+      { name: 'Var', code: '83' },
+      { name: 'Vaucluse', code: '84' },
     ],
   },
   {
-    nom: 'Guadeloupe',
-    departements: [{ nom: 'Guadeloupe', code: '971' }],
+    name: 'Guadeloupe',
+    departements: [{ name: 'Guadeloupe', code: '971' }],
   },
   {
-    nom: 'Martinique',
-    departements: [{ nom: 'Martinique', code: '972' }],
+    name: 'Martinique',
+    departements: [{ name: 'Martinique', code: '972' }],
   },
   {
-    nom: 'Guyane',
-    departements: [{ nom: 'Guyane', code: '973' }],
+    name: 'Guyane',
+    departements: [{ name: 'Guyane', code: '973' }],
   },
   {
-    nom: 'La Réunion',
-    departements: [{ nom: 'La Réunion', code: '974' }],
+    name: 'La Réunion',
+    departements: [{ name: 'La Réunion', code: '974' }],
   },
   {
-    nom: 'Mayotte',
-    departements: [{ nom: 'Mayotte', code: '976' }],
+    name: 'Mayotte',
+    departements: [{ name: 'Mayotte', code: '976' }],
   },
   {
-    nom: 'Saint-Pierre-et-Miquelon',
-    departements: [{ nom: 'Saint-Pierre-et-Miquelon', code: '975' }],
+    name: 'Saint-Pierre-et-Miquelon',
+    departements: [{ name: 'Saint-Pierre-et-Miquelon', code: '975' }],
   },
   {
-    nom: 'Polynésie Française',
-    departements: [{ nom: 'Polynésie Française', code: '987' }],
+    name: 'Polynésie Française',
+    departements: [{ name: 'Polynésie Française', code: '987' }],
   },
   {
-    nom: 'Nouvelle-Calédonie',
-    departements: [{ nom: 'Nouvelle-Calédonie', code: '988' }],
+    name: 'Nouvelle-Calédonie',
+    departements: [{ name: 'Nouvelle-Calédonie', code: '988' }],
   },
   {
-    nom: 'Wallis-et-Futuna',
-    departements: [{ nom: 'Wallis-et-Futuna', code: '986' }],
+    name: 'Wallis-et-Futuna',
+    departements: [{ name: 'Wallis-et-Futuna', code: '986' }],
   },
   {
-    nom: 'Terres australes et antarctiques françaises',
+    name: 'Terres australes et antarctiques françaises',
     departements: [
-      { nom: 'Terres australes et antarctiques françaises', code: '984' },
+      { name: 'Terres australes et antarctiques françaises', code: '984' },
     ],
   },
   {
-    nom: 'Saint-Barthélemy',
-    departements: [{ nom: 'Saint-Barthélemy', code: '977' }],
+    name: 'Saint-Barthélemy',
+    departements: [{ name: 'Saint-Barthélemy', code: '977' }],
   },
   {
-    nom: 'Saint-Martin',
-    departements: [{ nom: 'Saint-Martin', code: '978' }],
+    name: 'Saint-Martin',
+    departements: [{ name: 'Saint-Martin', code: '978' }],
   },
 ];
 
 @Injectable()
 export class RegionsDepartementsSeed {
-  constructor(private readonly saveRegionUseCase: SaveRegionUsecase) {}
+  constructor(
+    private readonly saveRegionUsecase: SaveRegionUsecase,
+    private readonly saveDepartementUsecase: SaveDepartementUsecase,
+  ) {}
 
   async seed() {
-    const createRegionPromises = regions.map((region) => {
-      const departements = region.departements.map(
-        (departement) =>
-          new DepartementEntity(departement.nom, departement.code),
+    const promises: Promise<DepartementEntity>[] = [];
+
+    for (const region of regions) {
+      const newRegion = await this.saveRegionUsecase.execute(
+        new RegionEntity(region.name),
       );
 
-      const createdRegion = new RegionEntity(region.nom, departements);
+      for (const departement of region.departements) {
+        await this.saveDepartementUsecase.execute(
+          new DepartementEntity(departement.name, departement.code, newRegion),
+        );
+      }
+    }
 
-      return this.saveRegionUseCase.execute(createdRegion);
-    });
-
-    await Promise.all(createRegionPromises);
-
-    console.log('Regions and departements created');
+    await Promise.all(promises);
   }
 }

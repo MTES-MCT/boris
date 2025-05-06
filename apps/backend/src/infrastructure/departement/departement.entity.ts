@@ -14,9 +14,9 @@ export class DepartementEntity implements DepartementInterface {
   public code: string;
 
   @ManyToOne(() => RegionEntity, (region) => region.departements)
-  region: RegionEntity | undefined;
+  region: RegionEntity;
 
-  constructor(name: string, code: string, region?: RegionEntity) {
+  constructor(name: string, code: string, region: RegionEntity) {
     this.name = name;
     this.code = code;
     this.region = region;
