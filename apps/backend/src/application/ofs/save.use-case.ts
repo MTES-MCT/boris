@@ -15,12 +15,10 @@ export class SaveOfsUsecase {
   ) {}
 
   public async execute(ofs: OfsEntity): Promise<OfsEntity> {
-    // TODO - Checker si le nomn de l'OFS existe déjà
-    // TODO - Checker l'existence des départements
     const { regions, departements } = ofs;
 
     const existingRegions = await this.regionRepository.findManyByNames(
-      regions?.map((r) => r.name) || [],
+      regions?.map((r) => r.name),
     );
 
     if (existingRegions.length !== regions?.length) {
@@ -29,7 +27,7 @@ export class SaveOfsUsecase {
 
     const existingDepartements =
       await this.departementRepository.findManyByNames(
-        departements?.map((r) => r.name) || [],
+        departements?.map((r) => r.name),
       );
 
     if (existingDepartements.length !== departements?.length) {
