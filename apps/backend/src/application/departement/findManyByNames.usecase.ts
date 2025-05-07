@@ -8,7 +8,7 @@ export class FindManyDepartementsByNamesUsecase {
     private readonly departementRepository: DepartementRepositoryInterface,
   ) {}
 
-  public async execute(departements: string[]): Promise<DepartementEntity[]> {
-    return await this.departementRepository.findManyByNames(departements);
+  public async execute(names: string[]): Promise<DepartementEntity[]> {
+    return await this.departementRepository.findManyByNames(names);
   }
 }
