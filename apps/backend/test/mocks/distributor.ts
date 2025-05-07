@@ -7,5 +7,5 @@ export const distributor1 = new DistributorEntity(
 );
 
 export const mockDistributorRepository = {
-  // save: jest.fn(),
+  save: jest.fn(),
 };
