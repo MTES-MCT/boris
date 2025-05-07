@@ -24,13 +24,13 @@ export class OfsEntity implements OfsInterface {
   @Column({ type: 'varchar' })
   public websiteUrl: string;
 
-  @ManyToMany(() => DepartementEntity)
+  @ManyToMany(() => DepartementEntity, (departement) => departement.ofss)
   @JoinTable({
     name: 'ofs_departement',
   })
   public departements: DepartementEntity[];
 
-  @ManyToMany(() => RegionEntity)
+  @ManyToMany(() => RegionEntity, (region) => region.ofss)
   @JoinTable({
     name: 'ofs_region',
   })
@@ -46,9 +46,9 @@ export class OfsEntity implements OfsInterface {
     name: string,
     phone: string,
     websiteUrl: string,
-    distributors: DistributorEntity[],
     departements: DepartementEntity[],
     regions: RegionEntity[],
+    distributors: DistributorEntity[],
   ) {
     this.name = name;
     this.phone = phone;
