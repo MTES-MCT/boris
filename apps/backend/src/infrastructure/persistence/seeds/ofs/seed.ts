@@ -1,3 +1,5 @@
+import fs from 'fs';
+import { parse } from 'csv-parse';
 import { Injectable } from '@nestjs/common';
 import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/findManyByNames.usecase';
 import { FindOneRegionByNameUsecase } from 'src/application/region/findOneByName.usecase';
@@ -20,5 +22,18 @@ export class OfsSeed {
     const region = await this.findOneRegionByNameUsecase.execute('Bretagne');
 
     console.log(region);
+
+    // fs.readFile('ofs.csv', (err, data) => {
+    //   if (err) throw err;
+
+    //   parse(data, { columns: true }, (err, records) => {
+    //     if (err) throw err;
+
+    //     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    //     records.forEach((row: any) => {
+    //       console.log('Ligne :', row); // Traitement de chaque ligne ici
+    //     });
+    //   });
+    // });
   }
 }
