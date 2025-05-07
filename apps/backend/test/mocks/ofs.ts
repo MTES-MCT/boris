@@ -8,6 +8,7 @@ export const ofs1 = new OfsEntity(
   'https://boris.beta.gouv.fr',
   [finistere, paris],
   [bretagne],
+  [],
 );
 
 export const mockOfsRepository = {
