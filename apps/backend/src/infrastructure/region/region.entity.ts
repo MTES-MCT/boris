@@ -1,6 +1,13 @@
 import { RegionInterface } from 'src/domain/region/region.interface';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
+import { OfsEntity } from '../ofs/ofs.entity';
 
 @Entity('region')
 export class RegionEntity implements RegionInterface {
@@ -13,9 +20,12 @@ export class RegionEntity implements RegionInterface {
   @OneToMany(() => DepartementEntity, (departement) => departement.region, {
     cascade: true,
   })
-  public departements: DepartementEntity[] | undefined;
+  public departements: DepartementEntity[];
 
-  constructor(name: string, departements?: DepartementEntity[]) {
+  @ManyToMany(() => OfsEntity, (ofs) => ofs.regions)
+  public ofss: OfsEntity[];
+
+  constructor(name: string, departements: DepartementEntity[]) {
     this.name = name;
     this.departements = departements;
   }

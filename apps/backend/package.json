@@ -80,7 +80,11 @@
     ],
     "coveragePathIgnorePatterns": [
       "<rootDir>/src/main.ts",
-      "<rootDir>/src/infrastructure/persistence/migrations/"
+      "<rootDir>/src/infrastructure/persistence/migrations/",
+      "<rootDir>/src/infrastructure/persistence/seeds",
+      "<rootDir>/src/infrastructure/persistence/typeorm-cli.config.ts",
+      "<rootDir>/src/infrastructure/persistence/typeorm.config.ts",
+      "<rootDir>/src/seed.regions-departements.ts"
     ],
     "coverageDirectory": "./coverage",
     "testEnvironment": "node"

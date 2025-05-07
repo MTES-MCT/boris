@@ -229,7 +229,7 @@ export class RegionsDepartementsSeed {
 
     for (const region of regions) {
       const newRegion = await this.saveRegionUsecase.execute(
-        new RegionEntity(region.name),
+        new RegionEntity(region.name, []),
       );
 
       for (const departement of region.departements) {
