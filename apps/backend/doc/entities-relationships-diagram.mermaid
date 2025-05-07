@@ -8,9 +8,8 @@ erDiagram
     OFS ||--|{ OFS_DEPARTEMENT : "se situe"
     OFS_DEPARTEMENT }|--|| DEPARTEMENT : "se situe"
     DEPARTEMENT }|--|| REGION : "se situe"
-    DISTRIBUTOR }o--|{ OFS : "travaille pour"
-
-    %% todo: confirmer le type de relation entre DISTRIBUTOR et OFS
+    DISTRIBUTOR ||--o{ OFS_DISTRIBUTOR : "travaille pour"
+    OFS ||--o{ OFS_DISTRIBUTOR : "travaille pour"
 
     %% -------------------
     %% |    ENTITIES     |
@@ -52,6 +51,12 @@ erDiagram
       string name
       string website_link
       string ofs_id FK
+    }
+
+    OFS_DISTRIBUTOR {
+      string id PK
+      string ofs_id FK
+      string distributor_id FK
     }
 
     USER {
