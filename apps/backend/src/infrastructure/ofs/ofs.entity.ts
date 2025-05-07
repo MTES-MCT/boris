@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 import { RegionEntity } from '../region/region.entity';
+import { DistributorEntity } from '../distributor/distributor.entity';
 
 @Entity('ofs')
 export class OfsEntity implements OfsInterface {
@@ -27,25 +28,33 @@ export class OfsEntity implements OfsInterface {
   @JoinTable({
     name: 'ofs_departement',
   })
-  public departements: DepartementEntity[] | undefined;
+  public departements: DepartementEntity[];
 
   @ManyToMany(() => RegionEntity)
   @JoinTable({
     name: 'ofs_region',
   })
-  public regions: RegionEntity[] | undefined;
+  public regions: RegionEntity[];
+
+  @ManyToMany(() => DistributorEntity, (distributor) => distributor.ofss)
+  @JoinTable({
+    name: 'ofs_distributor',
+  })
+  public distributors: DistributorEntity[];
 
   constructor(
     name: string,
     phone: string,
     websiteUrl: string,
-    departements?: DepartementEntity[],
-    regions?: RegionEntity[],
+    distributors: DistributorEntity[],
+    departements: DepartementEntity[],
+    regions: RegionEntity[],
   ) {
     this.name = name;
     this.phone = phone;
     this.websiteUrl = websiteUrl;
     this.departements = departements;
     this.regions = regions;
+    this.distributors = distributors;
   }
 }

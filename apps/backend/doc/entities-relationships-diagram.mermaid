@@ -19,7 +19,7 @@ erDiagram
         string id PK
         string name
         string phone
-        string website_link
+        string websiteUrl
     }
 
     REGION {
@@ -29,41 +29,40 @@ erDiagram
 
     OFS_REGION {
       string id PK
-      string ofs_id FK
-      string region_id FK
+      string ofsId FK
+      string regionId FK
     }
 
     DEPARTEMENT {
       string id PK
       string name
       string code
-      string region_id FK
+      string regionId FK
     }
 
     OFS_DEPARTEMENT {
       string id PK
-      string ofs_id FK
-      string departement_id FK
+      string ofsId FK
+      string departementId FK
     }
 
     DISTRIBUTOR {
       string id PK
       string name
-      string website_link
-      string ofs_id FK
+      string websiteUrl
     }
 
     OFS_DISTRIBUTOR {
       string id PK
-      string ofs_id FK
-      string distributor_id FK
+      string ofsId FK
+      string distributorId FK
     }
 
     USER {
       string id PK
       string email
       string password
-      string first_name
-      string last_name
+      string firstName
+      string lastName
       string role
     }

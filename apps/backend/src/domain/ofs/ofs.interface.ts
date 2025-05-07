@@ -1,4 +1,5 @@
 import { DepartementInterface } from '../departement/departement.interface';
+import { DistributorInterface } from '../distributor/distributor.interface';
 import { RegionInterface } from '../region/region.interface';
 
 export interface OfsInterface {
@@ -6,6 +7,7 @@ export interface OfsInterface {
   name: string;
   phone: string;
   websiteUrl: string;
-  region?: RegionInterface;
-  departements?: DepartementInterface[];
+  regions: RegionInterface[];
+  departements: DepartementInterface[];
+  distributors: DistributorInterface[];
 }
