@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DepartementEntity } from './departement.entity';
 import { DepartementRepository } from './departement.repository';
 import { SaveDepartementUsecase } from 'src/application/departement/save.usecase';
+import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/findManyByNames.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([DepartementEntity])],
@@ -13,7 +14,8 @@ import { SaveDepartementUsecase } from 'src/application/departement/save.usecase
       useClass: DepartementRepository,
     },
     SaveDepartementUsecase,
+    FindManyDepartementsByNamesUsecase,
   ],
-  exports: [SaveDepartementUsecase],
+  exports: [SaveDepartementUsecase, FindManyDepartementsByNamesUsecase],
 })
 export class DepartementModule {}
