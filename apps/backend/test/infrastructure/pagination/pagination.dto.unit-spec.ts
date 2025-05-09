@@ -1,4 +1,5 @@
 import { validate } from 'class-validator';
+import { MAX_PAGE_SIZE } from 'src/application/pagination/pagination';
 import { PaginationDTO } from 'src/infrastructure/pagination/pagination.dto';
 
 describe('PaginationDTO', () => {
@@ -34,12 +35,12 @@ describe('PaginationDTO', () => {
 
   it('should fail when pageSize is greater than 50', async () => {
     const dto = new PaginationDTO();
-    dto.pageSize = 99;
+    dto.pageSize = MAX_PAGE_SIZE + 1;
 
     const validation = await validate(dto);
     expect(validation).toHaveLength(1);
     expect(validation[0].constraints).toMatchObject({
-      max: 'pageSize must not be greater than 50',
+      max: `pageSize must not be greater than ${MAX_PAGE_SIZE}`,
     });
   });
 });

@@ -5,7 +5,8 @@ import { OfsRepository } from './ofs.repository';
 import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
 import { RegionModule } from '../region/region.module';
 import { DepartementModule } from '../departement/departement.module';
-import { GetOfssController } from './controllers/getOfss.controller';
+import { GetAllController } from './controllers/getAll.controller';
+import { GetAllOfssUsecase } from 'src/application/ofs/usecases/getAll.usecase';
 
 @Module({
   imports: [
@@ -13,10 +14,11 @@ import { GetOfssController } from './controllers/getOfss.controller';
     RegionModule,
     DepartementModule,
   ],
-  controllers: [GetOfssController],
+  controllers: [GetAllController],
   providers: [
     { provide: 'OfsRepositoryInterface', useClass: OfsRepository },
     SaveOfsUsecase,
+    GetAllOfssUsecase,
   ],
   exports: [SaveOfsUsecase],
 })
