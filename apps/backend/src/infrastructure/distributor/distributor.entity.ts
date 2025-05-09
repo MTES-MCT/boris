@@ -1,5 +1,12 @@
 import { OfsInterface } from 'src/domain/ofs/ofs.interface';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { DistributorInterface } from 'src/domain/distributor/distributor.interface';
 import { OfsEntity } from '../ofs/ofs.entity';
 
@@ -16,6 +23,12 @@ export class DistributorEntity implements DistributorInterface {
 
   @ManyToMany(() => OfsEntity, (ofs) => ofs.distributors)
   public ofss: OfsInterface[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   constructor(name: string, websiteUrl: string, ofss: OfsInterface[]) {
     this.name = name;

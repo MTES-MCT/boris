@@ -225,6 +225,9 @@ export class RegionsDepartementsSeed {
   ) {}
 
   async seed() {
+    let regionsCount = 0;
+    let departementsCount = 0;
+
     const promises: Promise<DepartementEntity>[] = [];
 
     for (const region of regions) {
@@ -232,13 +235,20 @@ export class RegionsDepartementsSeed {
         new RegionEntity(region.name, []),
       );
 
+      regionsCount = regionsCount + 1;
+
       for (const departement of region.departements) {
         await this.saveDepartementUsecase.execute(
           new DepartementEntity(departement.name, departement.code, newRegion),
         );
+
+        departementsCount = departementsCount + 1;
       }
     }
 
     await Promise.all(promises);
+
+    console.log(`${regionsCount} regions créées.`);
+    console.log(`${departementsCount} départements créés.`);
   }
 }

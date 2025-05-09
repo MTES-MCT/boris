@@ -7,4 +7,6 @@ export interface DepartementInterface {
   code: string;
   region: RegionEntity;
   ofss: OfsInterface[];
+  createdAt: Date;
+  updatedAt: Date;
 }

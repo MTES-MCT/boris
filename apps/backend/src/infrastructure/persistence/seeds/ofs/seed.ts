@@ -802,8 +802,8 @@ export class OfsSeed {
       ofsCount = ofsCount + 1;
     }
 
-    console.log(`${ofsCount} ofss créés`);
-    console.log(`${distributorCount} commercialisateurs créés`);
+    console.log(`${ofsCount} ofss créés.`);
+    console.log(`${distributorCount} commercialisateurs créés.`);
   }
 
   private setDistributors(ofs: Ofs): DistributorEntity[] {

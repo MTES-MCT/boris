@@ -1,10 +1,12 @@
 import { OfsInterface } from 'src/domain/ofs/ofs.interface';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 import { RegionEntity } from '../region/region.entity';
@@ -44,6 +46,12 @@ export class OfsEntity implements OfsInterface {
     name: 'ofs_distributor',
   })
   public distributors: DistributorEntity[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   constructor(
     name: string,
