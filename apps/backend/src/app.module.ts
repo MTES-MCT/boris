@@ -7,10 +7,23 @@ import { DepartementModule } from './infrastructure/departement/departement.modu
 import { DistributorModule } from './infrastructure/distributor/distributor.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeormConfig),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        enabled: process.env.NODE_ENV !== 'ci',
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            singleLine: true,
+          },
+        },
+      },
+    }),
+
     RegionModule,
     OfsModule,
     DepartementModule,
