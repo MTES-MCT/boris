@@ -11,4 +11,6 @@ export interface OfsInterface {
   regions: RegionInterface[];
   departements: DepartementInterface[];
   distributors: DistributorInterface[];
+  createdAt: Date;
+  updatedAt: Date;
 }
