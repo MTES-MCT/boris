@@ -13,6 +13,10 @@ import { FindOneRegionByNameUsecase } from 'src/application/region/findOneByName
     SaveRegionUsecase,
     FindOneRegionByNameUsecase,
   ],
-  exports: [SaveRegionUsecase, FindOneRegionByNameUsecase],
+  exports: [
+    'RegionRepositoryInterface',
+    SaveRegionUsecase,
+    FindOneRegionByNameUsecase,
+  ],
 })
 export class RegionModule {}

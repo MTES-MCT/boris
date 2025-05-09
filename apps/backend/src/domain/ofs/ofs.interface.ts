@@ -5,8 +5,9 @@ import { RegionInterface } from '../region/region.interface';
 export interface OfsInterface {
   id?: string;
   name: string;
-  phone: string;
-  websiteUrl: string;
+  phone: string | null;
+  websiteUrl: string | null;
+  email: string | null;
   regions: RegionInterface[];
   departements: DepartementInterface[];
   distributors: DistributorInterface[];

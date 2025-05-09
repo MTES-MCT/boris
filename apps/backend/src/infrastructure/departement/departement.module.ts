@@ -16,6 +16,10 @@ import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/
     SaveDepartementUsecase,
     FindManyDepartementsByNamesUsecase,
   ],
-  exports: [SaveDepartementUsecase, FindManyDepartementsByNamesUsecase],
+  exports: [
+    'DepartementRepositoryInterface',
+    SaveDepartementUsecase,
+    FindManyDepartementsByNamesUsecase,
+  ],
 })
 export class DepartementModule {}
