@@ -15,14 +15,17 @@ export class OfsEntity implements OfsInterface {
   @PrimaryGeneratedColumn('uuid')
   public readonly id: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar' })
   public name: string;
 
-  @Column({ type: 'varchar' })
-  public phone: string;
+  @Column({ type: 'varchar', nullable: true })
+  public websiteUrl: string | null;
 
-  @Column({ type: 'varchar' })
-  public websiteUrl: string;
+  @Column({ type: 'varchar', nullable: true })
+  public phone: string | null;
+
+  @Column({ type: 'varchar', nullable: true })
+  public email: string | null;
 
   @ManyToMany(() => DepartementEntity, (departement) => departement.ofss)
   @JoinTable({
@@ -44,8 +47,9 @@ export class OfsEntity implements OfsInterface {
 
   constructor(
     name: string,
-    phone: string,
-    websiteUrl: string,
+    phone: string | null,
+    websiteUrl: string | null,
+    email: string | null,
     departements: DepartementEntity[],
     regions: RegionEntity[],
     distributors: DistributorEntity[],
@@ -53,6 +57,7 @@ export class OfsEntity implements OfsInterface {
     this.name = name;
     this.phone = phone;
     this.websiteUrl = websiteUrl;
+    this.email = email;
     this.departements = departements;
     this.regions = regions;
     this.distributors = distributors;

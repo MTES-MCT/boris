@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { SaveOfsUsecase } from 'src/application/ofs/save.use-case';
+import { SaveOfsUsecase } from 'src/application/ofs/save.usecase';
 import {
   finistere,
   mockDepartementRepository,

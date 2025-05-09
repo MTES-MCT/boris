@@ -8,7 +8,7 @@ export class DistributorEntity implements DistributorInterface {
   @PrimaryGeneratedColumn('uuid')
   public readonly id: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar' })
   public name: string;
 
   @Column({ type: 'varchar' })

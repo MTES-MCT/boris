@@ -1,11 +1,19 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DistributorEntity } from './distributor.entity';
+import { DistributorRepository } from './distributor.repository';
+import { SaveDistributorUsecase } from 'src/application/distributor/save.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([DistributorEntity])],
   controllers: [],
-  providers: [],
-  exports: [],
+  providers: [
+    {
+      provide: 'DistributorRepositoryInterface',
+      useClass: DistributorRepository,
+    },
+    SaveDistributorUsecase,
+  ],
+  exports: [SaveDistributorUsecase],
 })
 export class DistributorModule {}
