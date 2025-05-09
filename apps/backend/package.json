@@ -85,7 +85,8 @@
       "<rootDir>/src/infrastructure/persistence/seeds",
       "<rootDir>/src/infrastructure/persistence/typeorm-cli.config.ts",
       "<rootDir>/src/infrastructure/persistence/typeorm.config.ts",
-      "<rootDir>/src/seed.regions-departements.ts"
+      "<rootDir>/src/seed.regions-departements.ts",
+      "<rootDir>/src/seed.ofs.ts"
     ],
     "coverageDirectory": "./coverage",
     "testEnvironment": "node"
