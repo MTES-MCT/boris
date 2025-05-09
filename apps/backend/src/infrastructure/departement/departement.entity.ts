@@ -1,10 +1,12 @@
 import { DepartementInterface } from 'src/domain/departement/departement.interface';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { RegionEntity } from 'src/infrastructure/region/region.entity';
 import { OfsEntity } from '../ofs/ofs.entity';
@@ -25,6 +27,12 @@ export class DepartementEntity implements DepartementInterface {
 
   @ManyToMany(() => OfsEntity, (ofs) => ofs.departements)
   public ofss: OfsEntity[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   constructor(name: string, code: string, region: RegionEntity) {
     this.name = name;

@@ -5,4 +5,6 @@ export interface DistributorInterface {
   name: string;
   websiteUrl: string;
   ofss: OfsInterface[];
+  createdAt: Date;
+  updatedAt: Date;
 }

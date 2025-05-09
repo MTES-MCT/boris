@@ -24,7 +24,7 @@ export class DepartementRepository implements DepartementRepositoryInterface {
     return this.repository.findOneBy({ code });
   }
 
-  public findManyByNames(names: string[]): Promise<DepartementEntity[] | []> {
+  public findManyByNames(names: string[]): Promise<DepartementEntity[]> {
     return this.repository.findBy({
       name: In(names),
     });

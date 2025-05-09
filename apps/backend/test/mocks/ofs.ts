@@ -6,6 +6,7 @@ export const ofs1 = new OfsEntity(
   'La foncière de Bretagne',
   '0203040506',
   'https://boris.beta.gouv.fr',
+  'ofs@bretagne.fr',
   [finistere, paris],
   [bretagne],
   [],

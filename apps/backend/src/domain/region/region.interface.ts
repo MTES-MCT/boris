@@ -6,4 +6,6 @@ export interface RegionInterface {
   name: string;
   departements: DepartementInterface[];
   ofss: OfsInterface[];
+  createdAt: Date;
+  updatedAt: Date;
 }
