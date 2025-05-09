@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/findManyByNames.usecase';
+import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/usecases/findManyByNames.usecase';
 import {
   finistere,
   mockDepartementRepository,

@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SaveDistributorUsecase } from 'src/application/distributor/save.usecase';
+import { SaveDistributorUsecase } from 'src/application/distributor/usecases/save.usecase';
 import {
   distributor1,
   mockDistributorRepository,

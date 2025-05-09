@@ -1,6 +1,6 @@
 import { ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { SaveRegionUsecase } from 'src/application/region/save.usecase';
+import { SaveRegionUsecase } from 'src/application/region/usecases/save.usecase';
 import { bretagne, mockRegionRepository } from 'test/mocks/region';
 
 describe('SaveRegionUsecase', () => {

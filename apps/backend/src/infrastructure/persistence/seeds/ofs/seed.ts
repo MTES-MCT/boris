@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/findManyByNames.usecase';
-import { SaveDistributorUsecase } from 'src/application/distributor/save.usecase';
-import { SaveOfsUsecase } from 'src/application/ofs/save.usecase';
-import { FindOneRegionByNameUsecase } from 'src/application/region/findOneByName.usecase';
+import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/usecases/findManyByNames.usecase';
+import { SaveDistributorUsecase } from 'src/application/distributor/usecases/save.usecase';
+import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
+import { FindOneRegionByNameUsecase } from 'src/application/region/usecases/findOneByName.usecase';
 import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
 

@@ -1,0 +1,44 @@
+import { Pagination } from 'src/application/pagination/pagination';
+import { OfsRepositoryInterface } from 'src/domain/ofs/ofs.repository.interface';
+import { OfsView } from '../views/ofs.view';
+import { PaginationProps } from 'src/domain/pagination/paginationProps';
+import { Inject } from '@nestjs/common';
+
+export class GetAllOfssUsecase {
+  constructor(
+    @Inject('OfsRepositoryInterface')
+    private readonly ofsRepository: OfsRepositoryInterface,
+  ) {}
+
+  public async execute(
+    paginationProps: PaginationProps,
+  ): Promise<Pagination<OfsView>> {
+    const [ofss, totalCount] = await this.ofsRepository.getAll(paginationProps);
+
+    const items = ofss.map((ofs) => {
+      return new OfsView(
+        ofs.id,
+        ofs.name,
+        ofs.websiteUrl,
+        ofs.phone,
+        ofs.email,
+        ofs.departements.map((departement) => ({
+          id: departement.id,
+          name: departement.name,
+          code: departement.code,
+        })),
+        ofs.regions.map((region) => ({
+          id: region.id,
+          name: region.name,
+        })),
+        ofs.distributors.map((distributor) => ({
+          id: distributor.id,
+          name: distributor.name,
+          websiteUrl: distributor.websiteUrl,
+        })),
+      );
+    });
+
+    return new Pagination(items, totalCount, paginationProps);
+  }
+}

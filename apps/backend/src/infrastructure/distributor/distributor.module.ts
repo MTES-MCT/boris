@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DistributorEntity } from './distributor.entity';
 import { DistributorRepository } from './distributor.repository';
-import { SaveDistributorUsecase } from 'src/application/distributor/save.usecase';
+import { SaveDistributorUsecase } from 'src/application/distributor/usecases/save.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([DistributorEntity])],

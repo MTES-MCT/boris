@@ -1,6 +1,6 @@
 import { ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { SaveDepartementUsecase } from 'src/application/departement/save.usecase';
+import { SaveDepartementUsecase } from 'src/application/departement/usecases/save.usecase';
 import { finistere, mockDepartementRepository } from 'test/mocks/departement';
 
 describe('SaveDepartementUsecase', () => {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { SaveDepartementUsecase } from 'src/application/departement/save.usecase';
-import { SaveRegionUsecase } from 'src/application/region/save.usecase';
+import { SaveDepartementUsecase } from 'src/application/departement/usecases/save.usecase';
+import { SaveRegionUsecase } from 'src/application/region/usecases/save.usecase';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 import { RegionEntity } from 'src/infrastructure/region/region.entity';
 

@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RegionEntity } from './region.entity';
 import { RegionRepository } from './region.repository';
-import { SaveRegionUsecase } from 'src/application/region/save.usecase';
-import { FindOneRegionByNameUsecase } from 'src/application/region/findOneByName.usecase';
+import { SaveRegionUsecase } from 'src/application/region/usecases/save.usecase';
+import { FindOneRegionByNameUsecase } from 'src/application/region/usecases/findOneByName.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([RegionEntity])],
