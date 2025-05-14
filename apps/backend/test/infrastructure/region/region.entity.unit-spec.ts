@@ -1,4 +1,4 @@
-import { bretagne } from 'test/mocks/region';
+import { bretagne } from 'test/mocks/integration/region';
 
 describe('RegionEntity', () => {
   it('getters', () => {

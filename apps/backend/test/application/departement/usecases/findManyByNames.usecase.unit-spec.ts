@@ -4,7 +4,7 @@ import {
   finistere,
   mockDepartementRepository,
   paris,
-} from 'test/mocks/departement';
+} from 'test/mocks/integration/departement';
 
 describe('FindManyDepartementsByNamesUsecase', () => {
   let useCase: FindManyDepartementsByNamesUsecase;

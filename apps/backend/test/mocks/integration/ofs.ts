@@ -15,3 +15,5 @@ export const ofs1 = new OfsEntity(
 export const mockOfsRepository = {
   save: jest.fn(),
 };
+
+export const e2eOfss = {};

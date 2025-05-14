@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { FindOneRegionByNameUsecase } from 'src/application/region/usecases/findOneByName.usecase';
-import { bretagne, mockRegionRepository } from 'test/mocks/region';
+import { bretagne, mockRegionRepository } from 'test/mocks/integration/region';
 
 describe('FindOneRegionByNameUsecase', () => {
   let useCase: FindOneRegionByNameUsecase;

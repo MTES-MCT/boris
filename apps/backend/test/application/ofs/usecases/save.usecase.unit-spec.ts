@@ -5,9 +5,9 @@ import {
   finistere,
   mockDepartementRepository,
   paris,
-} from 'test/mocks/departement';
-import { mockOfsRepository, ofs1 } from 'test/mocks/ofs';
-import { bretagne, mockRegionRepository } from 'test/mocks/region';
+} from 'test/mocks/integration/departement';
+import { mockOfsRepository, ofs1 } from 'test/mocks/integration/ofs';
+import { bretagne, mockRegionRepository } from 'test/mocks/integration/region';
 
 describe('SaveOfsUsecase', () => {
   let useCase: SaveOfsUsecase;

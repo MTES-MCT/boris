@@ -6,7 +6,7 @@ import {
   finistere,
   mockDepartementRepository,
   paris,
-} from 'test/mocks/departement';
+} from 'test/mocks/integration/departement';
 import { In } from 'typeorm';
 
 describe('DepartementRepository', () => {

@@ -5,8 +5,6 @@ import { RegionModule } from './infrastructure/region/region.module';
 import { OfsModule } from './infrastructure/ofs/ofs.module';
 import { DepartementModule } from './infrastructure/departement/departement.module';
 import { DistributorModule } from './infrastructure/distributor/distributor.module';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { LoggerModule } from 'nestjs-pino';
 
 @Module({
@@ -29,7 +27,7 @@ import { LoggerModule } from 'nestjs-pino';
     DepartementModule,
     DistributorModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

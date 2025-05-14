@@ -1,5 +1,5 @@
-import { finistere } from 'test/mocks/departement';
-import { bretagne, ileDeFrance } from 'test/mocks/region';
+import { finistere } from 'test/mocks/integration/departement';
+import { bretagne, ileDeFrance } from 'test/mocks/integration/region';
 
 describe('DepartementEntity', () => {
   it('getters', () => {
