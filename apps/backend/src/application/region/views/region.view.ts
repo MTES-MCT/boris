@@ -1,10 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { DepartementView } from 'src/application/departement/views/departement.view';
-
-type Departement = Omit<
-  DepartementView,
-  'departements' | 'createdAt' | 'updatedAt'
->;
+import { MinimalDepartementView } from 'src/application/departement/views/minimal.view';
 
 export class RegionView {
   @ApiProperty({ example: '5d33fedc-7a06-48a4-b53d-05bf2da446dc' })
@@ -13,8 +8,8 @@ export class RegionView {
   @ApiProperty({ example: 'Bretagne' })
   public name: string;
 
-  @ApiProperty()
-  public departements: Departement[];
+  @ApiProperty({ type: () => [MinimalDepartementView] })
+  public departements: MinimalDepartementView[];
 
   @ApiProperty({ required: false })
   public createdAt?: Date;
@@ -25,7 +20,7 @@ export class RegionView {
   constructor(
     id: string,
     name: string,
-    departements: Departement[],
+    departements: MinimalDepartementView[],
     createdAt?: Date,
     updatedAt?: Date,
   ) {

@@ -1,11 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { DepartementView } from 'src/application/departement/views/departement.view';
-import { DistributorView } from 'src/application/distributor/views/distributor.view';
-import { RegionView } from 'src/application/region/views/region.view';
-
-type Departement = Omit<DepartementView, 'region' | 'createdAt' | 'updatedAt'>;
-type Region = Omit<RegionView, 'departements' | 'createdAt' | 'updatedAt'>;
-type Distributor = Omit<DistributorView, 'ofss' | 'createdAt' | 'updatedAt'>;
+import { MinimalRegionView } from 'src/application/region/views/minimal.view';
+import { MinimalDepartementView } from 'src/application/departement/views/minimal.view';
+import { MinimalDistributorView } from 'src/application/distributor/views/minimal.view';
 
 export class OfsView {
   @ApiProperty({ example: '5d33fedc-7a06-48a4-b53d-05bf2da446dc' })
@@ -23,14 +19,14 @@ export class OfsView {
   @ApiProperty({ example: 'contact@ofs-de-bretagne.fr' })
   public email: string | null;
 
-  @ApiProperty()
-  public departements: Departement[];
+  @ApiProperty({ type: () => [MinimalDepartementView] })
+  public departements: MinimalDepartementView[];
 
-  @ApiProperty()
-  public regions: Region[];
+  @ApiProperty({ type: () => [MinimalRegionView] })
+  public regions: MinimalRegionView[];
 
-  @ApiProperty()
-  public distributors: Distributor[];
+  @ApiProperty({ type: () => [MinimalDistributorView] })
+  public distributors: MinimalDistributorView[];
 
   @ApiProperty({ required: false })
   public createdAt?: Date;
@@ -44,9 +40,9 @@ export class OfsView {
     websiteUrl: string | null,
     phone: string | null,
     email: string | null,
-    departements: Departement[],
-    regions: Region[],
-    distributors: Distributor[],
+    departements: MinimalDepartementView[],
+    regions: MinimalRegionView[],
+    distributors: MinimalDistributorView[],
     createdAt?: Date,
     updatedAt?: Date,
   ) {
