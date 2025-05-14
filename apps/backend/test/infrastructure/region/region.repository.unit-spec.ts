@@ -2,7 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { RegionEntity } from 'src/infrastructure/region/region.entity';
 import { RegionRepository } from 'src/infrastructure/region/region.repository';
-import { bretagne, ileDeFrance, mockRegionRepository } from 'test/mocks/region';
+import {
+  bretagne,
+  ileDeFrance,
+  mockRegionRepository,
+} from 'test/mocks/integration/region';
 import { In } from 'typeorm';
 
 describe('RegionRepository', () => {

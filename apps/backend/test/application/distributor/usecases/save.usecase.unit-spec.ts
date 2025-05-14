@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SaveDistributorUsecase } from 'src/application/distributor/save.usecase';
+import { SaveDistributorUsecase } from 'src/application/distributor/usecases/save.usecase';
 import {
   distributor1,
   mockDistributorRepository,
-} from 'test/mocks/distributor';
+} from 'test/mocks/integration/distributor';
 
 describe('SaveDistributorUsecase', () => {
   let useCase: SaveDistributorUsecase;

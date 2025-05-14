@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/findManyByNames.usecase';
-import { SaveDistributorUsecase } from 'src/application/distributor/save.usecase';
-import { SaveOfsUsecase } from 'src/application/ofs/save.usecase';
-import { FindOneRegionByNameUsecase } from 'src/application/region/findOneByName.usecase';
+import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/usecases/findManyByNames.usecase';
+import { SaveDistributorUsecase } from 'src/application/distributor/usecases/save.usecase';
+import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
+import { FindOneRegionByNameUsecase } from 'src/application/region/usecases/findOneByName.usecase';
 import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
 
-type Ofs = {
+export type Ofs = {
   nom: string;
   commercialisateur: string | null;
   region: string;
@@ -752,6 +752,17 @@ const ofss: Ofs[] = [
   },
 ];
 
+export const setDistributors = (ofs: Ofs): DistributorEntity[] => {
+  const names: string[] = ofs.commercialisateur?.split(', ') || [];
+  const websiteUrls: string[] = ofs.lien?.split(', ') || [];
+
+  const distributors: DistributorEntity[] = names.map((name, i) => {
+    return new DistributorEntity(name, websiteUrls[i], []);
+  });
+
+  return distributors;
+};
+
 @Injectable()
 export class OfsSeed {
   constructor(
@@ -777,7 +788,7 @@ export class OfsSeed {
       let ofsWebsiteUrl = ofs.lien;
 
       if (ofs.commercialisateur) {
-        for (const distributor of this.setDistributors(ofs)) {
+        for (const distributor of setDistributors(ofs)) {
           const newDistributor =
             await this.saveDistributorUsecase.execute(distributor);
 
@@ -804,16 +815,5 @@ export class OfsSeed {
 
     console.log(`${ofsCount} ofss créés.`);
     console.log(`${distributorCount} commercialisateurs créés.`);
-  }
-
-  private setDistributors(ofs: Ofs): DistributorEntity[] {
-    const names: string[] = ofs.commercialisateur?.split(', ') || [];
-    const websiteUrls: string[] = ofs.lien?.split(', ') || [];
-
-    const distributors: DistributorEntity[] = names.map((name, i) => {
-      return new DistributorEntity(name, websiteUrls[i], []);
-    });
-
-    return distributors;
   }
 }

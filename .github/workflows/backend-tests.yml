@@ -47,5 +47,11 @@ jobs:
       - name: Backend unit tests
         run: npm run test:unit -w @boris/backend
 
+      - name: Run database migrations
+        run: make migration-migrate-ci
+
+      - name: Seed test data
+        run: npm run seed:test-data -w @boris/backend
+
       - name: Backend e2e tests
         run: npm run test:e2e -w @boris/backend

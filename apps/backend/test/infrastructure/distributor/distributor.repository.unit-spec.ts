@@ -5,7 +5,7 @@ import { DistributorRepository } from 'src/infrastructure/distributor/distributo
 import {
   distributor1,
   mockDistributorRepository,
-} from 'test/mocks/distributor';
+} from 'test/mocks/integration/distributor';
 
 describe('DistributorRepository', () => {
   let distributorRepository: DistributorRepository;

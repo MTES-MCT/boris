@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OfsEntity } from './ofs.entity';
 import { OfsRepository } from './ofs.repository';
-import { SaveOfsUsecase } from 'src/application/ofs/save.usecase';
+import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
 import { RegionModule } from '../region/region.module';
 import { DepartementModule } from '../departement/departement.module';
+import { GetAllController } from './controllers/getAll.controller';
+import { GetAllOfssUsecase } from 'src/application/ofs/usecases/getAll.usecase';
 
 @Module({
   imports: [
@@ -12,10 +14,11 @@ import { DepartementModule } from '../departement/departement.module';
     RegionModule,
     DepartementModule,
   ],
-  controllers: [],
+  controllers: [GetAllController],
   providers: [
     { provide: 'OfsRepositoryInterface', useClass: OfsRepository },
     SaveOfsUsecase,
+    GetAllOfssUsecase,
   ],
   exports: [SaveOfsUsecase],
 })

@@ -1,6 +1,6 @@
-import { finistere, paris } from 'test/mocks/departement';
-import { ofs1 } from 'test/mocks/ofs';
-import { bretagne } from 'test/mocks/region';
+import { finistere, paris } from 'test/mocks/integration/departement';
+import { ofs1 } from 'test/mocks/integration/ofs';
+import { bretagne } from 'test/mocks/integration/region';
 
 describe('Ofs', () => {
   it('getters', () => {

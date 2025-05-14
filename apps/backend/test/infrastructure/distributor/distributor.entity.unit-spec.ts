@@ -1,5 +1,5 @@
-import { distributor1 } from 'test/mocks/distributor';
-import { ofs1 } from 'test/mocks/ofs';
+import { distributor1 } from 'test/mocks/integration/distributor';
+import { ofs1 } from 'test/mocks/integration/ofs';
 
 describe('DistributorEntity', () => {
   it('getters', () => {

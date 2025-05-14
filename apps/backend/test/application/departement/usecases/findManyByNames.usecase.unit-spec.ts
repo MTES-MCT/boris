@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/findManyByNames.usecase';
+import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/usecases/findManyByNames.usecase';
 import {
   finistere,
   mockDepartementRepository,
   paris,
-} from 'test/mocks/departement';
+} from 'test/mocks/integration/departement';
 
 describe('FindManyDepartementsByNamesUsecase', () => {
   let useCase: FindManyDepartementsByNamesUsecase;

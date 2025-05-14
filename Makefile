@@ -26,3 +26,7 @@ migration-migrate:
 	npm run build -w @boris/backend
 	npm run migration:migrate -w @boris/backend
 	npm run migration:migrate:test -w @boris/backend
+
+migration-migrate-ci:
+	npm run build -w @boris/backend
+	npm run migration:migrate:test -w @boris/backend
