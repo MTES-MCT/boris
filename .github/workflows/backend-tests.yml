@@ -45,7 +45,7 @@ jobs:
       - run: npm ci
 
       - name: Run database migrations
-        run: make migrations-migrate
+        run: make migration-migrate
 
       - name: Seed test data
         run: npm run seed:test-data -w @boris/backend
