@@ -22,11 +22,11 @@
     "lighthouse-desktop": "lhci autorun --config=./.lighthouse-desktop.json"
   },
   "dependencies": {
-    "@boris/views": "1.0.0",
     "@sentry/sveltekit": "^8.42.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
+    "@boris/views": "1.0.0",
     "@csstools/postcss-global-data": "^3.0.0",
     "@fullhuman/postcss-purgecss": "^7.0.2",
     "@gouvfr/dsfr": "^1.12.1",
