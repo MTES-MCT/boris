@@ -2,6 +2,7 @@
   import Section from '$components/common/Section.svelte';
   import Accordion from '$components/common/Accordion.svelte';
   import type { Region } from '$lib/utils/definitions';
+  import type { OfsView, ViewType } from '@boris/views';
 
   type Props = {
     data: {
@@ -11,6 +12,15 @@
 
   const { data }: Props = $props();
   const { regions } = data;
+
+  const test: ViewType = {
+    id: 'hello',
+    description: 'description',
+  };
+
+  const testOfsView: OfsView = {
+    name: 'Bonjour',
+  };
 </script>
 
 <svelte:head>
@@ -23,6 +33,8 @@
 <Section
   title="Voici la liste des Organismes de Foncier Solidaires (OFS) répertoriés par région"
   titleElement="h1">
+  <p>{test.description}</p>
+  <p>{testOfsView.name}</p>
   <p>
     Les OFS jouent un rôle clé dans l'accès au dispositif de Bail Réel Solidaire
     (BRS). Ces organismes sans but lucratif agréés par l'État sont les seuls

@@ -16,6 +16,7 @@ const config = {
       $components: 'src/lib/components',
       $routes: 'src/routes',
       $tests: 'tests/',
+      $backend: '../backend',
     },
     prerender: {
       handleHttpError: ({ path, message }) => {
