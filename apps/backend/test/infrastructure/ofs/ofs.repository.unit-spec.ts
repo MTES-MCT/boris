@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
 import { OfsRepository } from 'src/infrastructure/ofs/ofs.repository';
-import { mockOfsRepository, ofs1 } from 'test/mocks/ofs';
+import { mockOfsRepository, ofs1 } from 'test/mocks/integration/ofs';
 
 describe('OfsRepository', () => {
   let ofsRepository: OfsRepository;
