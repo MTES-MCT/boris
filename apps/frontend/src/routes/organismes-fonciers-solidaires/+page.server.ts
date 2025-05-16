@@ -1,23 +1,14 @@
-// @ts-expect-error: no module
-import Papa from 'papaparse';
-import { formatOFSs } from '$lib/utils/formatters';
-import { PUBLIC_BORIS_CMS_URL } from '$env/static/public';
-import type { Region } from '$lib/utils/definitions';
+import { API_URL } from '$env/static/private';
+import { formatOfss } from '$lib/utils/formatters';
+
+import type { OfsView, Pagination } from '$lib/utils/api-types';
 
 export const load = async () => {
-  const response = await fetch(`${PUBLIC_BORIS_CMS_URL}/api/v2/documents`);
-  const data = await response.json();
-
-  const document = data.items[0];
-  const csvFile = await fetch(document.meta.download_url);
-  const csvFileContent = await csvFile.text();
-
-  const OFSs = await Papa.parse(csvFileContent, { header: true });
-
-  const regions: Region[] = formatOFSs(OFSs.data);
+  const response = await fetch(`${API_URL}/ofss`);
+  const ofss: Pagination<OfsView> = await response.json();
 
   return {
-    regions,
+    regions: formatOfss(ofss.items),
   };
 };
 

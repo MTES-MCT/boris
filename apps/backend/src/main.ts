@@ -20,6 +20,7 @@ async function bootstrap() {
   const customOptions = {
     customSiteTitle: 'Documentation API de Boris',
     securitySchemes: {},
+    jsonDocumentUrl: 'api/documentation/schema/json',
   };
 
   const document = SwaggerModule.createDocument(app, options);

@@ -310,7 +310,7 @@ const ofss: Ofs[] = [
     commercialisateur: null,
     region: 'Île-de-France',
     departements:
-      "Seine-et-Marne, Yvelines, Hauts-de-Seine, Seine-Saint-Denis, Val d'Oise",
+      "Seine-et-Marne, Yvelines, Hauts-de-Seine, Seine-Saint-Denis, Val-d'Oise",
     lien: 'https://coopfoncierefrancilienne.fr/nos-programmes/',
     telephone: null,
     email: null,
@@ -320,7 +320,7 @@ const ofss: Ofs[] = [
     commercialisateur: null,
     region: 'Île-de-France',
     departements:
-      "Seine-et-Marne, Yvelines, Essone, Hauts-de-Seine, Seine-Saint-Denis, Val d'Oise",
+      "Seine-et-Marne, Yvelines, Essone, Hauts-de-Seine, Seine-Saint-Denis, Val-d'Oise",
     lien: 'https://seqens-accession.fr/programmes-en-vente/',
     telephone: null,
     email: null,
@@ -464,7 +464,7 @@ const ofss: Ofs[] = [
     nom: 'Occitalys Foncier',
     commercialisateur: 'Les Chalets Accession',
     region: 'Occitanie',
-    departements: 'Arriège, Haute-Garonne, Hautes-Pyrénées, Tarn-et-Garonne\n',
+    departements: 'Ariège, Haute-Garonne, Hautes-Pyrénées, Tarn-et-Garonne',
     lien: 'https://www.leschaletsaccession.com/',
     telephone: null,
     email: null,
