@@ -1,40 +1,35 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/utility/icons/icons-business/icons-business.min.css';
-  import type { Props } from './definitions';
   import Section from '$components/common/Section.svelte';
   import { formatPublishedAt } from '$lib/utils/formatters';
+  import type { Snippet } from 'svelte';
+  import type { ArticlePreview } from '$lib/utils/definitions';
 
-  const { data }: Props = $props();
-  const { article } = data;
+  type Props = {
+    article: ArticlePreview;
+    children: Snippet;
+  };
+
+  const { article, children }: Props = $props();
 </script>
 
 <svelte:head>
-  <title>{article.title}</title>
+  <title>{article?.title}</title>
   <meta
     name="description"
-    content={article.description} />
+    content={article?.description} />
 </svelte:head>
 
 <Section
-  title={article.title}
+  title={article?.title}
   titleElement="h1">
   <p class="fr-card__detail fr-icon-calendar-2-line">
-    {formatPublishedAt(article.firstPublishedAt)}
+    {formatPublishedAt(article?.firstPublishedAt as string)}
   </p>
-  {#if article.body}
-    {#each article.body as { type, value }}
-      {#if type === 'paragraph'}
-        {@html value}
-      {:else if type === 'image'}
-        <img
-          src={value.url}
-          alt={value.alt} />
-      {/if}
-    {/each}
-  {/if}
+  {@render children()}
 </Section>
 
-<style>
+<style lang="postcss">
   img {
     max-width: 100%;
   }
