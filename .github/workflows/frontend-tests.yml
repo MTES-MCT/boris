@@ -65,9 +65,5 @@ jobs:
           npm run start:test -w @boris/backend &
           sleep 5
 
-      # Your following steps will run while the server is running in the background
-      - name: Run tests
-        run: npm run test
-
       - name: Frontend e2e tests
         run: npm run test:e2e -w @boris/frontend
