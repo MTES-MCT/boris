@@ -11,6 +11,7 @@ jobs:
       LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
       PUBLIC_BORIS_CMS_URL: ${{ secrets.PUBLIC_BORIS_CMS_URL }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      API_URL: ${{ secrets.API_URL }}
 
     strategy:
       matrix:
