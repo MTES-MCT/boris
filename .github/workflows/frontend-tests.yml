@@ -12,10 +12,30 @@ jobs:
       PUBLIC_BORIS_CMS_URL: ${{ secrets.PUBLIC_BORIS_CMS_URL }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       API_URL: ${{ secrets.API_URL }}
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5433
+      POSTGRES_USER: boris
+      POSTGRES_PASSWORD: boris
+      POSTGRES_DB: boris
 
     strategy:
       matrix:
         node-version: [20.18.0]
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: boris-test
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U boris-test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - uses: actions/checkout@v4
@@ -33,6 +53,12 @@ jobs:
 
       - name: Install playrwight
         run: npx playwright install --with-deps
+
+      - name: Run database migrations
+        run: make migration-migrate-ci
+
+      - name: Seed test data
+        run: npm run seed:test-data -w @boris/backend
 
       - name: Frontend e2e tests
         run: npm run test:e2e -w @boris/frontend
