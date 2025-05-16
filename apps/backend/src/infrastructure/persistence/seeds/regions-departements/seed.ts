@@ -17,9 +17,10 @@ const regions = [
       { name: 'Loire', code: '42' },
       { name: 'Haute-Loire', code: '43' },
       { name: 'Puy-de-Dôme', code: '63' },
-      { name: 'Rhône', code: '69' },
+      { name: 'Rhône', code: '69D' },
       { name: 'Savoie', code: '73' },
       { name: 'Haute-Savoie', code: '74' },
+      { name: 'Métropole de Lyon', code: '69M' },
     ],
   },
   {
@@ -142,6 +143,7 @@ const regions = [
       { name: 'Pyrénées-Orientales', code: '66' },
       { name: 'Tarn', code: '81' },
       { name: 'Tarn-et-Garonne', code: '82' },
+      { name: 'Hautes-Pyrénées', code: '65' },
     ],
   },
   {

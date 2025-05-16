@@ -1,20 +1,19 @@
 import { describe, it, expect } from 'vitest';
 import {
-  formatDepartements,
   formatEuro,
-  formatOFSs,
+  formatOfss,
   formatPublishedAt,
 } from '$lib/utils/formatters';
-import { expectedResult, OFSs } from '$tests/mocks/OFSs';
+import { expectedResult, ofss } from '$tests/mocks/ofss';
 
-describe('formatOFSs', () => {
+describe('formatOfss', () => {
   it('should format an OFS list to a region based list', () => {
-    const result = formatOFSs(OFSs);
+    const result = formatOfss(ofss);
     expect(result).toStrictEqual(expectedResult);
   });
 
   it('should return an empty array when OFSs list is empty', () => {
-    const result = formatOFSs([]);
+    const result = formatOfss([]);
     expect(result).toStrictEqual([]);
   });
 });
@@ -34,21 +33,6 @@ describe('formatPublishedAt', () => {
   it('should correctly format a date', () => {
     expect(formatPublishedAt('2025-01-07T15:15:15.899904+01:00')).toMatch(
       'Publié le 7 janvier 2025 à 15:15',
-    );
-  });
-});
-
-describe('formatDepartements', () => {
-  it('should correctly format departements', () => {
-    expect(formatDepartements('')).toMatch('');
-    expect(formatDepartements('Finistère')).toMatch('BRS Finistère');
-    expect(formatDepartements('Finistère, Morbihan')).toMatch(
-      'BRS Finistère, BRS Morbihan',
-    );
-    expect(
-      formatDepartements("Finistère, Morbihan, Côtes d'Armor, Ille-et-Vilaine"),
-    ).toMatch(
-      "BRS Finistère, BRS Morbihan, BRS Côtes d'Armor, BRS Ille-et-Vilaine",
     );
   });
 });
