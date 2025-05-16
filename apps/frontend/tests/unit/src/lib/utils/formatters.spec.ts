@@ -4,7 +4,7 @@ import {
   formatOfss,
   formatPublishedAt,
 } from '$lib/utils/formatters';
-import { expectedResult, ofss } from '$tests/mocks/OFSs';
+import { expectedResult, ofss } from '$tests/mocks/ofss';
 
 describe('formatOfss', () => {
   it('should format an OFS list to a region based list', () => {
