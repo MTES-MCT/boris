@@ -61,7 +61,7 @@ jobs:
         run: npm run seed:test-data -w @boris/backend
 
       - name: Run test server backend
-        run: npm run start:dev -w @boris/backend
+        run: npm run start:test -w @boris/backend
 
       - name: Frontend e2e tests
         run: npm run test:e2e -w @boris/frontend
