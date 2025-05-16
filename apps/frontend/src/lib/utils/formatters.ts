@@ -1,47 +1,28 @@
-import type {
-  FormattedCommercialisateurs,
-  OFS,
-  Region,
-} from '$lib/utils/definitions';
+import type { Region } from '$lib/utils/definitions';
+import type { OfsView } from '$lib/utils/api-types';
 
-export const formatOFSs = (OFSs: OFS[]): Region[] => {
-  const regions: Region[] = [];
-
+export const formatOfss = (ofss: OfsView[]): Region[] => {
   const regionNames = [
-    ...new Set(OFSs.map((ofs) => ofs.region.split(', ')).flat()),
+    ...new Set(
+      ofss.map((ofs) => ofs.regions.map((region) => region.name).flat()).flat(),
+    ),
   ];
 
+  const regions: Region[] = [];
+
   regionNames.forEach((regionName) => {
-    let totalOFSsInRegion = 0;
+    let totalOfssInRegion = 0;
 
-    const regionnalOFSs: OFS[] = OFSs.filter((ofs) =>
-      ofs.region.includes(regionName),
-    ).map((ofs) => {
-      const liens = ofs.lien.split(',');
-      const noms = ofs.commercialisateur.split(',');
+    const regionnalOfss: OfsView[] = ofss.filter((ofs) =>
+      ofs.regions.some((region) => region.name === regionName),
+    );
 
-      const formattedCommercialisateurs: FormattedCommercialisateurs[] = [];
-
-      liens.forEach((lien, index) => {
-        formattedCommercialisateurs.push({
-          lien: lien.replace(/^\s+|\s+$|\s+(?=\s)/g, ''),
-          nom: noms[index].replace(/^\s+|\s+$|\s+(?=\s)/g, ''),
-        });
-      });
-
-      return {
-        ...ofs,
-        departements: formatDepartements(ofs.departements),
-        formattedCommercialisateurs,
-      };
-    });
-
-    totalOFSsInRegion = regionnalOFSs.length;
+    totalOfssInRegion = regionnalOfss.length;
 
     regions.push({
       name: regionName,
-      OFSs: regionnalOFSs,
-      totalOFSs: totalOFSsInRegion,
+      ofss: regionnalOfss,
+      totalOfss: totalOfssInRegion,
     });
   });
 
@@ -67,15 +48,4 @@ export const formatPublishedAt = (date: string) => {
   }).format(new Date(date));
 
   return `Publié le ${formattedDate}`;
-};
-
-export const formatDepartements = (departements: string) => {
-  if (departements.length === 0) {
-    return '';
-  } else {
-    return departements
-      .split(', ')
-      .map((departement) => `BRS ${departement}`)
-      .join(', ');
-  }
 };

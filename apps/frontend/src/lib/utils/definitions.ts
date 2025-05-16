@@ -1,3 +1,5 @@
+import type { OfsView } from './api-types';
+
 export type Heading = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 export type WagtailApiItemsResponse = {
@@ -71,29 +73,8 @@ export type Step = {
   };
 };
 
-export type OFS = {
-  nom: string;
-  region: string;
-  departements: string;
-  commercialisateur: string;
-  lien: string;
-  telephone: string;
-  formattedCommercialisateurs?: FormattedCommercialisateurs[];
-};
-
-export type FormattedCommercialisateurs = {
-  nom: string;
-  lien: string;
-};
-
-export type Departement = {
-  name: string;
-  totalOFSs: number;
-  OFSs: OFS[];
-};
-
 export type Region = {
   name: string;
-  totalOFSs: number;
-  OFSs: OFS[];
+  totalOfss: number;
+  ofss: OfsView[];
 };

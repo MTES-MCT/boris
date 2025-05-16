@@ -1,175 +1,205 @@
-import type { OFS } from '$lib/utils/definitions';
+import type { OfsView } from '$lib/utils/api-types';
 
-export const OFSs: OFS[] = [
+export const ofss: OfsView[] = [
   {
-    nom: 'OFS1',
-    region: 'bretagne',
-    departements: "Cotes d'armor, finistere",
-    lien: 'https://ofs.random',
-    telephone: '123456789',
-    commercialisateur: 'commercialisateur',
+    id: '086d854f-3d94-4adc-98cf-13b8b9e01462',
+    name: 'OFIS',
+    websiteUrl: null,
+    phone: null,
+    email: null,
+    departements: [
+      {
+        id: '634ab950-c60b-4021-b865-d0941bf613fd',
+        name: 'Haute-Savoie',
+        code: '74',
+      },
+    ],
+    regions: [
+      {
+        id: '4c56344e-a30b-4c98-86b3-f3a619d65be0',
+        name: 'Auvergne-Rhône-Alpes',
+      },
+    ],
+    distributors: [
+      {
+        id: '8a2d2886-5bec-4e9c-8af8-4893d8cc4025',
+        name: 'Haute-Savoie Habitat',
+        websiteUrl:
+          'https://www.hautesavoiehabitat.fr/nous-connaitre/nos-marques-et-filiales/ofis/',
+      },
+    ],
   },
   {
-    nom: 'OFS2',
-    region: 'bretagne',
-    departements: 'morbihan',
-    lien: 'https://ofs.random',
-    telephone: '123456789',
-    commercialisateur: 'commercialisateur',
+    id: 'be74a186-b935-4d88-8d40-1fe388863c15',
+    name: 'La Coop Foncière Méditerranée ',
+    websiteUrl: null,
+    phone: null,
+    email: null,
+    departements: [],
+    regions: [
+      {
+        id: '3f2a978c-f6d5-4148-97ae-88e669544db1',
+        name: "Provence-Alpes-Côte d'Azur",
+      },
+    ],
+    distributors: [
+      {
+        id: '4f59c056-7eda-4e66-b03c-c23f8f4ddfb9',
+        name: 'Grand Delta Habitat',
+        websiteUrl: 'https://www.granddelta.fr/',
+      },
+      {
+        id: '68e73767-f3c7-4f3f-94ed-649437d9343d',
+        name: 'Maison Familiale de Provence',
+        websiteUrl: 'https://maison-familiale-de-provence.fr/',
+      },
+    ],
   },
   {
-    nom: 'OFS3',
-    region: 'Ile de france',
-    departements: 'Paris',
-    lien: 'https://ofs.random',
-    telephone: '123456789',
-    commercialisateur: 'commercialisateur',
+    id: 'a16b756a-5df5-404d-a374-644d89576622',
+    name: 'Foncière Solucia Territoires',
+    websiteUrl: null,
+    phone: '06 50 59 31 05',
+    email: 'contact@ofs-fst.fr',
+    departements: [],
+    regions: [
+      {
+        id: '1bdb7c19-a40c-479d-8756-39e1c224e914',
+        name: 'Bretagne',
+      },
+    ],
+    distributors: [],
   },
   {
-    nom: 'OFS4',
-    region: 'Ile de france',
-    departements: 'Paris, Seinte saint Denis',
-    lien: 'https://ofs.random',
-    telephone: '123456789',
-    commercialisateur: 'commercialisateur',
-  },
-  {
-    nom: 'OFS5',
-    region: 'Ile de france, bretagne',
-    departements: 'Paris, Seinte saint Denis',
-    lien: 'https://ofs.random',
-    telephone: '123456789',
-    commercialisateur: 'commercialisateur',
-  },
-  {
-    nom: 'OFS6',
-    region: 'Occitanie',
-    departements: 'Gard',
-    lien: 'https://ofs.random1, https://ofs.random2',
-    telephone: '123456789',
-    commercialisateur: 'commercialisateur1, commercialisateur2',
+    id: '7d56679f-0153-4f5e-967a-099235ec9528',
+    name: 'Foncier Coopératif Malouin',
+    websiteUrl: 'https://www.foncier-cooperatif-malouin.coop/',
+    phone: null,
+    email: 'contact.fcm@keredes.coop',
+    departements: [
+      {
+        id: '8fb92e67-2a0b-4745-8b1e-e0a76e1e84d2',
+        name: 'Ille-et-Vilaine',
+        code: '35',
+      },
+    ],
+    regions: [
+      {
+        id: '1bdb7c19-a40c-479d-8756-39e1c224e914',
+        name: 'Bretagne',
+      },
+    ],
+    distributors: [],
   },
 ];
 
 export const expectedResult = [
   {
-    name: 'bretagne',
-    OFSs: [
+    name: 'Auvergne-Rhône-Alpes',
+    ofss: [
       {
-        nom: 'OFS1',
-        region: 'bretagne',
-        departements: "BRS Cotes d'armor, BRS finistere",
-        lien: 'https://ofs.random',
-        telephone: '123456789',
-        commercialisateur: 'commercialisateur',
-        formattedCommercialisateurs: [
+        id: '086d854f-3d94-4adc-98cf-13b8b9e01462',
+        name: 'OFIS',
+        websiteUrl: null,
+        phone: null,
+        email: null,
+        departements: [
           {
-            lien: 'https://ofs.random',
-            nom: 'commercialisateur',
+            id: '634ab950-c60b-4021-b865-d0941bf613fd',
+            name: 'Haute-Savoie',
+            code: '74',
           },
         ],
-      },
-      {
-        nom: 'OFS2',
-        region: 'bretagne',
-        departements: 'BRS morbihan',
-        lien: 'https://ofs.random',
-        telephone: '123456789',
-        commercialisateur: 'commercialisateur',
-        formattedCommercialisateurs: [
+        regions: [
           {
-            lien: 'https://ofs.random',
-            nom: 'commercialisateur',
+            id: '4c56344e-a30b-4c98-86b3-f3a619d65be0',
+            name: 'Auvergne-Rhône-Alpes',
           },
         ],
-      },
-      {
-        nom: 'OFS5',
-        region: 'Ile de france, bretagne',
-        departements: 'BRS Paris, BRS Seinte saint Denis',
-        lien: 'https://ofs.random',
-        telephone: '123456789',
-        commercialisateur: 'commercialisateur',
-        formattedCommercialisateurs: [
+        distributors: [
           {
-            lien: 'https://ofs.random',
-            nom: 'commercialisateur',
+            id: '8a2d2886-5bec-4e9c-8af8-4893d8cc4025',
+            name: 'Haute-Savoie Habitat',
+            websiteUrl:
+              'https://www.hautesavoiehabitat.fr/nous-connaitre/nos-marques-et-filiales/ofis/',
           },
         ],
       },
     ],
-    totalOFSs: 3,
+    totalOfss: 1,
   },
   {
-    name: 'Ile de france',
-    OFSs: [
+    name: "Provence-Alpes-Côte d'Azur",
+    ofss: [
       {
-        nom: 'OFS3',
-        region: 'Ile de france',
-        departements: 'BRS Paris',
-        lien: 'https://ofs.random',
-        telephone: '123456789',
-        commercialisateur: 'commercialisateur',
-        formattedCommercialisateurs: [
+        id: 'be74a186-b935-4d88-8d40-1fe388863c15',
+        name: 'La Coop Foncière Méditerranée ',
+        websiteUrl: null,
+        phone: null,
+        email: null,
+        departements: [],
+        regions: [
           {
-            lien: 'https://ofs.random',
-            nom: 'commercialisateur',
+            id: '3f2a978c-f6d5-4148-97ae-88e669544db1',
+            name: "Provence-Alpes-Côte d'Azur",
           },
         ],
-      },
-      {
-        nom: 'OFS4',
-        region: 'Ile de france',
-        departements: 'BRS Paris, BRS Seinte saint Denis',
-        lien: 'https://ofs.random',
-        telephone: '123456789',
-        commercialisateur: 'commercialisateur',
-        formattedCommercialisateurs: [
+        distributors: [
           {
-            lien: 'https://ofs.random',
-            nom: 'commercialisateur',
+            id: '4f59c056-7eda-4e66-b03c-c23f8f4ddfb9',
+            name: 'Grand Delta Habitat',
+            websiteUrl: 'https://www.granddelta.fr/',
           },
-        ],
-      },
-      {
-        nom: 'OFS5',
-        region: 'Ile de france, bretagne',
-        departements: 'BRS Paris, BRS Seinte saint Denis',
-        lien: 'https://ofs.random',
-        telephone: '123456789',
-        commercialisateur: 'commercialisateur',
-        formattedCommercialisateurs: [
           {
-            lien: 'https://ofs.random',
-            nom: 'commercialisateur',
+            id: '68e73767-f3c7-4f3f-94ed-649437d9343d',
+            name: 'Maison Familiale de Provence',
+            websiteUrl: 'https://maison-familiale-de-provence.fr/',
           },
         ],
       },
     ],
-    totalOFSs: 3,
+    totalOfss: 1,
   },
   {
-    name: 'Occitanie',
-    OFSs: [
+    name: 'Bretagne',
+    ofss: [
       {
-        nom: 'OFS6',
-        region: 'Occitanie',
-        departements: 'BRS Gard',
-        lien: 'https://ofs.random1, https://ofs.random2',
-        telephone: '123456789',
-        commercialisateur: 'commercialisateur1, commercialisateur2',
-        formattedCommercialisateurs: [
+        id: 'a16b756a-5df5-404d-a374-644d89576622',
+        name: 'Foncière Solucia Territoires',
+        websiteUrl: null,
+        phone: '06 50 59 31 05',
+        email: 'contact@ofs-fst.fr',
+        departements: [],
+        regions: [
           {
-            lien: 'https://ofs.random1',
-            nom: 'commercialisateur1',
-          },
-          {
-            lien: 'https://ofs.random2',
-            nom: 'commercialisateur2',
+            id: '1bdb7c19-a40c-479d-8756-39e1c224e914',
+            name: 'Bretagne',
           },
         ],
+        distributors: [],
+      },
+      {
+        id: '7d56679f-0153-4f5e-967a-099235ec9528',
+        name: 'Foncier Coopératif Malouin',
+        websiteUrl: 'https://www.foncier-cooperatif-malouin.coop/',
+        phone: null,
+        email: 'contact.fcm@keredes.coop',
+        departements: [
+          {
+            id: '8fb92e67-2a0b-4745-8b1e-e0a76e1e84d2',
+            name: 'Ille-et-Vilaine',
+            code: '35',
+          },
+        ],
+        regions: [
+          {
+            id: '1bdb7c19-a40c-479d-8756-39e1c224e914',
+            name: 'Bretagne',
+          },
+        ],
+        distributors: [],
       },
     ],
-    totalOFSs: 1,
+    totalOfss: 2,
   },
 ];

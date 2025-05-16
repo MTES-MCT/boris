@@ -8,8 +8,7 @@
   },
   "workspaces": [
     "apps/frontend",
-    "apps/backend",
-    "packages/views"
+    "apps/backend"
   ],
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

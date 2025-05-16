@@ -2,7 +2,6 @@
   import Section from '$components/common/Section.svelte';
   import Accordion from '$components/common/Accordion.svelte';
   import type { Region } from '$lib/utils/definitions';
-  import type { OfsView, ViewType } from '@boris/views';
 
   type Props = {
     data: {
@@ -12,15 +11,6 @@
 
   const { data }: Props = $props();
   const { regions } = data;
-
-  const test: ViewType = {
-    id: 'hello',
-    description: 'description',
-  };
-
-  const testOfsView: OfsView = {
-    name: 'Bonjour',
-  };
 </script>
 
 <svelte:head>
@@ -33,8 +23,6 @@
 <Section
   title="Voici la liste des Organismes de Foncier Solidaires (OFS) répertoriés par région"
   titleElement="h1">
-  <p>{test.description}</p>
-  <p>{testOfsView.name}</p>
   <p>
     Les OFS jouent un rôle clé dans l'accès au dispositif de Bail Réel Solidaire
     (BRS). Ces organismes sans but lucratif agréés par l'État sont les seuls
@@ -60,49 +48,62 @@
 
   <div class="fr-accordions-group">
     {#each regions as region}
-      {@const regionLabel = `${region.name} (${region.totalOFSs})`}
+      {@const regionLabel = `${region.name} (${region.totalOfss})`}
 
       <Accordion
         label={regionLabel}
         labelElement="h2">
         <ul>
-          {#each region.OFSs as ofs}
-            <li>
-              <p class="fr-text__lead fr-mb-0"><b>{ofs.nom}</b></p>
+          {#each region.ofss as ofs}
+            <li class="ofs">
+              <p class="fr-text__lead fr-mb-0"><b>{ofs.name}</b></p>
               {#if ofs.departements}
-                <p class="fr-mb-0"><i>{ofs.departements}</i></p>
+                <p class="departements">
+                  <i>
+                    {ofs.departements
+                      .map(({ name }) => `BRS ${name}`)
+                      .join(', ')}
+                  </i>
+                </p>
               {/if}
-              <ul class="commercialisateurs">
-                {#if ofs.formattedCommercialisateurs}
-                  {#each ofs.formattedCommercialisateurs as { nom, lien }}
-                    {@const hasName = Boolean(nom)}
-                    {@const hasLink = Boolean(lien)}
+              {#if ofs.distributors.length > 0}
+                <ul class="commercialisateurs">
+                  {#each ofs.distributors as { name, websiteUrl }}
+                    {@const hasName = Boolean(name)}
+                    {@const hasLink = Boolean(websiteUrl)}
 
                     <li>
                       {#if hasName && hasLink}
                         <p class="fr-mb-0">
-                          Commercialisateur: {nom} &nbsp;-&nbsp;
+                          Commercialisateur: {name} &nbsp;-&nbsp;
                           <a
                             class="fr-link"
                             target="_blank"
-                            href={lien}>
+                            href={websiteUrl}>
                             Site web
                           </a>
                         </p>
                       {:else if hasName}
-                        <p class="fr-mb-0">{nom}</p>
+                        <p class="fr-mb-0">{name}</p>
                       {:else if hasLink}
                         <a
                           class="fr-link"
                           target="_blank"
-                          href={lien}>
+                          href={websiteUrl}>
                           Site web
                         </a>
                       {/if}
                     </li>
                   {/each}
-                {/if}
-              </ul>
+                </ul>
+              {:else if ofs.websiteUrl}
+                <a
+                  class="fr-link"
+                  target="_blank"
+                  href={ofs.websiteUrl as unknown as string}>
+                  Site web
+                </a>
+              {/if}
             </li>
           {/each}
         </ul>
@@ -112,12 +113,24 @@
 </Section>
 
 <style lang="postcss">
+  .ofs {
+    margin-bottom: var(--2w);
+  }
+
+  .departements {
+    margin-block-end: var(--1w);
+  }
+
   .commercialisateurs {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: var(--1w);
     padding-inline-start: 0;
-    margin-block-end: var(--3w);
+    margin-block: 0;
+
+    li {
+      padding-bottom: 0;
+    }
   }
 </style>

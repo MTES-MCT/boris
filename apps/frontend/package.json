@@ -19,14 +19,14 @@
     "test:e2e": "playwright test",
     "test:unit": "vitest",
     "lighthouse-mobile": "lhci autorun --config=./.lighthouse-mobile.json",
-    "lighthouse-desktop": "lhci autorun --config=./.lighthouse-desktop.json"
+    "lighthouse-desktop": "lhci autorun --config=./.lighthouse-desktop.json",
+    "generate-api-types": "openapi-typescript http://localhost:3000/api/documentation/schema/json --output src/lib/utils/generated-api-types.ts"
   },
   "dependencies": {
     "@sentry/sveltekit": "^8.42.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
-    "@boris/views": "1.0.0",
     "@csstools/postcss-global-data": "^3.0.0",
     "@fullhuman/postcss-purgecss": "^7.0.2",
     "@gouvfr/dsfr": "^1.12.1",
@@ -39,7 +39,7 @@
     "cssnano": "^7.0.6",
     "eslint-plugin-svelte": "^2.36.0",
     "nanoid": "^5.0.8",
-    "papaparse": "^5.4.1",
+    "openapi-typescript": "^7.8.0",
     "postcss": "^8.4.49",
     "postcss-custom-media": "^11.0.5",
     "prettier-plugin-svelte": "^3.1.2",
