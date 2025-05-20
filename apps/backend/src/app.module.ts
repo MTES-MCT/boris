@@ -6,6 +6,7 @@ import { OfsModule } from './infrastructure/ofs/ofs.module';
 import { DepartementModule } from './infrastructure/departement/departement.module';
 import { DistributorModule } from './infrastructure/distributor/distributor.module';
 import { LoggerModule } from 'nestjs-pino';
+import { HomeModule } from './infrastructure/home/home.module';
 
 @Module({
   imports: [
@@ -21,11 +22,11 @@ import { LoggerModule } from 'nestjs-pino';
         },
       },
     }),
-
     RegionModule,
     OfsModule,
     DepartementModule,
     DistributorModule,
+    HomeModule,
   ],
   controllers: [],
   providers: [],
