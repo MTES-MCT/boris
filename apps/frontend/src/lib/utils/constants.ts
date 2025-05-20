@@ -81,23 +81,23 @@ export const eligibilityData: EligibilityData[] = [
 
 export const statistics: Statistic[] = [
   {
-    amount: '199 000 €',
+    amount: '380 000 €',
     subtitle: 'd’argent public investi sur notre plateforme.',
     content: '',
   },
   {
-    amount: '4 750',
+    amount: '7 000',
     subtitle: 'simulations',
-    content: 'dont 75% concernent des ménages éligibles.',
+    content: 'dont 90% concernent des ménages éligibles.',
   },
   {
-    amount: '1 275',
+    amount: '2 000',
     subtitle: 'ménages recontactés',
     content:
-      'après simulation d’éligibilité pour avoir les clés de la poursuite de leur projets (dont 61% ne connaissait pas le BRS avant BoRiS)',
+      'après simulation d’éligibilité pour avoir les clés de la poursuite de leur projets (dont 65% ne connaissait pas le BRS avant BoRiS)',
   },
   {
-    amount: '40',
+    amount: '70',
     subtitle: 'organismes de foncier solidaire partenaires',
     content: '',
   },
