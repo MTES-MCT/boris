@@ -1,0 +1,55 @@
+<main class="fr-pt-md-14w" role="main">
+  <div class="fr-container fr-container--fluid fr-mb-md-14v">
+    <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
+      <div class="fr-col-12 fr-col-md-8 fr-col-lg-6">
+        <div class="fr-container fr-background-alt--grey fr-px-md-0 fr-py-10v fr-py-md-14v">
+          <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
+            <div class="fr-col-12 fr-col-md-9 fr-col-lg-8">
+              <div class="fr-mb-4w flex justify-between items-center">
+                <p class="fr-logo">Ministère <br> chargé du <br> logement</p>
+                {{> logo}}
+              </div>
+              <h1>Connexion à Boris</h1>
+              <div>
+                <form id="login-form">
+                  <fieldset class="fr-fieldset" id="login-form-fieldset"
+                    aria-labelledby="login-form-fieldset-legend login-form-fieldset-messages">
+                    <div class="fr-fieldset__element">
+                      <fieldset class="fr-fieldset" id="credentials" aria-labelledby="credentials-messages">
+                        <div class="fr-fieldset__element">
+                          <div class="fr-input-group"> <label class="fr-label" for="username"> Identifiant <span
+                                class="fr-hint-text">Format attendu : nom@domaine.fr</span> </label> <input
+                              class="fr-input" autocomplete="username" aria-required="true"
+                              aria-describedby="username-messages" name="username" id="username" type="text">
+                            <div class="fr-messages-group" id="username-messages" aria-live="assertive"> </div>
+                          </div>
+                        </div>
+                        <div class="fr-fieldset__element">
+                          <div class="fr-password" id="password"> <label class="fr-label" for="password-input"> Mot de
+                              passe </label>
+                            <div class="fr-input-wrap"> <input class="fr-password__input fr-input"
+                                aria-describedby="password-input-messages" aria-required="true" name="password"
+                                autocomplete="current-password" id="password-input" type="password"> </div>
+                            <div class="fr-messages-group" id="password-input-messages" aria-live="assertive">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="fr-messages-group" id="credentials-messages" aria-live="assertive"> </div>
+                      </fieldset>
+                    </div>
+                    <div class="fr-fieldset__element">
+                      <ul class="fr-btns-group">
+                        <li> <button class="fr-btn"> Se connecter </button> </li>
+                      </ul>
+                    </div>
+                    <div class="fr-messages-group" id="login-form-fieldset-messages" aria-live="assertive"> </div>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

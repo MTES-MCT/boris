@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import * as hbs from 'hbs';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -28,8 +29,18 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api/documentation', app, document, customOptions);
 
-  app.useStaticAssets(join(__dirname, './', 'infrastructure', 'public'));
-  app.setBaseViewsDir(join(__dirname, './', 'infrastructure', 'views'));
+  app.useStaticAssets(
+    join(__dirname, './', 'infrastructure', 'admin', 'assets'),
+  );
+  app.setBaseViewsDir(
+    join(__dirname, './', 'infrastructure', 'admin', 'views'),
+  );
+  hbs.registerPartials(
+    join(__dirname, './', 'infrastructure', 'admin', 'views', 'partials'),
+  );
+  hbs.registerPartials(
+    join(__dirname, './', 'infrastructure', 'admin', 'views', 'layouts'),
+  );
   app.setViewEngine('hbs');
 
   await app.listen(process.env.PORT ?? 3000);
