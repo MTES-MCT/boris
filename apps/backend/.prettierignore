@@ -5,3 +5,4 @@ Makefile
 .prettierignore
 Procfile
 *.mermaid
+*.hbs
