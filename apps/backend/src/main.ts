@@ -6,12 +6,16 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as hbs from 'hbs';
+import { useSession } from './infrastructure/session/session.middleware';
+import dataSource from './infrastructure/persistence/typeorm.config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useLogger(app.get(Logger));
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+
+  await useSession(app, dataSource);
 
   const options = new DocumentBuilder()
     .addBearerAuth()

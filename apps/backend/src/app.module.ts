@@ -9,6 +9,8 @@ import { OfsModule } from './infrastructure/ofs/ofs.module';
 import { DepartementModule } from './infrastructure/departement/departement.module';
 import { DistributorModule } from './infrastructure/distributor/distributor.module';
 import { AdminModule } from './infrastructure/admin/admin.module';
+import { UserModule } from './infrastructure/user/user.module';
+import { AuthModule } from './infrastructure/auth/auth.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { AdminModule } from './infrastructure/admin/admin.module';
     DepartementModule,
     DistributorModule,
     AdminModule,
+    UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

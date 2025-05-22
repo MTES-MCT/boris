@@ -11,27 +11,35 @@
               </div>
               <h1>Connexion à Boris</h1>
               <div>
-                <form id="login-form">
+                <form id="login-form" method="POST" action="/auth/login">
                   <fieldset class="fr-fieldset" id="login-form-fieldset"
                     aria-labelledby="login-form-fieldset-legend login-form-fieldset-messages">
                     <div class="fr-fieldset__element">
                       <fieldset class="fr-fieldset" id="credentials" aria-labelledby="credentials-messages">
                         <div class="fr-fieldset__element">
-                          <div class="fr-input-group"> <label class="fr-label" for="username"> Identifiant <span
-                                class="fr-hint-text">Format attendu : nom@domaine.fr</span> </label> <input
-                              class="fr-input" autocomplete="username" aria-required="true"
-                              aria-describedby="username-messages" name="username" id="username" type="text">
-                            <div class="fr-messages-group" id="username-messages" aria-live="assertive"> </div>
+                          <div class="fr-input-group">
+                            <label class="fr-label" for="email">
+                              Identifiant
+                              <span class="fr-hint-text">
+                                Format attendu : nom@domaine.fr
+                              </span>
+                            </label>
+                            <input class="fr-input" autocomplete="email" aria-required="true"
+                              aria-describedby="email-messages" name="email" id="email" type="text">
+                            <div class="fr-messages-group" id="email-messages" aria-live="assertive"></div>
                           </div>
                         </div>
                         <div class="fr-fieldset__element">
-                          <div class="fr-password" id="password"> <label class="fr-label" for="password-input"> Mot de
-                              passe </label>
-                            <div class="fr-input-wrap"> <input class="fr-password__input fr-input"
-                                aria-describedby="password-input-messages" aria-required="true" name="password"
-                                autocomplete="current-password" id="password-input" type="password"> </div>
-                            <div class="fr-messages-group" id="password-input-messages" aria-live="assertive">
+                          <div class="fr-password" id="password">
+                            <label class="fr-label" for="password-input">
+                              Mot de passe
+                            </label>
+                            <div class="fr-input-wrap">
+                              <input class="fr-password__input fr-input" aria-describedby="password-input-messages"
+                                aria-required="true" name="password" autocomplete="current-password" id="password-input"
+                                type="password">
                             </div>
+                            <div class="fr-messages-group" id="password-input-messages" aria-live="assertive"></div>
                           </div>
                         </div>
                         <div class="fr-messages-group" id="credentials-messages" aria-live="assertive"> </div>
@@ -39,7 +47,9 @@
                     </div>
                     <div class="fr-fieldset__element">
                       <ul class="fr-btns-group">
-                        <li> <button class="fr-btn"> Se connecter </button> </li>
+                        <li>
+                          <button class="fr-btn"> Se connecter</button>
+                        </li>
                       </ul>
                     </div>
                     <div class="fr-messages-group" id="login-form-fieldset-messages" aria-live="assertive"> </div>
