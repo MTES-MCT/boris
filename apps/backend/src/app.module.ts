@@ -10,7 +10,6 @@ import { DepartementModule } from './infrastructure/departement/departement.modu
 import { DistributorModule } from './infrastructure/distributor/distributor.module';
 import { AdminModule } from './infrastructure/admin/admin.module';
 import { UserModule } from './infrastructure/user/user.module';
-import { AuthModule } from './infrastructure/auth/auth.module';
 
 @Module({
   imports: [
@@ -32,7 +31,6 @@ import { AuthModule } from './infrastructure/auth/auth.module';
     DistributorModule,
     AdminModule,
     UserModule,
-    AuthModule,
   ],
   controllers: [],
   providers: [],

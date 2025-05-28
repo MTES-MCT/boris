@@ -8,6 +8,9 @@ import { join } from 'path';
 import * as hbs from 'hbs';
 import { useSession } from './infrastructure/session/session.middleware';
 import dataSource from './infrastructure/persistence/typeorm.config';
+import * as connectLivereload from 'connect-livereload';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import flash = require('connect-flash');
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -15,7 +18,10 @@ async function bootstrap() {
   app.useLogger(app.get(Logger));
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
+  app.use(connectLivereload());
+
   await useSession(app, dataSource);
+  app.use(flash());
 
   const options = new DocumentBuilder()
     .addBearerAuth()
@@ -46,6 +52,7 @@ async function bootstrap() {
     join(__dirname, './', 'infrastructure', 'admin', 'views', 'layouts'),
   );
   app.setViewEngine('hbs');
+  app.enable('view cache');
 
   await app.listen(process.env.PORT ?? 3000);
 }

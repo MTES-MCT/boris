@@ -5,17 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boris</title>
-  <link rel='stylesheet' href='/output.css' />
+  <link rel='stylesheet' href='/styles/output.css' />
 </head>
 
 <body>
-  {{> header}}
+  <div class="flex">
+    {{> menu}}
 
-  <main class="container mx-auto px-4 py-8">
-    {{{body}}}
-  </main>
-
-  {{> footer}}
+    <main class="mx-auto p-16 flex-1 bg-gray-50 overflow-hidden">
+      {{{body}}}
+    </main>
+  </div>
 </body>
 
 </html>

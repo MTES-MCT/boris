@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { HomeModule } from './home/home.module';
-import { AuthModule } from './auth/auth.module';
+import { AdminHomeModule } from './home/home.module';
+import { AdminAuthModule } from './auth/auth.module';
+import { AdminOfsModule } from './ofs/ofs.module';
 
 @Module({
-  imports: [HomeModule, AuthModule],
+  imports: [AdminHomeModule, AdminAuthModule, AdminOfsModule],
   controllers: [],
   providers: [],
   exports: [],

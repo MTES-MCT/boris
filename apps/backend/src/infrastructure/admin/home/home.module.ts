@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { HomeController } from './controllers/home.controller';
+import { AdminHomeController } from './controllers/home.controller';
 
 @Module({
   imports: [],
-  controllers: [HomeController],
+  controllers: [AdminHomeController],
   providers: [],
   exports: [],
 })
-export class HomeModule {}
+export class AdminHomeModule {}

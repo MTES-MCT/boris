@@ -25,7 +25,8 @@
                               </span>
                             </label>
                             <input class="fr-input" autocomplete="email" aria-required="true"
-                              aria-describedby="email-messages" name="email" id="email" type="text">
+                              aria-describedby="email-messages" name="email" id="email" type="email"
+                              required="required">
                             <div class="fr-messages-group" id="email-messages" aria-live="assertive"></div>
                           </div>
                         </div>
@@ -37,12 +38,19 @@
                             <div class="fr-input-wrap">
                               <input class="fr-password__input fr-input" aria-describedby="password-input-messages"
                                 aria-required="true" name="password" autocomplete="current-password" id="password-input"
-                                type="password">
+                                type="password" required="required">
                             </div>
                             <div class="fr-messages-group" id="password-input-messages" aria-live="assertive"></div>
                           </div>
                         </div>
-                        <div class="fr-messages-group" id="credentials-messages" aria-live="assertive"> </div>
+                        <div class="fr-messages-group" id="credentials-messages" aria-live="assertive">
+                          {{#if message}}
+                          <div class="fr-alert fr-alert--error">
+                            <p class="fr-alert__title">Erreur</p>
+                            <p class="fr-alert__description">{{message}}</p>
+                          </div>
+                          {{/if}}
+                        </div>
                       </fieldset>
                     </div>
                     <div class="fr-fieldset__element">

@@ -1,0 +1,10 @@
+/* @import '@gouvfr/dsfr/dist/dsfr.min.css';
+@import '@gouvfr/dsfr/dist/utility/utility.min.css'; */
+@import 'tailwindcss';
+@import './font-face.css';
+
+@theme {
+  --font-spectral: 'Spectral', sans-serif;
+  --font-sans: 'Marianne', sans-serif;
+  --main-width: calc(100vw - calc(var(--spacing) * 80));
+}

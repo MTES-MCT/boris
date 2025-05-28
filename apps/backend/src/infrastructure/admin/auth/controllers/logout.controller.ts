@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
-@Controller('auth/logout')
-export class LocalLogoutController {
-  @Post()
+@Controller('/auth')
+export class AdminLogoutController {
+  @Post('/logout')
   public async post(@Req() req: Request, @Res() res: Response): Promise<void> {
     const err = await new Promise((resolve) => {
       req.logout((err) => resolve(err));
@@ -19,7 +19,6 @@ export class LocalLogoutController {
       throw new InternalServerErrorException('Failed to log out');
     }
 
-    console.log('HEREEEEE logout');
-    res.redirect(303, '/login');
+    res.redirect(303, '/auth/login');
   }
 }

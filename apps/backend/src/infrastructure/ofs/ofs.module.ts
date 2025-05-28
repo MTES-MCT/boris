@@ -20,6 +20,6 @@ import { GetAllOfssUsecase } from 'src/application/ofs/usecases/getAll.usecase';
     SaveOfsUsecase,
     GetAllOfssUsecase,
   ],
-  exports: [SaveOfsUsecase],
+  exports: ['OfsRepositoryInterface', GetAllOfssUsecase],
 })
 export class OfsModule {}

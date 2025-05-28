@@ -1,0 +1,40 @@
+<div class="overflow-x-auto rounded-lg shadow">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-white">
+      <tr>
+        {{#each headers}}
+        <th scope="col"
+          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px] max-w-[250px]">
+          {{this.label}}
+        </th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      {{#each rows}}
+      <tr class="hover:bg-gray-50 transition-colors duration-200">
+        {{#each this}}
+        <td
+          class="px-6 py-4 text-sm {{#if @first}}text-gray-900{{else}}text-gray-500{{/if}} break-words min-w-[200px] max-w-[250px]">
+          {{#if this.isLink}}
+          <a href="{{this.href}}" class="text-indigo-600 hover:text-indigo-900 inline-flex items-center gap-1" {{#if
+            this.external}}target="_blank" rel="noopener noreferrer" {{/if}}>
+            {{this.text}}
+            {{#if this.external}}
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            {{/if}}
+          </a>
+          {{else}}
+          {{this}}
+          {{/if}}
+        </td>
+        {{/each}}
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
