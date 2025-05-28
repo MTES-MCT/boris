@@ -52,7 +52,6 @@ async function bootstrap() {
     join(__dirname, './', 'infrastructure', 'admin', 'views', 'layouts'),
   );
   app.setViewEngine('hbs');
-  app.enable('view cache');
 
   await app.listen(process.env.PORT ?? 3000);
 }
