@@ -28,6 +28,6 @@ export class AdminLoginController {
   @Post('/login')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   post(@Res() res: Response, @Body() { email, password }: AdminLoginDto) {
-    res.redirect(303, '/');
+    res.redirect(303, '/ofs');
   }
 }
