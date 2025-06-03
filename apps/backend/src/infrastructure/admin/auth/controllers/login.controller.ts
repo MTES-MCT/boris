@@ -10,7 +10,7 @@ import {
 import { Request, Response } from 'express';
 import { LocalAuthGuard } from '../guards/local.guard';
 import { AdminLoginDto } from '../dtos/login.dto';
-import messages from 'src/infrastructure/flash/messages';
+import messages from 'src/infrastructure/utils/messages';
 import { RedirectIfAuthenticatedGuard } from '../guards/redirectIfAuthenticated.guard';
 
 @Controller('/auth')

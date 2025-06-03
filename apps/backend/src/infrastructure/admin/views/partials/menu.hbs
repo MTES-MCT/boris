@@ -1,25 +1,47 @@
-<nav class="menu min-w-64 h-full sticky top-0 h-screen p-8 border-r border-gray-200 shadow-xl">
-  <div class="h-full flex flex-col">
-    <div class="flex gap-8 justify-center border-b border-gray-200 pb-8">
-      {{> logo}}
-    </div>
+<button data-drawer-target="sidebar-search" data-drawer-toggle="sidebar-search" aria-controls="sidebar-search"
+  type="button"
+  class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+  <span class="sr-only">Open sidebar</span>
+  <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <path clip-rule="evenodd" fill-rule="evenodd"
+      d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+    </path>
+  </svg>
+</button>
 
-    <div class="py-8 flex-1">
-      <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider p-2">Menu</p>
-
-      <div class="flex flex-col gap-4">
-        <a href="/ofs" class="flex items-center p-2 font-[500] rounded-lg hover:bg-gray-100">OFS</a>
-      </div>
-    </div>
-
-    <div class="pt-8 border-t border-gray-200">
-      <form action="/auth/logout" method="POST" class="w-full">
-        <button type="submit"
-          class="w-full flex items-center gap-2 p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-          {{> icons/logout}}
-          Déconnexion
-        </button>
-      </form>
-    </div>
+<aside id="sidebar-search"
+  class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r border-gray-200 dark:border-gray-700"
+  aria-label="Sidebar">
+  <div class="overflow-y-auto py-4 px-3 h-full bg-white dark:bg-gray-800">
+    <a href="/" class="flex items-center justify-center pl-2 mb-5">
+      {{> icons/logo width="100" height="100" lightColor="gray-600"}}
+    </a>
+    <ul class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
+      <li>
+        <a href="/ofs"
+          class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <svg aria-hidden="true"
+            class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+          </svg>
+          <span class="ml-3">Ofs</span>
+        </a>
+      </li>
+    </ul>
   </div>
-</nav>
+  <div class="absolute bottom-0 left-0 justify-center p-4 w-full bg-white dark:bg-gray-800 z-20">
+    <p class="text-sm font-semibold mb-2 text-gray-500 dark:text-gray-400">email@email.email</p>
+    <form action="/auth/logout" method="POST">
+      <button type="submit"
+        class="inline-flex cursor-pointer items-center justify-center w-full py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+        <svg aria-hidden="true" class="mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+        </svg>
+        Déconnexion
+        </a>
+  </div>
+</aside>

@@ -1,6 +1,6 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import messages from 'src/infrastructure/flash/messages';
+import messages from 'src/infrastructure/utils/messages';
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {

@@ -76,6 +76,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "concurrently": "^9.1.2",
+    "flowbite": "^3.1.2",
     "install": "^0.13.0",
     "jest": "^29.7.0",
     "nodemon": "^3.1.10",
