@@ -1,7 +1,7 @@
 <div class="bg-white dark:bg-gray-800 relative shadow-md overflow-hidden">
   <div class="mx-4 mb-8">
     <div class="flex items-end justify-between space-x-4">
-      <div class="flex-1 flex items-end justify-between space-x-3">
+      <div class="w-full flex items-end justify-between space-x-3">
         <h5 class="text-gray-800 text-2xl dark:text-white font-semibold">{{title}}</h5>
 
         <button type="button"
@@ -18,7 +18,7 @@
   </div>
   <div class="overflow-x-auto">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <thead class="w-full text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           {{#each columns}}
           <th scope="col" class="px-4 py-3">{{this}}</th>
@@ -29,35 +29,34 @@
         </tr>
       </thead>
       <tbody>
-        {{#each rows}}
+        {{#each rows as |row|}}
         <tr class="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-          {{#each this}}
-          {{#if this.isLink}}
+          {{#each row as |cell|}}
+          {{#if cell.isLink}}
           <td class="px-2 py-2">
-            <a href="{{this.href}}" target="_blank">{{this.text}}</a>
+            <a href="{{cell.href}}" target="_blank">{{cell.text}}</a>
           </td>
-          {{else if this.isMailto}}
+          {{else if cell.isMailto}}
           <td class="px-2 py-2">
-            <a href="mailto:{{this.href}}">{{this.text}}</a>
+            <a href="mailto:{{cell.href}}">{{cell.text}}</a>
           </td>
-          {{else if this.isArray}}
+          {{else if cell.isArray}}
           <td class="px-2 py-2">
             <div class="flex min-w-40 flex-wrap gap-1">
-              {{#each this.value}}
+              {{#each cell.value as |item|}}
               <span
-                class="inline-flex bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                {{this}}</span>
+                class="inline-flex bg-{{or cell.color 'primary'}}-100 text-{{or cell.color 'primary'}}-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-{{or cell.color 'primary'}}-900 dark:text-{{or cell.color 'primary'}}-300">
+                {{item}}</span>
               {{/each}}
             </div>
           </td>
           {{else}}
           <td class="py-2">
             <span class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              {{this}}</span>
+              {{cell}}</span>
           </td>
           {{/if}}
           {{/each}}
-          </td>
           <td class="px-4 py-2">
             <button id="-dropdown-button" type="button" data-dropdown-toggle="-dropdown"
               class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100">
@@ -87,124 +86,60 @@
           </td>
         </tr>
         {{/each}}
-        <tr class="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-          <th scope="row" class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">Upload feed
-            and Reels in Instagram</th>
-          <td class="px-4 py-2 whitespace-nowrap">
-            <span
-              class="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">In
-              progress</span>
-          </td>
-          <td class="px-4 py-2 whitespace-nowrap">
-            <div class="flex -space-x-4 w-28">
-              <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/avatar-10.png" alt=""
-                class="w-10 h-10 flex-shrink-0 border-2 border-white rounded-full dark:border-gray-800">
-              <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/avatar-1.png" alt=""
-                class="w-10 h-10 flex-shrink-0 border-2 border-white rounded-full dark:border-gray-800">
-              <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/avatar-3.png" alt=""
-                class="w-10 h-10 flex-shrink-0 border-2 border-white rounded-full dark:border-gray-800">
-              <a href="#"
-                class="flex-shrink-0 flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-gray-900 dark:bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600 dark:border-gray-800">+5</a>
-            </div>
-          </td>
-          <td class="px-4 py-2 font-medium whitespace-nowrap">
-            <div class="flex justify-end mb-1">
-              <span class="text-xs font-medium text-gray-500 dark:text-gray-400">75%</span>
-            </div>
-            <div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
-              <div class="bg-primary-600 h-1.5 rounded-full" style="width: 75%"></div>
-            </div>
-          </td>
-          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            <a href="#"
-              class="font-medium text-primary-600 dark:text-primary-500 hover:underline inline-flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewbox="0 0 20 20" fill="currentColor"
-                aria-hidden="true">
-                <path
-                  d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-              </svg>
-              Website
-            </a>
-          </td>
-          <td class="px-4 py-2 text-gray-900 whitespace-nowrap dark:text-white">
-            <div
-              class="px-2 py-1 border dark:border-gray-600 bg-white dark:bg-gray-700 rounded-lg text-xs font-medium inline-flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"
-                class="h-4 w-4 mr-1 text-gray-400" viewbox="0 0 20 20">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" />
-              </svg>
-              <span class="text-green-500">6:47</span>
-              /8:00
-              <button class="bg-orange-500 hover:bg-orange-700 text-white p-1 rounded-md ml-3">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="w-4 h-4"
-                  aria-hidden="true">
-                  <path fill-rule="evenodd"
-                    d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7.5 0A.75.75 0 0115 4.5h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75V5.25z"
-                    clip-rule="evenodd" />
-                </svg>
-              </button>
-            </div>
-          </td>
-          <td class="px-4 py-2 whitespace-nowrap font-medium text-gray-900 dark:text-white text-xs">23 Nov 2022</td>
-        </tr>
       </tbody>
     </table>
   </div>
   <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
     aria-label="Table navigation">
     <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-      Showing
-      <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
-      of
-      <span class="font-semibold text-gray-900 dark:text-white">1000</span>
+      Affichage
+      <span
+        class="font-semibold text-gray-900 dark:text-white">{{pagination.lowOffset}}-{{pagination.highOffset}}</span>
+      de
+      <span class="font-semibold text-gray-900 dark:text-white">{{pagination.totalCount}}</span>
     </span>
+    {{#if (or pagination.hasPreviousPage pagination.hasNextPage)}}
     <ul class="inline-flex items-stretch -space-x-px">
+      {{#each pagination.pages as |page|}}
       <li>
-        <a href="#"
+        {{#if page.isPrevious}}
+        {{#if page.disabled}}
+        <span
+          class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-400 bg-white rounded-l-lg border border-gray-300 cursor-not-allowed dark:bg-gray-800 dark:border-gray-700 dark:text-gray-500">
+          <span class="sr-only">Précédent</span>
+          {{> icons/chevron_left}}
+        </span>
+        {{else}}
+        <a href="?page={{page.number}}&pageSize={{../pagination.pageSize}}"
           class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-          <span class="sr-only">Previous</span>
-          <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-              d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-              clip-rule="evenodd" />
-          </svg>
+          <span class="sr-only">Précédent</span>
+          {{> icons/chevron_left}}
         </a>
-      </li>
-      <li>
-        <a href="#"
-          class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-      </li>
-      <li>
-        <a href="#"
-          class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-      </li>
-      <li>
-        <a href="#" aria-current="page"
-          class="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-      </li>
-      <li>
-        <a href="#"
-          class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
-      </li>
-      <li>
-        <a href="#"
-          class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">100</a>
-      </li>
-      <li>
-        <a href="#"
+        {{/if}}
+        {{else if page.isNext}}
+        {{#if page.disabled}}
+        <span
+          class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-400 bg-white rounded-r-lg border border-gray-300 cursor-not-allowed dark:bg-gray-800 dark:border-gray-700 dark:text-gray-500">
+          <span class="sr-only">Suivant</span>
+          {{> icons/chevron_right}}
+        </span>
+        {{else}}
+        <a href="?page={{page.number}}&pageSize={{../pagination.pageSize}}"
           class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-          <span class="sr-only">Next</span>
-          <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-              clip-rule="evenodd" />
-          </svg>
+          <span class="sr-only">Suivant</span>
+          {{> icons/chevron_right}}
         </a>
+        {{/if}}
+        {{else if page.number}}
+        <a href="?page={{page.number}}&pageSize={{../pagination.pageSize}}"
+          class="flex items-center justify-center text-sm py-2 px-3 leading-tight {{#if page.isCurrent}}text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white{{else}}text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white{{/if}}">{{page.number}}</a>
+        {{else if page.isEllipsis}}
+        <span
+          class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-400 bg-white border border-gray-300 cursor-not-allowed dark:bg-gray-800 dark:border-gray-700 dark:text-gray-500">...</span>
+        {{/if}}
       </li>
+      {{/each}}
     </ul>
+    {{/if}}
   </nav>
 </div>
