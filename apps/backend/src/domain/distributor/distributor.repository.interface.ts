@@ -3,4 +3,6 @@ import { DistributorEntity } from 'src/infrastructure/distributor/distributor.en
 
 export interface DistributorRepositoryInterface {
   save(distributor: DistributorInterface): Promise<DistributorEntity>;
+  findAll(): Promise<DistributorEntity[]>;
+  findManyByIds(ids: string[]): Promise<DistributorEntity[]>;
 }

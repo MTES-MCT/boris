@@ -25,4 +25,12 @@ export class RegionRepository implements RegionRepositoryInterface {
       name: In(names),
     });
   }
+
+  public findAll(): Promise<RegionEntity[]> {
+    return this.repository.find({
+      order: {
+        name: 'ASC',
+      },
+    });
+  }
 }

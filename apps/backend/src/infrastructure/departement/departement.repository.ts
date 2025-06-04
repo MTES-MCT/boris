@@ -29,4 +29,12 @@ export class DepartementRepository implements DepartementRepositoryInterface {
       name: In(names),
     });
   }
+
+  public findAll(): Promise<DepartementEntity[]> {
+    return this.repository.find({
+      order: {
+        name: 'ASC',
+      },
+    });
+  }
 }

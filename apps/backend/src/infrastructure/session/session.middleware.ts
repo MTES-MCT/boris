@@ -28,10 +28,11 @@ export async function useSession(
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
         sameSite: true,
-        secure: ['1', 'true'].includes(process.env.SESSION_COOKIE_SECURE || ''),
+        secure: process.env.NODE_ENV === 'production',
       },
     }),
   );
 
+  app.use(passport.initialize());
   app.use(passport.session());
 }

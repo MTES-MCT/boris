@@ -5,6 +5,8 @@ import {
   UseGuards,
   UseFilters,
   Query,
+  Post,
+  Body,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { GetAllOfssUsecase } from 'src/application/ofs/usecases/getAll.usecase';
@@ -14,9 +16,21 @@ import { LocalIsAuthenticatedGuard } from 'src/infrastructure/admin/auth/guards/
 import messages from 'src/infrastructure/utils/messages';
 import { TableFactory } from 'src/infrastructure/admin/factories/table.factories';
 import { PaginationDTO } from 'src/infrastructure/pagination/pagination.dto';
+import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
+import { SaveOfsDTO } from 'src/infrastructure/ofs/dtos/save.dto';
+import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.usecase';
+import { FindAllDepartementsUsecase } from 'src/application/departement/usecases/findAll.usecase';
+import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases/findAll.usecase';
+
 @Controller('/ofs')
 export class AdminOfsController {
-  constructor(private readonly getAllOfssUsecase: GetAllOfssUsecase) {}
+  constructor(
+    private readonly getAllOfssUsecase: GetAllOfssUsecase,
+    private readonly saveOfsUsecase: SaveOfsUsecase,
+    private readonly findAllRegionsUsecase: FindAllRegionsUsecase,
+    private readonly findAllDepartementsUsecase: FindAllDepartementsUsecase,
+    private readonly findAllDistributorsUsecase: FindAllDistributorsUsecase,
+  ) {}
 
   @UseGuards(LocalIsAuthenticatedGuard)
   @UseFilters(LocalRequireAuthFilter)
@@ -30,12 +44,14 @@ export class AdminOfsController {
       pageSize,
     });
 
+    const regions = await this.findAllRegionsUsecase.execute();
+    const departements = await this.findAllDepartementsUsecase.execute();
+    const distributors = await this.findAllDistributorsUsecase.execute();
+
     const { columns, rows, pagination } = TableFactory.createTable(
       messages.contents.ofs.columns,
       ofss,
     );
-
-    console.log(pagination);
 
     res.render('ofs/index', {
       layout: 'layouts/main',
@@ -50,6 +66,21 @@ export class AdminOfsController {
       columns,
       rows,
       pagination,
+      regions,
+      departements,
+      distributors,
     });
+  }
+
+  @UseGuards(LocalIsAuthenticatedGuard)
+  @UseFilters(LocalRequireAuthFilter)
+  @Post('')
+  public async save(@Body() body: SaveOfsDTO, @Res() res: Response) {
+    try {
+      await this.saveOfsUsecase.execute(body);
+      res.redirect('/ofs');
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

@@ -37,7 +37,7 @@ const messages: Messages = {
     ofs: {
       title: 'Organismes de foncier solidaire',
       action: {
-        label: 'Ajouter un OFS',
+        label: 'Créer un OFS',
       },
       columns: [
         { key: 'name', label: 'Nom', type: 'string' },

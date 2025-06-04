@@ -7,12 +7,14 @@ import { RegionModule } from '../region/region.module';
 import { DepartementModule } from '../departement/departement.module';
 import { GetAllController } from './controllers/getAll.controller';
 import { GetAllOfssUsecase } from 'src/application/ofs/usecases/getAll.usecase';
+import { DistributorModule } from '../distributor/distributor.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([OfsEntity]),
     RegionModule,
     DepartementModule,
+    DistributorModule,
   ],
   controllers: [GetAllController],
   providers: [
@@ -20,6 +22,6 @@ import { GetAllOfssUsecase } from 'src/application/ofs/usecases/getAll.usecase';
     SaveOfsUsecase,
     GetAllOfssUsecase,
   ],
-  exports: ['OfsRepositoryInterface', GetAllOfssUsecase],
+  exports: ['OfsRepositoryInterface', GetAllOfssUsecase, SaveOfsUsecase],
 })
 export class OfsModule {}

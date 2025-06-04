@@ -6,4 +6,5 @@ export interface DepartementRepositoryInterface {
   findOneByName(name: string): Promise<DepartementEntity | null>;
   findOneByCode(code: string): Promise<DepartementEntity | null>;
   findManyByNames(name: string[]): Promise<DepartementEntity[] | []>;
+  findAll(): Promise<DepartementEntity[]>;
 }

@@ -13,8 +13,8 @@ export class UserRepository implements UserRepositoryInterface {
 
   public findOneByEmail(email: string): UserEntity | null {
     const mockedUsers: UserEntity[] = [
-      new UserEntity('test@test.com', 'test'),
-      new UserEntity('test2@test.com', 'test2'),
+      { ...new UserEntity('test@test.com', 'test'), id: '1' },
+      { ...new UserEntity('test2@test.com', 'test2'), id: '2' },
     ];
 
     return mockedUsers.find((user) => user.email === email) || null;

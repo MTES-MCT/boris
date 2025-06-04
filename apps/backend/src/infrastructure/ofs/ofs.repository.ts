@@ -28,7 +28,8 @@ export class OfsRepository implements OfsRepositoryInterface {
       .leftJoinAndSelect('ofs.regions', 'regions')
       .leftJoinAndSelect('ofs.distributors', 'distributors')
       .skip((page - 1) * pageSize)
-      .take(pageSize);
+      .take(pageSize)
+      .orderBy('ofs.createdAt', 'DESC');
 
     return query.getManyAndCount();
   }
