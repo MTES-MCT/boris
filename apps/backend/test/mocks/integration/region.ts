@@ -9,4 +9,5 @@ export const mockRegionRepository = {
   findBy: jest.fn(),
   findOneByName: jest.fn(),
   findManyByNames: jest.fn(),
+  findAll: jest.fn(),
 };

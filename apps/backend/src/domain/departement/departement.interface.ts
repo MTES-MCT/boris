@@ -5,8 +5,8 @@ export interface DepartementInterface {
   id?: string;
   name: string;
   code: string;
-  region?: RegionInterface;
-  ofss?: OfsInterface[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  region: RegionInterface;
+  ofss: OfsInterface[];
+  createdAt: Date;
+  updatedAt: Date;
 }

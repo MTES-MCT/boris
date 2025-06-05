@@ -1,7 +1,7 @@
 import { ConflictException, Inject } from '@nestjs/common';
-import { RegionInterface } from 'src/domain/region/region.interface';
 import { RegionRepositoryInterface } from 'src/domain/region/region.repository.interface';
-import { RegionEntity } from 'src/infrastructure/region/region.entity';
+import { RegionView } from '../views/region.view';
+import { SaveRegionParams } from './save.params';
 
 export class SaveRegionUsecase {
   constructor(
@@ -9,15 +9,17 @@ export class SaveRegionUsecase {
     private readonly regionRepository: RegionRepositoryInterface,
   ) {}
 
-  public async execute(region: RegionInterface): Promise<RegionEntity> {
-    const existingRegion = await this.regionRepository.findOneByName(
-      region.name,
-    );
+  public async execute(params: SaveRegionParams): Promise<RegionView> {
+    const { name } = params;
+
+    const existingRegion = await this.regionRepository.findOneByName(name);
 
     if (existingRegion) {
       throw new ConflictException();
     }
 
-    return await this.regionRepository.save(region);
+    const region = await this.regionRepository.save(params);
+
+    return new RegionView(region.id, region.name);
   }
 }

@@ -1,9 +1,9 @@
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
-import { DepartementInterface } from './departement.interface';
 import { PaginationProps } from '../pagination/paginationProps';
+import { SaveDepartementParams } from 'src/application/departement/usecases/save.params';
 
 export interface DepartementRepositoryInterface {
-  save(departement: DepartementInterface): Promise<DepartementEntity>;
+  save(departement: SaveDepartementParams): Promise<DepartementEntity>;
   findOneByName(name: string): Promise<DepartementEntity | null>;
   findOneByCode(code: string): Promise<DepartementEntity | null>;
   findManyByNames(name: string[]): Promise<DepartementEntity[] | []>;

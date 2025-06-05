@@ -4,6 +4,7 @@ import { In, Repository } from 'typeorm';
 import { RegionRepositoryInterface } from 'src/domain/region/region.repository.interface';
 import { RegionEntity } from './region.entity';
 import { RegionInterface } from 'src/domain/region/region.interface';
+import { PaginationProps } from 'src/domain/pagination/paginationProps';
 
 @Injectable()
 export class RegionRepository implements RegionRepositoryInterface {
@@ -26,11 +27,17 @@ export class RegionRepository implements RegionRepositoryInterface {
     });
   }
 
-  public findAll(): Promise<RegionEntity[]> {
-    return this.repository.find({
-      order: {
-        name: 'ASC',
-      },
-    });
+  public findAll(
+    paginationProps: PaginationProps,
+  ): Promise<[RegionEntity[], number]> {
+    const { pageSize, page } = paginationProps;
+
+    const query = this.repository
+      .createQueryBuilder('region')
+      .skip((page - 1) * pageSize)
+      .take(pageSize)
+      .orderBy('region.name', 'ASC');
+
+    return query.getManyAndCount();
   }
 }
