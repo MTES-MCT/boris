@@ -2,11 +2,11 @@ import * as passport from 'passport';
 import * as session from 'express-session';
 import { TypeormStore } from 'connect-typeorm';
 import { DataSource } from 'typeorm';
-import { INestApplication } from '@nestjs/common';
 import { SessionEntity } from './session.entity';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 export async function useSession(
-  app: INestApplication,
+  app: NestExpressApplication,
   dataSource: DataSource,
 ) {
   const sessionStore = new TypeormStore({
@@ -27,7 +27,7 @@ export async function useSession(
       saveUninitialized: false,
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-        sameSite: true,
+        sameSite: 'lax',
         secure: process.env.NODE_ENV === 'production',
       },
     }),
@@ -35,4 +35,5 @@ export async function useSession(
 
   app.use(passport.initialize());
   app.use(passport.session());
+  app.set('trust proxy', 1);
 }
