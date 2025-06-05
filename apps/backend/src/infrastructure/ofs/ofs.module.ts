@@ -5,9 +5,10 @@ import { OfsRepository } from './ofs.repository';
 import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
 import { RegionModule } from '../region/region.module';
 import { DepartementModule } from '../departement/departement.module';
-import { GetAllController } from './controllers/getAll.controller';
+import { OfsApiController } from './controllers/ofs.api.controller';
 import { FindAllOfssUsecase } from 'src/application/ofs/usecases/findAll.usecase';
 import { DistributorModule } from '../distributor/distributor.module';
+import { OfsAdminController } from './controllers/ofs.admin.controller';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { DistributorModule } from '../distributor/distributor.module';
     DepartementModule,
     DistributorModule,
   ],
-  controllers: [GetAllController],
+  controllers: [OfsApiController, OfsAdminController],
   providers: [
     { provide: 'OfsRepositoryInterface', useClass: OfsRepository },
     SaveOfsUsecase,

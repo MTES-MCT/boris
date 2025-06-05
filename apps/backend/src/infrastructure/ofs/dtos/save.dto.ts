@@ -25,17 +25,17 @@ export class SaveOfsDTO {
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
-  public departements: string[];
+  public departementNames: string[];
 
   @ApiProperty()
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
-  public regions: string[];
+  public regionNames: string[];
 
   @ApiProperty()
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
-  public distributors: string[];
+  public distributorIds: string[];
 }

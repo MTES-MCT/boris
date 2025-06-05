@@ -10,7 +10,10 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { FindAllOfssUsecase } from 'src/application/ofs/usecases/findAll.usecase';
-import { MAX_PAGE_SIZE } from 'src/application/pagination/pagination';
+import {
+  DEFAULT_PAGINATION,
+  MAX_PAGE_SIZE,
+} from 'src/application/pagination/pagination';
 import { LocalRequireAuthFilter } from 'src/infrastructure/admin/auth/filters/local.requireAuth.filter';
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/admin/auth/guards/local.isAuthenticated.guard';
 import messages from 'src/infrastructure/utils/messages';
@@ -23,7 +26,7 @@ import { FindAllDepartementsUsecase } from 'src/application/departement/usecases
 import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases/findAll.usecase';
 
 @Controller('/ofs')
-export class AdminOfsController {
+export class OfsAdminController {
   constructor(
     private readonly findAllOfssUsecase: FindAllOfssUsecase,
     private readonly saveOfsUsecase: SaveOfsUsecase,
@@ -35,7 +38,7 @@ export class AdminOfsController {
   @UseGuards(LocalIsAuthenticatedGuard)
   @UseFilters(LocalRequireAuthFilter)
   @Get()
-  public async getAll(
+  public async getOfss(
     @Query() { page = 1, pageSize = MAX_PAGE_SIZE }: PaginationDTO,
     @Res() res: Response,
   ) {
@@ -44,9 +47,12 @@ export class AdminOfsController {
       pageSize,
     });
 
-    const regions = await this.findAllRegionsUsecase.execute();
-    const departements = await this.findAllDepartementsUsecase.execute();
-    const distributors = await this.findAllDistributorsUsecase.execute();
+    const regions =
+      await this.findAllRegionsUsecase.execute(DEFAULT_PAGINATION);
+    const departements =
+      await this.findAllDepartementsUsecase.execute(DEFAULT_PAGINATION);
+    const distributors =
+      await this.findAllDistributorsUsecase.execute(DEFAULT_PAGINATION);
 
     const { columns, rows, pagination } = TableFactory.createTable(
       messages.contents.ofs.columns,
@@ -75,7 +81,7 @@ export class AdminOfsController {
   @UseGuards(LocalIsAuthenticatedGuard)
   @UseFilters(LocalRequireAuthFilter)
   @Post('')
-  public async save(@Body() body: SaveOfsDTO, @Res() res: Response) {
+  public async saveOfs(@Body() body: SaveOfsDTO, @Res() res: Response) {
     try {
       await this.saveOfsUsecase.execute(body);
       res.redirect('/ofs');

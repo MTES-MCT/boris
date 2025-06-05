@@ -8,7 +8,7 @@ import { OfsView } from 'src/application/ofs/views/ofs.view';
 
 @Controller('api/ofss')
 @ApiTags('OFS')
-export class GetAllController {
+export class OfsApiController {
   constructor(private readonly findAllOfssUsecase: FindAllOfssUsecase) {}
 
   @Get()
