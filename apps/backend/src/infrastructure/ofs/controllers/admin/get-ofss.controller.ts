@@ -46,8 +46,12 @@ export class GetOfssAdminController {
 
     const regions =
       await this.findAllRegionsUsecase.execute(DEFAULT_PAGINATION);
-    const departements =
-      await this.findAllDepartementsUsecase.execute(DEFAULT_PAGINATION);
+
+    const departements = await this.findAllDepartementsUsecase.execute({
+      ...DEFAULT_PAGINATION,
+      pageSize: 150,
+    });
+
     const distributors =
       await this.findAllDistributorsUsecase.execute(DEFAULT_PAGINATION);
 
@@ -69,9 +73,9 @@ export class GetOfssAdminController {
       columns,
       rows,
       pagination,
-      regions,
-      departements,
-      distributors,
+      regions: regions.items,
+      departements: departements.items,
+      distributors: distributors.items,
     });
   }
 }

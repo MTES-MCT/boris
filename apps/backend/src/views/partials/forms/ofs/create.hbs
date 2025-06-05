@@ -28,8 +28,8 @@
 
   <div class="grid gap-4 mb-4 sm:grid-cols-2">
     <div>
-      <label for="regions" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Région(s)</label>
-      <select multiple id="regions" name="regions[]"
+      <label for="regionNames" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Région(s)</label>
+      <select multiple id="regionNames" name="regionNames[]"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         {{#each regions as |region|}}
         <option value="{{region.name}}">{{region.name}}</option>
@@ -38,9 +38,9 @@
     </div>
 
     <div>
-      <label for="departements"
+      <label for="departementNames"
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Département(s)</label>
-      <select multiple id="departements" name="departements[]"
+      <select multiple id="departementNames" name="departementNames[]"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         {{#each departements as |departement|}}
         <option value="{{departement.name}}">{{departement.name}}</option>
@@ -50,9 +50,9 @@
   </div>
 
   <div class="mb-4">
-    <label for="distributors"
+    <label for="distributorIds"
       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Commercialisateur(s)</label>
-    <select multiple id="distributors" name="distributors[]"
+    <select multiple id="distributorIds" name="distributorIds[]"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
       {{#each distributors as |distributor|}}
       <option value="{{distributor.id}}">{{distributor.name}}</option>
