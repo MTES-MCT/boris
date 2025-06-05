@@ -1,4 +1,4 @@
-import { Column } from '../admin/factories/table.factories';
+import { Column } from 'src/views/factories/table.factories';
 
 type EntityPage = {
   title: string;

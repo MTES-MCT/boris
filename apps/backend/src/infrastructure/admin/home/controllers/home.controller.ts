@@ -1,8 +1,8 @@
 import { Get, Controller, Res, UseGuards, UseFilters } from '@nestjs/common';
 import { Response } from 'express';
-import { LocalRequireAuthFilter } from 'src/infrastructure/admin/auth/filters/local.requireAuth.filter';
-import { LocalIsAuthenticatedGuard } from 'src/infrastructure/admin/auth/guards/local.isAuthenticated.guard';
-import messages from 'src/infrastructure/utils/messages';
+import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.requireAuth.filter';
+import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
+import messages from 'src/views/utils/messages';
 
 @Controller('/')
 export class AdminHomeController {

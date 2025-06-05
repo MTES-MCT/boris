@@ -34,18 +34,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api/documentation', app, document, customOptions);
 
-  app.useStaticAssets(
-    join(__dirname, './', 'infrastructure', 'admin', 'assets'),
-  );
-  app.setBaseViewsDir(
-    join(__dirname, './', 'infrastructure', 'admin', 'views'),
-  );
-  hbs.registerPartials(
-    join(__dirname, './', 'infrastructure', 'admin', 'views', 'partials'),
-  );
-  hbs.registerPartials(
-    join(__dirname, './', 'infrastructure', 'admin', 'views', 'layouts'),
-  );
+  app.useStaticAssets(join(__dirname, './', 'assets'));
+  app.setBaseViewsDir(join(__dirname, './', 'views'));
+  hbs.registerPartials(join(__dirname, './', 'views', 'partials'));
+  hbs.registerPartials(join(__dirname, './', 'views', 'layouts'));
 
   // Register custom helpers
   hbs.registerHelper('or', function (a, b) {

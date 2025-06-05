@@ -5,8 +5,6 @@ import {
   UseGuards,
   UseFilters,
   Query,
-  Post,
-  Body,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { FindAllOfssUsecase } from 'src/application/ofs/usecases/findAll.usecase';
@@ -14,19 +12,18 @@ import {
   DEFAULT_PAGINATION,
   MAX_PAGE_SIZE,
 } from 'src/application/pagination/pagination';
-import { LocalRequireAuthFilter } from 'src/infrastructure/admin/auth/filters/local.requireAuth.filter';
-import { LocalIsAuthenticatedGuard } from 'src/infrastructure/admin/auth/guards/local.isAuthenticated.guard';
-import messages from 'src/infrastructure/utils/messages';
-import { TableFactory } from 'src/infrastructure/admin/factories/table.factories';
+import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.requireAuth.filter';
+import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
+import messages from 'src/views/utils/messages';
+import { TableFactory } from 'src/views/factories/table.factories';
 import { PaginationDTO } from 'src/infrastructure/pagination/pagination.dto';
 import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
-import { SaveOfsDTO } from 'src/infrastructure/ofs/dtos/save.dto';
 import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.usecase';
 import { FindAllDepartementsUsecase } from 'src/application/departement/usecases/findAll.usecase';
 import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases/findAll.usecase';
 
 @Controller('/ofs')
-export class OfsAdminController {
+export class GetOfssAdminController {
   constructor(
     private readonly findAllOfssUsecase: FindAllOfssUsecase,
     private readonly saveOfsUsecase: SaveOfsUsecase,
@@ -76,17 +73,5 @@ export class OfsAdminController {
       departements,
       distributors,
     });
-  }
-
-  @UseGuards(LocalIsAuthenticatedGuard)
-  @UseFilters(LocalRequireAuthFilter)
-  @Post('')
-  public async saveOfs(@Body() body: SaveOfsDTO, @Res() res: Response) {
-    try {
-      await this.saveOfsUsecase.execute(body);
-      res.redirect('/ofs');
-    } catch (e) {
-      console.log(e);
-    }
   }
 }
