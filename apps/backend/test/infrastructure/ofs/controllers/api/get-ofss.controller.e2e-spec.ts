@@ -6,7 +6,7 @@ import { App } from 'supertest/types';
 import { setupTesingApp } from 'test/config/setup.e2e';
 import { ofss } from 'test/mocks/e2e/ofs';
 
-describe('GetOfssController', () => {
+describe('GetOfssApiController', () => {
   let app: INestApplication<App>;
 
   beforeEach(async () => {
