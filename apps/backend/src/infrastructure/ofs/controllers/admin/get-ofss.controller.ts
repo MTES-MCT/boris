@@ -21,7 +21,9 @@ import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
 import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.usecase';
 import { FindAllDepartementsUsecase } from 'src/application/departement/usecases/findAll.usecase';
 import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases/findAll.usecase';
+import { ApiExcludeController } from '@nestjs/swagger';
 
+@ApiExcludeController()
 @Controller('/ofs')
 export class GetOfssAdminController {
   constructor(

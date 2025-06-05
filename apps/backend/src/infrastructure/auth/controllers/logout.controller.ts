@@ -6,7 +6,9 @@ import {
   Res,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { ApiExcludeController } from '@nestjs/swagger';
 
+@ApiExcludeController()
 @Controller('/auth')
 export class AdminLogoutController {
   @Post('/logout')

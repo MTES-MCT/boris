@@ -11,7 +11,9 @@ import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.re
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
 import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
 import { SaveOfsDTO } from 'src/infrastructure/ofs/dtos/save.dto';
+import { ApiExcludeController } from '@nestjs/swagger';
 
+@ApiExcludeController()
 @Controller('/ofs')
 export class SaveOfsAdminController {
   constructor(private readonly saveOfsUsecase: SaveOfsUsecase) {}

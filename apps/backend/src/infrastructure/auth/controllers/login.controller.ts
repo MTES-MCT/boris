@@ -12,7 +12,9 @@ import { LocalAuthGuard } from '../guards/local.guard';
 import { AdminLoginDto } from '../dtos/login.dto';
 import messages from 'src/views/utils/messages';
 import { RedirectIfAuthenticatedGuard } from '../guards/redirectIfAuthenticated.guard';
+import { ApiExcludeController } from '@nestjs/swagger';
 
+@ApiExcludeController()
 @Controller('/auth')
 export class AdminLoginController {
   @UseGuards(RedirectIfAuthenticatedGuard)

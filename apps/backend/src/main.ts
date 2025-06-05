@@ -1,50 +1,22 @@
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { join } from 'path';
-import * as hbs from 'hbs';
 import { useSession } from './infrastructure/session/session.middleware';
 import dataSource from './infrastructure/persistence/typeorm.config';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 import flash = require('connect-flash');
+import { configureViewEngine } from './infrastructure/config/view-engine.config';
+import { configureApiDocumentation } from './infrastructure/config/api-documentation.config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
-
   await useSession(app, dataSource);
   app.use(flash());
-
-  const options = new DocumentBuilder()
-    .addBearerAuth()
-    .setTitle('Boris API')
-    .setDescription('Documentation API de Boris')
-    .setVersion('1.0.0')
-    .build();
-
-  const customOptions = {
-    customSiteTitle: 'Documentation API de Boris',
-    securitySchemes: {},
-    jsonDocumentUrl: 'api/documentation/schema/json',
-  };
-
-  const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api/documentation', app, document, customOptions);
-
-  app.useStaticAssets(join(__dirname, './', 'assets'));
-  app.setBaseViewsDir(join(__dirname, './', 'views'));
-  hbs.registerPartials(join(__dirname, './', 'views', 'partials'));
-  hbs.registerPartials(join(__dirname, './', 'views', 'layouts'));
-
-  // Register custom helpers
-  hbs.registerHelper('or', function (a, b) {
-    return a || b;
-  });
-
-  app.setViewEngine('hbs');
+  configureViewEngine(app);
+  configureApiDocumentation(app);
 
   await app.listen(process.env.PORT ?? 3000);
 }
