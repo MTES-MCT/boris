@@ -6,10 +6,10 @@
     "deleteOutDir": true,
     "watchAssets": true,
     "assets": [
-      "infrastructure/admin/views/**/*.hbs",
-      "infrastructure/admin/assets/**/*.css",
-      "infrastructure/admin/assets/**/*.woff",
-      "infrastructure/admin/assets/**/*.woff2"
+      "views/**/*.hbs",
+      "assets/**/*.css",
+      "assets/**/*.woff",
+      "assets/**/*.woff2"
     ]
   }
 }
