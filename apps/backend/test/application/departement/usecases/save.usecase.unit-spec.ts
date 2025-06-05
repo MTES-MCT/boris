@@ -1,4 +1,4 @@
-import { ConflictException } from '@nestjs/common';
+import { BadRequestException, ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SaveDepartementUsecase } from 'src/application/departement/usecases/save.usecase';
 import { DepartementView } from 'src/application/departement/views/departement.view';
@@ -6,6 +6,7 @@ import {
   finistere,
   mockDepartementRepository,
 } from 'test/mocks/integration/departement';
+import { mockRegionRepository } from 'test/mocks/integration/region';
 
 describe('SaveDepartementUsecase', () => {
   let useCase: SaveDepartementUsecase;
@@ -18,6 +19,10 @@ describe('SaveDepartementUsecase', () => {
           provide: 'DepartementRepositoryInterface',
           useValue: mockDepartementRepository,
         },
+        {
+          provide: 'RegionRepositoryInterface',
+          useValue: mockRegionRepository,
+        },
       ],
     }).compile();
 
@@ -28,6 +33,7 @@ describe('SaveDepartementUsecase', () => {
     mockDepartementRepository.save.mockReturnValue(finistere);
     mockDepartementRepository.findOneByName.mockReturnValue(null);
     mockDepartementRepository.findOneByCode.mockReturnValue(null);
+    mockRegionRepository.findOneByName.mockReturnValue(finistere.region);
 
     const expectedResult = new DepartementView(
       finistere.id,
@@ -35,7 +41,11 @@ describe('SaveDepartementUsecase', () => {
       finistere.code,
     );
 
-    const result = await useCase.execute(finistere);
+    const result = await useCase.execute({
+      name: finistere.name,
+      code: finistere.code,
+      regionName: finistere.region.name,
+    });
 
     expect(result).toMatchObject(expectedResult);
     expect(mockDepartementRepository.findOneByName).toHaveBeenCalledTimes(1);
@@ -46,6 +56,10 @@ describe('SaveDepartementUsecase', () => {
     expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledWith(
       finistere.code,
     );
+    expect(mockRegionRepository.findOneByName).toHaveBeenCalledTimes(1);
+    expect(mockRegionRepository.findOneByName).toHaveBeenCalledWith(
+      finistere.region.name,
+    );
     expect(mockDepartementRepository.save).toHaveBeenCalledTimes(1);
     expect(mockDepartementRepository.save).toHaveBeenCalledWith(finistere);
   });
@@ -54,9 +68,14 @@ describe('SaveDepartementUsecase', () => {
     mockDepartementRepository.save.mockReturnValue(finistere);
     mockDepartementRepository.findOneByName.mockReturnValue(finistere);
     mockDepartementRepository.findOneByCode.mockReturnValue(null);
+    mockRegionRepository.findOneByName.mockReturnValue(finistere.region);
 
     try {
-      await useCase.execute(finistere);
+      await useCase.execute({
+        name: finistere.name,
+        code: finistere.code,
+        regionName: finistere.region.name,
+      });
     } catch (e) {
       expect(e).toBeInstanceOf(ConflictException);
       expect(mockDepartementRepository.findOneByName).toHaveBeenCalledTimes(1);
@@ -64,6 +83,7 @@ describe('SaveDepartementUsecase', () => {
         finistere.name,
       );
       expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledTimes(0);
+      expect(mockRegionRepository.findOneByName).toHaveBeenCalledTimes(0);
       expect(mockDepartementRepository.save).toHaveBeenCalledTimes(0);
     }
   });
@@ -72,9 +92,14 @@ describe('SaveDepartementUsecase', () => {
     mockDepartementRepository.save.mockReturnValue(finistere);
     mockDepartementRepository.findOneByName.mockReturnValue(null);
     mockDepartementRepository.findOneByCode.mockReturnValue(finistere);
+    mockRegionRepository.findOneByName.mockReturnValue(finistere.region);
 
     try {
-      await useCase.execute(finistere);
+      await useCase.execute({
+        name: finistere.name,
+        code: finistere.code,
+        regionName: finistere.region.name,
+      });
     } catch (e) {
       expect(e).toBeInstanceOf(ConflictException);
       expect(mockDepartementRepository.findOneByName).toHaveBeenCalledTimes(1);
@@ -84,6 +109,37 @@ describe('SaveDepartementUsecase', () => {
       expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledTimes(1);
       expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledWith(
         finistere.code,
+      );
+      expect(mockRegionRepository.findOneByName).toHaveBeenCalledTimes(0);
+      expect(mockDepartementRepository.save).toHaveBeenCalledTimes(0);
+    }
+  });
+
+  it('should fail if the region does not exist', async () => {
+    mockDepartementRepository.save.mockReturnValue(finistere);
+    mockDepartementRepository.findOneByName.mockReturnValue(null);
+    mockDepartementRepository.findOneByCode.mockReturnValue(null);
+    mockRegionRepository.findOneByName.mockReturnValue(null);
+
+    try {
+      await useCase.execute({
+        name: finistere.name,
+        code: finistere.code,
+        regionName: finistere.region.name,
+      });
+    } catch (e) {
+      expect(e).toBeInstanceOf(BadRequestException);
+      expect(mockDepartementRepository.findOneByName).toHaveBeenCalledTimes(1);
+      expect(mockDepartementRepository.findOneByName).toHaveBeenCalledWith(
+        finistere.name,
+      );
+      expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledTimes(1);
+      expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledWith(
+        finistere.code,
+      );
+      expect(mockRegionRepository.findOneByName).toHaveBeenCalledTimes(1);
+      expect(mockRegionRepository.findOneByName).toHaveBeenCalledWith(
+        finistere.region.name,
       );
       expect(mockDepartementRepository.save).toHaveBeenCalledTimes(0);
     }

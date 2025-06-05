@@ -39,9 +39,7 @@ describe('SaveRegionUsecase', () => {
       bretagne.name,
     );
     expect(mockRegionRepository.save).toHaveBeenCalledTimes(1);
-    expect(mockRegionRepository.save).toHaveBeenCalledWith({
-      name: bretagne.name,
-    });
+    expect(mockRegionRepository.save).toHaveBeenCalledWith(bretagne);
   });
 
   it('should fail if a region with the same name already exists', async () => {
