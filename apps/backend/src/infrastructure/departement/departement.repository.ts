@@ -4,6 +4,7 @@ import { In, Repository } from 'typeorm';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
 import { DepartementEntity } from './departement.entity';
 import { DepartementInterface } from 'src/domain/departement/departement.interface';
+import { PaginationProps } from 'src/domain/pagination/paginationProps';
 
 @Injectable()
 export class DepartementRepository implements DepartementRepositoryInterface {
@@ -30,11 +31,17 @@ export class DepartementRepository implements DepartementRepositoryInterface {
     });
   }
 
-  public findAll(): Promise<DepartementEntity[]> {
-    return this.repository.find({
-      order: {
-        name: 'ASC',
-      },
-    });
+  public findAll(
+    paginationProps: PaginationProps,
+  ): Promise<[DepartementEntity[], number]> {
+    const { pageSize, page } = paginationProps;
+
+    const query = this.repository
+      .createQueryBuilder('departement')
+      .skip((page - 1) * pageSize)
+      .take(pageSize)
+      .orderBy('departement.code', 'ASC');
+
+    return query.getManyAndCount();
   }
 }
