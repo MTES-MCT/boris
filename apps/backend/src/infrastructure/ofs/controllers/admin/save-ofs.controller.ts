@@ -23,8 +23,6 @@ export class SaveOfsAdminController {
   @Post('')
   public async saveOfs(@Body() body: SaveOfsDTO, @Res() res: Response) {
     try {
-      console.log(body);
-
       await this.saveOfsUsecase.execute(body);
       res.redirect('/ofs');
     } catch (e) {
