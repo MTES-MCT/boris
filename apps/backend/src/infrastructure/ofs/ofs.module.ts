@@ -6,7 +6,7 @@ import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
 import { RegionModule } from '../region/region.module';
 import { DepartementModule } from '../departement/departement.module';
 import { GetAllController } from './controllers/getAll.controller';
-import { GetAllOfssUsecase } from 'src/application/ofs/usecases/getAll.usecase';
+import { FindAllOfssUsecase } from 'src/application/ofs/usecases/findAll.usecase';
 import { DistributorModule } from '../distributor/distributor.module';
 
 @Module({
@@ -20,8 +20,8 @@ import { DistributorModule } from '../distributor/distributor.module';
   providers: [
     { provide: 'OfsRepositoryInterface', useClass: OfsRepository },
     SaveOfsUsecase,
-    GetAllOfssUsecase,
+    FindAllOfssUsecase,
   ],
-  exports: ['OfsRepositoryInterface', GetAllOfssUsecase, SaveOfsUsecase],
+  exports: ['OfsRepositoryInterface', FindAllOfssUsecase, SaveOfsUsecase],
 })
 export class OfsModule {}

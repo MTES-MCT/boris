@@ -12,6 +12,17 @@ export const ofs1 = new OfsEntity(
   [],
 );
 
+export const ofs2 = new OfsEntity(
+  'La foncière de Paris',
+  '0102030405',
+  'https://ofs-paris.fr',
+  'ofs@paris.fr',
+  [paris],
+  [],
+  [],
+);
+
 export const mockOfsRepository = {
   save: jest.fn(),
+  findAll: jest.fn(),
 };

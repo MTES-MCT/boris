@@ -9,7 +9,7 @@ import {
   Body,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { GetAllOfssUsecase } from 'src/application/ofs/usecases/getAll.usecase';
+import { FindAllOfssUsecase } from 'src/application/ofs/usecases/findAll.usecase';
 import { MAX_PAGE_SIZE } from 'src/application/pagination/pagination';
 import { LocalRequireAuthFilter } from 'src/infrastructure/admin/auth/filters/local.requireAuth.filter';
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/admin/auth/guards/local.isAuthenticated.guard';
@@ -25,7 +25,7 @@ import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases
 @Controller('/ofs')
 export class AdminOfsController {
   constructor(
-    private readonly getAllOfssUsecase: GetAllOfssUsecase,
+    private readonly findAllOfssUsecase: FindAllOfssUsecase,
     private readonly saveOfsUsecase: SaveOfsUsecase,
     private readonly findAllRegionsUsecase: FindAllRegionsUsecase,
     private readonly findAllDepartementsUsecase: FindAllDepartementsUsecase,
@@ -39,7 +39,7 @@ export class AdminOfsController {
     @Query() { page = 1, pageSize = MAX_PAGE_SIZE }: PaginationDTO,
     @Res() res: Response,
   ) {
-    const ofss = await this.getAllOfssUsecase.execute({
+    const ofss = await this.findAllOfssUsecase.execute({
       page,
       pageSize,
     });

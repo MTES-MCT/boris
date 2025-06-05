@@ -1,19 +1,24 @@
 import { Pagination } from 'src/application/pagination/pagination';
 import { OfsRepositoryInterface } from 'src/domain/ofs/ofs.repository.interface';
 import { OfsView } from '../views/ofs.view';
-import { PaginationProps } from 'src/domain/pagination/paginationProps';
 import { Inject } from '@nestjs/common';
+import { FindAllOfssParams } from './findAll.params';
 
-export class GetAllOfssUsecase {
+export class FindAllOfssUsecase {
   constructor(
     @Inject('OfsRepositoryInterface')
     private readonly ofsRepository: OfsRepositoryInterface,
   ) {}
 
   public async execute(
-    paginationProps: PaginationProps,
+    params: FindAllOfssParams,
   ): Promise<Pagination<OfsView>> {
-    const [ofss, totalCount] = await this.ofsRepository.getAll(paginationProps);
+    const { page, pageSize } = params;
+
+    const [ofss, totalCount] = await this.ofsRepository.findAll({
+      page,
+      pageSize,
+    });
 
     const items = ofss.map((ofs) => {
       return new OfsView(
@@ -39,6 +44,6 @@ export class GetAllOfssUsecase {
       );
     });
 
-    return new Pagination(items, totalCount, paginationProps);
+    return new Pagination(items, totalCount, { page, pageSize });
   }
 }
