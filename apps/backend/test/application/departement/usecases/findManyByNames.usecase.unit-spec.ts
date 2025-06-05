@@ -37,7 +37,9 @@ describe('FindManyDepartementsByNamesUsecase', () => {
       new DepartementView(paris.id, paris.name, paris.code),
     ];
 
-    const result = await useCase.execute([finistere.name, paris.name]);
+    const result = await useCase.execute({
+      names: [finistere.name, paris.name],
+    });
 
     expect(result).toMatchObject(expectedResult);
     expect(mockDepartementRepository.findManyByNames).toHaveBeenCalledTimes(1);
@@ -50,7 +52,9 @@ describe('FindManyDepartementsByNamesUsecase', () => {
   it('should return an empty array if no departements are found', async () => {
     mockDepartementRepository.findManyByNames.mockReturnValue([]);
 
-    const result = await useCase.execute([finistere.name, paris.name]);
+    const result = await useCase.execute({
+      names: [finistere.name, paris.name],
+    });
 
     expect(result).toEqual([]);
     expect(mockDepartementRepository.findManyByNames).toHaveBeenCalledTimes(1);

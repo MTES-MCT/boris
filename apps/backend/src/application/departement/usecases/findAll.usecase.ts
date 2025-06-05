@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 import { Pagination } from 'src/application/pagination/pagination';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
 import { DepartementView } from '../views/departement.view';
-import { PaginationProps } from 'src/domain/pagination/paginationProps';
+import { FindAllDepartementsParams } from './findAll.params';
 
 export class FindAllDepartementsUsecase {
   constructor(
@@ -11,10 +11,13 @@ export class FindAllDepartementsUsecase {
   ) {}
 
   public async execute(
-    paginationProps: PaginationProps,
+    params: FindAllDepartementsParams,
   ): Promise<Pagination<DepartementView>> {
-    const [departements, totalCount] =
-      await this.departementRepository.findAll(paginationProps);
+    const { paginationProps } = params;
+
+    const [departements, totalCount] = await this.departementRepository.findAll(
+      { ...paginationProps },
+    );
 
     const items = departements.map((departement) => {
       return new DepartementView(

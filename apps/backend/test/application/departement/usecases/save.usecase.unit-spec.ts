@@ -1,6 +1,7 @@
 import { ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SaveDepartementUsecase } from 'src/application/departement/usecases/save.usecase';
+import { DepartementView } from 'src/application/departement/views/departement.view';
 import {
   finistere,
   mockDepartementRepository,
@@ -28,9 +29,15 @@ describe('SaveDepartementUsecase', () => {
     mockDepartementRepository.findOneByName.mockReturnValue(null);
     mockDepartementRepository.findOneByCode.mockReturnValue(null);
 
+    const expectedResult = new DepartementView(
+      finistere.id,
+      finistere.name,
+      finistere.code,
+    );
+
     const result = await useCase.execute(finistere);
 
-    expect(result).toMatchObject(finistere);
+    expect(result).toMatchObject(expectedResult);
     expect(mockDepartementRepository.findOneByName).toHaveBeenCalledTimes(1);
     expect(mockDepartementRepository.findOneByName).toHaveBeenCalledWith(
       finistere.name,
