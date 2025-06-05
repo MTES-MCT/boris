@@ -4,7 +4,6 @@ import { SaveDistributorUsecase } from 'src/application/distributor/usecases/sav
 import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
 import { FindOneRegionByNameUsecase } from 'src/application/region/usecases/findOneByName.usecase';
 import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
-import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
 
 export type Ofs = {
   nom: string;
@@ -777,14 +776,16 @@ export class OfsSeed {
     let distributorCount = 0;
 
     for (const ofs of ofss) {
-      const region = await this.findOneRegionByNameUsecase.execute(ofs.region);
+      const region = await this.findOneRegionByNameUsecase.execute({
+        name: ofs.region,
+      });
 
       const departements =
-        await this.findManyDepartementsByNamesUsecase.execute(
-          ofs.departements?.split(', ') || [],
-        );
+        await this.findManyDepartementsByNamesUsecase.execute({
+          names: ofs.departements?.split(', ') || [],
+        });
 
-      const distributors: DistributorEntity[] = [];
+      const distributorIds: string[] = [];
       let ofsWebsiteUrl = ofs.lien;
 
       if (ofs.commercialisateur) {
@@ -792,24 +793,23 @@ export class OfsSeed {
           const newDistributor =
             await this.saveDistributorUsecase.execute(distributor);
 
-          distributors.push(newDistributor);
+          distributorIds.push(newDistributor.id || '');
           distributorCount = distributorCount + 1;
         }
 
         ofsWebsiteUrl = null;
       }
 
-      const newOfs = new OfsEntity(
-        ofs.nom,
-        ofs.telephone,
-        ofsWebsiteUrl,
-        ofs.email,
-        departements,
-        [region],
-        distributors,
-      );
+      await this.saveOfsUsecase.execute({
+        name: ofs.nom,
+        phone: ofs.telephone || undefined,
+        websiteUrl: ofsWebsiteUrl || undefined,
+        email: ofs.email || undefined,
+        departementNames: departements.map((d) => d.name),
+        regionNames: [region.name],
+        distributorIds,
+      });
 
-      await this.saveOfsUsecase.execute(newOfs);
       ofsCount = ofsCount + 1;
     }
 

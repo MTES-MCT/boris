@@ -17,7 +17,7 @@ export class OfsRepository implements OfsRepositoryInterface {
     return this.repository.save(ofs);
   }
 
-  public getAll(
+  public findAll(
     paginationProps: PaginationProps,
   ): Promise<[OfsEntity[], number]> {
     const { pageSize, page } = paginationProps;
