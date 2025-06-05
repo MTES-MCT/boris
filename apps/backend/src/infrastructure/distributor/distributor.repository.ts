@@ -4,6 +4,7 @@ import { Repository, In } from 'typeorm';
 import { DistributorRepositoryInterface } from 'src/domain/distributor/distributor.repository.interface';
 import { DistributorEntity } from './distributor.entity';
 import { DistributorInterface } from 'src/domain/distributor/distributor.interface';
+import { PaginationProps } from 'src/domain/pagination/paginationProps';
 
 @Injectable()
 export class DistributorRepository implements DistributorRepositoryInterface {
@@ -16,12 +17,18 @@ export class DistributorRepository implements DistributorRepositoryInterface {
     return this.repository.save(distributor);
   }
 
-  public findAll(): Promise<DistributorEntity[]> {
-    return this.repository.find({
-      order: {
-        name: 'ASC',
-      },
-    });
+  public findAll(
+    paginationProps: PaginationProps,
+  ): Promise<[DistributorEntity[], number]> {
+    const { pageSize, page } = paginationProps;
+
+    const query = this.repository
+      .createQueryBuilder('distributor')
+      .skip((page - 1) * pageSize)
+      .take(pageSize)
+      .orderBy('distributor.name', 'ASC');
+
+    return query.getManyAndCount();
   }
 
   public findManyByIds(ids: string[]): Promise<DistributorEntity[]> {

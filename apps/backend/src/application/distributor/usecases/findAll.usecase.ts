@@ -1,6 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { DistributorRepositoryInterface } from 'src/domain/distributor/distributor.repository.interface';
-import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
+import { FindAllDistributorsParams } from './findAll.params';
+import { DistributorView } from '../views/distributor.view';
+import { Pagination } from 'src/application/pagination/pagination';
 
 export class FindAllDistributorsUsecase {
   constructor(
@@ -8,7 +10,22 @@ export class FindAllDistributorsUsecase {
     private readonly distributorRepository: DistributorRepositoryInterface,
   ) {}
 
-  public async execute(): Promise<DistributorEntity[]> {
-    return this.distributorRepository.findAll();
+  public async execute(
+    params: FindAllDistributorsParams,
+  ): Promise<Pagination<DistributorView>> {
+    const { paginationProps } = params;
+
+    const [distributors, totalCount] =
+      await this.distributorRepository.findAll(paginationProps);
+
+    const items = distributors.map((distributor) => {
+      return new DistributorView(
+        distributor.id,
+        distributor.name,
+        distributor.websiteUrl,
+      );
+    });
+
+    return new Pagination(items, totalCount, paginationProps);
   }
 }

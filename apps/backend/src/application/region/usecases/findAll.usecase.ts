@@ -15,9 +15,8 @@ export class FindAllRegionsUsecase {
   ): Promise<Pagination<RegionView>> {
     const { paginationProps } = params;
 
-    const [regions, totalCount] = await this.regionRepository.findAll({
-      ...paginationProps,
-    });
+    const [regions, totalCount] =
+      await this.regionRepository.findAll(paginationProps);
 
     const items = regions.map((region) => {
       return new RegionView(region.id, region.name);

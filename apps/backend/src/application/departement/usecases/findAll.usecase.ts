@@ -15,9 +15,8 @@ export class FindAllDepartementsUsecase {
   ): Promise<Pagination<DepartementView>> {
     const { paginationProps } = params;
 
-    const [departements, totalCount] = await this.departementRepository.findAll(
-      { ...paginationProps },
-    );
+    const [departements, totalCount] =
+      await this.departementRepository.findAll(paginationProps);
 
     const items = departements.map((departement) => {
       return new DepartementView(

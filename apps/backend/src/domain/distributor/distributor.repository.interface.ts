@@ -1,8 +1,10 @@
-import { DistributorInterface } from './distributor.interface';
 import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
+import { PaginationProps } from '../pagination/paginationProps';
 
 export interface DistributorRepositoryInterface {
-  save(distributor: DistributorInterface): Promise<DistributorEntity>;
-  findAll(): Promise<DistributorEntity[]>;
+  save(distributor: DistributorEntity): Promise<DistributorEntity>;
+  findAll(
+    paginationProps: PaginationProps,
+  ): Promise<[DistributorEntity[], number]>;
   findManyByIds(ids: string[]): Promise<DistributorEntity[]>;
 }

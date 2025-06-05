@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { DistributorRepositoryInterface } from 'src/domain/distributor/distributor.repository.interface';
-import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
+import { FindManyDistributorsByIdsParams } from './findManyByIds.params';
+import { DistributorView } from '../views/distributor.view';
 
 export class FindManyDistributorsByIdsUsecase {
   constructor(
@@ -8,7 +9,19 @@ export class FindManyDistributorsByIdsUsecase {
     private readonly distributorRepository: DistributorRepositoryInterface,
   ) {}
 
-  public async execute(ids: string[]): Promise<DistributorEntity[]> {
-    return this.distributorRepository.findManyByIds(ids);
+  public async execute(
+    params: FindManyDistributorsByIdsParams,
+  ): Promise<DistributorView[]> {
+    const { ids } = params;
+
+    const distributors = await this.distributorRepository.findManyByIds(ids);
+
+    return distributors.map((distributor) => {
+      return new DistributorView(
+        distributor.id,
+        distributor.name,
+        distributor.websiteUrl,
+      );
+    });
   }
 }
