@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
-import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
+import { DepartementView } from '../views/departement.view';
 
 export class FindManyDepartementsByNamesUsecase {
   constructor(
@@ -8,7 +8,16 @@ export class FindManyDepartementsByNamesUsecase {
     private readonly departementRepository: DepartementRepositoryInterface,
   ) {}
 
-  public async execute(names: string[]): Promise<DepartementEntity[]> {
-    return await this.departementRepository.findManyByNames(names);
+  public async execute(names: string[]): Promise<DepartementView[]> {
+    const departements =
+      await this.departementRepository.findManyByNames(names);
+
+    return departements.map((departement) => {
+      return new DepartementView(
+        departement.id,
+        departement.name,
+        departement.code,
+      );
+    });
   }
 }
