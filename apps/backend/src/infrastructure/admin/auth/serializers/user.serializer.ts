@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportSerializer } from '@nestjs/passport';
 import { FindOneByEmailUsecase } from 'src/application/user/usecases/findOneByEmail.usecase';
-import { AuthenticatedUserView } from 'src/application/user/views/authenticated.view';
+import { UserView } from 'src/application/user/views/user.view';
 
 @Injectable()
 export class UserSerializer extends PassportSerializer {
@@ -9,12 +9,12 @@ export class UserSerializer extends PassportSerializer {
     super();
   }
 
-  serializeUser(user: AuthenticatedUserView, done: Function) {
+  serializeUser(user: UserView, done: Function) {
     done(null, user.email);
   }
 
   deserializeUser(email: string, done: Function) {
-    const user = this.findOneByEmailUseCase.execute(email);
+    const user = this.findOneByEmailUseCase.execute({ email });
 
     if (!user) {
       return done(

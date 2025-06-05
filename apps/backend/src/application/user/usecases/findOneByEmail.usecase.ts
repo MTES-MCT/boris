@@ -1,6 +1,7 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { UserRepositoryInterface } from 'src/domain/user/user.repository.interface';
-import { UserEntity } from 'src/infrastructure/user/user.entity';
+import { FindOneByEmailParams } from './findOneByEmail.params';
+import { UserView } from '../views/user.view';
 
 @Injectable()
 export class FindOneByEmailUsecase {
@@ -9,7 +10,15 @@ export class FindOneByEmailUsecase {
     private readonly userRepository: UserRepositoryInterface,
   ) {}
 
-  public execute(email: string): UserEntity | null {
-    return this.userRepository.findOneByEmail(email);
+  public execute(params: FindOneByEmailParams): UserView {
+    const { email } = params;
+
+    const user = this.userRepository.findOneByEmail(email);
+
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    return new UserView(user.email);
   }
 }

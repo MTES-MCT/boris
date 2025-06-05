@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoginUsecase } from 'src/application/auth/usecases/login.usecase';
-import { user1, mockUserRepository } from 'test/mocks/integration/user';
-import { UnauthorizedException } from '@nestjs/common';
+import { FindOneByEmailUsecase } from 'src/application/user/usecases/findOneByEmail.usecase';
 import { UserView } from 'src/application/user/views/user.view';
+import { user1, mockUserRepository } from 'test/mocks/integration/user';
+import { NotFoundException } from '@nestjs/common';
 
-describe('LoginUsecase', () => {
-  let useCase: LoginUsecase;
+describe('FindOneByEmailUsecase', () => {
+  let useCase: FindOneByEmailUsecase;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        LoginUsecase,
+        FindOneByEmailUsecase,
         {
           provide: 'UserRepositoryInterface',
           useValue: mockUserRepository,
@@ -18,31 +18,29 @@ describe('LoginUsecase', () => {
       ],
     }).compile();
 
-    useCase = module.get<LoginUsecase>(LoginUsecase);
+    useCase = module.get<FindOneByEmailUsecase>(FindOneByEmailUsecase);
   });
 
-  it('should login successfully with valid credentials', () => {
+  it('should return user view if user is found', () => {
     mockUserRepository.findOneByEmail.mockReturnValue(user1);
 
     const expectedResult = new UserView(user1.email);
 
-    const result = useCase.execute(user1);
+    const result = useCase.execute({ email: user1.email });
 
     expect(result).toMatchObject(expectedResult);
-    expect(mockUserRepository.findOneByEmail).toHaveBeenCalledTimes(1);
     expect(mockUserRepository.findOneByEmail).toHaveBeenCalledWith(user1.email);
   });
 
-  it('should throw UnauthorizedException when user is not found', () => {
+  it('should throw NotFoundException if user is not found', () => {
     mockUserRepository.findOneByEmail.mockReturnValue(null);
 
     try {
-      useCase.execute(user1);
+      useCase.execute({ email: 'notfound@example.com' });
     } catch (e) {
-      expect(e).toBeInstanceOf(UnauthorizedException);
-      expect(mockUserRepository.findOneByEmail).toHaveBeenCalledTimes(1);
+      expect(e).toBeInstanceOf(NotFoundException);
       expect(mockUserRepository.findOneByEmail).toHaveBeenCalledWith(
-        user1.email,
+        'notfound@example.com',
       );
     }
   });

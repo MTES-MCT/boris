@@ -1,6 +1,6 @@
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
 import { UserRepositoryInterface } from 'src/domain/user/user.repository.interface';
-import { AuthenticatedUserView } from '../../user/views/authenticated.view';
+import { UserView } from '../../user/views/user.view';
 import { LoginParams } from './login.params';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class LoginUsecase {
     private readonly userRepository: UserRepositoryInterface,
   ) {}
 
-  public execute({ email, password }: LoginParams): AuthenticatedUserView {
+  public execute({ email, password }: LoginParams): UserView {
     const user = this.userRepository.findOneByEmail(email.toLowerCase());
     console.log(password);
 
@@ -18,6 +18,6 @@ export class LoginUsecase {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    return new AuthenticatedUserView(user.email);
+    return new UserView(user.email);
   }
 }

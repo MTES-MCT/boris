@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class AuthenticatedUserView {
+export class UserView {
   @ApiProperty({ example: 'hello@whatsup.com' })
   public email: string;
 
