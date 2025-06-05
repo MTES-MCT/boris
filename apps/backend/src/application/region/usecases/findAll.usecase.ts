@@ -13,15 +13,17 @@ export class FindAllRegionsUsecase {
   public async execute(
     params: FindAllRegionsParams,
   ): Promise<Pagination<RegionView>> {
-    const { paginationProps } = params;
+    const { page, pageSize } = params;
 
-    const [regions, totalCount] =
-      await this.regionRepository.findAll(paginationProps);
+    const [regions, totalCount] = await this.regionRepository.findAll({
+      page,
+      pageSize,
+    });
 
     const items = regions.map((region) => {
       return new RegionView(region.id, region.name);
     });
 
-    return new Pagination(items, totalCount, paginationProps);
+    return new Pagination(items, totalCount, { page, pageSize });
   }
 }

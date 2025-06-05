@@ -13,10 +13,11 @@ export class FindAllDepartementsUsecase {
   public async execute(
     params: FindAllDepartementsParams,
   ): Promise<Pagination<DepartementView>> {
-    const { paginationProps } = params;
+    const { page, pageSize } = params;
 
-    const [departements, totalCount] =
-      await this.departementRepository.findAll(paginationProps);
+    const [departements, totalCount] = await this.departementRepository.findAll(
+      { page, pageSize },
+    );
 
     const items = departements.map((departement) => {
       return new DepartementView(
@@ -26,6 +27,6 @@ export class FindAllDepartementsUsecase {
       );
     });
 
-    return new Pagination(items, totalCount, paginationProps);
+    return new Pagination(items, totalCount, { page, pageSize });
   }
 }

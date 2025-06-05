@@ -8,6 +8,7 @@ import { DistributorRepositoryInterface } from 'src/domain/distributor/distribut
 import { RegionEntity } from 'src/infrastructure/region/region.entity';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
+import { OfsView } from '../views/ofs.view';
 
 export class SaveOfsUsecase {
   constructor(
@@ -21,52 +22,76 @@ export class SaveOfsUsecase {
     private readonly distributorRepository: DistributorRepositoryInterface,
   ) {}
 
-  public async execute(ofs: SaveOfsParams): Promise<OfsEntity> {
-    const { regions, departements, distributors } = ofs;
+  public async execute(params: SaveOfsParams): Promise<OfsView> {
+    const {
+      name,
+      phone,
+      websiteUrl,
+      email,
+      regionNames,
+      departementNames,
+      distributorIds,
+    } = params;
+
     let existingRegions: RegionEntity[] = [];
     let existingDepartements: DepartementEntity[] = [];
     let existingDistributors: DistributorEntity[] = [];
 
-    if (regions) {
+    if (regionNames) {
       existingRegions = await this.regionRepository.findManyByNames(
-        regions?.map((r) => r) || [],
+        regionNames?.map((r) => r) || [],
       );
 
-      if (existingRegions.length !== regions?.length) {
+      if (existingRegions.length !== regionNames?.length) {
         throw new BadRequestException();
       }
     }
 
-    if (departements) {
+    if (departementNames) {
       existingDepartements = await this.departementRepository.findManyByNames(
-        departements?.map((d) => d) || [],
+        departementNames?.map((d) => d) || [],
       );
 
-      if (existingDepartements.length !== departements?.length) {
+      if (existingDepartements.length !== departementNames?.length) {
         throw new BadRequestException();
       }
     }
 
-    if (distributors) {
+    if (distributorIds) {
       existingDistributors = await this.distributorRepository.findManyByIds(
-        distributors?.map((d) => d) || [],
+        distributorIds?.map((d) => d) || [],
       );
 
-      if (existingDistributors.length !== distributors?.length) {
+      if (existingDistributors.length !== distributorIds?.length) {
         throw new BadRequestException();
       }
     }
 
-    const ofsEntity = new OfsEntity(
-      ofs.name,
-      ofs.phone,
-      ofs.websiteUrl,
-      ofs.email,
-      existingDepartements,
-      existingRegions,
-      existingDistributors,
+    const ofs = await this.ofsRepository.save(
+      new OfsEntity(
+        name,
+        phone || null,
+        websiteUrl || null,
+        email || null,
+        existingDepartements,
+        existingRegions,
+        existingDistributors,
+      ),
     );
 
-    return await this.ofsRepository.save(ofsEntity);
+    return new OfsView(
+      ofs.id,
+      ofs.name,
+      ofs.websiteUrl,
+      ofs.phone,
+      ofs.email,
+      ofs.departements.map((d) => ({
+        id: d.id,
+        name: d.name,
+        code: d.code,
+      })),
+      ofs.regions.map((r) => ({ id: r.id, name: r.name })),
+      ofs.distributors.map((d) => ({ id: d.id, name: d.name })),
+    );
   }
 }

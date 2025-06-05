@@ -1,6 +1,7 @@
 import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
 import { finistere, paris } from './departement';
 import { bretagne } from './region';
+import { distributor1 } from './distributor';
 
 export const ofs1 = new OfsEntity(
   'La foncière de Bretagne',
@@ -9,7 +10,7 @@ export const ofs1 = new OfsEntity(
   'ofs@bretagne.fr',
   [finistere, paris],
   [bretagne],
-  [],
+  [distributor1],
 );
 
 export const ofs2 = new OfsEntity(

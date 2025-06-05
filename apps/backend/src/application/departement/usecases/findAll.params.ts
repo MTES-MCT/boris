@@ -1,5 +1,3 @@
 import { PaginationProps } from 'src/domain/pagination/paginationProps';
 
-export interface FindAllDepartementsParams {
-  paginationProps: PaginationProps;
-}
+export interface FindAllDepartementsParams extends PaginationProps {}

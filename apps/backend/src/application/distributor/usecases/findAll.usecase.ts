@@ -13,10 +13,11 @@ export class FindAllDistributorsUsecase {
   public async execute(
     params: FindAllDistributorsParams,
   ): Promise<Pagination<DistributorView>> {
-    const { paginationProps } = params;
+    const { page, pageSize } = params;
 
-    const [distributors, totalCount] =
-      await this.distributorRepository.findAll(paginationProps);
+    const [distributors, totalCount] = await this.distributorRepository.findAll(
+      { page, pageSize },
+    );
 
     const items = distributors.map((distributor) => {
       return new DistributorView(
@@ -26,6 +27,6 @@ export class FindAllDistributorsUsecase {
       );
     });
 
-    return new Pagination(items, totalCount, paginationProps);
+    return new Pagination(items, totalCount, { page, pageSize });
   }
 }

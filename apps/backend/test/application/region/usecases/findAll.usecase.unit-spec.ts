@@ -40,9 +40,7 @@ describe('FindAllRegionsUsecase', () => {
       DEFAULT_PAGINATION,
     );
 
-    const result = await useCase.execute({
-      paginationProps: DEFAULT_PAGINATION,
-    });
+    const result = await useCase.execute(DEFAULT_PAGINATION);
 
     expect(result).toMatchObject(expectedResult);
     expect(mockRegionRepository.findAll).toHaveBeenCalledTimes(1);
