@@ -10,10 +10,10 @@ export class FindOneByEmailUsecase {
     private readonly userRepository: UserRepositoryInterface,
   ) {}
 
-  public execute(params: FindOneByEmailParams): UserView {
+  public async execute(params: FindOneByEmailParams): Promise<UserView> {
     const { email } = params;
 
-    const user = this.userRepository.findOneByEmail(email);
+    const user = await this.userRepository.findOneByEmail(email);
 
     if (!user) {
       throw new NotFoundException();

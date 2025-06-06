@@ -11,12 +11,11 @@ export class UserRepository implements UserRepositoryInterface {
     private readonly repository: Repository<UserEntity>,
   ) {}
 
-  public findOneByEmail(email: string): UserEntity | null {
-    const mockedUsers: UserEntity[] = [
-      { ...new UserEntity('test@test.com', 'test'), id: '1' },
-      { ...new UserEntity('test2@test.com', 'test2'), id: '2' },
-    ];
+  public async save(user: UserEntity): Promise<UserEntity> {
+    return this.repository.save(user);
+  }
 
-    return mockedUsers.find((user) => user.email === email) || null;
+  public async findOneByEmail(email: string): Promise<UserEntity | null> {
+    return this.repository.findOne({ where: { email } });
   }
 }

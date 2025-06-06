@@ -13,8 +13,8 @@ export class UserSerializer extends PassportSerializer {
     done(null, user.email);
   }
 
-  deserializeUser(email: string, done: Function) {
-    const user = this.findOneByEmailUseCase.execute({ email });
+  async deserializeUser(email: string, done: Function) {
+    const user = await this.findOneByEmailUseCase.execute({ email });
 
     if (!user) {
       return done(

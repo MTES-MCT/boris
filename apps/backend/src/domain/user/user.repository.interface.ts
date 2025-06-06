@@ -1,5 +1,6 @@
 import { UserEntity } from 'src/infrastructure/user/user.entity';
 
 export interface UserRepositoryInterface {
-  findOneByEmail(email: string): UserEntity | null;
+  save(user: UserEntity): Promise<UserEntity>;
+  findOneByEmail(email: string): Promise<UserEntity | null>;
 }

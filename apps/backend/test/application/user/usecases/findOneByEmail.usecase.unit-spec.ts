@@ -21,22 +21,22 @@ describe('FindOneByEmailUsecase', () => {
     useCase = module.get<FindOneByEmailUsecase>(FindOneByEmailUsecase);
   });
 
-  it('should return user view if user is found', () => {
+  it('should return user view if user is found', async () => {
     mockUserRepository.findOneByEmail.mockReturnValue(user1);
 
     const expectedResult = new UserView(user1.email);
 
-    const result = useCase.execute({ email: user1.email });
+    const result = await useCase.execute({ email: user1.email });
 
     expect(result).toMatchObject(expectedResult);
     expect(mockUserRepository.findOneByEmail).toHaveBeenCalledWith(user1.email);
   });
 
-  it('should throw NotFoundException if user is not found', () => {
+  it('should throw NotFoundException if user is not found', async () => {
     mockUserRepository.findOneByEmail.mockReturnValue(null);
 
     try {
-      useCase.execute({ email: 'notfound@example.com' });
+      await useCase.execute({ email: 'notfound@example.com' });
     } catch (e) {
       expect(e).toBeInstanceOf(NotFoundException);
       expect(mockUserRepository.findOneByEmail).toHaveBeenCalledWith(
