@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
 import { typeormConfig } from './infrastructure/persistence/typeorm.config';
@@ -9,6 +9,7 @@ import { DistributorModule } from './infrastructure/distributor/distributor.modu
 import { UserModule } from './infrastructure/user/user.module';
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { AdminHomeModule } from './infrastructure/admin/home/home.module';
+import { UserToLocalsMiddleware } from './infrastructure/middlewares/user-to-locals.middleware';
 
 @Module({
   imports: [
@@ -35,4 +36,8 @@ import { AdminHomeModule } from './infrastructure/admin/home/home.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(UserToLocalsMiddleware).forRoutes('*');
+  }
+}

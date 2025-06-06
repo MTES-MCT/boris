@@ -22,7 +22,7 @@ export class LoginUsecase {
     );
 
     if (!user || !isPasswordValid) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException();
     }
 
     return new UserView(user.email);

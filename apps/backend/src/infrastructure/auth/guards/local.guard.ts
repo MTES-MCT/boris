@@ -26,7 +26,13 @@ export class LocalAuthGuard extends AuthGuard('local') {
         messages.errors.login.invalidCredentials,
       );
 
-      response.redirect('/auth/login');
+      await new Promise<void>((resolve) => {
+        request.session.save(() => {
+          response.redirect(303, '/auth/login');
+          resolve();
+        });
+      });
+
       return false;
     }
   }
