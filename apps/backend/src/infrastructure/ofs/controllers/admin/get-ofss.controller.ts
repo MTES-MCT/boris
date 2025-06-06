@@ -17,7 +17,6 @@ import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.
 import messages from 'src/views/utils/messages';
 import { TableFactory } from 'src/views/factories/table.factories';
 import { PaginationDTO } from 'src/infrastructure/pagination/pagination.dto';
-import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
 import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.usecase';
 import { FindAllDepartementsUsecase } from 'src/application/departement/usecases/findAll.usecase';
 import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases/findAll.usecase';
@@ -28,7 +27,6 @@ import { ApiExcludeController } from '@nestjs/swagger';
 export class GetOfssAdminController {
   constructor(
     private readonly findAllOfssUsecase: FindAllOfssUsecase,
-    private readonly saveOfsUsecase: SaveOfsUsecase,
     private readonly findAllRegionsUsecase: FindAllRegionsUsecase,
     private readonly findAllDepartementsUsecase: FindAllDepartementsUsecase,
     private readonly findAllDistributorsUsecase: FindAllDistributorsUsecase,

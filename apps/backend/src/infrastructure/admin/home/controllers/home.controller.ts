@@ -15,6 +15,7 @@ export class AdminHomeController {
     res.render('index', {
       layout: 'layouts/main',
       title: messages.contents.home.title,
+      breadcrumbLinks: [],
     });
   }
 }
