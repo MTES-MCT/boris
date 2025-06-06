@@ -32,6 +32,7 @@
     "migration:migrate:revert:test": "NODE_ENV=test npm run typeorm -- migration:revert -d src/infrastructure/persistence/typeorm-cli.config.ts",
     "seed:regions-departements": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/regions-departements/run.ts",
     "seed:ofs": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/ofs/run.ts",
+    "seed:user": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/user/run.ts",
     "seed:test-data": "NODE_ENV=test ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/test-data/run.ts"
   },
   "dependencies": {

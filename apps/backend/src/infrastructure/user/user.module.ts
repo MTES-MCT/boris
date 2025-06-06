@@ -19,6 +19,7 @@ import { SaveUserUseCase } from 'src/application/user/usecases/save.usecase';
     'UserRepositoryInterface',
     'PasswordHasherInterface',
     FindOneByEmailUsecase,
+    SaveUserUseCase,
   ],
 })
 export class UserModule {}
