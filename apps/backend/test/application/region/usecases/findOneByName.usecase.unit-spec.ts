@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { FindOneRegionByNameUsecase } from 'src/application/region/usecases/findOneByName.usecase';
+import { RegionView } from 'src/application/region/views/region.view';
 import { bretagne, mockRegionRepository } from 'test/mocks/integration/region';
 
 describe('FindOneRegionByNameUsecase', () => {
@@ -29,9 +30,11 @@ describe('FindOneRegionByNameUsecase', () => {
   it('should find a region according to its name', async () => {
     mockRegionRepository.findOneByName.mockResolvedValue(bretagne);
 
-    const result = await useCase.execute(bretagne.name);
+    const expectedResult = new RegionView(bretagne.id, bretagne.name);
 
-    expect(result).toMatchObject(bretagne);
+    const result = await useCase.execute({ name: bretagne.name });
+
+    expect(result).toMatchObject(expectedResult);
     expect(mockRegionRepository.findOneByName).toHaveBeenCalledTimes(1);
     expect(mockRegionRepository.findOneByName).toHaveBeenCalledWith(
       bretagne.name,
@@ -42,7 +45,7 @@ describe('FindOneRegionByNameUsecase', () => {
     mockRegionRepository.findOneByName.mockResolvedValue(null);
 
     try {
-      await useCase.execute(bretagne.name);
+      await useCase.execute({ name: bretagne.name });
     } catch (e) {
       expect(e).toBeInstanceOf(NotFoundException);
       expect(mockRegionRepository.findOneByName).toHaveBeenCalledTimes(1);

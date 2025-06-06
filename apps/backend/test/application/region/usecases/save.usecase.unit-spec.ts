@@ -1,6 +1,7 @@
 import { ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SaveRegionUsecase } from 'src/application/region/usecases/save.usecase';
+import { RegionView } from 'src/application/region/views/region.view';
 import { bretagne, mockRegionRepository } from 'test/mocks/integration/region';
 
 describe('SaveRegionUsecase', () => {
@@ -28,9 +29,11 @@ describe('SaveRegionUsecase', () => {
     mockRegionRepository.save.mockResolvedValue(bretagne);
     mockRegionRepository.findOneByName.mockResolvedValue(null);
 
-    const result = await useCase.execute(bretagne);
+    const expectedResult = new RegionView(bretagne.id, bretagne.name);
 
-    expect(result).toMatchObject(bretagne);
+    const result = await useCase.execute({ name: bretagne.name });
+
+    expect(result).toMatchObject(expectedResult);
     expect(mockRegionRepository.findOneByName).toHaveBeenCalledTimes(1);
     expect(mockRegionRepository.findOneByName).toHaveBeenCalledWith(
       bretagne.name,

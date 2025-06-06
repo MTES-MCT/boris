@@ -5,21 +5,29 @@ import { OfsRepository } from './ofs.repository';
 import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
 import { RegionModule } from '../region/region.module';
 import { DepartementModule } from '../departement/departement.module';
-import { GetAllController } from './controllers/getAll.controller';
-import { GetAllOfssUsecase } from 'src/application/ofs/usecases/getAll.usecase';
+import { GetOfssApiController } from './controllers/api/get-ofss.controller';
+import { FindAllOfssUsecase } from 'src/application/ofs/usecases/findAll.usecase';
+import { DistributorModule } from '../distributor/distributor.module';
+import { GetOfssAdminController } from './controllers/admin/get-ofss.controller';
+import { SaveOfsAdminController } from './controllers/admin/save-ofs.controller';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([OfsEntity]),
     RegionModule,
     DepartementModule,
+    DistributorModule,
   ],
-  controllers: [GetAllController],
+  controllers: [
+    GetOfssApiController,
+    GetOfssAdminController,
+    SaveOfsAdminController,
+  ],
   providers: [
     { provide: 'OfsRepositoryInterface', useClass: OfsRepository },
     SaveOfsUsecase,
-    GetAllOfssUsecase,
+    FindAllOfssUsecase,
   ],
-  exports: [SaveOfsUsecase],
+  exports: ['OfsRepositoryInterface', FindAllOfssUsecase, SaveOfsUsecase],
 })
 export class OfsModule {}

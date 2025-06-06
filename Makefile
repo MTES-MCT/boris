@@ -30,3 +30,8 @@ migration-migrate:
 migration-migrate-ci:
 	npm run build -w @boris/backend
 	npm run migration:migrate:test -w @boris/backend
+
+migration-revert:
+	npm run build -w @boris/backend
+	npm run migration:migrate:revert -w @boris/backend
+	npm run migration:migrate:revert:test -w @boris/backend

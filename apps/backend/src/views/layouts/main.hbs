@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  {{> head title="Boris"}}
+</head>
+
+<body>
+  <div class="flex">
+    {{> menu}}
+
+    <main class="relative h-full w-full overflow-x-scroll bg-gray-50 dark:bg-gray-900 lg:ml-64">
+      {{{body}}}
+    </main>
+  </div>
+
+  {{> scripts}}
+</body>
+
+</html>

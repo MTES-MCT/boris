@@ -1,0 +1,39 @@
+import { ExecutionContext, Injectable } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Request, Response } from 'express';
+import messages from 'src/views/utils/messages';
+
+@Injectable()
+export class LocalAuthGuard extends AuthGuard('local') {
+  constructor() {
+    super();
+  }
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    try {
+      await super.canActivate(context);
+      const request = context.switchToHttp().getRequest();
+      await super.logIn(request);
+
+      return true;
+    } catch (e) {
+      console.log(e);
+      const response: Response = context.switchToHttp().getResponse();
+      const request: Request = context.switchToHttp().getRequest();
+
+      request.flash(
+        messages.errors.label,
+        messages.errors.login.invalidCredentials,
+      );
+
+      await new Promise<void>((resolve) => {
+        request.session.save(() => {
+          response.redirect(303, '/auth/login');
+          resolve();
+        });
+      });
+
+      return false;
+    }
+  }
+}

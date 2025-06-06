@@ -33,6 +33,7 @@ node_modules
 # apps/backend
 apps/backend/coverage
 apps/backend/.nyc_output
+apps/backend/src/assets/styles/output.css
 
 # Logs
 logs

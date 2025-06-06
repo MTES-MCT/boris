@@ -240,9 +240,11 @@ export class RegionsDepartementsSeed {
       regionsCount = regionsCount + 1;
 
       for (const departement of region.departements) {
-        await this.saveDepartementUsecase.execute(
-          new DepartementEntity(departement.name, departement.code, newRegion),
-        );
+        await this.saveDepartementUsecase.execute({
+          name: departement.name,
+          code: departement.code,
+          regionName: newRegion.name,
+        });
 
         departementsCount = departementsCount + 1;
       }

@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
-import { OfsSeedModule } from './infrastructure/persistence/seeds/ofs/module';
-import { OfsSeed } from './infrastructure/persistence/seeds/ofs/seed';
+import { OfsSeedModule } from './module';
+import { OfsSeed } from './seed';
 
 async function run() {
   const app = await NestFactory.create(OfsSeedModule);
