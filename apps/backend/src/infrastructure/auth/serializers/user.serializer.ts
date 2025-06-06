@@ -1,11 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { PassportSerializer } from '@nestjs/passport';
-import { FindOneByEmailUsecase } from 'src/application/user/usecases/findOneByEmail.usecase';
 import { UserView } from 'src/application/user/views/user.view';
+import { UserRepositoryInterface } from 'src/domain/user/user.repository.interface';
 
 @Injectable()
 export class UserSerializer extends PassportSerializer {
-  constructor(private readonly findOneByEmailUseCase: FindOneByEmailUsecase) {
+  constructor(
+    @Inject('UserRepositoryInterface')
+    private readonly userRepository: UserRepositoryInterface,
+  ) {
     super();
   }
 
@@ -14,7 +17,7 @@ export class UserSerializer extends PassportSerializer {
   }
 
   async deserializeUser(email: string, done: Function) {
-    const user = await this.findOneByEmailUseCase.execute({ email });
+    const user = await this.userRepository.findOneByEmail(email);
 
     if (!user) {
       return done(
