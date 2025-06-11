@@ -1,4 +1,4 @@
-<form method="DELETE" action="/ofs/{{id}}" class="relative p-4 text-center bg-white rounded-lg sm:p-5">
+<form method="POST" action="/ofs/{{id}}?_method=DELETE" class="relative p-4 text-center bg-white rounded-lg sm:p-5">
   <div class="flex justify-center items-center mb-4">
     {{> icons/trash_bin width="11" height="11"}}
   </div>
@@ -15,4 +15,4 @@
       Supprimer
     </button>
   </div>
-  </div>
+</form>

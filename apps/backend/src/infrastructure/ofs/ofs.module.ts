@@ -11,6 +11,7 @@ import { DistributorModule } from '../distributor/distributor.module';
 import { GetOfssAdminController } from './controllers/admin/get-ofss.controller';
 import { SaveOfsAdminController } from './controllers/admin/save-ofs.controller';
 import { DeleteOfsUsecase } from 'src/application/ofs/usecases/delete.usecase';
+import { DeleteOfsAdminController } from './controllers/admin/delete-ofs.controller';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { DeleteOfsUsecase } from 'src/application/ofs/usecases/delete.usecase';
     GetOfssApiController,
     GetOfssAdminController,
     SaveOfsAdminController,
+    DeleteOfsAdminController,
   ],
   providers: [
     { provide: 'OfsRepositoryInterface', useClass: OfsRepository },
