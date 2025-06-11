@@ -7,9 +7,9 @@ import { RegionRelationnalView } from 'src/application/region/views/relationnal.
 export type Column = {
   key: keyof Views;
   label: string;
-  type: 'string' | 'link' | 'mailto' | 'array';
+  type: 'string' | 'link' | 'mailto' | 'array' | 'actions';
   arrayKey?: keyof RelationnalView;
-  color?: 'blue' | 'orange' | 'green';
+  color?: 'blue' | 'orange' | 'green' | 'purple';
 };
 
 export type PageNavigation = {
@@ -76,6 +76,11 @@ export class TableFactory {
                 (item: Views) => item[column.arrayKey as keyof RelationnalView],
               ),
               color: column.color,
+            };
+          case 'actions':
+            return {
+              isActions: true,
+              value: item[column.key],
             };
           default:
             return item[column.key];

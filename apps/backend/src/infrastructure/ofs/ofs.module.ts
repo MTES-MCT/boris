@@ -10,6 +10,8 @@ import { FindAllOfssUsecase } from 'src/application/ofs/usecases/findAll.usecase
 import { DistributorModule } from '../distributor/distributor.module';
 import { GetOfssAdminController } from './controllers/admin/get-ofss.controller';
 import { SaveOfsAdminController } from './controllers/admin/save-ofs.controller';
+import { DeleteOfsUsecase } from 'src/application/ofs/usecases/delete.usecase';
+import { DeleteOfsAdminController } from './controllers/admin/delete-ofs.controller';
 
 @Module({
   imports: [
@@ -22,12 +24,19 @@ import { SaveOfsAdminController } from './controllers/admin/save-ofs.controller'
     GetOfssApiController,
     GetOfssAdminController,
     SaveOfsAdminController,
+    DeleteOfsAdminController,
   ],
   providers: [
     { provide: 'OfsRepositoryInterface', useClass: OfsRepository },
     SaveOfsUsecase,
     FindAllOfssUsecase,
+    DeleteOfsUsecase,
   ],
-  exports: ['OfsRepositoryInterface', FindAllOfssUsecase, SaveOfsUsecase],
+  exports: [
+    'OfsRepositoryInterface',
+    FindAllOfssUsecase,
+    SaveOfsUsecase,
+    DeleteOfsUsecase,
+  ],
 })
 export class OfsModule {}

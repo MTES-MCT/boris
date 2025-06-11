@@ -8,8 +8,20 @@ export function configureViewEngine(app: NestExpressApplication) {
   hbs.registerPartials(join(__dirname, '../', '../', 'views', 'layouts'));
   hbs.registerPartials(join(__dirname, '../', '../', 'views', 'partials'));
 
-  hbs.registerHelper('or', function (a, b) {
+  hbs.registerHelper('or', (a, b) => {
     return a || b;
+  });
+
+  hbs.registerHelper('concat', (a, b) => {
+    return `${a}${b}`;
+  });
+
+  hbs.registerHelper('stringify', (a) => {
+    return JSON.stringify(a);
+  });
+
+  hbs.registerHelper('rowName', (row) => {
+    return row[0];
   });
 
   app.setViewEngine('hbs');

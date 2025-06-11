@@ -9,7 +9,7 @@ import { DistributorModule } from './infrastructure/distributor/distributor.modu
 import { UserModule } from './infrastructure/user/user.module';
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { AdminHomeModule } from './infrastructure/admin/home/home.module';
-import { UserToLocalsMiddleware } from './infrastructure/middlewares/user-to-locals.middleware';
+import { ToLocalsMiddleware } from './infrastructure/middlewares/to-locals.middleware';
 
 @Module({
   imports: [
@@ -38,6 +38,6 @@ import { UserToLocalsMiddleware } from './infrastructure/middlewares/user-to-loc
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(UserToLocalsMiddleware).forRoutes('*');
+    consumer.apply(ToLocalsMiddleware).forRoutes('*');
   }
 }
