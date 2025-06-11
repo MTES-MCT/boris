@@ -15,6 +15,12 @@ type Messages = {
       invalidCredentials: string;
     };
   };
+  actions: {
+    [key: string]: string;
+  };
+  fields: {
+    [key: string]: string;
+  };
   contents: {
     home: {
       title: string;
@@ -29,6 +35,20 @@ const messages: Messages = {
     login: {
       invalidCredentials: 'Identifiant ou mot de passe incorrect',
     },
+  },
+  actions: {
+    delete: 'Supprimer',
+    closeModal: 'Fermer la modal',
+    deleteConfirmation: 'Êtes-vous sûr de vouloir supprimer',
+  },
+  fields: {
+    name: 'Nom',
+    phone: 'Téléphone',
+    websiteUrl: 'Site web',
+    email: 'Adresse email',
+    distributors: 'Commercialisateur(s)',
+    departements: 'Département(s)',
+    regions: 'Région(s)',
   },
   contents: {
     home: {
@@ -60,7 +80,12 @@ const messages: Messages = {
           label: 'Commercialisateur(s)',
           type: 'array',
           arrayKey: 'name',
-          color: 'orange',
+          color: 'purple',
+        },
+        {
+          key: 'id',
+          label: 'Actions',
+          type: 'actions',
         },
       ],
     },

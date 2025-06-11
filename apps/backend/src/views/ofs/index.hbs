@@ -1,3 +1,7 @@
 {{> breadcrumb links=breadcrumbLinks }}
-{{> page_header title=title action=action}}
-{{> table title=title action=action columns=columns rows=rows}}
+
+{{#> page_header title=title actionLabel=messages.contents.ofs.action.label}}
+{{> forms/ofs/create actionLabel=messages.contents.ofs.action.label}}
+{{/page_header}}
+
+{{> table title=title columns=columns rows=rows}}

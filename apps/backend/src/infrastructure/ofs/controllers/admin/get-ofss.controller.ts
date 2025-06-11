@@ -69,7 +69,6 @@ export class GetOfssAdminController {
           href: '/ofs',
         },
       ],
-      action: messages.contents.ofs.action.label,
       columns,
       rows,
       pagination,
