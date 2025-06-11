@@ -9,7 +9,8 @@
       "views/**/*.hbs",
       "assets/**/*.css",
       "assets/**/*.woff",
-      "assets/**/*.woff2"
+      "assets/**/*.woff2",
+      "assets/images/**/*"
     ]
   }
 }
