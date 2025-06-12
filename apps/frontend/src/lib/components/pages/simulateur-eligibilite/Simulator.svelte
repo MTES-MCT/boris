@@ -2,7 +2,9 @@
   import Data from '$components/pages/simulateur-eligibilite/Data.svelte';
 </script>
 
-<section class="fr-container">
+<section
+  class="fr-container"
+  id="plafonds-de-ressources">
   <div class="wrapper">
     <div class="blue-overlay rounded-box-lg"></div>
     <div class="content rounded-box-lg background-color-white">
