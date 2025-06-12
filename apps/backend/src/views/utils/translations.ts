@@ -1,11 +1,15 @@
 import { Column } from 'src/views/factories/table.factories';
+import { DistributorView } from 'src/application/distributor/views/distributor.view';
+import { OfsView } from 'src/application/ofs/views/ofs.view';
+import { RegionView } from 'src/application/region/views/region.view';
+import { DepartementView } from 'src/application/departement/views/departement.view';
 
-type EntityPage = {
+type EntityPage<T> = {
   title: string;
-  action: {
+  action?: {
     label: string;
   };
-  columns: Column[];
+  columns?: Column<T>[];
 };
 
 type AlertType = {
@@ -31,7 +35,10 @@ type translations = {
     home: {
       title: string;
     };
-    ofs: EntityPage;
+    ofs: EntityPage<OfsView>;
+    distributors: EntityPage<DistributorView>;
+    regions: EntityPage<RegionView>;
+    departements: EntityPage<DepartementView>;
   };
 };
 
@@ -52,12 +59,13 @@ const translations: translations = {
   actions: {
     delete: 'Supprimer',
     closeModal: 'Fermer la modal',
-    deleteConfirmation: 'Êtes-vous sûr de vouloir supprimer',
   },
   fields: {
     name: 'Nom',
     phone: 'Téléphone',
     websiteUrl: 'Site web',
+    websiteUrlInputHint:
+      'Veuillez entrer une URL valide commençant par http:// ou https://',
     email: 'Adresse email',
     distributors: 'Commercialisateur(s)',
     departements: 'Département(s)',
@@ -66,6 +74,17 @@ const translations: translations = {
   contents: {
     home: {
       title: 'Boris dashboard',
+    },
+    distributors: {
+      title: 'Commercialisateurs',
+      action: {
+        label: 'Créer un commercialisateur',
+      },
+      columns: [
+        { key: 'name', label: 'Nom', type: 'string' },
+        { key: 'websiteUrl', label: 'Site web', type: 'link' },
+        { key: 'id', label: 'Actions', type: 'actions' },
+      ],
     },
     ofs: {
       title: 'Organismes de foncier solidaire',
@@ -101,6 +120,12 @@ const translations: translations = {
           type: 'actions',
         },
       ],
+    },
+    regions: {
+      title: 'Régions',
+    },
+    departements: {
+      title: 'Départements',
     },
   },
 };

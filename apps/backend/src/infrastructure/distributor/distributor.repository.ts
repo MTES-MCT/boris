@@ -26,7 +26,7 @@ export class DistributorRepository implements DistributorRepositoryInterface {
       .createQueryBuilder('distributor')
       .skip((page - 1) * pageSize)
       .take(pageSize)
-      .orderBy('distributor.name', 'ASC');
+      .orderBy('distributor.createdAt', 'DESC');
 
     return query.getManyAndCount();
   }
@@ -35,5 +35,13 @@ export class DistributorRepository implements DistributorRepositoryInterface {
     return this.repository.findBy({
       id: In(ids),
     });
+  }
+
+  public async findById(id: string): Promise<DistributorEntity | null> {
+    return this.repository.findOneBy({ id });
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
   }
 }

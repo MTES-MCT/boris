@@ -21,12 +21,12 @@ export const formatOfss = (ofss: OfsView[]): Region[] => {
 
     regions.push({
       name: regionName,
-      ofss: regionnalOfss,
+      ofss: regionnalOfss.sort((a, b) => a.name.localeCompare(b.name)),
       totalOfss: totalOfssInRegion,
     });
   });
 
-  return regions;
+  return regions.sort((a, b) => a.name.localeCompare(b.name));
 };
 
 export const formatEuro = (amount: number) => {

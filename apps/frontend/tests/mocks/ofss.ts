@@ -129,6 +129,48 @@ export const expectedResult = [
     totalOfss: 1,
   },
   {
+    name: 'Bretagne',
+    ofss: [
+      {
+        id: '7d56679f-0153-4f5e-967a-099235ec9528',
+        name: 'Foncier Coopératif Malouin',
+        websiteUrl: 'https://www.foncier-cooperatif-malouin.coop/',
+        phone: null,
+        email: 'contact.fcm@keredes.coop',
+        departements: [
+          {
+            id: '8fb92e67-2a0b-4745-8b1e-e0a76e1e84d2',
+            name: 'Ille-et-Vilaine',
+            code: '35',
+          },
+        ],
+        regions: [
+          {
+            id: '1bdb7c19-a40c-479d-8756-39e1c224e914',
+            name: 'Bretagne',
+          },
+        ],
+        distributors: [],
+      },
+      {
+        id: 'a16b756a-5df5-404d-a374-644d89576622',
+        name: 'Foncière Solucia Territoires',
+        websiteUrl: null,
+        phone: '06 50 59 31 05',
+        email: 'contact@ofs-fst.fr',
+        departements: [],
+        regions: [
+          {
+            id: '1bdb7c19-a40c-479d-8756-39e1c224e914',
+            name: 'Bretagne',
+          },
+        ],
+        distributors: [],
+      },
+    ],
+    totalOfss: 2,
+  },
+  {
     name: "Provence-Alpes-Côte d'Azur",
     ofss: [
       {
@@ -159,47 +201,5 @@ export const expectedResult = [
       },
     ],
     totalOfss: 1,
-  },
-  {
-    name: 'Bretagne',
-    ofss: [
-      {
-        id: 'a16b756a-5df5-404d-a374-644d89576622',
-        name: 'Foncière Solucia Territoires',
-        websiteUrl: null,
-        phone: '06 50 59 31 05',
-        email: 'contact@ofs-fst.fr',
-        departements: [],
-        regions: [
-          {
-            id: '1bdb7c19-a40c-479d-8756-39e1c224e914',
-            name: 'Bretagne',
-          },
-        ],
-        distributors: [],
-      },
-      {
-        id: '7d56679f-0153-4f5e-967a-099235ec9528',
-        name: 'Foncier Coopératif Malouin',
-        websiteUrl: 'https://www.foncier-cooperatif-malouin.coop/',
-        phone: null,
-        email: 'contact.fcm@keredes.coop',
-        departements: [
-          {
-            id: '8fb92e67-2a0b-4745-8b1e-e0a76e1e84d2',
-            name: 'Ille-et-Vilaine',
-            code: '35',
-          },
-        ],
-        regions: [
-          {
-            id: '1bdb7c19-a40c-479d-8756-39e1c224e914',
-            name: 'Bretagne',
-          },
-        ],
-        distributors: [],
-      },
-    ],
-    totalOfss: 2,
   },
 ];

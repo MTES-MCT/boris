@@ -56,7 +56,7 @@ export class GetOfssAdminController {
       await this.findAllDistributorsUsecase.execute(DEFAULT_PAGINATION);
 
     const { columns, rows, pagination } = TableFactory.createTable(
-      translations.contents.ofs.columns,
+      translations.contents.ofs.columns || [],
       ofss,
     );
 
@@ -65,16 +65,16 @@ export class GetOfssAdminController {
       title: translations.contents.ofs.title,
       breadcrumbLinks: [
         {
-          label: 'OFS',
+          label: translations.contents.ofs.title,
           href: '/ofs',
         },
       ],
       columns,
       rows,
       pagination,
-      regions: regions.items,
-      departements: departements.items,
-      distributors: distributors.items,
+      regions,
+      departements,
+      distributors,
     });
   }
 }

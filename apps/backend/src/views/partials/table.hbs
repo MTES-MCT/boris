@@ -1,10 +1,10 @@
 <div class="bg-white dark:bg-gray-900 relative shadow-md overflow-hidden">
   <div class="overflow-x-auto">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead class="w-full text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
+      <thead class="w-full text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">
         <tr>
           {{#each columns}}
-          <th scope="col" class="px-4 py-3">{{this}}</th>
+          <th scope="col" class="px-4 py-3 {{#if (isEqual this 'Actions')}}text-right{{/if}}">{{this}}</th>
           {{/each}}
         </tr>
       </thead>
@@ -13,19 +13,27 @@
         <tr class="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800">
           {{#each row as |cell|}}
           {{#if cell.isLink}}
-          <td class="px-2 py-2">
-            <a href="{{cell.href}}" target="_blank">{{cell.text}}</a>
+          <td class="px-4 py-2">
+            <a href="{{cell.href}}" target="_blank"
+              class="font-medium text-primary-600 dark:text-primary-500 hover:underline inline-flex items-center flex gap-2">
+              {{> icons/arrow_up_right width="4" height="4" }}
+              {{cell.text}}
+            </a>
           </td>
           {{else if cell.isMailto}}
-          <td class="px-2 py-2">
-            <a href="mailto:{{cell.href}}">{{cell.text}}</a>
+          <td class="px-4 py-2">
+            <a href="mailto:{{cell.href}}"
+              class="font-medium text-primary-600 dark:text-primary-500 hover:underline inline-flex items-center flex gap-2">
+              {{> icons/arrow_up_right width="4" height="4" }}
+              {{cell.text}}
+            </a>
           </td>
           {{else if cell.isArray}}
-          <td class="px-2 py-2">
+          <td class="px-4 py-2">
             <div class="flex min-w-40 flex-wrap gap-1">
               {{#each cell.value as |item|}}
               <span
-                class="inline-flex bg-{{or cell.color 'primary'}}-100 text-{{or cell.color 'primary'}}-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-{{or cell.color 'primary'}}-900 dark:text-{{or cell.color 'primary'}}-300">
+                class="inline-flex bg-{{or cell.color 'primary'}}-50 text-{{or cell.color 'primary'}}-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-{{or cell.color 'primary'}}-900 dark:text-{{or cell.color 'primary'}}-300">
                 {{item}}</span>
               {{/each}}
             </div>
@@ -50,7 +58,7 @@
               </ul>
             </div>
             {{#> modal id=cell.value }}
-            {{> forms/ofs/delete id=cell.value name=(rowName row)}}
+            {{> @partial-block id=cell.value name=(rowName row) }}
             {{/modal}}
           </td>
           {{else}}

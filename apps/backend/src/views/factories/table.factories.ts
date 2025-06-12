@@ -1,11 +1,15 @@
 import { DepartementRelationnalView } from 'src/application/departement/views/relationnal.view';
+import { DistributorView } from 'src/application/distributor/views/distributor.view';
 import { DistributorRelationnalView } from 'src/application/distributor/views/relationnal.view';
 import { OfsView } from 'src/application/ofs/views/ofs.view';
 import { Pagination } from 'src/application/pagination/pagination';
 import { RegionRelationnalView } from 'src/application/region/views/relationnal.view';
+import { RegionView } from 'src/application/region/views/region.view';
+import { DepartementView } from 'src/application/departement/views/departement.view';
+import { UserView } from 'src/application/user/views/user.view';
 
-export type Column = {
-  key: keyof Views;
+export type Column<T> = {
+  key: keyof T;
   label: string;
   type: 'string' | 'link' | 'mailto' | 'array' | 'actions';
   arrayKey?: keyof RelationnalView;
@@ -21,14 +25,22 @@ export type PageNavigation = {
   disabled?: boolean;
 };
 
-export type Views = OfsView;
+export type Views =
+  | OfsView
+  | DistributorView
+  | RegionView
+  | DepartementView
+  | UserView;
 export type RelationnalView =
   | RegionRelationnalView
   | DepartementRelationnalView
   | DistributorRelationnalView;
 
 export class TableFactory {
-  public static createTable(columns: Column[], pagination: Pagination<Views>) {
+  public static createTable<T extends Views>(
+    columns: Column<T>[],
+    pagination: Pagination<T>,
+  ) {
     const { items, totalCount, page, hasPreviousPage, hasNextPage, pageSize } =
       pagination;
 
@@ -51,7 +63,7 @@ export class TableFactory {
     };
   }
 
-  private static formatRows(columns: Column[], items: Views[]) {
+  private static formatRows<T extends Views>(columns: Column<T>[], items: T[]) {
     return items.map((item) => {
       return columns.map((column) => {
         switch (column.type) {
@@ -72,8 +84,9 @@ export class TableFactory {
           case 'array':
             return {
               isArray: true,
-              value: (item[column.key] as [])?.map(
-                (item: Views) => item[column.arrayKey as keyof RelationnalView],
+              value: (item[column.key] as unknown as RelationnalView[])?.map(
+                (relationnal) =>
+                  relationnal[column.arrayKey as keyof RelationnalView],
               ),
               color: column.color,
             };
