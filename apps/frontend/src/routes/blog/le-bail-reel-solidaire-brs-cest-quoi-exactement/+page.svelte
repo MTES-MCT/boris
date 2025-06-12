@@ -211,7 +211,7 @@
   </p>
 
   <h2 class="fr-mt-8w">
-    <b>📍Où trouver un logement en Bail réel solidaire (BRS) ?</b>
+    <b>📍Où trouver un logement en Bail réel solidaire (BRS)?</b>
   </h2>
   <p>
     De plus en plus de programmes immobiliers intègrent le Bail réel solidaire
