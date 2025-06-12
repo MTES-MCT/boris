@@ -36,7 +36,7 @@ export class GetDistributorsAdminController {
     });
 
     const { columns, rows, pagination } = TableFactory.createTable(
-      translations.contents.distributors.columns,
+      translations.contents.distributors.columns || [],
       distributors,
     );
 

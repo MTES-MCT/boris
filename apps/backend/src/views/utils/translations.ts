@@ -1,13 +1,15 @@
 import { Column } from 'src/views/factories/table.factories';
 import { DistributorView } from 'src/application/distributor/views/distributor.view';
 import { OfsView } from 'src/application/ofs/views/ofs.view';
+import { RegionView } from 'src/application/region/views/region.view';
+import { DepartementView } from 'src/application/departement/views/departement.view';
 
 type EntityPage<T> = {
   title: string;
-  action: {
+  action?: {
     label: string;
   };
-  columns: Column<T>[];
+  columns?: Column<T>[];
 };
 
 type AlertType = {
@@ -35,6 +37,8 @@ type translations = {
     };
     ofs: EntityPage<OfsView>;
     distributors: EntityPage<DistributorView>;
+    regions: EntityPage<RegionView>;
+    departements: EntityPage<DepartementView>;
   };
 };
 
@@ -116,6 +120,12 @@ const translations: translations = {
           type: 'actions',
         },
       ],
+    },
+    regions: {
+      title: 'Régions',
+    },
+    departements: {
+      title: 'Départements',
     },
   },
 };

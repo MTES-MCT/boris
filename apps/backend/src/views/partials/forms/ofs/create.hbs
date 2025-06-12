@@ -36,7 +36,7 @@
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.regions}}</label>
       <select multiple id="regionNames" name="regionNames[]"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        {{#each regions as |region|}}
+        {{#each regions.items as |region|}}
         <option value="{{region.name}}">{{region.name}}</option>
         {{/each}}
       </select>
@@ -47,7 +47,7 @@
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.departements}}</label>
       <select multiple id="departementNames" name="departementNames[]"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        {{#each departements as |departement|}}
+        {{#each departements.items as |departement|}}
         <option value="{{departement.name}}">{{departement.name}}</option>
         {{/each}}
       </select>
@@ -59,7 +59,7 @@
       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.distributors}}</label>
     <select multiple id="distributorIds" name="distributorIds[]"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-      {{#each distributors as |distributor|}}
+      {{#each distributors.items as |distributor|}}
       <option value="{{distributor.id}}">{{distributor.name}}</option>
       {{/each}}
     </select>
