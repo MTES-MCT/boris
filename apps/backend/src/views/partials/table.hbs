@@ -4,7 +4,7 @@
       <thead class="w-full text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
         <tr>
           {{#each columns}}
-          <th scope="col" class="px-4 py-3">{{this}}</th>
+          <th scope="col" class="px-4 py-3 {{#if (isEqual this 'Actions')}}text-right{{/if}}">{{this}}</th>
           {{/each}}
         </tr>
       </thead>
@@ -13,15 +13,15 @@
         <tr class="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800">
           {{#each row as |cell|}}
           {{#if cell.isLink}}
-          <td class="px-2 py-2">
+          <td class="px-4 py-2">
             <a href="{{cell.href}}" target="_blank">{{cell.text}}</a>
           </td>
           {{else if cell.isMailto}}
-          <td class="px-2 py-2">
+          <td class="px-4 py-2">
             <a href="mailto:{{cell.href}}">{{cell.text}}</a>
           </td>
           {{else if cell.isArray}}
-          <td class="px-2 py-2">
+          <td class="px-4 py-2">
             <div class="flex min-w-40 flex-wrap gap-1">
               {{#each cell.value as |item|}}
               <span

@@ -1,11 +1,13 @@
 import { Column } from 'src/views/factories/table.factories';
+import { DistributorView } from 'src/application/distributor/views/distributor.view';
+import { OfsView } from 'src/application/ofs/views/ofs.view';
 
-type EntityPage = {
+type EntityPage<T> = {
   title: string;
   action: {
     label: string;
   };
-  columns: Column[];
+  columns: Column<T>[];
 };
 
 type AlertType = {
@@ -31,7 +33,8 @@ type translations = {
     home: {
       title: string;
     };
-    ofs: EntityPage;
+    ofs: EntityPage<OfsView>;
+    distributors: EntityPage<DistributorView>;
   };
 };
 
@@ -66,6 +69,17 @@ const translations: translations = {
   contents: {
     home: {
       title: 'Boris dashboard',
+    },
+    distributors: {
+      title: 'Commercialisateurs',
+      action: {
+        label: 'Créer un commercialisateur',
+      },
+      columns: [
+        { key: 'name', label: 'Nom', type: 'string' },
+        { key: 'websiteUrl', label: 'Site web', type: 'link' },
+        { key: 'id', label: 'Actions', type: 'actions' },
+      ],
     },
     ofs: {
       title: 'Organismes de foncier solidaire',

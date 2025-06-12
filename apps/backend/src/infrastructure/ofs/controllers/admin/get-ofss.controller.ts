@@ -65,7 +65,7 @@ export class GetOfssAdminController {
       title: translations.contents.ofs.title,
       breadcrumbLinks: [
         {
-          label: 'OFS',
+          label: translations.contents.ofs.title,
           href: '/ofs',
         },
       ],
