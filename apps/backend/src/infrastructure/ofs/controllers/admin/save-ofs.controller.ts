@@ -13,7 +13,6 @@ import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.
 import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
 import { SaveOfsDTO } from 'src/infrastructure/ofs/dtos/save.dto';
 import { ApiExcludeController } from '@nestjs/swagger';
-import { FlashMessageFactory } from 'src/views/factories/flash-message.factories';
 import translations from 'src/views/utils/translations';
 
 @ApiExcludeController()
@@ -32,25 +31,31 @@ export class SaveOfsAdminController {
     try {
       await this.saveOfsUsecase.execute(body);
 
-      const flashMessage = FlashMessageFactory.createFlashMessage({
-        type: 'success',
-        message: translations.success.defaultContent,
+      req.flash(
+        translations.success.defaultLabel,
+        translations.success.defaultContent,
+      );
+
+      await new Promise<void>((resolve) => {
+        req.session.save(() => {
+          res.redirect(303, '/ofs');
+          resolve();
+        });
       });
-
-      req.flash(flashMessage.type, flashMessage.message);
-
-      res.redirect('/ofs');
     } catch (e) {
       console.log(e);
 
-      const flashMessage = FlashMessageFactory.createFlashMessage({
-        type: 'error',
-        message: translations.error.defaultContent,
+      req.flash(
+        translations.error.defaultLabel,
+        translations.error.defaultContent,
+      );
+
+      await new Promise<void>((resolve) => {
+        req.session.save(() => {
+          res.redirect(303, '/ofs');
+          resolve();
+        });
       });
-
-      req.flash(flashMessage.type, flashMessage.message);
-
-      res.redirect('/ofs');
     }
   }
 }
