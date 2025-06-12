@@ -2,14 +2,14 @@ import type { ArticlePreview } from '$lib/utils/definitions';
 
 export const articles: ArticlePreview[] = [
   {
-    title: 'Le Bail Réel Solidaire (BRS), c’est quoi exactement ?',
+    title: 'Le Bail Réel Solidaire (BRS), c’est quoi exactement?',
     description:
-      "Découvrez le Bail Réel Solidaire (BRS), un dispositif innovant permettant d'acheter son logement 30 à 50% moins cher. Conditions d'éligibilité, avantages et fonctionnement expliqués simplement.",
+      "Découvrez le Bail Réel Solidaire (BRS), un dispositif innovant permettant d'acheter son logement 30 à 50% moins cher. Conditions d'éligibilité au BRS, avantages, inconvénients, où trouver un logement en BRS... on vous explique tout sur le bail réel solidaire",
     firstPublishedAt: '2025-06-12T11:46:39.527438+01:00',
     slug: 'le-bail-reel-solidaire-brs-cest-quoi-exactement',
   },
   {
-    title: 'Puis-je acheter un logement en BRS si je suis déjà propriétaire ?',
+    title: 'Puis-je acheter un logement en BRS si je suis déjà propriétaire?',
     description:
       'Si vous êtes déjà propriétaire, êtes-vous éligible au Bail Réel Solidaire ? Nous vous proposons de répondre à cette question dans cet article.',
     firstPublishedAt: '2025-01-08T11:46:39.527438+01:00',
