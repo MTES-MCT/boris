@@ -25,17 +25,17 @@
     des logements depuis 2000, il repose sur un principe simple mais puissant :
     <b>
       devenir propriétaire en réduisant le coût d’achat d’un bien immobilier.
-      Ceci étant possible, en partageant la propriété avec l’Organisme Foncier
-      Solidaire.
+      Ceci étant possible, en partageant la propriété avec l’Organisme de
+      Foncier Solidaire.
     </b>
   </p>
   <p>
-    <b>Un Organisme Foncier Solidaire c’est quoi?</b>
-    L’Organisme Foncier Solidaire (OFS) est un organisme, agréé par l’Etat, créé
+    <b>Un Organisme de Foncier Solidaire c’est quoi?</b>
+    L’Organisme de Foncier Solidaire (OFS) est un organisme, agréé par l’Etat, créé
     par la loi ALUR en 2014, à but non lucratif, qui acquiert et détient des terrains
     qui accueillent des programmes en Bail Réel Solidaire (BRS). Sur ces terrains,
-    l’Organisme Foncier Solidaire produit des logements, qui seront vendus en Bail
-    Réel Solidaire (BRS) aux ménages
+    l’Organisme de Foncier Solidaire produit des logements, qui seront vendus en
+    Bail Réel Solidaire (BRS) aux ménages
     <a
       href="/simulateur-eligibilite"
       class="fr-link">
@@ -45,16 +45,16 @@
   </p>
 
   <h2 class="fr-mt-8w">
-    <b>🔄 Comment fonctionne le Bail Réel Solidaire (BRS) ?</b>
+    <b>🔄 Comment fonctionne le Bail Réel Solidaire (BRS)?</b>
   </h2>
 
   <p>
     Le ménage est pleinement propriétaire du logement (appartement ou maison),
-    et partage la propriété avec <b>l’Organisme Foncier Solidaire (OFS)</b>
+    et partage la propriété avec <b>l’Organisme de Foncier Solidaire (OFS)</b>
     . L’achat en Bail Réel Solidaire (BRS) permet au ménage d’acheter son logement
     30 à 50% moins cher que dans le marché libre. En contrepartie, l’acquéreur verse
-    une redevance contenue à l’Organisme Foncier Solidaire (OFS), pour l’usage du
-    sol. Ainsi, la charge financière est partagée entre l’OFS et le ménage, puisque
+    une redevance contenue à l’Organisme de Foncier Solidaire (OFS), pour l’usage
+    du sol. Ainsi, la charge financière est partagée entre l’OFS et le ménage, puisque
     l’Organisme de Foncier Solidaire prend pour sa part 30 à 50% du prix du logement
     lors de la première cession, et ce sont les ménages propriétaires successifs
     qui payeront, petit à petit, sur le temps très long, cette charge via la redevance.
@@ -71,19 +71,28 @@
   </h2>
 
   <p>Le Bail réel solidaire (BRS) est réservé aux ménages :</p>
+
   <ul>
     <li>
       Sous <b>plafond de ressources</b>
-      , variables selon la zone géographique.
+      , variables selon la zone géographique. Consultez notre page indiquant
+      <a
+        href="/simulateur-eligibilite#plafonds-de-ressources"
+        class="fr-link">
+        les plafonds de ressources
+      </a>
+      .
     </li>
     <li>
-      Qui ne sont pas déjà propriétaire d’un logement adapté à leurs besoins, ou
-      susceptible de procurer des revenus suffisants pour un achat dans le
-      marché libre (
+      Qui ne sont <b>
+        pas déjà propriétaire d’un logement adapté à leurs besoins
+      </b>
+      , ou susceptible de procurer des revenus suffisants pour un achat dans le marché
+      libre (plus d’informations dans notre article:
       <a
         href="/blog/puis-je-acheter-un-logement-en-brs-si-je-suis-deja-proprietaire"
         class="fr-link">
-        plus d’informations dans notre article ici
+        “Puis-je acheter un logement en BRS si je suis déjà propriétaire?”
       </a>
       ).
     </li>
@@ -101,7 +110,7 @@
   </a>
 
   <h2 class="fr-mt-8w">
-    <b>✅ Quels sont les avantages du bail réel solidaire (BRS) ?</b>
+    <b>✅ Quels sont les avantages du bail réel solidaire (BRS)?</b>
   </h2>
 
   <p>On note deux principaux avantages en BRS:</p>
@@ -120,11 +129,11 @@
   </ul>
 
   <p>
-    Vous trouverez plus d’information sur note article dédié aux
+    Vous trouverez plus d’information sur notre article dédié aux
     <a
       href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif#les-avantages-du-BRS"
       class="fr-link">
-      avantages du Bail Réel Solidaire
+      avantages du Bail Réel Solidaire (BRS)
     </a>
     .
   </p>
@@ -132,7 +141,7 @@
   <h2 class="fr-mt-8w">
     <b>
       ⚖️ Quelles sont les inconvénients - ou plutôt les contreparties - du bail
-      réel solidaire ?
+      réel solidaire?
     </b>
   </h2>
 
@@ -171,7 +180,9 @@
       Obligation de faire de ce logement sa <b>résidence principale</b>
     </li>
     <li>
-      <b>Engagement à verser une redevance à l’Organisme Foncier Solidaire</b>
+      <b>
+        Engagement à verser une redevance à l’Organisme de Foncier Solidaire
+      </b>
     </li>
   </ul>
 
