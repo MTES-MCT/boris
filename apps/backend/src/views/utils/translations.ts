@@ -55,7 +55,6 @@ const translations: translations = {
   actions: {
     delete: 'Supprimer',
     closeModal: 'Fermer la modal',
-    deleteConfirmation: 'Êtes-vous sûr de vouloir supprimer',
   },
   fields: {
     name: 'Nom',

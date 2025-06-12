@@ -36,4 +36,12 @@ export class DistributorRepository implements DistributorRepositoryInterface {
       id: In(ids),
     });
   }
+
+  public async findById(id: string): Promise<DistributorEntity | null> {
+    return this.repository.findOneBy({ id });
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
 }

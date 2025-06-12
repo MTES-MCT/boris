@@ -32,16 +32,13 @@ describe('OfsRepository', () => {
   });
 
   it('should find an ofs by id', async () => {
-    mockOfsRepository.findOne.mockResolvedValue(ofs1);
+    mockOfsRepository.findOneBy.mockResolvedValue(ofs1);
 
     const result = await ofsRepository.findById('1234');
 
     expect(result).toMatchObject(ofs1);
-    expect(mockOfsRepository.findOne).toHaveBeenCalledTimes(1);
-    expect(mockOfsRepository.findOne).toHaveBeenCalledWith({
-      where: { id: '1234' },
-      relations: ['departements', 'regions', 'distributors'],
-    });
+    expect(mockOfsRepository.findOneBy).toHaveBeenCalledTimes(1);
+    expect(mockOfsRepository.findOneBy).toHaveBeenCalledWith({ id: '1234' });
   });
 
   it('should delete an ofs', async () => {

@@ -7,10 +7,16 @@ import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases
 import { FindManyDistributorsByIdsUsecase } from 'src/application/distributor/usecases/findManyByIds.usecase';
 import { GetDistributorsAdminController } from './controllers/admin/get-distributors.controller';
 import { SaveDistributorAdminController } from './controllers/admin/save-distributor.controller';
+import { DeleteDistributorUsecase } from 'src/application/distributor/usecases/delete.usecase';
+import { DeleteDistributorAdminController } from './controllers/admin/delete-distributor.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([DistributorEntity])],
-  controllers: [GetDistributorsAdminController, SaveDistributorAdminController],
+  controllers: [
+    GetDistributorsAdminController,
+    SaveDistributorAdminController,
+    DeleteDistributorAdminController,
+  ],
   providers: [
     {
       provide: 'DistributorRepositoryInterface',
@@ -19,12 +25,14 @@ import { SaveDistributorAdminController } from './controllers/admin/save-distrib
     SaveDistributorUsecase,
     FindAllDistributorsUsecase,
     FindManyDistributorsByIdsUsecase,
+    DeleteDistributorUsecase,
   ],
   exports: [
     'DistributorRepositoryInterface',
     SaveDistributorUsecase,
     FindAllDistributorsUsecase,
     FindManyDistributorsByIdsUsecase,
+    DeleteDistributorUsecase,
   ],
 })
 export class DistributorModule {}

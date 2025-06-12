@@ -26,7 +26,7 @@ export const ofs2 = new OfsEntity(
 export const mockOfsRepository = {
   save: jest.fn(),
   findAll: jest.fn(),
-  findOne: jest.fn(),
+  findOneBy: jest.fn(),
   findById: jest.fn(),
   delete: jest.fn(),
 };

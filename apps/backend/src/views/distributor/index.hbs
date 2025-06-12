@@ -4,4 +4,6 @@
 {{> forms/distributor/create actionLabel=translations.contents.distributors.action.label}}
 {{/page_header}}
 
-{{> table title=title columns=columns rows=rows}}
+{{#> table title=title columns=columns rows=rows}}
+{{> forms/distributor/delete}}
+{{/table}}

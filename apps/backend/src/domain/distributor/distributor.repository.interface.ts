@@ -7,4 +7,6 @@ export interface DistributorRepositoryInterface {
     paginationProps: PaginationProps,
   ): Promise<[DistributorEntity[], number]>;
   findManyByIds(ids: string[]): Promise<DistributorEntity[]>;
+  findById(id: string): Promise<DistributorEntity | null>;
+  delete(id: string): Promise<void>;
 }

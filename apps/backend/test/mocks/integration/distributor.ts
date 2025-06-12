@@ -7,14 +7,17 @@ export const distributor1 = new DistributorEntity(
 );
 
 export const distributor2 = new DistributorEntity(
-  "Commercialisateur d'Ile-de-France",
-  'https://idf.beta.gouv.fr',
+  'Commercialisateur de normandie',
+  'https://boris.beta.gouv.fr',
   [],
 );
 
 export const mockDistributorRepository = {
   save: jest.fn(),
   findBy: jest.fn(),
+  findOneBy: jest.fn(),
   findAll: jest.fn(),
   findManyByIds: jest.fn(),
+  findById: jest.fn(),
+  delete: jest.fn(),
 };

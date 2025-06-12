@@ -58,7 +58,7 @@
               </ul>
             </div>
             {{#> modal id=cell.value }}
-            {{> forms/ofs/delete id=cell.value name=(rowName row)}}
+            {{> @partial-block id=cell.value name=(rowName row) }}
             {{/modal}}
           </td>
           {{else}}
