@@ -1,13 +1,5 @@
-import {
-  Get,
-  Controller,
-  Res,
-  UseGuards,
-  Post,
-  Body,
-  Req,
-} from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Get, Controller, Res, UseGuards, Post, Body } from '@nestjs/common';
+import { Response } from 'express';
 import { LocalAuthGuard } from '../guards/local.guard';
 import { AdminLoginDto } from '../dtos/login.dto';
 import { RedirectIfAuthenticatedGuard } from '../guards/redirectIfAuthenticated.guard';
@@ -18,9 +10,7 @@ import { ApiExcludeController } from '@nestjs/swagger';
 export class AdminLoginController {
   @UseGuards(RedirectIfAuthenticatedGuard)
   @Get('/login')
-  public get(@Res() res: Response, @Req() req: Request) {
-    console.log(req.flash());
-
+  public get(@Res() res: Response) {
     res.render('auth/login', {
       layout: 'layouts/auth',
     });
