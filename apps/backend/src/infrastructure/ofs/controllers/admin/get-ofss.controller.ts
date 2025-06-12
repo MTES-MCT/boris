@@ -14,7 +14,7 @@ import {
 } from 'src/application/pagination/pagination';
 import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.requireAuth.filter';
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
-import messages from 'src/views/utils/messages';
+import translations from 'src/views/utils/translations';
 import { TableFactory } from 'src/views/factories/table.factories';
 import { PaginationDTO } from 'src/infrastructure/pagination/pagination.dto';
 import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.usecase';
@@ -56,13 +56,13 @@ export class GetOfssAdminController {
       await this.findAllDistributorsUsecase.execute(DEFAULT_PAGINATION);
 
     const { columns, rows, pagination } = TableFactory.createTable(
-      messages.contents.ofs.columns,
+      translations.contents.ofs.columns,
       ofss,
     );
 
     res.render('ofs/index', {
       layout: 'layouts/main',
-      title: messages.contents.ofs.title,
+      title: translations.contents.ofs.title,
       breadcrumbLinks: [
         {
           label: 'OFS',

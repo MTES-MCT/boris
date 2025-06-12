@@ -10,7 +10,6 @@ import {
 import { Request, Response } from 'express';
 import { LocalAuthGuard } from '../guards/local.guard';
 import { AdminLoginDto } from '../dtos/login.dto';
-import messages from 'src/views/utils/messages';
 import { RedirectIfAuthenticatedGuard } from '../guards/redirectIfAuthenticated.guard';
 import { ApiExcludeController } from '@nestjs/swagger';
 
@@ -20,9 +19,10 @@ export class AdminLoginController {
   @UseGuards(RedirectIfAuthenticatedGuard)
   @Get('/login')
   public get(@Res() res: Response, @Req() req: Request) {
+    console.log(req.flash());
+
     res.render('auth/login', {
       layout: 'layouts/auth',
-      message: req.flash(messages.errors.label),
     });
   }
 

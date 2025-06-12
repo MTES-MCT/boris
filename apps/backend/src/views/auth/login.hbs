@@ -24,8 +24,10 @@
               required="">
           </div>
 
-          {{#if message}}
-          {{> alerts/error title="Erreur" content=message}}
+          {{#if flashMessage}}
+          <div class="mb-4">
+            {{> alerts/error title=flashMessage.title content=flashMessage.content}}
+          </div>
           {{/if}}
 
           <button type="submit"

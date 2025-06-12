@@ -1,7 +1,8 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
-import messages from 'src/views/utils/messages';
+import { FlashMessageFactory } from 'src/views/factories/flash-message.factories';
+import translations from 'src/views/utils/translations';
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {
@@ -18,17 +19,19 @@ export class LocalAuthGuard extends AuthGuard('local') {
       return true;
     } catch (e) {
       console.log(e);
-      const response: Response = context.switchToHttp().getResponse();
-      const request: Request = context.switchToHttp().getRequest();
+      const res: Response = context.switchToHttp().getResponse();
+      const req: Request = context.switchToHttp().getRequest();
 
-      request.flash(
-        messages.errors.label,
-        messages.errors.login.invalidCredentials,
-      );
+      const flashMessage = FlashMessageFactory.createFlashMessage({
+        type: 'error',
+        message: translations.error.login.invalidCredentials,
+      });
+
+      req.flash(flashMessage.type, flashMessage.message);
 
       await new Promise<void>((resolve) => {
-        request.session.save(() => {
-          response.redirect(303, '/auth/login');
+        req.session.save(() => {
+          res.redirect(303, '/auth/login');
           resolve();
         });
       });

@@ -24,5 +24,9 @@ export function configureViewEngine(app: NestExpressApplication) {
     return row[0];
   });
 
+  hbs.registerHelper('isEqual', (a, b) => {
+    return a === b;
+  });
+
   app.setViewEngine('hbs');
 }
