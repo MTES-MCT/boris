@@ -14,18 +14,26 @@
           {{#each row as |cell|}}
           {{#if cell.isLink}}
           <td class="px-4 py-2">
-            <a href="{{cell.href}}" target="_blank">{{cell.text}}</a>
+            <a href="{{cell.href}}" target="_blank"
+              class="font-medium text-primary-600 dark:text-primary-500 hover:underline inline-flex items-center flex gap-2">
+              {{> icons/arrow_up_right width="4" height="4" }}
+              {{cell.text}}
+            </a>
           </td>
           {{else if cell.isMailto}}
           <td class="px-4 py-2">
-            <a href="mailto:{{cell.href}}">{{cell.text}}</a>
+            <a href="mailto:{{cell.href}}"
+              class="font-medium text-primary-600 dark:text-primary-500 hover:underline inline-flex items-center flex gap-2">
+              {{> icons/arrow_up_right width="4" height="4" }}
+              {{cell.text}}
+            </a>
           </td>
           {{else if cell.isArray}}
           <td class="px-4 py-2">
             <div class="flex min-w-40 flex-wrap gap-1">
               {{#each cell.value as |item|}}
               <span
-                class="inline-flex bg-{{or cell.color 'primary'}}-100 text-{{or cell.color 'primary'}}-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-{{or cell.color 'primary'}}-900 dark:text-{{or cell.color 'primary'}}-300">
+                class="inline-flex bg-{{or cell.color 'primary'}}-50 text-{{or cell.color 'primary'}}-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-{{or cell.color 'primary'}}-900 dark:text-{{or cell.color 'primary'}}-300">
                 {{item}}</span>
               {{/each}}
             </div>

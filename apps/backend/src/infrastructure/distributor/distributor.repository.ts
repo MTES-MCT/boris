@@ -26,7 +26,7 @@ export class DistributorRepository implements DistributorRepositoryInterface {
       .createQueryBuilder('distributor')
       .skip((page - 1) * pageSize)
       .take(pageSize)
-      .orderBy('distributor.name', 'ASC');
+      .orderBy('distributor.createdAt', 'DESC');
 
     return query.getManyAndCount();
   }

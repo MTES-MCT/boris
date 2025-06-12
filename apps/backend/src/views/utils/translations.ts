@@ -61,6 +61,8 @@ const translations: translations = {
     name: 'Nom',
     phone: 'Téléphone',
     websiteUrl: 'Site web',
+    websiteUrlInputHint:
+      'Veuillez entrer une URL valide commençant par http:// ou https://',
     email: 'Adresse email',
     distributors: 'Commercialisateur(s)',
     departements: 'Département(s)',
