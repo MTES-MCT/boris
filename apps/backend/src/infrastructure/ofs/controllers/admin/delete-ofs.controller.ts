@@ -5,13 +5,15 @@ import {
   Res,
   UseFilters,
   UseGuards,
+  Req,
 } from '@nestjs/common';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { ApiExcludeController } from '@nestjs/swagger';
 import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.requireAuth.filter';
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
 import { DeleteOfsUsecase } from 'src/application/ofs/usecases/delete.usecase';
 import { IdDTO } from 'src/infrastructure/common/dtos/id.dto';
+import translations from 'src/views/utils/translations';
 
 @ApiExcludeController()
 @Controller('/ofs')
@@ -21,15 +23,39 @@ export class DeleteOfsAdminController {
   @UseGuards(LocalIsAuthenticatedGuard)
   @UseFilters(LocalRequireAuthFilter)
   @Delete(':id')
-  public async deleteOfs(@Param() params: IdDTO, @Res() res: Response) {
-    console.log('deleting ofs');
-
+  public async deleteOfs(
+    @Param() params: IdDTO,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
     try {
       await this.deleteOfsUsecase.execute(params);
-      res.redirect('/ofs');
+
+      req.flash(
+        translations.success.defaultLabel,
+        translations.success.defaultContent,
+      );
+
+      await new Promise<void>((resolve) => {
+        req.session.save(() => {
+          res.redirect(303, '/ofs');
+          resolve();
+        });
+      });
     } catch (error) {
       console.error(error);
-      res.redirect('/ofs');
+
+      req.flash(
+        translations.error.defaultLabel,
+        translations.error.defaultContent,
+      );
+
+      await new Promise<void>((resolve) => {
+        req.session.save(() => {
+          res.redirect(303, '/ofs');
+          resolve();
+        });
+      });
     }
   }
 }

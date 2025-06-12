@@ -8,13 +8,19 @@ type EntityPage = {
   columns: Column[];
 };
 
-type Messages = {
-  errors: {
-    label: string;
+type AlertType = {
+  label: string;
+  defaultLabel: string;
+  defaultContent: string;
+};
+
+type translations = {
+  error: AlertType & {
     login: {
       invalidCredentials: string;
     };
   };
+  success: AlertType;
   actions: {
     [key: string]: string;
   };
@@ -29,12 +35,19 @@ type Messages = {
   };
 };
 
-const messages: Messages = {
-  errors: {
-    label: 'error',
+const translations: translations = {
+  error: {
+    label: 'Erreur',
+    defaultLabel: 'Erreur',
+    defaultContent: 'Une erreur est survenue.',
     login: {
       invalidCredentials: 'Identifiant ou mot de passe incorrect',
     },
+  },
+  success: {
+    label: 'Succès',
+    defaultLabel: 'Succès',
+    defaultContent: `L'opération a été effectuée avec succès.`,
   },
   actions: {
     delete: 'Supprimer',
@@ -92,4 +105,4 @@ const messages: Messages = {
   },
 };
 
-export default messages;
+export default translations;

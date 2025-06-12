@@ -3,7 +3,7 @@ import { ApiExcludeController } from '@nestjs/swagger';
 import { Response } from 'express';
 import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.requireAuth.filter';
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
-import messages from 'src/views/utils/messages';
+import translations from 'src/views/utils/translations';
 
 @ApiExcludeController()
 @Controller('/')
@@ -14,7 +14,7 @@ export class AdminHomeController {
   index(@Res() res: Response) {
     res.render('index', {
       layout: 'layouts/main',
-      title: messages.contents.home.title,
+      title: translations.contents.home.title,
       breadcrumbLinks: [],
     });
   }

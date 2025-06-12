@@ -3,14 +3,14 @@ import { OfsView } from 'src/application/ofs/views/ofs.view';
 import { Pagination } from 'src/application/pagination/pagination';
 import * as request from 'supertest';
 import { App } from 'supertest/types';
-import { setupTesingApp } from 'test/config/setup.e2e';
+import { setupTestingApp } from 'test/config/setup.e2e';
 import { ofss } from 'test/mocks/e2e/ofs';
 
 describe('GetOfssApiController', () => {
   let app: INestApplication<App>;
 
   beforeEach(async () => {
-    app = await setupTesingApp();
+    app = await setupTestingApp();
     await app.init();
   });
 

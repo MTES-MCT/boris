@@ -14,6 +14,10 @@
     </main>
   </div>
 
+  {{#if flashMessage}}
+  {{> alerts/toast}}
+  {{/if}}
+
   {{> scripts}}
 </body>
 
