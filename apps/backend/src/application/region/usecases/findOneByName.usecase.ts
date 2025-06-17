@@ -1,6 +1,7 @@
 import { Inject, NotFoundException } from '@nestjs/common';
 import { RegionRepositoryInterface } from 'src/domain/region/region.repository.interface';
-import { RegionEntity } from 'src/infrastructure/region/region.entity';
+import { FindOneRegionByNameParams } from './findOneByName.params';
+import { RegionView } from '../views/region.view';
 
 export class FindOneRegionByNameUsecase {
   constructor(
@@ -8,13 +9,15 @@ export class FindOneRegionByNameUsecase {
     private readonly regionRepository: RegionRepositoryInterface,
   ) {}
 
-  public async execute(name: string): Promise<RegionEntity> {
+  public async execute(params: FindOneRegionByNameParams): Promise<RegionView> {
+    const { name } = params;
+
     const region = await this.regionRepository.findOneByName(name);
 
     if (!region) {
       throw new NotFoundException();
     }
 
-    return region;
+    return new RegionView(region.id, region.name);
   }
 }

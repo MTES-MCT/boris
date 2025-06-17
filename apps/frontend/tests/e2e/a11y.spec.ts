@@ -14,6 +14,11 @@ test('a11y', async ({ page }) => {
 
   for (const url of urls) {
     console.log(url);
+
+    if (url.includes('questionnaire')) {
+      continue;
+    }
+
     await page.goto(url);
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 

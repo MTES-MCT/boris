@@ -1,0 +1,9 @@
+{{> breadcrumb links=breadcrumbLinks }}
+
+{{#> page_header title=title actionLabel=translations.contents.ofs.action.label}}
+{{> forms/ofs/create actionLabel=translations.contents.ofs.action.label}}
+{{/page_header}}
+
+{{#> table title=title columns=columns rows=rows}}
+{{> forms/ofs/delete}}
+{{/table}}

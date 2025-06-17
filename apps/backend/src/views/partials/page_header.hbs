@@ -1,0 +1,20 @@
+<div class="px-4 py-8 bg-gray-50 dark:bg-gray-900">
+  <div class="flex items-end justify-between space-x-4">
+    <div class="w-full flex items-end justify-between space-x-3">
+      <h5 class="text-gray-800 text-2xl dark:text-white font-semibold">{{title}}</h5>
+
+      {{#if actionLabel}}
+      <div>
+        <button type="button" data-modal-target="actionModal" data-modal-toggle="actionModal"
+          class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+          {{actionLabel}}
+        </button>
+
+        {{#> modal id="actionModal" actionLabel=actionLabel}}
+        {{> @partial-block}}
+        {{/modal}}
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

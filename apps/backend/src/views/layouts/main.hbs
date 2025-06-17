@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  {{> head title="Boris"}}
+</head>
+
+<body>
+  <div class="flex">
+    {{> menu}}
+
+    <main class="relative h-full w-full overflow-x-scroll bg-gray-50 dark:bg-gray-900 lg:ml-72 min-h-screen">
+      {{{body}}}
+    </main>
+  </div>
+
+  {{#if flashMessage}}
+  {{> alerts/toast}}
+  {{/if}}
+
+  {{> scripts}}
+</body>
+
+</html>

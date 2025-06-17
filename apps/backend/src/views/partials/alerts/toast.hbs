@@ -1,0 +1,8 @@
+<div class="fixed bottom-5 right-5 flex items-center w-full max-w-xs p-4 rounded-lg shadow animate-toast z-50"
+  role="alert">
+  {{#if (isEqual flashMessage.title 'Succès')}}
+  {{> alerts/success title=flashMessage.title content=flashMessage.content}}
+  {{else if (isEqual flashMessage.title 'Erreur')}}
+  {{> alerts/error title=flashMessage.title content=flashMessage.content}}
+  {{/if}}
+</div>

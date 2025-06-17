@@ -5,3 +5,7 @@ Makefile
 .prettierignore
 Procfile
 *.mermaid
+**/*.hbs
+**/*.woff
+**/*.woff2
+.gitignore

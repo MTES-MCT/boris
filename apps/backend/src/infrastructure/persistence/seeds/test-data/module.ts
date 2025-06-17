@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TestDataSeed } from './testDataSeed';
+import { TestDataSeed } from './seed';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeormConfig } from 'src/infrastructure/persistence/typeorm.config';
 import { DepartementModule } from 'src/infrastructure/departement/departement.module';
