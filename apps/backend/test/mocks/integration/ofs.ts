@@ -28,5 +28,6 @@ export const mockOfsRepository = {
   findAll: jest.fn(),
   findOneBy: jest.fn(),
   findById: jest.fn(),
+  findOne: jest.fn(),
   delete: jest.fn(),
 };

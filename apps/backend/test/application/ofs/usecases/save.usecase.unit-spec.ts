@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
 import { OfsView } from 'src/application/ofs/views/ofs.view';
@@ -43,59 +43,148 @@ describe('SaveOfsUsecase', () => {
     useCase = module.get<SaveOfsUsecase>(SaveOfsUsecase);
   });
 
-  it('should save an ofs and return its data', async () => {
-    mockRegionRepository.findManyByNames.mockReturnValue([bretagne]);
-    mockDepartementRepository.findManyByNames.mockReturnValue([
-      finistere,
-      paris,
-    ]);
-    mockDistributorRepository.findManyByIds.mockReturnValue([distributor1]);
-    mockOfsRepository.save.mockReturnValue(ofs1);
+  describe('create', () => {
+    it('should create a new ofs and return its data', async () => {
+      mockRegionRepository.findManyByNames.mockReturnValue([bretagne]);
+      mockDepartementRepository.findManyByNames.mockReturnValue([
+        finistere,
+        paris,
+      ]);
+      mockDistributorRepository.findManyByIds.mockReturnValue([distributor1]);
+      mockOfsRepository.save.mockReturnValue(ofs1);
 
-    const expectedResult = new OfsView(
-      ofs1.id,
-      ofs1.name,
-      ofs1.websiteUrl,
-      ofs1.phone,
-      ofs1.email,
-      ofs1.departements.map((d) => ({
-        id: d.id,
-        name: d.name,
-        code: d.code,
-      })),
-      ofs1.regions.map((r) => ({ id: r.id, name: r.name })),
-      ofs1.distributors.map((d) => ({
-        id: d.id,
-        name: d.name,
-      })),
-    );
+      const expectedResult = new OfsView(
+        ofs1.id,
+        ofs1.name,
+        ofs1.websiteUrl,
+        ofs1.phone,
+        ofs1.email,
+        ofs1.departements.map((d) => ({
+          id: d.id,
+          name: d.name,
+          code: d.code,
+        })),
+        ofs1.regions.map((r) => ({ id: r.id, name: r.name })),
+        ofs1.distributors.map((d) => ({
+          id: d.id,
+          name: d.name,
+        })),
+      );
 
-    const result = await useCase.execute({
-      name: ofs1.name,
-      phone: ofs1.phone || undefined,
-      websiteUrl: ofs1.websiteUrl || undefined,
-      email: ofs1.email || undefined,
-      departementNames: ofs1.departements.map((d) => d.name),
-      regionNames: ofs1.regions.map((r) => r.name),
-      distributorIds: ofs1.distributors.map((d) => d.id),
+      const result = await useCase.execute({
+        name: ofs1.name,
+        phone: ofs1.phone || undefined,
+        websiteUrl: ofs1.websiteUrl || undefined,
+        email: ofs1.email || undefined,
+        departementNames: ofs1.departements.map((d) => d.name),
+        regionNames: ofs1.regions.map((r) => r.name),
+        distributorIds: ofs1.distributors.map((d) => d.id),
+      });
+
+      expect(result).toMatchObject(expectedResult);
+      expect(mockRegionRepository.findManyByNames).toHaveBeenCalledTimes(1);
+      expect(mockRegionRepository.findManyByNames).toHaveBeenCalledWith([
+        'Bretagne',
+      ]);
+      expect(mockDepartementRepository.findManyByNames).toHaveBeenCalledTimes(
+        1,
+      );
+      expect(mockDepartementRepository.findManyByNames).toHaveBeenCalledWith([
+        'Finistère',
+        'Paris',
+      ]);
+      expect(mockDistributorRepository.findManyByIds).toHaveBeenCalledTimes(1);
+      expect(mockDistributorRepository.findManyByIds).toHaveBeenCalledWith([
+        distributor1.id,
+      ]);
+      expect(mockOfsRepository.save).toHaveBeenCalledTimes(1);
+      expect(mockOfsRepository.save).toHaveBeenCalledWith(expect.any(Object));
+    });
+  });
+
+  describe('update', () => {
+    it('should update an existing ofs and return its data', async () => {
+      mockOfsRepository.findById.mockResolvedValue(ofs1);
+      mockRegionRepository.findManyByNames.mockReturnValue([bretagne]);
+      mockDepartementRepository.findManyByNames.mockReturnValue([
+        finistere,
+        paris,
+      ]);
+      mockDistributorRepository.findManyByIds.mockReturnValue([distributor1]);
+      mockOfsRepository.save.mockReturnValue(ofs1);
+
+      const expectedResult = new OfsView(
+        ofs1.id,
+        ofs1.name,
+        ofs1.websiteUrl,
+        ofs1.phone,
+        ofs1.email,
+        ofs1.departements.map((d) => ({
+          id: d.id,
+          name: d.name,
+          code: d.code,
+        })),
+        ofs1.regions.map((r) => ({ id: r.id, name: r.name })),
+        ofs1.distributors.map((d) => ({
+          id: d.id,
+          name: d.name,
+        })),
+      );
+
+      const result = await useCase.execute({
+        id: '1234',
+        name: ofs1.name,
+        phone: ofs1.phone || undefined,
+        websiteUrl: ofs1.websiteUrl || undefined,
+        email: ofs1.email || undefined,
+        departementNames: ofs1.departements.map((d) => d.name),
+        regionNames: ofs1.regions.map((r) => r.name),
+        distributorIds: ofs1.distributors.map((d) => d.id),
+      });
+
+      expect(result).toMatchObject(expectedResult);
+      expect(mockOfsRepository.findById).toHaveBeenCalledTimes(1);
+      expect(mockOfsRepository.findById).toHaveBeenCalledWith('1234');
+      expect(mockRegionRepository.findManyByNames).toHaveBeenCalledTimes(1);
+      expect(mockRegionRepository.findManyByNames).toHaveBeenCalledWith([
+        'Bretagne',
+      ]);
+      expect(mockDepartementRepository.findManyByNames).toHaveBeenCalledTimes(
+        1,
+      );
+      expect(mockDepartementRepository.findManyByNames).toHaveBeenCalledWith([
+        'Finistère',
+        'Paris',
+      ]);
+      expect(mockDistributorRepository.findManyByIds).toHaveBeenCalledTimes(1);
+      expect(mockDistributorRepository.findManyByIds).toHaveBeenCalledWith([
+        distributor1.id,
+      ]);
+      expect(mockOfsRepository.save).toHaveBeenCalledTimes(1);
+      expect(mockOfsRepository.save).toHaveBeenCalledWith(ofs1);
     });
 
-    expect(result).toMatchObject(expectedResult);
-    expect(mockRegionRepository.findManyByNames).toHaveBeenCalledTimes(1);
-    expect(mockRegionRepository.findManyByNames).toHaveBeenCalledWith([
-      'Bretagne',
-    ]);
-    expect(mockDepartementRepository.findManyByNames).toHaveBeenCalledTimes(1);
-    expect(mockDepartementRepository.findManyByNames).toHaveBeenCalledWith([
-      'Finistère',
-      'Paris',
-    ]);
-    expect(mockDistributorRepository.findManyByIds).toHaveBeenCalledTimes(1);
-    expect(mockDistributorRepository.findManyByIds).toHaveBeenCalledWith([
-      distributor1.id,
-    ]);
-    expect(mockOfsRepository.save).toHaveBeenCalledTimes(1);
-    expect(mockOfsRepository.save).toHaveBeenCalledWith(ofs1);
+    it('should throw NotFoundException when OFS does not exist', async () => {
+      mockOfsRepository.findById.mockResolvedValue(null);
+
+      try {
+        await useCase.execute({
+          id: '1234',
+          name: ofs1.name,
+          phone: ofs1.phone || undefined,
+          websiteUrl: ofs1.websiteUrl || undefined,
+          email: ofs1.email || undefined,
+          departementNames: ofs1.departements.map((d) => d.name),
+          regionNames: ofs1.regions.map((r) => r.name),
+          distributorIds: ofs1.distributors.map((d) => d.id),
+        });
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+        expect(mockOfsRepository.findById).toHaveBeenCalledTimes(1);
+        expect(mockOfsRepository.findById).toHaveBeenCalledWith('1234');
+        expect(mockOfsRepository.save).not.toHaveBeenCalled();
+      }
+    });
   });
 
   it('should fail if a region does not exist', async () => {

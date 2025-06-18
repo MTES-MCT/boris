@@ -1,4 +1,4 @@
-import { BadRequestException, Inject } from '@nestjs/common';
+import { BadRequestException, Inject, NotFoundException } from '@nestjs/common';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
 import { OfsRepositoryInterface } from 'src/domain/ofs/ofs.repository.interface';
 import { RegionRepositoryInterface } from 'src/domain/region/region.repository.interface';
@@ -24,6 +24,7 @@ export class SaveOfsUsecase {
 
   public async execute(params: SaveOfsParams): Promise<OfsView> {
     const {
+      id,
       name,
       phone,
       websiteUrl,
@@ -32,6 +33,16 @@ export class SaveOfsUsecase {
       departementNames,
       distributorIds,
     } = params;
+
+    let ofs: OfsEntity | null = null;
+
+    if (id) {
+      ofs = await this.ofsRepository.findById(id);
+
+      if (!ofs) {
+        throw new NotFoundException();
+      }
+    }
 
     let existingRegions: RegionEntity[] = [];
     let existingDepartements: DepartementEntity[] = [];
@@ -67,8 +78,16 @@ export class SaveOfsUsecase {
       }
     }
 
-    const ofs = await this.ofsRepository.save(
-      new OfsEntity(
+    if (ofs) {
+      ofs.name = name;
+      ofs.phone = phone || null;
+      ofs.websiteUrl = websiteUrl || null;
+      ofs.email = email || null;
+      ofs.departements = existingDepartements;
+      ofs.regions = existingRegions;
+      ofs.distributors = existingDistributors;
+    } else {
+      ofs = new OfsEntity(
         name,
         phone || null,
         websiteUrl || null,
@@ -76,22 +95,24 @@ export class SaveOfsUsecase {
         existingDepartements,
         existingRegions,
         existingDistributors,
-      ),
-    );
+      );
+    }
+
+    const savedOfs = await this.ofsRepository.save(ofs);
 
     return new OfsView(
-      ofs.id,
-      ofs.name,
-      ofs.websiteUrl,
-      ofs.phone,
-      ofs.email,
-      ofs.departements.map((d) => ({
+      savedOfs.id,
+      savedOfs.name,
+      savedOfs.websiteUrl,
+      savedOfs.phone,
+      savedOfs.email,
+      savedOfs.departements.map((d) => ({
         id: d.id,
         name: d.name,
         code: d.code,
       })),
-      ofs.regions.map((r) => ({ id: r.id, name: r.name })),
-      ofs.distributors.map((d) => ({ id: d.id, name: d.name })),
+      savedOfs.regions.map((r) => ({ id: r.id, name: r.name })),
+      savedOfs.distributors.map((d) => ({ id: d.id, name: d.name })),
     );
   }
 }

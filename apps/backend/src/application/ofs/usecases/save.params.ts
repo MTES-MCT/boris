@@ -1,4 +1,5 @@
 export interface SaveOfsParams {
+  id?: string;
   name: string;
   phone?: string;
   websiteUrl?: string;
