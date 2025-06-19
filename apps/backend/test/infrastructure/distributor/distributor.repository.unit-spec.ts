@@ -45,7 +45,7 @@ describe('DistributorRepository', () => {
     expect(mockDistributorRepository.findOne).toHaveBeenCalledTimes(1);
     expect(mockDistributorRepository.findOne).toHaveBeenCalledWith({
       where: { id: '1234' },
-      relations: ['ofs'],
+      relations: ['ofss'],
     });
   });
 
