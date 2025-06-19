@@ -10,10 +10,10 @@ import {
 import { Request, Response } from 'express';
 import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.requireAuth.filter';
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
-import { SaveOfsDTO } from 'src/infrastructure/ofs/dtos/save.dto';
 import { ApiExcludeController } from '@nestjs/swagger';
 import translations from 'src/views/utils/translations';
 import { CreateOfsUsecase } from 'src/application/ofs/usecases/create.usecase';
+import { CreateOfsDTO } from 'src/infrastructure/ofs/dtos/create.dto';
 
 @ApiExcludeController()
 @Controller('/ofs')
@@ -24,7 +24,7 @@ export class CreateOfsAdminController {
   @UseFilters(LocalRequireAuthFilter)
   @Post('')
   public async createOfs(
-    @Body() body: SaveOfsDTO,
+    @Body() body: CreateOfsDTO,
     @Req() req: Request,
     @Res() res: Response,
   ) {

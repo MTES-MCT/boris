@@ -35,3 +35,11 @@ migration-revert:
 	npm run build -w @boris/backend
 	npm run migration:migrate:revert -w @boris/backend
 	npm run migration:migrate:revert:test -w @boris/backend
+
+seed:
+	npm run seed:regions-departements -w @boris/backend
+	npm run seed:ofs -w @boris/backend
+	npm run seed:user -w @boris/backend
+
+seed-test-data:
+	npm run seed:test-data -w @boris/backend
