@@ -17,7 +17,7 @@
             <a href="{{cell.href}}" target="_blank"
               class="font-medium text-primary-600 dark:text-primary-500 hover:underline inline-flex items-center flex gap-2">
               {{> icons/arrow_up_right width="4" height="4" }}
-              {{cell.text}}
+              {{cell.value}}
             </a>
           </td>
           {{else if cell.isMailto}}
@@ -25,7 +25,7 @@
             <a href="mailto:{{cell.href}}"
               class="font-medium text-primary-600 dark:text-primary-500 hover:underline inline-flex items-center flex gap-2">
               {{> icons/arrow_up_right width="4" height="4" }}
-              {{cell.text}}
+              {{cell.value}}
             </a>
           </td>
           {{else if cell.isArray}}
@@ -49,22 +49,28 @@
               <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                 aria-labelledby="dropdown-button-{{cell.value}}">
                 <li>
-                  <button data-modal-target="{{cell.value}}" data-modal-toggle="{{cell.value}}"
-                    class="block py-2 px-4 w-full text-left font-bold text-red-600 dark:text-red-400 hover:bg-red-200 hover:text-red-700">
-                    {{!-- FIX: Valeur vide ici quand on essaye message.actions.delete :/ --}}
-                    Supprimer
+                  <a href="/{{../../entity}}/{{cell.value}}/update"
+                    class="block py-2 px-4 w-full text-left font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    {{../../translations.actions.update}}
+                  </a>
+                </li>
+                <li>
+                  <button data-modal-target="delete-{{cell.value}}" data-modal-toggle="delete-{{cell.value}}"
+                    class="block py-2 px-4 w-full text-left font-bold text-red-700 dark:text-red-400 hover:bg-red-100 dark:hover:bg-gray-600 dark:hover:text-red-500">
+                    {{../../translations.actions.delete}}
                   </button>
                 </li>
               </ul>
             </div>
-            {{#> modal id=cell.value }}
-            {{> @partial-block id=cell.value name=(rowName row) }}
+
+            {{#> modal id=(concat 'delete-' cell.value) }}
+            {{> (lookup ../../../. 'deleteForm') id=cell.value name=(rowName row)}}
             {{/modal}}
           </td>
-          {{else}}
+          {{else if (ifNot cell.isEntity)}}
           <td class="py-2">
             <span class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              {{cell}}</span>
+              {{cell.value}}</span>
           </td>
           {{/if}}
           {{/each}}

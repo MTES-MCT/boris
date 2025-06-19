@@ -8,12 +8,25 @@ import { RegionView } from 'src/application/region/views/region.view';
 import { DepartementView } from 'src/application/departement/views/departement.view';
 import { UserView } from 'src/application/user/views/user.view';
 
+type Color = 'blue' | 'orange' | 'green' | 'purple';
+
 export type Column<T> = {
   key: keyof T;
   label: string;
-  type: 'string' | 'link' | 'mailto' | 'array' | 'actions';
+  type: 'string' | 'link' | 'mailto' | 'array' | 'actions' | 'entity';
   arrayKey?: keyof RelationnalView;
-  color?: 'blue' | 'orange' | 'green' | 'purple';
+  color?: Color;
+};
+
+export type Row<T> = {
+  value: string | string[] | T;
+  isLink?: boolean;
+  href?: string;
+  isMailto?: boolean;
+  isArray?: boolean;
+  isActions?: boolean;
+  isEntity?: boolean;
+  color?: Color;
 };
 
 export type PageNavigation = {
@@ -45,7 +58,9 @@ export class TableFactory {
       pagination;
 
     return {
-      columns: columns.map((column) => column.label),
+      columns: columns
+        .filter((column) => column.type !== 'entity')
+        .map((column) => column.label),
       rows: this.formatRows(columns, items),
       pagination: {
         totalCount,
@@ -63,23 +78,28 @@ export class TableFactory {
     };
   }
 
-  private static formatRows<T extends Views>(columns: Column<T>[], items: T[]) {
+  private static formatRows<T extends Views>(
+    columns: Column<T>[],
+    items: T[],
+  ): Row<T>[][] {
     return items.map((item) => {
       return columns.map((column) => {
         switch (column.type) {
           case 'string':
-            return item[column.key] || '-';
+            return {
+              value: (item[column.key] as string) || '-',
+            };
           case 'link':
             return {
               isLink: true,
-              href: item[column.key],
-              text: column.label,
+              href: item[column.key] as string,
+              value: column.label,
             };
           case 'mailto':
             return {
               isMailto: true,
               href: `mailto:${item[column.key] as string}`,
-              text: item[column.key],
+              value: (item[column.key] as string) || '-',
             };
           case 'array':
             return {
@@ -93,10 +113,17 @@ export class TableFactory {
           case 'actions':
             return {
               isActions: true,
-              value: item[column.key],
+              value: item[column.key] as string,
+            };
+          case 'entity':
+            return {
+              isEntity: true,
+              value: item,
             };
           default:
-            return item[column.key];
+            return {
+              value: 'hello',
+            };
         }
       });
     });

@@ -12,26 +12,24 @@ import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.re
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
 import { ApiExcludeController } from '@nestjs/swagger';
 import translations from 'src/views/utils/translations';
-import { SaveDistributorUsecase } from 'src/application/distributor/usecases/save.usecase';
-import { SaveDistriburorDTO } from '../../dtos/save.dto';
+import { CreateOfsUsecase } from 'src/application/ofs/usecases/create.usecase';
+import { CreateOfsDTO } from 'src/infrastructure/ofs/dtos/create.dto';
 
 @ApiExcludeController()
-@Controller('/distributors')
-export class SaveDistributorAdminController {
-  constructor(
-    private readonly saveDistributorUsecase: SaveDistributorUsecase,
-  ) {}
+@Controller('/ofs')
+export class CreateOfsAdminController {
+  constructor(private readonly createOfsUsecase: CreateOfsUsecase) {}
 
   @UseGuards(LocalIsAuthenticatedGuard)
   @UseFilters(LocalRequireAuthFilter)
   @Post('')
-  public async saveDistributor(
-    @Body() body: SaveDistriburorDTO,
+  public async createOfs(
+    @Body() body: CreateOfsDTO,
     @Req() req: Request,
     @Res() res: Response,
   ) {
     try {
-      await this.saveDistributorUsecase.execute(body);
+      await this.createOfsUsecase.execute(body);
 
       req.flash(
         translations.success.defaultLabel,
@@ -40,7 +38,7 @@ export class SaveDistributorAdminController {
 
       await new Promise<void>((resolve) => {
         req.session.save(() => {
-          res.redirect(303, '/distributors');
+          res.redirect(303, '/ofs');
           resolve();
         });
       });
@@ -54,7 +52,7 @@ export class SaveDistributorAdminController {
 
       await new Promise<void>((resolve) => {
         req.session.save(() => {
-          res.redirect(303, '/distributors');
+          res.redirect(303, '/ofs');
           resolve();
         });
       });

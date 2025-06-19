@@ -59,6 +59,8 @@ const translations: translations = {
   actions: {
     delete: 'Supprimer',
     closeModal: 'Fermer la modal',
+    update: 'Modifier',
+    view: 'Voir',
   },
   fields: {
     name: 'Nom',
@@ -118,6 +120,11 @@ const translations: translations = {
           key: 'id',
           label: 'Actions',
           type: 'actions',
+        },
+        {
+          key: 'id',
+          label: 'entity',
+          type: 'entity',
         },
       ],
     },

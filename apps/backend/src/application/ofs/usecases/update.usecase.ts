@@ -1,16 +1,15 @@
-import { BadRequestException, Inject } from '@nestjs/common';
+import { BadRequestException, Inject, NotFoundException } from '@nestjs/common';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
 import { OfsRepositoryInterface } from 'src/domain/ofs/ofs.repository.interface';
 import { RegionRepositoryInterface } from 'src/domain/region/region.repository.interface';
-import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
-import { SaveOfsParams } from './save.params';
 import { DistributorRepositoryInterface } from 'src/domain/distributor/distributor.repository.interface';
 import { RegionEntity } from 'src/infrastructure/region/region.entity';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 import { OfsView } from '../views/ofs.view';
+import { UpdateOfsUsecaseParams } from './update.params';
 
-export class SaveOfsUsecase {
+export class UpdateOfsUsecase {
   constructor(
     @Inject('OfsRepositoryInterface')
     private readonly ofsRepository: OfsRepositoryInterface,
@@ -22,8 +21,9 @@ export class SaveOfsUsecase {
     private readonly distributorRepository: DistributorRepositoryInterface,
   ) {}
 
-  public async execute(params: SaveOfsParams): Promise<OfsView> {
+  public async execute(params: UpdateOfsUsecaseParams): Promise<OfsView> {
     const {
+      id,
       name,
       phone,
       websiteUrl,
@@ -32,6 +32,12 @@ export class SaveOfsUsecase {
       departementNames,
       distributorIds,
     } = params;
+
+    const ofs = await this.ofsRepository.findById(id);
+
+    if (!ofs) {
+      throw new NotFoundException();
+    }
 
     let existingRegions: RegionEntity[] = [];
     let existingDepartements: DepartementEntity[] = [];
@@ -67,31 +73,29 @@ export class SaveOfsUsecase {
       }
     }
 
-    const ofs = await this.ofsRepository.save(
-      new OfsEntity(
-        name,
-        phone || null,
-        websiteUrl || null,
-        email || null,
-        existingDepartements,
-        existingRegions,
-        existingDistributors,
-      ),
-    );
+    ofs.name = name;
+    ofs.phone = phone || null;
+    ofs.websiteUrl = websiteUrl || null;
+    ofs.email = email || null;
+    ofs.departements = existingDepartements;
+    ofs.regions = existingRegions;
+    ofs.distributors = existingDistributors;
+
+    const updatedOfs = await this.ofsRepository.save(ofs);
 
     return new OfsView(
-      ofs.id,
-      ofs.name,
-      ofs.websiteUrl,
-      ofs.phone,
-      ofs.email,
-      ofs.departements.map((d) => ({
+      updatedOfs.id,
+      updatedOfs.name,
+      updatedOfs.websiteUrl,
+      updatedOfs.phone,
+      updatedOfs.email,
+      updatedOfs.departements.map((d) => ({
         id: d.id,
         name: d.name,
         code: d.code,
       })),
-      ofs.regions.map((r) => ({ id: r.id, name: r.name })),
-      ofs.distributors.map((d) => ({ id: d.id, name: d.name })),
+      updatedOfs.regions.map((r) => ({ id: r.id, name: r.name })),
+      updatedOfs.distributors.map((d) => ({ id: d.id, name: d.name })),
     );
   }
 }

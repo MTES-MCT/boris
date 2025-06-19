@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/usecases/findManyByNames.usecase';
-import { SaveDistributorUsecase } from 'src/application/distributor/usecases/save.usecase';
-import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
+import { CreateDistributorUsecase } from 'src/application/distributor/usecases/create.usecase';
+import { CreateOfsUsecase } from 'src/application/ofs/usecases/create.usecase';
 import { FindOneRegionByNameUsecase } from 'src/application/region/usecases/findOneByName.usecase';
 import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 
@@ -767,8 +767,8 @@ export class OfsSeed {
   constructor(
     private readonly findManyDepartementsByNamesUsecase: FindManyDepartementsByNamesUsecase,
     private readonly findOneRegionByNameUsecase: FindOneRegionByNameUsecase,
-    private readonly saveDistributorUsecase: SaveDistributorUsecase,
-    private readonly saveOfsUsecase: SaveOfsUsecase,
+    private readonly createDistributorUsecase: CreateDistributorUsecase,
+    private readonly createOfsUsecase: CreateOfsUsecase,
   ) {}
 
   async seed() {
@@ -791,7 +791,7 @@ export class OfsSeed {
       if (ofs.commercialisateur) {
         for (const distributor of setDistributors(ofs)) {
           const newDistributor =
-            await this.saveDistributorUsecase.execute(distributor);
+            await this.createDistributorUsecase.execute(distributor);
 
           distributorIds.push(newDistributor.id || '');
           distributorCount = distributorCount + 1;
@@ -800,7 +800,7 @@ export class OfsSeed {
         ofsWebsiteUrl = null;
       }
 
-      await this.saveOfsUsecase.execute({
+      await this.createOfsUsecase.execute({
         name: ofs.nom,
         phone: ofs.telephone || undefined,
         websiteUrl: ofsWebsiteUrl || undefined,

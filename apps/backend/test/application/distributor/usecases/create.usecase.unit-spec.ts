@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SaveDistributorUsecase } from 'src/application/distributor/usecases/save.usecase';
-import { DistributorView } from 'src/application/distributor/views/distributor.view';
+import { CreateDistributorUsecase } from 'src/application/distributor/usecases/create.usecase';
 import {
-  distributor1,
   mockDistributorRepository,
+  distributor1,
 } from 'test/mocks/integration/distributor';
+import { DistributorView } from 'src/application/distributor/views/distributor.view';
 
-describe('SaveDistributorUsecase', () => {
-  let useCase: SaveDistributorUsecase;
+describe('CreateDistributorUsecase', () => {
+  let useCase: CreateDistributorUsecase;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        SaveDistributorUsecase,
+        CreateDistributorUsecase,
         {
           provide: 'DistributorRepositoryInterface',
           useValue: mockDistributorRepository,
@@ -20,10 +20,10 @@ describe('SaveDistributorUsecase', () => {
       ],
     }).compile();
 
-    useCase = module.get<SaveDistributorUsecase>(SaveDistributorUsecase);
+    useCase = module.get<CreateDistributorUsecase>(CreateDistributorUsecase);
   });
 
-  it('should save a distributor and return its data', async () => {
+  it('should create a distributor and return its data', async () => {
     mockDistributorRepository.save.mockReturnValue(distributor1);
 
     const expectedResult = new DistributorView(
@@ -37,7 +37,7 @@ describe('SaveDistributorUsecase', () => {
       websiteUrl: distributor1.websiteUrl,
     });
 
-    expect(result).toMatchObject(expectedResult);
+    expect(result).toEqual(expectedResult);
     expect(mockDistributorRepository.save).toHaveBeenCalledTimes(1);
     expect(mockDistributorRepository.save).toHaveBeenCalledWith(distributor1);
   });

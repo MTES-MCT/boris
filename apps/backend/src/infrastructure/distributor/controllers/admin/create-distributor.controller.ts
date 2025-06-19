@@ -10,26 +10,28 @@ import {
 import { Request, Response } from 'express';
 import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.requireAuth.filter';
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
-import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
-import { SaveOfsDTO } from 'src/infrastructure/ofs/dtos/save.dto';
+import { CreateDistributorUsecase } from 'src/application/distributor/usecases/create.usecase';
+import { CreateDistributorDTO } from 'src/infrastructure/distributor/dtos/create.dto';
 import { ApiExcludeController } from '@nestjs/swagger';
 import translations from 'src/views/utils/translations';
 
 @ApiExcludeController()
-@Controller('/ofs')
-export class SaveOfsAdminController {
-  constructor(private readonly saveOfsUsecase: SaveOfsUsecase) {}
+@Controller('/distributors')
+export class CreateDistributorAdminController {
+  constructor(
+    private readonly createDistributorUsecase: CreateDistributorUsecase,
+  ) {}
 
   @UseGuards(LocalIsAuthenticatedGuard)
   @UseFilters(LocalRequireAuthFilter)
   @Post('')
-  public async saveOfs(
-    @Body() body: SaveOfsDTO,
+  public async createDistributor(
+    @Body() body: CreateDistributorDTO,
     @Req() req: Request,
     @Res() res: Response,
   ) {
     try {
-      await this.saveOfsUsecase.execute(body);
+      await this.createDistributorUsecase.execute(body);
 
       req.flash(
         translations.success.defaultLabel,
@@ -38,7 +40,7 @@ export class SaveOfsAdminController {
 
       await new Promise<void>((resolve) => {
         req.session.save(() => {
-          res.redirect(303, '/ofs');
+          res.redirect(303, '/distributors');
           resolve();
         });
       });
@@ -52,7 +54,7 @@ export class SaveOfsAdminController {
 
       await new Promise<void>((resolve) => {
         req.session.save(() => {
-          res.redirect(303, '/ofs');
+          res.redirect(303, '/distributors');
           resolve();
         });
       });

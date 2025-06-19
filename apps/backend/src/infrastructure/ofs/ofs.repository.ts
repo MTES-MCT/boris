@@ -35,7 +35,10 @@ export class OfsRepository implements OfsRepositoryInterface {
   }
 
   public async findById(id: string): Promise<OfsEntity | null> {
-    return this.repository.findOneBy({ id });
+    return this.repository.findOne({
+      where: { id },
+      relations: ['departements', 'regions', 'distributors'],
+    });
   }
 
   public async delete(id: string): Promise<void> {

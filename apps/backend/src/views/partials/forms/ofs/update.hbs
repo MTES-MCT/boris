@@ -1,32 +1,33 @@
-<form action="/ofs" method="post">
+<form method="POST" action="/ofs/{{ofs.id}}?_method=PUT">
   <div class="grid gap-4 mb-4 sm:grid-cols-2">
     <div>
       <label for="name"
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.name}}</label>
       <input type="text" name="name" id="name"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        placeholder="Nom de l'OFS" required>
+        placeholder="Nom de l'OFS" required value="{{ofs.name}}">
     </div>
     <div>
       <label for="phone"
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.phone}}</label>
       <input type="text" name="phone" id="phone"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        placeholder="0102030405">
+        placeholder="0102030405" value="{{ofs.phone}}">
     </div>
     <div>
       <label for="websiteUrl"
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.websiteUrl}}</label>
       <input type="text" name="websiteUrl" id="websiteUrl"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        placeholder="https://domaine.fr" pattern="https?://.+" title="{{translations.fields.websiteUrlInputHint}}">
+        placeholder="https://domaine.fr" pattern="https?://.+" title="{{translations.fields.websiteUrlInputHint}}"
+        value="{{ofs.websiteUrl}}">
     </div>
     <div>
       <label for="email"
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.email}}</label>
       <input type="text" name="email" id="email"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        placeholder="ofs@domaine.fr">
+        placeholder="ofs@domaine.fr" value="{{ofs.email}}">
     </div>
   </div>
 
@@ -37,7 +38,8 @@
       <select multiple id="regionNames" name="regionNames[]" size="10"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         {{#each regions.items as |region|}}
-        <option value="{{region.name}}">{{region.name}}</option>
+        <option value="{{region.name}}" {{#if (contains region.id (entitiesToIds ../ofs.regions))}}selected{{/if}}>
+          {{region.name}}</option>
         {{/each}}
       </select>
     </div>
@@ -48,7 +50,9 @@
       <select multiple id="departementNames" name="departementNames[]" size="10"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         {{#each departements.items as |departement|}}
-        <option value="{{departement.name}}">{{departement.code}} - {{departement.name}}</option>
+        <option value="{{departement.name}}" {{#if (contains departement.id (entitiesToIds
+          ../ofs.departements))}}selected{{/if}}>
+          {{departement.code}} - {{departement.name}}</option>
         {{/each}}
       </select>
     </div>
@@ -60,7 +64,9 @@
     <select multiple id="distributorIds" name="distributorIds[]" size="10"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
       {{#each distributors.items as |distributor|}}
-      <option value="{{distributor.id}}">{{distributor.name}}</option>
+      <option value="{{distributor.id}}" {{#if (contains distributor.id (entitiesToIds
+        ../ofs.distributors))}}selected{{/if}}>
+        {{distributor.name}}</option>
       {{/each}}
     </select>
   </div>

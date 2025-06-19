@@ -1,6 +1,6 @@
 import { validate } from 'class-validator';
 import { MAX_PAGE_SIZE } from 'src/application/pagination/pagination';
-import { PaginationDTO } from 'src/infrastructure/pagination/pagination.dto';
+import { PaginationDTO } from 'src/infrastructure/common/dtos/pagination.dto';
 
 describe('PaginationDTO', () => {
   it('should be valid', async () => {
