@@ -1,7 +1,7 @@
 <script lang="ts">
   import Page from '$components/common/SideNavPage/Page.svelte';
   import Hero from '$components/common/StepPage/Hero.svelte';
-  import { steps } from './content.js';
+  import { steps } from './content';
   import Promesses from '$components/common/StepPage/Promesses.svelte';
   import Promess from '$components/common/StepPage/Promess.svelte';
 
