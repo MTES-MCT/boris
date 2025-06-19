@@ -5,7 +5,7 @@ import { DepartementEntity } from 'src/infrastructure/departement/departement.en
 import { Ofs, setDistributors } from '../ofs/seed';
 import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/usecases/findManyByNames.usecase';
 import { FindOneRegionByNameUsecase } from 'src/application/region/usecases/findOneByName.usecase';
-import { SaveDistributorUsecase } from 'src/application/distributor/usecases/save.usecase';
+import { CreateDistributorUsecase } from 'src/application/distributor/usecases/create.usecase';
 import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
 
 const regions = [
@@ -48,7 +48,7 @@ export class TestDataSeed {
     private readonly saveDepartementUsecase: SaveDepartementUsecase,
     private readonly findManyDepartementsByNamesUsecase: FindManyDepartementsByNamesUsecase,
     private readonly findOneRegionByNameUsecase: FindOneRegionByNameUsecase,
-    private readonly saveDistributorUsecase: SaveDistributorUsecase,
+    private readonly createDistributorUsecase: CreateDistributorUsecase,
     private readonly saveOfsUsecase: SaveOfsUsecase,
   ) {}
 
@@ -106,7 +106,7 @@ export class TestDataSeed {
       if (ofs.commercialisateur) {
         for (const distributor of setDistributors(ofs)) {
           const newDistributor =
-            await this.saveDistributorUsecase.execute(distributor);
+            await this.createDistributorUsecase.execute(distributor);
 
           distributorIds.push(newDistributor.id);
           distributorCount = distributorCount + 1;

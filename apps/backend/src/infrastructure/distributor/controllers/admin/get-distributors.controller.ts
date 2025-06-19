@@ -12,7 +12,7 @@ import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.re
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
 import translations from 'src/views/utils/translations';
 import { TableFactory } from 'src/views/factories/table.factories';
-import { PaginationDTO } from 'src/infrastructure/pagination/pagination.dto';
+import { PaginationDTO } from 'src/infrastructure/common/dtos/pagination.dto';
 import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases/findAll.usecase';
 import { ApiExcludeController } from '@nestjs/swagger';
 

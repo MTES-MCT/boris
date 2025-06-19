@@ -1,13 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export class SaveDistriburorDTO {
+export class CreateDistributorDTO {
   @ApiProperty()
   @IsString()
+  @IsNotEmpty()
   public name: string;
 
   @ApiProperty()
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   public websiteUrl: string;
 }

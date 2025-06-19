@@ -37,11 +37,7 @@ export class UpdateOfsAdminController {
   @UseGuards(LocalIsAuthenticatedGuard)
   @UseFilters(LocalRequireAuthFilter)
   @Get(':id/update')
-  public async getOfsUpdate(
-    @Param() params: IdDTO,
-    @Req() req: Request,
-    @Res() res: Response,
-  ) {
+  public async getOfsUpdate(@Param() params: IdDTO, @Res() res: Response) {
     const ofs = await this.findOfsByIdUsecase.execute(params);
 
     const regions =

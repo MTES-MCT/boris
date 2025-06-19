@@ -60,6 +60,7 @@ const translations: translations = {
     delete: 'Supprimer',
     closeModal: 'Fermer la modal',
     update: 'Modifier',
+    view: 'Voir',
   },
   fields: {
     name: 'Nom',

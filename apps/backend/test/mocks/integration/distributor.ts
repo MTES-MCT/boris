@@ -15,9 +15,9 @@ export const distributor2 = new DistributorEntity(
 export const mockDistributorRepository = {
   save: jest.fn(),
   findBy: jest.fn(),
-  findOneBy: jest.fn(),
   findAll: jest.fn(),
   findManyByIds: jest.fn(),
   findById: jest.fn(),
+  findOne: jest.fn(),
   delete: jest.fn(),
 };
