@@ -9,6 +9,8 @@ import { CreateDistributorAdminController } from './controllers/admin/create-dis
 import { GetDistributorsAdminController } from './controllers/admin/get-distributors.controller';
 import { DeleteDistributorAdminController } from './controllers/admin/delete-distributor.controller';
 import { DistributorRepository } from './distributor.repository';
+import { UpdateDistributorAdminController } from './controllers/admin/update-distributor.controller';
+import { UpdateDistributorUsecase } from 'src/application/distributor/usecases/update.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([DistributorEntity])],
@@ -16,9 +18,11 @@ import { DistributorRepository } from './distributor.repository';
     CreateDistributorAdminController,
     GetDistributorsAdminController,
     DeleteDistributorAdminController,
+    UpdateDistributorAdminController,
   ],
   providers: [
     CreateDistributorUsecase,
+    UpdateDistributorUsecase,
     FindAllDistributorsUsecase,
     FindManyDistributorsByIdsUsecase,
     DeleteDistributorUsecase,

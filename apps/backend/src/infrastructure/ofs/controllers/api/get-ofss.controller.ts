@@ -3,7 +3,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FindAllOfssUsecase } from 'src/application/ofs/usecases/findAll.usecase';
 import { MAX_PAGE_SIZE } from 'src/application/pagination/pagination';
 import { ApiPaginatedResponse } from 'src/infrastructure/decorators/apiPaginatedResponse';
-import { PaginationDTO } from 'src/infrastructure/pagination/pagination.dto';
+import { PaginationDTO } from 'src/infrastructure/common/dtos/pagination.dto';
 import { OfsView } from 'src/application/ofs/views/ofs.view';
 
 @Controller('api/ofss')
