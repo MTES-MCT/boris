@@ -1,35 +1,35 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DistributorEntity } from './distributor.entity';
-import { DistributorRepository } from './distributor.repository';
-import { SaveDistributorUsecase } from 'src/application/distributor/usecases/save.usecase';
+import { CreateDistributorUsecase } from 'src/application/distributor/usecases/create.usecase';
 import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases/findAll.usecase';
 import { FindManyDistributorsByIdsUsecase } from 'src/application/distributor/usecases/findManyByIds.usecase';
-import { GetDistributorsAdminController } from './controllers/admin/get-distributors.controller';
-import { SaveDistributorAdminController } from './controllers/admin/save-distributor.controller';
 import { DeleteDistributorUsecase } from 'src/application/distributor/usecases/delete.usecase';
+import { CreateDistributorAdminController } from './controllers/admin/create-distributor.controller';
+import { GetDistributorsAdminController } from './controllers/admin/get-distributors.controller';
 import { DeleteDistributorAdminController } from './controllers/admin/delete-distributor.controller';
+import { DistributorRepository } from './distributor.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([DistributorEntity])],
   controllers: [
+    CreateDistributorAdminController,
     GetDistributorsAdminController,
-    SaveDistributorAdminController,
     DeleteDistributorAdminController,
   ],
   providers: [
+    CreateDistributorUsecase,
+    FindAllDistributorsUsecase,
+    FindManyDistributorsByIdsUsecase,
+    DeleteDistributorUsecase,
     {
       provide: 'DistributorRepositoryInterface',
       useClass: DistributorRepository,
     },
-    SaveDistributorUsecase,
-    FindAllDistributorsUsecase,
-    FindManyDistributorsByIdsUsecase,
-    DeleteDistributorUsecase,
   ],
   exports: [
     'DistributorRepositoryInterface',
-    SaveDistributorUsecase,
+    CreateDistributorUsecase,
     FindAllDistributorsUsecase,
     FindManyDistributorsByIdsUsecase,
     DeleteDistributorUsecase,

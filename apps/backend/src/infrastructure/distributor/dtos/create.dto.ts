@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
 
-export class SaveDistriburorDTO {
+export class CreateDistributorDTO {
   @ApiProperty()
   @IsString()
   public name: string;

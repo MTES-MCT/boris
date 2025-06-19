@@ -10,28 +10,28 @@ import {
 import { Request, Response } from 'express';
 import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.requireAuth.filter';
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
+import { CreateDistributorUsecase } from 'src/application/distributor/usecases/create.usecase';
+import { CreateDistributorDTO } from 'src/infrastructure/distributor/dtos/create.dto';
 import { ApiExcludeController } from '@nestjs/swagger';
 import translations from 'src/views/utils/translations';
-import { SaveDistributorUsecase } from 'src/application/distributor/usecases/save.usecase';
-import { SaveDistriburorDTO } from '../../dtos/save.dto';
 
 @ApiExcludeController()
 @Controller('/distributors')
-export class SaveDistributorAdminController {
+export class CreateDistributorAdminController {
   constructor(
-    private readonly saveDistributorUsecase: SaveDistributorUsecase,
+    private readonly createDistributorUsecase: CreateDistributorUsecase,
   ) {}
 
   @UseGuards(LocalIsAuthenticatedGuard)
   @UseFilters(LocalRequireAuthFilter)
   @Post('')
-  public async saveDistributor(
-    @Body() body: SaveDistriburorDTO,
+  public async createDistributor(
+    @Body() body: CreateDistributorDTO,
     @Req() req: Request,
     @Res() res: Response,
   ) {
     try {
-      await this.saveDistributorUsecase.execute(body);
+      await this.createDistributorUsecase.execute(body);
 
       req.flash(
         translations.success.defaultLabel,
