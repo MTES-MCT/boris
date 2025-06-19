@@ -40,7 +40,7 @@ export class DistributorRepository implements DistributorRepositoryInterface {
   public async findById(id: string): Promise<DistributorEntity | null> {
     return this.repository.findOne({
       where: { id },
-      relations: ['ofs'],
+      relations: ['ofss'],
     });
   }
 

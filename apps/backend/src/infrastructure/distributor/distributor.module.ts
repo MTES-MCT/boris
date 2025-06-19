@@ -11,6 +11,7 @@ import { DeleteDistributorAdminController } from './controllers/admin/delete-dis
 import { DistributorRepository } from './distributor.repository';
 import { UpdateDistributorAdminController } from './controllers/admin/update-distributor.controller';
 import { UpdateDistributorUsecase } from 'src/application/distributor/usecases/update.usecase';
+import { FindDistributorByIdUsecase } from 'src/application/distributor/usecases/findById.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([DistributorEntity])],
@@ -26,6 +27,7 @@ import { UpdateDistributorUsecase } from 'src/application/distributor/usecases/u
     FindAllDistributorsUsecase,
     FindManyDistributorsByIdsUsecase,
     DeleteDistributorUsecase,
+    FindDistributorByIdUsecase,
     {
       provide: 'DistributorRepositoryInterface',
       useClass: DistributorRepository,
@@ -34,6 +36,8 @@ import { UpdateDistributorUsecase } from 'src/application/distributor/usecases/u
   exports: [
     'DistributorRepositoryInterface',
     CreateDistributorUsecase,
+    UpdateDistributorUsecase,
+    FindDistributorByIdUsecase,
     FindAllDistributorsUsecase,
     FindManyDistributorsByIdsUsecase,
     DeleteDistributorUsecase,
