@@ -14,6 +14,7 @@ import { DeleteOfsUsecase } from 'src/application/ofs/usecases/delete.usecase';
 import { DeleteOfsAdminController } from './controllers/admin/delete-ofs.controller';
 import { UpdateOfsAdminController } from './controllers/admin/update-ofs.controller';
 import { FindOfsByIdUsecase } from 'src/application/ofs/usecases/findById.usecase';
+import { UpdateOfsUsecase } from 'src/application/ofs/usecases/update.usecase';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { FindOfsByIdUsecase } from 'src/application/ofs/usecases/findById.usecas
     FindAllOfssUsecase,
     DeleteOfsUsecase,
     FindOfsByIdUsecase,
+    UpdateOfsUsecase,
   ],
   exports: [
     'OfsRepositoryInterface',
