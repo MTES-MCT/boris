@@ -37,14 +37,15 @@ describe('DistributorRepository', () => {
   });
 
   it('should find a distributor by id', async () => {
-    mockDistributorRepository.findOneBy.mockResolvedValue(distributor1);
+    mockDistributorRepository.findOne.mockResolvedValue(distributor1);
 
     const result = await distributorRepository.findById('1234');
 
     expect(result).toMatchObject(distributor1);
-    expect(mockDistributorRepository.findOneBy).toHaveBeenCalledTimes(1);
-    expect(mockDistributorRepository.findOneBy).toHaveBeenCalledWith({
-      id: '1234',
+    expect(mockDistributorRepository.findOne).toHaveBeenCalledTimes(1);
+    expect(mockDistributorRepository.findOne).toHaveBeenCalledWith({
+      where: { id: '1234' },
+      relations: ['ofs'],
     });
   });
 
