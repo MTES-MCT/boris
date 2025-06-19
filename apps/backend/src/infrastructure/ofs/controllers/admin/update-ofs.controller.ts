@@ -20,15 +20,15 @@ import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.u
 import { FindAllDepartementsUsecase } from 'src/application/departement/usecases/findAll.usecase';
 import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases/findAll.usecase';
 import { DEFAULT_PAGINATION } from 'src/application/pagination/pagination';
-import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
-import { SaveOfsDTO } from '../../dtos/save.dto';
+import { UpdateOfsDTO } from 'src/infrastructure/ofs/dtos/update.dto';
+import { UpdateOfsUsecase } from 'src/application/ofs/usecases/update.usecase';
 
 @ApiExcludeController()
 @Controller('/ofs')
 export class UpdateOfsAdminController {
   constructor(
     private readonly findOfsByIdUsecase: FindOfsByIdUsecase,
-    private readonly saveOfsUsecase: SaveOfsUsecase,
+    private readonly updateOfsUsecase: UpdateOfsUsecase,
     private readonly findAllRegionsUsecase: FindAllRegionsUsecase,
     private readonly findAllDepartementsUsecase: FindAllDepartementsUsecase,
     private readonly findAllDistributorsUsecase: FindAllDistributorsUsecase,
@@ -75,12 +75,12 @@ export class UpdateOfsAdminController {
   @Put(':id')
   public async updateOfs(
     @Param() params: IdDTO,
-    @Body() body: SaveOfsDTO,
+    @Body() body: UpdateOfsDTO,
     @Req() req: Request,
     @Res() res: Response,
   ) {
     try {
-      await this.saveOfsUsecase.execute({ id: params.id, ...body });
+      await this.updateOfsUsecase.execute({ id: params.id, ...body });
 
       req.flash(
         translations.success.defaultLabel,

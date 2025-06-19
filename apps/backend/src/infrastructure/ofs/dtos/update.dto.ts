@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class SaveOfsDTO {
+export class UpdateOfsDTO {
   @ApiProperty()
   @IsString()
+  @IsNotEmpty()
   public name: string;
 
   @ApiProperty()

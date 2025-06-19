@@ -1,5 +1,4 @@
-export interface SaveOfsParams {
-  id?: string;
+export interface CreateOfsUsecaseParams {
   name: string;
   phone?: string;
   websiteUrl?: string;

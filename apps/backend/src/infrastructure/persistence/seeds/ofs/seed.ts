@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/usecases/findManyByNames.usecase';
 import { CreateDistributorUsecase } from 'src/application/distributor/usecases/create.usecase';
-import { SaveOfsUsecase } from 'src/application/ofs/usecases/save.usecase';
+import { CreateOfsUsecase } from 'src/application/ofs/usecases/create.usecase';
 import { FindOneRegionByNameUsecase } from 'src/application/region/usecases/findOneByName.usecase';
 import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 
@@ -768,7 +768,7 @@ export class OfsSeed {
     private readonly findManyDepartementsByNamesUsecase: FindManyDepartementsByNamesUsecase,
     private readonly findOneRegionByNameUsecase: FindOneRegionByNameUsecase,
     private readonly createDistributorUsecase: CreateDistributorUsecase,
-    private readonly saveOfsUsecase: SaveOfsUsecase,
+    private readonly createOfsUsecase: CreateOfsUsecase,
   ) {}
 
   async seed() {
@@ -800,7 +800,7 @@ export class OfsSeed {
         ofsWebsiteUrl = null;
       }
 
-      await this.saveOfsUsecase.execute({
+      await this.createOfsUsecase.execute({
         name: ofs.nom,
         phone: ofs.telephone || undefined,
         websiteUrl: ofsWebsiteUrl || undefined,
