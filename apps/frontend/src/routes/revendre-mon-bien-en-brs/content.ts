@@ -39,7 +39,7 @@ export const steps: Step[] = [
           </p>
 
           <details>
-            <summary>
+            <summary class="fr-mb-2w">
               Voir la liste des diagnostics obligatoires
             </summary>
             <ul>
@@ -199,10 +199,9 @@ export const steps: Step[] = [
           </p>
           <a
             href="/simulateur-eligibilite"
-            class="fr-btn fr-btn--lg">
+            class="fr-btn fr-btn--lg fr-mb-3w">
             Simuler mon éligibilité
           </a>
-          <p></p>
           <p>
             Votre acheteur achète dans les mêmes conditions que vous à l’époque : il
             faut que ce logement devienne sa résidence principale, sa plus-value
@@ -315,24 +314,81 @@ export const steps: Step[] = [
             propriétaire ! Vous recevrez les fonds issus de la vente sur votre
             compte bancaire sous quelques jours.
           </p>
+          <p>
+            Nous vous proposons un template d’offre préalable de cession des droits
+            réels entre preneurs. Il s’agit d’un acte rédigé par un notaire, dédié à
+            la revente d’un bien en Bail Réel Solidaire.
+          </p>
+          <a
+            href="https://docs.google.com/document/d/1iEUKObH-4JPEYVzrpI50M3LTN9yl65KE/edit?tab=t.0#bookmark=id.taxh8lmhokue"
+            class="fr-btn fr-btn--lg"
+            target="_blank">
+            Télécharger un template de notaire dédié à la revente en BRS
+          </a>
         `,
       },
       {
         id: 'etape-6',
-        title: 'Que se passe-t-il si je ne trouve pas d’acheteur ?',
+        title: 'Les difficultés que vous pouvez rencontrer',
         content: `
           <p>
-            Lorsque vous avez acheté votre bien, vous avez peut-être remarqué une
-            clause de garantie de rachat dans votre contrat.
+            Revendre un logement et trouver le bon acheteur n’est pas toujours facile. Dans le cas du bail réel solidaire (BRS), vous pouvez faire face à deux difficultés majeures :
           </p>
-          <p class="fr-m-0">
-            En effet, l’OFS s’engage à racheter le bien immobilier en cas de départ
-            définitif (ou de non-respect des conditions d’occupation). C’est
-            sécurisant pour vous mais attention : le prix de rachat est fixé lors de
-            la signature du contrat. La plupart du temps, vous avez plutôt intérêt à
-            chercher un acheteur directement qui puisse vous racheter le bien à un
-            meilleur prix.
+          <ol>
+            <li>
+              Vous ne trouvez aucun acheteur pour votre bien
+            </li>
+            <li>
+              Vous trouvez un acheteur mais l’Organisme de Foncier Solidaire (OFS) refuse de l’agréer
+            </li>
+          </ol>
+          <p>
+            Dans les deux cas, pas de panique, l’OFS pourra vous aider ou vous
+            indemniser selon certaines conditions : explorons ensemble les deux
+            scénarios.
           </p>
+          <ul>
+            <li>
+              <p class="fr-mb-0"><b>Si vous ne trouvez aucun acheteur potentiel :</b></p>
+              <p class="fr-mb-1w">
+                Vous pouvez alors demander à l’OFS de vous proposer un acquéreur
+                qui respecte les conditions prévues par la loi. Le prix de vente doit
+                alors être calculé selon les règles fixées dans le bail.
+                Si l’OFS ne trouve pas d’acquéreur dans un délai de six mois, ou si l’agrément est refusé
+                lors d’une donation, le bail réel solidaire (BRS) peut être résilié d’un commun accord.
+                Dans ce cas, le preneur (l’occupant) reçoit une indemnisation correspondant à la valeur de ses droits,
+                selon les modalités prévues dans le bail (souvent dans une section intitulée “Résiliation du bail” ou “Fin de bail”).
+                C’est sécurisant pour vous mais attention : <b>le montant de l’indemnisation est la plupart du temps inférieur à votre prix d’achat</b>.
+                Ce montant est précisé dans le bail que vous avez signé au moment de l’acquisition de votre logement.
+              </p>
+              <p>
+                Vous avez donc plutôt intérêt à chercher un acheteur directement qui
+                puisse vous racheter le bien à un meilleur prix !
+              </p>
+            </li>
+            <li>
+              <p class="fr-mb-0"><b>Si vous trouvez un acheteur mais que l’OFS refuse de l’agréer :</b></p>
+              <p class="fr-mb-1w">
+                Dans certains cas, l’OFS peut refuser l’acheteur pour différentes raisons, par exemple parce qu’il ne respecte pas les conditions d’éligibilité au Bail Réel Solidaire ou parce qu’il n’a pas une capacité de financement suffisante. 
+              </p>
+              <p class="fr-mb-0">Plusieurs options sont alors possibles :</p>
+              <ul>
+                <li>
+                  Vous pouvez alors rechercher un autre acheteur et le soumettre à l’OFS pour agréement et ce nouveau ménage est accepté.
+                </li>
+                <li>
+
+                Vous pouvez aussi choisir de demander à l’OFS de vous proposer un autre acquéreur qui respecte les conditions prévues par la loi. Le prix de vente doit alors être calculé selon les règles fixées dans le bail.
+                </li>
+                <li>
+                  Dans un délai de 6 mois, l’OFS ne trouve pas d’acquéreur, le bail réel solidaire (BRS) peut être résilié d’un commun accord. Dans ce cas, le preneur (l’occupant) reçoit une indemnisation correspondant à la valeur de ses droits, selon les modalités prévues dans le bail (souvent dans une section intitulée “Résiliation du bail” ou “Fin de bail”).
+                  <br/>
+                  C’est sécurisant pour vous mais attention : <b>le montant de l’indemnisation est la plupart du temps inférieur à votre prix d’achat</b>. Ce montant est précisé dans le bail que vous avez signé au moment de l’acquisition de votre logement. 
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <p class="fr-m-0"></p>
         `,
       },
     ],
