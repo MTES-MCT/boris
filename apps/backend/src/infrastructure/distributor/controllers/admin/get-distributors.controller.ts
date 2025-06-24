@@ -7,7 +7,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { MAX_PAGE_SIZE } from 'src/application/pagination/pagination';
+import { MAX_PAGE_SIZE } from 'src/application/common/pagination';
 import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.requireAuth.filter';
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
 import translations from 'src/views/utils/translations';

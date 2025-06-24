@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { OfsView } from 'src/application/ofs/views/ofs.view';
-import { Pagination } from 'src/application/pagination/pagination';
+import { Pagination } from 'src/application/common/pagination';
 import * as request from 'supertest';
 import { App } from 'supertest/types';
 import { setupTestingApp } from 'test/config/setup.e2e';

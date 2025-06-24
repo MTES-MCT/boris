@@ -96,9 +96,4 @@ export const statistics: Statistic[] = [
     content:
       'après simulation d’éligibilité pour avoir les clés de la poursuite de leur projets (dont 65% ne connaissait pas le BRS avant BoRiS)',
   },
-  {
-    amount: '70',
-    subtitle: 'organismes de foncier solidaire partenaires',
-    content: '',
-  },
 ];

@@ -4,7 +4,7 @@ import { In, Repository } from 'typeorm';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
 import { DepartementEntity } from './departement.entity';
 import { DepartementInterface } from 'src/domain/departement/departement.interface';
-import { PaginationProps } from 'src/domain/pagination/paginationProps';
+import { PaginationProps } from 'src/domain/common/paginationProps';
 
 @Injectable()
 export class DepartementRepository implements DepartementRepositoryInterface {

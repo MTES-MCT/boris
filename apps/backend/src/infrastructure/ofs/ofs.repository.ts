@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { OfsEntity } from './ofs.entity';
 import { OfsInterface } from 'src/domain/ofs/ofs.interface';
 import { OfsRepositoryInterface } from 'src/domain/ofs/ofs.repository.interface';
-import { PaginationProps } from 'src/domain/pagination/paginationProps';
+import { PaginationProps } from 'src/domain/common/paginationProps';
 
 @Injectable()
 export class OfsRepository implements OfsRepositoryInterface {

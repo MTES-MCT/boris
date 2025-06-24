@@ -1,4 +1,4 @@
-import { Pagination } from 'src/application/pagination/pagination';
+import { Pagination } from 'src/application/common/pagination';
 import { OfsRepositoryInterface } from 'src/domain/ofs/ofs.repository.interface';
 import { OfsView } from '../views/ofs.view';
 import { Inject } from '@nestjs/common';

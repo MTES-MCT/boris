@@ -4,7 +4,7 @@ import { DepartementView } from 'src/application/departement/views/departement.v
 import {
   DEFAULT_PAGINATION,
   Pagination,
-} from 'src/application/pagination/pagination';
+} from 'src/application/common/pagination';
 import {
   finistere,
   mockDepartementRepository,

@@ -1,5 +1,5 @@
 import { validate } from 'class-validator';
-import { MAX_PAGE_SIZE } from 'src/application/pagination/pagination';
+import { MAX_PAGE_SIZE } from 'src/application/common/pagination';
 import { PaginationDTO } from 'src/infrastructure/common/dtos/pagination.dto';
 
 describe('PaginationDTO', () => {

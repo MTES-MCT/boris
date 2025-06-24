@@ -1,8 +1,5 @@
 import { OfsView } from 'src/application/ofs/views/ofs.view';
-import {
-  MAX_PAGE_SIZE,
-  Pagination,
-} from 'src/application/pagination/pagination';
+import { MAX_PAGE_SIZE, Pagination } from 'src/application/common/pagination';
 
 export const ofss: Pagination<OfsView> = {
   items: [

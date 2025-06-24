@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { Pagination } from 'src/application/pagination/pagination';
+import { Pagination } from 'src/application/common/pagination';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
 import { DepartementView } from '../views/departement.view';
 import { FindAllDepartementsParams } from './findAll.params';

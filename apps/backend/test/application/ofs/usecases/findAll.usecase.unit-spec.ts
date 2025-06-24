@@ -4,7 +4,7 @@ import { OfsView } from 'src/application/ofs/views/ofs.view';
 import {
   DEFAULT_PAGINATION,
   Pagination,
-} from 'src/application/pagination/pagination';
+} from 'src/application/common/pagination';
 import { ofs1, ofs2, mockOfsRepository } from 'test/mocks/integration/ofs';
 
 describe('FindAllOfssUsecase', () => {

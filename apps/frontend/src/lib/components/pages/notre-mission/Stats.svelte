@@ -2,7 +2,12 @@
   import Section from '$components/common/Section.svelte';
   import Disclaimer from '$components/common/Disclaimer.svelte';
   import type { Statistic } from '$lib/utils/definitions';
-  import { statistics } from '$lib/utils/constants';
+
+  type Props = {
+    statistics: Statistic[];
+  };
+
+  const { statistics }: Props = $props();
 </script>
 
 <Section id="statistiques">
