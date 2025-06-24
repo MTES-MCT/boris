@@ -4,7 +4,7 @@ import { In, Repository } from 'typeorm';
 import { RegionRepositoryInterface } from 'src/domain/region/region.repository.interface';
 import { RegionEntity } from './region.entity';
 import { RegionInterface } from 'src/domain/region/region.interface';
-import { PaginationProps } from 'src/domain/pagination/paginationProps';
+import { PaginationProps } from 'src/domain/common/paginationProps';
 
 @Injectable()
 export class RegionRepository implements RegionRepositoryInterface {

@@ -19,7 +19,7 @@ import translations from 'src/views/utils/translations';
 import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.usecase';
 import { FindAllDepartementsUsecase } from 'src/application/departement/usecases/findAll.usecase';
 import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases/findAll.usecase';
-import { DEFAULT_PAGINATION } from 'src/application/pagination/pagination';
+import { DEFAULT_PAGINATION } from 'src/application/common/pagination';
 import { UpdateOfsDTO } from 'src/infrastructure/ofs/dtos/update.dto';
 import { UpdateOfsUsecase } from 'src/application/ofs/usecases/update.usecase';
 

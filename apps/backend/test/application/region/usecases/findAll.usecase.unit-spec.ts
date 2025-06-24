@@ -4,7 +4,7 @@ import { RegionView } from 'src/application/region/views/region.view';
 import {
   DEFAULT_PAGINATION,
   Pagination,
-} from 'src/application/pagination/pagination';
+} from 'src/application/common/pagination';
 import {
   bretagne,
   ileDeFrance,

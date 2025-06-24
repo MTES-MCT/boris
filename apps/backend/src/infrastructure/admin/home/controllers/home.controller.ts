@@ -8,7 +8,7 @@ import { FindAllOfssUsecase } from 'src/application/ofs/usecases/findAll.usecase
 import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.usecase';
 import { FindAllDepartementsUsecase } from 'src/application/departement/usecases/findAll.usecase';
 import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases/findAll.usecase';
-import { DEFAULT_PAGINATION } from 'src/application/pagination/pagination';
+import { DEFAULT_PAGINATION } from 'src/application/common/pagination';
 
 @ApiExcludeController()
 @Controller('/')

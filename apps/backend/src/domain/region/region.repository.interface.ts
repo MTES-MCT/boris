@@ -1,5 +1,5 @@
 import { RegionEntity } from 'src/infrastructure/region/region.entity';
-import { PaginationProps } from '../pagination/paginationProps';
+import { PaginationProps } from '../common/paginationProps';
 
 export interface RegionRepositoryInterface {
   save(region: RegionEntity): Promise<RegionEntity>;

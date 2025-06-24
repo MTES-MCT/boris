@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray } from 'class-validator';
-import { PaginationProps } from 'src/domain/pagination/paginationProps';
+import { PaginationProps } from 'src/domain/common/paginationProps';
 
 export const MAX_PAGE_SIZE = 150;
 export const DEFAULT_PAGINATION = {

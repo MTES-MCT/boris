@@ -1,5 +1,5 @@
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
-import { PaginationProps } from '../pagination/paginationProps';
+import { PaginationProps } from '../common/paginationProps';
 
 export interface DepartementRepositoryInterface {
   save(departement: DepartementEntity): Promise<DepartementEntity>;

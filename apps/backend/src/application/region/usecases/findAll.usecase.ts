@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 import { RegionRepositoryInterface } from 'src/domain/region/region.repository.interface';
 import { FindAllRegionsParams } from './findAll.params';
 import { RegionView } from '../views/region.view';
-import { Pagination } from 'src/application/pagination/pagination';
+import { Pagination } from 'src/application/common/pagination';
 
 export class FindAllRegionsUsecase {
   constructor(

@@ -1,5 +1,5 @@
-import { Pagination } from 'src/application/pagination/pagination';
-import { PaginationProps } from 'src/domain/pagination/paginationProps';
+import { Pagination } from 'src/application/common/pagination';
+import { PaginationProps } from 'src/domain/common/paginationProps';
 
 describe('Pagination', () => {
   it('should generate valid pagination on first page', () => {
