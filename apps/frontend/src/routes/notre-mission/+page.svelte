@@ -1,9 +1,18 @@
-<script>
+<script lang="ts">
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Hero from '$components/pages/notre-mission/Hero.svelte';
   import Team from '$components/pages/notre-mission/Team.svelte';
   import Chronology from '$components/pages/notre-mission/Chronology.svelte';
   import Stats from '$components/pages/notre-mission/Stats.svelte';
+  import type { Statistic } from '$lib/utils/definitions';
+
+  type Props = {
+    data: {
+      statistics: Statistic[];
+    };
+  };
+
+  const { data }: Props = $props();
 </script>
 
 <svelte:head>
@@ -17,5 +26,5 @@
   <Hero />
   <Team />
   <Chronology />
-  <Stats />
+  <Stats statistics={data.statistics} />
 </GradientBackgroundWrapper>
