@@ -1,4 +1,4 @@
-import { PaginationProps } from 'src/domain/pagination/paginationProps';
+import { PaginationProps } from 'src/domain/common/paginationProps';
 
 describe('PaginationProps', () => {
   it('getters', () => {

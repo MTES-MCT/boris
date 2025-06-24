@@ -1,4 +1,4 @@
-import { PaginationProps } from '../pagination/paginationProps';
+import { PaginationProps } from '../common/paginationProps';
 import { OfsInterface } from './ofs.interface';
 import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
 

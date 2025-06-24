@@ -2,7 +2,7 @@ import { DepartementRelationnalView } from 'src/application/departement/views/re
 import { DistributorView } from 'src/application/distributor/views/distributor.view';
 import { DistributorRelationnalView } from 'src/application/distributor/views/relationnal.view';
 import { OfsView } from 'src/application/ofs/views/ofs.view';
-import { Pagination } from 'src/application/pagination/pagination';
+import { Pagination } from 'src/application/common/pagination';
 import { RegionRelationnalView } from 'src/application/region/views/relationnal.view';
 import { RegionView } from 'src/application/region/views/region.view';
 import { DepartementView } from 'src/application/departement/views/departement.view';

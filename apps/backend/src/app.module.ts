@@ -9,6 +9,7 @@ import { DistributorModule } from './infrastructure/distributor/distributor.modu
 import { UserModule } from './infrastructure/user/user.module';
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { AdminHomeModule } from './infrastructure/admin/home/home.module';
+import { NotFoundModule } from './infrastructure/not-found/not-found.module';
 import { ToLocalsMiddleware } from './infrastructure/middlewares/to-locals.middleware';
 
 @Module({
@@ -32,6 +33,7 @@ import { ToLocalsMiddleware } from './infrastructure/middlewares/to-locals.middl
     DistributorModule,
     UserModule,
     AdminHomeModule,
+    NotFoundModule,
   ],
   controllers: [],
   providers: [],

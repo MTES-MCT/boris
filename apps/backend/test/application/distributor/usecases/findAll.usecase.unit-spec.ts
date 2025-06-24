@@ -4,7 +4,7 @@ import { DistributorView } from 'src/application/distributor/views/distributor.v
 import {
   DEFAULT_PAGINATION,
   Pagination,
-} from 'src/application/pagination/pagination';
+} from 'src/application/common/pagination';
 import {
   distributor1,
   distributor2,

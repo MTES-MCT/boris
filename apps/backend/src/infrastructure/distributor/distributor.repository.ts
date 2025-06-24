@@ -4,7 +4,7 @@ import { Repository, In } from 'typeorm';
 import { DistributorRepositoryInterface } from 'src/domain/distributor/distributor.repository.interface';
 import { DistributorEntity } from './distributor.entity';
 import { DistributorInterface } from 'src/domain/distributor/distributor.interface';
-import { PaginationProps } from 'src/domain/pagination/paginationProps';
+import { PaginationProps } from 'src/domain/common/paginationProps';
 
 @Injectable()
 export class DistributorRepository implements DistributorRepositoryInterface {

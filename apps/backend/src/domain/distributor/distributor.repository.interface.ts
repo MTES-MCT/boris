@@ -1,5 +1,5 @@
 import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
-import { PaginationProps } from '../pagination/paginationProps';
+import { PaginationProps } from '../common/paginationProps';
 
 export interface DistributorRepositoryInterface {
   save(distributor: DistributorEntity): Promise<DistributorEntity>;

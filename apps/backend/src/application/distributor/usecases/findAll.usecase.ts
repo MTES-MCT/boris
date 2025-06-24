@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 import { DistributorRepositoryInterface } from 'src/domain/distributor/distributor.repository.interface';
 import { FindAllDistributorsParams } from './findAll.params';
 import { DistributorView } from '../views/distributor.view';
-import { Pagination } from 'src/application/pagination/pagination';
+import { Pagination } from 'src/application/common/pagination';
 
 export class FindAllDistributorsUsecase {
   constructor(
