@@ -26,7 +26,7 @@
   </h2>
   <p
     class="fr-text--lg"
-    style="color: var(--color-red-primary);">
+    style="color: var(--color-red-dark);">
     <b>Faux.</b>
   </p>
   <p>
@@ -47,7 +47,7 @@
   </h2>
   <p
     class="fr-text--lg"
-    style="color: var(--color-red-primary);">
+    style="color: var(--color-red-dark);">
     <b>Faux.</b>
   </p>
   <p>
@@ -73,7 +73,7 @@
   </h2>
   <p
     class="fr-text--lg"
-    style="color: var(--color-red-primary);">
+    style="color: var(--color-red-dark);">
     <b>Faux.</b>
   </p>
   <p>
@@ -89,7 +89,7 @@
   </h2>
   <p
     class="fr-text--lg"
-    style="color: var(--color-red-primary);">
+    style="color: var(--color-red-dark);">
     <b>Faux.</b>
   </p>
   <p>
@@ -114,7 +114,7 @@
   </h2>
   <p
     class="fr-text--lg"
-    style="color: var(--color-red-primary);">
+    style="color: var(--color-red-dark);">
     <b>Faux.</b>
   </p>
   <p>
