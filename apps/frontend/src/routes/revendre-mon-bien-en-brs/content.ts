@@ -209,6 +209,19 @@ export const steps: Step[] = [
             Mais il a aussi le même avantage principal : il achète un logement
             beaucoup moins cher que le prix du marché !
           </p>
+          <p>Quelques spécificités sont à connaître pour l’acheteur:</p>
+          <ul>
+            <li>
+              <p>
+                <b>Concernant le Prêt à taux Zéro</b>: comme pour tout achat immobilier (en bail réel solidaire ou non), le Prêt à taux Zéro n’est possible que sur un logement neuf ou achevé depuis moins de 5 ans. Si vous revendez plus de 5 ans après la fin de la construction de votre logement, l’acheteur ne pourra donc pas bénéficier du PTZ sauf exception.
+                <br>
+                Exception: le rachat d’un logement ancien qui a fait l’objet de rénovation* peut faire l’object d’un prêt à taux zéro.
+              </p>
+            </li>
+            <li>
+              <p><b>Concernant les frais de notaire</b>: Comment pour tout achat immobilier, les frais de notaire sont réduits pour un achat dans le neuf, mais pas dans l’ancien. Ainsi, les frais de notaire seront de 7 à 8% du prix d'acquisition lorsque vous achetez un logement dans l’ancien. Dans le cas d’un achat de logement neuf, les frais de notaire sont réduits, ils sont de 2 à 3% du prix d'acquisition.</p>
+            </li>
+          </ul>
           <p>Pour trouver l’acheteur, vous avez deux options :</p>
           <p class="fr-mb-0">
             <b>Option 1 : la vente entre particuliers.</b>

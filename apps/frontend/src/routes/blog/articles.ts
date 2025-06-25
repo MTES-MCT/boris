@@ -2,6 +2,12 @@ import type { ArticlePreview } from '$lib/utils/definitions';
 
 export const articles: ArticlePreview[] = [
   {
+    title: '5 idées reçues sur le bail réel solidaire (brs)',
+    description: `Le bail réel solidaire (BRS) souffre de quelques fausses idées: "je ne pourrai jamais revendre", "je ne suis pas propriétaire"… Découvrez la vérité sur le bail réel solidaire (BRS) via BoRiS, plateforme officielle du gouvernement dédiée au bail réel solidaire.`,
+    firstPublishedAt: '2025-06-25T11:46:39.527438+01:00',
+    slug: '5-idees-recues-sur-le-bail-reel-solidaire-brs',
+  },
+  {
     title: 'Le Bail Réel Solidaire (BRS), c’est quoi exactement?',
     description:
       "Découvrez le Bail Réel Solidaire (BRS), un dispositif innovant permettant d'acheter son logement 30 à 50% moins cher. Conditions d'éligibilité au BRS, avantages, inconvénients, où trouver un logement en BRS... on vous explique tout sur le bail réel solidaire",
