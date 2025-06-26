@@ -14,10 +14,10 @@
 </script>
 
 <svelte:head>
-  <title>Organismes de Foncier Solidaires - Boris</title>
+  <title>Les logements disponibles en Bail Réel Solidaire - BRS - BoRiS</title>
   <meta
     name="description"
-    content="Découvrez les Organismes de Foncier Solidaire (OFS) en France, acteurs clés du dispositif du Bail Réel Solidaire." />
+    content=" Les Organismes de Foncier Solidaires (OFS) ou leurs commercialisateurs proposent des logements en Bail Réel Solidaire (BRS) en vente. Découvrez les ici." />
 </svelte:head>
 
 <Section

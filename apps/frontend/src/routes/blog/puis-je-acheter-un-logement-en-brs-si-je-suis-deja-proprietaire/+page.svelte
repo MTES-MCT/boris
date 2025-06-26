@@ -131,7 +131,8 @@
   </p>
   <p>
     Vous êtes éligible ? <a
-      href="https://boris.beta.gouv.fr/organismes-fonciers-solidaires">
+      href="/logements-brs-disponibles"
+      class="fr-link">
       Contactez dès à présent les OFS ou leurs commercialisateurs dans votre
       région de recherche pour voir les biens disponibles
     </a>

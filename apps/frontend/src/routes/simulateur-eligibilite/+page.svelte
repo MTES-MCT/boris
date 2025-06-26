@@ -15,10 +15,10 @@
 </script>
 
 <svelte:head>
-  <title>Simuler mon éligibilité - Boris</title>
+  <title>Suis-je éligible au Bail Réel Solidaire - BRS - BoRiS</title>
   <meta
     name="description"
-    content="Utilisez le simulateur BoRiS pour vérifier votre éligibilité au Bail Réel Solidaire (BRS) en quelques étapes." />
+    content="L'outil de simulation de l'Etat pour savoir si vous êtes éligible au dispositif de Bail Réel Solidaire (BRS)." />
 </svelte:head>
 
 <GradientBackgroundWrapper>

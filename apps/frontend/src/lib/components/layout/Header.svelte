@@ -100,10 +100,10 @@
           <li class="fr-nav__item">
             <a
               class="fr-nav__link"
-              href="/organismes-fonciers-solidaires"
-              aria-current={pathname === '/organismes-fonciers-solidaires'}
+              href="/logements-brs-disponibles"
+              aria-current={pathname === '/logements-brs-disponibles'}
               target="_self">
-              La liste des OFS
+              Trouver un logement en BRS
             </a>
           </li>
           <li class="fr-nav__item">

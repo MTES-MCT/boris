@@ -25,6 +25,7 @@ export type StepSection = {
 
 export type Step = {
   title: string;
+  headTitle: string;
   description: string;
   slug: string;
   sections: StepSection[];

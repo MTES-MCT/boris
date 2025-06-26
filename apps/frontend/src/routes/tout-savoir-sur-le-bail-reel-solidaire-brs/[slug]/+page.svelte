@@ -2,12 +2,12 @@
   import Page from '$components/common/SideNavPage/Page.svelte';
 
   const { data } = $props();
-  const { title, description, sections, previousStep, nextStep } =
+  const { title, description, sections, previousStep, nextStep, headTitle } =
     $derived(data);
 </script>
 
 <svelte:head>
-  <title>{title} - Boris</title>
+  <title>{headTitle}</title>
   <meta
     name="description"
     content={description} />

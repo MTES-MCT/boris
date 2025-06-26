@@ -2,37 +2,44 @@ import type { Step } from '$lib/utils/definitions';
 
 const step1 = {
   title: 'Je découvre le dispositif',
+  headTitle: 'Découvrir le Bail Réel Solidaire - BRS - BoRiS',
   slug: 'je-decouvre-le-dispositif',
   description:
-    "Découvrez le Bail Réel Solidaire (BRS) et ses avantages : un dispositif pour faciliter l'accès à la propriété, réduire les coûts d'achat et favoriser la construction de patrimoine.",
+    'Vous trouverez ici toutes les informations pour découvrir le Bail Réel Solidaire (BRS). BoRiS est la plateforme de référence du ministère du Logement.',
 };
 
 const step2 = {
   title: 'Je trouve mon logement en BRS',
+  headTitle: 'Comment trouver un logement en Bail Réel Solidaire - BRS - BoRiS',
   slug: 'je-trouve-mon-logement-en-BRS',
   description:
-    "Découvrez comment trouver votre logement en Bail Réel Solidaire (BRS) : conseils pour définir votre projet, rechercher un bien et préparer votre dossier d'achat. BoRiS vous accompagne dans toutes les étapes.",
+    'Toutes les informations pour trouver un logement en Bail Réel Solidaire (BRS). BoRiS est la plateforme de référence du ministère du Logement.',
 };
 
 const step3 = {
   title: 'Je cherche des financements',
+  headTitle:
+    'Financer l’achat d’un logement en Bail Réel Solidaire - BRS - BoRiS',
   slug: 'je-cherche-des-financements',
   description:
-    "Découvrez les solutions de financement disponibles pour l'achat d'un logement en Bail Réel Solidaire (BRS) : prêts, aides, et conseils pour établir un plan de financement adapté à votre projet immobilier.",
+    'Toutes les informations pour financer votre projet d’achat en Bail Réel Solidaire (BRS).  BoRiS est la plateforme de référence du ministère du Logement.',
 };
 
 const step4 = {
-  title: 'Je deviens propriétaire',
+  title: 'Je passe chez le notaire',
+  headTitle: 'Le passage chez le notaire - Bail Réel Solidaire - BRS - BoRiS',
   slug: 'je-deviens-proprietaire',
   description:
-    "Devenez propriétaire d'un logement en Bail Réel Solidaire (BRS) : suivez les étapes clés après avoir trouvé votre bien, de la signature du compromis à l'acte de vente chez le notaire, et préparez votre dossier pour finaliser l'achat.",
+    'Les informations sur le passage chez le notaire pour un achat en Bail Réel Solidaire (BRS). BoRiS est la plateforme de référence du Ministère du Logement.',
 };
 
 const step5 = {
   title: 'Je suis chez moi',
+  headTitle:
+    'Etre propriétaire d’un logement en Bail Réel Solidaire - BRS - BoRiS',
   slug: 'je-suis-chez-moi',
   description:
-    'Une fois installé dans votre logement en Bail Réel Solidaire (BRS), découvrez vos droits et obligations : assurance, réalisation de travaux, gestion de la copropriété et conditions de revente pour garantir une expérience de vie sereine.',
+    'Toutes les informations nécessaires pour les ménages déjà propriétaires en Bail Réel Solidaire. BoRiS est la plateforme de référence du Ministère du Logement.',
 };
 
 export const steps: Step[] = [
@@ -138,7 +145,7 @@ export const steps: Step[] = [
             réhabilitation des logements. C’est à l’OFS que vous verserez une redevance
             mensuelle.
           </p>
-          <a class="fr-btn fr-btn--lg" href="/organismes-fonciers-solidaires">
+          <a class="fr-btn fr-btn--lg" href="/logements-brs-disponibles">
             Prendre contact pour trouver un logement en BRS
           </a>
         `,
@@ -193,7 +200,7 @@ export const steps: Step[] = [
             sommes en lien direct avec des professionnel.lles spécialisé.es dans le Bail
             Réel Solidaire.
           </p>
-          <a class="fr-btn fr-btn--lg" href="/organismes-fonciers-solidaires">
+          <a class="fr-btn fr-btn--lg" href="/logements-brs-disponibles">
             Prendre contact pour trouver un logement en BRS
           </a>
         `,
@@ -589,6 +596,9 @@ export const steps: Step[] = [
             un certain pourcentage du prix de vente initial. N’oubliez pas de demander
             quelles sont les conditions de rachat dans votre cas.
           </p>
+          <a class="fr-btn fr-mt-4w" href="/revendre-mon-bien-en-brs">
+            Toutes les informations sur la revente en Bail Réel Solidaire (BRS)
+          </a>
         `,
       },
     ],

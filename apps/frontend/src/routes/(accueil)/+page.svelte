@@ -8,10 +8,10 @@
 </script>
 
 <svelte:head>
-  <title>Accueil - Boris</title>
+  <title>La plateforme officielle du Bail Réel Solidaire - BRS - BoRiS</title>
   <meta
     name="description"
-    content="BoRiS aide à l'accès à la propriété en Bail Réel Solidaire (BRS)" />
+    content="Retrouvez toutes les informations de l'Etat sur le parcours d’achat en Bail Réel Solidaire (BRS). Vérifiez votre éligibilité et trouvez un logement en vente." />
 </svelte:head>
 
 <Hero />
