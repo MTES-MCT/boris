@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-  <title>Bail Réel Solidaire (BRS) - BoRiS - La plateforme officielle</title>
+  <title>La plateforme officielle du Bail Réel Solidaire - BRS - BoRiS</title>
   <meta
     name="description"
     content="Retrouvez toutes les informations de l'Etat sur le parcours d’achat en Bail Réel Solidaire (BRS). Vérifiez votre éligibilité et trouvez un logement en vente." />
