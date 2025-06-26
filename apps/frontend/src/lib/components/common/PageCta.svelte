@@ -22,9 +22,9 @@
         accompagnent tout au long du processus, découvrez leurs offres !
       </p>
       <a
-        href="/organismes-fonciers-solidaires"
+        href="/logements-brs-disponibles"
         class="fr-btn fr-btn--lg">
-        Voir la liste des OFS
+        Trouver un logement en BRS
       </a>
     </div>
   </div>

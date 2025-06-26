@@ -217,7 +217,7 @@
     De plus en plus de programmes immobiliers intègrent le Bail réel solidaire
     (BRS). Vous pouvez consulter la
     <a
-      href="/organismes-fonciers-solidaires"
+      href="/logements-brs-disponibles"
       class="fr-link">
       liste des Organismes de Foncier Solidaire agréés (OFS agréés)
     </a>

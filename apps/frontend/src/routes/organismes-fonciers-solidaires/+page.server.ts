@@ -1,15 +1,5 @@
-import { API_URL } from '$env/static/private';
-import { formatOfss } from '$lib/utils/formatters';
-
-import type { OfsView, Pagination } from '$lib/utils/api-types';
+import { redirect } from '@sveltejs/kit';
 
 export const load = async () => {
-  const response = await fetch(`${API_URL}/ofss`);
-  const ofss: Pagination<OfsView> = await response.json();
-
-  return {
-    regions: formatOfss(ofss.items),
-  };
+  throw redirect(301, '/logements-brs-disponibles');
 };
-
-export const prerender = false;

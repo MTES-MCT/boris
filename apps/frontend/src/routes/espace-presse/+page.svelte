@@ -4,6 +4,7 @@
 </script>
 
 <svelte:head>
+  <title>Espace presse - BoRiS</title>
   <meta
     name="description"
     content="Découvrez l’espace presse de BoRiS, avec nos communiqués et dossiers de presse sur le Bail Réel Solidaire (BRS)." />
@@ -15,12 +16,17 @@
   <p>
     Nous avons regroupé sur cette page l’essentiel des informations relatives à
     BoRiS. Pour toute information complémentaire ou demande d’interview, merci
-    de nous contacter <a href="/nous-contacter"><b>ici</b></a>
+    de nous contacter <a
+      href="/nous-contacter"
+      class="fr-link">
+      <b>ici</b>
+    </a>
     .
   </p>
 
   <a
     href="https://drive.google.com/drive/folders/1ILzjig74CXB7R57gq0wzrKrzLd-xVYxi"
+    class="fr-link"
     target="_blank"
     rel="noopener">
     <b>Dossier de presse</b>
@@ -30,7 +36,10 @@
   <ul>
     <li>
       25/02/2025: <a
-        href="https://docs.google.com/document/d/1g5H1elvqgCDENfT76MZ0ftkjPdmgmYRN210Aoe6w-zw/edit?usp=sharing">
+        href="https://docs.google.com/document/d/1g5H1elvqgCDENfT76MZ0ftkjPdmgmYRN210Aoe6w-zw/edit?usp=sharing"
+        class="fr-link"
+        target="_blank"
+        rel="noopener">
         Le ministère chargé du logement lance BoRiS : la startup d’État qui
         permet d’acheter son logement 30% à 50% moins cher
       </a>
@@ -83,9 +92,10 @@
     prochaines années.
   </p>
   <p>
-    Le parcours détaillé du BRS sur le site BoRiS : <a
-      href="https://boris.beta.gouv.fr/tout-savoir-sur-le-bail-reel-solidaire-brs">
-      https://boris.beta.gouv.fr/tout-savoir-sur-le-bail-reel-solidaire-brs
+    <a
+      href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
+      class="fr-link">
+      Le parcours détaillé du BRS sur le site BoRiS
     </a>
   </p>
 
@@ -119,7 +129,11 @@
   <ContentPageSubtitle title="Nous contacter" />
   <p>
     Pour toute information complémentaire ou demande d’interview, merci de nous
-    contacter <a href="/nous-contacter"><b>ici</b></a>
+    contacter <a
+      href="/nous-contacter"
+      class="fr-link">
+      <b>ici</b>
+    </a>
     .
   </p>
 </Section>

@@ -306,7 +306,7 @@
     Vous avez désormais toutes les clés en main pour explorer ces solutions et
     voir ce qui correspond le mieux à votre projet. Alors, pourquoi ne pas
     commencer par vous renseigner sur les <a
-      href="/organismes-fonciers-solidaires"
+      href="/logements-brs-disponibles"
       class="fr-link">
       logements disponibles
     </a>

@@ -5,11 +5,11 @@
   import Promesses from '$components/common/StepPage/Promesses.svelte';
   import Promess from '$components/common/StepPage/Promess.svelte';
 
-  const { title, description, sections } = steps[0];
+  const { title, description, sections, headTitle } = steps[0];
 </script>
 
 <svelte:head>
-  <title>{title} - Boris</title>
+  <title>{headTitle}</title>
   <meta
     name="description"
     content={description} />
