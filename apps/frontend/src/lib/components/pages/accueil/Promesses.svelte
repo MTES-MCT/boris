@@ -44,8 +44,8 @@
         </div>
         <a
           class="fr-link"
-          href="/organismes-fonciers-solidaires">
-          Voir la liste des OFS
+          href="/logements-brs-disponibles">
+          Trouver un logement en BRS
         </a>
       </div>
       <div class="column fr-col-12 fr-col-md-6 fr-col-lg-3">

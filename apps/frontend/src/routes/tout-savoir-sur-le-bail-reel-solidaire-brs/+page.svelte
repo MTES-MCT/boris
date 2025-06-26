@@ -16,10 +16,10 @@
 </script>
 
 <svelte:head>
-  <title>Tout savoir sur le BRS - Boris</title>
+  <title>Tout savoir sur le Bail Réel Solidaire - BRS - BoRiS</title>
   <meta
     name="description"
-    content="Découvrez le Bail Réel Solidaire (BRS), un dispositif qui permet d'accéder à la propriété à un prix abordable grâce à un partenariat avec des organismes de fonciers solidaires. Apprenez-en plus sur ses avantages, critères et fonctionnement." />
+    content="Toutes les informations nécessaires sur le dispositif de Bail Réel Solidaire (BRS). BoRiS est la plateforme de référence du Ministère du Logement." />
 </svelte:head>
 
 <GradientBackgroundWrapper>
@@ -116,7 +116,7 @@
     </Step>
 
     <Step
-      title="Je deviens propriétaire."
+      title="Je passe chez le notaire."
       illustration={BrsEtape4}
       linkLabel="S'assurer du bon déroulement de l'achat"
       href={`/tout-savoir-sur-le-bail-reel-solidaire-brs/${steps[3].slug}`}

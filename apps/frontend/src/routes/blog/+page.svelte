@@ -5,7 +5,10 @@
 </script>
 
 <svelte:head>
-  <title>Blog - Boris</title>
+  <title>Blog sur le Bail Réel Solidaire - BRS - BoRiS</title>
+  <meta
+    name="description"
+    content="Articles de blog sur des sujets précis concernant le Bail Réel Solidaire (BRS). BoRiS est la plateforme de référence du Ministère du Logement." />
 </svelte:head>
 
 <Section
