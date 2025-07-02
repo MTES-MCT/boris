@@ -90,7 +90,9 @@
 
 <div class="container">
   <div class="wrapper">
-    <Section title="Simulateur d’acquisition en BRS">
+    <Section
+      title="Simulateur d’acquisition en BRS"
+      titleElement="h1">
       <form autocomplete="off">
         <div class="fieldset-container">
           <fieldset class="fr-fieldset">
