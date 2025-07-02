@@ -81,6 +81,13 @@
   );
 </script>
 
+<svelte:head>
+  <title>Simulateur d'acquisition en BRS | BoRiS</title>
+  <meta
+    name="robots"
+    content="noindex, nofollow" />
+</svelte:head>
+
 <div class="container">
   <div class="wrapper">
     <Section title="Simulateur d’acquisition en BRS">
