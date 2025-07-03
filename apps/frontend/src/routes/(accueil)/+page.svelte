@@ -11,7 +11,7 @@
   <title>La plateforme officielle du Bail Réel Solidaire - BRS - BoRiS</title>
   <meta
     name="description"
-    content="Retrouvez toutes les informations de l'Etat sur le parcours d’achat en Bail Réel Solidaire (BRS). Vérifiez votre éligibilité et trouvez un logement en vente." />
+    content="Découvrez le Bail Réel Solidaire (BRS), vérifiez votre éligibilité et trouvez un logement abordable grâce aux informations officielles de l'État." />
 </svelte:head>
 
 <Hero />

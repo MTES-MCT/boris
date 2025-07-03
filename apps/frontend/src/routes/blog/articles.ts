@@ -2,6 +2,12 @@ import type { ArticlePreview } from '$lib/utils/definitions';
 
 export const articles: ArticlePreview[] = [
   {
+    title: 'Comment savoir si je suis éligible au Bail Réel Solidaire (BRS) ?',
+    description: `Découvrez si vous êtes éligible au Bail Réel Solidaire (BRS). Critères, plafonds de revenus, exemples concrets et simulateur officiel pour tout savoir.`,
+    firstPublishedAt: '2025-07-01T11:00:00.527438+01:00',
+    slug: 'comment-savoir-si-je-suis-eligible-au-bail-reel-solidaire-brs',
+  },
+  {
     title: '5 idées reçues sur le bail réel solidaire (brs)',
     description: `Le bail réel solidaire (BRS) souffre de quelques fausses idées: "je ne pourrai jamais revendre", "je ne suis pas propriétaire"… Découvrez la vérité sur le bail réel solidaire (BRS) via BoRiS, plateforme officielle du gouvernement dédiée au bail réel solidaire.`,
     firstPublishedAt: '2025-06-25T11:46:39.527438+01:00',
