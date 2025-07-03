@@ -17,38 +17,63 @@
   <title>Les logements disponibles en Bail Réel Solidaire - BRS - BoRiS</title>
   <meta
     name="description"
-    content=" Les Organismes de Foncier Solidaires (OFS) ou leurs commercialisateurs proposent des logements en Bail Réel Solidaire (BRS) en vente. Découvrez les ici." />
+    content="Trouvez un logement en BRS: consultez les biens en BRS disponibles à l’achat partout en France. Appartements et maisons en Bail Réel Solidaire." />
 </svelte:head>
 
 <Section
-  title="Voici la liste des Organismes de Foncier Solidaires (OFS) répertoriés par région"
+  title="Voici la liste des sites sur lesquels vous pouvez trouver des logements en bail réel solidaire disponibles à l’achat."
   titleElement="h1">
+  <ul>
+    <li>
+      <p>
+        <b>
+          Les sites avec l’ensemble des logements disponibles en BRS sont
+          référencés ici <u>par région</u>
+          et
+          <u>par OFS</u>
+          (Organismes de Foncier Solidaires).
+        </b>
+      </p>
+    </li>
+    <li>
+      <p>
+        <b>
+          Chaque lien vous redirige vers la page programme de l’Organismes de
+          Foncier Solidaires (OFS) ou de son commercialisateur. Vous pourrez y
+          consulter les logements en BRS disponibles à l’achat ou prendre
+          contact pour trouver un logement en Bail Réel Solidaire.
+        </b>
+      </p>
+    </li>
+  </ul>
+
   <p>
-    Les OFS jouent un rôle clé dans l'accès au dispositif de Bail Réel Solidaire
-    (BRS). Ces organismes sans but lucratif agréés par l'État sont les seuls
-    acteurs autorisés à monter des programmes en BRS.
+    <b>Les appartements en BRS ou maisons en BRS</b>
+    sont proposés par des
+    <b>Organismes de Foncier Solidaires (OFS)</b>
+    qui jouent un rôle clé dans l'accès au dispositif de Bail Réel Solidaire (BRS).
+    Ces organismes, sans but lucratif et agréés par l'État, sont les seuls acteurs
+    autorisés à monter des programmes en BRS.
   </p>
+
   <p>
-    Sur cette page, vous trouverez un annuaire des OFS producteurs de BRS en
-    France, trié par région. Cet outil vous permettra d’identifier rapidement
-    les OFS actifs près de chez vous, de découvrir les projets qu’ils portent,
-    et de les contacter pour en savoir plus sur les opportunités de logement en
-    BRS.
+    Sur cette page, vous pourrez ainsi identifier les Organismes de Foncier
+    Solidaire (OFS) producteurs de logements en BRS proche de chez vous et
+    découvrir les logements en bail réel solidaire qu’ils proposent. Vous pouvez
+    les contacter pour connaître les logements disponibles à l’achat en BRS en
+    ce moment ou à venir dans votre région.
   </p>
+
   <p>
-    Chaque OFS développe des programmes de logements spécifiques, adaptés aux
-    besoins locaux. Vous pouvez les contacter pour connaître les logements
-    disponibles ou à venir dans votre région.
-  </p>
-  <p>
-    Dans certains cas, les OFS travaillent avec d'autres organismes pour
-    diffuser leurs logements disponibles : vous pourrez être mis en relation
-    avec ces organismes dans le cadre de vos démarches.
+    Dans certains cas, les OFS travaillent avec d'autres organismes, qu’on
+    appelle commercialisateurs, pour diffuser leurs logements disponibles : vous
+    pourrez être mis en relation avec ces commercialisateurs dans le cadre de
+    vos démarches.
   </p>
 
   <div class="fr-accordions-group">
     {#each regions as region}
-      {@const regionLabel = `${region.name} (${region.totalOfss})`}
+      {@const regionLabel = `${region.name}`}
 
       <Accordion
         label={regionLabel}
