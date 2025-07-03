@@ -128,16 +128,6 @@
     </li>
   </ul>
 
-  <p>
-    Vous trouverez plus d’information sur notre article dédié aux
-    <a
-      href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif#les-avantages-du-BRS"
-      class="fr-link">
-      avantages du Bail Réel Solidaire (BRS)
-    </a>
-    .
-  </p>
-
   <h2 class="fr-mt-8w">
     <b>
       ⚖️ Quelles sont les inconvénients - ou plutôt les contreparties - du bail
