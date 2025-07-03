@@ -10,17 +10,22 @@
   import Tooltip from '$components/common/Tooltip.svelte';
 
   let housingPrice: number = $state(0);
+  let surface: number = $state(0);
   let housingType: 'new' | 'old' = $state('new');
   let ownContribution: number = $state(0);
   let notaryFees: number = $state(0);
   let loanFees: number = $state(0);
-  let realEstateFees: number = $state(0);
+  let realEstateFees: number | undefined = $state(undefined);
   let oneTimeExpenses: number = $state(0);
   let interestRate: number = $state(0);
   let loanDuration: number = $state(0);
   let brsFees: number = $state(0);
   let propertyTax: number = $state(0);
   let yearlyExpenses: number = $state(0);
+  let meterSquareCost: number = $state(0);
+  let totalMeterSquareCost: number = $state(0);
+  let homeInsurance: number = $state(150);
+  let condominiumFees: number = $derived(35 * surface);
 
   let estimatedNotaryFees: number = $derived.by(() => {
     if (housingPrice) {
@@ -48,18 +53,22 @@
 
   let estimatedLoanFees: number = $derived.by(() => {
     if (!housingPrice) return 0;
-    return Math.max(1000, Math.min(2500, Math.round(housingPrice * 0.01)));
+    return Math.round(500 + loanAmount * 0.008);
   });
 
-  let estimatedRealEstateFees: number = $derived.by(() => {
+  let estimatedRealEstateFees: number | undefined = $derived.by(() => {
     if (!housingPrice) return 0;
+
+    console.log(realEstateFees);
+
+    if (realEstateFees === 0) return;
+
     return Math.round(housingPrice * 0.055);
   });
 
   let totalFees: number = $derived(
     (notaryFees || estimatedNotaryFees) +
-      (loanFees || estimatedLoanFees) +
-      (realEstateFees || estimatedRealEstateFees) +
+      (realEstateFees || estimatedRealEstateFees || 0) +
       oneTimeExpenses,
   );
 
@@ -77,7 +86,9 @@
   });
 
   let monthlyCost: number = $derived(
-    loanMonthlyCost + brsFees + (propertyTax + yearlyExpenses) / 12,
+    loanMonthlyCost +
+      brsFees +
+      (propertyTax + yearlyExpenses + homeInsurance) / 12,
   );
 </script>
 
@@ -96,7 +107,7 @@
       <form autocomplete="off">
         <div class="fieldset-container">
           <fieldset class="fr-fieldset">
-            <legend class="fr-h4">1. Prix du logement</legend>
+            <legend class="fr-h4">1. Votre futur logement</legend>
             <div class="fr-fieldset__element">
               <label
                 class="fr-label"
@@ -119,6 +130,44 @@
                 placeholder="Exemple: 180000"
                 oninput={(e) => {
                   housingPrice = Number((e.target as HTMLInputElement).value);
+                }} />
+            </div>
+            <div class="fr-fieldset__element">
+              <label
+                class="fr-label"
+                for="zipcode">
+                Code postal du logement
+              </label>
+              <input
+                class="fr-input"
+                type="text"
+                id="zipcode"
+                maxlength="5"
+                required
+                placeholder="Exemple: 29720"
+                oninput={(e) => {
+                  const value = (e.target as HTMLInputElement).value;
+                  const numericValue = value.replace(/\D/g, '').slice(0, 5);
+                  (e.target as HTMLInputElement).value = numericValue;
+                }} />
+            </div>
+            <div class="fr-fieldset__element">
+              <label
+                class="fr-label"
+                for="surface">
+                Superficie du logement (m²)
+              </label>
+              <input
+                class="fr-input"
+                type="text"
+                id="surface"
+                required
+                placeholder="Exemple: 50"
+                oninput={(e) => {
+                  const value = (e.target as HTMLInputElement).value;
+                  const numericValue = value.replace(/\D/g, '').slice(0, 3);
+                  (e.target as HTMLInputElement).value = numericValue;
+                  surface = Number(numericValue);
                 }} />
             </div>
             <div class="fr-fieldset__element">
@@ -240,8 +289,10 @@
                 <Tooltip>
                   <div class="fr-p-2w">
                     Frais liés à la mise en place de votre prêt immobilier
-                    (caution, garantie, dossier). Généralement entre 1 000€ et 2
-                    500€.
+                    (caution, garantie, dossier). Généralement autour de 0,8% du
+                    montant emprunté + frais de dossier. Environ 70% de cette
+                    somme vous serons reversés lorsque que vous aurez remboursé
+                    l’intégralité de votre prêt.
                   </div>
                 </Tooltip>
               </label>
@@ -280,11 +331,11 @@
                 id="real-estate-fees"
                 min="0"
                 step="100"
-                placeholder="Laissez vide pour estimation automatique"
+                placeholder="Inscrivez 0 si vous n’avez pas de frais d’agence"
                 oninput={(e) => {
                   realEstateFees = Number((e.target as HTMLInputElement).value);
                 }} />
-              {#if realEstateFees === 0 && housingPrice}
+              {#if realEstateFees === undefined && housingPrice}
                 <p>
                   Estimation automatique: <b>
                     {estimatedRealEstateFees}€ (5,5% du prix)
@@ -300,8 +351,8 @@
                 Autres frais ponctuels (€)
                 <Tooltip>
                   <div class="fr-p-2w">
-                    Déménagement, ouverture de compteurs, frais administratifs,
-                    etc. Optionnel.
+                    Coût du déménagement, ouverture des compteurs, etc. si
+                    pertinent
                   </div>
                 </Tooltip>
               </label>
@@ -377,7 +428,10 @@
                         <tr>
                           <th>Total frais annexes</th>
                           <th>
-                            {housingPrice + ownContribution + totalFees || '-'}
+                            {housingPrice +
+                              ownContribution +
+                              totalFees +
+                              estimatedLoanFees || '-'}
                           </th>
                         </tr>
                         <tr>
@@ -391,7 +445,7 @@
                         <tr>
                           <th>Besoin d’emprunt</th>
                           <th>
-                            {housingPrice - ownContributionAfterFees || '-'}
+                            {loanAmount || '-'}
                           </th>
                         </tr>
                       </tfoot>
@@ -525,6 +579,49 @@
             </div>
 
             <div class="fr-fieldset__element">
+              <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-6">
+                  <label
+                    class="fr-label"
+                    for="meter-square-cost">
+                    Coût par m²
+                  </label>
+                  <input
+                    class="fr-input"
+                    type="number"
+                    id="meter-square-cost"
+                    value={meterSquareCost}
+                    oninput={(e) => {
+                      meterSquareCost = Number(
+                        (e.target as HTMLInputElement).value,
+                      );
+
+                      totalMeterSquareCost = meterSquareCost * surface;
+                    }} />
+                </div>
+                <div class="fr-col-6">
+                  <label
+                    class="fr-label"
+                    for="total-meter-square-cost">
+                    Coût total
+                  </label>
+                  <input
+                    class="fr-input"
+                    type="number"
+                    id="total-meter-square-cost"
+                    value={totalMeterSquareCost}
+                    oninput={(e) => {
+                      totalMeterSquareCost = Number(
+                        (e.target as HTMLInputElement).value,
+                      );
+
+                      meterSquareCost = totalMeterSquareCost / surface;
+                    }} />
+                </div>
+              </div>
+            </div>
+
+            <div class="fr-fieldset__element">
               <label
                 class="fr-label"
                 for="property-tax">
@@ -539,6 +636,31 @@
                 placeholder="Ex : 900"
                 oninput={(e) => {
                   propertyTax = Number((e.target as HTMLInputElement).value);
+                }} />
+            </div>
+
+            <div class="fr-fieldset__element">
+              <label
+                class="fr-label"
+                for="home-insurance">
+                Assurance habitation (€ / an)
+                <Tooltip>
+                  <div class="fr-p-2w">
+                    L’assurance habitation est obligatoire pour votre logement,
+                    que vous soyez propriétaire ou locataire.
+                  </div>
+                </Tooltip>
+              </label>
+              <input
+                class="fr-input"
+                type="number"
+                id="home-insurance"
+                min="0"
+                step="1"
+                placeholder="Ex : 150"
+                value={homeInsurance}
+                oninput={(e) => {
+                  homeInsurance = Number((e.target as HTMLInputElement).value);
                 }} />
             </div>
 
@@ -560,6 +682,61 @@
                 }} />
             </div>
 
+            <div class="fr-fieldset__element">
+              <p><b>Charges de copropriété</b></p>
+              <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-4">
+                  <label
+                    class="fr-label"
+                    for="monthly-condominium-fees">
+                    Coût mensuel
+                  </label>
+                  <input
+                    class="fr-input"
+                    type="number"
+                    id="monthly-condominium-fees"
+                    value={Math.round(condominiumFees / 12)}
+                    oninput={(e) => {
+                      condominiumFees =
+                        Number((e.target as HTMLInputElement).value) * 12;
+                    }} />
+                </div>
+                <div class="fr-col-4">
+                  <label
+                    class="fr-label"
+                    for="trimestrial-condominium-fees">
+                    Coût trimestriel
+                  </label>
+                  <input
+                    class="fr-input"
+                    type="number"
+                    id="trimestrial-condominium-fees"
+                    value={Math.round(condominiumFees / 4)}
+                    oninput={(e) => {
+                      condominiumFees =
+                        Number((e.target as HTMLInputElement).value) * 4;
+                    }} />
+                </div>
+                <div class="fr-col-4">
+                  <label
+                    class="fr-label"
+                    for="yearly-condominium-fees">
+                    Coût annuel
+                  </label>
+                  <input
+                    class="fr-input"
+                    type="number"
+                    id="yearly-condominium-fees"
+                    value={condominiumFees}
+                    oninput={(e) => {
+                      condominiumFees = Number(
+                        (e.target as HTMLInputElement).value,
+                      );
+                    }} />
+                </div>
+              </div>
+            </div>
+
             <div>
               <p class="fr-mb-0">
                 <b>Coût mensuel estimé (hors charges courantes):</b>
@@ -574,6 +751,11 @@
                 <li>
                   Taxe foncière: {propertyTax || '-'}€/an ({propertyTax
                     ? Math.round(propertyTax / 12)
+                    : '-'}€/mois)
+                </li>
+                <li>
+                  Assurance habitation: {homeInsurance || '-'}€/an ({homeInsurance
+                    ? Math.round(homeInsurance / 12)
                     : '-'}€/mois)
                 </li>
                 <li>
@@ -605,6 +787,13 @@
                 </strong>
               </div>
             </div>
+
+            <button
+              type="button"
+              class="fr-btn fr-btn--secondary fr-btn--download fr-mt-2w"
+              onclick={() => window.print()}>
+              Télécharger le récapitulatif
+            </button>
           </fieldset>
         </div>
       </form>
