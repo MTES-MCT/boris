@@ -1,33 +1,27 @@
 <script lang="ts">
   import cookieConsentManager from '$lib/managers/consent.svelte';
-  import Modal from '$lib/components/common/Modal.svelte';
-
-  const { setUserConsent, needsConsentDecision } = cookieConsentManager;
-
-  let modalRef: Modal;
+  import Banner from '$lib/components/common/Banner.svelte';
 
   const handleAcceptAll = () => {
-    setUserConsent(true);
-    modalRef?.closeModal();
+    cookieConsentManager.setUserConsent(true);
   };
 
   const handleRejectAll = () => {
-    setUserConsent(false);
-    modalRef?.closeModal();
+    cookieConsentManager.setUserConsent(false);
   };
 </script>
 
-{#if needsConsentDecision}
-  <Modal
-    bind:this={modalRef}
-    title="À propos des cookies sur BoRiS"
-    autoOpen>
+{#if cookieConsentManager.needsConsentDecision}
+  <Banner>
     <div class="fr-consent-banner">
+      <h2 class="fr-h6">À propos des cookies sur BoRiS.</h2>
       <div class="fr-consent-banner__content">
-        <p class="fr-text--sm">
+        <p>
           Bienvenue ! Nous utilisons des cookies pour améliorer votre expérience
           et les services disponibles sur ce site. Pour en savoir plus, visitez
-          la page <a href="/politique-de-confidentialite">
+          la page <a
+            href="/politique-de-confidentialite"
+            class="fr-link">
             Données personnelles et cookies
           </a>
           . Vous pouvez, à tout moment, avoir le contrôle sur les cookies que vous
@@ -40,7 +34,7 @@
           <button
             class="fr-btn"
             title="Autoriser tous les cookies"
-            on:click={handleAcceptAll}>
+            onclick={handleAcceptAll}>
             Tout accepter
           </button>
         </li>
@@ -48,11 +42,11 @@
           <button
             class="fr-btn fr-btn--secondary"
             title="Refuser tous les cookies"
-            on:click={handleRejectAll}>
+            onclick={handleRejectAll}>
             Tout refuser
           </button>
         </li>
       </ul>
     </div>
-  </Modal>
+  </Banner>
 {/if}
