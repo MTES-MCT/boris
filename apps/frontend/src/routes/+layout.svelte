@@ -9,14 +9,16 @@
   import Header from '$components/layout/Header.svelte';
   import Footer from '$components/layout/Footer.svelte';
   import NoScrollOnNavigation from '$components/layout/NoScrollOnNavigation.svelte';
+  import Consent from '$components/common/Consent.svelte';
 
   type Props = { children: Snippet };
   const { children }: Props = $props();
 </script>
 
-<NoScrollOnNavigation />
 <Favicon />
+<Consent />
 <Analytics />
+<NoScrollOnNavigation />
 <SkipLinks />
 <Header />
 
