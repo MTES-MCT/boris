@@ -28,8 +28,15 @@ class CookieConsentManager {
 
       if (cookiesToRemove.some((c) => cookieName.includes(c))) {
         document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${window.location.hostname};`;
         document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`;
+
+        if (window.location.hostname.endsWith('.beta.gouv.fr')) {
+          document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.beta.gouv.fr;`;
+        }
+
+        if (window.location.hostname.endsWith('.incubateur.net')) {
+          document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.incubateur.net;`;
+        }
       }
     });
   };
