@@ -7,7 +7,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 test('a11y', async ({ page }) => {
   await page.addInitScript(() => {
-    localStorage.setItem('cookies-consent', 'false');
+    localStorage.setItem('boris-cookies-consent', 'false');
   });
 
   const response = await fetch('http://localhost:4173/sitemap.xml');
