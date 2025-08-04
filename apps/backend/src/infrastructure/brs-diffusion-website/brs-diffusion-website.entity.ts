@@ -56,4 +56,30 @@ export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  constructor(
+    source: string,
+    distributorName: string,
+    ofsName: string,
+    city: string,
+    zipcode: string,
+    address: string,
+    inseeCode: string,
+    latitude: number,
+    longitude: number,
+    region: RegionEntity,
+    departement: DepartementEntity,
+  ) {
+    this.source = source;
+    this.distributorName = distributorName;
+    this.ofsName = ofsName;
+    this.city = city;
+    this.zipcode = zipcode;
+    this.address = address;
+    this.inseeCode = inseeCode;
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.region = region;
+    this.departement = departement;
+  }
 }
