@@ -53,6 +53,9 @@ export class BrsDiffusionWebsiteSeed {
       await this.brsDiffusionWebsiteRepository.save(newBrsDiffusionWebsite);
 
       count++;
+
+      console.log(`${count}/${brsDiffusionWebsites.length}`);
+      await new Promise((resolve) => setTimeout(resolve, 50));
     }
 
     console.log(`${count} sites de diffusion BRS créés`);
