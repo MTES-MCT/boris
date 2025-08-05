@@ -1,0 +1,7 @@
+{{> breadcrumb links=breadcrumbLinks }}
+
+{{#> page_header title=title actionLabel=translations.contents.brsDiffusionWebsites.action.label}}
+{{!-- {{> forms/brs-diffusion-website/create actionLabel=translations.contents.brsDiffusionWebsites.action.label}} --}}
+{{/page_header}}
+
+{{> table title=title columns=columns rows=rows entity="brs-diffusion-websites" deleteForm='forms/distributor/delete'}}

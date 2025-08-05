@@ -11,6 +11,7 @@ import { AuthModule } from './infrastructure/auth/auth.module';
 import { AdminHomeModule } from './infrastructure/admin/home/home.module';
 import { NotFoundModule } from './infrastructure/not-found/not-found.module';
 import { ToLocalsMiddleware } from './infrastructure/middlewares/to-locals.middleware';
+import { BrsDiffusionWebsiteModule } from './infrastructure/brs-diffusion-website/brs-diffusion-website.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { ToLocalsMiddleware } from './infrastructure/middlewares/to-locals.middl
     DepartementModule,
     DistributorModule,
     UserModule,
+    BrsDiffusionWebsiteModule,
     AdminHomeModule,
     NotFoundModule,
   ],
