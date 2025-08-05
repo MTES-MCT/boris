@@ -8,6 +8,7 @@ export const mockDepartementRepository = {
   save: jest.fn(),
   find: jest.fn(),
   findBy: jest.fn(),
+  findOne: jest.fn(),
   findOneBy: jest.fn(),
   findOneByName: jest.fn(),
   findOneByCode: jest.fn(),

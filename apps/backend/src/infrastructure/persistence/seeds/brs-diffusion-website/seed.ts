@@ -3,15 +3,19 @@ import { brsDiffusionWebsites } from './data';
 import { GeocoderService } from 'src/infrastructure/geocoder/geocoder.service';
 import { BrsDiffusionWebsiteEntity } from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.entity';
 import { DepartementRepository } from 'src/infrastructure/departement/departement.repository';
+import { BrsDiffusionWebsiteRepository } from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.repository';
 
 @Injectable()
 export class BrsDiffusionWebsiteSeed {
   constructor(
     private readonly geocoderService: GeocoderService,
     private readonly departementRepository: DepartementRepository,
+    private readonly brsDiffusionWebsiteRepository: BrsDiffusionWebsiteRepository,
   ) {}
 
   async seed() {
+    let count = 0;
+
     for (const brsDiffusionWebsite of brsDiffusionWebsites) {
       const geocodedMunicipality =
         await this.geocoderService.geocodeByMunicipality(
@@ -46,9 +50,11 @@ export class BrsDiffusionWebsiteSeed {
         departement,
       );
 
-      console.log(newBrsDiffusionWebsite);
+      await this.brsDiffusionWebsiteRepository.save(newBrsDiffusionWebsite);
 
-      // Faire repository etc...
+      count++;
     }
+
+    console.log(`${count} sites de diffusion BRS créés`);
   }
 }
