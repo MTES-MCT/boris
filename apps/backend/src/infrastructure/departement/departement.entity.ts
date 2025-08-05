@@ -5,11 +5,13 @@ import {
   Entity,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { RegionEntity } from 'src/infrastructure/region/region.entity';
 import { OfsEntity } from '../ofs/ofs.entity';
+import { BrsDiffusionWebsiteEntity } from '../brs-diffusion-website/brs-diffusion-website.entity';
 
 @Entity('departement')
 export class DepartementEntity implements DepartementInterface {
@@ -27,6 +29,13 @@ export class DepartementEntity implements DepartementInterface {
 
   @ManyToMany(() => OfsEntity, (ofs) => ofs.departements)
   public ofss: OfsEntity[];
+
+  @OneToMany(
+    () => BrsDiffusionWebsiteEntity,
+    (brsDiffusionWebsite) => brsDiffusionWebsite.departement,
+    { cascade: true },
+  )
+  public brsDiffusionWebsites: BrsDiffusionWebsiteEntity[];
 
   @CreateDateColumn()
   createdAt: Date;
