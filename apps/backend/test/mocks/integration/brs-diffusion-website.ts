@@ -26,4 +26,7 @@ export const mockedBrsDiffusionWebsiteRepository = {
     leftJoinAndSelect: jest.fn().mockReturnThis(),
     getManyAndCount: jest.fn().mockResolvedValue([[], 0]),
   }),
+  findOne: jest.fn(),
+  findById: jest.fn(),
+  delete: jest.fn(),
 };

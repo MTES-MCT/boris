@@ -35,4 +35,15 @@ export class BrsDiffusionWebsiteRepository
 
     return query.getManyAndCount();
   }
+
+  public async findById(id: string): Promise<BrsDiffusionWebsiteEntity | null> {
+    return this.repository.findOne({
+      where: { id },
+      relations: ['region', 'departement'],
+    });
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
 }

@@ -81,4 +81,34 @@ describe('BrsDiffusionWebsiteRepository', () => {
     );
     expect(mockQueryBuilder.getManyAndCount).toHaveBeenCalledTimes(1);
   });
+
+  it('should find a brs diffusion website by id', async () => {
+    mockedBrsDiffusionWebsiteRepository.findOne.mockResolvedValue(
+      mockedBrsDiffusionWebsite,
+    );
+
+    const result = await brsDiffusionWebsiteRepository.findById('1234');
+
+    expect(result).toMatchObject(mockedBrsDiffusionWebsite);
+    expect(mockedBrsDiffusionWebsiteRepository.findOne).toHaveBeenCalledTimes(
+      1,
+    );
+    expect(mockedBrsDiffusionWebsiteRepository.findOne).toHaveBeenCalledWith({
+      where: { id: '1234' },
+      relations: ['region', 'departement'],
+    });
+  });
+
+  it('should delete a brs diffusion website', async () => {
+    mockedBrsDiffusionWebsiteRepository.delete.mockResolvedValue({
+      affected: 1,
+    });
+
+    await brsDiffusionWebsiteRepository.delete('1234');
+
+    expect(mockedBrsDiffusionWebsiteRepository.delete).toHaveBeenCalledTimes(1);
+    expect(mockedBrsDiffusionWebsiteRepository.delete).toHaveBeenCalledWith(
+      '1234',
+    );
+  });
 });

@@ -8,6 +8,7 @@ import { CreateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-
 import { GeocoderModule } from 'src/infrastructure/geocoder/geocoder.module';
 import { DepartementModule } from '../departement/departement.module';
 import { CreateBrsDiffusionWebsiteAdminController } from './controllers/admin/create-brs-diffusion-website.controller';
+import { DeleteBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-website/usecases/delete.usecase';
 
 @Module({
   imports: [
@@ -27,12 +28,14 @@ import { CreateBrsDiffusionWebsiteAdminController } from './controllers/admin/cr
     BrsDiffusionWebsiteRepository,
     FindAllBrsDiffusionWebsitesUsecase,
     CreateBrsDiffusionWebsiteUsecase,
+    DeleteBrsDiffusionWebsiteUsecase,
   ],
   exports: [
     'BrsDiffusionWebsiteRepositoryInterface',
     BrsDiffusionWebsiteRepository,
     FindAllBrsDiffusionWebsitesUsecase,
     CreateBrsDiffusionWebsiteUsecase,
+    DeleteBrsDiffusionWebsiteUsecase,
   ],
 })
 export class BrsDiffusionWebsiteModule {}
