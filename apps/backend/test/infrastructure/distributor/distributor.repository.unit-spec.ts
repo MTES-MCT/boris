@@ -26,7 +26,7 @@ describe('DistributorRepository', () => {
     );
   });
 
-  it('should save a departement and return its data', async () => {
+  it('should save a distributor and return its data', async () => {
     mockDistributorRepository.save.mockResolvedValue(distributor1);
 
     const result = await distributorRepository.save(distributor1);

@@ -18,4 +18,12 @@ export const mockedBrsDiffusionWebsite = new BrsDiffusionWebsiteEntity(
 
 export const mockedBrsDiffusionWebsiteRepository = {
   save: jest.fn(),
+  findAll: jest.fn(),
+  createQueryBuilder: jest.fn().mockReturnValue({
+    skip: jest.fn().mockReturnThis(),
+    take: jest.fn().mockReturnThis(),
+    orderBy: jest.fn().mockReturnThis(),
+    leftJoinAndSelect: jest.fn().mockReturnThis(),
+    getManyAndCount: jest.fn().mockResolvedValue([[], 0]),
+  }),
 };

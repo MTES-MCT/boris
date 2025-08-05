@@ -51,14 +51,23 @@
 
   <div class="flex flex-col gap-2">
     <div class="bg-white p-4 rounded-lg shadow-md text-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-gray-200">
-      <h3 class="text-2xl font-semibold mb-2">{{regions.totalCount}}</h3>
-      <p class="font-medium text-gray-600 dark:text-gray-400">{{translations.contents.regions.title}}</p>
-    </div>
-  </div>
+      <h3 class="text-2xl font-semibold mb-2">{{distributors.totalCount}}</h3>
+      <p class="font-medium text-gray-600 dark:text-gray-400">{{translations.contents.distributors.title}}</p>
+      <div class="flex flex-col gap-1 mt-4">
+        <a href="/distributors"
+          class="font-medium text-primary-600 dark:text-primary-500 hover:underline flex items-start flex gap-2">
+          {{> icons/arrow_up_right width="4" height="4" }}
+          {{translations.actions.view}}
+        </a>
+        <button type="button" data-modal-target="createDistributor" data-modal-toggle="createDistributor"
+          class="font-medium text-primary-600 dark:text-primary-500 hover:underline flex items-center flex gap-2">
+          {{> icons/plus width="4" height="4" }}
+          {{translations.contents.distributors.action.label}}
+        </button>
+      </div>
 
-  <div class="flex flex-col gap-2">
-    <div class="bg-white p-4 rounded-lg shadow-md text-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-gray-200">
-      <h3 class="text-2xl font-semibold mb-2">{{departements.totalCount}}</h3>
-      <p class="font-medium text-gray-600 dark:text-gray-400">{{translations.contents.departements.title}}</p>
+      {{#> modal id="createDistributor" actionLabel=translations.contents.distributors.action.label}}
+      {{> forms/distributor/create actionLabel=translations.contents.distributors.action.label}}
+      {{/modal}}
     </div>
   </div>
