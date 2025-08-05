@@ -51,23 +51,24 @@
 
   <div class="flex flex-col gap-2">
     <div class="bg-white p-4 rounded-lg shadow-md text-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-gray-200">
-      <h3 class="text-2xl font-semibold mb-2">{{distributors.totalCount}}</h3>
-      <p class="font-medium text-gray-600 dark:text-gray-400">{{translations.contents.distributors.title}}</p>
+      <h3 class="text-2xl font-semibold mb-2">{{brsDiffusionWebsites.totalCount}}</h3>
+      <p class="font-medium text-gray-600 dark:text-gray-400">{{translations.contents.brsDiffusionWebsites.title}}</p>
       <div class="flex flex-col gap-1 mt-4">
-        <a href="/distributors"
+        <a href="/brs-diffusion-websites"
           class="font-medium text-primary-600 dark:text-primary-500 hover:underline flex items-start flex gap-2">
           {{> icons/arrow_up_right width="4" height="4" }}
           {{translations.actions.view}}
         </a>
-        <button type="button" data-modal-target="createDistributor" data-modal-toggle="createDistributor"
+        <button type="button" data-modal-target="createBrsDiffusionWebsite"
+          data-modal-toggle="createBrsDiffusionWebsite"
           class="font-medium text-primary-600 dark:text-primary-500 hover:underline flex items-center flex gap-2">
           {{> icons/plus width="4" height="4" }}
-          {{translations.contents.distributors.action.label}}
+          {{translations.contents.brsDiffusionWebsites.action.label}}
         </button>
       </div>
 
-      {{#> modal id="createDistributor" actionLabel=translations.contents.distributors.action.label}}
-      {{> forms/distributor/create actionLabel=translations.contents.distributors.action.label}}
+      {{#> modal id="createBrsDiffusionWebsite" actionLabel=translations.contents.brsDiffusionWebsites.action.label}}
+      {{> forms/brs_diffusion_website/create actionLabel=translations.contents.brsDiffusionWebsites.action.label}}
       {{/modal}}
     </div>
   </div>

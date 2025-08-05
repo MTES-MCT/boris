@@ -2,7 +2,12 @@ import { Module } from '@nestjs/common';
 import { GeocoderService } from './geocoder.service';
 
 @Module({
-  providers: [GeocoderService],
-  exports: [GeocoderService],
+  providers: [
+    {
+      provide: 'GeocoderServiceInterface',
+      useClass: GeocoderService,
+    },
+  ],
+  exports: ['GeocoderServiceInterface'],
 })
 export class GeocoderModule {}

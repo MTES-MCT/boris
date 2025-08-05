@@ -74,6 +74,10 @@ const translations: translations = {
     distributors: 'Commercialisateur(s)',
     departements: 'Département(s)',
     regions: 'Région(s)',
+    source: 'Source',
+    distributorName: 'Nom du commercialisateur',
+    ofsName: "Nom de l'OFS",
+    city: 'Ville',
   },
   contents: {
     home: {
@@ -137,9 +141,9 @@ const translations: translations = {
       title: 'Départements',
     },
     brsDiffusionWebsites: {
-      title: 'Sites de diffusion du BRS',
+      title: 'Sites de diffusion BRS',
       action: {
-        label: 'Créer un site de diffusion du BRS',
+        label: 'Créer un site de diffusion BRS',
       },
       columns: [
         { key: 'source', label: 'Source', type: 'link' },
