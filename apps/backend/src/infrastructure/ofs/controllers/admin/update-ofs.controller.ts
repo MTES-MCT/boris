@@ -22,6 +22,7 @@ import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases
 import { DEFAULT_PAGINATION } from 'src/application/common/pagination';
 import { UpdateOfsDTO } from 'src/infrastructure/ofs/dtos/update.dto';
 import { UpdateOfsUsecase } from 'src/application/ofs/usecases/update.usecase';
+import { RequestWithFlash } from 'src/types/request-with-flash';
 
 @ApiExcludeController()
 @Controller('/ofs')
@@ -82,7 +83,7 @@ export class UpdateOfsAdminController {
     try {
       await this.updateOfsUsecase.execute({ id: params.id, ...body });
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.success.defaultLabel,
         translations.success.defaultContent,
       );
@@ -96,7 +97,7 @@ export class UpdateOfsAdminController {
     } catch (error) {
       console.log(error);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
         translations.error.defaultContent,
       );

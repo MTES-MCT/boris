@@ -14,6 +14,7 @@ import { ApiExcludeController } from '@nestjs/swagger';
 import translations from 'src/views/utils/translations';
 import { CreateOfsUsecase } from 'src/application/ofs/usecases/create.usecase';
 import { CreateOfsDTO } from 'src/infrastructure/ofs/dtos/create.dto';
+import { RequestWithFlash } from 'src/types/request-with-flash';
 
 @ApiExcludeController()
 @Controller('/ofs')
@@ -31,7 +32,7 @@ export class CreateOfsAdminController {
     try {
       await this.createOfsUsecase.execute(body);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.success.defaultLabel,
         translations.success.defaultContent,
       );
@@ -45,7 +46,7 @@ export class CreateOfsAdminController {
     } catch (e) {
       console.log(e);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
         translations.error.defaultContent,
       );
