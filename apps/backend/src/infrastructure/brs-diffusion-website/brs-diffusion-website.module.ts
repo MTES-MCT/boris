@@ -11,6 +11,8 @@ import { CreateBrsDiffusionWebsiteAdminController } from './controllers/admin/cr
 import { DeleteBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-website/usecases/delete.usecase';
 import { DeleteBrsDiffusionWebsiteAdminController } from './controllers/admin/delete-brs-diffusion-website.controller';
 import { UpdateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-website/usecases/update.usecase';
+import { FindBrsDiffusionWebsiteByIdUsecase } from 'src/application/brs-diffusion-website/usecases/findById.usecase';
+import { UpdateBrsDiffusionWebsiteAdminController } from './controllers/admin/update-brs-diffusion-website.controller';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import { UpdateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-
     GetBrsDiffusionWebsitesAdminController,
     CreateBrsDiffusionWebsiteAdminController,
     DeleteBrsDiffusionWebsiteAdminController,
+    UpdateBrsDiffusionWebsiteAdminController,
   ],
   providers: [
     {
@@ -33,6 +36,7 @@ import { UpdateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-
     CreateBrsDiffusionWebsiteUsecase,
     DeleteBrsDiffusionWebsiteUsecase,
     UpdateBrsDiffusionWebsiteUsecase,
+    FindBrsDiffusionWebsiteByIdUsecase,
   ],
   exports: [
     'BrsDiffusionWebsiteRepositoryInterface',
@@ -41,6 +45,7 @@ import { UpdateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-
     CreateBrsDiffusionWebsiteUsecase,
     DeleteBrsDiffusionWebsiteUsecase,
     UpdateBrsDiffusionWebsiteUsecase,
+    FindBrsDiffusionWebsiteByIdUsecase,
   ],
 })
 export class BrsDiffusionWebsiteModule {}

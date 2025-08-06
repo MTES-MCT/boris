@@ -78,6 +78,11 @@ const translations: translations = {
     distributorName: 'Nom du commercialisateur',
     ofsName: "Nom de l'OFS",
     city: 'Ville',
+    zipcode: 'Code postal',
+    inseeCode: 'Code INSEE',
+    address: 'Adresse',
+    latitude: 'Latitude',
+    longitude: 'Longitude',
   },
   contents: {
     home: {
