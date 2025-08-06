@@ -10,6 +10,7 @@ import { DepartementModule } from '../departement/departement.module';
 import { CreateBrsDiffusionWebsiteAdminController } from './controllers/admin/create-brs-diffusion-website.controller';
 import { DeleteBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-website/usecases/delete.usecase';
 import { DeleteBrsDiffusionWebsiteAdminController } from './controllers/admin/delete-brs-diffusion-website.controller';
+import { UpdateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-website/usecases/update.usecase';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { DeleteBrsDiffusionWebsiteAdminController } from './controllers/admin/de
     FindAllBrsDiffusionWebsitesUsecase,
     CreateBrsDiffusionWebsiteUsecase,
     DeleteBrsDiffusionWebsiteUsecase,
-    DeleteBrsDiffusionWebsiteAdminController,
+    UpdateBrsDiffusionWebsiteUsecase,
   ],
   exports: [
     'BrsDiffusionWebsiteRepositoryInterface',
@@ -39,6 +40,7 @@ import { DeleteBrsDiffusionWebsiteAdminController } from './controllers/admin/de
     FindAllBrsDiffusionWebsitesUsecase,
     CreateBrsDiffusionWebsiteUsecase,
     DeleteBrsDiffusionWebsiteUsecase,
+    UpdateBrsDiffusionWebsiteUsecase,
   ],
 })
 export class BrsDiffusionWebsiteModule {}
