@@ -1,6 +1,7 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
+import { RequestWithFlash } from 'src/types/request-with-flash';
 import translations from 'src/views/utils/translations';
 
 @Injectable()
@@ -21,7 +22,7 @@ export class LocalAuthGuard extends AuthGuard('local') {
       const res: Response = context.switchToHttp().getResponse();
       const req: Request = context.switchToHttp().getRequest();
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
         translations.error.login.invalidCredentials,
       );

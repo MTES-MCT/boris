@@ -13,6 +13,7 @@ import { DeleteBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-
 import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.requireAuth.filter';
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
 import { IdDTO } from 'src/infrastructure/common/dtos/id.dto';
+import { RequestWithFlash } from 'src/types/request-with-flash';
 import translations from 'src/views/utils/translations';
 
 @ApiExcludeController()
@@ -33,7 +34,7 @@ export class DeleteBrsDiffusionWebsiteAdminController {
     try {
       await this.deleteBrsDiffusionWebsiteUsecase.execute(params);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.success.defaultLabel,
         translations.success.defaultContent,
       );
@@ -47,7 +48,7 @@ export class DeleteBrsDiffusionWebsiteAdminController {
     } catch (error) {
       console.error(error);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
         translations.error.defaultContent,
       );

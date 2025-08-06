@@ -14,6 +14,7 @@ import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.
 import { CreateBrsDiffusionWebsiteDTO } from '../../dtos/create.dto';
 import { Request, Response } from 'express';
 import translations from 'src/views/utils/translations';
+import { RequestWithFlash } from 'src/types/request-with-flash';
 
 @ApiExcludeController()
 @Controller('/brs-diffusion-websites')
@@ -33,7 +34,7 @@ export class CreateBrsDiffusionWebsiteAdminController {
     try {
       await this.createBrsDiffusionWebsiteUsecase.execute(body);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.success.defaultLabel,
         translations.success.defaultContent,
       );
@@ -47,7 +48,7 @@ export class CreateBrsDiffusionWebsiteAdminController {
     } catch (e) {
       console.log(e);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
         translations.error.defaultContent,
       );

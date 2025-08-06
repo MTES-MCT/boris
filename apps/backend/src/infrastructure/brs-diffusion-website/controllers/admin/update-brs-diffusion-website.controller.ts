@@ -18,6 +18,7 @@ import { UpdateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-
 import { UpdateBrsDiffusionWebsiteDTO } from '../../dtos/update.dto';
 import { IdDTO } from 'src/infrastructure/common/dtos/id.dto';
 import { FindBrsDiffusionWebsiteByIdUsecase } from 'src/application/brs-diffusion-website/usecases/findById.usecase';
+import { RequestWithFlash } from 'src/types/request-with-flash';
 
 @ApiExcludeController()
 @Controller('/brs-diffusion-websites')
@@ -67,7 +68,7 @@ export class UpdateBrsDiffusionWebsiteAdminController {
         ...body,
       });
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.success.defaultLabel,
         translations.success.defaultContent,
       );
@@ -81,7 +82,7 @@ export class UpdateBrsDiffusionWebsiteAdminController {
     } catch (e) {
       console.log(e);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
         translations.error.defaultContent,
       );

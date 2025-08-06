@@ -1,5 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
+import { RequestWithFlash } from 'src/types/request-with-flash';
 import translations from 'src/views/utils/translations';
 
 @Injectable()
@@ -8,7 +9,7 @@ export class ToLocalsMiddleware implements NestMiddleware {
     res.locals.user = req.user;
     res.locals.translations = translations;
 
-    const flashMessage = req.flash();
+    const flashMessage = (req as RequestWithFlash).flash();
 
     if (Object.keys(flashMessage).length > 0) {
       res.locals.flashMessage = {

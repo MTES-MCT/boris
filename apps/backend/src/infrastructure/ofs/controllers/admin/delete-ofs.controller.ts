@@ -14,6 +14,7 @@ import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.
 import { DeleteOfsUsecase } from 'src/application/ofs/usecases/delete.usecase';
 import { IdDTO } from 'src/infrastructure/common/dtos/id.dto';
 import translations from 'src/views/utils/translations';
+import { RequestWithFlash } from 'src/types/request-with-flash';
 
 @ApiExcludeController()
 @Controller('/ofs')
@@ -31,7 +32,7 @@ export class DeleteOfsAdminController {
     try {
       await this.deleteOfsUsecase.execute(params);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.success.defaultLabel,
         translations.success.defaultContent,
       );
@@ -45,7 +46,7 @@ export class DeleteOfsAdminController {
     } catch (error) {
       console.error(error);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
         translations.error.defaultContent,
       );
