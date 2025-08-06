@@ -52,5 +52,5 @@ button {
 }
 
 .animate-toast {
-  animation: toast 4s ease-in-out forwards;
+  animation: toast 6s ease-in-out forwards;
 }

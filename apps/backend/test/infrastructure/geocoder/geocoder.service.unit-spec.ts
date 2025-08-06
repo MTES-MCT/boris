@@ -60,4 +60,10 @@ describe('GeocoderService', () => {
     expect(mockFetch).toHaveBeenCalledTimes(1);
     expect(result).toBeUndefined();
   });
+
+  it('should return the first two digits of the zipcode', () => {
+    const zipcode = '75001';
+    const result = geocoderService.getZipcodeFirstTwoDigits(zipcode);
+    expect(result).toBe('75');
+  });
 });

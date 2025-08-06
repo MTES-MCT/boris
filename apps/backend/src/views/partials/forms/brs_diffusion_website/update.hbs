@@ -1,0 +1,91 @@
+<form action="/brs-diffusion-websites/{{brsDiffusionWebsite.id}}?_method=PUT" method="post">
+  <div class="grid gap-4 mb-4 sm:grid-cols-2">
+    <div>
+      <label for="source"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.websiteUrl}}</label>
+      <input type="text" name="source" id="source"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        placeholder="https://domaine.fr" pattern="https?://.+" title="{{translations.fields.websiteUrlInputHint}}"
+        required value="{{brsDiffusionWebsite.source}}">
+    </div>
+    <div>
+      <label for="distributorName"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.distributorName}}</label>
+      <input type="text" name="distributorName" id="distributorName"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        placeholder="Nom du commercialisateur" required value="{{brsDiffusionWebsite.distributorName}}">
+    </div>
+    <div>
+      <label for="ofsName"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.ofsName}}</label>
+      <input type="text" name="ofsName" id="ofsName"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        placeholder="Nom de l'OFS" required value="{{brsDiffusionWebsite.ofsName}}">
+    </div>
+    <div>
+      <label for="city"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.city}}</label>
+      <input type="text" name="city" id="city"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        placeholder="Nom de la ville" required value="{{brsDiffusionWebsite.city}}">
+    </div>
+    <div>
+      <label for="region"
+        class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">{{translations.fields.regions}}</label>
+      <input type="text" name="region" id="region"
+        class="bg-gray-100 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        disabled readonly placeholder="Nom de la région" value="{{brsDiffusionWebsite.region.name}}">
+    </div>
+    <div>
+      <label for="departement"
+        class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">{{translations.fields.departements}}</label>
+      <input type="text" name="departement" id="departement"
+        class="bg-gray-100 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        disabled readonly placeholder="Nom du département" value="{{brsDiffusionWebsite.departement.name}}">
+    </div>
+    <div>
+      <label for="zipcode"
+        class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">{{translations.fields.zipcode}}</label>
+      <input type="text" name="zipcode" id="zipcode"
+        class="bg-gray-100 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        disabled readonly placeholder="Code postal" required value="{{brsDiffusionWebsite.zipcode}}">
+    </div>
+    <div>
+      <label for="inseeCode"
+        class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">{{translations.fields.inseeCode}}</label>
+      <input type="text" name="inseeCode" id="inseeCode"
+        class="bg-gray-100 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        disabled readonly placeholder="Code INSEE" required value="{{brsDiffusionWebsite.inseeCode}}">
+    </div>
+    <div>
+      <label for="address"
+        class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">{{translations.fields.address}}</label>
+      <input type="text" name="address" id="address"
+        class="bg-gray-100 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        disabled readonly placeholder="Adresse" required value="{{brsDiffusionWebsite.address}}">
+    </div>
+    <div>
+      <div class="grid gap-4 mb-4 sm:grid-cols-2">
+        <div>
+          <label for="latitude"
+            class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">{{translations.fields.latitude}}</label>
+          <input type="text" name="latitude" id="latitude"
+            class="bg-gray-100 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            disabled readonly placeholder="Latitude" required value="{{brsDiffusionWebsite.latitude}}">
+        </div>
+        <div>
+          <label for="longitude"
+            class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">{{translations.fields.longitude}}</label>
+          <input type="text" name="longitude" id="longitude"
+            class="bg-gray-100 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            disabled readonly placeholder="Longitude" required value="{{brsDiffusionWebsite.longitude}}">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit"
+    class="text-white mt-4 inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+    {{actionLabel}}
+  </button>
+</form>

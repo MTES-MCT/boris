@@ -1,0 +1,8 @@
+{{> breadcrumb links=breadcrumbLinks }}
+
+{{> page_header title=(concat translations.actions.update (concat ' ' brsDiffusionWebsite.source))}}
+
+<div class="m-4 p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+  {{> forms/brs_diffusion_website/update actionLabel=translations.actions.update brsDiffusionWebsite=brsDiffusionWebsite
+  }}
+</div>
