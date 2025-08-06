@@ -18,7 +18,8 @@ import { BrsDiffusionWebsiteModule } from './infrastructure/brs-diffusion-websit
     TypeOrmModule.forRoot(typeormConfig),
     LoggerModule.forRoot({
       pinoHttp: {
-        enabled: process.env.NODE_ENV !== 'ci',
+        enabled:
+          process.env.NODE_ENV !== 'ci' && process.env.NODE_ENV !== 'test',
         transport: {
           target: 'pino-pretty',
           options: {

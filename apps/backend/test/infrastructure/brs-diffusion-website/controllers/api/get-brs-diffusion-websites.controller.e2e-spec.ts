@@ -1,10 +1,10 @@
 import { INestApplication } from '@nestjs/common';
-import { OfsView } from 'src/application/ofs/views/ofs.view';
+import { BrsDiffusionWebsiteView } from 'src/application/brs-diffusion-website/views/brs-diffusion-website.view';
 import * as request from 'supertest';
 import { App } from 'supertest/types';
 import { setupTestingApp } from 'test/config/setup.e2e';
 
-describe('GetOfssApiController', () => {
+describe('GetBrsDiffusionWebsitesApiController', () => {
   let app: INestApplication<App>;
 
   beforeEach(async () => {
@@ -16,9 +16,9 @@ describe('GetOfssApiController', () => {
     await app.close();
   });
 
-  it('should return paginated ofss', async () => {
+  it('should return paginated brs diffusion websites', async () => {
     const { status, body } = await request(app.getHttpServer()).get(
-      '/api/ofss',
+      '/api/brs-diffusion-websites',
     );
 
     expect(status).toBe(200);
@@ -30,23 +30,33 @@ describe('GetOfssApiController', () => {
     expect(body).toHaveProperty('hasPreviousPage');
     expect(body).toHaveProperty('hasNextPage');
 
-    body.items.forEach((item: OfsView) => {
+    body.items.forEach((item: BrsDiffusionWebsiteView) => {
       expect(item).toMatchObject({
         id: expect.any(String),
-        name: expect.any(String),
-        departements: expect.any(Array),
-        regions: expect.any(Array),
-        distributors: expect.any(Array),
-        websiteUrl: expect.toBeOneOf([expect.any(String), null]),
-        phone: expect.toBeOneOf([expect.any(String), null]),
-        email: expect.toBeOneOf([expect.any(String), null]),
+        source: expect.any(String),
+        distributorName: expect.any(String),
+        ofsName: expect.any(String),
+        city: expect.any(String),
+        zipcode: expect.any(String),
+        address: expect.any(String),
+        latitude: expect.any(Number),
+        longitude: expect.any(Number),
+        region: expect.objectContaining({
+          id: expect.any(String),
+          name: expect.any(String),
+        }),
+        departement: expect.objectContaining({
+          id: expect.any(String),
+          name: expect.any(String),
+          code: expect.any(String),
+        }),
       });
     });
   });
 
-  it('should retrieve first page of ofss', async () => {
+  it('should retrieve first page of brs diffusion websites', async () => {
     const { status, body } = await request(app.getHttpServer()).get(
-      '/api/ofss?page=1&pageSize=10',
+      '/api/brs-diffusion-websites?page=1&pageSize=10',
     );
 
     expect(status).toBe(200);
@@ -64,23 +74,33 @@ describe('GetOfssApiController', () => {
     expect(body.hasPreviousPage).toBe(false);
     expect(body.hasNextPage).toBe(true);
 
-    body.items.forEach((item: OfsView) => {
+    body.items.forEach((item: BrsDiffusionWebsiteView) => {
       expect(item).toMatchObject({
         id: expect.any(String),
-        name: expect.any(String),
-        departements: expect.any(Array),
-        regions: expect.any(Array),
-        distributors: expect.any(Array),
-        websiteUrl: expect.toBeOneOf([expect.any(String), null]),
-        phone: expect.toBeOneOf([expect.any(String), null]),
-        email: expect.toBeOneOf([expect.any(String), null]),
+        source: expect.any(String),
+        distributorName: expect.any(String),
+        ofsName: expect.any(String),
+        city: expect.any(String),
+        zipcode: expect.any(String),
+        address: expect.any(String),
+        latitude: expect.any(Number),
+        longitude: expect.any(Number),
+        region: expect.objectContaining({
+          id: expect.any(String),
+          name: expect.any(String),
+        }),
+        departement: expect.objectContaining({
+          id: expect.any(String),
+          name: expect.any(String),
+          code: expect.any(String),
+        }),
       });
     });
   });
 
   it('should throw a 400 when pagination query params are invalid', async () => {
     const { status } = await request(app.getHttpServer()).get(
-      '/api/ofss?page=deux',
+      '/api/brs-diffusion-websites?page=deux',
     );
 
     expect(status).toBe(400);
