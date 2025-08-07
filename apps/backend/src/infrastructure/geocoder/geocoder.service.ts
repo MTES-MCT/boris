@@ -16,8 +16,6 @@ export class GeocoderService implements GeocoderServiceInterface {
         `${this.baseUrl}/search?q=${municipality}&autocomplete=0&index=address&limit=1&returntruegeometry=false&type=municipality`,
       );
 
-      console.log(JSON.stringify(response));
-
       const data: GeocodedSearchApiResponse = await response.json();
 
       return data?.features?.[0];
