@@ -1,4 +1,7 @@
-import { BrsDiffusionWebsiteEntity } from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.entity';
+import {
+  BrsDiffusionWebsiteEntity,
+  BrsDiffusionWebsiteEntityWithDistance,
+} from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.entity';
 import { PaginationProps } from '../common/paginationProps';
 
 export interface BrsDiffusionWebsiteRepositoryInterface {
@@ -10,4 +13,10 @@ export interface BrsDiffusionWebsiteRepositoryInterface {
   ): Promise<[BrsDiffusionWebsiteEntity[], number]>;
   findById(id: string): Promise<BrsDiffusionWebsiteEntity | null>;
   delete(id: string): Promise<void>;
+  findAllByLocation(
+    paginationProps: PaginationProps,
+    latitude: number,
+    longitude: number,
+    radius: number,
+  ): Promise<[BrsDiffusionWebsiteEntityWithDistance[], number]>;
 }

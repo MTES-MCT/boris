@@ -54,6 +54,45 @@ describe('GetBrsDiffusionWebsitesApiController', () => {
     });
   });
 
+  it('should return paginated brs diffusion websites', async () => {
+    const { status, body } = await request(app.getHttpServer()).get(
+      '/api/brs-diffusion-websites?latitude=48.85341&longitude=2.3488&radius=150',
+    );
+
+    expect(status).toBe(200);
+    expect(body).toHaveProperty('items');
+    expect(body).toHaveProperty('totalCount');
+    expect(body).toHaveProperty('page');
+    expect(body).toHaveProperty('pageSize');
+    expect(body).toHaveProperty('pagesCount');
+    expect(body).toHaveProperty('hasPreviousPage');
+    expect(body).toHaveProperty('hasNextPage');
+
+    body.items.forEach((item: BrsDiffusionWebsiteView) => {
+      expect(item).toMatchObject({
+        id: expect.any(String),
+        source: expect.any(String),
+        distributorName: expect.any(String),
+        ofsName: expect.any(String),
+        city: expect.any(String),
+        zipcode: expect.any(String),
+        address: expect.any(String),
+        latitude: expect.any(Number),
+        longitude: expect.any(Number),
+        region: expect.objectContaining({
+          id: expect.any(String),
+          name: expect.any(String),
+        }),
+        departement: expect.objectContaining({
+          id: expect.any(String),
+          name: expect.any(String),
+          code: expect.any(String),
+        }),
+        distance: expect.any(Number),
+      });
+    });
+  });
+
   it('should retrieve first page of brs diffusion websites', async () => {
     const { status, body } = await request(app.getHttpServer()).get(
       '/api/brs-diffusion-websites?page=1&pageSize=10',

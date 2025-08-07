@@ -83,3 +83,8 @@ export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
     this.departement = departement;
   }
 }
+
+export type BrsDiffusionWebsiteEntityWithDistance =
+  BrsDiffusionWebsiteEntity & {
+    distance: number;
+  };

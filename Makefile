@@ -18,6 +18,9 @@ psql-staging:
 psql-prod:
 	scalingo -a boris-backend-prod pgsql-console
 
+migration-create:
+	npm run migration:create src/infrastructure/persistence/migrations/${NAME} -w @boris/backend
+
 migration-generate:
 	npm run build -w @boris/backend
 	npm run migration:generate src/infrastructure/persistence/migrations/${NAME} -w @boris/backend

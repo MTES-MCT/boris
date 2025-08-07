@@ -3,6 +3,9 @@ import { FindAllBrsDiffusionWebsitesParams } from './findAll.params';
 import { Pagination } from 'src/application/common/pagination';
 import { BrsDiffusionWebsiteRepositoryInterface } from 'src/domain/brs-diffusion-website/brs-diffusion-website.repository.interface';
 import { BrsDiffusionWebsiteView } from '../views/brs-diffusion-website.view';
+import { BrsDiffusionWebsiteEntityWithDistance } from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.entity';
+
+export const DEFAULT_RADIUS = 100;
 
 export class FindAllBrsDiffusionWebsitesUsecase {
   constructor(
@@ -13,10 +16,33 @@ export class FindAllBrsDiffusionWebsitesUsecase {
   public async execute(
     params: FindAllBrsDiffusionWebsitesParams,
   ): Promise<Pagination<BrsDiffusionWebsiteView>> {
-    const { page, pageSize } = params;
+    const {
+      page,
+      pageSize,
+      latitude,
+      longitude,
+      radius = DEFAULT_RADIUS,
+    } = params;
+    const paginationProps = { page, pageSize };
 
-    const [brsDiffusionWebsites, totalCount] =
-      await this.brsDiffusionWebsiteRepository.findAll({ page, pageSize });
+    let brsDiffusionWebsites;
+    let totalCount: number;
+    let showDistance = false;
+
+    if (latitude && longitude && radius) {
+      [brsDiffusionWebsites, totalCount] =
+        await this.brsDiffusionWebsiteRepository.findAllByLocation(
+          paginationProps,
+          latitude,
+          longitude,
+          radius,
+        );
+
+      showDistance = true;
+    } else {
+      [brsDiffusionWebsites, totalCount] =
+        await this.brsDiffusionWebsiteRepository.findAll(paginationProps);
+    }
 
     const items = brsDiffusionWebsites.map((brsDiffusionWebsite) => {
       return new BrsDiffusionWebsiteView(
@@ -37,8 +63,13 @@ export class FindAllBrsDiffusionWebsitesUsecase {
         {
           id: brsDiffusionWebsite.departement.id,
           name: brsDiffusionWebsite.departement.name,
+
           code: brsDiffusionWebsite.departement.code,
         },
+        showDistance
+          ? (brsDiffusionWebsite as BrsDiffusionWebsiteEntityWithDistance)
+              .distance
+          : undefined,
       );
     });
 
