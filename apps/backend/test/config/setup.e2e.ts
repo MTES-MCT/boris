@@ -11,6 +11,14 @@ import * as methodOverride from 'method-override';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 import flash = require('connect-flash');
 
+// add all jest-extended matchers
+import * as matchers from 'jest-extended';
+expect.extend(matchers);
+
+// or just add specific matchers
+import { toBeArray, toBeSealed } from 'jest-extended';
+expect.extend({ toBeArray, toBeSealed });
+
 export const setupTestingApp = async (): Promise<INestApplication<App>> => {
   // S'assurer que la connexion précédente est fermée
   if (dataSource.isInitialized) {

@@ -7,6 +7,7 @@ import {
 } from 'src/application/common/pagination';
 import {
   mockedBrsDiffusionWebsite,
+  mockedBrsDiffusionWebsiteRawWithDistance,
   mockedBrsDiffusionWebsiteRepository,
 } from 'test/mocks/integration/brs-diffusion-website';
 
@@ -72,5 +73,65 @@ describe('FindAllBrsDiffusionWebsitesUsecase', () => {
     expect(mockedBrsDiffusionWebsiteRepository.findAll).toHaveBeenCalledWith(
       DEFAULT_PAGINATION,
     );
+    expect(
+      mockedBrsDiffusionWebsiteRepository.findAllByLocation,
+    ).not.toHaveBeenCalled();
+  });
+
+  it('should return all brs diffusion websites by location', async () => {
+    mockedBrsDiffusionWebsiteRepository.findAllByLocation.mockResolvedValue([
+      [
+        {
+          ...mockedBrsDiffusionWebsite,
+          distance: mockedBrsDiffusionWebsiteRawWithDistance.distance,
+        },
+      ],
+      1,
+    ]);
+
+    const expectedResult = new Pagination(
+      [
+        new BrsDiffusionWebsiteView(
+          mockedBrsDiffusionWebsite.id,
+          mockedBrsDiffusionWebsite.source,
+          mockedBrsDiffusionWebsite.distributorName,
+          mockedBrsDiffusionWebsite.ofsName,
+          mockedBrsDiffusionWebsite.city,
+          mockedBrsDiffusionWebsite.zipcode,
+          mockedBrsDiffusionWebsite.address,
+          mockedBrsDiffusionWebsite.inseeCode,
+          mockedBrsDiffusionWebsite.latitude,
+          mockedBrsDiffusionWebsite.longitude,
+          {
+            id: mockedBrsDiffusionWebsite.region.id,
+            name: mockedBrsDiffusionWebsite.region.name,
+          },
+          {
+            id: mockedBrsDiffusionWebsite.departement.id,
+            name: mockedBrsDiffusionWebsite.departement.name,
+            code: mockedBrsDiffusionWebsite.departement.code,
+          },
+          mockedBrsDiffusionWebsiteRawWithDistance.distance,
+        ),
+      ],
+      1,
+      DEFAULT_PAGINATION,
+    );
+
+    const result = await useCase.execute({
+      ...DEFAULT_PAGINATION,
+      latitude: 48.292817,
+      longitude: 4.075149,
+      radius: 150,
+    });
+
+    expect(result).toMatchObject(expectedResult);
+    expect(
+      mockedBrsDiffusionWebsiteRepository.findAllByLocation,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      mockedBrsDiffusionWebsiteRepository.findAllByLocation,
+    ).toHaveBeenCalledWith(DEFAULT_PAGINATION, 48.292817, 4.075149, 150);
+    expect(mockedBrsDiffusionWebsiteRepository.findAll).not.toHaveBeenCalled();
   });
 });

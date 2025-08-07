@@ -13,6 +13,7 @@ import { DeleteBrsDiffusionWebsiteAdminController } from './controllers/admin/de
 import { UpdateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-website/usecases/update.usecase';
 import { FindBrsDiffusionWebsiteByIdUsecase } from 'src/application/brs-diffusion-website/usecases/findById.usecase';
 import { UpdateBrsDiffusionWebsiteAdminController } from './controllers/admin/update-brs-diffusion-website.controller';
+import { GetBrsDiffusionWebsitesApiController } from './controllers/api/get-brs-diffusion-websites.controller';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { UpdateBrsDiffusionWebsiteAdminController } from './controllers/admin/up
     CreateBrsDiffusionWebsiteAdminController,
     DeleteBrsDiffusionWebsiteAdminController,
     UpdateBrsDiffusionWebsiteAdminController,
+    GetBrsDiffusionWebsitesApiController,
   ],
   providers: [
     {

@@ -2,44 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { SaveDepartementUsecase } from 'src/application/departement/usecases/save.usecase';
 import { SaveRegionUsecase } from 'src/application/region/usecases/save.usecase';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
-import { Ofs, setDistributors } from '../ofs/seed';
+import { setDistributors } from '../ofs/seed';
 import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/usecases/findManyByNames.usecase';
 import { FindOneRegionByNameUsecase } from 'src/application/region/usecases/findOneByName.usecase';
 import { CreateDistributorUsecase } from 'src/application/distributor/usecases/create.usecase';
 import { CreateOfsUsecase } from 'src/application/ofs/usecases/create.usecase';
-
-const regions = [
-  {
-    name: 'Bretagne',
-    departements: [
-      { name: "Côtes-d'Armor", code: '22' },
-      { name: 'Finistère', code: '29' },
-      { name: 'Ille-et-Vilaine', code: '35' },
-      { name: 'Morbihan', code: '56' },
-    ],
-  },
-];
-
-const ofss: Ofs[] = [
-  {
-    nom: 'La Coop Foncière Bretonne ',
-    commercialisateur: 'Maison Familiale de Quimper, Grand Delta Habitat',
-    region: 'Bretagne',
-    departements: 'Finistère',
-    lien: 'https://maison-familiale-de-quimper.fr/, https://www.granddelta.fr/',
-    telephone: null,
-    email: null,
-  },
-  {
-    nom: 'Archipel Habitat',
-    commercialisateur: null,
-    region: 'Bretagne',
-    departements: 'Ille-et-Vilaine',
-    lien: 'https://www.archipel-habitat.fr/trouver-un-logement/acheter-un-logement/programmes-en-cours',
-    telephone: null,
-    email: null,
-  },
-];
+import { regions } from '../regions-departements/data';
+import { ofss } from '../ofs/data';
+import { brsDiffusionWebsites } from '../brs-diffusion-website/data';
+import { CreateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-website/usecases/create.usecase';
 
 @Injectable()
 export class TestDataSeed {
@@ -50,6 +21,7 @@ export class TestDataSeed {
     private readonly findOneRegionByNameUsecase: FindOneRegionByNameUsecase,
     private readonly createDistributorUsecase: CreateDistributorUsecase,
     private readonly createOfsUsecase: CreateOfsUsecase,
+    private readonly createBrsDiffusionWebsiteUsecase: CreateBrsDiffusionWebsiteUsecase,
   ) {}
 
   private async seedRegions() {
@@ -131,8 +103,30 @@ export class TestDataSeed {
     console.log(`${distributorCount} commercialisateurs créés.`);
   }
 
+  private async seedBrsDiffusionWebsites() {
+    console.log('Création des sites web de diffusion BRS');
+
+    let brsDiffusionWebsitesCount = 0;
+
+    for (const brsDiffusionWebsite of brsDiffusionWebsites) {
+      await this.createBrsDiffusionWebsiteUsecase.execute({
+        source: brsDiffusionWebsite.source,
+        ofsName: brsDiffusionWebsite.ofs,
+        distributorName: brsDiffusionWebsite.commercialisateur,
+        city: brsDiffusionWebsite.commune,
+      });
+
+      brsDiffusionWebsitesCount = brsDiffusionWebsitesCount + 1;
+    }
+
+    console.log(
+      `${brsDiffusionWebsitesCount} sites web de diffusion BRS créés.`,
+    );
+  }
+
   async seed() {
     await this.seedRegions();
     await this.seedOfss();
+    await this.seedBrsDiffusionWebsites();
   }
 }

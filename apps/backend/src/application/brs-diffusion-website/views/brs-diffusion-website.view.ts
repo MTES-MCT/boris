@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { DepartementRelationnalView } from 'src/application/departement/views/relationnal.view';
 import { RegionRelationnalView } from 'src/application/region/views/relationnal.view';
 
@@ -33,6 +33,9 @@ export class BrsDiffusionWebsiteView {
   @ApiProperty({ example: 4.111111 })
   public longitude: number;
 
+  @ApiPropertyOptional({ example: 100, description: 'Distance en kilomètres' })
+  public distance?: number;
+
   @ApiProperty({
     type: /* istanbul ignore next */ () => RegionRelationnalView,
   })
@@ -56,6 +59,7 @@ export class BrsDiffusionWebsiteView {
     longitude: number,
     region: RegionRelationnalView,
     departement: DepartementRelationnalView,
+    distance?: number,
   ) {
     this.id = id;
     this.source = source;
@@ -69,5 +73,6 @@ export class BrsDiffusionWebsiteView {
     this.longitude = longitude;
     this.region = region;
     this.departement = departement;
+    this.distance = distance;
   }
 }

@@ -1,48 +1,28 @@
 import { Inject } from '@nestjs/common';
-import { FindAllBrsDiffusionWebsitesParams } from './findAll.params';
+import { FindAllBrsDiffusionWebsitesByRegionParams } from './findAllByRegion.params';
 import { Pagination } from 'src/application/common/pagination';
 import { BrsDiffusionWebsiteRepositoryInterface } from 'src/domain/brs-diffusion-website/brs-diffusion-website.repository.interface';
 import { BrsDiffusionWebsiteView } from '../views/brs-diffusion-website.view';
-import { BrsDiffusionWebsiteEntityWithDistance } from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.entity';
 
 export const DEFAULT_RADIUS = 100;
 
-export class FindAllBrsDiffusionWebsitesUsecase {
+export class FindAllBrsDiffusionWebsitesByRegionUsecase {
   constructor(
     @Inject('BrsDiffusionWebsiteRepositoryInterface')
     private readonly brsDiffusionWebsiteRepository: BrsDiffusionWebsiteRepositoryInterface,
   ) {}
 
   public async execute(
-    params: FindAllBrsDiffusionWebsitesParams,
+    params: FindAllBrsDiffusionWebsitesByRegionParams,
   ): Promise<Pagination<BrsDiffusionWebsiteView>> {
-    const {
-      page,
-      pageSize,
-      latitude,
-      longitude,
-      radius = DEFAULT_RADIUS,
-    } = params;
+    const { page, pageSize, regionId } = params;
     const paginationProps = { page, pageSize };
 
-    let brsDiffusionWebsites;
-    let totalCount: number;
-    let showDistance = false;
-
-    if (latitude && longitude && radius) {
-      [brsDiffusionWebsites, totalCount] =
-        await this.brsDiffusionWebsiteRepository.findAllByLocation(
-          paginationProps,
-          latitude,
-          longitude,
-          radius,
-        );
-
-      showDistance = true;
-    } else {
-      [brsDiffusionWebsites, totalCount] =
-        await this.brsDiffusionWebsiteRepository.findAll(paginationProps);
-    }
+    const [brsDiffusionWebsites, totalCount] =
+      await this.brsDiffusionWebsiteRepository.findAllByRegion(
+        paginationProps,
+        regionId,
+      );
 
     const items = brsDiffusionWebsites.map((brsDiffusionWebsite) => {
       return new BrsDiffusionWebsiteView(
@@ -66,10 +46,6 @@ export class FindAllBrsDiffusionWebsitesUsecase {
 
           code: brsDiffusionWebsite.departement.code,
         },
-        showDistance
-          ? (brsDiffusionWebsite as BrsDiffusionWebsiteEntityWithDistance)
-              .distance
-          : undefined,
       );
     });
 

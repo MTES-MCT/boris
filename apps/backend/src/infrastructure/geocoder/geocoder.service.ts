@@ -11,13 +11,17 @@ export class GeocoderService implements GeocoderServiceInterface {
   public async geocodeByMunicipality(
     municipality: string,
   ): Promise<GeocodedResponse | undefined> {
-    const response = await fetch(
-      `${this.baseUrl}/search?q=${municipality}&autocomplete=0&index=address&limit=1&returntruegeometry=false&type=municipality`,
-    );
+    try {
+      const response = await fetch(
+        `${this.baseUrl}/search?q=${municipality}&autocomplete=0&index=address&limit=1&returntruegeometry=false&type=municipality`,
+      );
 
-    const data: GeocodedSearchApiResponse = await response.json();
+      const data: GeocodedSearchApiResponse = await response.json();
 
-    return data?.features?.[0];
+      return data?.features?.[0];
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   public getZipcodeFirstTwoDigits(zipcode: string): string {
