@@ -24,8 +24,6 @@ export class CreateBrsDiffusionWebsiteUsecase {
     const geocodedMunicipality =
       await this.geocoderService.geocodeByMunicipality(city);
 
-    console.log(geocodedMunicipality);
-
     if (!geocodedMunicipality) {
       throw new BadRequestException();
     }

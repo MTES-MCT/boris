@@ -43,7 +43,7 @@ seed:
 	npm run seed:regions-departements -w @boris/backend
 	npm run seed:ofs -w @boris/backend
 	npm run seed:user -w @boris/backend
-	npm run seed:brs-diffusion-websites -w @boris/backend
+	npm run seed:brs-diffusion-website -w @boris/backend
 
 seed-test-data:
 	npm run seed:test-data -w @boris/backend

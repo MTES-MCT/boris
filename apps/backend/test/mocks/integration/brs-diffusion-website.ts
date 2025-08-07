@@ -58,4 +58,6 @@ export const mockedBrsDiffusionWebsiteRepository = {
   findById: jest.fn(),
   delete: jest.fn(),
   findAllByLocation: jest.fn(),
+  findAllByRegion: jest.fn(),
+  findAllByDepartement: jest.fn(),
 };

@@ -93,4 +93,40 @@ export class BrsDiffusionWebsiteRepository
 
     return [result, count];
   }
+
+  public findAllByRegion(
+    paginationProps: PaginationProps,
+    regionId: string,
+  ): Promise<[BrsDiffusionWebsiteEntity[], number]> {
+    const { pageSize, page } = paginationProps;
+
+    const query = this.repository
+      .createQueryBuilder('brs_diffusion_website')
+      .leftJoinAndSelect('brs_diffusion_website.region', 'region')
+      .leftJoinAndSelect('brs_diffusion_website.departement', 'departement')
+      .where('region.id = :regionId', { regionId })
+      .skip((page - 1) * pageSize)
+      .take(pageSize)
+      .orderBy('brs_diffusion_website.createdAt', 'DESC');
+
+    return query.getManyAndCount();
+  }
+
+  public findAllByDepartement(
+    paginationProps: PaginationProps,
+    departementId: string,
+  ): Promise<[BrsDiffusionWebsiteEntity[], number]> {
+    const { pageSize, page } = paginationProps;
+
+    const query = this.repository
+      .createQueryBuilder('brs_diffusion_website')
+      .leftJoinAndSelect('brs_diffusion_website.region', 'region')
+      .leftJoinAndSelect('brs_diffusion_website.departement', 'departement')
+      .where('departement.id = :departementId', { departementId })
+      .skip((page - 1) * pageSize)
+      .take(pageSize)
+      .orderBy('brs_diffusion_website.createdAt', 'DESC');
+
+    return query.getManyAndCount();
+  }
 }
