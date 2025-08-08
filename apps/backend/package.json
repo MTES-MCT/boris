@@ -25,6 +25,7 @@
     "test:integration": "jest --testPathPattern=integration-spec.ts$",
     "test:e2e": "jest --testPathPattern=e2e-spec.ts$ --testTimeout=30000 --detectOpenHandles",
     "typeorm": "typeorm-ts-node-commonjs",
+    "migration:create": "npm run typeorm -- migration:create",
     "migration:generate": "npm run typeorm -- migration:generate -d src/infrastructure/persistence/typeorm-cli.config.ts",
     "migration:migrate": "npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm-cli.config.ts",
     "migration:migrate:test": "NODE_ENV=test  npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm-cli.config.ts",
@@ -33,7 +34,9 @@
     "seed:regions-departements": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/regions-departements/run.ts",
     "seed:ofs": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/ofs/run.ts",
     "seed:user": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/user/run.ts",
-    "seed:test-data": "NODE_ENV=test ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/test-data/run.ts"
+    "seed:brs-diffusion-website": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/brs-diffusion-website/run.ts",
+    "seed:test-data": "NODE_ENV=test ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/test-data/run.ts",
+    "generate-address-datagouv-types": "openapi-typescript https://data.geopf.fr/geocodage/openapi.yaml --output src/infrastructure/common/types/generated-address-datagouv-types.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -83,7 +86,9 @@
     "flowbite": "^3.1.2",
     "install": "^0.13.0",
     "jest": "^29.7.0",
+    "jest-extended": "^6.0.0",
     "nodemon": "^3.1.10",
+    "openapi-typescript": "^7.8.0",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
     "tailwindcss": "^4.1.7",

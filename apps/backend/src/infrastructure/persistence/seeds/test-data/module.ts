@@ -6,6 +6,7 @@ import { DepartementModule } from 'src/infrastructure/departement/departement.mo
 import { RegionModule } from 'src/infrastructure/region/region.module';
 import { OfsModule } from 'src/infrastructure/ofs/ofs.module';
 import { DistributorModule } from 'src/infrastructure/distributor/distributor.module';
+import { BrsDiffusionWebsiteModule } from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { DistributorModule } from 'src/infrastructure/distributor/distributor.mo
     DepartementModule,
     OfsModule,
     DistributorModule,
+    BrsDiffusionWebsiteModule,
   ],
   providers: [TestDataSeed],
 })

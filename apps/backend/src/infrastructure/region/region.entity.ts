@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 import { OfsEntity } from '../ofs/ofs.entity';
+import { BrsDiffusionWebsiteEntity } from '../brs-diffusion-website/brs-diffusion-website.entity';
 
 @Entity('region')
 export class RegionEntity implements RegionInterface {
@@ -26,6 +27,13 @@ export class RegionEntity implements RegionInterface {
 
   @ManyToMany(() => OfsEntity, (ofs) => ofs.regions)
   public ofss: OfsEntity[];
+
+  @OneToMany(
+    () => BrsDiffusionWebsiteEntity,
+    (brsDiffusionWebsite) => brsDiffusionWebsite.region,
+    { cascade: true },
+  )
+  public brsDiffusionWebsites: BrsDiffusionWebsiteEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

@@ -14,6 +14,7 @@ import { CreateDistributorUsecase } from 'src/application/distributor/usecases/c
 import { CreateDistributorDTO } from 'src/infrastructure/distributor/dtos/create.dto';
 import { ApiExcludeController } from '@nestjs/swagger';
 import translations from 'src/views/utils/translations';
+import { RequestWithFlash } from 'src/types/request-with-flash';
 
 @ApiExcludeController()
 @Controller('/distributors')
@@ -33,7 +34,7 @@ export class CreateDistributorAdminController {
     try {
       await this.createDistributorUsecase.execute(body);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.success.defaultLabel,
         translations.success.defaultContent,
       );
@@ -47,7 +48,7 @@ export class CreateDistributorAdminController {
     } catch (e) {
       console.log(e);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
         translations.error.defaultContent,
       );

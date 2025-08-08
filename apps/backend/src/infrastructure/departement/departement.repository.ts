@@ -22,7 +22,7 @@ export class DepartementRepository implements DepartementRepositoryInterface {
   }
 
   public findOneByCode(code: string): Promise<DepartementEntity | null> {
-    return this.repository.findOneBy({ code });
+    return this.repository.findOne({ where: { code }, relations: ['region'] });
   }
 
   public findManyByNames(names: string[]): Promise<DepartementEntity[]> {

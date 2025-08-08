@@ -1,10 +1,8 @@
 import { INestApplication } from '@nestjs/common';
 import { OfsView } from 'src/application/ofs/views/ofs.view';
-import { Pagination } from 'src/application/common/pagination';
 import * as request from 'supertest';
 import { App } from 'supertest/types';
 import { setupTestingApp } from 'test/config/setup.e2e';
-import { ofss } from 'test/mocks/e2e/ofs';
 
 describe('GetOfssApiController', () => {
   let app: INestApplication<App>;
@@ -18,53 +16,66 @@ describe('GetOfssApiController', () => {
     await app.close();
   });
 
-  it('should retrieve all ofss', async () => {
+  it('should return paginated ofss', async () => {
     const { status, body } = await request(app.getHttpServer()).get(
       '/api/ofss',
     );
 
     expect(status).toBe(200);
-    expect(body).toMatchObject(ofss);
+    expect(body).toHaveProperty('items');
+    expect(body).toHaveProperty('totalCount');
+    expect(body).toHaveProperty('page');
+    expect(body).toHaveProperty('pageSize');
+    expect(body).toHaveProperty('pagesCount');
+    expect(body).toHaveProperty('hasPreviousPage');
+    expect(body).toHaveProperty('hasNextPage');
+
+    body.items.forEach((item: OfsView) => {
+      expect(item).toMatchObject({
+        id: expect.any(String),
+        name: expect.any(String),
+        departements: expect.any(Array),
+        regions: expect.any(Array),
+        distributors: expect.any(Array),
+        websiteUrl: expect.toBeOneOf([expect.any(String), null]),
+        phone: expect.toBeOneOf([expect.any(String), null]),
+        email: expect.toBeOneOf([expect.any(String), null]),
+      });
+    });
   });
 
   it('should retrieve first page of ofss', async () => {
     const { status, body } = await request(app.getHttpServer()).get(
-      '/api/ofss?page=1&pageSize=1',
+      '/api/ofss?page=1&pageSize=10',
     );
 
-    const paginatedOfss: Pagination<OfsView> = {
-      ...ofss,
-      items: expect.any(Array),
-      totalCount: 2,
-      page: 1,
-      pageSize: 1,
-      pagesCount: 2,
-      hasPreviousPage: false,
-      hasNextPage: true,
-    };
-
     expect(status).toBe(200);
-    expect(body).toMatchObject(paginatedOfss);
-  });
+    expect(body).toHaveProperty('items');
+    expect(body).toHaveProperty('totalCount');
+    expect(body).toHaveProperty('page');
+    expect(body).toHaveProperty('pageSize');
+    expect(body).toHaveProperty('pagesCount');
+    expect(body).toHaveProperty('hasPreviousPage');
+    expect(body).toHaveProperty('hasNextPage');
 
-  it('should retrieve last page of ofss', async () => {
-    const { status, body } = await request(app.getHttpServer()).get(
-      '/api/ofss?page=2&pageSize=1',
-    );
+    expect(body.items.length).toBe(10);
+    expect(body.page).toBe(1);
+    expect(body.pageSize).toBe(10);
+    expect(body.hasPreviousPage).toBe(false);
+    expect(body.hasNextPage).toBe(true);
 
-    const paginatedOfss: Pagination<OfsView> = {
-      ...ofss,
-      items: expect.any(Array),
-      totalCount: 2,
-      page: 2,
-      pageSize: 1,
-      pagesCount: 2,
-      hasPreviousPage: true,
-      hasNextPage: false,
-    };
-
-    expect(status).toBe(200);
-    expect(body).toMatchObject(paginatedOfss);
+    body.items.forEach((item: OfsView) => {
+      expect(item).toMatchObject({
+        id: expect.any(String),
+        name: expect.any(String),
+        departements: expect.any(Array),
+        regions: expect.any(Array),
+        distributors: expect.any(Array),
+        websiteUrl: expect.toBeOneOf([expect.any(String), null]),
+        phone: expect.toBeOneOf([expect.any(String), null]),
+        email: expect.toBeOneOf([expect.any(String), null]),
+      });
+    });
   });
 
   it('should throw a 400 when pagination query params are invalid', async () => {

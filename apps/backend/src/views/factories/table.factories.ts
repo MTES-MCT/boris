@@ -7,13 +7,21 @@ import { RegionRelationnalView } from 'src/application/region/views/relationnal.
 import { RegionView } from 'src/application/region/views/region.view';
 import { DepartementView } from 'src/application/departement/views/departement.view';
 import { UserView } from 'src/application/user/views/user.view';
+import { BrsDiffusionWebsiteView } from 'src/application/brs-diffusion-website/views/brs-diffusion-website.view';
 
 type Color = 'blue' | 'orange' | 'green' | 'purple';
 
 export type Column<T> = {
   key: keyof T;
   label: string;
-  type: 'string' | 'link' | 'mailto' | 'array' | 'actions' | 'entity';
+  type:
+    | 'string'
+    | 'link'
+    | 'mailto'
+    | 'array'
+    | 'actions'
+    | 'entity'
+    | 'relationnal';
   arrayKey?: keyof RelationnalView;
   color?: Color;
 };
@@ -43,7 +51,8 @@ export type Views =
   | DistributorView
   | RegionView
   | DepartementView
-  | UserView;
+  | UserView
+  | BrsDiffusionWebsiteView;
 export type RelationnalView =
   | RegionRelationnalView
   | DepartementRelationnalView
@@ -119,6 +128,13 @@ export class TableFactory {
             return {
               isEntity: true,
               value: item,
+            };
+          case 'relationnal':
+            return {
+              isRelationnal: true,
+              value: (item[column.key] as RelationnalView)[
+                column.arrayKey as keyof RelationnalView
+              ],
             };
           default:
             return {

@@ -3,6 +3,7 @@ import { DistributorView } from 'src/application/distributor/views/distributor.v
 import { OfsView } from 'src/application/ofs/views/ofs.view';
 import { RegionView } from 'src/application/region/views/region.view';
 import { DepartementView } from 'src/application/departement/views/departement.view';
+import { BrsDiffusionWebsiteView } from 'src/application/brs-diffusion-website/views/brs-diffusion-website.view';
 
 type EntityPage<T> = {
   title: string;
@@ -39,6 +40,7 @@ type translations = {
     distributors: EntityPage<DistributorView>;
     regions: EntityPage<RegionView>;
     departements: EntityPage<DepartementView>;
+    brsDiffusionWebsites: EntityPage<BrsDiffusionWebsiteView>;
   };
 };
 
@@ -72,6 +74,15 @@ const translations: translations = {
     distributors: 'Commercialisateur(s)',
     departements: 'Département(s)',
     regions: 'Région(s)',
+    source: 'Source',
+    distributorName: 'Nom du commercialisateur',
+    ofsName: "Nom de l'OFS",
+    city: 'Ville',
+    zipcode: 'Code postal',
+    inseeCode: 'Code INSEE',
+    address: 'Adresse',
+    latitude: 'Latitude',
+    longitude: 'Longitude',
   },
   contents: {
     home: {
@@ -133,6 +144,32 @@ const translations: translations = {
     },
     departements: {
       title: 'Départements',
+    },
+    brsDiffusionWebsites: {
+      title: 'Sites de diffusion BRS',
+      action: {
+        label: 'Créer un site de diffusion BRS',
+      },
+      columns: [
+        { key: 'source', label: 'Source', type: 'link' },
+        { key: 'distributorName', label: 'Commercialisateur', type: 'string' },
+        { key: 'ofsName', label: 'OFS', type: 'string' },
+        { key: 'city', label: 'Ville', type: 'string' },
+        { key: 'zipcode', label: 'Code postal', type: 'string' },
+        {
+          key: 'region',
+          label: 'Région',
+          type: 'relationnal',
+          arrayKey: 'name',
+        },
+        {
+          key: 'departement',
+          label: 'Département',
+          type: 'relationnal',
+          arrayKey: 'name',
+        },
+        { key: 'id', label: 'Actions', type: 'actions' },
+      ],
     },
   },
 };

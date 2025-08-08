@@ -51,14 +51,17 @@ describe('DepartementRepository', () => {
   });
 
   it('should find a departement by code and return its data', async () => {
-    mockDepartementRepository.findOneBy.mockResolvedValue(finistere);
+    mockDepartementRepository.findOne.mockResolvedValue(finistere);
 
     const result = await departementRepository.findOneByCode('29');
 
     expect(result).toMatchObject(finistere);
-    expect(mockDepartementRepository.findOneBy).toHaveBeenCalledTimes(1);
-    expect(mockDepartementRepository.findOneBy).toHaveBeenCalledWith({
-      code: '29',
+    expect(mockDepartementRepository.findOne).toHaveBeenCalledTimes(1);
+    expect(mockDepartementRepository.findOne).toHaveBeenCalledWith({
+      where: {
+        code: '29',
+      },
+      relations: ['region'],
     });
   });
 

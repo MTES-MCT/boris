@@ -11,13 +11,15 @@ import { AuthModule } from './infrastructure/auth/auth.module';
 import { AdminHomeModule } from './infrastructure/admin/home/home.module';
 import { NotFoundModule } from './infrastructure/not-found/not-found.module';
 import { ToLocalsMiddleware } from './infrastructure/middlewares/to-locals.middleware';
+import { BrsDiffusionWebsiteModule } from './infrastructure/brs-diffusion-website/brs-diffusion-website.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeormConfig),
     LoggerModule.forRoot({
       pinoHttp: {
-        enabled: process.env.NODE_ENV !== 'ci',
+        enabled:
+          process.env.NODE_ENV !== 'ci' && process.env.NODE_ENV !== 'test',
         transport: {
           target: 'pino-pretty',
           options: {
@@ -32,6 +34,7 @@ import { ToLocalsMiddleware } from './infrastructure/middlewares/to-locals.middl
     DepartementModule,
     DistributorModule,
     UserModule,
+    BrsDiffusionWebsiteModule,
     AdminHomeModule,
     NotFoundModule,
   ],

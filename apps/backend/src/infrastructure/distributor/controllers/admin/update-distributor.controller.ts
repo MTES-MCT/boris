@@ -18,6 +18,7 @@ import { ApiExcludeController } from '@nestjs/swagger';
 import translations from 'src/views/utils/translations';
 import { IdDTO } from 'src/infrastructure/common/dtos/id.dto';
 import { FindDistributorByIdUsecase } from 'src/application/distributor/usecases/findById.usecase';
+import { RequestWithFlash } from 'src/types/request-with-flash';
 
 @ApiExcludeController()
 @Controller('/distributors')
@@ -64,7 +65,7 @@ export class UpdateDistributorAdminController {
     try {
       await this.updateDistributorUsecase.execute({ id, ...body });
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.success.defaultLabel,
         translations.success.defaultContent,
       );
@@ -78,7 +79,7 @@ export class UpdateDistributorAdminController {
     } catch (e) {
       console.log(e);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
         translations.error.defaultContent,
       );

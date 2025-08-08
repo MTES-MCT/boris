@@ -1,6 +1,6 @@
 <button data-drawer-target="sidebar-search" data-drawer-toggle="sidebar-search" aria-controls="sidebar-search"
   type="button"
-  class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+  class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
   <span class="sr-only">Open sidebar</span>
   <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
     <path clip-rule="evenodd" fill-rule="evenodd"
@@ -10,7 +10,7 @@
 </button>
 
 <aside id="sidebar-search"
-  class="fixed top-0 left-0 z-40 w-72 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r border-gray-200 dark:border-gray-700"
+  class="fixed top-0 left-0 z-40 w-72 h-screen transition-transform -translate-x-full lg:translate-x-0 border-r border-gray-200 dark:border-gray-700"
   aria-label="Sidebar">
   <div class="overflow-y-auto py-4 px-3 h-full bg-white dark:bg-gray-800">
     <a href="/" class="flex items-center justify-center pl-2 mb-5 text-primary-600 dark:text-primary-300">
@@ -37,6 +37,18 @@
           </div>
           <span
             class="ml-3 font-semibold text-gray-600 transition duration-75 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white">Commercialisateurs</span>
+        </a>
+      </li>
+      <li>
+        <a href="/brs-diffusion-websites"
+          class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <div
+            class="text-gray-600 transition duration-75 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white">
+            {{> icons/link width="6" height="6"}}
+          </div>
+          <span
+            class="ml-3 font-semibold text-gray-600 transition duration-75 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white">Sites
+            de diffusion BRS</span>
         </a>
       </li>
     </ul>

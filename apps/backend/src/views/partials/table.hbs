@@ -67,6 +67,11 @@
             {{> (lookup ../../../. 'deleteForm') id=cell.value name=(rowName row)}}
             {{/modal}}
           </td>
+          {{else if cell.isRelationnal}}
+          <td class="px-4 py-2">
+            <span class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              {{cell.value}}</span>
+          </td>
           {{else if (ifNot cell.isEntity)}}
           <td class="py-2">
             <span class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">

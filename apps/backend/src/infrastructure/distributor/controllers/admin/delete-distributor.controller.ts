@@ -14,6 +14,7 @@ import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.
 import { IdDTO } from 'src/infrastructure/common/dtos/id.dto';
 import translations from 'src/views/utils/translations';
 import { DeleteDistributorUsecase } from 'src/application/distributor/usecases/delete.usecase';
+import { RequestWithFlash } from 'src/types/request-with-flash';
 
 @ApiExcludeController()
 @Controller('/distributors')
@@ -33,7 +34,7 @@ export class DeleteDistributorAdminController {
     try {
       await this.deleteDistributorUsecase.execute(params);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.success.defaultLabel,
         translations.success.defaultContent,
       );
@@ -47,7 +48,7 @@ export class DeleteDistributorAdminController {
     } catch (error) {
       console.error(error);
 
-      req.flash(
+      (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
         translations.error.defaultContent,
       );

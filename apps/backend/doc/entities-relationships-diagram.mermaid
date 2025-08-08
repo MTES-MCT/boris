@@ -10,6 +10,8 @@ erDiagram
     DEPARTEMENT }|--|| REGION : "se situe"
     DISTRIBUTOR ||--o{ OFS_DISTRIBUTOR : "travaille pour"
     OFS ||--o{ OFS_DISTRIBUTOR : "travaille pour"
+    BRS_DIFFUSION_WEBSITE ||--|{ REGION : "se situe"
+    BRS_DIFFUSION_WEBSITE ||--|{ DEPARTEMENT : "se situe"
 
     %% -------------------
     %% |    ENTITIES     |
@@ -65,4 +67,19 @@ erDiagram
       string firstName
       string lastName
       string role
+    }
+
+    BRS_DIFFUSION_WEBSITE {
+      string id PK
+      string source
+      string distributorName
+      string ofsName
+      string city
+      string zipcode
+      string address
+      string inseeCode
+      string latitude
+      string longitude
+      string regionId FK
+      string departementId FK
     }
