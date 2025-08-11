@@ -97,3 +97,8 @@ export const statistics: Statistic[] = [
       'après simulation d’éligibilité pour avoir les clés de la poursuite de leur projets (dont 65% ne connaissait pas le BRS avant BoRiS)',
   },
 ];
+
+export const defaultPagination = {
+  page: 1,
+  pageSize: 24,
+};
