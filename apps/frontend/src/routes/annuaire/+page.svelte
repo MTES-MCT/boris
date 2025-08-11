@@ -1,5 +1,7 @@
 <script lang="ts">
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
+  import Section from '$components/common/Section.svelte';
+  import Card from '$components/pages/annuaire/Card.svelte';
   import type { DataType } from './+page.server';
 
   type Props = {
@@ -12,5 +14,15 @@
 </script>
 
 <GradientBackgroundWrapper>
-  <h1>Annuaire</h1>
+  <Section>
+    <div class="fr-container--fluid">
+      <div class="fr-grid-row fr-grid-row--gutters">
+        {#each data.brsDiffusionWebsites.items as item}
+          <div class="fr-col-12 fr-col-md-6">
+            <Card {...item} />
+          </div>
+        {/each}
+      </div>
+    </div>
+  </Section>
 </GradientBackgroundWrapper>
