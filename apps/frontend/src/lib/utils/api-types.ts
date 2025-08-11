@@ -18,3 +18,9 @@ export type OfsView = Omit<
 
 export type BrsDiffusionWebsiteView =
   components['schemas']['BrsDiffusionWebsiteView'];
+
+export type RegionRelationnalView =
+  components['schemas']['RegionRelationnalView'];
+
+export type DepartementRelationnalView =
+  components['schemas']['DepartementRelationnalView'];
