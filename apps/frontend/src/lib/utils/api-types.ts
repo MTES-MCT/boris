@@ -15,3 +15,6 @@ export type OfsView = Omit<
   phone: string | null;
   email: string | null;
 };
+
+export type BrsDiffusionWebsiteView =
+  components['schemas']['BrsDiffusionWebsiteView'];

@@ -1,12 +1,10 @@
 <script lang="ts">
   import Section from '$components/common/Section.svelte';
   import Accordion from '$components/common/Accordion.svelte';
-  import type { Region } from '$lib/utils/definitions';
+  import type { DataType } from './+page.server';
 
   type Props = {
-    data: {
-      regions: Region[];
-    };
+    data: DataType;
   };
 
   const { data }: Props = $props();

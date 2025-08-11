@@ -5,7 +5,9 @@ export const load: PageServerLoad = async ({ fetch }) => {
   const response = await fetch('api/ofss');
   const ofss = await response.json();
 
-  return {
+  const data = {
     regions: formatOfss(ofss.items),
   };
+
+  return data;
 };
