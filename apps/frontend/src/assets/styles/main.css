@@ -56,3 +56,8 @@
     visibility: visible;
   }
 }
+
+.disabled {
+  color: var(--text-disabled-grey);
+  cursor: not-allowed;
+}
