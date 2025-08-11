@@ -156,3 +156,8 @@ export const statistics: Statistic[] = [
     content: '',
   },
 ];
+
+export const defaultPagination = {
+  page: 1,
+  pageSize: 24,
+};
