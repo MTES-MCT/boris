@@ -30,3 +30,8 @@
 .background-color-white {
   background-color: white;
 }
+
+.disabled {
+  color: var(--text-disabled-grey);
+  cursor: not-allowed;
+}
