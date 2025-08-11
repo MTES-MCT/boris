@@ -14,11 +14,7 @@
 
 <GradientBackgroundWrapper>
   <Section title="Annuaire des sites de diffusion du BRS">
-    <Pagination
-      {...data.brsDiffusionWebsites}
-      baseUrl="/annuaire" />
-
-    <div class="fr-container--fluid">
+    <div class="fr-container--fluid fr-mb-4w">
       <div class="fr-grid-row fr-grid-row--gutters">
         {#each data.brsDiffusionWebsites.items as item}
           <div class="fr-col-12 fr-col-md-6">
@@ -27,5 +23,9 @@
         {/each}
       </div>
     </div>
+
+    <Pagination
+      {...data.brsDiffusionWebsites}
+      baseUrl="/annuaire" />
   </Section>
 </GradientBackgroundWrapper>

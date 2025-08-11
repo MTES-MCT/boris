@@ -1,14 +1,16 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/component/pagination/pagination.min.css';
+  import '@gouvfr/dsfr/dist/component/form/form.min.css';
+  import '@gouvfr/dsfr/dist/component/select/select.min.css';
 
   import type { Pagination } from '$lib/utils/api-types';
+  import { goto } from '$app/navigation';
 
   type Props = Pagination<unknown> & {
     baseUrl: string;
   };
 
   const {
-    totalCount,
     page,
     pageSize,
     pagesCount,
@@ -16,21 +18,94 @@
     hasNextPage,
     baseUrl,
   }: Props = $props();
+
+  const generatePageNumbers = (
+    pagesAround: number,
+  ): (number | 'ellipsis')[] => {
+    const pageNumbers: (number | 'ellipsis')[] = [];
+
+    const start = Math.max(1, page - pagesAround);
+    const end = Math.min(pagesCount, page + pagesAround);
+
+    if (start > 1) {
+      pageNumbers.push(1);
+      if (start > 1) {
+        pageNumbers.push('ellipsis');
+      }
+    }
+
+    for (let i = start; i <= end; i++) {
+      pageNumbers.push(i);
+    }
+
+    if (end < pagesCount) {
+      if (end < pagesCount - 1) {
+        pageNumbers.push('ellipsis');
+      }
+
+      pageNumbers.push(pagesCount);
+    }
+
+    return pageNumbers;
+  };
+
+  const generateSelecOptions = (): { value: number; selected: boolean }[] => {
+    const selectOptions = [];
+
+    for (let i = 1; i <= pagesCount; i++) {
+      selectOptions.push({
+        value: i,
+        selected: page === i,
+      });
+    }
+
+    return selectOptions;
+  };
+
+  const mobilePageNumbers = $derived(generatePageNumbers(1));
+  const desktopPageNumbers = $derived(generatePageNumbers(2));
+  const selectOptions = $derived(generateSelecOptions());
+
+  const selectPage = (e: Event) => {
+    const target = e.target as HTMLSelectElement;
+
+    goto(`${baseUrl}?page=${target.value}&pageSize=${pageSize}`);
+  };
 </script>
 
-<p>totalCount: {totalCount}</p>
-<p>page: {page}</p>
-<p>pageSize: {pageSize}</p>
-<p>pagesCount: {pagesCount}</p>
-<p>hasPreviousPage: {hasPreviousPage}</p>
-<p>hasNextPage: {hasNextPage}</p>
+<div class="fr-select-group">
+  <label
+    class="fr-label"
+    for="page-select">
+    Pagination
+  </label>
+  <select
+    class="fr-select"
+    aria-describedby="page-select-messages"
+    id="page-select"
+    name="page-select"
+    onchange={selectPage}>
+    {#each selectOptions as option}
+      <option
+        value={option.value}
+        selected={option.selected}>
+        Page {option.value}
+      </option>
+    {/each}
+  </select>
+  <div
+    class="fr-messages-group"
+    id="page-select-messages"
+    aria-live="polite">
+  </div>
+</div>
 
 <nav
   class="fr-pagination"
   aria-label="Pagination"
-  data-fr-analytics-page-total="132">
+  data-fr-analytics-page-total={pagesCount}>
   <ul class="fr-pagination__list">
-    <li>
+    <li class="fr-hidden fr-unhidden-sm">
       {#if hasPreviousPage}
         <a
           class="fr-pagination__link fr-pagination__link--first"
@@ -61,57 +136,48 @@
         </span>
       {/if}
     </li>
-    <li>
-      <a
-        class="fr-pagination__link"
-        href="#"
-        title="Page 1">
-        1
-      </a>
-    </li>
-    <li>
-      <a
-        class="fr-pagination__link"
-        aria-current="page"
-        title="Page 2">
-        2
-      </a>
-    </li>
-    <li>
-      <a
-        class="fr-pagination__link fr-hidden fr-unhidden-lg"
-        href="#"
-        title="Page 3">
-        3
-      </a>
-    </li>
-    <li>
-      <span class="fr-pagination__link fr-hidden fr-unhidden-lg">…</span>
-    </li>
-    <li>
-      <a
-        class="fr-pagination__link fr-hidden fr-unhidden-lg"
-        href="#"
-        title="Page 130">
-        130
-      </a>
-    </li>
-    <li>
-      <a
-        class="fr-pagination__link fr-hidden fr-unhidden-lg"
-        href="#"
-        title="Page 131">
-        131
-      </a>
-    </li>
-    <li>
-      <a
-        class="fr-pagination__link"
-        href="#"
-        title="Page 132">
-        132
-      </a>
-    </li>
+    {#each mobilePageNumbers as pageNumber}
+      <li class="fr-hidden-md">
+        {#if pageNumber === 'ellipsis'}
+          <span class="fr-pagination__link">…</span>
+        {:else if pageNumber === page}
+          <span
+            class="fr-pagination__link"
+            aria-current="page"
+            title={`Page ${pageNumber}`}>
+            {pageNumber}
+          </span>
+        {:else}
+          <a
+            class="fr-pagination__link"
+            href={`${baseUrl}?page=${pageNumber}&pageSize=${pageSize}`}
+            title={`Page ${pageNumber}`}>
+            {pageNumber}
+          </a>
+        {/if}
+      </li>
+    {/each}
+    {#each desktopPageNumbers as pageNumber}
+      <li class="fr-hidden fr-unhidden-md">
+        {#if pageNumber === 'ellipsis'}
+          <span class="fr-pagination__link">…</span>
+        {:else if pageNumber === page}
+          <span
+            class="fr-pagination__link"
+            aria-current="page"
+            title={`Page ${pageNumber}`}>
+            {pageNumber}
+          </span>
+        {:else}
+          <a
+            class="fr-pagination__link"
+            href={`${baseUrl}?page=${pageNumber}&pageSize=${pageSize}`}
+            title={`Page ${pageNumber}`}>
+            {pageNumber}
+          </a>
+        {/if}
+      </li>
+    {/each}
     <li>
       {#if hasNextPage}
         <a
@@ -128,7 +194,7 @@
         </span>
       {/if}
     </li>
-    <li>
+    <li class="fr-hidden fr-unhidden-sm">
       {#if hasNextPage}
         <a
           class="fr-pagination__link fr-pagination__link--last"
@@ -148,8 +214,20 @@
 </nav>
 
 <style lang="postcss">
+  .fr-select-group {
+    display: block;
+
+    @media (--xxs-viewport) {
+      display: none;
+    }
+  }
+
   .fr-pagination {
-    display: flex;
+    display: none;
     justify-content: center;
+
+    @media (--xxs-viewport) {
+      display: flex;
+    }
   }
 </style>
