@@ -9,12 +9,10 @@
   };
 
   const { data }: Props = $props();
-
-  console.log(data);
 </script>
 
 <GradientBackgroundWrapper>
-  <Section>
+  <Section title="Annuaire des sites de diffusion du BRS">
     <div class="fr-container--fluid">
       <div class="fr-grid-row fr-grid-row--gutters">
         {#each data.brsDiffusionWebsites.items as item}
