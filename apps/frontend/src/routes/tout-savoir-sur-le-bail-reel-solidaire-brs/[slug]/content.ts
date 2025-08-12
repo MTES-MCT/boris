@@ -373,6 +373,23 @@ export const steps: Step[] = [
           </p>
         `,
       },
+      {
+        id: 'action-logement',
+        title:
+          'Salarié·es du privé ? Profitez du conseil en financement et en accession d’Action Logement !',
+        content: `
+          <p>
+            Si vous faites partie d’une entreprise de plus de 10 salarié·es (ou plus de
+            50 salarié·es dans le secteur agricole) vous pouvez bénéficier gratuitement
+            d’un accompagnement dans votre projet d’achat.
+          </p>
+          <a
+            class="fr-btn fr-btn--lg"
+            href="/action-logement">
+            En savoir plus
+          </a>
+        `,
+      },
     ],
     previousStep: step2,
     nextStep: step4,
