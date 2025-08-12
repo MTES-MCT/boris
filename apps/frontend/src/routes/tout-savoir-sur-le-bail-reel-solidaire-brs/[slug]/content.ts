@@ -259,13 +259,25 @@ export const steps: Step[] = [
             mensuellement suite à l’achat du logement et de vérifier que la somme à
             débourser chaque mois et bien compatible avec votre situation.
           </p>
-          <p class="fr-mb-0">
+          <p class="fr-mb-4w">
             Enfin, l’accession à la propriété nécessite une projection sur plusieurs
             années. Prévoyez-vous de rester dans votre logement 5 ans ? 10 ans ? 25 ans
             ? Toute votre vie ? Souhaitez-vous le revendre à terme pour vous constituer
             une épargne ? Le transmettre à vos proches ? Les réponses à ces questions
             permettront d’ajuster votre projet au mieux !
-          </p>    
+          </p>
+
+          <h2 class="fr-h5 heading">Salarié·es du privé ? Profitez du conseil en financement et en accession d’Action Logement !</h2>
+          <p>
+            Si vous faites partie d’une entreprise de plus de 10 salarié·es (ou plus de
+            50 salarié·es dans le secteur agricole) vous pouvez bénéficier gratuitement
+            d’un accompagnement dans votre projet d’achat.
+          </p>
+          <a
+            class="fr-btn fr-btn--lg"
+            href="/action-logement">
+            En savoir plus
+          </a>
         `,
       },
       {
@@ -371,23 +383,6 @@ export const steps: Step[] = [
               visualiser.
             </a>
           </p>
-        `,
-      },
-      {
-        id: 'action-logement',
-        title:
-          'Salarié·es du privé ? Profitez du conseil en financement et en accession d’Action Logement !',
-        content: `
-          <p>
-            Si vous faites partie d’une entreprise de plus de 10 salarié·es (ou plus de
-            50 salarié·es dans le secteur agricole) vous pouvez bénéficier gratuitement
-            d’un accompagnement dans votre projet d’achat.
-          </p>
-          <a
-            class="fr-btn fr-btn--lg"
-            href="/action-logement">
-            En savoir plus
-          </a>
         `,
       },
     ],
