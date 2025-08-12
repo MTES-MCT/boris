@@ -10,10 +10,20 @@
   import Footer from '$components/layout/Footer.svelte';
   import NoScrollOnNavigation from '$components/layout/NoScrollOnNavigation.svelte';
   import Consent from '$components/common/Consent.svelte';
+  import { blockSearchEngineIndexing } from '$lib/utils/helpers';
+  import { page } from '$app/state';
 
   type Props = { children: Snippet };
   const { children }: Props = $props();
 </script>
+
+<svelte:head>
+  {#if blockSearchEngineIndexing(page)}
+    <meta
+      name="robots"
+      content="noindex, nofollow" />
+  {/if}
+</svelte:head>
 
 <Favicon />
 <Consent />
