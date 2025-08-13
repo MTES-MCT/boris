@@ -22,5 +22,6 @@ export const mockedGeocodedResponse: GeocodedResponse = {
 
 export const mockedGeocoderService = {
   geocodeByMunicipality: jest.fn(),
-  getZipcodeFirstTwoDigits: jest.fn(),
+  geocodedResultHasMunicipalityDoublon: jest.fn(),
+  getDepartementCode: jest.fn(),
 };

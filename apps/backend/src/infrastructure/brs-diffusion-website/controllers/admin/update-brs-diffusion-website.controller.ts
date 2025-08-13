@@ -84,12 +84,12 @@ export class UpdateBrsDiffusionWebsiteAdminController {
 
       (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
-        translations.error.defaultContent,
+        (e.message as string) || translations.error.defaultContent,
       );
 
       await new Promise<void>((resolve) => {
         req.session.save(() => {
-          res.redirect(303, '/brs-diffusion-websites');
+          res.redirect(303, `/brs-diffusion-websites/${id}/update`);
           resolve();
         });
       });

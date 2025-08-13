@@ -51,18 +51,16 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
       distributorName: 'Commercialisateur_updated',
       ofsName: 'OFS_updated',
       city: 'Paris',
+      inseeCode: '12345',
     };
 
     mockedBrsDiffusionWebsiteRepository.findById.mockResolvedValue(
       mockedBrsDiffusionWebsite,
     );
-    mockedGeocoderService.geocodeByMunicipality.mockResolvedValue(
+    mockedGeocoderService.geocodeByMunicipality.mockResolvedValue([
       mockedGeocodedResponse,
-    );
-    mockedGeocoderService.getZipcodeFirstTwoDigits.mockReturnValue(
-      mockedGeocodedResponse.properties?.postcode?.slice(0, 2),
-    );
-    mockDepartementRepository.findOneByCode.mockResolvedValue(finistere);
+    ]);
+    mockDepartementRepository.findOneByCityZipcode.mockResolvedValue(finistere);
     mockedBrsDiffusionWebsiteRepository.save.mockResolvedValue({
       ...mockedBrsDiffusionWebsite,
       source: payload.source,
@@ -114,16 +112,13 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
     );
     expect(mockedGeocoderService.geocodeByMunicipality).toHaveBeenCalledWith(
       payload.city,
+      payload.inseeCode,
     );
     expect(
-      mockedGeocoderService.getZipcodeFirstTwoDigits,
+      mockDepartementRepository.findOneByCityZipcode,
     ).toHaveBeenCalledTimes(1);
-    expect(mockedGeocoderService.getZipcodeFirstTwoDigits).toHaveBeenCalledWith(
+    expect(mockDepartementRepository.findOneByCityZipcode).toHaveBeenCalledWith(
       mockedGeocodedResponse.properties?.postcode,
-    );
-    expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledTimes(1);
-    expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledWith(
-      mockedGeocodedResponse.properties?.postcode?.slice(0, 2),
     );
     expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledTimes(1);
     expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledWith(
@@ -195,9 +190,8 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
     );
     expect(mockedGeocoderService.geocodeByMunicipality).not.toHaveBeenCalled();
     expect(
-      mockedGeocoderService.getZipcodeFirstTwoDigits,
+      mockDepartementRepository.findOneByCityZipcode,
     ).not.toHaveBeenCalled();
-    expect(mockDepartementRepository.findOneByCode).not.toHaveBeenCalled();
     expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledTimes(1);
     expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledWith(
       new BrsDiffusionWebsiteEntity(
@@ -241,9 +235,8 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
         mockedGeocoderService.geocodeByMunicipality,
       ).not.toHaveBeenCalled();
       expect(
-        mockedGeocoderService.getZipcodeFirstTwoDigits,
+        mockDepartementRepository.findOneByCityZipcode,
       ).not.toHaveBeenCalled();
-      expect(mockDepartementRepository.findOneByCode).not.toHaveBeenCalled();
       expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
     }
   });
@@ -259,7 +252,7 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
     mockedBrsDiffusionWebsiteRepository.findById.mockResolvedValue(
       mockedBrsDiffusionWebsite,
     );
-    mockedGeocoderService.geocodeByMunicipality.mockResolvedValue(null);
+    mockedGeocoderService.geocodeByMunicipality.mockResolvedValue([]);
 
     try {
       await useCase.execute({
@@ -279,11 +272,11 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
       );
       expect(mockedGeocoderService.geocodeByMunicipality).toHaveBeenCalledWith(
         payload.city,
+        undefined,
       );
       expect(
-        mockedGeocoderService.getZipcodeFirstTwoDigits,
+        mockDepartementRepository.findOneByCityZipcode,
       ).not.toHaveBeenCalled();
-      expect(mockDepartementRepository.findOneByCode).not.toHaveBeenCalled();
       expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
     }
   });
@@ -300,11 +293,10 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
     mockedBrsDiffusionWebsiteRepository.findById.mockResolvedValue(
       mockedBrsDiffusionWebsite,
     );
-    mockedGeocoderService.geocodeByMunicipality.mockResolvedValue(
+    mockedGeocoderService.geocodeByMunicipality.mockResolvedValue([
       mockedGeocodedResponse,
-    );
-    mockedGeocoderService.getZipcodeFirstTwoDigits.mockReturnValue('99');
-    mockDepartementRepository.findOneByCode.mockResolvedValue(null);
+    ]);
+    mockDepartementRepository.findOneByCityZipcode.mockResolvedValue(null);
 
     try {
       await useCase.execute(payload);
@@ -318,17 +310,14 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
       );
       expect(mockedGeocoderService.geocodeByMunicipality).toHaveBeenCalledWith(
         payload.city,
+        undefined,
       );
       expect(
-        mockedGeocoderService.getZipcodeFirstTwoDigits,
+        mockDepartementRepository.findOneByCityZipcode,
       ).toHaveBeenCalledTimes(1);
       expect(
-        mockedGeocoderService.getZipcodeFirstTwoDigits,
+        mockDepartementRepository.findOneByCityZipcode,
       ).toHaveBeenCalledWith(mockedGeocodedResponse.properties?.postcode);
-      expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledTimes(1);
-      expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledWith(
-        '99',
-      );
       expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
     }
   });

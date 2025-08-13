@@ -4,4 +4,5 @@ export interface UpdateBrsDiffusionWebsiteParams {
   distributorName: string;
   ofsName: string;
   city: string;
+  inseeCode?: string;
 }

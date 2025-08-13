@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
 import { BrsDiffusionWebsiteRepositoryInterface } from 'src/domain/brs-diffusion-website/brs-diffusion-website.repository.interface';
 import { GeocoderService } from 'src/infrastructure/geocoder/geocoder.service';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
@@ -20,7 +25,7 @@ export class UpdateBrsDiffusionWebsiteUsecase {
   public async execute(
     params: UpdateBrsDiffusionWebsiteParams,
   ): Promise<BrsDiffusionWebsiteView> {
-    const { id, source, distributorName, ofsName, city } = params;
+    const { id, source, distributorName, ofsName, city, inseeCode } = params;
 
     const brsDiffusionWebsite =
       await this.brsDiffusionWebsiteRepository.findById(id);
@@ -33,22 +38,41 @@ export class UpdateBrsDiffusionWebsiteUsecase {
     brsDiffusionWebsite.distributorName = distributorName;
     brsDiffusionWebsite.ofsName = ofsName;
 
-    let geocodedMunicipality: GeocodedResponse | undefined;
+    let geocodedMunicipalityResult: GeocodedResponse[];
     let departement: DepartementEntity | null = brsDiffusionWebsite.departement;
 
-    if (brsDiffusionWebsite.city !== city) {
-      geocodedMunicipality =
-        await this.geocoderService.geocodeByMunicipality(city);
+    if (
+      brsDiffusionWebsite.city !== city ||
+      (inseeCode && brsDiffusionWebsite.inseeCode !== inseeCode)
+    ) {
+      geocodedMunicipalityResult =
+        await this.geocoderService.geocodeByMunicipality(city, inseeCode);
+
+      const geocodedMunicipality = geocodedMunicipalityResult[0];
 
       if (!geocodedMunicipality) {
-        throw new BadRequestException();
+        console.log(`No result for ${city}`);
+        throw new BadRequestException(
+          `Pas de résultat pour cette ville ou ce code INSEE. (ville: ${city}, code INSEE: ${inseeCode})`,
+        );
       }
 
-      const zipcode = this.geocoderService.getZipcodeFirstTwoDigits(
-        geocodedMunicipality?.properties?.postcode as string,
-      );
+      const hasDoublon =
+        this.geocoderService.geocodedResultHasMunicipalityDoublon(
+          geocodedMunicipalityResult,
+          city,
+        );
 
-      departement = await this.departementRepository.findOneByCode(zipcode);
+      if (hasDoublon) {
+        console.log(`Multiple results for ${city}, please provide INSEE code.`);
+        throw new NotAcceptableException(
+          `Plusieurs résultats pour la ville ${city}, veuillez préciser le code INSEE.`,
+        );
+      }
+
+      departement = await this.departementRepository.findOneByCityZipcode(
+        geocodedMunicipality.properties?.postcode as string,
+      );
 
       if (!departement) {
         throw new NotFoundException();

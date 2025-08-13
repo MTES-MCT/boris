@@ -30,6 +30,13 @@
         placeholder="Nom de la ville" required value="{{brsDiffusionWebsite.city}}">
     </div>
     <div>
+      <label for="inseeCode"
+        class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">{{translations.fields.inseeCode}}</label>
+      <input type="text" name="inseeCode" id="inseeCode"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        placeholder="Code INSEE" required value="{{brsDiffusionWebsite.inseeCode}}">
+    </div>
+    <div>
       <label for="region"
         class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">{{translations.fields.regions}}</label>
       <input type="text" name="region" id="region"
@@ -49,13 +56,6 @@
       <input type="text" name="zipcode" id="zipcode"
         class="bg-gray-100 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
         disabled readonly placeholder="Code postal" required value="{{brsDiffusionWebsite.zipcode}}">
-    </div>
-    <div>
-      <label for="inseeCode"
-        class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">{{translations.fields.inseeCode}}</label>
-      <input type="text" name="inseeCode" id="inseeCode"
-        class="bg-gray-100 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        disabled readonly placeholder="Code INSEE" required value="{{brsDiffusionWebsite.inseeCode}}">
     </div>
     <div>
       <label for="address"

@@ -25,8 +25,6 @@ describe('GetBrsDiffusionWebsitesByRegionApiController', () => {
       (item: BrsDiffusionWebsiteView) => item.region.name === 'Bretagne',
     )?.region.id;
 
-    console.log(regionId);
-
     const { status, body } = await request(app.getHttpServer()).get(
       `/api/regions/${regionId}/brs-diffusion-websites`,
     );

@@ -25,6 +25,16 @@ export class DepartementRepository implements DepartementRepositoryInterface {
     return this.repository.findOne({ where: { code }, relations: ['region'] });
   }
 
+  public findOneByCityZipcode(
+    cityZipcode: string,
+  ): Promise<DepartementEntity | null> {
+    return this.repository
+      .createQueryBuilder('departement')
+      .leftJoinAndSelect('departement.region', 'region')
+      .where(":cityZipcode LIKE departement.code || '%'", { cityZipcode })
+      .getOne();
+  }
+
   public findManyByNames(names: string[]): Promise<DepartementEntity[]> {
     return this.repository.findBy({
       name: In(names),

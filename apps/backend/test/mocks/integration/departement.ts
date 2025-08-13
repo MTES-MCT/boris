@@ -12,6 +12,8 @@ export const mockDepartementRepository = {
   findOneBy: jest.fn(),
   findOneByName: jest.fn(),
   findOneByCode: jest.fn(),
+  findOneByCityZipcode: jest.fn(),
   findManyByNames: jest.fn(),
   findAll: jest.fn(),
+  createQueryBuilder: jest.fn(),
 };
