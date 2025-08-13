@@ -3,6 +3,7 @@ export interface BrsDiffusionWebsite {
   commune: string;
   commercialisateur: string;
   ofs: string;
+  codeInsee?: string;
 }
 
 export const brsDiffusionWebsites: BrsDiffusionWebsite[] = [
