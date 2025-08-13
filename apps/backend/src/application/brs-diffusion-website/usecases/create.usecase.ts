@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
 import { BrsDiffusionWebsiteRepositoryInterface } from 'src/domain/brs-diffusion-website/brs-diffusion-website.repository.interface';
 import { CreateBrsDiffusionWebsiteParams } from './create.params';
 import { GeocoderService } from 'src/infrastructure/geocoder/geocoder.service';
@@ -19,20 +24,36 @@ export class CreateBrsDiffusionWebsiteUsecase {
   public async execute(
     params: CreateBrsDiffusionWebsiteParams,
   ): Promise<BrsDiffusionWebsiteView> {
-    const { source, distributorName, ofsName, city } = params;
+    const { source, distributorName, ofsName, city, inseeCode } = params;
 
-    const geocodedMunicipality =
-      await this.geocoderService.geocodeByMunicipality(city);
+    const geocodedMunicipalityResult =
+      await this.geocoderService.geocodeByMunicipality(city, inseeCode);
+
+    const geocodedMunicipality = geocodedMunicipalityResult[0];
 
     if (!geocodedMunicipality) {
-      throw new BadRequestException();
+      console.log(`No result for ${city}`);
+      throw new BadRequestException(
+        `Pas de résultat pour cette ville ou ce code INSEE. (ville: ${city}, code INSEE: ${inseeCode})`,
+      );
     }
 
-    const zipcode = this.geocoderService.getZipcodeFirstTwoDigits(
-      geocodedMunicipality?.properties?.postcode as string,
-    );
+    const hasDoublon =
+      this.geocoderService.geocodedResultHasMunicipalityDoublon(
+        geocodedMunicipalityResult,
+        city,
+      );
 
-    const departement = await this.departementRepository.findOneByCode(zipcode);
+    if (hasDoublon) {
+      console.log(`Multiple results for ${city}, please provide INSEE code.`);
+      throw new NotAcceptableException(
+        `Plusieurs résultats pour la ville ${city}, veuillez préciser le code INSEE.`,
+      );
+    }
+
+    const departement = await this.departementRepository.findOneByCityZipcode(
+      geocodedMunicipality.properties?.postcode as string,
+    );
 
     if (!departement) {
       throw new NotFoundException();

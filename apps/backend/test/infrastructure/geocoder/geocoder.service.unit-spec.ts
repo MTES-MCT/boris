@@ -22,9 +22,9 @@ describe('GeocoderService', () => {
     expect(geocoderService.baseUrl).toBe('https://data.geopf.fr/geocodage');
   });
 
-  it('should return the first feature when geocoding is successful', async () => {
+  it('should return features when geocoding is successful', async () => {
     const municipality = 'Paris';
-    const expectedUrl = `${geocoderService.baseUrl}/search?q=${municipality}&autocomplete=0&index=address&limit=1&returntruegeometry=false&type=municipality`;
+    const url = `${geocoderService.baseUrl}/search?q=${municipality}&autocomplete=0&index=address&limit=5&returntruegeometry=false&type=municipality`;
 
     const mockApiResponse: GeocodedSearchApiResponse = {
       type: 'FeatureCollection',
@@ -38,12 +38,37 @@ describe('GeocoderService', () => {
 
     const result = await geocoderService.geocodeByMunicipality(municipality);
 
-    expect(mockFetch).toHaveBeenCalledWith(expectedUrl);
+    expect(mockFetch).toHaveBeenCalledWith(url);
     expect(mockFetch).toHaveBeenCalledTimes(1);
-    expect(result).toEqual(mockedGeocodedResponse);
+    expect(result).toEqual([mockedGeocodedResponse]);
   });
 
-  it('should return undefined when no features are found', async () => {
+  it('should return features when geocoding with inseeCode is successful ', async () => {
+    const municipality = 'Paris';
+    const inseeCode = '12345';
+    const url = `${geocoderService.baseUrl}/search?q=${municipality}&autocomplete=0&index=address&limit=5&returntruegeometry=false&type=municipality&citycode=${inseeCode}`;
+
+    const mockApiResponse: GeocodedSearchApiResponse = {
+      type: 'FeatureCollection',
+      features: [mockedGeocodedResponse],
+    };
+
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockApiResponse),
+    } as unknown as Response);
+
+    const result = await geocoderService.geocodeByMunicipality(
+      municipality,
+      inseeCode,
+    );
+
+    expect(mockFetch).toHaveBeenCalledWith(url);
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    expect(result).toEqual([mockedGeocodedResponse]);
+  });
+
+  it('should return empty array when no features are found', async () => {
     const municipality = 'NonExistentCity';
     const emptyResponse: GeocodedSearchApiResponse = {
       type: 'FeatureCollection',
@@ -58,12 +83,24 @@ describe('GeocoderService', () => {
     const result = await geocoderService.geocodeByMunicipality(municipality);
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
-    expect(result).toBeUndefined();
+    expect(result).toHaveLength(0);
   });
 
-  it('should return the first two digits of the zipcode', () => {
-    const zipcode = '75001';
-    const result = geocoderService.getZipcodeFirstTwoDigits(zipcode);
-    expect(result).toBe('75');
+  it('should find city doublon', () => {
+    const hasDoublon = geocoderService.geocodedResultHasMunicipalityDoublon(
+      [mockedGeocodedResponse, mockedGeocodedResponse],
+      mockedGeocodedResponse.properties?.city as string,
+    );
+
+    expect(hasDoublon).toBeTruthy();
+  });
+
+  it('should not find city doublon', () => {
+    const hasDoublon = geocoderService.geocodedResultHasMunicipalityDoublon(
+      [mockedGeocodedResponse, mockedGeocodedResponse],
+      'OtherCity',
+    );
+
+    expect(hasDoublon).toBeFalsy();
   });
 });

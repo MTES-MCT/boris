@@ -50,7 +50,7 @@ export class CreateBrsDiffusionWebsiteAdminController {
 
       (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
-        translations.error.defaultContent,
+        (e.message as string) || translations.error.defaultContent,
       );
 
       await new Promise<void>((resolve) => {

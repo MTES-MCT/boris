@@ -3,4 +3,5 @@ export interface CreateBrsDiffusionWebsiteParams {
   distributorName: string;
   ofsName: string;
   city: string;
+  inseeCode?: string;
 }

@@ -17,6 +17,7 @@ export class BrsDiffusionWebsiteSeed {
         distributorName: brsDiffusionWebsite.commercialisateur,
         ofsName: brsDiffusionWebsite.ofs,
         city: brsDiffusionWebsite.commune,
+        inseeCode: brsDiffusionWebsite.inseeCode,
       });
 
       count++;

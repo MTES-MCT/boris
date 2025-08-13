@@ -79,4 +79,31 @@ describe('DepartementRepository', () => {
       name: In(['Finistère', 'Paris']),
     });
   });
+
+  it('should find a departement by a cityZipcode', async () => {
+    const mockQueryBuilder = {
+      leftJoinAndSelect: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      getOne: jest.fn().mockResolvedValue(finistere),
+    };
+
+    mockDepartementRepository.createQueryBuilder.mockReturnValue(
+      mockQueryBuilder,
+    );
+
+    const expectedResult = finistere;
+
+    const result = await departementRepository.findOneByCityZipcode('12345');
+
+    expect(result).toMatchObject(expectedResult);
+    expect(mockQueryBuilder.leftJoinAndSelect).toHaveBeenCalledWith(
+      'departement.region',
+      'region',
+    );
+    expect(mockQueryBuilder.where).toHaveBeenCalledWith(
+      ":cityZipcode LIKE departement.code || '%'",
+      { cityZipcode: '12345' },
+    );
+    expect(mockQueryBuilder.getOne).toHaveBeenCalledTimes(1);
+  });
 });
