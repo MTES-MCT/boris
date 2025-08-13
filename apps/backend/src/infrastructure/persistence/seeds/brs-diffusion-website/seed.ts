@@ -20,15 +20,9 @@ export class BrsDiffusionWebsiteSeed {
         inseeCode: brsDiffusionWebsite.codeInsee,
       });
 
-        count++;
-        console.log(`${count}/${brsDiffusionWebsites.length}`);
-      } catch (error) {
-        console.error(error);
-        console.log(
-          `Erreur lors de l'import de ${brsDiffusionWebsite.commune}`,
-        );
-      }
+      count++;
 
+      console.log(`${count}/${brsDiffusionWebsites.length}`);
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
 
