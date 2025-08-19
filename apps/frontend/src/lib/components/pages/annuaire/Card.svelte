@@ -7,6 +7,7 @@
     DepartementRelationnalView,
     RegionRelationnalView,
   } from '$lib/utils/api-types';
+  import type { Heading } from '$lib/utils/definitions';
 
   type Props = {
     region: RegionRelationnalView;
@@ -15,10 +16,18 @@
     ofsName: string;
     distributorName: string;
     source: string;
+    cardTitleElement?: Heading;
   };
 
-  const { region, departement, city, ofsName, distributorName, source }: Props =
-    $props();
+  const {
+    region,
+    departement,
+    city,
+    ofsName,
+    distributorName,
+    source,
+    cardTitleElement = 'h3',
+  }: Props = $props();
 </script>
 
 <article class="fr-card fr-card--sm">
@@ -30,7 +39,11 @@
         <Badge>{city}</Badge>
       </div>
       <div>
-        <h3 class="fr-card__title">{ofsName}</h3>
+        <svelte:element
+          this={cardTitleElement}
+          class="fr-card__title">
+          {ofsName}
+        </svelte:element>
         <p class="fr-mb-0">{distributorName}</p>
       </div>
     </div>
