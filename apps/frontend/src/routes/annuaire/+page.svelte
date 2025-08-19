@@ -12,13 +12,24 @@
   const { data }: Props = $props();
 </script>
 
+<svelte:head>
+  <title>Annuaire des sites de diffusion du BRS - BoRiS</title>
+  <meta
+    name="description"
+    content="Annuaire des sites de diffusion du BRS" />
+</svelte:head>
+
 <GradientBackgroundWrapper>
-  <Section title="Annuaire des sites de diffusion du BRS">
+  <Section
+    title="Annuaire des sites de diffusion du BRS"
+    titleElement="h1">
     <div class="fr-container--fluid fr-mb-4w">
       <div class="fr-grid-row fr-grid-row--gutters">
         {#each data.brsDiffusionWebsites.items as item}
           <div class="fr-col-12 fr-col-md-6">
-            <Card {...item} />
+            <Card
+              {...item}
+              cardTitleElement="h2" />
           </div>
         {/each}
       </div>
