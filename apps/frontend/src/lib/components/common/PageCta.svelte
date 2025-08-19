@@ -1,5 +1,12 @@
 <script lang="ts">
   import { default as MascotteShowing } from '$assets/icons/mascotte-showing.svg?raw';
+  import type { Heading } from '$lib/utils/definitions';
+
+  type Props = {
+    titleElement?: Heading;
+  };
+
+  const { titleElement = 'h3' }: Props = $props();
 </script>
 
 <section>
@@ -13,18 +20,22 @@
   </div>
   <div class="fr-container">
     <div class="content">
-      <h3>
-        Découvrez si des logements en BRS sont disponibles près de chez vous !
-      </h3>
+      <svelte:element
+        this={titleElement}
+        class="fr-h3">
+        Découvrez si des logements en bail réel solidaire (BRS) sont disponibles
+        près de chez vous !
+      </svelte:element>
       <p>
-        Les OFS partagent la propriété des logements en BRS avec les ménages
-        bénéficiaires du dispositif, les aident, sécurisent leur achat et les
-        accompagnent tout au long du processus, découvrez leurs offres !
+        Les OFS partagent la propriété des logements en bail réel solidaire
+        (BRS) avec les ménages bénéficiaires du dispositif, les aident,
+        sécurisent leur achat et les accompagnent tout au long du processus,
+        découvrez leurs offres !
       </p>
       <a
         href="/logements-brs-disponibles"
         class="fr-btn fr-btn--lg">
-        Trouver un logement en BRS
+        Trouver un logement en bail réel solidaire
       </a>
     </div>
   </div>

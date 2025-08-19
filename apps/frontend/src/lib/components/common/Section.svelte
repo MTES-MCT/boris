@@ -7,14 +7,22 @@
     titleElement?: Heading;
     title?: string;
     id?: string;
+    narrow?: boolean;
   };
 
-  const { title, children, titleElement = 'h2', id }: Props = $props();
+  const {
+    title,
+    children,
+    titleElement = 'h2',
+    id,
+    narrow = false,
+  }: Props = $props();
 </script>
 
 <section
   {id}
-  class="section">
+  class="section"
+  class:narrow>
   <div class="fr-container">
     <div class="fr-col-12">
       {#if title}
@@ -29,6 +37,13 @@
 <style lang="postcss">
   .section {
     padding-block: var(--2w);
+  }
+
+  .narrow {
+    width: 100%;
+    max-width: 636px;
+    margin: 0 auto;
+    text-align: center;
   }
 
   .section:nth-last-child(1) {

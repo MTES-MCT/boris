@@ -29,7 +29,7 @@
       </p>
       <a
         href="/nous-contacter"
-        class="fr-btn fr-btn--lg">
+        class="fr-btn fr-btn--lg fr-mt-2w">
         Nous contacter
       </a>
     </Hero>

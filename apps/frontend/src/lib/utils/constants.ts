@@ -1,4 +1,5 @@
 import type { EligibilityData, Statistic } from '$lib/utils/definitions';
+import { formatEuro } from './formatters';
 
 export const eligibilityData: EligibilityData[] = [
   {
@@ -78,6 +79,59 @@ export const eligibilityData: EligibilityData[] = [
     zoneB2andC: 9599,
   },
 ];
+
+export const eligibilityDataTable = {
+  theads: [
+    'Nb de personnes destinées à occuper le logement',
+    'Zone A',
+    'Zone B1',
+    'Zone B2 et C',
+  ],
+  tbodies: [
+    [
+      'Personne seule',
+      formatEuro(eligibilityData[0].zoneAandAbis),
+      formatEuro(eligibilityData[0].zoneB1),
+      formatEuro(eligibilityData[0].zoneB2andC),
+    ],
+    [
+      '2 personnes ne comportant aucune personne à charge hors jeunes ménages <br> <b>ou</b> 1 personne seule en situation de handicap',
+      formatEuro(eligibilityData[1].zoneAandAbis),
+      formatEuro(eligibilityData[1].zoneB1),
+      formatEuro(eligibilityData[1].zoneB2andC),
+    ],
+    [
+      '3 personnes <br> <b>ou</b> 1 personne seule avec 1 personne à charge <br> <b>ou</b> Jeune ménage: 2 personnes dont la somme des âges ne dépasse pas 55 ans <br> <b>ou</b> 2 personnes dont au moins 1 est en situation de handicap',
+      formatEuro(eligibilityData[2].zoneAandAbis),
+      formatEuro(eligibilityData[2].zoneB1),
+      formatEuro(eligibilityData[2].zoneB2andC),
+    ],
+    [
+      '4 personnes <br> <b>ou</b> 1 personne seule avec 2 personnes à charge <br> <b>ou</b> 3 personnes dont au moins 1 est en situation de handicap',
+      formatEuro(eligibilityData[3].zoneAandAbis),
+      formatEuro(eligibilityData[3].zoneB1),
+      formatEuro(eligibilityData[3].zoneB2andC),
+    ],
+    [
+      '5 personnes <br> <b>ou</b> 1 personne avec 3 personnes à charge <br> <b>ou</b> 4 personnes dont au moins 1 est en situation de handicap',
+      formatEuro(eligibilityData[4].zoneAandAbis),
+      formatEuro(eligibilityData[4].zoneB1),
+      formatEuro(eligibilityData[4].zoneB2andC),
+    ],
+    [
+      '6 personnes <br> <b>ou</b> 1 personne seule avec 4 personnes à charge <br> <b>ou</b> 5 personnes dont au moins 1 est en situation de handicap',
+      formatEuro(eligibilityData[5].zoneAandAbis),
+      formatEuro(eligibilityData[5].zoneB1),
+      formatEuro(eligibilityData[5].zoneB2andC),
+    ],
+    [
+      'Par personne supplémentaire',
+      formatEuro(eligibilityData[6].zoneAandAbis),
+      formatEuro(eligibilityData[6].zoneB1),
+      formatEuro(eligibilityData[6].zoneB2andC),
+    ],
+  ],
+};
 
 export const statistics: Statistic[] = [
   {

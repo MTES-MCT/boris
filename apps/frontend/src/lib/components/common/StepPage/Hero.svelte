@@ -17,10 +17,11 @@
     text-align: center;
     max-width: 640px;
     padding-block: var(--8w);
+
     @media (--sm-viewport) {
       padding-block: var(--15w);
       h1 {
-        max-width: 380px;
+        max-width: 580px;
         margin: 0 auto;
         margin-bottom: var(--5w);
       }
