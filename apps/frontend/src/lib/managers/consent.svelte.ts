@@ -39,14 +39,6 @@ class CookieConsentManager {
       }
     });
   };
-
-  getStoredConsentValue = (): string | null => {
-    if (browser) {
-      return localStorage.getItem('boris-cookies-consent');
-    }
-
-    return null;
-  };
 }
 
 const cookieConsentManager = new CookieConsentManager();

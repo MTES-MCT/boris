@@ -3,7 +3,6 @@
   import '@gouvfr/dsfr/dist/component/consent/consent.min.css';
 
   import cookieConsentManager from '$lib/managers/consent.svelte';
-
   const handleAcceptAll = () => {
     cookieConsentManager.setUserConsent(true);
   };
@@ -14,7 +13,7 @@
 </script>
 
 {#if cookieConsentManager.needsConsentDecision}
-  <div class="fr-consent-banner">
+  <div class="fr-consent-banner fade-in">
     <h2 class="fr-h6">À propos des cookies sur BoRiS.</h2>
     <div class="fr-consent-banner__content">
       <p>
