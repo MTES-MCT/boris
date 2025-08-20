@@ -1,0 +1,20 @@
+name: "Setup database"
+description: "Run database migrations, and seed data"
+
+inputs:
+  node-version:
+    description: "Node.js version to use"
+    required: false
+    default: "20.18.0"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Run database migrations
+      shell: bash
+      run: make migration-migrate-ci
+
+    - name: Seed test data
+      shell: bash
+      run: npm run seed:test-data -w @boris/backend

@@ -1,5 +1,5 @@
-name: "Install dependencies"
-description: "Install dependencies for the project"
+name: "Install dependencies & setup database"
+description: "Install dependencies, run database migrations, and seed data"
 
 inputs:
   node-version:
@@ -30,3 +30,24 @@ runs:
     - name: Install dependencies
       shell: bash
       run: npm ci
+
+    - name: Cache Playwright browsers
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-playwright-
+
+    - name: Install Playwright browsers
+      shell: bash
+      run: npx playwright install --with-deps
+
+    - name: Run database migrations
+      shell: bash
+      run: make migration-migrate-ci
+
+    - name: Seed test data
+      shell: bash
+      run: npm run seed:test-data -w @boris/backend
