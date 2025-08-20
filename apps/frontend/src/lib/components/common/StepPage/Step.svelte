@@ -9,7 +9,7 @@
     position: number;
     isLast: boolean;
     large: boolean;
-    href?: string;
+    href: string;
     linkLabel?: string;
     illustration?: string;
   };
@@ -19,7 +19,7 @@
     children,
     position,
     isLast,
-    href = undefined,
+    href,
     linkLabel = undefined,
     illustration = undefined,
   }: Props = $props();
@@ -29,33 +29,33 @@
   class={`step-${position}`}
   style={!illustration ? `--illustration-max-height: 0px` : ``}>
   <div class="fr-hidden fr-unhidden-lg column"></div>
+
   <div class="column">
-    <div class="column-container">
-      {#if illustration}
-        <div class="illustration">
-          {@html illustration}
-        </div>
-      {/if}
-      <div class="content">
-        <div class="position color-blue-primary">
-          <span><b>{position}</b></span>
-        </div>
-        <div class="text">
-          <h2>
-            {title}
-          </h2>
-          {@render children()}
-          {#if href}
-            <a
-              rel="noopener"
-              class="fr-link fr-icon-arrow-right-line fr-link--icon-right"
-              {href}>
+    <a
+      rel="noopener"
+      {href}>
+      <div class="column-container">
+        {#if illustration}
+          <div class="illustration">
+            {@html illustration}
+          </div>
+        {/if}
+        <div class="content">
+          <div class="position color-blue-primary">
+            <span><b>{position}</b></span>
+          </div>
+          <div class="text">
+            <h2>
+              {title}
+            </h2>
+            {@render children()}
+            <h3 class="fr-link fr-icon-arrow-right-line fr-link--icon-right">
               {linkLabel}
-            </a>
-          {/if}
+            </h3>
+          </div>
         </div>
       </div>
-    </div>
+    </a>
   </div>
 
   {#if isLast}
@@ -66,13 +66,19 @@
 </article>
 
 <style lang="postcss">
+  a {
+    background: none;
+  }
+
   article {
     --illustration-max-height: 150px;
     margin: 0 auto;
     display: block;
 
-    a {
-      font-size: 0.875rem;
+    h3 {
+      font-weight: normal;
+      text-decoration: underline;
+      text-underline-offset: 5px;
     }
 
     .illustration {

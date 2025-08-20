@@ -4,7 +4,7 @@ export const blockSearchEngineIndexing = (page: Page): boolean => {
   const hiddenPaths = ['/questionnaire', '/simulateur-acquisition'];
 
   return (
-    PUBLIC_NODE_ENV !== 'production' ||
+    (PUBLIC_NODE_ENV !== 'production' && PUBLIC_NODE_ENV !== 'ci') ||
     hiddenPaths.includes(page.route.id as string)
   );
 };

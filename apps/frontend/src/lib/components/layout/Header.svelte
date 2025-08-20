@@ -126,7 +126,7 @@
                     aria-current={pathname ===
                       '/tout-savoir-sur-le-bail-reel-solidaire-brs'}
                     class="fr-nav__link">
-                    Les étapes du parcours d'achat
+                    Tout savoir sur le Bail Réel Solidaire
                   </a>
                 </li>
                 {#each steps as step}
