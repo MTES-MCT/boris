@@ -11,9 +11,13 @@ runs:
   using: "composite"
 
   steps:
+    - name: Build backend
+      shell: bash
+      run: npm run build -w @boris/backend
+
     - name: Run database migrations
       shell: bash
-      run: make migration-migrate-ci
+      run: npm run migration:migrate:test -w @boris/backend
 
     - name: Seed test data
       shell: bash
