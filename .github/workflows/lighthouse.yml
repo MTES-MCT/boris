@@ -29,6 +29,11 @@ jobs:
 
       - run: npm ci
 
+      - name: Start backend server
+        run: |
+          npm run start:test -w @boris/backend &
+          sleep 5
+
       - name: Build frontend
         run: npm run build -w @boris/frontend
 
