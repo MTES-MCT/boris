@@ -46,3 +46,9 @@ jobs:
 
       - name: Run backend tests
         uses: ./.github/actions/backend
+
+      - name: Run frontend tests
+        uses: ./.github/actions/frontend
+
+      - name: Run lighthouse
+        uses: ./.github/actions/lighthouse

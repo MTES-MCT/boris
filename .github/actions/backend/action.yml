@@ -18,3 +18,9 @@ runs:
     - name: Backend e2e tests
       shell: bash
       run: npm run test:e2e -w @boris/backend
+
+    - name: Start backend server
+      shell: bash
+      run: |
+        npm run start:test -w @boris/backend &
+        sleep 5

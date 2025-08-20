@@ -1,0 +1,49 @@
+name: "Lighthouse"
+description: "Run lighthouse tests"
+
+inputs:
+  node-version:
+    description: "Node.js version to use"
+    required: false
+    default: "20.18.0"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Build frontend
+      shell: bash
+      run: npm run build -w @boris/frontend
+
+    - name: Start server
+      shell: bash
+      run: npm run preview -w @boris/frontend &
+
+    - name: Run lighthouse desktop
+      shell: bash
+      run: npm run lighthouse-desktop -w @boris/frontend
+
+    - name: Upload lighthouse desktop report
+      shell: bash
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        include-hidden-files: true
+        name: lighthouse-report-ubuntu-latest
+        path: ${{ github.workspace }}/apps/frontend/.lighthouseci/*
+
+    # - name: Run lighthouse mobile
+    #   # skip for now
+    #   if: false
+    #   shell: bash
+    #   run: npm run lighthouse-mobile -w @boris/frontend
+
+    #   - name: Upload lighthouse mobile report
+    #     # skip for now
+    #     if: false
+    #     shell: bash
+    #     uses: actions/upload-artifact@v4
+    #     with:
+    #       include-hidden-files: true
+    #       name: lighthouse-report-ubuntu-latest
+    #       path: ${{ github.workspace }}/apps/frontend/.lighthouseci/*
