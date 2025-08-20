@@ -30,10 +30,6 @@
 </Section>
 
 <style lang="postcss">
-  img {
-    max-width: 100%;
-  }
-
   .fr-card__detail {
     display: flex;
     align-items: center;

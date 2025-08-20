@@ -11,6 +11,7 @@
   import ArticlePage from '$components/pages/blog/ArticlePage.svelte';
   import type { ArticlePreview } from '$lib/utils/definitions';
   import { articles } from '$routes/blog/articles';
+  import Table from '$components/common/Table.svelte';
 
   const article = articles.find(
     (article) => article.slug === 'la-succession-en-bail-reel-solidaire-brs',
@@ -177,98 +178,41 @@
   </ul>
 
   <h2 class="fr-mt-8w">📌 En résumé</h2>
-  <div
-    class="fr-table fr-table--lg fr-table--no-caption fr-table--bordered"
-    id="table-component">
-    <div class="fr-table__wrapper">
-      <div class="fr-table__container">
-        <div class="fr-table__content">
-          <table id="table">
-            <caption>Titre du tableau (caption)</caption>
-            <thead>
-              <tr>
-                <th>Situation des héritiers</th>
-                <th>Conséquence</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                id="table-row-key-1"
-                data-row-key="1">
-                <td>
-                  ✅ Éligibles au BRS <br />
-                  (Test d’éligibilité
-                  <a
-                    href="/simulateur-eligibilite"
-                    class="fr-link fr-text--sm">
-                    ICI
-                  </a>
-                  )
-                </td>
-                <td>
-                  ✅ Vous héritez du logement en bail réel solidaire
-                  <br />
-                  ✅ Vous avez la possibilité de conserver le bien en respectant
-                  les conditions du BRS
-                  <ul>
-                    <li>
-                      Obligation d’user du bien à titre de résidence principale
-                    </li>
-                    <li>Le ménage doit être agréé par l’OFS</li>
-                    <li>
-                      👉 <a
-                        href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif"
-                        class="fr-link fr-text--sm">
-                        Les règles en BRS
-                      </a>
-                    </li>
-                  </ul>
-                  Vous avez aussi la possibilité de vendre le logement
-                  <a
-                    href="/revendre-mon-bien-en-brs"
-                    class="fr-link fr-text--sm">
-                    👉 Revente d’un logement en BRS.
-                  </a>
-                </td>
-              </tr>
-              <tr
-                id="table-row-key-2"
-                data-row-key="2">
-                <td>
-                  ❌ NON Éligibles au BRS <br />
-                  (Test d’éligibilité
-                  <a
-                    href="/simulateur-eligibilite"
-                    class="fr-link fr-text--sm">
-                    ICI
-                  </a>
-                  )
-                </td>
-                <td>
-                  ✅ Vous héritez du logement en bail réel solidaire
-                  <br />
-
-                  ❌ Il vous est IMPOSSIBLE de conserver le bien en bail réel
-                  solidaire → Obligation de revendre le bien
-                  <br />
-                  <ul>
-                    <li>Le bien doit être revendu selon les règles du BRS</li>
-                    <li>
-                      <a
-                        href="/revendre-mon-bien-en-brs"
-                        class="fr-link fr-text--sm">
-                        👉 Revente d’un logement en BRS.
-                      </a>
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+  <Table
+    theads={['Situation des héritiers', 'Conséquence']}
+    tbodies={[
+      [
+        `✅ Éligibles au BRS <br />
+      (Test d'éligibilité
+      <a href="/simulateur-eligibilite" class="fr-link fr-text--sm">ICI</a>)`,
+        `✅ Vous héritez du logement en bail réel solidaire
+      <br />
+      ✅ Vous avez la possibilité de conserver le bien en respectant
+      les conditions du BRS
+      <ul>
+        <li>Obligation d'user du bien à titre de résidence principale</li>
+        <li>Le ménage doit être agréé par l'OFS</li>
+        <li>👉 <a href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif" class="fr-link fr-text--sm">Les règles en BRS</a></li>
+      </ul>
+      Vous avez aussi la possibilité de vendre le logement
+      <a href="/revendre-mon-bien-en-brs" class="fr-link fr-text--sm">👉 Revente d'un logement en BRS.</a>`,
+      ],
+      [
+        `❌ NON Éligibles au BRS <br />
+      (Test d'éligibilité
+      <a href="/simulateur-eligibilite" class="fr-link fr-text--sm">ICI</a>)`,
+        `✅ Vous héritez du logement en bail réel solidaire
+      <br />
+      ❌ Il vous est IMPOSSIBLE de conserver le bien en bail réel
+      solidaire → Obligation de revendre le bien
+      <br />
+      <ul>
+        <li>Le bien doit être revendu selon les règles du BRS</li>
+        <li><a href="/revendre-mon-bien-en-brs" class="fr-link fr-text--sm">👉 Revente d'un logement en BRS.</a></li>
+      </ul>`,
+      ],
+    ]}
+    caption="Titre du tableau (caption)" />
 
   <h2 class="fr-mt-8w">📌 Pour aller plus loin</h2>
   <ul>
