@@ -12,6 +12,7 @@ jobs:
     env:
       LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
       PUBLIC_NODE_ENV: ${{ secrets.PUBLIC_NODE_ENV }}
+      API_URL: ${{ secrets.API_URL }}
 
     strategy:
       matrix:
