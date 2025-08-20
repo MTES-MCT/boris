@@ -44,8 +44,5 @@ jobs:
       - name: Setup database
         uses: ./.github/actions/setup-database
 
-      - name: Backend unit tests
-        run: npm run test:unit -w @boris/backend
-
-      - name: Backend e2e tests
-        run: npm run test:e2e -w @boris/backend
+      - name: Run backend tests
+        uses: ./.github/actions/backend/test

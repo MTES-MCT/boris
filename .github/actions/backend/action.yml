@@ -1,0 +1,20 @@
+name: "Backend tests"
+description: "Run backend unit and e2e tests"
+
+inputs:
+  node-version:
+    description: "Node.js version to use"
+    required: false
+    default: "20.18.0"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Backend unit tests
+      bash: shell
+      run: npm run test:unit -w @boris/backend
+
+    - name: Backend e2e tests
+      bash: shell
+      run: npm run test:e2e -w @boris/backend
