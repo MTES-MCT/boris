@@ -13,7 +13,7 @@ jobs:
       API_URL: ${{ secrets.API_URL }}
       PUBLIC_NODE_ENV: ${{ secrets.PUBLIC_NODE_ENV }}
       POSTGRES_HOST: localhost
-      POSTGRES_PORT: 5433
+      POSTGRES_PORT: 5432
       POSTGRES_USER: boris
       POSTGRES_PASSWORD: boris
       POSTGRES_DB: boris
@@ -30,7 +30,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
           POSTGRES_DB: boris
         ports:
-          - 5433:5432
+          - 5432:5432
         options: >-
           --health-cmd "pg_isready -U boris"
           --health-interval 10s

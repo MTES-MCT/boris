@@ -17,7 +17,7 @@ runs:
 
     - name: Run database migrations
       shell: bash
-      run: npm run migration:migrate:test -w @boris/backend
+      run: npm run migration:migrate -w @boris/backend
 
     - name: Seed test data
       shell: bash
