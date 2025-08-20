@@ -45,4 +45,4 @@ jobs:
         uses: ./.github/actions/setup-database
 
       - name: Run backend tests
-        uses: ./.github/actions/backend/test
+        uses: ./.github/actions/backend

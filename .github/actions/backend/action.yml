@@ -12,9 +12,9 @@ runs:
 
   steps:
     - name: Backend unit tests
-      bash: shell
+      shell: bash
       run: npm run test:unit -w @boris/backend
 
     - name: Backend e2e tests
-      bash: shell
+      shell: bash
       run: npm run test:e2e -w @boris/backend
