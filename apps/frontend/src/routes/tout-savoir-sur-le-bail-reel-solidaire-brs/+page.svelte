@@ -184,7 +184,7 @@
       <h2>FAQ : Les réponses à vos questions sur le bail réel solidaire</h2>
 
       <Accordion label="Comment savoir si je suis éligible au BRS ?">
-        <p>
+        <p class="fr-mt-1w">
           Pour savoir si vous êtes éligible au bail réel solidaire, il vous
           suffit de remplir ce <a
             href="/simulateur-eligibilite"
@@ -204,7 +204,7 @@
         </p>
       </Accordion>
       <Accordion label="Le Bail Réel Solidaire (BRS), c’est quoi exactement ?">
-        <p>
+        <p class="fr-mt-1w">
           Le bail réel solidaire (BRS) est un dispositif immobilier mis en place
           par l’Etat en 2015. C’est un dispositif d’accession sociale à la
           propriété. Il permet à des personnes qui ne pourraient pas devenir
@@ -222,7 +222,7 @@
       </Accordion>
       <Accordion
         label="Quels sont les plafonds de revenus 2025 en bail réel solidaire (BRS) ?">
-        <p>
+        <p class="fr-mt-1w">
           Consultez le <a
             href="/simulateur-eligibilite#plafonds-de-ressources"
             class="fr-link">
@@ -231,7 +231,7 @@
         </p>
       </Accordion>
       <Accordion label="Comment savoir si je suis en zone A, Abis, B1 ou C ?">
-        <p>
+        <p class="fr-mt-1w">
           Pour connaître votre zone, vous pouvez utiliser <a
             href="https://www.service-public.fr/simulateur/calcul/zonage-abc"
             target="_blank"
@@ -243,13 +243,13 @@
         </p>
       </Accordion>
       <Accordion label="Quelle est la durée du BRS ?">
-        <p>
+        <p class="fr-mt-1w">
           Le Bail Réel Solidaire (BRS) est signé pour une durée de 18 à 99 ans.
           Lorsqu’il y a une revente ou succession, cette durée repart à zéro.
         </p>
       </Accordion>
       <Accordion label="Où trouver un logement en bail réel solidaire ?">
-        <p>
+        <p class="fr-mt-1w">
           Pour consulter les différents logements en bail réel solidaire
           disponibles à l’achat, vous pouvez vous rendre sur la page <a
             href="/logements-brs-disponibles"
@@ -282,7 +282,7 @@
         <p>Mais ce ne sont pas les seules!</p>
       </Accordion>
       <Accordion label="Un Organisme de Foncier Solidaire (OFS), c’est quoi ?">
-        <p>
+        <p class="fr-mt-1w">
           Un Organisme de Foncier Solidaire est un organisme agréé par l’Etat,
           qui achète des terrains pour y construire des logements en bail réel
           solidaire qu’il met ensuite en vente.
@@ -294,7 +294,7 @@
       </Accordion>
       <Accordion
         label="Est-ce que je dois respecter un délai pour revendre mon bien en bail réel solidaire ? Ou je peux revendre quand je veux ?">
-        <p>
+        <p class="fr-mt-1w">
           La revente en bail réel solidaire est <b>possible à tout moment</b>
           .
         </p>
