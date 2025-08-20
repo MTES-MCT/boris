@@ -17,8 +17,20 @@ runs:
 
     - name: Run database migrations
       shell: bash
-      run: npm run migration:migrate -w @boris/backend
+      env:
+        POSTGRES_HOST: localhost
+        POSTGRES_PORT: 5433
+        POSTGRES_USER: boris
+        POSTGRES_PASSWORD: boris
+        POSTGRES_DB: boris
+      run: npm run migration:migrate:test -w @boris/backend
 
     - name: Seed test data
       shell: bash
+      env:
+        POSTGRES_HOST: localhost
+        POSTGRES_PORT: 5433
+        POSTGRES_USER: boris
+        POSTGRES_PASSWORD: boris
+        POSTGRES_DB: boris
       run: npm run seed:test-data -w @boris/backend
