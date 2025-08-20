@@ -14,9 +14,9 @@ jobs:
       PUBLIC_NODE_ENV: ${{ secrets.PUBLIC_NODE_ENV }}
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5433
-      POSTGRES_USER: boris
-      POSTGRES_PASSWORD: boris
-      POSTGRES_DB: boris
+      POSTGRES_USER: boris-test
+      POSTGRES_PASSWORD: boris-test
+      POSTGRES_DB: boris-test
 
     strategy:
       matrix:
