@@ -34,8 +34,12 @@ jobs:
           --health-retries 5
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
+        with:
+          node-version: ${{ matrix.node-version }}
 
       - name: Backend unit tests
         run: npm run test:unit -w @boris/backend
