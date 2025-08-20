@@ -4,28 +4,47 @@ on:
   pull_request:
 
 jobs:
-  setup:
-    uses: ./.github/workflows/setup.yml
-    with:
-      node-version: "20.18.0"
-      start-backend: false
-    secrets: inherit
-
   backend-tests:
-    needs: setup
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5433
+      POSTGRES_USER: boris
+      POSTGRES_PASSWORD: boris
+      POSTGRES_DB: boris
 
-      - name: Use Node.js 20.18.0
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.18.0
-          cache: "npm"
+    strategy:
+      matrix:
+        node-version: [20.18.0]
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: boris-test
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U boris-test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
 
       - name: Backend unit tests
         run: npm run test:unit -w @boris/backend
+
+      - name: Run database migrations
+        run: make migration-migrate-ci
+
+      - name: Seed test data
+        run: npm run seed:test-data -w @boris/backend
 
       - name: Backend e2e tests
         run: npm run test:e2e -w @boris/backend
