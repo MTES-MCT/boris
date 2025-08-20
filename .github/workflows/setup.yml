@@ -1,0 +1,82 @@
+name: Setup Environment
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: false
+        type: string
+        default: "20.18.0"
+      start-backend:
+        required: false
+        type: boolean
+        default: false
+    secrets:
+      LANDBOT_CONFIG_URL:
+        required: false
+      SENTRY_AUTH_TOKEN:
+        required: false
+      API_URL:
+        required: false
+      PUBLIC_NODE_ENV:
+        required: false
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5433
+      POSTGRES_USER: boris
+      POSTGRES_PASSWORD: boris
+      POSTGRES_DB: boris
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: boris-test
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U boris-test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: "npm"
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run database migrations
+        run: make migration-migrate-ci
+
+      - name: Seed test data
+        run: npm run seed:test-data -w @boris/backend
+
+      - name: Start backend server
+        if: inputs.start-backend
+        run: |
+          npm run start:test -w @boris/backend &
+          sleep 5
