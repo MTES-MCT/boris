@@ -17,6 +17,16 @@ runs:
         node-version: ${{ inputs.node-version }}
         cache: "npm"
 
+    - name: Cache node_modules
+      uses: actions/cache@v4
+      with:
+        path: |
+          node_modules
+          */*/node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
+
     - name: Install dependencies
       shell: bash
       run: npm ci
