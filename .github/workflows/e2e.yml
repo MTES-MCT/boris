@@ -1,0 +1,63 @@
+name: E2E tests
+
+on:
+  pull_request:
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+
+    env:
+      LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      API_URL: ${{ secrets.API_URL }}
+      PUBLIC_NODE_ENV: ${{ secrets.PUBLIC_NODE_ENV }}
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5433
+      POSTGRES_USER: boris
+      POSTGRES_PASSWORD: boris
+      POSTGRES_DB: boris
+
+    strategy:
+      matrix:
+        node-version: [20.18.0]
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: boris-test
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U boris-test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Setup database
+        uses: ./.github/actions/setup-database
+
+      - name: Backend e2e tests
+        run: npm run test:e2e -w @boris/backend
+
+      - name: Run backend server
+        uses: ./.github/actions/run-backend
+
+      - name: Install playwright
+        uses: ./.github/actions/install-playwright
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Frontend e2e tests
+        run: npm run test:e2e -w @boris/frontend

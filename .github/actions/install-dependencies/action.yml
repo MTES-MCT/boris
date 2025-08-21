@@ -1,5 +1,5 @@
-name: "Install dependencies & setup database"
-description: "Install dependencies, run database migrations, and seed data"
+name: "Install dependencies"
+description: "Install dependencies"
 
 inputs:
   node-version:
@@ -17,19 +17,6 @@ runs:
         node-version: ${{ inputs.node-version }}
         cache: "npm"
 
-    # - name: Cache Playwright browsers
-    #   uses: actions/cache@v4
-    #   with:
-    #     path: |
-    #       ~/.cache/ms-playwright
-    #     key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
-    #     restore-keys: |
-    #       ${{ runner.os }}-playwright-
-
     - name: Install dependencies
       shell: bash
       run: npm ci
-
-    # - name: Install Playwright browsers
-    #   shell: bash
-    #   run: npx playwright install chromium --with-deps
