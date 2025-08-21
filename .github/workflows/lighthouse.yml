@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  lighthouse:
+  run:
     runs-on: ubuntu-latest
 
     env:
@@ -41,24 +41,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
 
-      - run: npm ci
+      - name: Setup database
+        uses: ./.github/actions/setup-database
 
-      - name: Run database migrations
-        run: make migration-migrate-ci
-
-      - name: Seed test data
-        run: npm run seed:test-data -w @boris/backend
-
-      - name: Start backend server
-        run: |
-          npm run start:test -w @boris/backend &
-          sleep 5
+      - name: Run backend server
+        uses: ./.github/actions/run-backend
 
       - name: Build frontend
         run: npm run build -w @boris/frontend

@@ -31,7 +31,7 @@
     if ('undefined' != typeof Tally) v();
     else if (d.querySelector('script[src="' + w + '"]') == null) {
       var s = d.createElement('script');
-      (s.src = w), (s.onload = v), (s.onerror = v), d.body.appendChild(s);
+      ((s.src = w), (s.onload = v), (s.onerror = v), d.body.appendChild(s));
     }
   </script>
 </div>

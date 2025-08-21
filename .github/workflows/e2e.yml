@@ -1,13 +1,17 @@
-name: Backend tests
+name: e2e tests
 
 on:
   pull_request:
 
 jobs:
-  backend-tests:
+  run:
     runs-on: ubuntu-latest
 
     env:
+      LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      API_URL: ${{ secrets.API_URL }}
+      PUBLIC_NODE_ENV: ${{ secrets.PUBLIC_NODE_ENV }}
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5433
       POSTGRES_USER: boris
@@ -36,22 +40,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
 
-      - run: npm ci
-
-      - name: Backend unit tests
-        run: npm run test:unit -w @boris/backend
-
-      - name: Run database migrations
-        run: make migration-migrate-ci
-
-      - name: Seed test data
-        run: npm run seed:test-data -w @boris/backend
+      - name: Setup database
+        uses: ./.github/actions/setup-database
 
       - name: Backend e2e tests
         run: npm run test:e2e -w @boris/backend
+
+      - name: Run backend server
+        uses: ./.github/actions/run-backend
+
+      - name: Install playwright
+        uses: ./.github/actions/install-playwright
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Frontend e2e tests
+        run: npm run test:e2e -w @boris/frontend
