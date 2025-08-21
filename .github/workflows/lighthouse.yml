@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  lighthouse:
+  run:
     runs-on: ubuntu-latest
 
     env:
