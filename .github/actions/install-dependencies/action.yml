@@ -32,4 +32,4 @@ runs:
 
     - name: Install Playwright browsers
       shell: bash
-      run: npx playwright install --with-deps
+      run: npx playwright install chromium --with-deps
