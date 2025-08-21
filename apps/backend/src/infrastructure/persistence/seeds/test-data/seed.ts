@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { SaveDepartementUsecase } from 'src/application/departement/usecases/save.usecase';
 import { SaveRegionUsecase } from 'src/application/region/usecases/save.usecase';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
@@ -9,8 +9,11 @@ import { CreateDistributorUsecase } from 'src/application/distributor/usecases/c
 import { CreateOfsUsecase } from 'src/application/ofs/usecases/create.usecase';
 import { regions } from '../regions-departements/data';
 import { ofss } from '../ofs/data';
-import { brsDiffusionWebsites } from '../brs-diffusion-website/data';
 import { CreateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-website/usecases/create.usecase';
+import { BrsDiffusionWebsiteRepositoryInterface } from 'src/domain/brs-diffusion-website/brs-diffusion-website.repository.interface';
+import { geocodedMunicipalities } from './data';
+import { BrsDiffusionWebsiteEntity } from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.entity';
+import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
 
 @Injectable()
 export class TestDataSeed {
@@ -22,6 +25,10 @@ export class TestDataSeed {
     private readonly createDistributorUsecase: CreateDistributorUsecase,
     private readonly createOfsUsecase: CreateOfsUsecase,
     private readonly createBrsDiffusionWebsiteUsecase: CreateBrsDiffusionWebsiteUsecase,
+    @Inject('BrsDiffusionWebsiteRepositoryInterface')
+    private readonly brsDiffusionWebsiteRepository: BrsDiffusionWebsiteRepositoryInterface,
+    @Inject('DepartementRepositoryInterface')
+    private readonly departementRepository: DepartementRepositoryInterface,
   ) {}
 
   private async seedRegions() {
@@ -108,13 +115,33 @@ export class TestDataSeed {
 
     let brsDiffusionWebsitesCount = 0;
 
-    for (const brsDiffusionWebsite of brsDiffusionWebsites) {
-      await this.createBrsDiffusionWebsiteUsecase.execute({
-        source: brsDiffusionWebsite.source,
-        ofsName: brsDiffusionWebsite.ofs,
-        distributorName: brsDiffusionWebsite.commercialisateur,
-        city: brsDiffusionWebsite.commune,
-      });
+    for (const geocodedMunicipality of geocodedMunicipalities) {
+      const departement = await this.departementRepository.findOneByCityZipcode(
+        geocodedMunicipality.properties?.postcode,
+      );
+
+      if (!departement) {
+        console.log(
+          `No departement found for ${geocodedMunicipality.properties?.city}`,
+        );
+        continue;
+      }
+
+      await this.brsDiffusionWebsiteRepository.save(
+        new BrsDiffusionWebsiteEntity(
+          'https://source.fr',
+          'distributorName',
+          'ofsName',
+          geocodedMunicipality?.properties?.city,
+          geocodedMunicipality?.properties?.postcode,
+          geocodedMunicipality?.properties?.context,
+          geocodedMunicipality?.properties?.citycode,
+          geocodedMunicipality?.geometry?.coordinates?.[1],
+          geocodedMunicipality?.geometry?.coordinates?.[0],
+          departement.region,
+          departement,
+        ),
+      );
 
       brsDiffusionWebsitesCount = brsDiffusionWebsitesCount + 1;
     }
