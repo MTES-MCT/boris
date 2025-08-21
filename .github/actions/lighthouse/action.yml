@@ -23,27 +23,8 @@ runs:
       shell: bash
       run: npm run lighthouse-desktop -w @boris/frontend
 
-    - name: Upload lighthouse desktop report
-      shell: bash
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        include-hidden-files: true
-        name: lighthouse-report-ubuntu-latest
-        path: ${{ github.workspace }}/apps/frontend/.lighthouseci/*
-
     # - name: Run lighthouse mobile
     #   # skip for now
     #   if: false
     #   shell: bash
     #   run: npm run lighthouse-mobile -w @boris/frontend
-
-    #   - name: Upload lighthouse mobile report
-    #     # skip for now
-    #     if: false
-    #     shell: bash
-    #     uses: actions/upload-artifact@v4
-    #     with:
-    #       include-hidden-files: true
-    #       name: lighthouse-report-ubuntu-latest
-    #       path: ${{ github.workspace }}/apps/frontend/.lighthouseci/*

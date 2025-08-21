@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  pull_request:
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.18.0]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Backend unit tests
+        run: npm run test:unit -w @boris/backend
+
+      - name: Frontend unit tests
+        run: npm run test:unit -w @boris/frontend
