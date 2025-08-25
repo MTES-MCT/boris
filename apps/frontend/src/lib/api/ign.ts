@@ -5,8 +5,6 @@ const API_URL = 'https://data.geopf.fr/geocodage/completion/';
 export const autocomplete = async (
   query: string,
 ): Promise<AutocompleteResponse> => {
-  console.log(query);
-
   if (!query) {
     return {
       status: 200,

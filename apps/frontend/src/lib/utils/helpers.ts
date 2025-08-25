@@ -17,3 +17,19 @@ export const debounce = (callback: (...args: any[]) => void, wait = 300) => {
     timeout = setTimeout(() => callback(...args), wait);
   };
 };
+
+export const clickOutside = (node: Element) => {
+  const handleClick = (event: Event) => {
+    if (!node.contains(<Node>event.target)) {
+      node.dispatchEvent(new CustomEvent('clickoutside'));
+    }
+  };
+
+  document.addEventListener('click', handleClick, true);
+
+  return {
+    destroy() {
+      document.removeEventListener('click', handleClick, true);
+    },
+  };
+};

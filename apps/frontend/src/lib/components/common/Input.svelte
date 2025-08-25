@@ -4,8 +4,10 @@
   import '@gouvfr/dsfr/dist/component/input/input.min.css';
 
   import { nanoid } from 'nanoid';
+  import type { AriaAttributes, AriaRole, FullAutoFill } from 'svelte/elements';
 
   type Props = {
+    id?: string;
     placeholder?: string;
     type?:
       | 'date'
@@ -19,18 +21,26 @@
     value?: string;
     label?: string;
     icon?: string;
+    role?: AriaRole;
+    ariaAttributes: AriaAttributes;
+    ariaAutocomplete?: 'none' | 'list' | 'inline' | 'both' | null;
+    autocomplete?: FullAutoFill;
     onChange?: (event: Event) => void;
+    onKeydown?: (event: KeyboardEvent) => void;
   };
 
-  const id = nanoid(10);
-
   const {
+    id = nanoid(10),
     placeholder = '',
     type = 'text',
     value,
     label = '',
     icon = '',
+    role = '',
+    ariaAttributes,
+    autocomplete,
     onChange,
+    onKeydown,
   }: Props = $props();
 </script>
 
@@ -46,24 +56,10 @@
   {/if}
   {#if icon}
     <div class={`fr-input-wrap fr-icon-${icon}`}>
-      <input
-        class="fr-input"
-        aria-describedby={`${id}-messages`}
-        {placeholder}
-        {type}
-        {value}
-        {id}
-        oninput={onChange} />
+      {@render input()}
     </div>
   {:else}
-    <input
-      class="fr-input"
-      aria-describedby={`${id}-messages`}
-      {placeholder}
-      {type}
-      {value}
-      {id}
-      oninput={onChange} />
+    {@render input()}
   {/if}
   <div
     class="fr-messages-group"
@@ -71,3 +67,18 @@
     aria-live="polite">
   </div>
 </div>
+
+{#snippet input()}
+  <input
+    class="fr-input"
+    aria-describedby={`${id}-messages`}
+    {placeholder}
+    {type}
+    {value}
+    {id}
+    {role}
+    {...ariaAttributes}
+    {autocomplete}
+    oninput={onChange}
+    onkeydown={onKeydown} />
+{/snippet}

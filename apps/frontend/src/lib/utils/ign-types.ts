@@ -10,6 +10,7 @@ export type AutocompleteSuggestion = {
   fulltext: string;
   metropole: boolean;
   poiType: 'région' | 'département'[];
+  id?: string;
 };
 
 export type AutocompleteResponse = {
