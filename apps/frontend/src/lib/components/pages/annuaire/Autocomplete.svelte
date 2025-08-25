@@ -1,15 +1,20 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/utility/icons/icons-map/icons-map.min.css';
-  import { debounce } from '$lib/utils/helpers';
+  import { clickOutside, debounce } from '$lib/utils/helpers';
 
   import Input from '$components/common/Input.svelte';
   import { autocomplete } from '$lib/api/ign';
   import type { AutocompleteSuggestion } from '$lib/utils/ign-types';
+  import { nanoid } from 'nanoid';
 
-  let value = $state('');
+  let value = $state<string>('');
   let suggestions = $state<AutocompleteSuggestion[] | null>(null);
+  let isListExpanded = $state<boolean>(false);
   let isTooShort = $derived(value.length > 0 && value.length < 3);
   let isTooLong = $derived(value.length > 200);
+  const inputId = nanoid(10);
+  const suggestionsId = nanoid(10);
+  let focusedSuggestionId = $state<string | null>(null);
 
   const handleChange = async (event: Event) => {
     value = (event.target as HTMLInputElement).value;
@@ -18,59 +23,147 @@
     if (hasCorrectLength) {
       const { results } = await autocomplete(value);
 
-      suggestions = results;
+      suggestions = results.map((result, index) => ({
+        ...result,
+        id: `suggestion-${index}`,
+      }));
+
+      isListExpanded = true;
+
+      if (suggestions.length > 0) {
+        focusedSuggestionId = suggestions[0]?.id as string;
+      }
     } else {
+      isListExpanded = false;
       suggestions = null;
     }
+
+    isListExpanded = value.length > 0;
+  };
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    const { key } = event;
+
+    if (key === 'ArrowDown') {
+      let nextSuggestionIndex: number;
+
+      const currentSuggestionIndex = suggestions?.findIndex(
+        (suggestion) => suggestion.id === focusedSuggestionId,
+      );
+
+      if (
+        typeof currentSuggestionIndex === 'number' &&
+        suggestions &&
+        currentSuggestionIndex < suggestions?.length - 1
+      ) {
+        nextSuggestionIndex = currentSuggestionIndex + 1;
+        focusedSuggestionId = suggestions[nextSuggestionIndex].id as string;
+      }
+    } else if (key === 'ArrowUp') {
+      event.preventDefault();
+      let previousSuggestionIndex: number;
+
+      const currentSuggestionIndex = suggestions?.findIndex(
+        (suggestion) => suggestion.id === focusedSuggestionId,
+      );
+
+      if (
+        typeof currentSuggestionIndex === 'number' &&
+        suggestions &&
+        currentSuggestionIndex > 0
+      ) {
+        previousSuggestionIndex = currentSuggestionIndex - 1;
+        focusedSuggestionId = suggestions[previousSuggestionIndex].id as string;
+      }
+    } else if (key === 'Escape') {
+      isListExpanded = false;
+    } else if (key === 'Enter') {
+      handleSelect();
+    }
+  };
+
+  const handleClickOuside = () => {
+    isListExpanded = false;
+  };
+
+  const handleSelect = (id?: string) => {
+    const selectedSuggestion = suggestions?.find((suggestion) => {
+      if (id) {
+        return suggestion.id === id;
+      } else {
+        return suggestion.id === focusedSuggestionId;
+      }
+    });
+
+    value = selectedSuggestion?.fulltext as string;
+    isListExpanded = false;
   };
 </script>
 
-<div class="autocomplete">
+<div
+  class="autocomplete"
+  use:clickOutside
+  onclickoutside={handleClickOuside}>
   <Input
     {value}
+    id={inputId}
+    placeholder="Bordeaux, Marseille, Paris"
+    label="Saisir le lieu ou le code postal"
     icon="map-pin-2-line"
-    placeholder="Saisir le lieu ou le code postal"
-    onChange={debounce(handleChange, 300)} />
+    role="combobox"
+    autocomplete="off"
+    ariaAttributes={{
+      'aria-autocomplete': 'list',
+      'aria-expanded': isListExpanded,
+      'aria-controls': suggestionsId,
+      'aria-activedescendant': focusedSuggestionId,
+    }}
+    onChange={debounce(handleChange, 300)}
+    onKeydown={handleKeydown} />
 
   <span></span>
 
-  {#if isTooShort}
-    <div class="suggestions">
-      <ul>
-        <li>
-          <b>Veuillez saisir au moins 3 caractères.</b>
-        </li>
-      </ul>
-    </div>
-  {:else if isTooLong}
-    <div class="suggestions">
-      <ul>
-        <li>
-          <b>Veuillez saisir 200 caractères au maximum.</b>
-        </li>
-      </ul>
-    </div>
-  {:else if suggestions && suggestions.length > 0}
-    <div class="suggestions">
-      <ul>
-        {#each suggestions as suggestion}
-          {@render autocompleteSuggestion(suggestion)}
-        {/each}
-      </ul>
-    </div>
-  {:else if suggestions && suggestions.length === 0 && value.length > 0}
-    <div class="suggestions">
-      <ul>
-        <li>
-          <b>Aucun lieu correspondant n'a été trouvé.</b>
-        </li>
+  {#if isListExpanded}
+    <div
+      class="suggestions"
+      id={suggestionsId}>
+      <ul
+        aria-labelledby={inputId}
+        role="listbox">
+        {#if isTooShort}
+          <li>
+            <b>Veuillez saisir au moins 3 caractères.</b>
+          </li>
+        {:else if isTooLong}
+          <li>
+            <b>Veuillez saisir 200 caractères au maximum.</b>
+          </li>
+        {:else if suggestions && suggestions.length > 0}
+          {#each suggestions as suggestion, index}
+            {@render autocompleteSuggestion(suggestion, index)}
+          {/each}
+        {:else if suggestions && suggestions.length === 0 && value.length > 0}
+          <li>
+            <b>Aucun lieu correspondant n'a été trouvé.</b>
+          </li>
+        {/if}
       </ul>
     </div>
   {/if}
 </div>
 
-{#snippet autocompleteSuggestion(suggestion: AutocompleteSuggestion)}
-  <li>
+{#snippet autocompleteSuggestion(
+  suggestion: AutocompleteSuggestion,
+  index: number,
+)}
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <li
+    id={suggestion.id}
+    role="option"
+    aria-selected={suggestion.id === focusedSuggestionId}
+    aria-setsize={suggestions?.length}
+    aria-posinset={index}
+    onclick={() => handleSelect(suggestion.id)}>
     {suggestion.fulltext}
     {#if suggestion.poiType}
       {#each suggestion.poiType as poiType}
@@ -91,21 +184,24 @@
     position: absolute;
     z-index: 1000;
     left: 0;
-    top: 100%;
+    top: calc(100% + var(--1w));
     width: 100%;
     background-color: white;
-    padding: var(--1w);
     box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
   }
 
   ul {
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--1w);
+    margin: 0;
+    padding: 0;
 
     li {
+      padding: var(--1w) var(--2w);
       cursor: pointer;
+
+      &[aria-selected='true'] {
+        background-color: var(--background-default-grey-active);
+      }
     }
   }
 </style>
