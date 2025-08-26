@@ -17,12 +17,16 @@
       | 'search'
       | 'tel'
       | 'text'
-      | 'url';
+      | 'url'
+      | 'range';
     value?: string;
     label?: string;
     icon?: string;
     role?: AriaRole;
-    ariaAttributes: AriaAttributes;
+    min?: number;
+    max?: number;
+    step?: number;
+    ariaAttributes?: AriaAttributes;
     ariaAutocomplete?: 'none' | 'list' | 'inline' | 'both' | null;
     autocomplete?: FullAutoFill;
     onChange?: (event: Event) => void;
@@ -39,6 +43,9 @@
     role = '',
     ariaAttributes,
     autocomplete,
+    min,
+    max,
+    step,
     onChange,
     onKeydown,
   }: Props = $props();
@@ -79,6 +86,9 @@
     {role}
     {...ariaAttributes}
     {autocomplete}
+    {min}
+    {max}
+    {step}
     oninput={onChange}
     onkeydown={onKeydown} />
 {/snippet}

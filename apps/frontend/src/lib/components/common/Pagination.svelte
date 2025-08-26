@@ -1,10 +1,10 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/component/pagination/pagination.min.css';
-  import '@gouvfr/dsfr/dist/component/form/form.min.css';
-  import '@gouvfr/dsfr/dist/component/select/select.min.css';
 
-  import type { Pagination } from '$lib/utils/api-types';
   import { goto } from '$app/navigation';
+  import Select from '$lib/components/common/Select.svelte';
+  import type { Pagination } from '$lib/utils/api-types';
+  import type { ComponentProps } from 'svelte';
 
   type Props = Pagination<unknown> & {
     baseUrl: string;
@@ -49,12 +49,13 @@
     return pageNumbers;
   };
 
-  const generateSelecOptions = (): { value: number; selected: boolean }[] => {
-    const selectOptions = [];
+  const generateSelecOptions = (): ComponentProps<typeof Select>['options'] => {
+    const selectOptions: ComponentProps<typeof Select>['options'] = [];
 
     for (let i = 1; i <= pagesCount; i++) {
       selectOptions.push({
         value: i,
+        label: `Page ${i}`,
         selected: page === i,
       });
     }
@@ -64,9 +65,9 @@
 
   const mobilePageNumbers = $derived(generatePageNumbers(1));
   const desktopPageNumbers = $derived(generatePageNumbers(2));
-  const selectOptions = $derived(generateSelecOptions());
+  const options = $derived(generateSelecOptions());
 
-  const selectPage = (e: Event) => {
+  const handleSelect = (e: Event) => {
     const target = e.target as HTMLSelectElement;
 
     goto(`${baseUrl}?page=${target.value}&pageSize=${pageSize}`);
@@ -74,25 +75,11 @@
 </script>
 
 <div class="fr-select-group">
-  <label
-    class="fr-label"
-    for="page-select">
-    Pagination
-  </label>
-  <select
-    class="fr-select"
-    aria-describedby="page-select-messages"
+  <Select
+    label="Pagination"
     id="page-select"
-    name="page-select"
-    onchange={selectPage}>
-    {#each selectOptions as option}
-      <option
-        value={option.value}
-        selected={option.selected}>
-        Page {option.value}
-      </option>
-    {/each}
-  </select>
+    {options}
+    onChange={handleSelect} />
   <div
     class="fr-messages-group"
     id="page-select-messages"
