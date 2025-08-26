@@ -161,3 +161,9 @@ export const defaultPagination = {
   page: 1,
   pageSize: 24,
 };
+
+// Paris coordinates
+export const defaultCoords: { latitude: number; longitude: number } = {
+  latitude: 48.859,
+  longitude: 2.347,
+};

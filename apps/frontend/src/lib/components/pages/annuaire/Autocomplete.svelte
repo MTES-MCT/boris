@@ -1,11 +1,12 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/utility/icons/icons-map/icons-map.min.css';
-  import { clickOutside, debounce } from '$lib/utils/helpers';
 
+  import { clickOutside, debounce } from '$lib/utils/helpers';
   import Input from '$components/common/Input.svelte';
   import { autocomplete } from '$lib/api/ign';
   import type { AutocompleteSuggestion } from '$lib/utils/ign-types';
   import { nanoid } from 'nanoid';
+  import annuaireManager from '$lib/managers/annuaire.svelte';
 
   let value = $state<string>('');
   let suggestions = $state<AutocompleteSuggestion[] | null>(null);
@@ -97,6 +98,13 @@
 
     value = selectedSuggestion?.fulltext as string;
     isListExpanded = false;
+
+    annuaireManager.setBrsDiffusionWebsites({
+      coords: {
+        latitude: selectedSuggestion?.y as number,
+        longitude: selectedSuggestion?.x as number,
+      },
+    });
   };
 </script>
 
@@ -118,6 +126,7 @@
       'aria-controls': suggestionsId,
       'aria-activedescendant': focusedSuggestionId,
     }}
+    forceNoMarginBottom
     onChange={debounce(handleChange, 300)}
     onKeydown={handleKeydown} />
 

@@ -1,8 +1,9 @@
 <script lang="ts">
-  import Select from '$components/common/Select.svelte';
   import type { ComponentProps } from 'svelte';
+  import Select from '$components/common/Select.svelte';
+  import annuaireManager from '$lib/managers/annuaire.svelte';
 
-  const radiuses = ['5', '10', '20', '50', '100'];
+  const radiuses = ['5', '10', '20', '50', '100', '200'];
 
   let value = $state<string>('50');
 
@@ -26,9 +27,11 @@
     const target = e.target as HTMLSelectElement;
 
     value = target.value;
-  };
 
-  $inspect(value);
+    annuaireManager.setBrsDiffusionWebsites({
+      radius: Number(value),
+    });
+  };
 </script>
 
 <Select

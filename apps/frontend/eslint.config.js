@@ -33,4 +33,10 @@ export default tseslint.config(
   {
     ignores: ['build/', '.svelte-kit/', 'dist/'],
   },
+  {
+    parserOptions: {
+      project: './tsconfig.json',
+      tsconfigRootDir: './',
+    },
+  },
 );
