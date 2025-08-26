@@ -29,6 +29,7 @@
     ariaAttributes?: AriaAttributes;
     ariaAutocomplete?: 'none' | 'list' | 'inline' | 'both' | null;
     autocomplete?: FullAutoFill;
+    forceNoMarginBottom?: boolean;
     onChange?: (event: Event) => void;
     onKeydown?: (event: KeyboardEvent) => void;
   };
@@ -46,6 +47,7 @@
     min,
     max,
     step,
+    forceNoMarginBottom = false,
     onChange,
     onKeydown,
   }: Props = $props();
@@ -53,6 +55,7 @@
 
 <div
   class="fr-input-group"
+  class:no-margin-bottom={forceNoMarginBottom}
   id={`${id}-group`}>
   {#if label}
     <label
@@ -92,3 +95,9 @@
     oninput={onChange}
     onkeydown={onKeydown} />
 {/snippet}
+
+<style lang="postcss">
+  .no-margin-bottom {
+    margin-bottom: 0;
+  }
+</style>

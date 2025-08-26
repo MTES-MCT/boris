@@ -1,10 +1,8 @@
-import { API_URL } from '$env/static/private';
-import type { OfsView, Pagination } from '$lib/utils/api-types';
+import { getOfss } from '$lib/api/ofss';
 import { statistics } from '$lib/utils/constants';
 
 export const load = async () => {
-  const response = await fetch(`${API_URL}/ofss`);
-  const ofss: Pagination<OfsView> = await response.json();
+  const ofss = await getOfss();
 
   return {
     statistics: [
