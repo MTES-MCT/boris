@@ -121,8 +121,6 @@
     onChange={debounce(handleChange, 300)}
     onKeydown={handleKeydown} />
 
-  <span></span>
-
   {#if isListExpanded}
     <div
       class="suggestions"
