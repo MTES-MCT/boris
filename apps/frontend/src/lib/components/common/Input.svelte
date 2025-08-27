@@ -100,4 +100,8 @@
   .no-margin-bottom {
     margin-bottom: 0;
   }
+
+  input {
+    background-color: var(--input-background-color, --background-contrast-grey);
+  }
 </style>
