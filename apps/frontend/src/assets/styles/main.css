@@ -6,11 +6,9 @@
 }
 
 .background-gradient {
-  background: linear-gradient(
-    180deg,
-    var(--color-teal-light) 0%,
-    var(--color-red-light) 100%
-  );
+  background: linear-gradient(180deg,
+      var(--color-teal-light) 0%,
+      var(--color-red-light) 100%);
 }
 
 .rounded-box-md {
@@ -39,10 +37,16 @@
     fadeIn 0.3s ease-in-out forwards 0.3s;
 }
 
+.leaflet-control [href] {
+  background: #fff !important;
+  background-image: none !important;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -52,6 +56,7 @@
   from {
     visibility: hidden;
   }
+
   to {
     visibility: visible;
   }

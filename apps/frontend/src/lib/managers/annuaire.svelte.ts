@@ -10,6 +10,7 @@ class AnnuaireManager {
   brsDiffusionWebsites = $state<Pagination<BrsDiffusionWebsiteView> | null>(
     null,
   );
+  viewType = $state<'list' | 'map'>('list')
 
   setBrsDiffusionWebsites = async ({
     coords,
@@ -18,20 +19,21 @@ class AnnuaireManager {
     coords?: { latitude: number; longitude: number };
     radius?: number;
   }) => {
-    this.latitude = coords?.latitude || this.latitude;
-    this.longitude = coords?.longitude || this.longitude;
-    this.radius = radius || this.radius;
 
     const query = {
       page: defaultPagination.page,
       pageSize: defaultPagination.pageSize,
-      latitude: this.latitude,
-      longitude: this.longitude,
-      radius: this.radius,
+      latitude: coords?.latitude || this.latitude,
+      longitude: coords?.longitude || this.longitude,
+      radius: radius || this.radius,
     };
 
     const brsDiffusionWebsites = await getBrsDiffusionWebsites(query);
     this.brsDiffusionWebsites = brsDiffusionWebsites;
+
+    this.latitude = coords?.latitude || this.latitude;
+    this.longitude = coords?.longitude || this.longitude;
+    this.radius = radius || this.radius;
   };
 }
 

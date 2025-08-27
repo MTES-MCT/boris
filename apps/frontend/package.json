@@ -24,7 +24,11 @@
   },
   "dependencies": {
     "@sentry/sveltekit": "^8.42.0",
+<<<<<<< HEAD
     "keyv": "^5.5.0"
+=======
+    "leaflet": "^1.9.4"
+>>>>>>> ed2fcc2 (feat: initial map view)
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",

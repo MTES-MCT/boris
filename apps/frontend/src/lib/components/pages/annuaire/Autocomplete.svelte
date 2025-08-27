@@ -189,7 +189,7 @@
 
   .suggestions {
     position: absolute;
-    z-index: 1000;
+    z-index: 9999999;
     left: 0;
     top: calc(100% + var(--1w));
     width: 100%;

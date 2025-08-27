@@ -33,3 +33,9 @@
     </option>
   {/each}
 </select>
+
+<style lang="postcss">
+  select {
+    background-color: var(--input-background-color, --background-contrast-grey);
+  }
+</style>

@@ -1,12 +1,11 @@
 <script lang="ts">
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
-  import Pagination from '$components/common/Pagination.svelte';
   import Section from '$components/common/Section.svelte';
-  import Card from '$components/pages/annuaire/Card.svelte';
   import Filters from '$components/pages/annuaire/Filters.svelte';
-  import type { DataType } from './+page.server';
+  import type { DataType } from './+page';
+  import ListView from '$components/pages/annuaire/ListView.svelte';
   import annuaireManager from '$lib/managers/annuaire.svelte';
-  import { default as WomanYoga } from '$assets/illustrations/woman-yoga.svg?raw';
+  import MapView from '$components/pages/annuaire/MapView.svelte';
 
   type Props = {
     data: DataType;
@@ -31,52 +30,18 @@
         <div class="fr-col-12">
           <Filters />
         </div>
-        {#if annuaireManager.brsDiffusionWebsites}
-          {#if annuaireManager.brsDiffusionWebsites.items.length > 0}
-            {@render content(annuaireManager.brsDiffusionWebsites)}
-          {:else}
-            {@render noResult()}
-          {/if}
+        {#if annuaireManager.viewType === 'map'}
+          <MapView />
         {:else}
-          {@render content(data.brsDiffusionWebsites)}
+          <ListView brsDiffusionWebsites={data.brsDiffusionWebsites} />
         {/if}
       </div>
     </div>
   </Section>
 </GradientBackgroundWrapper>
 
-{#snippet content(payload: DataType['brsDiffusionWebsites'])}
-  {#each payload.items as item}
-    <div class="fr-col-12 fr-col-md-6">
-      <Card
-        {...item}
-        cardTitleElement="h2" />
-    </div>
-  {/each}
-  <div class="fr-col-12">
-    <Pagination
-      {...payload}
-      baseUrl="/annuaire" />
-  </div>
-{/snippet}
-
-{#snippet noResult()}
-  <div class="fr-col-4"></div>
-  <div class="fr-col-4 svg-container">
-    <p class="fr-text--lead fr-my-4w">
-      <b>Oups, pas de resultats pour votre recherche.</b>
-    </p>
-    {@html WomanYoga}
-  </div>
-  <div class="fr-col-4"></div>
-{/snippet}
-
 <style lang="postcss">
   .fr-container--fluid {
     overflow: visible;
-  }
-
-  .fr-text--lead {
-    text-align: center;
   }
 </style>

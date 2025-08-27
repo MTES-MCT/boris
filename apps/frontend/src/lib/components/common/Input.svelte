@@ -107,4 +107,8 @@
       var(--background-contrast-grey)
     );
   }
+
+  input {
+    background-color: var(--input-background-color, --background-contrast-grey);
+  }
 </style>

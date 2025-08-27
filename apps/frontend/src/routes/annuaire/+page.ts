@@ -1,4 +1,4 @@
-import type { PageServerLoad } from './$types';
+import type { PageLoad } from './$types';
 import { getBrsDiffusionWebsites } from '$lib/api/brs-diffusion-websites';
 import type { BrsDiffusionWebsiteView, Pagination } from '$lib/utils/api-types';
 import { defaultPagination } from '$lib/utils/constants';
@@ -7,7 +7,7 @@ export type DataType = {
   brsDiffusionWebsites: Pagination<BrsDiffusionWebsiteView>;
 };
 
-export const load: PageServerLoad = async ({ url }): Promise<DataType> => {
+export const load: PageLoad = async ({ url }): Promise<DataType> => {
   const { searchParams } = url;
 
   const query = {
@@ -25,4 +25,5 @@ export const load: PageServerLoad = async ({ url }): Promise<DataType> => {
   return data;
 };
 
-export const prerender = false;
+export const csr = true;
+export const ssr = false;
