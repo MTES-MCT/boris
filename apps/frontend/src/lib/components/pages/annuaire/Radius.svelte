@@ -2,10 +2,11 @@
   import type { ComponentProps } from 'svelte';
   import Select from '$components/common/Select.svelte';
   import annuaireManager from '$lib/managers/annuaire.svelte';
+  import { defaultRadius } from '$lib/utils/constants';
 
   const radiuses = ['5', '10', '20', '50', '100', '200'];
 
-  let value = $state<string>('50');
+  let value = $state<string>(defaultRadius.toString());
 
   const generateSelecOptions = (): ComponentProps<typeof Select>['options'] => {
     const selectOptions: ComponentProps<typeof Select>['options'] = [];

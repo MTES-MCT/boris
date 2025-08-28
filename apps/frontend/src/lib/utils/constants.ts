@@ -167,3 +167,7 @@ export const defaultCoords: { latitude: number; longitude: number } = {
   latitude: 48.859,
   longitude: 2.347,
 };
+
+export const defaultRadius = 50;
+
+export const defaultZoom = 12;

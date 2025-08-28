@@ -31,7 +31,7 @@
           <Filters />
         </div>
         {#if annuaireManager.viewType === 'map'}
-          <MapView />
+          <MapView brsDiffusionWebsites={data.brsDiffusionWebsites} />
         {:else}
           <ListView brsDiffusionWebsites={data.brsDiffusionWebsites} />
         {/if}
