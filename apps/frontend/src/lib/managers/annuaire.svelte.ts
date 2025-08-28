@@ -1,10 +1,10 @@
 import { getBrsDiffusionWebsites } from '$lib/api/brs-diffusion-websites';
 
 import type { BrsDiffusionWebsiteView, Pagination } from '$lib/utils/api-types';
-import { defaultCoords, defaultPagination } from '$lib/utils/constants';
+import { defaultCoords, defaultPagination, defaultRadius } from '$lib/utils/constants';
 
 class AnnuaireManager {
-  radius = $state<number>(50);
+  radius = $state<number>(defaultRadius);
   latitude = $state<number>(defaultCoords.latitude);
   longitude = $state<number>(defaultCoords.longitude);
   brsDiffusionWebsites = $state<Pagination<BrsDiffusionWebsiteView> | null>(

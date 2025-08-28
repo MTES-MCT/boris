@@ -10,12 +10,11 @@ import { PaginationProps } from 'src/domain/common/paginationProps';
 
 @Injectable()
 export class BrsDiffusionWebsiteRepository
-  implements BrsDiffusionWebsiteRepositoryInterface
-{
+  implements BrsDiffusionWebsiteRepositoryInterface {
   constructor(
     @InjectRepository(BrsDiffusionWebsiteEntity)
     private readonly repository: Repository<BrsDiffusionWebsiteEntity>,
-  ) {}
+  ) { }
 
   public save(
     brsDiffusionWebsite: BrsDiffusionWebsiteEntity,
@@ -92,6 +91,35 @@ export class BrsDiffusionWebsiteRepository
     });
 
     return [result, count];
+  }
+
+  public async findAllByBounds(
+    paginationProps: PaginationProps,
+    northEastLat: number,
+    northEastLng: number,
+    southWestLat: number,
+    southWestLng: number,
+  ): Promise<[BrsDiffusionWebsiteEntity[], number]> {
+    const { pageSize, page } = paginationProps;
+
+    const query = this.repository
+      .createQueryBuilder('brs_diffusion_website')
+      .leftJoinAndSelect('brs_diffusion_website.region', 'region')
+      .leftJoinAndSelect('brs_diffusion_website.departement', 'departement')
+      .where(
+        'cube(ARRAY[:northEastLat::float8, :northEastLng::float8], ARRAY[:southWestLat::float8, :southWestLng::float8]) @> cube(ARRAY[brs_diffusion_website.latitude, brs_diffusion_website.longitude])'
+      )
+      .setParameters({
+        northEastLat,
+        northEastLng,
+        southWestLat,
+        southWestLng,
+      })
+      .skip((page - 1) * pageSize)
+      .take(pageSize)
+      .orderBy('brs_diffusion_website.createdAt', 'DESC');
+
+    return query.getManyAndCount();
   }
 
   public findAllByRegion(
