@@ -15,19 +15,19 @@ export const steps: Step[] = [
       {
         id: 'etape-1',
         title:
-          'Notifier l’Organisme de Foncier Solidaire (OFS) et déterminer votre prix de vente',
+          "Notifier l'Organisme de Foncier Solidaire (OFS) et déterminer votre prix de vente",
         content: `
           <p>
-            Quand vous décidez de mettre en vente votre logement, prévenez tout de suite l’OFS avec qui vous avez contractualisé lors de l’achat.
+            Quand vous décidez de mettre en vente votre logement, prévenez tout de suite l'OFS avec qui vous avez contractualisé lors de l'achat.
           </p>
           <p>
-            L’OFS a un droit de préemption, ce qui signifie qu’il peut racheter le bien avant que celui-ci ne soit proposé à d’autres acheteurs.
+            L'OFS a un droit de préemption, ce qui signifie qu'il peut racheter le bien avant que celui-ci ne soit proposé à d'autres acheteurs.
           </p>
           <p>
-            De plus, l’OFS pourra vous indiquer le prix de vente maximum autorisé pour votre logement. Ce prix de vente est fixé en fonction de votre prix d’achat ainsi que de l’indice de référence fixé par l’INSEE. L’OFS pourra de plus vous accompagner dans la préparation de la cession.
+            De plus, l'OFS pourra vous indiquer le prix de vente maximum autorisé pour votre logement. Ce prix de vente est fixé en fonction de votre prix d'achat ainsi que de l'indice de référence fixé par l'INSEE. L'OFS pourra de plus vous accompagner dans la préparation de la cession.
           </p>
           <p>
-            Pour préciser votre prix de vente, vous pouvez également consulter des professionnels de l’immobilier spécialisés en BRS.
+            Pour préciser votre prix de vente, vous pouvez également consulter des professionnels de l'immobilier spécialisés en BRS.
           </p>
         `,
       },
@@ -192,38 +192,37 @@ export const steps: Step[] = [
         title: 'Trouvez un acheteur',
         content: `
           <p>
-            Comme dans le cas d’une vente d’un appartement dans le marché libre,
-            l’étape cruciale est de trouver un acheteur ! La seule différence est
+            Comme dans le cas d'une vente d'un appartement dans le marché libre,
+            l'étape cruciale est de trouver un acheteur ! La seule différence est
             que celui-ci doit être éligible au BRS. Cette éligibilité peut être
             vérifiée rapidement en utilisant notre simulateur. Celle-ci devra
-            ensuite être vérifiée officiellement par l’OFS.
+            ensuite être vérifiée officiellement par l'OFS.
           </p>
           <a
             href="/simulateur-eligibilite"
-            class="fr-btn fr-btn--lg fr-mb-3w">
+            class="fr-btn fr-btn">
             Simuler mon éligibilité
           </a>
+          <p></p>
           <p>
-            Votre acheteur achète dans les mêmes conditions que vous à l’époque : il
+            Votre acheteur achète dans les mêmes conditions que vous à l'époque : il
             faut que ce logement devienne sa résidence principale, sa plus-value
-            sera encadrée et il devra payer une redevance mensuelle auprès de l’OFS.
+            sera encadrée et il devra payer une redevance mensuelle auprès de l'OFS.
             Mais il a aussi le même avantage principal : il achète un logement
             beaucoup moins cher que le prix du marché !
           </p>
-          <p>Quelques spécificités sont à connaître pour l’acheteur:</p>
+          <p>Quelques spécificités sont à connaître pour l'acheteur:</p>
           <ul>
             <li>
               <p>
-                <b>Concernant le Prêt à taux Zéro</b>: comme pour tout achat immobilier (en bail réel solidaire ou non), le Prêt à taux Zéro n’est possible que sur un logement neuf ou achevé depuis moins de 5 ans. Si vous revendez plus de 5 ans après la fin de la construction de votre logement, l’acheteur ne pourra donc pas bénéficier du PTZ sauf exception.
-                <br>
-                Exception: le rachat d’un logement ancien qui a fait l’objet de rénovation* peut faire l’object d’un prêt à taux zéro.
+                <b>Concernant le Prêt à taux Zéro</b>: comme pour tout achat immobilier (en bail réel solidaire ou non), le Prêt à taux Zéro n'est possible que sur un logement neuf (achevé depuis moins de 5 ans et non occupé) ou pour financer des travaux nécessaires à la réhabilitation d'un logement ancien. Ainsi, un ménage qui achète un logement en BRS auprès d'un particulier, n'est pas éligible au PTZ. 
               </p>
             </li>
             <li>
-              <p><b>Concernant les frais de notaire</b>: Comment pour tout achat immobilier, les frais de notaire sont réduits pour un achat dans le neuf, mais pas dans l’ancien. Ainsi, les frais de notaire seront de 7 à 8% du prix d'acquisition lorsque vous achetez un logement dans l’ancien. Dans le cas d’un achat de logement neuf, les frais de notaire sont réduits, ils sont de 2 à 3% du prix d'acquisition.</p>
+              <p><b>Concernant les frais de notaire</b>:  Comme pour tout achat immobilier, les frais de notaire sont réduits pour un achat dans le neuf, mais pas dans l'ancien. Ainsi, les frais de notaire seront de 7 à 8% du prix d'acquisition lorsque vous achetez un logement en BRS auprès d'un particulier. </p>
             </li>
           </ul>
-          <p>Pour trouver l’acheteur, vous avez deux options :</p>
+          <p>Pour trouver l'acheteur, vous avez deux options :</p>
           <p class="fr-mb-0">
             <b>Option 1 : la vente entre particuliers.</b>
           </p>
@@ -245,19 +244,19 @@ export const steps: Step[] = [
               entreparticuliers.com
             </a>
             par exemple), vous organisez les visites, et vous vous rendez ensemble chez
-            le notaire ! Environ 30% des ventes en France s’effectuent en direct.
+            le notaire ! Environ 30% des ventes en France s'effectuent en direct.
           </p>
           <p class="fr-mb-0">
-            <b>Option 2 : faire appel à un professionnel de l’immobilier.</b>
+            <b>Option 2 : faire appel à un professionnel de l'immobilier.</b>
           </p>
           <p>
             Comme 70% des ménages, vous pouvez choisir de passer par un professionnel
-            de l’immobilier pour commercialiser votre bien à votre place. Demandez à
-            votre OFS s’il a des contacts à vous partager : il est important de choisir
-            un agent qui connaît le BRS et pourra l’expliquer aux acheteurs potentiels.
-            L’intérêt de cette solution, c’est de gagner du temps sur la vente et de
+            de l'immobilier pour commercialiser votre bien à votre place. Demandez à
+            votre OFS s'il a des contacts à vous partager : il est important de choisir
+            un agent qui connaît le BRS et pourra l'expliquer aux acheteurs potentiels.
+            L'intérêt de cette solution, c'est de gagner du temps sur la vente et de
             toucher plus de ménages potentiels via les outils réservés aux professionnels.
-            L’inconvénient, c’est que cette prestation a un coût : en moyenne entre 4%
+            L'inconvénient, c'est que cette prestation a un coût : en moyenne entre 4%
             et 6% du prix de vente.
           </p>
         `,
@@ -276,7 +275,7 @@ export const steps: Step[] = [
           </p>
           <a
             href="/nous-contacter"
-            class="fr-btn fr-btn--lg">
+            class="fr-btn fr-btn">
             Nous contacter
           </a>
           <p></p>
@@ -291,6 +290,12 @@ export const steps: Step[] = [
             En cas de refus d’agrément de la part de l’OFS, vous pouvez lui demander
             de vous présenter des acquéreurs potentiels éligibles au dispositif.
           </p>
+          <a
+            href="https://docs.google.com/document/d/1iEUKObH-4JPEYVzrpI50M3LTN9yl65KE/edit?tab=t.0#bookmark=id.taxh8lmhokue"
+            class="fr-btn fr-btn"
+            target="_blank">
+            Télécharger un modèle d'offre préalable de cession en BRS
+          </a>
         `,
       },
       {
@@ -328,17 +333,6 @@ export const steps: Step[] = [
             propriétaire ! Vous recevrez les fonds issus de la vente sur votre
             compte bancaire sous quelques jours.
           </p>
-          <p>
-            Nous vous proposons un template d’offre préalable de cession des droits
-            réels entre preneurs. Il s’agit d’un acte rédigé par un notaire, dédié à
-            la revente d’un bien en Bail Réel Solidaire.
-          </p>
-          <a
-            href="https://docs.google.com/document/d/1iEUKObH-4JPEYVzrpI50M3LTN9yl65KE/edit?tab=t.0#bookmark=id.taxh8lmhokue"
-            class="fr-btn fr-btn--lg"
-            target="_blank">
-            Télécharger un template de notaire dédié à la revente en BRS
-          </a>
         `,
       },
       {
@@ -346,18 +340,18 @@ export const steps: Step[] = [
         title: 'Les difficultés que vous pouvez rencontrer',
         content: `
           <p>
-            Revendre un logement et trouver le bon acheteur n’est pas toujours facile. Dans le cas du bail réel solidaire (BRS), vous pouvez faire face à deux difficultés majeures :
+            Revendre un logement et trouver le bon acheteur n'est pas toujours facile. Dans le cas du bail réel solidaire (BRS), vous pouvez faire face à deux difficultés majeures :
           </p>
           <ol>
             <li>
               Vous ne trouvez aucun acheteur pour votre bien
             </li>
             <li>
-              Vous trouvez un acheteur mais l’Organisme de Foncier Solidaire (OFS) refuse de l’agréer
+              Vous trouvez un acheteur mais l'Organisme de Foncier Solidaire (OFS) refuse de l'agréer
             </li>
           </ol>
           <p>
-            Dans les deux cas, pas de panique, l’OFS pourra vous aider ou vous
+            Dans les deux cas, pas de panique, l'OFS pourra vous aider ou vous
             indemniser selon certaines conditions : explorons ensemble les deux
             scénarios.
           </p>
@@ -365,15 +359,7 @@ export const steps: Step[] = [
             <li>
               <p class="fr-mb-0"><b>Si vous ne trouvez aucun acheteur potentiel :</b></p>
               <p class="fr-mb-1w">
-                Vous pouvez alors demander à l’OFS de vous proposer un acquéreur
-                qui respecte les conditions prévues par la loi. Le prix de vente doit
-                alors être calculé selon les règles fixées dans le bail.
-                Si l’OFS ne trouve pas d’acquéreur dans un délai de six mois, ou si l’agrément est refusé
-                lors d’une donation, le bail réel solidaire (BRS) peut être résilié d’un commun accord.
-                Dans ce cas, le preneur (l’occupant) reçoit une indemnisation correspondant à la valeur de ses droits,
-                selon les modalités prévues dans le bail (souvent dans une section intitulée “Résiliation du bail” ou “Fin de bail”).
-                C’est sécurisant pour vous mais attention : <b>le montant de l’indemnisation est la plupart du temps inférieur à votre prix d’achat</b>.
-                Ce montant est précisé dans le bail que vous avez signé au moment de l’acquisition de votre logement.
+                Vous pouvez alors demander conseil à votre OFS. Ce dernier pourra par exemple vous renvoyer vers des professionnel·les de l'immobilier formé·es sur la vente en BRS ou vous proposer des acquéreurs potentiels.
               </p>
               <p>
                 Vous avez donc plutôt intérêt à chercher un acheteur directement qui
@@ -381,23 +367,21 @@ export const steps: Step[] = [
               </p>
             </li>
             <li>
-              <p class="fr-mb-0"><b>Si vous trouvez un acheteur mais que l’OFS refuse de l’agréer :</b></p>
+              <p class="fr-mb-0"><b>Si vous trouvez un acheteur mais que l'OFS refuse de l'agréer :</b></p>
               <p class="fr-mb-1w">
-                Dans certains cas, l’OFS peut refuser l’acheteur pour différentes raisons, par exemple parce qu’il ne respecte pas les conditions d’éligibilité au Bail Réel Solidaire ou parce qu’il n’a pas une capacité de financement suffisante. 
+                Dans certains cas, l'OFS peut refuser l'acheteur pour différentes raisons, par exemple parce qu'il ne respecte pas les conditions d'éligibilité au Bail Réel Solidaire ou parce qu'il n'a pas une capacité de financement suffisante. 
               </p>
               <p class="fr-mb-0">Plusieurs options sont alors possibles :</p>
               <ul>
                 <li>
-                  Vous pouvez alors rechercher un autre acheteur et le soumettre à l’OFS pour agréement et ce nouveau ménage est accepté.
+                  Vous pouvez alors rechercher un autre acheteur et le soumettre à l'OFS pour agréement et ce nouveau ménage est accepté.
                 </li>
                 <li>
 
-                Vous pouvez aussi choisir de demander à l’OFS de vous proposer un autre acquéreur qui respecte les conditions prévues par la loi. Le prix de vente doit alors être calculé selon les règles fixées dans le bail.
+                Vous pouvez aussi choisir de demander à l'OFS de vous proposer un autre acquéreur qui respecte les conditions prévues par la loi. Le prix de vente doit alors être calculé selon les règles fixées dans le bail.
                 </li>
                 <li>
-                  Dans un délai de 6 mois, l’OFS ne trouve pas d’acquéreur, le bail réel solidaire (BRS) peut être résilié d’un commun accord. Dans ce cas, le preneur (l’occupant) reçoit une indemnisation correspondant à la valeur de ses droits, selon les modalités prévues dans le bail (souvent dans une section intitulée “Résiliation du bail” ou “Fin de bail”).
-                  <br/>
-                  C’est sécurisant pour vous mais attention : <b>le montant de l’indemnisation est la plupart du temps inférieur à votre prix d’achat</b>. Ce montant est précisé dans le bail que vous avez signé au moment de l’acquisition de votre logement. 
+                  Si dans un délai de 6 mois, l'OFS ne trouve pas d'acquéreur, le bail réel solidaire (BRS) peut être résilié de façon conventionnelle, à votre demande. Dans ce cas, vous recevez une indemnisation correspondant à la valeur de vos droits réels immobiliers, selon les modalités prévues dans le bail. C'est sécurisant pour vous mais attention : <b>le montant de l'indemnisation est la plupart du temps inférieur à votre prix d'achat</b>. Le calcul de ce montant est précisé dans le bail que vous avez signé au moment de l'acquisition de votre logement.
                 </li>
               </ul>
             </li>
