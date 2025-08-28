@@ -200,9 +200,10 @@ export const steps: Step[] = [
           </p>
           <a
             href="/simulateur-eligibilite"
-            class="fr-btn fr-btn fr-mb-3w">
+            class="fr-btn fr-btn">
             Simuler mon éligibilité
           </a>
+          <p></p>
           <p>
             Votre acheteur achète dans les mêmes conditions que vous à l'époque : il
             faut que ce logement devienne sa résidence principale, sa plus-value
