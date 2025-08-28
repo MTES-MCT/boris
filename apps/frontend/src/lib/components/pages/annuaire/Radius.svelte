@@ -15,7 +15,10 @@
       selectOptions.push({
         value: radius,
         label: `${radius} km`,
-        selected: radius === value,
+        selected:
+          annuaireManager.viewType === 'map'
+            ? radius === defaultRadius.toString()
+            : radius === value,
       });
     });
 
@@ -38,5 +41,6 @@
 <Select
   id="rayon"
   label="Rayon (km)"
+  disabled={annuaireManager.viewType === 'map'}
   {options}
   onChange={handleSelect} />

@@ -2,6 +2,7 @@
   import Autocomplete from '$components/pages/annuaire/Autocomplete.svelte';
   import Radius from '$components/pages/annuaire/Radius.svelte';
   import Toggle from '$components/pages/annuaire/Toggle.svelte';
+  import annuaireManager from '$lib/managers/annuaire.svelte';
 </script>
 
 <div class="fr-container--fluid">
@@ -16,6 +17,17 @@
       <Toggle />
     </div>
   </div>
+
+  {#if annuaireManager.brsDiffusionWebsites}
+    <p class="fr-text--sm fr-mt-1w fr-mb-0">
+      <b>
+        {annuaireManager.brsDiffusionWebsites?.totalCount} résulat{annuaireManager
+          .brsDiffusionWebsites?.totalCount !== 1
+          ? 's'
+          : ''} pour votre recherche
+      </b>
+    </p>
+  {/if}
 </div>
 
 <style lang="postcss">

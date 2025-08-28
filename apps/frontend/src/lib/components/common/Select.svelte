@@ -8,10 +8,17 @@
     id?: string;
     label?: string;
     options: { value: unknown; label: string; selected: boolean }[];
+    disabled?: boolean;
     onChange?: (event: Event) => void;
   };
 
-  const { id = nanoid(10), label, options, onChange }: Props = $props();
+  const {
+    id = nanoid(10),
+    label,
+    options,
+    disabled,
+    onChange,
+  }: Props = $props();
 </script>
 
 <label
@@ -21,6 +28,7 @@
 </label>
 <select
   class="fr-select"
+  {disabled}
   aria-describedby={`${id}-messages`}
   {id}
   name={id}

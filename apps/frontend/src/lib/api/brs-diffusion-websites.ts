@@ -29,3 +29,21 @@ export const getBrsDiffusionWebsites = async (
 
   return data;
 };
+
+export const getBrsDiffusionWebsitesByBounds = async (query: operations['GetBrsDiffusionWebsitesByBoundsApiController_index']['parameters']['query']) => {
+  const url = new URL(`${PUBLIC_API_URL}/brs-diffusion-websites-by-bounds`);
+
+  if (query?.page) {
+    url.searchParams.set('page', query.page.toString());
+  }
+
+  url.searchParams.set('northEastLat', query.northEastLat.toString())
+  url.searchParams.set('northEastLng', query.northEastLng.toString())
+  url.searchParams.set('southWestLat', query.southWestLat.toString())
+  url.searchParams.set('southWestLng', query.southWestLng.toString())
+
+  const response = await fetch(url);
+  const data: Pagination<BrsDiffusionWebsiteView> = await response.json()
+
+  return data
+}
