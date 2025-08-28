@@ -11,7 +11,7 @@ export class DepartementRepository implements DepartementRepositoryInterface {
   constructor(
     @InjectRepository(DepartementEntity)
     private readonly repository: Repository<DepartementEntity>,
-  ) {}
+  ) { }
 
   public save(departement: DepartementInterface): Promise<DepartementEntity> {
     return this.repository.save(departement);
@@ -25,13 +25,13 @@ export class DepartementRepository implements DepartementRepositoryInterface {
     return this.repository.findOne({ where: { code }, relations: ['region'] });
   }
 
-  public findOneByCityZipcode(
-    cityZipcode: string,
+  public findOneByInseeCode(
+    inseeCode: string,
   ): Promise<DepartementEntity | null> {
     return this.repository
       .createQueryBuilder('departement')
       .leftJoinAndSelect('departement.region', 'region')
-      .where(":cityZipcode LIKE departement.code || '%'", { cityZipcode })
+      .where(":inseeCode LIKE departement.code || '%'", { inseeCode })
       .getOne();
   }
 
