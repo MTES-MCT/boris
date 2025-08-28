@@ -25,7 +25,7 @@
         Vous souhaitez revendre votre bien en BRS ? BoRiS est là pour vous
         guider à chacune des phases ! Notre équipe du Ministère du logement peut
         même vous accompagner gratuitement dans ce projet. Cela vous intéresse ?
-        Sur cette page, vous découvrirez chaque étape jusqu’à la vente.
+        Sur cette page, vous découvrirez chaque étape jusqu'à la vente.
       </p>
       <a
         href="/nous-contacter"
@@ -41,33 +41,33 @@
         </p>
         <p>
           Que ce soit pour changer de ville ou trouver un nouveau logement plus
-          approprié à vos besoins, c’est vous qui décidez quand vous partez !
+          approprié à vos besoins, c'est vous qui décidez quand vous partez !
         </p>
       </Promess>
       <Promess>
         <p>
-          <b>La revente d’un bien en BRS est encadrée :</b>
+          <b>La revente d'un bien en BRS est encadrée :</b>
         </p>
         <p>
-          Vous ne pouvez pas le vendre à n’importe qui : le ménage acheteur doit
-          respecter les conditions d’éligibilité au BRS (c’est le cas de 87% des
+          Vous ne pouvez pas le vendre à n'importe qui : le ménage acheteur doit
+          respecter les conditions d'éligibilité au BRS (c'est le cas de 87% des
           foyers !)
         </p>
         <p>
           Le prix de revente est encadré : vous pouvez faire une plus value à
-          hauteur de l’inflation depuis votre achat. Le BRS est un dispositif
+          hauteur de l'inflation depuis votre achat. Le BRS est un dispositif
           non spéculatif.
         </p>
       </Promess>
       <Promess>
         <p>
-          <b>Il faut impliquer l’OFS dans le processus.</b>
+          <b>Il faut impliquer l'OFS dans le processus.</b>
         </p>
         <p>
-          D’abord parce qu’il a un droit de préemption (il peut racheter le bien
-          avant qu’il soit proposé à d’autres personnes) ; ensuite parce qu’il
-          doit donner son agrément ; parce qu’il doit être impliqué dans la
-          rédaction du contrat de vente ; enfin parce qu’il peut vous aider à
+          D'abord parce qu'il a un droit de préemption (il peut racheter le bien
+          avant qu'il soit proposé à d'autres personnes) ; ensuite parce qu'il
+          doit donner son agrément ; parce qu'il doit être impliqué dans la
+          rédaction du contrat de vente ; enfin parce qu'il peut vous aider à
           trouver un acheteur !
         </p>
       </Promess>
