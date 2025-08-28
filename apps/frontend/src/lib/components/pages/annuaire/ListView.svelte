@@ -7,37 +7,40 @@
   import Card from '$lib/components/pages/annuaire/Card.svelte';
   import Pagination from '$components/common/Pagination.svelte';
   import { default as WomanYoga } from '$assets/illustrations/woman-yoga.svg?raw';
+  import { noConflict } from 'leaflet';
 
   type Props = {
     brsDiffusionWebsites: PaginationType<BrsDiffusionWebsiteView>;
   };
 
   const { brsDiffusionWebsites }: Props = $props();
+
+  $inspect(annuaireManager.brsDiffusionWebsites);
 </script>
 
 {#if annuaireManager.brsDiffusionWebsites}
-  {#if annuaireManager.brsDiffusionWebsites.items.length > 0}
-    {@render content(annuaireManager.brsDiffusionWebsites)}
-  {:else}
-    {@render noResult()}
-  {/if}
+  {@render content(annuaireManager.brsDiffusionWebsites)}
 {:else}
   {@render content(brsDiffusionWebsites)}
 {/if}
 
 {#snippet content(payload: PaginationType<BrsDiffusionWebsiteView>)}
-  {#each payload.items as item}
-    <div class="fr-col-12 fr-col-md-6">
-      <Card
-        {...item}
-        cardTitleElement="h2" />
+  {#if payload.items.length > 0}
+    {#each payload.items as item}
+      <div class="fr-col-12 fr-col-md-6">
+        <Card
+          {...item}
+          cardTitleElement="h2" />
+      </div>
+    {/each}
+    <div class="fr-col-12">
+      <Pagination
+        {...payload}
+        baseUrl="/annuaire" />
     </div>
-  {/each}
-  <div class="fr-col-12">
-    <Pagination
-      {...payload}
-      baseUrl="/annuaire" />
-  </div>
+  {:else}
+    {@render noResult()}
+  {/if}
 {/snippet}
 
 {#snippet noResult()}
