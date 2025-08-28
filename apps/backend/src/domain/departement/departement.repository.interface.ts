@@ -6,7 +6,7 @@ export interface DepartementRepositoryInterface {
   findOneByName(name: string): Promise<DepartementEntity | null>;
   findOneByCode(code: string): Promise<DepartementEntity | null>;
   findManyByNames(name: string[]): Promise<DepartementEntity[] | []>;
-  findOneByCityZipcode(cityZipcode: string): Promise<DepartementEntity | null>;
+  findOneByInseeCode(inseeCode: string): Promise<DepartementEntity | null>;
   findAll(
     paginationProps: PaginationProps,
   ): Promise<[DepartementEntity[], number]>;

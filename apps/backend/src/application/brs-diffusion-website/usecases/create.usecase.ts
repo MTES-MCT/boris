@@ -19,7 +19,7 @@ export class CreateBrsDiffusionWebsiteUsecase {
     private readonly geocoderService: GeocoderService,
     @Inject('DepartementRepositoryInterface')
     private readonly departementRepository: DepartementRepositoryInterface,
-  ) {}
+  ) { }
 
   public async execute(
     params: CreateBrsDiffusionWebsiteParams,
@@ -51,8 +51,8 @@ export class CreateBrsDiffusionWebsiteUsecase {
       );
     }
 
-    const departement = await this.departementRepository.findOneByCityZipcode(
-      geocodedMunicipality.properties?.postcode as string,
+    const departement = await this.departementRepository.findOneByInseeCode(
+      geocodedMunicipality.properties?.citycode as string,
     );
 
     if (!departement) {

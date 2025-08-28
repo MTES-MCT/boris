@@ -6,7 +6,7 @@ import { CreateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-
 export class BrsDiffusionWebsiteSeed {
   constructor(
     private readonly createBrsDiffusionWebsiteUsecase: CreateBrsDiffusionWebsiteUsecase,
-  ) {}
+  ) { }
 
   async seed() {
     let count = 0;
@@ -22,8 +22,8 @@ export class BrsDiffusionWebsiteSeed {
 
       count++;
 
-      console.log(`${count}/${brsDiffusionWebsites.length}`);
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      console.log(`${count}/${brsDiffusionWebsites.length} - ${brsDiffusionWebsite.commune}`);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
     console.log(`${count} sites de diffusion BRS créés`);

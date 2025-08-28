@@ -60,7 +60,7 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
     mockedGeocoderService.geocodeByMunicipality.mockResolvedValue([
       mockedGeocodedResponse,
     ]);
-    mockDepartementRepository.findOneByCityZipcode.mockResolvedValue(finistere);
+    mockDepartementRepository.findOneByInseeCode.mockResolvedValue(finistere);
     mockedBrsDiffusionWebsiteRepository.save.mockResolvedValue({
       ...mockedBrsDiffusionWebsite,
       source: payload.source,
@@ -115,10 +115,10 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
       payload.inseeCode,
     );
     expect(
-      mockDepartementRepository.findOneByCityZipcode,
+      mockDepartementRepository.findOneByInseeCode,
     ).toHaveBeenCalledTimes(1);
-    expect(mockDepartementRepository.findOneByCityZipcode).toHaveBeenCalledWith(
-      mockedGeocodedResponse.properties?.postcode,
+    expect(mockDepartementRepository.findOneByInseeCode).toHaveBeenCalledWith(
+      mockedGeocodedResponse.properties?.citycode,
     );
     expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledTimes(1);
     expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledWith(
@@ -190,7 +190,7 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
     );
     expect(mockedGeocoderService.geocodeByMunicipality).not.toHaveBeenCalled();
     expect(
-      mockDepartementRepository.findOneByCityZipcode,
+      mockDepartementRepository.findOneByInseeCode,
     ).not.toHaveBeenCalled();
     expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledTimes(1);
     expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledWith(
@@ -235,7 +235,7 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
         mockedGeocoderService.geocodeByMunicipality,
       ).not.toHaveBeenCalled();
       expect(
-        mockDepartementRepository.findOneByCityZipcode,
+        mockDepartementRepository.findOneByInseeCode,
       ).not.toHaveBeenCalled();
       expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
     }
@@ -275,7 +275,7 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
         undefined,
       );
       expect(
-        mockDepartementRepository.findOneByCityZipcode,
+        mockDepartementRepository.findOneByInseeCode,
       ).not.toHaveBeenCalled();
       expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
     }
@@ -296,7 +296,7 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
     mockedGeocoderService.geocodeByMunicipality.mockResolvedValue([
       mockedGeocodedResponse,
     ]);
-    mockDepartementRepository.findOneByCityZipcode.mockResolvedValue(null);
+    mockDepartementRepository.findOneByInseeCode.mockResolvedValue(null);
 
     try {
       await useCase.execute(payload);
@@ -313,11 +313,11 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
         undefined,
       );
       expect(
-        mockDepartementRepository.findOneByCityZipcode,
+        mockDepartementRepository.findOneByInseeCode,
       ).toHaveBeenCalledTimes(1);
       expect(
-        mockDepartementRepository.findOneByCityZipcode,
-      ).toHaveBeenCalledWith(mockedGeocodedResponse.properties?.postcode);
+        mockDepartementRepository.findOneByInseeCode,
+      ).toHaveBeenCalledWith(mockedGeocodedResponse.properties?.citycode);
       expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
     }
   });
