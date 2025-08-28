@@ -19,6 +19,13 @@ export interface BrsDiffusionWebsiteRepositoryInterface {
     longitude: number,
     radius: number,
   ): Promise<[BrsDiffusionWebsiteEntityWithDistance[], number]>;
+  findAllByBounds(
+    paginationProps: PaginationProps,
+    northEastLat: number,
+    northEastLng: number,
+    southWestLat: number,
+    southWestLng: number
+  ): Promise<[BrsDiffusionWebsiteEntity[], number]>;
   findAllByRegion(
     paginationProps: PaginationProps,
     regionId: string,

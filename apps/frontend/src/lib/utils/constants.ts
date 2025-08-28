@@ -151,3 +151,18 @@ export const statistics: Statistic[] = [
       'après simulation d’éligibilité pour avoir les clés de la poursuite de leur projets (dont 65% ne connaissait pas le BRS avant BoRiS)',
   },
 ];
+
+export const defaultPagination = {
+  page: 1,
+  pageSize: 24,
+};
+
+// Paris coordinates
+export const defaultCoords: { latitude: number; longitude: number } = {
+  latitude: 48.859,
+  longitude: 2.347,
+};
+
+export const defaultRadius = 50;
+
+export const defaultZoom = 12;

@@ -55,7 +55,7 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
     mockedGeocoderService.geocodedResultHasMunicipalityDoublon.mockReturnValue(
       false,
     );
-    mockDepartementRepository.findOneByCityZipcode.mockResolvedValue(finistere);
+    mockDepartementRepository.findOneByInseeCode.mockResolvedValue(finistere);
     mockedBrsDiffusionWebsiteRepository.save.mockResolvedValue(
       mockedBrsDiffusionWebsite,
     );
@@ -107,10 +107,10 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
       mockedGeocoderService.geocodedResultHasMunicipalityDoublon,
     ).toHaveBeenCalledTimes(1);
     expect(
-      mockDepartementRepository.findOneByCityZipcode,
+      mockDepartementRepository.findOneByInseeCode,
     ).toHaveBeenCalledTimes(1);
-    expect(mockDepartementRepository.findOneByCityZipcode).toHaveBeenCalledWith(
-      mockedGeocodedResponse.properties?.postcode,
+    expect(mockDepartementRepository.findOneByInseeCode).toHaveBeenCalledWith(
+      mockedGeocodedResponse.properties?.citycode,
     );
     expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledTimes(1);
     expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledWith(
@@ -137,7 +137,7 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
     mockedGeocoderService.geocodedResultHasMunicipalityDoublon.mockReturnValue(
       false,
     );
-    mockDepartementRepository.findOneByCityZipcode.mockResolvedValue(finistere);
+    mockDepartementRepository.findOneByInseeCode.mockResolvedValue(finistere);
     mockedBrsDiffusionWebsiteRepository.save.mockResolvedValue(
       mockedBrsDiffusionWebsite,
     );
@@ -190,10 +190,10 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
       mockedGeocoderService.geocodedResultHasMunicipalityDoublon,
     ).toHaveBeenCalledTimes(1);
     expect(
-      mockDepartementRepository.findOneByCityZipcode,
+      mockDepartementRepository.findOneByInseeCode,
     ).toHaveBeenCalledTimes(1);
-    expect(mockDepartementRepository.findOneByCityZipcode).toHaveBeenCalledWith(
-      mockedGeocodedResponse.properties?.postcode,
+    expect(mockDepartementRepository.findOneByInseeCode).toHaveBeenCalledWith(
+      mockedGeocodedResponse.properties?.citycode,
     );
     expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledTimes(1);
     expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledWith(
@@ -242,7 +242,7 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
         mockedGeocoderService.geocodedResultHasMunicipalityDoublon,
       ).not.toHaveBeenCalled();
       expect(
-        mockDepartementRepository.findOneByCityZipcode,
+        mockDepartementRepository.findOneByInseeCode,
       ).not.toHaveBeenCalled();
       expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
     }
@@ -283,7 +283,7 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
         mockedBrsDiffusionWebsite.city,
       );
       expect(
-        mockDepartementRepository.findOneByCityZipcode,
+        mockDepartementRepository.findOneByInseeCode,
       ).not.toHaveBeenCalled();
       expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
     }
@@ -296,7 +296,7 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
     mockedGeocoderService.geocodedResultHasMunicipalityDoublon.mockReturnValue(
       false,
     );
-    mockDepartementRepository.findOneByCityZipcode.mockResolvedValue(null);
+    mockDepartementRepository.findOneByInseeCode.mockResolvedValue(null);
 
     try {
       await useCase.execute({
@@ -315,11 +315,11 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
         undefined,
       );
       expect(
-        mockDepartementRepository.findOneByCityZipcode,
+        mockDepartementRepository.findOneByInseeCode,
       ).toHaveBeenCalledTimes(1);
       expect(
-        mockDepartementRepository.findOneByCityZipcode,
-      ).toHaveBeenCalledWith(mockedGeocodedResponse.properties?.postcode);
+        mockDepartementRepository.findOneByInseeCode,
+      ).toHaveBeenCalledWith(mockedGeocodedResponse.properties?.citycode);
       expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
     }
   });

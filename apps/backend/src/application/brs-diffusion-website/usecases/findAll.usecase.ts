@@ -5,13 +5,13 @@ import { BrsDiffusionWebsiteRepositoryInterface } from 'src/domain/brs-diffusion
 import { BrsDiffusionWebsiteView } from '../views/brs-diffusion-website.view';
 import { BrsDiffusionWebsiteEntityWithDistance } from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.entity';
 
-export const DEFAULT_RADIUS = 100;
+export const DEFAULT_RADIUS = 50;
 
 export class FindAllBrsDiffusionWebsitesUsecase {
   constructor(
     @Inject('BrsDiffusionWebsiteRepositoryInterface')
     private readonly brsDiffusionWebsiteRepository: BrsDiffusionWebsiteRepositoryInterface,
-  ) {}
+  ) { }
 
   public async execute(
     params: FindAllBrsDiffusionWebsitesParams,
@@ -68,7 +68,7 @@ export class FindAllBrsDiffusionWebsitesUsecase {
         },
         showDistance
           ? (brsDiffusionWebsite as BrsDiffusionWebsiteEntityWithDistance)
-              .distance
+            .distance
           : undefined,
       );
     });
