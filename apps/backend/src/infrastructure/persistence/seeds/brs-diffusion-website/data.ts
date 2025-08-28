@@ -1582,7 +1582,7 @@ export const brsDiffusionWebsites: BrsDiffusionWebsite[] = [
     ofs: 'Archipel Habitat',
   },
 
-  Corse
+  // Corse
   {
     source: 'https://www.habitat-cooperatif.fr/programmes/',
     commune: 'Ajaccio',
@@ -1644,7 +1644,7 @@ export const brsDiffusionWebsites: BrsDiffusionWebsite[] = [
     ofs: 'OFS Racines',
   },
 
-  DOM - TOM
+  // DOM - TOM
   {
     source: 'https://www.habitat-cooperatif.fr/programmes/',
     commune: 'Fort-de-France',
