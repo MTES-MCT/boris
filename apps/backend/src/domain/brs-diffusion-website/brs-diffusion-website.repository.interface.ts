@@ -24,7 +24,7 @@ export interface BrsDiffusionWebsiteRepositoryInterface {
     northEastLat: number,
     northEastLng: number,
     southWestLat: number,
-    southWestLng: number
+    southWestLng: number,
   ): Promise<[BrsDiffusionWebsiteEntity[], number]>;
   findAllByRegion(
     paginationProps: PaginationProps,

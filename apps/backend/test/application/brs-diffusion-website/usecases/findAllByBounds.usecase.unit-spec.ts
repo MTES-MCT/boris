@@ -68,7 +68,7 @@ describe('FindAllBrsDiffusionWebsitesByBounds', () => {
       northEastLat: 48,
       northEastLng: 40,
       southWestLat: 48,
-      southWestLng: 40
+      southWestLng: 40,
     });
 
     expect(result).toMatchObject(expectedResult);

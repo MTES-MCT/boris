@@ -10,11 +10,12 @@ import { PaginationProps } from 'src/domain/common/paginationProps';
 
 @Injectable()
 export class BrsDiffusionWebsiteRepository
-  implements BrsDiffusionWebsiteRepositoryInterface {
+  implements BrsDiffusionWebsiteRepositoryInterface
+{
   constructor(
     @InjectRepository(BrsDiffusionWebsiteEntity)
     private readonly repository: Repository<BrsDiffusionWebsiteEntity>,
-  ) { }
+  ) {}
 
   public save(
     brsDiffusionWebsite: BrsDiffusionWebsiteEntity,
@@ -107,7 +108,7 @@ export class BrsDiffusionWebsiteRepository
       .leftJoinAndSelect('brs_diffusion_website.region', 'region')
       .leftJoinAndSelect('brs_diffusion_website.departement', 'departement')
       .where(
-        'cube(ARRAY[:northEastLat::float8, :northEastLng::float8], ARRAY[:southWestLat::float8, :southWestLng::float8]) @> cube(ARRAY[brs_diffusion_website.latitude, brs_diffusion_website.longitude])'
+        'cube(ARRAY[:northEastLat::float8, :northEastLng::float8], ARRAY[:southWestLat::float8, :southWestLng::float8]) @> cube(ARRAY[brs_diffusion_website.latitude, brs_diffusion_website.longitude])',
       )
       .setParameters({
         northEastLat,

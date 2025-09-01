@@ -106,9 +106,9 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
     expect(
       mockedGeocoderService.geocodedResultHasMunicipalityDoublon,
     ).toHaveBeenCalledTimes(1);
-    expect(
-      mockDepartementRepository.findOneByInseeCode,
-    ).toHaveBeenCalledTimes(1);
+    expect(mockDepartementRepository.findOneByInseeCode).toHaveBeenCalledTimes(
+      1,
+    );
     expect(mockDepartementRepository.findOneByInseeCode).toHaveBeenCalledWith(
       mockedGeocodedResponse.properties?.citycode,
     );
@@ -189,9 +189,9 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
     expect(
       mockedGeocoderService.geocodedResultHasMunicipalityDoublon,
     ).toHaveBeenCalledTimes(1);
-    expect(
-      mockDepartementRepository.findOneByInseeCode,
-    ).toHaveBeenCalledTimes(1);
+    expect(mockDepartementRepository.findOneByInseeCode).toHaveBeenCalledTimes(
+      1,
+    );
     expect(mockDepartementRepository.findOneByInseeCode).toHaveBeenCalledWith(
       mockedGeocodedResponse.properties?.citycode,
     );
@@ -317,9 +317,9 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
       expect(
         mockDepartementRepository.findOneByInseeCode,
       ).toHaveBeenCalledTimes(1);
-      expect(
-        mockDepartementRepository.findOneByInseeCode,
-      ).toHaveBeenCalledWith(mockedGeocodedResponse.properties?.citycode);
+      expect(mockDepartementRepository.findOneByInseeCode).toHaveBeenCalledWith(
+        mockedGeocodedResponse.properties?.citycode,
+      );
       expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
     }
   });

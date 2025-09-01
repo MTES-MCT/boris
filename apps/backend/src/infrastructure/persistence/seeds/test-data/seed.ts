@@ -29,7 +29,7 @@ export class TestDataSeed {
     private readonly brsDiffusionWebsiteRepository: BrsDiffusionWebsiteRepositoryInterface,
     @Inject('DepartementRepositoryInterface')
     private readonly departementRepository: DepartementRepositoryInterface,
-  ) { }
+  ) {}
 
   private async seedRegions() {
     console.log('Création des régions et départements');

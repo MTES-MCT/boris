@@ -176,7 +176,7 @@ describe('BrsDiffusionWebsiteRepository', () => {
       mockQueryBuilder,
     );
 
-    const expectedResult = [[mockedBrsDiffusionWebsite], 1,];
+    const expectedResult = [[mockedBrsDiffusionWebsite], 1];
 
     const result = await brsDiffusionWebsiteRepository.findAllByBounds(
       {
@@ -212,7 +212,10 @@ describe('BrsDiffusionWebsiteRepository', () => {
     });
     expect(mockQueryBuilder.skip).toHaveBeenCalledWith(0);
     expect(mockQueryBuilder.take).toHaveBeenCalledWith(10);
-    expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith("brs_diffusion_website.createdAt", "DESC");
+    expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith(
+      'brs_diffusion_website.createdAt',
+      'DESC',
+    );
     expect(mockQueryBuilder.getManyAndCount).toHaveBeenCalledTimes(1);
   });
 
