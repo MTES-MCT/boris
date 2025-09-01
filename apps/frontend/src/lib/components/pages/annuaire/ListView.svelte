@@ -7,7 +7,6 @@
   import Card from '$lib/components/pages/annuaire/Card.svelte';
   import Pagination from '$components/common/Pagination.svelte';
   import { default as WomanYoga } from '$assets/illustrations/woman-yoga.svg?raw';
-  import { noConflict } from 'leaflet';
 
   type Props = {
     brsDiffusionWebsites: PaginationType<BrsDiffusionWebsiteView>;

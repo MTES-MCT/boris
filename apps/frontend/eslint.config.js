@@ -34,9 +34,16 @@ export default tseslint.config(
     ignores: ['build/', '.svelte-kit/', 'dist/'],
   },
   {
-    parserOptions: {
-      project: './tsconfig.json',
-      tsconfigRootDir: './',
+    rules: {
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
     },
   },
 );

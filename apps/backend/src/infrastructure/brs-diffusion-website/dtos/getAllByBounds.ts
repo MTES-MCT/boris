@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, } from 'class-validator';
+import { IsNumber } from 'class-validator';
 
 export class GetAllBrsDiffusionWebsitesByBoundsDTO {
   @ApiProperty({
@@ -16,7 +16,10 @@ export class GetAllBrsDiffusionWebsitesByBoundsDTO {
     example: 48.85341,
   })
   @Type(() => Number)
-  @IsNumber({}, { message: 'La longitude nord-est doit être un nombre décimal' })
+  @IsNumber(
+    {},
+    { message: 'La longitude nord-est doit être un nombre décimal' },
+  )
   public northEastLng: number;
 
   @ApiProperty({
@@ -24,7 +27,10 @@ export class GetAllBrsDiffusionWebsitesByBoundsDTO {
     example: 48.85341,
   })
   @Type(() => Number)
-  @IsNumber({}, { message: 'La latitude sud-ouest doit être un nombre décimal' })
+  @IsNumber(
+    {},
+    { message: 'La latitude sud-ouest doit être un nombre décimal' },
+  )
   public southWestLat: number;
 
   @ApiProperty({
@@ -32,6 +38,9 @@ export class GetAllBrsDiffusionWebsitesByBoundsDTO {
     example: 48.85341,
   })
   @Type(() => Number)
-  @IsNumber({}, { message: 'La longitude sud-ouest doit être un nombre décimal' })
+  @IsNumber(
+    {},
+    { message: 'La longitude sud-ouest doit être un nombre décimal' },
+  )
   public southWestLng: number;
 }

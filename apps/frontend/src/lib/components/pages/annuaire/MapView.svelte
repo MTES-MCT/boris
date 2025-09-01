@@ -1,6 +1,9 @@
 <script lang="ts">
   import 'leaflet/dist/leaflet.css';
-  import L, { Map, Marker } from 'leaflet';
+  import 'leaflet.markercluster/dist/MarkerCluster.css';
+  import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+  import L, { Map } from 'leaflet';
+  import 'leaflet.markercluster';
   import type {
     BrsDiffusionWebsiteView,
     Pagination as PaginationType,
@@ -19,7 +22,7 @@
 
   let mapRef: HTMLDivElement;
   let map = $state<Map | null>(null);
-  let markers: Marker[] = [];
+  let markers = L.markerClusterGroup();
 
   onMount(() => {
     createMap();
@@ -54,19 +57,16 @@
   };
 
   const deleteMarkersFromMap = () => {
-    markers.forEach((marker) => {
-      map?.removeLayer(marker);
-    });
-
-    markers = [];
+    map?.removeLayer(markers);
+    markers = L.markerClusterGroup();
   };
 
   const addMarkersToMap = (brsDiffusionWebsites: BrsDiffusionWebsiteView[]) => {
     brsDiffusionWebsites?.forEach((item) => {
-      markers.push(L.marker([item.latitude, item.longitude]));
+      markers.addLayer(L.marker([item.latitude, item.longitude]));
     });
 
-    markers.forEach((marker) => marker.addTo(map as Map));
+    map?.addLayer(markers);
   };
 
   const handleMapBoundsChange = async () => {
@@ -82,7 +82,7 @@
     let currentPage = data.page;
 
     if (data.hasNextPage) {
-      for (const pageNumber of new Array(data.pagesCount - 1)) {
+      for (const _ of new Array(data.pagesCount - 1)) {
         currentPage = currentPage + 1;
 
         const pageData = await getBrsDiffusionWebsitesByBounds({
