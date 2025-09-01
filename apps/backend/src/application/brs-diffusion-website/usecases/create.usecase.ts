@@ -19,7 +19,7 @@ export class CreateBrsDiffusionWebsiteUsecase {
     private readonly geocoderService: GeocoderService,
     @Inject('DepartementRepositoryInterface')
     private readonly departementRepository: DepartementRepositoryInterface,
-  ) { }
+  ) {}
 
   public async execute(
     params: CreateBrsDiffusionWebsiteParams,

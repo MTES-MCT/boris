@@ -651,7 +651,7 @@ export const brsDiffusionWebsites: BrsDiffusionWebsite[] = [
   },
   {
     source: 'https://www.habitat-cooperatif.fr/programmes/',
-    commune: 'Villeneuve-d\'Ascq',
+    commune: "Villeneuve-d'Ascq",
     commercialisateur: 'Habitat Coopératif',
     ofs: 'Foncier Coopératif Sud',
   },
@@ -1493,7 +1493,7 @@ export const brsDiffusionWebsites: BrsDiffusionWebsite[] = [
   },
   {
     source: 'https://www.archipel-habitat.fr/programmes/',
-    commune: 'Les Sables-d\'Olonne',
+    commune: "Les Sables-d'Olonne",
     commercialisateur: 'Archipel Habitat',
     ofs: 'Archipel Habitat',
   },
@@ -1627,7 +1627,7 @@ export const brsDiffusionWebsites: BrsDiffusionWebsite[] = [
   },
   {
     source: 'https://www.granddelta.fr/achat/',
-    commune: 'L\'Île-Rousse',
+    commune: "L'Île-Rousse",
     commercialisateur: 'Grand Delta Habitat',
     ofs: 'Grand Delta Habitat',
   },
@@ -2069,7 +2069,7 @@ export const brsDiffusionWebsites: BrsDiffusionWebsite[] = [
   },
   {
     source: 'https://www.granddelta.fr/achat/',
-    commune: 'L\'Haÿ-les-Roses',
+    commune: "L'Haÿ-les-Roses",
     commercialisateur: 'Grand Delta Habitat',
     ofs: 'Grand Delta Habitat',
   },

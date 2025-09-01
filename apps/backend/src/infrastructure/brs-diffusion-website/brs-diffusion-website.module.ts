@@ -29,7 +29,7 @@ import { GetBrsDiffusionWebsitesByBoundsApiController } from './controllers/api/
     DeleteBrsDiffusionWebsiteAdminController,
     UpdateBrsDiffusionWebsiteAdminController,
     GetBrsDiffusionWebsitesApiController,
-    GetBrsDiffusionWebsitesByBoundsApiController
+    GetBrsDiffusionWebsitesByBoundsApiController,
   ],
   providers: [
     {
@@ -42,7 +42,7 @@ import { GetBrsDiffusionWebsitesByBoundsApiController } from './controllers/api/
     DeleteBrsDiffusionWebsiteUsecase,
     UpdateBrsDiffusionWebsiteUsecase,
     FindBrsDiffusionWebsiteByIdUsecase,
-    FindAllBrsDiffusionWebsitesByBoundsUsecase
+    FindAllBrsDiffusionWebsitesByBoundsUsecase,
   ],
   exports: [
     'BrsDiffusionWebsiteRepositoryInterface',
@@ -52,7 +52,7 @@ import { GetBrsDiffusionWebsitesByBoundsApiController } from './controllers/api/
     DeleteBrsDiffusionWebsiteUsecase,
     UpdateBrsDiffusionWebsiteUsecase,
     FindBrsDiffusionWebsiteByIdUsecase,
-    FindAllBrsDiffusionWebsitesByBoundsUsecase
+    FindAllBrsDiffusionWebsitesByBoundsUsecase,
   ],
 })
-export class BrsDiffusionWebsiteModule { }
+export class BrsDiffusionWebsiteModule {}

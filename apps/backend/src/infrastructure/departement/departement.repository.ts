@@ -11,7 +11,7 @@ export class DepartementRepository implements DepartementRepositoryInterface {
   constructor(
     @InjectRepository(DepartementEntity)
     private readonly repository: Repository<DepartementEntity>,
-  ) { }
+  ) {}
 
   public save(departement: DepartementInterface): Promise<DepartementEntity> {
     return this.repository.save(departement);

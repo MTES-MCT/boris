@@ -11,7 +11,7 @@ export class FindAllBrsDiffusionWebsitesUsecase {
   constructor(
     @Inject('BrsDiffusionWebsiteRepositoryInterface')
     private readonly brsDiffusionWebsiteRepository: BrsDiffusionWebsiteRepositoryInterface,
-  ) { }
+  ) {}
 
   public async execute(
     params: FindAllBrsDiffusionWebsitesParams,
@@ -68,7 +68,7 @@ export class FindAllBrsDiffusionWebsitesUsecase {
         },
         showDistance
           ? (brsDiffusionWebsite as BrsDiffusionWebsiteEntityWithDistance)
-            .distance
+              .distance
           : undefined,
       );
     });

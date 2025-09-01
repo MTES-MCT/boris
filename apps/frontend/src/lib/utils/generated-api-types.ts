@@ -4,381 +4,381 @@
  */
 
 export interface paths {
-    "/api/regions/{id}/brs-diffusion-websites": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Récupérer tous les sites web de diffusion BRS par région */
-        get: operations["GetBrsDiffusionWebsitesByRegionApiController_index"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+  '/api/regions/{id}/brs-diffusion-websites': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/brs-diffusion-websites": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Récupérer tous les sites web de diffusion BRS */
-        get: operations["GetBrsDiffusionWebsitesApiController_index"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** Récupérer tous les sites web de diffusion BRS par région */
+    get: operations['GetBrsDiffusionWebsitesByRegionApiController_index'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/brs-diffusion-websites': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/brs-diffusion-websites-by-bounds": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Récupérer tous les sites web de diffusion BRS dans un rectangle défini par deux coordonnées géographiques. */
-        get: operations["GetBrsDiffusionWebsitesByBoundsApiController_index"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** Récupérer tous les sites web de diffusion BRS */
+    get: operations['GetBrsDiffusionWebsitesApiController_index'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/brs-diffusion-websites-by-bounds': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/departements/{id}/brs-diffusion-websites": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Récupérer tous les sites web de diffusion BRS par département */
-        get: operations["GetBrsDiffusionWebsitesByDepartementApiController_index"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** Récupérer tous les sites web de diffusion BRS dans un rectangle défini par deux coordonnées géographiques. */
+    get: operations['GetBrsDiffusionWebsitesByBoundsApiController_index'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/departements/{id}/brs-diffusion-websites': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/ofss": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Récupérer tous les OFS */
-        get: operations["GetOfssApiController_index"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** Récupérer tous les sites web de diffusion BRS par département */
+    get: operations['GetBrsDiffusionWebsitesByDepartementApiController_index'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/ofss': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
+    /** Récupérer tous les OFS */
+    get: operations['GetOfssApiController_index'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: {
-        Pagination: {
-            items: unknown[][];
-            totalCount: number;
-            page: number;
-            pageSize: number;
-            pagesCount: number;
-            hasPreviousPage: boolean;
-            hasNextPage: boolean;
-        };
-        RegionRelationnalView: {
-            /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
-            id: string;
-            /** @example Bretagne */
-            name: string;
-        };
-        DepartementRelationnalView: {
-            /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
-            id: string;
-            /** @example Finistère */
-            name: string;
-            /** @example 29 */
-            code: string;
-        };
-        BrsDiffusionWebsiteView: {
-            /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
-            id: string;
-            /** @example https://source.fr */
-            source: string;
-            /** @example Commercialisateur du Finistère */
-            distributorName: string;
-            /** @example Nom de l'OFS */
-            ofsName: string;
-            /** @example Quimper */
-            city: string;
-            /** @example 29000 */
-            zipcode: string;
-            /** @example 29, Finistère, Bretagne */
-            address: string;
-            /** @example 29000 */
-            inseeCode: string;
-            /** @example 48.111111 */
-            latitude: number;
-            /** @example 4.111111 */
-            longitude: number;
-            /**
-             * @description Distance en kilomètres
-             * @example 100
-             */
-            distance?: number;
-            region: components["schemas"]["RegionRelationnalView"];
-            departement: components["schemas"]["DepartementRelationnalView"];
-        };
-        DistributorRelationnalView: {
-            /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
-            id: string;
-            /** @example Commercialisateur du Finistère */
-            name: string;
-            /** @example https://ofs-de-bretagne.fr */
-            websiteUrl?: string;
-        };
-        OfsView: {
-            /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
-            id: string;
-            /** @example OFS de Bretagne */
-            name: string;
-            /** @example https://ofs-de-bretagne.fr */
-            websiteUrl: Record<string, never>;
-            /** @example 01 02 03 04 05 */
-            phone: Record<string, never>;
-            /** @example contact@ofs-de-bretagne.fr */
-            email: Record<string, never>;
-            departements: components["schemas"]["DepartementRelationnalView"][];
-            regions: components["schemas"]["RegionRelationnalView"][];
-            distributors: components["schemas"]["DistributorRelationnalView"][];
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
+  schemas: {
+    Pagination: {
+      items: unknown[][];
+      totalCount: number;
+      page: number;
+      pageSize: number;
+      pagesCount: number;
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
     };
-    responses: never;
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+    RegionRelationnalView: {
+      /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
+      id: string;
+      /** @example Bretagne */
+      name: string;
+    };
+    DepartementRelationnalView: {
+      /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
+      id: string;
+      /** @example Finistère */
+      name: string;
+      /** @example 29 */
+      code: string;
+    };
+    BrsDiffusionWebsiteView: {
+      /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
+      id: string;
+      /** @example https://source.fr */
+      source: string;
+      /** @example Commercialisateur du Finistère */
+      distributorName: string;
+      /** @example Nom de l'OFS */
+      ofsName: string;
+      /** @example Quimper */
+      city: string;
+      /** @example 29000 */
+      zipcode: string;
+      /** @example 29, Finistère, Bretagne */
+      address: string;
+      /** @example 29000 */
+      inseeCode: string;
+      /** @example 48.111111 */
+      latitude: number;
+      /** @example 4.111111 */
+      longitude: number;
+      /**
+       * @description Distance en kilomètres
+       * @example 100
+       */
+      distance?: number;
+      region: components['schemas']['RegionRelationnalView'];
+      departement: components['schemas']['DepartementRelationnalView'];
+    };
+    DistributorRelationnalView: {
+      /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
+      id: string;
+      /** @example Commercialisateur du Finistère */
+      name: string;
+      /** @example https://ofs-de-bretagne.fr */
+      websiteUrl?: string;
+    };
+    OfsView: {
+      /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
+      id: string;
+      /** @example OFS de Bretagne */
+      name: string;
+      /** @example https://ofs-de-bretagne.fr */
+      websiteUrl: Record<string, never>;
+      /** @example 01 02 03 04 05 */
+      phone: Record<string, never>;
+      /** @example contact@ofs-de-bretagne.fr */
+      email: Record<string, never>;
+      departements: components['schemas']['DepartementRelationnalView'][];
+      regions: components['schemas']['RegionRelationnalView'][];
+      distributors: components['schemas']['DistributorRelationnalView'][];
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      updatedAt?: string;
+    };
+  };
+  responses: never;
+  parameters: never;
+  requestBodies: never;
+  headers: never;
+  pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    GetBrsDiffusionWebsitesByRegionApiController_index: {
-        parameters: {
-            query?: {
-                page?: number;
-                pageSize?: number;
-            };
-            header?: never;
-            path: {
-                /** @description L'identifiant de la ressource */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        items?: components["schemas"]["BrsDiffusionWebsiteView"][];
-                        /** @example 42 */
-                        totalCount?: number;
-                        /** @example 1 */
-                        page?: number;
-                        /** @example 10 */
-                        pageSize?: number;
-                        /** @example 5 */
-                        pagesCount?: number;
-                        /** @example false */
-                        hasPreviousPage?: boolean;
-                        /** @example true */
-                        hasNextPage?: boolean;
-                    };
-                };
-            };
-        };
+  GetBrsDiffusionWebsitesByRegionApiController_index: {
+    parameters: {
+      query?: {
+        page?: number;
+        pageSize?: number;
+      };
+      header?: never;
+      path: {
+        /** @description L'identifiant de la ressource */
+        id: string;
+      };
+      cookie?: never;
     };
-    GetBrsDiffusionWebsitesApiController_index: {
-        parameters: {
-            query?: {
-                page?: number;
-                pageSize?: number;
-                /** @description La latitude du point de référence */
-                latitude?: number;
-                /** @description La longitude du point de référence */
-                longitude?: number;
-                /** @description Le rayon en kilomètres, par défaut 50km */
-                radius?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        items?: components["schemas"]["BrsDiffusionWebsiteView"][];
-                        /** @example 42 */
-                        totalCount?: number;
-                        /** @example 1 */
-                        page?: number;
-                        /** @example 10 */
-                        pageSize?: number;
-                        /** @example 5 */
-                        pagesCount?: number;
-                        /** @example false */
-                        hasPreviousPage?: boolean;
-                        /** @example true */
-                        hasNextPage?: boolean;
-                    };
-                };
-            };
+        content: {
+          'application/json': {
+            items?: components['schemas']['BrsDiffusionWebsiteView'][];
+            /** @example 42 */
+            totalCount?: number;
+            /** @example 1 */
+            page?: number;
+            /** @example 10 */
+            pageSize?: number;
+            /** @example 5 */
+            pagesCount?: number;
+            /** @example false */
+            hasPreviousPage?: boolean;
+            /** @example true */
+            hasNextPage?: boolean;
+          };
         };
+      };
     };
-    GetBrsDiffusionWebsitesByBoundsApiController_index: {
-        parameters: {
-            query: {
-                page?: number;
-                pageSize?: number;
-                /** @description La latitude du point nord-est de référence */
-                northEastLat: number;
-                /** @description La longitude du point nord-est de référence */
-                northEastLng: number;
-                /** @description La latitude du point sud-ouest de référence */
-                southWestLat: number;
-                /** @description La longitude du point sud-ouest de référence */
-                southWestLng: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        items?: components["schemas"]["BrsDiffusionWebsiteView"][];
-                        /** @example 42 */
-                        totalCount?: number;
-                        /** @example 1 */
-                        page?: number;
-                        /** @example 10 */
-                        pageSize?: number;
-                        /** @example 5 */
-                        pagesCount?: number;
-                        /** @example false */
-                        hasPreviousPage?: boolean;
-                        /** @example true */
-                        hasNextPage?: boolean;
-                    };
-                };
-            };
-        };
+  };
+  GetBrsDiffusionWebsitesApiController_index: {
+    parameters: {
+      query?: {
+        page?: number;
+        pageSize?: number;
+        /** @description La latitude du point de référence */
+        latitude?: number;
+        /** @description La longitude du point de référence */
+        longitude?: number;
+        /** @description Le rayon en kilomètres, par défaut 50km */
+        radius?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    GetBrsDiffusionWebsitesByDepartementApiController_index: {
-        parameters: {
-            query?: {
-                page?: number;
-                pageSize?: number;
-            };
-            header?: never;
-            path: {
-                /** @description L'identifiant de la ressource */
-                id: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        items?: components["schemas"]["BrsDiffusionWebsiteView"][];
-                        /** @example 42 */
-                        totalCount?: number;
-                        /** @example 1 */
-                        page?: number;
-                        /** @example 10 */
-                        pageSize?: number;
-                        /** @example 5 */
-                        pagesCount?: number;
-                        /** @example false */
-                        hasPreviousPage?: boolean;
-                        /** @example true */
-                        hasNextPage?: boolean;
-                    };
-                };
-            };
+        content: {
+          'application/json': {
+            items?: components['schemas']['BrsDiffusionWebsiteView'][];
+            /** @example 42 */
+            totalCount?: number;
+            /** @example 1 */
+            page?: number;
+            /** @example 10 */
+            pageSize?: number;
+            /** @example 5 */
+            pagesCount?: number;
+            /** @example false */
+            hasPreviousPage?: boolean;
+            /** @example true */
+            hasNextPage?: boolean;
+          };
         };
+      };
     };
-    GetOfssApiController_index: {
-        parameters: {
-            query?: {
-                page?: number;
-                pageSize?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        items?: components["schemas"]["OfsView"][];
-                        /** @example 42 */
-                        totalCount?: number;
-                        /** @example 1 */
-                        page?: number;
-                        /** @example 10 */
-                        pageSize?: number;
-                        /** @example 5 */
-                        pagesCount?: number;
-                        /** @example false */
-                        hasPreviousPage?: boolean;
-                        /** @example true */
-                        hasNextPage?: boolean;
-                    };
-                };
-            };
-        };
+  };
+  GetBrsDiffusionWebsitesByBoundsApiController_index: {
+    parameters: {
+      query: {
+        page?: number;
+        pageSize?: number;
+        /** @description La latitude du point nord-est de référence */
+        northEastLat: number;
+        /** @description La longitude du point nord-est de référence */
+        northEastLng: number;
+        /** @description La latitude du point sud-ouest de référence */
+        southWestLat: number;
+        /** @description La longitude du point sud-ouest de référence */
+        southWestLng: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            items?: components['schemas']['BrsDiffusionWebsiteView'][];
+            /** @example 42 */
+            totalCount?: number;
+            /** @example 1 */
+            page?: number;
+            /** @example 10 */
+            pageSize?: number;
+            /** @example 5 */
+            pagesCount?: number;
+            /** @example false */
+            hasPreviousPage?: boolean;
+            /** @example true */
+            hasNextPage?: boolean;
+          };
+        };
+      };
+    };
+  };
+  GetBrsDiffusionWebsitesByDepartementApiController_index: {
+    parameters: {
+      query?: {
+        page?: number;
+        pageSize?: number;
+      };
+      header?: never;
+      path: {
+        /** @description L'identifiant de la ressource */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            items?: components['schemas']['BrsDiffusionWebsiteView'][];
+            /** @example 42 */
+            totalCount?: number;
+            /** @example 1 */
+            page?: number;
+            /** @example 10 */
+            pageSize?: number;
+            /** @example 5 */
+            pagesCount?: number;
+            /** @example false */
+            hasPreviousPage?: boolean;
+            /** @example true */
+            hasNextPage?: boolean;
+          };
+        };
+      };
+    };
+  };
+  GetOfssApiController_index: {
+    parameters: {
+      query?: {
+        page?: number;
+        pageSize?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            items?: components['schemas']['OfsView'][];
+            /** @example 42 */
+            totalCount?: number;
+            /** @example 1 */
+            page?: number;
+            /** @example 10 */
+            pageSize?: number;
+            /** @example 5 */
+            pagesCount?: number;
+            /** @example false */
+            hasPreviousPage?: boolean;
+            /** @example true */
+            hasNextPage?: boolean;
+          };
+        };
+      };
+    };
+  };
 }

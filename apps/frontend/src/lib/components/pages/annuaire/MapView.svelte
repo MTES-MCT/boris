@@ -13,6 +13,7 @@
   import { defaultZoom } from '$lib/utils/constants';
   import { debounce } from '$lib/utils/helpers';
   import { getBrsDiffusionWebsitesByBounds } from '$lib/api/brs-diffusion-websites';
+  import Card from '$components/pages/annuaire/Card.svelte';
 
   type Props = {
     brsDiffusionWebsites: PaginationType<BrsDiffusionWebsiteView>;
@@ -63,8 +64,29 @@
 
   const addMarkersToMap = (brsDiffusionWebsites: BrsDiffusionWebsiteView[]) => {
     brsDiffusionWebsites?.forEach((item) => {
-      markers.addLayer(L.marker([item.latitude, item.longitude]));
+      const markerLayer = L.marker([item.latitude, item.longitude]);
+      // const div = document.createElement('div');
+      // const popup = new Card(div, {
+      //   cardTitleElement: 'h3',
+      //   city: item.city,
+      //   departement: item.departement,
+      //   region: item.region,
+      //   source: item.source,
+      //   distributorName: item.distributorName,
+      //   ofsName: item.ofsName,
+      // });
+      markerLayer.bindPopup(`
+        <p>${item.ofsName}</p>
+        <a href="${item.source}" class="fr-link">Source</a>
+      `);
+      markers.addLayer(markerLayer);
     });
+
+    // markers.addLayer(L.marker([48.859, 2.347]));
+    // markers.addLayer(L.marker([48.859, 2.347]));
+    // markers.addLayer(L.marker([48.859, 2.347]));
+    // markers.addLayer(L.marker([48.859, 2.347]));
+    // markers.addLayer(L.marker([48.859, 2.347]));
 
     map?.addLayer(markers);
   };

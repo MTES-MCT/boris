@@ -1,7 +1,11 @@
 import { getBrsDiffusionWebsites } from '$lib/api/brs-diffusion-websites';
 
 import type { BrsDiffusionWebsiteView, Pagination } from '$lib/utils/api-types';
-import { defaultCoords, defaultPagination, defaultRadius } from '$lib/utils/constants';
+import {
+  defaultCoords,
+  defaultPagination,
+  defaultRadius,
+} from '$lib/utils/constants';
 
 class AnnuaireManager {
   radius = $state<number>(defaultRadius);
@@ -10,7 +14,7 @@ class AnnuaireManager {
   brsDiffusionWebsites = $state<Pagination<BrsDiffusionWebsiteView> | null>(
     null,
   );
-  viewType = $state<'list' | 'map'>('list')
+  viewType = $state<'list' | 'map'>('list');
 
   setBrsDiffusionWebsites = async ({
     coords,
@@ -19,7 +23,6 @@ class AnnuaireManager {
     coords?: { latitude: number; longitude: number };
     radius?: number;
   }) => {
-
     const query = {
       page: defaultPagination.page,
       pageSize: defaultPagination.pageSize,

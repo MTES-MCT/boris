@@ -20,7 +20,7 @@ export class UpdateBrsDiffusionWebsiteUsecase {
     private readonly geocoderService: GeocoderService,
     @Inject('DepartementRepositoryInterface')
     private readonly departementRepository: DepartementRepositoryInterface,
-  ) { }
+  ) {}
 
   public async execute(
     params: UpdateBrsDiffusionWebsiteParams,

@@ -1,14 +1,14 @@
-import { Inject } from "@nestjs/common";
-import { BrsDiffusionWebsiteRepositoryInterface } from "src/domain/brs-diffusion-website/brs-diffusion-website.repository.interface";
-import { FindAllBrsDiffusionWebsitesByBoundsParams } from "./findAllByBounds.params";
-import { BrsDiffusionWebsiteView } from "../views/brs-diffusion-website.view";
-import { Pagination } from "src/application/common/pagination";
+import { Inject } from '@nestjs/common';
+import { BrsDiffusionWebsiteRepositoryInterface } from 'src/domain/brs-diffusion-website/brs-diffusion-website.repository.interface';
+import { FindAllBrsDiffusionWebsitesByBoundsParams } from './findAllByBounds.params';
+import { BrsDiffusionWebsiteView } from '../views/brs-diffusion-website.view';
+import { Pagination } from 'src/application/common/pagination';
 
 export class FindAllBrsDiffusionWebsitesByBoundsUsecase {
   constructor(
     @Inject('BrsDiffusionWebsiteRepositoryInterface')
     private readonly brsDiffusionWebsiteRepository: BrsDiffusionWebsiteRepositoryInterface,
-  ) { }
+  ) {}
 
   public async execute(params: FindAllBrsDiffusionWebsitesByBoundsParams) {
     const {
@@ -17,18 +17,19 @@ export class FindAllBrsDiffusionWebsitesByBoundsUsecase {
       northEastLat,
       northEastLng,
       southWestLat,
-      southWestLng
-    } = params
+      southWestLng,
+    } = params;
 
     const paginationProps = { page, pageSize };
 
-    const [brsDiffusionWebsites, totalCount] = await this.brsDiffusionWebsiteRepository.findAllByBounds(
-      paginationProps,
-      northEastLat,
-      northEastLng,
-      southWestLat,
-      southWestLng
-    )
+    const [brsDiffusionWebsites, totalCount] =
+      await this.brsDiffusionWebsiteRepository.findAllByBounds(
+        paginationProps,
+        northEastLat,
+        northEastLng,
+        southWestLat,
+        southWestLng,
+      );
 
     const items = brsDiffusionWebsites.map((brsDiffusionWebsite) => {
       return new BrsDiffusionWebsiteView(
