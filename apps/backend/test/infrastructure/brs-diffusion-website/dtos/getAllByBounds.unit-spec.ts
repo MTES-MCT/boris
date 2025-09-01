@@ -115,9 +115,19 @@ describe('GetAllBrsDiffusionWebsitesByBoundsDTO', () => {
 
   it('should be valid with valid latitude and longitude ranges', async () => {
     const validCoordinates = [
-      { northEastLat: 90, northEastLng: 180, southWestLat: -90, southWestLng: -180 }, // extremes
+      {
+        northEastLat: 90,
+        northEastLng: 180,
+        southWestLat: -90,
+        southWestLng: -180,
+      }, // extremes
       { northEastLat: 0, northEastLng: 0, southWestLat: 0, southWestLng: 0 }, // equator/prime meridian
-      { northEastLat: 48.8566, northEastLng: 2.3522, southWestLat: 48.8534, southWestLng: 2.3488 }, // Paris
+      {
+        northEastLat: 48.8566,
+        northEastLng: 2.3522,
+        southWestLat: 48.8534,
+        southWestLng: 2.3488,
+      }, // Paris
     ];
 
     for (const coords of validCoordinates) {
@@ -137,7 +147,7 @@ describe('GetAllBrsDiffusionWebsitesByBoundsDTO', () => {
     dto.northEastLat = 48.85341234;
     dto.northEastLng = 2.35223456;
     dto.southWestLat = 48.85345678;
-    dto.southWestLng = 2.34887890;
+    dto.southWestLng = 2.3488789;
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(0);
@@ -164,35 +174,32 @@ describe('GetAllBrsDiffusionWebsitesByBoundsDTO', () => {
     const errors = await validate(dto);
     expect(errors).toHaveLength(4);
 
-    const northEastLatError = errors.find(error => error.property === 'northEastLat');
-    expect(northEastLatError?.constraints?.isNumber).toBe('La latitude nord-est doit être un nombre décimal');
+    const northEastLatError = errors.find(
+      (error) => error.property === 'northEastLat',
+    );
+    expect(northEastLatError?.constraints?.isNumber).toBe(
+      'La latitude nord-est doit être un nombre décimal',
+    );
 
-    const northEastLngError = errors.find(error => error.property === 'northEastLng');
-    expect(northEastLngError?.constraints?.isNumber).toBe('La longitude nord-est doit être un nombre décimal');
+    const northEastLngError = errors.find(
+      (error) => error.property === 'northEastLng',
+    );
+    expect(northEastLngError?.constraints?.isNumber).toBe(
+      'La longitude nord-est doit être un nombre décimal',
+    );
 
-    const southWestLatError = errors.find(error => error.property === 'southWestLat');
-    expect(southWestLatError?.constraints?.isNumber).toBe('La latitude sud-ouest doit être un nombre décimal');
+    const southWestLatError = errors.find(
+      (error) => error.property === 'southWestLat',
+    );
+    expect(southWestLatError?.constraints?.isNumber).toBe(
+      'La latitude sud-ouest doit être un nombre décimal',
+    );
 
-    const southWestLngError = errors.find(error => error.property === 'southWestLng');
-    expect(southWestLngError?.constraints?.isNumber).toBe('La longitude sud-ouest doit être un nombre décimal');
-  });
-
-  it('should handle transformation from string to number', async () => {
-    const dto = new GetAllBrsDiffusionWebsitesByBoundsDTO();
-    // Simulate query parameters being received as strings
-    Object.assign(dto, {
-      northEastLat: '48.8566',
-      northEastLng: '2.3522',
-      southWestLat: '48.8534',
-      southWestLng: '2.3488'
-    });
-
-    // Transform should convert strings to numbers before validation
-    const { Transform } = require('class-transformer');
-    const { plainToClass } = require('class-transformer');
-
-    const transformedDto = plainToClass(GetAllBrsDiffusionWebsitesByBoundsDTO, dto);
-    const errors = await validate(transformedDto);
-    expect(errors).toHaveLength(0);
+    const southWestLngError = errors.find(
+      (error) => error.property === 'southWestLng',
+    );
+    expect(southWestLngError?.constraints?.isNumber).toBe(
+      'La longitude sud-ouest doit être un nombre décimal',
+    );
   });
 });

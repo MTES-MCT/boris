@@ -23,12 +23,7 @@
     "generate-api-types": "openapi-typescript http://localhost:3000/api/documentation/schema/json --output src/lib/utils/generated-api-types.ts"
   },
   "dependencies": {
-    "@sentry/sveltekit": "^8.42.0",
-<<<<<<< HEAD
-    "keyv": "^5.5.0"
-=======
-    "leaflet": "^1.9.4"
->>>>>>> ed2fcc2 (feat: initial map view)
+    "@sentry/sveltekit": "^8.42.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
@@ -39,9 +34,13 @@
     "@sveltejs/adapter-node": "^5.2.9",
     "@sveltejs/kit": "^2.17.1",
     "@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
+    "@types/leaflet.markercluster": "^1.5.5",
     "@zerodevx/svelte-img": "^2.1.2",
     "cssnano": "^7.0.6",
     "eslint-plugin-svelte": "^2.36.0",
+    "keyv": "^5.5.0",
+    "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3",
     "nanoid": "^5.0.8",
     "openapi-typescript": "^7.8.0",
     "postcss": "^8.4.49",
