@@ -99,12 +99,14 @@
     value = selectedSuggestion?.fulltext as string;
     isListExpanded = false;
 
-    annuaireManager.setBrsDiffusionWebsites({
+    annuaireManager.setListBrsDiffusionWebsites({
       coords: {
         latitude: selectedSuggestion?.y as number,
         longitude: selectedSuggestion?.x as number,
       },
     });
+
+    annuaireManager.zoom = 12;
   };
 </script>
 
@@ -206,7 +208,8 @@
       padding: var(--1w) var(--2w);
       cursor: pointer;
 
-      &[aria-selected='true'] {
+      &[aria-selected='true'],
+      &:hover {
         background-color: var(--background-default-grey-active);
       }
     }

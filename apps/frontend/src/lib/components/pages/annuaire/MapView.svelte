@@ -10,9 +10,7 @@
   } from '$lib/utils/api-types';
   import { onMount } from 'svelte';
   import annuaireManager from '$lib/managers/annuaire.svelte';
-  import { defaultZoom } from '$lib/utils/constants';
   import { debounce } from '$lib/utils/helpers';
-  import { getBrsDiffusionWebsitesByBounds } from '$lib/api/brs-diffusion-websites';
   import Card from '$components/pages/annuaire/Card.svelte';
 
   type Props = {
@@ -22,28 +20,41 @@
   const { brsDiffusionWebsites }: Props = $props();
 
   let mapRef: HTMLDivElement;
-  let map = $state<Map | null>(null);
+  let map: Map;
   let markers = L.markerClusterGroup();
+  let brsDiffusionWebsitesInBounds = $state(brsDiffusionWebsites.items);
+  let selectedMarkerId = $state('');
 
   onMount(() => {
     createMap();
   });
 
   $effect(() => {
-    if (annuaireManager.brsDiffusionWebsites) {
-      map?.setView([annuaireManager.latitude, annuaireManager.longitude]);
+    map?.setView(
+      [annuaireManager.latitude, annuaireManager.longitude],
+      annuaireManager.zoom,
+    );
 
-      if (map) {
-        deleteMarkersFromMap();
-        addMarkersToMap(annuaireManager.brsDiffusionWebsites.items);
-      }
+    deleteMarkersFromMap();
+    addMarkersToMap();
+  });
+
+  $effect(() => {
+    if (selectedMarkerId) {
+      const element = document.getElementById(selectedMarkerId);
+
+      element?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest',
+      });
     }
   });
 
   const createMap = () => {
     map = L.map(mapRef, {
       center: [annuaireManager.latitude, annuaireManager.longitude],
-      zoom: defaultZoom,
+      zoom: annuaireManager.zoom,
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -51,10 +62,12 @@
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    addMarkersToMap(brsDiffusionWebsites.items);
+    addMarkersToMap();
 
-    map.on('zoomlevelschange', debounce(handleMapBoundsChange, 500));
-    map.on('moveend', debounce(handleMapBoundsChange, 500));
+    map.on('zoomlevelschange', debounce(handleMapBoundsChange, 200));
+    map.on('moveend', debounce(handleMapBoundsChange, 200));
+
+    handleMapBoundsChange();
   };
 
   const deleteMarkersFromMap = () => {
@@ -62,73 +75,69 @@
     markers = L.markerClusterGroup();
   };
 
-  const addMarkersToMap = (brsDiffusionWebsites: BrsDiffusionWebsiteView[]) => {
-    brsDiffusionWebsites?.forEach((item) => {
+  const addMarkersToMap = () => {
+    brsDiffusionWebsites?.items.forEach((item) => {
       const markerLayer = L.marker([item.latitude, item.longitude]);
-      // const div = document.createElement('div');
-      // const popup = new Card(div, {
-      //   cardTitleElement: 'h3',
-      //   city: item.city,
-      //   departement: item.departement,
-      //   region: item.region,
-      //   source: item.source,
-      //   distributorName: item.distributorName,
-      //   ofsName: item.ofsName,
-      // });
-      markerLayer.bindPopup(`
-        <p>${item.ofsName}</p>
-        <a href="${item.source}" class="fr-link">Source</a>
-      `);
+
+      markerLayer.on('click', () => {
+        selectedMarkerId = item.id;
+      });
+
       markers.addLayer(markerLayer);
     });
-
-    // markers.addLayer(L.marker([48.859, 2.347]));
-    // markers.addLayer(L.marker([48.859, 2.347]));
-    // markers.addLayer(L.marker([48.859, 2.347]));
-    // markers.addLayer(L.marker([48.859, 2.347]));
-    // markers.addLayer(L.marker([48.859, 2.347]));
 
     map?.addLayer(markers);
   };
 
-  const handleMapBoundsChange = async () => {
-    const data = await getBrsDiffusionWebsitesByBounds({
-      northEastLat: map?.getBounds().getNorthEast().lat as number,
-      northEastLng: map?.getBounds().getNorthEast().lng as number,
-      southWestLat: map?.getBounds().getSouthWest().lat as number,
-      southWestLng: map?.getBounds().getSouthWest().lng as number,
+  const handleMapBoundsChange = () => {
+    const northEastLat = map.getBounds().getNorthEast().lat;
+    const northEastLng = map.getBounds().getNorthEast().lng;
+    const southWestLat = map.getBounds().getSouthWest().lat;
+    const southWestLng = map.getBounds().getSouthWest().lng;
+
+    brsDiffusionWebsitesInBounds = brsDiffusionWebsites.items.filter(
+      (item) =>
+        item.latitude <= northEastLat &&
+        item.latitude >= southWestLat &&
+        item.longitude <= northEastLng &&
+        item.longitude >= southWestLng,
+    );
+
+    const firstElement = document.getElementById(
+      brsDiffusionWebsites.items[0].id,
+    );
+
+    firstElement?.scrollIntoView({
+      block: 'nearest',
+      inline: 'nearest',
     });
-
-    let items = [...data.items];
-
-    let currentPage = data.page;
-
-    if (data.hasNextPage) {
-      for (const _ of new Array(data.pagesCount - 1)) {
-        currentPage = currentPage + 1;
-
-        const pageData = await getBrsDiffusionWebsitesByBounds({
-          page: currentPage,
-          northEastLat: map?.getBounds().getNorthEast().lat as number,
-          northEastLng: map?.getBounds().getNorthEast().lng as number,
-          southWestLat: map?.getBounds().getSouthWest().lat as number,
-          southWestLng: map?.getBounds().getSouthWest().lng as number,
-        });
-
-        items = [...items, ...pageData.items];
-
-        await new Promise((resolve) => setTimeout(resolve, 100));
-      }
-    }
-
-    deleteMarkersFromMap();
-    addMarkersToMap(items);
   };
 
-  $inspect(annuaireManager.brsDiffusionWebsites);
+  $inspect(selectedMarkerId);
 </script>
 
-<div class="fr-col-12">
+<div class="fr-col-12 container">
+  <div class="list-container">
+    <div class="fr-mb-0 fr-text--sm search-results">
+      <b>
+        {brsDiffusionWebsitesInBounds.length} résultat{brsDiffusionWebsitesInBounds.length >
+        1
+          ? 's'
+          : ''}
+      </b>
+    </div>
+    <ul>
+      {#each brsDiffusionWebsitesInBounds as item}
+        <li id={item.id}>
+          <Card
+            {...item}
+            cardTitleElement="h3"
+            narrow
+            selected={item.id === selectedMarkerId} />
+        </li>
+      {/each}
+    </ul>
+  </div>
   <div
     id="map"
     bind:this={mapRef}>
@@ -136,7 +145,52 @@
 </div>
 
 <style lang="postcss">
+  .container {
+    max-width: 110rem;
+    width: 100%;
+    margin: 0 auto;
+    height: calc(100vh - 22rem);
+    display: flex;
+    padding-bottom: 4rem;
+    padding-inline: var(--2w);
+  }
+
+  .list-container {
+    height: calc(100vh - 26rem);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .search-results {
+    background-color: white;
+    height: var(--6w);
+    padding-left: var(--2w);
+    display: flex;
+    align-items: center;
+    padding-top: var(--1w);
+  }
+
+  ul {
+    width: 18rem;
+    list-style: none;
+    background-color: white;
+    margin: 0;
+    padding: var(--2w);
+    padding-top: 0;
+    height: calc(100% - var(--6w));
+    overflow-y: auto;
+
+    @media (--lg-viewport) {
+      width: 28rem;
+    }
+
+    li {
+      padding-top: var(--1w);
+    }
+  }
+
   #map {
-    height: calc(100vh - 150px);
+    height: 100%;
+    flex: 1;
   }
 </style>

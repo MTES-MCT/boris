@@ -17,6 +17,8 @@
     distributorName: string;
     source: string;
     cardTitleElement?: Heading;
+    narrow?: boolean;
+    selected?: boolean;
   };
 
   const {
@@ -27,16 +29,33 @@
     distributorName,
     source,
     cardTitleElement = 'h3',
+    narrow = false,
+    selected = false,
   }: Props = $props();
 </script>
 
-<article class="fr-card fr-card--sm">
+<article
+  class="fr-card fr-card--sm"
+  class:narrow
+  class:selected>
   <div class="fr-card__body">
     <div class="fr-card__content">
-      <div class="location fr-mb-2w">
-        <Badge>{region.name}</Badge>
-        <Badge>{departement.name}</Badge>
-        <Badge>{city}</Badge>
+      <div class="location">
+        <Badge
+          status="info"
+          hideIcon>
+          {region.name}
+        </Badge>
+        <Badge
+          status="new"
+          hideIcon>
+          {departement.name}
+        </Badge>
+        <Badge
+          status="success"
+          hideIcon>
+          {city}
+        </Badge>
       </div>
       <div>
         <svelte:element
@@ -55,7 +74,7 @@
             class="fr-link fr-icon-arrow-right-line fr-link--icon-right"
             target="_blank"
             rel="noopener">
-            Libellé
+            Lien
           </a>
         </li>
       </ul>
@@ -68,5 +87,36 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--1w);
+    margin-bottom: var(--2w);
+  }
+
+  .narrow {
+    margin-bottom: var(--1v);
+
+    .fr-card__body {
+      padding-inline: var(--3w);
+    }
+
+    .fr-card__content {
+      padding-top: var(--2w);
+      padding-bottom: 0;
+
+      .location {
+        gap: var(--1v);
+        margin-bottom: var(--1w);
+      }
+    }
+
+    .fr-card__footer {
+      padding-top: 0;
+      padding-bottom: var(--1w);
+    }
+  }
+
+  .selected {
+    --border-default-grey: var(--color-blue-primary);
+
+    background-color: var(--color-blue-deep);
+    box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
   }
 </style>

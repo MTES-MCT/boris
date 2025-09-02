@@ -32,7 +32,7 @@
 
     value = target.value;
 
-    annuaireManager.setBrsDiffusionWebsites({
+    annuaireManager.setListBrsDiffusionWebsites({
       radius: Number(value),
     });
   };
