@@ -17,6 +17,7 @@ class AnnuaireManager {
     null,
   );
   viewType = $state<'list' | 'map'>('map');
+  autocompleteValue = $state('');
 
   setListBrsDiffusionWebsites = async ({
     coords,

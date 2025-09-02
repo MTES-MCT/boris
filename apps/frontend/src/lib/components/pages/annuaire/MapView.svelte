@@ -112,8 +112,6 @@
       inline: 'nearest',
     });
   };
-
-  $inspect(selectedMarkerId);
 </script>
 
 <div class="fr-col-12 container">

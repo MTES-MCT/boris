@@ -7,24 +7,24 @@
 
 <div class="filters fr-container--fluid">
   <div class="fr-grid-row fr-grid-row--gutters">
-    {#if annuaireManager.viewType === 'list'}
-      <div class="fr-col-12 fr-col-md-6 fr-col-lg-8">
-        <Autocomplete />
-      </div>
-      <div class="fr-col-12 fr-col-sm-6 fr-col-md-3 fr-col-md-3 fr-col-lg-2">
-        <Radius />
-      </div>
-      <div class="fr-col-12 fr-col-sm-6 fr-col-md-3 fr-col-lg-2 toggle">
-        <Toggle />
-      </div>
-    {:else}
-      <div class="fr-col-12 fr-col-md-8 fr-col-lg-10">
-        <Autocomplete />
-      </div>
-      <div class="fr-col-12 fr-col-md-4 fr-col-lg-2 toggle">
-        <Toggle />
-      </div>
-    {/if}
+    <div
+      class={annuaireManager.viewType === 'list'
+        ? 'fr-col-12 fr-col-md-6 fr-col-lg-8'
+        : 'fr-col-12 fr-col-md-8 fr-col-lg-10'}>
+      <Autocomplete />
+    </div>
+    <div
+      class={annuaireManager.viewType === 'list'
+        ? 'fr-col-12 fr-col-sm-6 fr-col-md-3 fr-col-md-3 fr-col-lg-2'
+        : 'fr-hidden'}>
+      <Radius />
+    </div>
+    <div
+      class={annuaireManager.viewType === 'list'
+        ? 'fr-col-12 fr-col-sm-6 fr-col-md-3 fr-col-lg-2 toggle'
+        : 'fr-col-12 fr-col-md-4 fr-col-lg-2 toggle'}>
+      <Toggle />
+    </div>
   </div>
 
   {#if annuaireManager.listBrsDiffusionWebsites && annuaireManager.viewType === 'list'}

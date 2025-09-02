@@ -17,6 +17,10 @@
   const suggestionsId = nanoid(10);
   let focusedSuggestionId = $state<string | null>(null);
 
+  $effect(() => {
+    annuaireManager.autocompleteValue = value;
+  });
+
   const handleChange = async (event: Event) => {
     value = (event.target as HTMLInputElement).value;
     const hasCorrectLength = value.length >= 3 && value.length <= 200;
@@ -115,7 +119,7 @@
   use:clickOutside
   onclickoutside={handleClickOuside}>
   <Input
-    {value}
+    value={annuaireManager.autocompleteValue}
     id={inputId}
     placeholder="Bordeaux, Marseille, Paris"
     label="Saisir le lieu ou le code postal"

@@ -8,6 +8,10 @@
 
   let value = $state<string>(defaultRadius.toString());
 
+  $effect(() => {
+    annuaireManager.radius = Number(value);
+  });
+
   const generateSelecOptions = (): ComponentProps<typeof Select>['options'] => {
     const selectOptions: ComponentProps<typeof Select>['options'] = [];
 
@@ -17,7 +21,7 @@
         label: `${radius} km`,
         selected:
           annuaireManager.viewType === 'map'
-            ? radius === defaultRadius.toString()
+            ? radius === annuaireManager.radius.toString()
             : radius === value,
       });
     });
