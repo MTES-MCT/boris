@@ -13,8 +13,8 @@
 </script>
 
 <div class="toggle">
-  {@render button('Liste', 'list', 'fr-icon-list-unordered')}
   {@render button('Carte', 'map', 'fr-icon-road-map-line')}
+  {@render button('Liste', 'list', 'fr-icon-list-unordered')}
 </div>
 
 {#snippet button(label: string, viewType: 'list' | 'map', icon: string)}

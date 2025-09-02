@@ -1,5 +1,6 @@
 import { PUBLIC_API_URL } from '$env/static/public';
 import type { Pagination, BrsDiffusionWebsiteView } from '$lib/utils/api-types';
+import { defaultPagination } from '$lib/utils/constants';
 import type { operations } from '$lib/utils/generated-api-types';
 
 export const getBrsDiffusionWebsites = async (
@@ -30,22 +31,39 @@ export const getBrsDiffusionWebsites = async (
   return data;
 };
 
-export const getBrsDiffusionWebsitesByBounds = async (
-  query: operations['GetBrsDiffusionWebsitesByBoundsApiController_index']['parameters']['query'],
-) => {
-  const url = new URL(`${PUBLIC_API_URL}/brs-diffusion-websites-by-bounds`);
+export const getAllBrsDiffusionWebsites = async (): Promise<
+  Pagination<BrsDiffusionWebsiteView>
+> => {
+  const url = new URL(`${PUBLIC_API_URL}/brs-diffusion-websites`);
 
-  if (query?.page) {
-    url.searchParams.set('page', query.page.toString());
-  }
-
-  url.searchParams.set('northEastLat', query.northEastLat.toString());
-  url.searchParams.set('northEastLng', query.northEastLng.toString());
-  url.searchParams.set('southWestLat', query.southWestLat.toString());
-  url.searchParams.set('southWestLng', query.southWestLng.toString());
+  url.searchParams.set('page', '1');
+  url.searchParams.set('pageSize', defaultPagination.pageSize.toString());
 
   const response = await fetch(url);
+
   const data: Pagination<BrsDiffusionWebsiteView> = await response.json();
 
-  return data;
+  let currentPage = data.page;
+
+  if (data.hasNextPage) {
+    for (const _ of new Array(data.pagesCount - 1)) {
+      currentPage = currentPage + 1;
+
+      url.searchParams.set('page', currentPage.toString());
+
+      const pageResponse = await fetch(url);
+      const pageData = await pageResponse.json();
+
+      data.items = [...data.items, ...pageData.items];
+    }
+  }
+
+  return {
+    ...data,
+    page: 1,
+    pagesCount: 1,
+    hasNextPage: false,
+    hasPreviousPage: false,
+    pageSize: data.totalCount,
+  };
 };

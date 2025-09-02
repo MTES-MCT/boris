@@ -25,23 +25,11 @@
   <Section
     title="Annuaire des sites de diffusion du BRS"
     titleElement="h1">
-    <div class="fr-container--fluid fr-mb-4w">
-      <div class="fr-grid-row fr-grid-row--gutters">
-        <div class="fr-col-12">
-          <Filters />
-        </div>
-        {#if annuaireManager.viewType === 'map'}
-          <MapView brsDiffusionWebsites={data.brsDiffusionWebsites} />
-        {:else}
-          <ListView brsDiffusionWebsites={data.brsDiffusionWebsites} />
-        {/if}
-      </div>
-    </div>
+    <Filters />
   </Section>
+  {#if annuaireManager.viewType === 'map'}
+    <MapView brsDiffusionWebsites={data.mapBrsDiffusionWebsites} />
+  {:else}
+    <ListView brsDiffusionWebsites={data.listBrsDiffusionWebsites} />
+  {/if}
 </GradientBackgroundWrapper>
-
-<style lang="postcss">
-  .fr-container--fluid {
-    overflow: visible;
-  }
-</style>

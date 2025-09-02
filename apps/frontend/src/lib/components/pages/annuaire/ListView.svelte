@@ -13,15 +13,17 @@
   };
 
   const { brsDiffusionWebsites }: Props = $props();
-
-  $inspect(annuaireManager.brsDiffusionWebsites);
 </script>
 
-{#if annuaireManager.brsDiffusionWebsites}
-  {@render content(annuaireManager.brsDiffusionWebsites)}
-{:else}
-  {@render content(brsDiffusionWebsites)}
-{/if}
+<div class="fr-container fr-container--fluid">
+  <div class="fr-grid-row fr-grid-row--gutters">
+    {#if annuaireManager.listBrsDiffusionWebsites}
+      {@render content(annuaireManager.listBrsDiffusionWebsites)}
+    {:else}
+      {@render content(brsDiffusionWebsites)}
+    {/if}
+  </div>
+</div>
 
 {#snippet content(payload: PaginationType<BrsDiffusionWebsiteView>)}
   {#if payload.items.length > 0}

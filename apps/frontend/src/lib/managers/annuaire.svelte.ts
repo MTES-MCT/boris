@@ -5,18 +5,20 @@ import {
   defaultCoords,
   defaultPagination,
   defaultRadius,
+  defaultZoom,
 } from '$lib/utils/constants';
 
 class AnnuaireManager {
   radius = $state<number>(defaultRadius);
   latitude = $state<number>(defaultCoords.latitude);
   longitude = $state<number>(defaultCoords.longitude);
-  brsDiffusionWebsites = $state<Pagination<BrsDiffusionWebsiteView> | null>(
+  zoom = $state<number>(defaultZoom);
+  listBrsDiffusionWebsites = $state<Pagination<BrsDiffusionWebsiteView> | null>(
     null,
   );
-  viewType = $state<'list' | 'map'>('list');
+  viewType = $state<'list' | 'map'>('map');
 
-  setBrsDiffusionWebsites = async ({
+  setListBrsDiffusionWebsites = async ({
     coords,
     radius,
   }: {
@@ -32,7 +34,7 @@ class AnnuaireManager {
     };
 
     const brsDiffusionWebsites = await getBrsDiffusionWebsites(query);
-    this.brsDiffusionWebsites = brsDiffusionWebsites;
+    this.listBrsDiffusionWebsites = brsDiffusionWebsites;
 
     this.latitude = coords?.latitude || this.latitude;
     this.longitude = coords?.longitude || this.longitude;

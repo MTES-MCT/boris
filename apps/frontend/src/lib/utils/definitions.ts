@@ -78,3 +78,10 @@ export type ZoneABC = {
   nom: string;
   zoneabc: string;
 };
+
+export type MapBounds = {
+  northEastLat: number;
+  northEastLng: number;
+  southWestLat: number;
+  southWestLng: number;
+};

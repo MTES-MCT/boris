@@ -1,35 +1,38 @@
 import type { PageLoad } from './$types';
-import { getBrsDiffusionWebsites } from '$lib/api/brs-diffusion-websites';
+import {
+  getBrsDiffusionWebsites,
+  getAllBrsDiffusionWebsites,
+} from '$lib/api/brs-diffusion-websites';
 import type { BrsDiffusionWebsiteView, Pagination } from '$lib/utils/api-types';
 import {
+  defaultBounds,
   defaultCoords,
   defaultPagination,
   defaultRadius,
+  parisCoords,
 } from '$lib/utils/constants';
 
 export type DataType = {
-  brsDiffusionWebsites: Pagination<BrsDiffusionWebsiteView>;
+  mapBrsDiffusionWebsites: Pagination<BrsDiffusionWebsiteView>;
+  listBrsDiffusionWebsites: Pagination<BrsDiffusionWebsiteView>;
 };
 
-export const load: PageLoad = async ({ url }): Promise<DataType> => {
-  const { searchParams } = url;
-
-  const query = {
-    page: Number(searchParams.get('page')) || defaultPagination.page,
-    pageSize:
-      Number(searchParams.get('pageSize')) || defaultPagination.pageSize,
-    latitude: defaultCoords.latitude,
-    longitude: defaultCoords.longitude,
+export const load: PageLoad = async (): Promise<DataType> => {
+  const listQuery = {
+    page: defaultPagination.page,
+    pageSize: defaultPagination.pageSize,
+    latitude: parisCoords.latitude,
+    longitude: parisCoords.longitude,
     radius: defaultRadius,
   };
 
-  const brsDiffusionWebsites = await getBrsDiffusionWebsites(query);
+  const mapBrsDiffusionWebsites = await getAllBrsDiffusionWebsites();
+  const listBrsDiffusionWebsites = await getBrsDiffusionWebsites(listQuery);
 
-  const data = {
-    brsDiffusionWebsites,
+  return {
+    mapBrsDiffusionWebsites,
+    listBrsDiffusionWebsites,
   };
-
-  return data;
 };
 
 export const csr = true;
