@@ -5,14 +5,17 @@ import {
   defaultCoords,
   defaultPagination,
   defaultRadius,
-  defaultZoom,
+  defaultZoomMobile,
+  defaultZoomDesktop,
 } from '$lib/utils/constants';
 
 class AnnuaireManager {
   radius = $state<number>(defaultRadius);
   latitude = $state<number>(defaultCoords.latitude);
   longitude = $state<number>(defaultCoords.longitude);
-  zoom = $state<number>(defaultZoom);
+  zoom = $state<number>(
+    window.innerWidth <= 44 * 16 ? defaultZoomMobile : defaultZoomDesktop,
+  );
   listBrsDiffusionWebsites = $state<Pagination<BrsDiffusionWebsiteView> | null>(
     null,
   );

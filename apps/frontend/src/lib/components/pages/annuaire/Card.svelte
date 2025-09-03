@@ -1,5 +1,6 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/component/card/card.min.css';
+  import '@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css';
 
   import Badge from '$components/common/Badge.svelte';
 
@@ -19,6 +20,7 @@
     cardTitleElement?: Heading;
     narrow?: boolean;
     selected?: boolean;
+    handleClose?: () => void;
   };
 
   const {
@@ -31,6 +33,7 @@
     cardTitleElement = 'h3',
     narrow = false,
     selected = false,
+    handleClose,
   }: Props = $props();
 </script>
 
@@ -40,23 +43,21 @@
   class:selected>
   <div class="fr-card__body">
     <div class="fr-card__content">
-      <div class="location">
-        <Badge
-          status="info"
-          hideIcon>
-          {region.name}
-        </Badge>
-        <Badge
-          status="new"
-          hideIcon>
-          {departement.name}
-        </Badge>
-        <Badge
-          status="success"
-          hideIcon>
-          {city}
-        </Badge>
-      </div>
+      {#if handleClose}
+        <div class="closable">
+          {@render badges()}
+          <button
+            onclick={handleClose}
+            aria-label="Fermer">
+            <span
+              aria-hidden="true"
+              class="fr-icon-close-line">
+            </span>
+          </button>
+        </div>
+      {:else}
+        {@render badges()}
+      {/if}
       <div>
         <svelte:element
           this={cardTitleElement}
@@ -82,12 +83,33 @@
   </div>
 </article>
 
+{#snippet badges()}
+  <div class="location">
+    <Badge
+      status="info"
+      hideIcon>
+      {region.name}
+    </Badge>
+    <Badge
+      status="new"
+      hideIcon>
+      {departement.name}
+    </Badge>
+    <Badge
+      status="success"
+      hideIcon>
+      {city}
+    </Badge>
+  </div>
+{/snippet}
+
 <style lang="postcss">
   .location {
     display: flex;
     flex-wrap: wrap;
     gap: var(--1w);
     margin-bottom: var(--2w);
+    margin-top: calc(var(--1v) / 2);
   }
 
   .narrow {
@@ -118,5 +140,12 @@
 
     background-color: var(--color-blue-deep);
     box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
+  }
+
+  .closable {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--2w);
   }
 </style>
