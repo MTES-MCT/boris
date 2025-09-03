@@ -181,4 +181,5 @@ export const defaultBounds: MapBounds = {
 
 export const defaultRadius = 50;
 
-export const defaultZoom = 6;
+export const defaultZoomDesktop = 6;
+export const defaultZoomMobile = 5;

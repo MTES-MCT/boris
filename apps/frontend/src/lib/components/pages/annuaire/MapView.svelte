@@ -23,7 +23,7 @@
   let map: Map;
   let markers = L.markerClusterGroup();
   let brsDiffusionWebsitesInBounds = $state(brsDiffusionWebsites.items);
-  let selectedMarkerId = $state('');
+  let selectedMarker = $state<BrsDiffusionWebsiteView | null>(null);
 
   onMount(() => {
     createMap();
@@ -35,13 +35,14 @@
       annuaireManager.zoom,
     );
 
+    selectedMarker = null;
     deleteMarkersFromMap();
     addMarkersToMap();
   });
 
   $effect(() => {
-    if (selectedMarkerId) {
-      const element = document.getElementById(selectedMarkerId);
+    if (selectedMarker) {
+      const element = document.getElementById(selectedMarker.id);
 
       element?.scrollIntoView({
         behavior: 'smooth',
@@ -80,7 +81,9 @@
       const markerLayer = L.marker([item.latitude, item.longitude]);
 
       markerLayer.on('click', () => {
-        selectedMarkerId = item.id;
+        selectedMarker = brsDiffusionWebsites.items.find(
+          (brsDiffusionWebsite) => brsDiffusionWebsite.id === item.id,
+        ) as BrsDiffusionWebsiteView;
       });
 
       markers.addLayer(markerLayer);
@@ -112,6 +115,10 @@
       inline: 'nearest',
     });
   };
+
+  const handleMobileCardClose = () => {
+    selectedMarker = null;
+  };
 </script>
 
 <div class="fr-col-12 container">
@@ -131,7 +138,7 @@
             {...item}
             cardTitleElement="h3"
             narrow
-            selected={item.id === selectedMarkerId} />
+            selected={item.id === selectedMarker?.id} />
         </li>
       {/each}
     </ul>
@@ -139,6 +146,15 @@
   <div
     id="map"
     bind:this={mapRef}>
+    {#if selectedMarker}
+      <div class="mobile-card">
+        <Card
+          {...selectedMarker}
+          cardTitleElement="h3"
+          narrow
+          handleClose={handleMobileCardClose} />
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -147,16 +163,26 @@
     max-width: 110rem;
     width: 100%;
     margin: 0 auto;
-    height: calc(100vh - 22rem);
+    height: calc(100vh - 4rem);
     display: flex;
     padding-bottom: 4rem;
     padding-inline: var(--2w);
+    position: relative;
+
+    @media (--md-viewport) {
+      height: calc(100vh - 12rem);
+    }
   }
 
   .list-container {
-    height: calc(100vh - 26rem);
+    height: calc(100vh - 16rem);
     overflow: hidden;
     position: relative;
+    display: none;
+
+    @media (--md-viewport) {
+      display: block;
+    }
   }
 
   .search-results {
@@ -190,5 +216,18 @@
   #map {
     height: 100%;
     flex: 1;
+    position: relative;
+  }
+
+  .mobile-card {
+    position: absolute;
+    bottom: var(--1w);
+    left: var(--1w);
+    right: var(--1w);
+    z-index: 1000;
+
+    @media (--md-viewport) {
+      display: none;
+    }
   }
 </style>
