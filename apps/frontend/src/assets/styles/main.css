@@ -44,6 +44,14 @@
   background-image: none !important;
 }
 
+.map-icon {
+  color: var(--color-blue-primary);
+}
+
+.map-icon span::before {
+  --icon-size: 2rem;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
