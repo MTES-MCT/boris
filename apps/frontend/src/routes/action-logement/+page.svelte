@@ -22,14 +22,15 @@
     à votre situation.
   </p>
 
-  <video
-    src="https://github.com/MTES-MCT/boris/releases/download/v1.0/action-logement.mp4"
-    controls
-    class="fr-mt-2w"
-    width="100%">
-    <track kind="captions" />
-    Votre navigateur ne supporte pas la vidéo.
-  </video>
+  <iframe
+    width="100%"
+    src="https://www.youtube.com/embed/w3J98JlSa9o?si=I4T62YZJbEKhTE6X"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen>
+  </iframe>
 
   <h2 class="fr-mt-6w">À qui s’adresse ce service ?</h2>
   <p>
@@ -47,8 +48,8 @@
     </li>
   </ul>
   <p>
-    Le service de conseil en financement d’Action logement peut également vous
-    accompagner pour d’autres projets qu’un achat en BRS, <a
+    Le service de conseil en financement d'Action logement peut également vous
+    accompagner pour d'autres projets qu'un achat en BRS, <a
       href="https://www.actionlogement.fr/le-conseil-en-accession"
       class="fr-link"
       target="_blank"
@@ -94,3 +95,9 @@
     </i>
   </p>
 </Section>
+
+<style>
+  iframe {
+    aspect-ratio: 16 / 9;
+  }
+</style>
