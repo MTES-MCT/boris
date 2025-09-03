@@ -17,11 +17,22 @@
     brsDiffusionWebsites: PaginationType<BrsDiffusionWebsiteView>;
   };
 
+  const markerClusterGroupOptions = {
+    spiderLegPolylineOptions: {
+      color: '#3917b3',
+      opacity: 1,
+    },
+    polygonOptions: {
+      color: '#3917b3',
+      fillColor: '#3917b3',
+    },
+  };
+
   const { brsDiffusionWebsites }: Props = $props();
 
   let mapRef: HTMLDivElement;
   let map: Map;
-  let markers = L.markerClusterGroup();
+  let markers = L.markerClusterGroup(markerClusterGroupOptions);
   let brsDiffusionWebsitesInBounds = $state(brsDiffusionWebsites.items);
   let selectedMarker = $state<BrsDiffusionWebsiteView | null>(null);
 
@@ -58,10 +69,15 @@
       zoom: annuaireManager.zoom,
     });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+    L.tileLayer(
+      'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png',
+      {
+        minZoom: 0,
+        maxZoom: 20,
+        attribution:
+          '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      },
+    ).addTo(map);
 
     addMarkersToMap();
 
@@ -73,12 +89,19 @@
 
   const deleteMarkersFromMap = () => {
     map?.removeLayer(markers);
-    markers = L.markerClusterGroup();
+    markers = L.markerClusterGroup(markerClusterGroupOptions);
   };
 
   const addMarkersToMap = () => {
+    const icon = L.divIcon({
+      className: 'map-icon',
+      html: `<span class="fr-icon-map-pin-2-fill" aria-hidden="true"></span>`,
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+    });
+
     brsDiffusionWebsites?.items.forEach((item) => {
-      const markerLayer = L.marker([item.latitude, item.longitude]);
+      const markerLayer = L.marker([item.latitude, item.longitude], { icon });
 
       markerLayer.on('click', () => {
         selectedMarker = brsDiffusionWebsites.items.find(
