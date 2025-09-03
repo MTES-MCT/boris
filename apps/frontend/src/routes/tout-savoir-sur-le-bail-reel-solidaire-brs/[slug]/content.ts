@@ -313,7 +313,8 @@ export const steps: Step[] = [
               <path style=" stroke:none;fill-rule:nonzero;fill:rgb(7.843138%,23.137255%,40.784314%);fill-opacity:1;" d="M 175.453125 57.109375 C 176.136719 57.179688 176.691406 57.433594 177.304688 57.726562 C 177.128906 58.148438 176.914062 58.382812 176.566406 58.671875 C 176.308594 58.886719 176.0625 59.101562 175.824219 59.335938 C 175.421875 59.363281 175.421875 59.363281 174.945312 59.351562 C 174.707031 59.351562 174.707031 59.351562 174.464844 59.347656 C 174.28125 59.34375 174.28125 59.34375 174.09375 59.335938 C 174.507812 58.5625 174.957031 57.832031 175.453125 57.109375 Z M 175.453125 57.109375 "/>
             </g>
           </svg>
-          <p class="fr-mt-3w">
+          <p></p>
+          <p>
             Si vous faites partie d'une entreprise de plus de 10 salarié·es (ou plus de
             50 salarié·es dans le secteur agricole) vous pouvez bénéficier gratuitement
             d'un accompagnement dans votre projet d’achat.
