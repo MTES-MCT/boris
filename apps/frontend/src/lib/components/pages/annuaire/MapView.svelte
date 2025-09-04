@@ -2,7 +2,7 @@
   import 'leaflet/dist/leaflet.css';
   import 'leaflet.markercluster/dist/MarkerCluster.css';
   import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
-  import L, { Map } from 'leaflet';
+  import L, { Map, type PointExpression } from 'leaflet';
   import 'leaflet.markercluster';
   import type {
     BrsDiffusionWebsiteView,
@@ -35,6 +35,7 @@
   let markers = L.markerClusterGroup(markerClusterGroupOptions);
   let brsDiffusionWebsitesInBounds = $state(brsDiffusionWebsites.items);
   let selectedMarker = $state<BrsDiffusionWebsiteView | null>(null);
+  let hoveredMarker = $state<BrsDiffusionWebsiteView | null>(null);
 
   onMount(() => {
     createMap();
@@ -45,10 +46,6 @@
       [annuaireManager.latitude, annuaireManager.longitude],
       annuaireManager.zoom,
     );
-
-    selectedMarker = null;
-    deleteMarkersFromMap();
-    addMarkersToMap();
   });
 
   $effect(() => {
@@ -76,10 +73,8 @@
 
     addMarkersToMap();
 
-    map.on('zoomlevelschange', debounce(handleMapBoundsChange, 200));
-    map.on('moveend', debounce(handleMapBoundsChange, 200));
-
-    handleMapBoundsChange();
+    map.on('zoomlevelschange', debounce(handleMapBoundsChange, 50));
+    map.on('move', handleMapBoundsChange);
   };
 
   const deleteMarkersFromMap = () => {
@@ -87,21 +82,32 @@
     markers = L.markerClusterGroup(markerClusterGroupOptions);
   };
 
-  const addMarkersToMap = () => {
-    const icon = L.divIcon({
-      className: 'map-icon',
-      html: `<span class="fr-icon-map-pin-2-fill" aria-hidden="true"></span>`,
-      iconSize: [32, 32],
-      iconAnchor: [16, 32],
-    });
+  const setIcon = (isSelected: boolean, isHovered: boolean) => {
+    const className = `map-icon ${isSelected ? 'selected' : ''} ${isHovered ? 'hovered' : ''}`;
 
+    return L.divIcon({
+      className,
+      html: `<span class="fr-icon-map-pin-2-fill" aria-hidden="true"></span>`,
+      iconSize: isSelected || isHovered ? [40, 40] : [32, 32],
+      iconAnchor: isSelected || isHovered ? [20, 40] : [16, 32],
+    });
+  };
+
+  const addMarkersToMap = () => {
     brsDiffusionWebsites?.items.forEach((item) => {
-      const markerLayer = L.marker([item.latitude, item.longitude], { icon });
+      const isSelected = item.id === selectedMarker?.id;
+      const isHovered = item.id === hoveredMarker?.id;
+
+      const markerLayer = L.marker([item.latitude, item.longitude], {
+        icon: setIcon(isSelected, isHovered),
+      });
 
       markerLayer.on('click', () => {
         selectedMarker = brsDiffusionWebsites.items.find(
           (brsDiffusionWebsite) => brsDiffusionWebsite.id === item.id,
         ) as BrsDiffusionWebsiteView;
+
+        map.setView([selectedMarker.latitude, selectedMarker.longitude], 13);
       });
 
       markers.addLayer(markerLayer);
@@ -111,6 +117,9 @@
   };
 
   const handleMapBoundsChange = () => {
+    deleteMarkersFromMap();
+    addMarkersToMap();
+
     const northEastLat = map.getBounds().getNorthEast().lat;
     const northEastLng = map.getBounds().getNorthEast().lng;
     const southWestLat = map.getBounds().getSouthWest().lat;
@@ -137,6 +146,34 @@
   const handleMobileCardClose = () => {
     selectedMarker = null;
   };
+
+  const handleOnMouseEnter = (e: MouseEvent) => {
+    const id = (e.currentTarget as HTMLElement).id;
+
+    hoveredMarker = brsDiffusionWebsites.items.find(
+      (item) => item.id === id,
+    ) as BrsDiffusionWebsiteView;
+
+    deleteMarkersFromMap();
+    addMarkersToMap();
+  };
+
+  const handleOnMouseLeave = (e: MouseEvent) => {
+    hoveredMarker = null;
+
+    deleteMarkersFromMap();
+    addMarkersToMap();
+  };
+
+  const handleCardClick = (e: MouseEvent) => {
+    const id = (e.currentTarget as HTMLElement).id;
+
+    selectedMarker = brsDiffusionWebsites.items.find(
+      (item) => item.id === id,
+    ) as BrsDiffusionWebsiteView;
+
+    map.setView([selectedMarker.latitude, selectedMarker.longitude], 13);
+  };
 </script>
 
 <div class="fr-col-12 container">
@@ -151,12 +188,19 @@
     </div>
     <ul>
       {#each brsDiffusionWebsitesInBounds as item}
-        <li id={item.id}>
+        <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <li
+          id={item.id}
+          onclick={handleCardClick}
+          onmouseenter={handleOnMouseEnter}
+          onmouseleave={handleOnMouseLeave}>
           <Card
             {...item}
             cardTitleElement="h3"
             narrow
-            selected={item.id === selectedMarker?.id} />
+            selected={item.id === selectedMarker?.id ||
+              item.id === hoveredMarker?.id} />
         </li>
       {/each}
     </ul>

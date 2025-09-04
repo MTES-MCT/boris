@@ -5,8 +5,6 @@ import {
 } from '$lib/api/brs-diffusion-websites';
 import type { BrsDiffusionWebsiteView, Pagination } from '$lib/utils/api-types';
 import {
-  defaultBounds,
-  defaultCoords,
   defaultPagination,
   defaultRadius,
   parisCoords,
