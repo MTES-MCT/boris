@@ -4,11 +4,21 @@
 }
 
 .map-icon {
-  color: var(--color-blue-primary);
+  color: var(--background-action-high-blue-france-hover);
 }
 
 .map-icon span::before {
   --icon-size: 2rem;
+}
+
+.map-icon.selected,
+.map-icon.hovered {
+  color: var(--background-action-high-blue-france);
+}
+
+.map-icon.selected span::before,
+.map-icon.hovered span::before {
+  --icon-size: 2.5rem;
 }
 
 .marker-cluster span {

@@ -43,7 +43,7 @@
         suggestions = null;
       }
     },
-    2000,
+    300,
   );
 
   const handleChange = async (event: Event) => {
@@ -121,8 +121,6 @@
 
     annuaireManager.zoom = 12;
   };
-
-  $inspect(isLoading);
 </script>
 
 <div
