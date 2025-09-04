@@ -1,0 +1,38 @@
+.leaflet-control [href] {
+  background: #fff !important;
+  background-image: none !important;
+}
+
+.map-icon {
+  color: var(--color-blue-primary);
+}
+
+.map-icon span::before {
+  --icon-size: 2rem;
+}
+
+.marker-cluster span {
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+.marker-cluster-large span {
+  font-size: 0.75rem;
+}
+
+.marker-cluster-small,
+.marker-cluster-small div {
+  background-color: var(--background-alt-green-emeraude-hover) !important;
+}
+
+.marker-cluster-medium,
+.marker-cluster-medium div {
+  background-color: var(
+    --background-alt-green-tilleul-verveine-hover
+  ) !important;
+}
+
+.marker-cluster-large,
+.marker-cluster-large div {
+  background-color: var(--pink-tuile-sun-425-moon-750-hover) !important;
+}
