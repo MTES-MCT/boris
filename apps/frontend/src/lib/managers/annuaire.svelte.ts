@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { getBrsDiffusionWebsites } from '$lib/api/brs-diffusion-websites';
 
 import type { BrsDiffusionWebsiteView, Pagination } from '$lib/utils/api-types';
@@ -19,8 +20,7 @@ class AnnuaireManager {
   listBrsDiffusionWebsites = $state<Pagination<BrsDiffusionWebsiteView> | null>(
     null,
   );
-  // viewType = $state<'list' | 'map'>('map');
-  viewType = $state<'list' | 'map'>('list');
+  viewType = $state<'list' | 'map'>('map');
   autocompleteValue = $state('');
   hasSearchedTroughAutocomplete = $state(false);
 
