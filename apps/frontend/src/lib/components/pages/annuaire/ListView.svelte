@@ -7,20 +7,14 @@
   import Card from '$lib/components/pages/annuaire/Card.svelte';
   import Pagination from '$components/common/Pagination.svelte';
   import { default as WomanYoga } from '$assets/illustrations/woman-yoga.svg?raw';
-
-  type Props = {
-    brsDiffusionWebsites: PaginationType<BrsDiffusionWebsiteView>;
-  };
-
-  const { brsDiffusionWebsites }: Props = $props();
 </script>
 
 <div class="fr-container fr-container--fluid">
   <div class="fr-grid-row fr-grid-row--gutters">
-    {#if annuaireManager.listBrsDiffusionWebsites}
+    {#if !annuaireManager.hasSearchedTroughAutocomplete}
+      {@render hint()}
+    {:else if annuaireManager.listBrsDiffusionWebsites}
       {@render content(annuaireManager.listBrsDiffusionWebsites)}
-    {:else}
-      {@render content(brsDiffusionWebsites)}
     {/if}
   </div>
 </div>
@@ -53,6 +47,12 @@
     {@html WomanYoga}
   </div>
   <div class="fr-col-4"></div>
+{/snippet}
+
+{#snippet hint()}
+  <div class="fr-col-12">
+    <p>text à définir</p>
+  </div>
 {/snippet}
 
 <style lang="postcss">

@@ -184,7 +184,7 @@ export const defaultBounds: MapBounds = {
   southWestLng: -8.085937500000002,
 };
 
-export const defaultRadius = 50;
+export const defaultRadius = 5;
 
 export const defaultZoomDesktop = 6;
 export const defaultZoomMobile = 5;

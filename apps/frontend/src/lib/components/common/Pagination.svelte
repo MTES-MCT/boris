@@ -5,6 +5,7 @@
   import Select from '$lib/components/common/Select.svelte';
   import type { Pagination } from '$lib/utils/api-types';
   import type { ComponentProps } from 'svelte';
+  import annuaireManager from '$lib/managers/annuaire.svelte';
 
   type Props = Pagination<unknown> & {
     baseUrl: string;
@@ -71,6 +72,10 @@
     const target = e.target as HTMLSelectElement;
 
     goto(`${baseUrl}?page=${target.value}&pageSize=${pageSize}`);
+  };
+
+  const buildUrl = (page: number) => {
+    return `${baseUrl}?page=${page}&pageSize=${pageSize}&latitude=${annuaireManager.latitude}&longitude=`;
   };
 </script>
 

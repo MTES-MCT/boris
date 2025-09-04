@@ -202,7 +202,7 @@ describe('BrsDiffusionWebsiteRepository', () => {
       'departement',
     );
     expect(mockQueryBuilder.where).toHaveBeenCalledWith(
-      'll_to_earth(brs_diffusion_website.latitude, brs_diffusion_website.longitude) <@ earth_box(ll_to_earth(:southWestLat, :southWestLng), ll_to_earth(:northEastLat, :northEastLng))',
+      'cube(ARRAY[:northEastLat::float8, :northEastLng::float8], ARRAY[:southWestLat::float8, :southWestLng::float8]) @> cube(ARRAY[brs_diffusion_website.latitude, brs_diffusion_website.longitude])',
     );
     expect(mockQueryBuilder.setParameters).toHaveBeenCalledWith({
       northEastLat: 48.292817,

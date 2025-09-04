@@ -37,7 +37,7 @@ export const getAllBrsDiffusionWebsites = async (): Promise<
   const url = new URL(`${PUBLIC_API_URL}/brs-diffusion-websites`);
 
   url.searchParams.set('page', '1');
-  url.searchParams.set('pageSize', defaultPagination.pageSize.toString());
+  url.searchParams.set('pageSize', '150');
 
   const response = await fetch(url);
 
