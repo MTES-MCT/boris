@@ -361,10 +361,6 @@ export const steps: Step[] = [
               <p class="fr-mb-1w">
                 Vous pouvez alors demander conseil à votre OFS. Ce dernier pourra par exemple vous renvoyer vers des professionnel·les de l'immobilier formé·es sur la vente en BRS ou vous proposer des acquéreurs potentiels.
               </p>
-              <p>
-                Vous avez donc plutôt intérêt à chercher un acheteur directement qui
-                puisse vous racheter le bien à un meilleur prix !
-              </p>
             </li>
             <li>
               <p class="fr-mb-0"><b>Si vous trouvez un acheteur mais que l'OFS refuse de l'agréer :</b></p>
