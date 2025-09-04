@@ -10,6 +10,7 @@
 
   let value = $state<string>('');
   let suggestions = $state<AutocompleteSuggestion[] | null>(null);
+  let isLoading = $state<boolean>(false);
   let isListExpanded = $state<boolean>(false);
   let isTooShort = $derived(value.length > 0 && value.length < 3);
   let isTooLong = $derived(value.length > 200);
@@ -21,29 +22,37 @@
     annuaireManager.autocompleteValue = value;
   });
 
+  const debouncedSearch = debounce(
+    async (searchValue: string, hasCorrectLength: boolean) => {
+      if (hasCorrectLength) {
+        const { results } = await autocomplete(searchValue);
+
+        suggestions = results.map((result, index) => ({
+          ...result,
+          id: `suggestion-${index}`,
+        }));
+
+        isListExpanded = true;
+
+        if (suggestions.length > 0) {
+          focusedSuggestionId = suggestions[0]?.id as string;
+        }
+
+        isLoading = false;
+      } else {
+        suggestions = null;
+      }
+    },
+    2000,
+  );
+
   const handleChange = async (event: Event) => {
     value = (event.target as HTMLInputElement).value;
     const hasCorrectLength = value.length >= 3 && value.length <= 200;
-
-    if (hasCorrectLength) {
-      const { results } = await autocomplete(value);
-
-      suggestions = results.map((result, index) => ({
-        ...result,
-        id: `suggestion-${index}`,
-      }));
-
-      isListExpanded = true;
-
-      if (suggestions.length > 0) {
-        focusedSuggestionId = suggestions[0]?.id as string;
-      }
-    } else {
-      isListExpanded = false;
-      suggestions = null;
-    }
-
     isListExpanded = value.length > 0;
+    isLoading = true;
+
+    debouncedSearch(value, hasCorrectLength);
   };
 
   const handleKeydown = (event: KeyboardEvent) => {
@@ -112,6 +121,8 @@
 
     annuaireManager.zoom = 12;
   };
+
+  $inspect(isLoading);
 </script>
 
 <div
@@ -133,7 +144,7 @@
       'aria-activedescendant': focusedSuggestionId,
     }}
     forceNoMarginBottom
-    onChange={debounce(handleChange, 300)}
+    onChange={handleChange}
     onKeydown={handleKeydown} />
 
   {#if isListExpanded}
@@ -150,6 +161,10 @@
         {:else if isTooLong}
           <li>
             <b>Veuillez saisir 200 caractères au maximum.</b>
+          </li>
+        {:else if isLoading}
+          <li>
+            <i>Recherche...</i>
           </li>
         {:else if suggestions && suggestions.length > 0}
           {#each suggestions as suggestion, index}

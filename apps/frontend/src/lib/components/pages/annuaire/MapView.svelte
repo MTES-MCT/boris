@@ -17,7 +17,7 @@
     brsDiffusionWebsites: PaginationType<BrsDiffusionWebsiteView>;
   };
 
-  const markerClusterGroupOptions = {
+  const markerClusterGroupOptions: L.MarkerClusterGroupOptions = {
     spiderLegPolylineOptions: {
       color: '#3917b3',
       opacity: 1,
@@ -69,15 +69,10 @@
       zoom: annuaireManager.zoom,
     });
 
-    L.tileLayer(
-      'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png',
-      {
-        minZoom: 0,
-        maxZoom: 20,
-        attribution:
-          '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      },
-    ).addTo(map);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
 
     addMarkersToMap();
 
