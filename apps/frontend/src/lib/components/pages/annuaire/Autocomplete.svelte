@@ -120,6 +120,7 @@
     });
 
     annuaireManager.zoom = 12;
+    annuaireManager.hasSearchedTroughAutocomplete = true;
   };
 </script>
 
@@ -131,7 +132,7 @@
     value={annuaireManager.autocompleteValue}
     id={inputId}
     placeholder="Bordeaux, Marseille, Paris"
-    label="Saisir le lieu ou le code postal"
+    label="Saisir la ville ou le code postal"
     icon="map-pin-2-line"
     role="combobox"
     autocomplete="off"

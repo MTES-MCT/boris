@@ -6,6 +6,7 @@
 </script>
 
 <div class="filters fr-container--fluid">
+  <p class="fr-h3"><b>Filtres</b></p>
   <div class="fr-grid-row fr-grid-row--gutters">
     <div
       class={annuaireManager.viewType === 'list'
@@ -49,5 +50,13 @@
   .toggle {
     display: flex;
     align-items: flex-end;
+  }
+
+  .fr-h3 {
+    margin-top: var(--4w);
+
+    @media (--lg-viewport) {
+      margin-top: var(--6w);
+    }
   }
 </style>

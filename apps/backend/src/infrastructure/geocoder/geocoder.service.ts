@@ -13,7 +13,7 @@ export class GeocoderService implements GeocoderServiceInterface {
     inseeCode?: string,
   ): Promise<GeocodedResponse[]> {
     try {
-      let url = `${this.baseUrl}/search?q=${municipality}&autocomplete=0&index=address&limit=5&returntruegeometry=false&type=municipality`;
+      let url = `${this.baseUrl}/search?q=${municipality}&autocomplete=1&index=address&limit=5&returntruegeometry=false&type=municipality`;
 
       if (inseeCode) {
         url = `${url}&citycode=${inseeCode}`;
