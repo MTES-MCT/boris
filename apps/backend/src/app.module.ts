@@ -1,4 +1,5 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { SentryModule } from '@sentry/nestjs/setup';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
 import { typeormConfig } from './infrastructure/persistence/typeorm.config';
@@ -15,6 +16,7 @@ import { BrsDiffusionWebsiteModule } from './infrastructure/brs-diffusion-websit
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     TypeOrmModule.forRoot(typeormConfig),
     LoggerModule.forRoot({
       pinoHttp: {
@@ -22,9 +24,6 @@ import { BrsDiffusionWebsiteModule } from './infrastructure/brs-diffusion-websit
           process.env.NODE_ENV !== 'ci' && process.env.NODE_ENV !== 'test',
         transport: {
           target: 'pino-pretty',
-          options: {
-            singleLine: true,
-          },
         },
       },
     }),
