@@ -18,7 +18,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await useSession(app, dataSource);
-
   configureViewEngine(app);
   configureApiDocumentation(app);
 
