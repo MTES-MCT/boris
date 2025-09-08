@@ -1,4 +1,5 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
 import { typeormConfig } from './infrastructure/persistence/typeorm.config';
@@ -12,9 +13,11 @@ import { AdminHomeModule } from './infrastructure/admin/home/home.module';
 import { NotFoundModule } from './infrastructure/not-found/not-found.module';
 import { ToLocalsMiddleware } from './infrastructure/middlewares/to-locals.middleware';
 import { BrsDiffusionWebsiteModule } from './infrastructure/brs-diffusion-website/brs-diffusion-website.module';
+import { APP_FILTER } from '@nestjs/core';
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     TypeOrmModule.forRoot(typeormConfig),
     LoggerModule.forRoot({
       pinoHttp: {
@@ -22,9 +25,6 @@ import { BrsDiffusionWebsiteModule } from './infrastructure/brs-diffusion-websit
           process.env.NODE_ENV !== 'ci' && process.env.NODE_ENV !== 'test',
         transport: {
           target: 'pino-pretty',
-          options: {
-            singleLine: true,
-          },
         },
       },
     }),
@@ -39,7 +39,12 @@ import { BrsDiffusionWebsiteModule } from './infrastructure/brs-diffusion-websit
     NotFoundModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: SentryGlobalFilter,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

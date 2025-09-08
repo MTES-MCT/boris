@@ -17,4 +17,9 @@ export class GetOfssApiController {
   index(@Query() { page = 1, pageSize = MAX_PAGE_SIZE }: PaginationDTO) {
     return this.findAllOfssUsecase.execute({ page, pageSize });
   }
+
+  @Get('/errors')
+  errors() {
+    throw new Error('Test sentry errors');
+  }
 }
