@@ -23,7 +23,8 @@
     "generate-api-types": "openapi-typescript http://localhost:3000/api/documentation/schema/json --output src/lib/utils/generated-api-types.ts"
   },
   "dependencies": {
-    "@sentry/sveltekit": "^8.42.0"
+    "@sentry/sveltekit": "^8.42.0",
+    "keyv": "^5.5.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
