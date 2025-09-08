@@ -3,29 +3,24 @@ import { formatOfss } from '$lib/utils/formatters';
 import type { OfsView, Pagination } from '$lib/utils/api-types';
 import Keyv from 'keyv';
 
-const TTL_MINS = 1;
-const TTL_MS = TTL_MINS * 60 * 1000;
-const ofssCache = new Keyv({ namespace: 'ofss', ttl: TTL_MS });
+const namespace = 'ofss';
+const TTL_HOURS = 24;
+const TTL_MINS = 60;
+const TTL_MS = TTL_HOURS * TTL_MINS * 60 * 1000;
+const cache = new Keyv({ namespace, ttl: TTL_MS });
 
 export const load = async () => {
-  const cache = await ofssCache.get('ofss');
+  let ofss = (await cache.get(namespace)) as Pagination<OfsView>;
 
-  console.log(cache);
-
-  if (cache) {
-    return {
-      regions: formatOfss(cache.items),
-    };
-  } else {
+  if (!ofss) {
     const response = await fetch(`${API_URL}/ofss`);
-    const ofss: Pagination<OfsView> = await response.json();
-
-    ofssCache.set('ofss', ofss);
-
-    return {
-      regions: formatOfss(ofss.items),
-    };
+    ofss = await response.json();
+    cache.set(namespace, ofss);
   }
+
+  return {
+    regions: formatOfss(ofss.items),
+  };
 };
 
 export const prerender = false;
