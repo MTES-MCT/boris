@@ -31,7 +31,8 @@
     <div class="fr-col-12">
       <Pagination
         {...payload}
-        baseUrl="/annuaire" />
+        baseUrl="/annuaire"
+        scrollToElementId="brs-diffusion-websites-filters" />
     </div>
   {:else}
     {@render noResult()}

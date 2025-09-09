@@ -17,19 +17,21 @@ class AnnuaireManager {
   listBrsDiffusionWebsites = $state<Pagination<BrsDiffusionWebsiteView> | null>(
     null,
   );
-  viewType = $state<'list' | 'map'>('map');
+  viewType = $state<'list' | 'map'>('list');
   autocompleteValue = $state('');
   hasSearchedTroughAutocomplete = $state(false);
 
   setListBrsDiffusionWebsites = async ({
+    page,
     coords,
     radius,
   }: {
+    page?: number;
     coords?: { latitude: number; longitude: number };
     radius?: number;
   }) => {
     const query = {
-      page: defaultPagination.page,
+      page: page || defaultPagination.page,
       pageSize: defaultPagination.pageSize,
       latitude: coords?.latitude || this.latitude,
       longitude: coords?.longitude || this.longitude,

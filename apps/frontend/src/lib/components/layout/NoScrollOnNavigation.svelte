@@ -1,17 +1,12 @@
 <script lang="ts">
   import { afterNavigate, beforeNavigate } from '$app/navigation';
-
-  const scrollBehaviorClass = 'scroll-behavior-smooth';
+  import { addSmoothScroll, removeSmoothScroll } from '$lib/utils/helpers';
 
   beforeNavigate(() => {
-    document
-      .getElementsByTagName('html')[0]
-      ?.classList.remove(scrollBehaviorClass);
+    removeSmoothScroll();
   });
 
   afterNavigate(() => {
-    document
-      .getElementsByTagName('html')[0]
-      ?.classList.add(scrollBehaviorClass);
+    addSmoothScroll();
   });
 </script>

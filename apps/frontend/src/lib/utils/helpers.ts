@@ -35,3 +35,15 @@ export const clickOutside = (node: Element) => {
     },
   };
 };
+
+export const addSmoothScroll = () => {
+  document
+    .getElementsByTagName('html')[0]
+    ?.classList.add('scroll-behavior-smooth');
+};
+
+export const removeSmoothScroll = () => {
+  document
+    .getElementsByTagName('html')[0]
+    ?.classList.remove('scroll-behavior-smooth');
+};
