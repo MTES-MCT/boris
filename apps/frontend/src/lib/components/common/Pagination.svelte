@@ -6,9 +6,11 @@
   import type { Pagination } from '$lib/utils/api-types';
   import type { ComponentProps } from 'svelte';
   import annuaireManager from '$lib/managers/annuaire.svelte';
+  import { addSmoothScroll, removeSmoothScroll } from '$lib/utils/helpers';
 
   type Props = Pagination<unknown> & {
     baseUrl: string;
+    scrollToElementId?: string;
   };
 
   const {
@@ -18,6 +20,7 @@
     hasPreviousPage,
     hasNextPage,
     baseUrl,
+    scrollToElementId = '',
   }: Props = $props();
 
   const generatePageNumbers = (
@@ -74,8 +77,16 @@
     goto(`${baseUrl}?page=${target.value}&pageSize=${pageSize}`);
   };
 
-  const buildUrl = (page: number) => {
-    return `${baseUrl}?page=${page}&pageSize=${pageSize}&latitude=${annuaireManager.latitude}&longitude=`;
+  const handleClick = (page: number) => {
+    removeSmoothScroll();
+    annuaireManager.setListBrsDiffusionWebsites({ page });
+
+    const scrollToElement = document.getElementById(scrollToElementId);
+
+    setTimeout(() => {
+      window.scrollTo(0, scrollToElement?.offsetTop || 0);
+      addSmoothScroll();
+    }, 50);
   };
 </script>
 
@@ -99,12 +110,12 @@
   <ul class="fr-pagination__list">
     <li class="fr-hidden fr-unhidden-sm">
       {#if hasPreviousPage}
-        <a
+        <button
           class="fr-pagination__link fr-pagination__link--first"
-          href={`${baseUrl}`}
+          onclick={() => handleClick(1)}
           title="Première page">
           Première page
-        </a>
+        </button>
       {:else}
         <span
           class="fr-pagination__link fr-pagination__link--first disabled"
@@ -115,12 +126,12 @@
     </li>
     <li>
       {#if hasPreviousPage}
-        <a
+        <button
           class="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label"
-          href={`${baseUrl}?page=${page - 1}&pageSize=${pageSize}`}
+          onclick={() => handleClick(page - 1)}
           title="Page précédente">
           Page précédente
-        </a>
+        </button>
       {:else}
         <span
           class="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label disabled">
@@ -140,12 +151,12 @@
             {pageNumber}
           </span>
         {:else}
-          <a
+          <button
             class="fr-pagination__link"
-            href={`${baseUrl}?page=${pageNumber}&pageSize=${pageSize}`}
+            onclick={() => handleClick(pageNumber)}
             title={`Page ${pageNumber}`}>
             {pageNumber}
-          </a>
+          </button>
         {/if}
       </li>
     {/each}
@@ -161,23 +172,23 @@
             {pageNumber}
           </span>
         {:else}
-          <a
+          <button
             class="fr-pagination__link"
-            href={`${baseUrl}?page=${pageNumber}&pageSize=${pageSize}`}
+            onclick={() => handleClick(pageNumber)}
             title={`Page ${pageNumber}`}>
             {pageNumber}
-          </a>
+          </button>
         {/if}
       </li>
     {/each}
     <li>
       {#if hasNextPage}
-        <a
+        <button
           class="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label"
-          href={`${baseUrl}?page=${page + 1}&pageSize=${pageSize}`}
+          onclick={() => handleClick(page + 1)}
           title="Page suivante">
           Page suivante
-        </a>
+        </button>
       {:else}
         <span
           class="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label disabled"
@@ -188,12 +199,12 @@
     </li>
     <li class="fr-hidden fr-unhidden-sm">
       {#if hasNextPage}
-        <a
+        <button
           class="fr-pagination__link fr-pagination__link--last"
-          href={`${baseUrl}?page=${pagesCount}&pageSize=${pageSize}`}
+          onclick={() => handleClick(pagesCount)}
           title="Dernière page">
           Dernière page
-        </a>
+        </button>
       {:else}
         <span
           class="fr-pagination__link fr-pagination__link--last disabled"

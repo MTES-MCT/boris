@@ -5,7 +5,9 @@
   import annuaireManager from '$lib/managers/annuaire.svelte';
 </script>
 
-<div class="filters fr-container--fluid">
+<div
+  id="brs-diffusion-websites-filters"
+  class="filters fr-container--fluid">
   <p class="fr-h3"><b>Filtres</b></p>
   <div class="fr-grid-row fr-grid-row--gutters">
     <div
