@@ -25,6 +25,9 @@ import { APP_FILTER } from '@nestjs/core';
           process.env.NODE_ENV !== 'ci' && process.env.NODE_ENV !== 'test',
         transport: {
           target: 'pino-pretty',
+          options: {
+            singleLine: true,
+          },
         },
       },
     }),
