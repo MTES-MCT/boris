@@ -1,38 +1,47 @@
 import { json } from '@sveltejs/kit';
 import { API_URL } from '$env/static/private';
-import type { BrsDiffusionWebsiteView, Pagination } from '$lib/utils/api-types';
+import cache, { namespaces } from '$lib/server/cache';
 
 export const GET = async () => {
-  const url = new URL(`${API_URL}/brs-diffusion-websites`);
+  let brsDiffusionWebsites = await cache.get(namespaces.brsDiffusionWebsites);
 
-  url.searchParams.set('page', '1');
-  url.searchParams.set('pageSize', '150');
+  if (!brsDiffusionWebsites) {
+    const url = new URL(`${API_URL}/brs-diffusion-websites`);
 
-  const response = await fetch(url);
+    url.searchParams.set('page', '1');
+    url.searchParams.set('pageSize', '150');
 
-  const data: Pagination<BrsDiffusionWebsiteView> = await response.json();
+    const response = await fetch(url);
 
-  let currentPage = data.page;
+    brsDiffusionWebsites = await response.json();
 
-  if (data.hasNextPage) {
-    for (const _ of new Array(data.pagesCount - 1)) {
-      currentPage = currentPage + 1;
+    let currentPage = brsDiffusionWebsites.page;
 
-      url.searchParams.set('page', currentPage.toString());
+    if (brsDiffusionWebsites.hasNextPage) {
+      for (const _ of new Array(brsDiffusionWebsites.pagesCount - 1)) {
+        currentPage = currentPage + 1;
 
-      const pageResponse = await fetch(url);
-      const pageData = await pageResponse.json();
+        url.searchParams.set('page', currentPage.toString());
 
-      data.items = [...data.items, ...pageData.items];
+        const pageResponse = await fetch(url);
+        const pageData = await pageResponse.json();
+
+        brsDiffusionWebsites.items = [
+          ...brsDiffusionWebsites.items,
+          ...pageData.items,
+        ];
+      }
     }
+
+    cache.set(namespaces.brsDiffusionWebsites, brsDiffusionWebsites);
   }
 
   return json({
-    ...data,
+    ...brsDiffusionWebsites,
     page: 1,
     pagesCount: 1,
     hasNextPage: false,
     hasPreviousPage: false,
-    pageSize: data.totalCount,
+    pageSize: brsDiffusionWebsites.totalCount,
   });
 };
