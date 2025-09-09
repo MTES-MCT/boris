@@ -1,6 +1,5 @@
 import { PUBLIC_API_URL } from '$env/static/public';
 import type { Pagination, BrsDiffusionWebsiteView } from '$lib/utils/api-types';
-import { defaultPagination } from '$lib/utils/constants';
 import type { operations } from '$lib/utils/generated-api-types';
 
 export const getBrsDiffusionWebsites = async (
