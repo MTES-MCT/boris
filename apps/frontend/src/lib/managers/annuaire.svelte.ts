@@ -17,7 +17,7 @@ class AnnuaireManager {
   listBrsDiffusionWebsites = $state<Pagination<BrsDiffusionWebsiteView> | null>(
     null,
   );
-  viewType = $state<'list' | 'map'>('list');
+  viewType = $state<'list' | 'map'>('map');
   autocompleteValue = $state('');
   hasSearchedTroughAutocomplete = $state(false);
 
