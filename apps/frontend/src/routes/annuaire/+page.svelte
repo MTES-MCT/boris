@@ -6,6 +6,7 @@
   import ListView from '$components/pages/annuaire/ListView.svelte';
   import annuaireManager from '$lib/managers/annuaire.svelte';
   import MapView from '$components/pages/annuaire/MapView.svelte';
+  import { browser } from '$app/environment';
 
   type Props = {
     data: DataType;
