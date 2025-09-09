@@ -1,6 +1,3 @@
-import { browser } from '$app/environment';
-import { getBrsDiffusionWebsites } from '$lib/api/brs-diffusion-websites';
-
 import type { BrsDiffusionWebsiteView, Pagination } from '$lib/utils/api-types';
 import {
   defaultCoords,
@@ -39,7 +36,16 @@ class AnnuaireManager {
       radius: radius || this.radius,
     };
 
-    const brsDiffusionWebsites = await getBrsDiffusionWebsites(query);
+    const url = new URL(`${window.location.origin}/api/brs-diffusion-websites`);
+    url.searchParams.set('page', query.page.toString());
+    url.searchParams.set('pageSize', query.pageSize.toString());
+    url.searchParams.set('latitude', query.latitude.toString());
+    url.searchParams.set('longitude', query.longitude.toString());
+    url.searchParams.set('radius', query.radius.toString());
+
+    const response = await fetch(url);
+    const brsDiffusionWebsites = await response.json();
+
     this.listBrsDiffusionWebsites = brsDiffusionWebsites;
 
     this.latitude = coords?.latitude || this.latitude;
