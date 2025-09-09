@@ -38,23 +38,6 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/api/brs-diffusion-websites-by-bounds': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Récupérer tous les sites web de diffusion BRS dans un rectangle défini par deux coordonnées géographiques. */
-    get: operations['GetBrsDiffusionWebsitesByBoundsApiController_index'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
   '/api/departements/{id}/brs-diffusion-websites': {
     parameters: {
       query?: never;
@@ -81,6 +64,22 @@ export interface paths {
     };
     /** Récupérer tous les OFS */
     get: operations['GetOfssApiController_index'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/ofss/errors': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['GetOfssApiController_errors'];
     put?: never;
     post?: never;
     delete?: never;
@@ -262,50 +261,6 @@ export interface operations {
       };
     };
   };
-  GetBrsDiffusionWebsitesByBoundsApiController_index: {
-    parameters: {
-      query: {
-        page?: number;
-        pageSize?: number;
-        /** @description La latitude du point nord-est de référence */
-        northEastLat: number;
-        /** @description La longitude du point nord-est de référence */
-        northEastLng: number;
-        /** @description La latitude du point sud-ouest de référence */
-        southWestLat: number;
-        /** @description La longitude du point sud-ouest de référence */
-        southWestLng: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': {
-            items?: components['schemas']['BrsDiffusionWebsiteView'][];
-            /** @example 42 */
-            totalCount?: number;
-            /** @example 1 */
-            page?: number;
-            /** @example 10 */
-            pageSize?: number;
-            /** @example 5 */
-            pagesCount?: number;
-            /** @example false */
-            hasPreviousPage?: boolean;
-            /** @example true */
-            hasNextPage?: boolean;
-          };
-        };
-      };
-    };
-  };
   GetBrsDiffusionWebsitesByDepartementApiController_index: {
     parameters: {
       query?: {
@@ -378,6 +333,23 @@ export interface operations {
             hasNextPage?: boolean;
           };
         };
+      };
+    };
+  };
+  GetOfssApiController_errors: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
       };
     };
   };
