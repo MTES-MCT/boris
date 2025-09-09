@@ -1,20 +1,11 @@
-import { API_URL } from '$env/static/private';
+import type { PageServerLoad } from './$types';
 import { formatOfss } from '$lib/utils/formatters';
-import type { OfsView, Pagination } from '$lib/utils/api-types';
-import cache, { namespaces } from '$lib/server/cache';
 
-export const load = async () => {
-  let ofss = (await cache.get(namespaces.ofss)) as Pagination<OfsView>;
-
-  if (!ofss) {
-    const response = await fetch(`${API_URL}/ofss`);
-    ofss = await response.json();
-    cache.set(namespaces.ofss, ofss);
-  }
+export const load: PageServerLoad = async ({ fetch }) => {
+  const response = await fetch('api/ofss');
+  const ofss = await response.json();
 
   return {
     regions: formatOfss(ofss.items),
   };
 };
-
-export const prerender = false;
