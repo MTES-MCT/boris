@@ -2,6 +2,7 @@ import Keyv from 'keyv';
 
 export const namespaces = {
   ofss: 'ofss',
+  brsDiffusionWebsites: 'brs-diffusion-websites',
 };
 
 const TTL_HOURS = 24;
