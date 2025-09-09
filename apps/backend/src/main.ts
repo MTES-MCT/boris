@@ -24,8 +24,6 @@ async function bootstrap() {
   app.use(flash());
   app.use(methodOverride('_method'));
 
-  app.enableCors();
-
   await app.listen(process.env.PORT ?? 3000);
 }
 
