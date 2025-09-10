@@ -20,7 +20,7 @@ class AnnuaireManager {
   viewType = $state<'list' | 'map'>('map');
   autocompleteValue = $state('');
   hasSearchedTroughAutocomplete = $state(false);
-  isListLoading = $state(true);
+  isListLoading = $state(false);
 
   setListBrsDiffusionWebsites = async ({
     page,
