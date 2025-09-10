@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { API_URL } from '$env/static/private';
+import { API_KEY, API_URL } from '$env/static/private';
 import cache, { namespaces } from '$lib/server/cache';
 
 export const GET = async () => {
@@ -11,7 +11,11 @@ export const GET = async () => {
     url.searchParams.set('page', '1');
     url.searchParams.set('pageSize', '150');
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        'x-api-key': API_KEY,
+      },
+    });
 
     brsDiffusionWebsites = await response.json();
 
@@ -23,7 +27,11 @@ export const GET = async () => {
 
         url.searchParams.set('page', currentPage.toString());
 
-        const pageResponse = await fetch(url);
+        const pageResponse = await fetch(url, {
+          headers: {
+            'x-api-key': API_KEY,
+          },
+        });
         const pageData = await pageResponse.json();
 
         brsDiffusionWebsites.items = [

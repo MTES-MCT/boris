@@ -1,4 +1,4 @@
-import { API_URL } from '$env/static/private';
+import { API_KEY, API_URL } from '$env/static/private';
 import { json } from '@sveltejs/kit';
 
 export const GET = async ({ url }) => {
@@ -29,7 +29,11 @@ export const GET = async ({ url }) => {
     fetchUrl.searchParams.set('radius', radius);
   }
 
-  const response = await fetch(fetchUrl);
+  const response = await fetch(fetchUrl, {
+    headers: {
+      'x-api-key': API_KEY,
+    },
+  });
   const data = await response.json();
 
   return json(data);
