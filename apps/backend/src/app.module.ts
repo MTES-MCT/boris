@@ -29,6 +29,23 @@ import { APP_FILTER } from '@nestjs/core';
             singleLine: true,
           },
         },
+        customProps: (req) => {
+          const apiKey = req.headers['x-api-key'];
+
+          return {
+            'x-api-key-truncated': apiKey
+              ? '***' + apiKey.toString().slice(-4)
+              : undefined,
+          };
+        },
+        redact: {
+          paths: [
+            'req.headers["x-api-key"]',
+            'req.headers.cookie',
+            'res.headers["set-cookie"]',
+          ],
+          censor: '***',
+        },
       },
     }),
     AuthModule,

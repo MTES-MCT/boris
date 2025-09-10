@@ -13,6 +13,7 @@ jobs:
       LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
       PUBLIC_NODE_ENV: ${{ secrets.PUBLIC_NODE_ENV }}
       API_URL: ${{ secrets.API_URL }}
+      API_KEY: ${{ secrets.API_KEY }}
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5433
       POSTGRES_USER: boris

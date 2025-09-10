@@ -16,10 +16,18 @@ describe('GetBrsDiffusionWebsitesApiController', () => {
     await app.close();
   });
 
-  it('should return paginated brs diffusion websites', async () => {
-    const { status, body } = await request(app.getHttpServer()).get(
+  it('should throw 401 if no api key is provided', async () => {
+    const { status } = await request(app.getHttpServer()).get(
       '/api/brs-diffusion-websites',
     );
+
+    expect(status).toBe(401);
+  });
+
+  it('should return paginated brs diffusion websites', async () => {
+    const { status, body } = await request(app.getHttpServer())
+      .get('/api/brs-diffusion-websites')
+      .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(200);
     expect(body).toHaveProperty('items');
@@ -55,9 +63,11 @@ describe('GetBrsDiffusionWebsitesApiController', () => {
   });
 
   it('should return paginated brs diffusion websites', async () => {
-    const { status, body } = await request(app.getHttpServer()).get(
-      '/api/brs-diffusion-websites?latitude=48.85341&longitude=2.3488&radius=150',
-    );
+    const { status, body } = await request(app.getHttpServer())
+      .get(
+        '/api/brs-diffusion-websites?latitude=48.85341&longitude=2.3488&radius=150',
+      )
+      .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(200);
     expect(body).toHaveProperty('items');
@@ -94,9 +104,9 @@ describe('GetBrsDiffusionWebsitesApiController', () => {
   });
 
   it('should retrieve first page of brs diffusion websites', async () => {
-    const { status, body } = await request(app.getHttpServer()).get(
-      '/api/brs-diffusion-websites?page=1&pageSize=10',
-    );
+    const { status, body } = await request(app.getHttpServer())
+      .get('/api/brs-diffusion-websites?page=1&pageSize=10')
+      .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(200);
     expect(body).toHaveProperty('items');
@@ -138,9 +148,9 @@ describe('GetBrsDiffusionWebsitesApiController', () => {
   });
 
   it('should throw a 400 when pagination query params are invalid', async () => {
-    const { status } = await request(app.getHttpServer()).get(
-      '/api/brs-diffusion-websites?page=deux',
-    );
+    const { status } = await request(app.getHttpServer())
+      .get('/api/brs-diffusion-websites?page=deux')
+      .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(400);
   });
