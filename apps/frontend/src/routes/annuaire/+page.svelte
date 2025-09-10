@@ -47,8 +47,14 @@
       ice cream biscuit. Biscuit sweet sweet roll cake topping. Sweet roll
       liquorice chocolate danish danish.
     </p>
+  </Section>
+
+  <Section
+    title="Filtres"
+    titleElement="h3">
     <Filters />
   </Section>
+
   {#if annuaireManager.viewType === 'map'}
     <MapView brsDiffusionWebsites={data.mapBrsDiffusionWebsites} />
   {:else}

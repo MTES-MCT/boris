@@ -16,5 +16,3 @@ export const load: PageServerLoad = async ({ fetch }) => {
     ],
   };
 };
-
-export const prerender = false;
