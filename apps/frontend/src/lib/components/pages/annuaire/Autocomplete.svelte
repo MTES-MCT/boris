@@ -17,42 +17,39 @@
   const inputId = nanoid(10);
   const suggestionsId = nanoid(10);
   let focusedSuggestionId = $state<string | null>(null);
+  let hasCorrectLength = $derived(value.length >= 3 && value.length <= 200);
 
   $effect(() => {
     annuaireManager.autocompleteValue = value;
   });
 
-  const debouncedSearch = debounce(
-    async (searchValue: string, hasCorrectLength: boolean) => {
-      if (hasCorrectLength) {
-        const { results } = await autocomplete(searchValue);
+  const debouncedSearch = debounce(async () => {
+    if (hasCorrectLength) {
+      const { results } = await autocomplete(value);
 
-        suggestions = results.map((result, index) => ({
-          ...result,
-          id: `suggestion-${index}`,
-        }));
+      suggestions = results.map((result, index) => ({
+        ...result,
+        id: `suggestion-${index}`,
+      }));
 
-        isListExpanded = true;
+      isListExpanded = true;
 
-        if (suggestions.length > 0) {
-          focusedSuggestionId = suggestions[0]?.id as string;
-        }
-
-        isLoading = false;
-      } else {
-        suggestions = null;
+      if (suggestions.length > 0) {
+        focusedSuggestionId = suggestions[0]?.id as string;
       }
-    },
-    300,
-  );
+
+      isLoading = false;
+    } else {
+      suggestions = null;
+    }
+  }, 300);
 
   const handleChange = async (event: Event) => {
     value = (event.target as HTMLInputElement).value;
-    const hasCorrectLength = value.length >= 3 && value.length <= 200;
     isListExpanded = value.length > 0;
     isLoading = true;
 
-    debouncedSearch(value, hasCorrectLength);
+    debouncedSearch();
   };
 
   const handleKeydown = (event: KeyboardEvent) => {
@@ -92,7 +89,9 @@
     } else if (key === 'Escape') {
       isListExpanded = false;
     } else if (key === 'Enter') {
-      handleSelect();
+      if (hasCorrectLength) {
+        handleSelect();
+      }
     }
   };
 
@@ -108,6 +107,8 @@
         return suggestion.id === focusedSuggestionId;
       }
     });
+
+    annuaireManager.isListLoading = true;
 
     value = selectedSuggestion?.fulltext as string;
     isListExpanded = false;

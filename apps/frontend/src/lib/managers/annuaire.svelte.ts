@@ -20,6 +20,7 @@ class AnnuaireManager {
   viewType = $state<'list' | 'map'>('map');
   autocompleteValue = $state('');
   hasSearchedTroughAutocomplete = $state(false);
+  isListLoading = $state(true);
 
   setListBrsDiffusionWebsites = async ({
     page,
@@ -38,6 +39,8 @@ class AnnuaireManager {
       radius: radius || this.radius,
     };
 
+    this.isListLoading = true;
+
     const url = new URL(`${window.location.origin}/api/brs-diffusion-websites`);
     url.searchParams.set('page', query.page.toString());
     url.searchParams.set('pageSize', query.pageSize.toString());
@@ -53,6 +56,7 @@ class AnnuaireManager {
     this.latitude = coords?.latitude || this.latitude;
     this.longitude = coords?.longitude || this.longitude;
     this.radius = radius || this.radius;
+    this.isListLoading = false;
   };
 }
 

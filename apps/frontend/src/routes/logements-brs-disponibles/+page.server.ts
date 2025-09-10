@@ -9,5 +9,3 @@ export const load: PageServerLoad = async ({ fetch }) => {
     regions: formatOfss(ofss.items),
   };
 };
-
-export const prerender = false;

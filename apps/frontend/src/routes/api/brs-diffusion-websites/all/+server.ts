@@ -45,3 +45,5 @@ export const GET = async () => {
     pageSize: brsDiffusionWebsites.totalCount,
   });
 };
+
+export const prerender = true;
