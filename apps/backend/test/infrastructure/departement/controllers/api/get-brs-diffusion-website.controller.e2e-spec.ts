@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { App } from 'supertest/types';
 import { setupTestingApp } from 'test/config/setup.e2e';
 
-describe('GetBrsDiffusionWebsitesByRegionApiController', () => {
+describe('GetBrsDiffusionWebsitesByDepartementApiController', () => {
   let app: INestApplication<App>;
 
   beforeEach(async () => {
@@ -16,18 +16,34 @@ describe('GetBrsDiffusionWebsitesByRegionApiController', () => {
     await app.close();
   });
 
-  it('should return paginated brs diffusion websites by region', async () => {
-    const { body: brsDiffusionWebsites } = await request(
-      app.getHttpServer(),
-    ).get('/api/brs-diffusion-websites');
+  it('should throw 401 if no api key is provided', async () => {
+    const { body: brsDiffusionWebsites } = await request(app.getHttpServer())
+      .get('/api/brs-diffusion-websites')
+      .set('x-api-key', process.env.API_KEY as string);
 
-    const regionId = brsDiffusionWebsites.items.find(
-      (item: BrsDiffusionWebsiteView) => item.region.name === 'Bretagne',
-    )?.region.id;
+    const departementId = brsDiffusionWebsites.items.find(
+      (item: BrsDiffusionWebsiteView) => item.departement.name === 'Finistère',
+    )?.departement.id;
 
-    const { status, body } = await request(app.getHttpServer()).get(
-      `/api/regions/${regionId}/brs-diffusion-websites`,
+    const { status } = await request(app.getHttpServer()).get(
+      `/api/departements/${departementId}/brs-diffusion-websites`,
     );
+
+    expect(status).toBe(401);
+  });
+
+  it('should return paginated brs diffusion websites by departement', async () => {
+    const { body: brsDiffusionWebsites } = await request(app.getHttpServer())
+      .get('/api/brs-diffusion-websites')
+      .set('x-api-key', process.env.API_KEY as string);
+
+    const departementId = brsDiffusionWebsites.items.find(
+      (item: BrsDiffusionWebsiteView) => item.departement.name === 'Finistère',
+    )?.departement.id;
+
+    const { status, body } = await request(app.getHttpServer())
+      .get(`/api/departements/${departementId}/brs-diffusion-websites`)
+      .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(200);
     expect(body).toHaveProperty('items');
@@ -63,9 +79,9 @@ describe('GetBrsDiffusionWebsitesByRegionApiController', () => {
   });
 
   it('should throw a 400 when id query params is invalid', async () => {
-    const { status } = await request(app.getHttpServer()).get(
-      '/api/regions/1/brs-diffusion-websites',
-    );
+    const { status } = await request(app.getHttpServer())
+      .get('/api/departements/1/brs-diffusion-websites')
+      .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(400);
   });

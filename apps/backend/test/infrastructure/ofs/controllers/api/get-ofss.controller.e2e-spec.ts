@@ -16,10 +16,16 @@ describe('GetOfssApiController', () => {
     await app.close();
   });
 
+  it('should throw 401 if no api key is provided', async () => {
+    const { status } = await request(app.getHttpServer()).get('/api/ofss');
+
+    expect(status).toBe(401);
+  });
+
   it('should return paginated ofss', async () => {
-    const { status, body } = await request(app.getHttpServer()).get(
-      '/api/ofss',
-    );
+    const { status, body } = await request(app.getHttpServer())
+      .get('/api/ofss')
+      .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(200);
     expect(body).toHaveProperty('items');
@@ -45,9 +51,9 @@ describe('GetOfssApiController', () => {
   });
 
   it('should retrieve first page of ofss', async () => {
-    const { status, body } = await request(app.getHttpServer()).get(
-      '/api/ofss?page=1&pageSize=10',
-    );
+    const { status, body } = await request(app.getHttpServer())
+      .get('/api/ofss?page=1&pageSize=10')
+      .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(200);
     expect(body).toHaveProperty('items');
@@ -79,9 +85,9 @@ describe('GetOfssApiController', () => {
   });
 
   it('should throw a 400 when pagination query params are invalid', async () => {
-    const { status } = await request(app.getHttpServer()).get(
-      '/api/ofss?page=deux',
-    );
+    const { status } = await request(app.getHttpServer())
+      .get('/api/ofss?page=deux')
+      .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(400);
   });

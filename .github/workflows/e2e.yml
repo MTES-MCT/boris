@@ -11,6 +11,7 @@ jobs:
       LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       API_URL: ${{ secrets.API_URL }}
+      API_KEY: ${{ secrets.API_KEY }}
       PUBLIC_NODE_ENV: ${{ secrets.PUBLIC_NODE_ENV }}
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5433

@@ -3,10 +3,17 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export function configureApiDocumentation(app: NestExpressApplication) {
   const options = new DocumentBuilder()
-    .addBearerAuth()
     .setTitle('Boris API')
     .setDescription('Documentation API de Boris')
     .setVersion('1.0.0')
+    .addApiKey(
+      {
+        type: 'apiKey',
+        name: 'x-api-key',
+        in: 'header',
+      },
+      'Api key',
+    )
     .build();
 
   const customOptions = {

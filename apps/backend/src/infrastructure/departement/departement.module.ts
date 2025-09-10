@@ -7,7 +7,7 @@ import { FindAllDepartementsUsecase } from 'src/application/departement/usecases
 import { FindManyDepartementsByNamesUsecase } from 'src/application/departement/usecases/findManyByNames.usecase';
 import { RegionEntity } from '../region/region.entity';
 import { RegionRepository } from '../region/region.repository';
-import { GetBrsDiffusionWebsitesByDepartementApiController } from './controllers/api/getBrsDiffusionWebsites.controller';
+import { GetBrsDiffusionWebsitesByDepartementApiController } from './controllers/api/get-brs-diffusion-websites.controller';
 import { FindAllBrsDiffusionWebsitesByDepartementUsecase } from 'src/application/brs-diffusion-website/usecases/findAllByDepartement.usecase';
 import { BrsDiffusionWebsiteEntity } from '../brs-diffusion-website/brs-diffusion-website.entity';
 import { BrsDiffusionWebsiteRepository } from '../brs-diffusion-website/brs-diffusion-website.repository';
