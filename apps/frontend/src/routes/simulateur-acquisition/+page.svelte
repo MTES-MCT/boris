@@ -8,9 +8,14 @@
 
   import Section from '$components/common/Section.svelte';
   import Tooltip from '$components/common/Tooltip.svelte';
+  import Autocomplete from '$components/common/Autocomplete.svelte';
+  import type { AutocompleteSuggestion } from '$lib/utils/definitions';
 
   let housingPrice: number = $state(0);
   let surface: number = $state(0);
+  let selectedLocation: AutocompleteSuggestion | undefined = $state();
+  let autocompleteValue = $derived(selectedLocation?.fulltext || '');
+  let brsZone: string = $state('');
   let housingType: 'new' | 'old' = $state('new');
   let ownContribution: number = $state(0);
   let notaryFees: number = $state(0);
@@ -90,6 +95,18 @@
       brsFees +
       (propertyTax + yearlyExpenses + homeInsurance) / 12,
   );
+
+  const onLocationSelect = async (suggestion: AutocompleteSuggestion) => {
+    selectedLocation = suggestion;
+
+    const response = await fetch(
+      `api/brs-zones?longitude=${selectedLocation.x}&latitude=${selectedLocation.y}`,
+    );
+
+    brsZone = await response.json();
+  };
+
+  $inspect(brsZone);
 </script>
 
 <svelte:head>
@@ -102,7 +119,7 @@
 <div class="container">
   <div class="wrapper">
     <Section
-      title="Simulateur d’acquisition en BRS"
+      title="Simulateur d'acquisition en BRS"
       titleElement="h1">
       <form autocomplete="off">
         <div class="fieldset-container">
@@ -115,7 +132,7 @@
                 Prix du logement (€)
                 <Tooltip>
                   <div class="fr-p-2w">
-                    Prix de vente affiché par l’opérateur ou le promoteur, hors
+                    Prix de vente affiché par l'opérateur ou le promoteur, hors
                     frais annexes.
                   </div>
                 </Tooltip>
@@ -133,23 +150,12 @@
                 }} />
             </div>
             <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="zipcode">
-                Code postal du logement
-              </label>
-              <input
-                class="fr-input"
-                type="text"
-                id="zipcode"
-                maxlength="5"
-                required
-                placeholder="Exemple: 29720"
-                oninput={(e) => {
-                  const value = (e.target as HTMLInputElement).value;
-                  const numericValue = value.replace(/\D/g, '').slice(0, 5);
-                  (e.target as HTMLInputElement).value = numericValue;
-                }} />
+              <Autocomplete
+                bind:value={autocompleteValue}
+                excludedPois={['commune', 'département', 'région']}
+                label="Ville ou code postal du logement"
+                placeholder="Quimper ou 23200"
+                onSelect={onLocationSelect} />
             </div>
             <div class="fr-fieldset__element">
               <label
