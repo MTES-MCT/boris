@@ -105,8 +105,6 @@
 
     brsZone = await response.json();
   };
-
-  $inspect(brsZone);
 </script>
 
 <svelte:head>
@@ -380,7 +378,7 @@
 
         <div class="fieldset-container">
           <fieldset class="fr-fieldset">
-            <legend class="fr-h4">4. Synthèse de l’apport et des frais</legend>
+            <legend class="fr-h4">4. Synthèse de l'apport et des frais</legend>
             <div class="fr-table fr-table--lg fr-table--no-caption">
               <div class="fr-table__wrapper">
                 <div class="fr-table__container">
@@ -472,7 +470,7 @@
 
         <div class="fieldset-container">
           <fieldset class="fr-fieldset">
-            <legend class="fr-h4">5. Simulation de votre emprunt</legend>
+            <legend class="fr-h4">5. Prêt immobilier & PTZ (lissage)</legend>
 
             <div class="fr-fieldset__element">
               <a
@@ -488,14 +486,15 @@
             </div>
 
             <div class="fr-fieldset__element">
+              <p class="fr-h5 fr-mb-2w fr-mt-3w"><u>Paramètres du prêt</u></p>
               <label
                 class="fr-label"
                 for="interest-rate">
-                Taux d’intérêt de votre crédit (%)
+                Taux d'intérêt de votre crédit (%)
                 <Tooltip>
                   <div class="fr-p-2w">
                     Taux annuel effectif global (TAEG) proposé par votre banque.
-                    Indiquez 0 si vous n’avez pas encore d’offre.
+                    Indiquez 0 si vous n'avez pas encore d'offre.
                   </div>
                 </Tooltip>
               </label>
