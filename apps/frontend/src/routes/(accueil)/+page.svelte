@@ -12,6 +12,9 @@
   <meta
     name="description"
     content="Découvrez le Bail Réel Solidaire (BRS), vérifiez votre éligibilité et trouvez un logement abordable grâce aux informations officielles de l'État." />
+  <meta
+    name="google-site-verification"
+    content="XsW67VGWzF9jXJpdRrNGgpXSYSN3YAxW8jDfLIFL5-o" />
 </svelte:head>
 
 <Hero />
