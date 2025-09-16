@@ -10,19 +10,20 @@
   import Tooltip from '$components/common/Tooltip.svelte';
   import Autocomplete from '$components/common/Autocomplete.svelte';
   import type { AutocompleteSuggestion } from '$lib/utils/definitions';
+  import { type Logement } from '$lib/utils/lissage-ptz';
 
-  let housingPrice: number = $state(0);
+  let housingPrice: number = $state(200000);
   let surface: number = $state(0);
   let selectedLocation: AutocompleteSuggestion | undefined = $state();
   let autocompleteValue = $derived(selectedLocation?.fulltext || '');
   let housingType: 'new' | 'old' = $state('new');
-  let ownContribution: number = $state(0);
+  let ownContribution: number = $state(5000);
   let notaryFees: number = $state(0);
   let loanFees: number = $state(0);
   let realEstateFees: number | undefined = $state(undefined);
   let oneTimeExpenses: number = $state(0);
-  let interestRate: number = $state(0);
-  let loanDuration: number = $state(0);
+  let interestRate: number = $state(4);
+  let loanDuration: number = $state(25);
   let brsFees: number = $state(0);
   let propertyTax: number = $state(0);
   let yearlyExpenses: number = $state(0);
@@ -32,10 +33,10 @@
   let condominiumFees: number = $derived(35 * surface);
 
   // TODO: Uncomment to use for enhanced simulator
-  // let brsZone: string = $state('');
-  // let inHousePeopleAmount: number = $state(1);
-  // let fiscalIncome: number | undefined = $state();
-  // let ptzType: 'new' | 'old' = $state('new');
+  let brsZone: string = $state('Abis');
+  let inHousePeopleAmount: number = $state(1);
+  let fiscalIncome: number | undefined = $state(24000);
+  let ptzType: Logement = $state('collectif');
 
   let estimatedNotaryFees: number = $derived.by(() => {
     if (housingPrice) {
@@ -63,7 +64,8 @@
 
   let estimatedLoanFees: number = $derived.by(() => {
     if (!housingPrice) return 0;
-    return Math.round(500 + loanAmount * 0.008);
+    return 0;
+    // return Math.round(500 + loanAmount * 0.008);
   });
 
   let estimatedRealEstateFees: number | undefined = $derived.by(() => {
@@ -104,13 +106,14 @@
   const onLocationSelect = async (suggestion: AutocompleteSuggestion) => {
     selectedLocation = suggestion;
 
-    // TODO: Uncomment to use for enhanced simulator
-    // const response = await fetch(
-    //   `api/brs-zones?longitude=${selectedLocation.x}&latitude=${selectedLocation.y}`,
-    // );
+    const response = await fetch(
+      `api/brs-zones?longitude=${selectedLocation.x}&latitude=${selectedLocation.y}`,
+    );
 
-    // brsZone = await response.json();
+    brsZone = await response.json();
   };
+
+  const calculateGlobalLoan = () => {};
 </script>
 
 <svelte:head>
@@ -478,7 +481,7 @@
         </div>
 
         <!-- TODO: Remove for enhanced simulator -->
-        <div class="fieldset-container">
+        <!-- <div class="fieldset-container">
           <fieldset class="fr-fieldset">
             <legend class="fr-h4">5. Simulation de votre emprunt</legend>
 
@@ -568,10 +571,10 @@
               </b>
             </p>
           </fieldset>
-        </div>
+        </div> -->
 
         <!-- TODO: Uncomment to use for enhanced simulator -->
-        <!-- <div class="fieldset-container">
+        <div class="fieldset-container">
           <fieldset class="fr-fieldset">
             <legend class="fr-h4">
               5. Prêt immobilier & prêt à taux zéro (PTZ, lissage)
@@ -703,10 +706,10 @@
                     name="type-ptz"
                     value="new"
                     oninput={() => {
-                      ptzType = 'new';
+                      ptzType = 'collectif';
                     }}
-                    checked={ptzType === 'new'} />
-                  <label for="ptz-neuf">Neuf</label>
+                    checked={ptzType === 'collectif'} />
+                  <label for="ptz-neuf">Neuf collectif</label>
                 </div>
                 <div class="fr-radio-group">
                   <input
@@ -715,10 +718,10 @@
                     name="type-ptz"
                     value="old"
                     oninput={() => {
-                      ptzType = 'old';
+                      ptzType = 'individuel';
                     }}
-                    checked={ptzType === 'old'} />
-                  <label for="ptz-ancien">Ancien</label>
+                    checked={ptzType === 'individuel'} />
+                  <label for="ptz-ancien">Neuf individuel</label>
                 </div>
               </div>
             </div>
@@ -726,7 +729,7 @@
             <button
               type="button"
               class="fr-btn fr-btn--secondary fr-btn--download fr-mt-2w"
-              onclick={() => {}}>
+              onclick={calculateGlobalLoan}>
               Calculer prêt à taux zero (ptz) + lissage
             </button>
 
@@ -780,7 +783,7 @@
               </div>
             </div>
           </fieldset>
-        </div> -->
+        </div>
 
         <div class="fieldset-container">
           <fieldset class="fr-fieldset">
