@@ -1,7 +1,7 @@
 <script lang="ts">
   import appleTouchIconHref from '@gouvfr/dsfr/dist/favicon/apple-touch-icon.png';
   import iconSvg from '@gouvfr/dsfr/dist/favicon/favicon.svg';
-  import iconIco from '/favicon.ico';
+  import iconIco from '@gouvfr/dsfr/dist/favicon/favicon.ico';
   import webmanifest from '@gouvfr/dsfr/dist/favicon/manifest.webmanifest';
 </script>
 

@@ -15,7 +15,6 @@
   let surface: number = $state(0);
   let selectedLocation: AutocompleteSuggestion | undefined = $state();
   let autocompleteValue = $derived(selectedLocation?.fulltext || '');
-  let brsZone: string = $state('');
   let housingType: 'new' | 'old' = $state('new');
   let ownContribution: number = $state(0);
   let notaryFees: number = $state(0);
@@ -31,6 +30,12 @@
   let totalMeterSquareCost: number = $state(0);
   let homeInsurance: number = $state(150);
   let condominiumFees: number = $derived(35 * surface);
+
+  // TODO: Uncomment to use for enhanced simulator
+  // let brsZone: string = $state('');
+  // let inHousePeopleAmount: number = $state(1);
+  // let fiscalIncome: number | undefined = $state();
+  // let ptzType: 'new' | 'old' = $state('new');
 
   let estimatedNotaryFees: number = $derived.by(() => {
     if (housingPrice) {
@@ -99,11 +104,12 @@
   const onLocationSelect = async (suggestion: AutocompleteSuggestion) => {
     selectedLocation = suggestion;
 
-    const response = await fetch(
-      `api/brs-zones?longitude=${selectedLocation.x}&latitude=${selectedLocation.y}`,
-    );
+    // TODO: Uncomment to use for enhanced simulator
+    // const response = await fetch(
+    //   `api/brs-zones?longitude=${selectedLocation.x}&latitude=${selectedLocation.y}`,
+    // );
 
-    brsZone = await response.json();
+    // brsZone = await response.json();
   };
 </script>
 
@@ -147,6 +153,7 @@
                   housingPrice = Number((e.target as HTMLInputElement).value);
                 }} />
             </div>
+
             <div class="fr-fieldset__element">
               <Autocomplete
                 bind:value={autocompleteValue}
@@ -155,6 +162,7 @@
                 placeholder="Quimper ou 23200"
                 onSelect={onLocationSelect} />
             </div>
+
             <div class="fr-fieldset__element">
               <label
                 class="fr-label"
@@ -174,6 +182,7 @@
                   surface = Number(numericValue);
                 }} />
             </div>
+
             <div class="fr-fieldset__element">
               <label class="fr-label fr-mb-1w">
                 Type de bien
@@ -251,7 +260,7 @@
 
         <div class="fieldset-container">
           <fieldset class="fr-fieldset">
-            <legend class="fr-h4">3. Frais annexes à l’acquisition</legend>
+            <legend class="fr-h4">3. Frais annexes à l'acquisition</legend>
             <div class="fr-fieldset__element">
               <label
                 class="fr-label"
@@ -259,11 +268,11 @@
                 Frais de notaire (€)
                 <Tooltip>
                   <div class="fr-p-2w">
-                    Frais obligatoires lors de l’achat, couvrant taxes et
+                    Frais obligatoires lors de l'achat, couvrant taxes et
                     rémunération du notaire.
                     <ul>
                       <li>Pour un achat neuf: 2,3% du prix du logement</li>
-                      <li>Pour de l’ancien: 7,8%.</li>
+                      <li>Pour de l'ancien: 7,8%.</li>
                     </ul>
                   </div>
                 </Tooltip>
@@ -296,7 +305,7 @@
                     (caution, garantie, dossier). Généralement autour de 0,8% du
                     montant emprunté + frais de dossier. Environ 70% de cette
                     somme vous serons reversés lorsque que vous aurez remboursé
-                    l’intégralité de votre prêt.
+                    l'intégralité de votre prêt.
                   </div>
                 </Tooltip>
               </label>
@@ -468,9 +477,10 @@
           </fieldset>
         </div>
 
+        <!-- TODO: Remove for enhanced simulator -->
         <div class="fieldset-container">
           <fieldset class="fr-fieldset">
-            <legend class="fr-h4">5. Prêt immobilier & PTZ (lissage)</legend>
+            <legend class="fr-h4">5. Simulation de votre emprunt</legend>
 
             <div class="fr-fieldset__element">
               <a
@@ -484,6 +494,88 @@
                 </b>
               </a>
             </div>
+
+            <div class="fr-fieldset__element">
+              <label
+                class="fr-label"
+                for="interest-rate">
+                Taux d’intérêt de votre crédit (%)
+                <Tooltip>
+                  <div class="fr-p-2w">
+                    Taux annuel effectif global (TAEG) proposé par votre banque.
+                    Indiquez 0 si vous n’avez pas encore d’offre.
+                  </div>
+                </Tooltip>
+              </label>
+              <input
+                class="fr-input"
+                type="number"
+                id="interest-rate"
+                min="0"
+                max="100"
+                step="0.01"
+                placeholder="Exemple: 3.25"
+                oninput={(e) => {
+                  interestRate = Number((e.target as HTMLInputElement).value);
+                }} />
+            </div>
+
+            <div class="fr-fieldset__element">
+              <label
+                class="fr-label"
+                for="loan-duration">
+                Durée de remboursement (années)
+                <Tooltip>
+                  <div class="fr-p-2w">Durée classique: 20 à 25 ans.</div>
+                </Tooltip>
+              </label>
+              <input
+                class="fr-input"
+                type="number"
+                id="loan-duration"
+                min="5"
+                max="30"
+                step="1"
+                placeholder="Exemple: 25"
+                oninput={(e) => {
+                  loanDuration = Number((e.target as HTMLInputElement).value);
+                }} />
+            </div>
+
+            <div class="fr-fieldset__element">
+              <label
+                class="fr-label"
+                for="loan-amount">
+                Montant à emprunter (€)
+              </label>
+              <input
+                class="fr-input"
+                type="number"
+                id="loan-amount"
+                min="0"
+                step="100"
+                placeholder="Exemple: 180000"
+                value={loanAmount}
+                oninput={(e) => {
+                  loanAmount = Number((e.target as HTMLInputElement).value);
+                }} />
+            </div>
+            <p>
+              <b>
+                Mensualité estimée: {loanMonthlyCost
+                  ? `${loanMonthlyCost}€ (hors assurance)`
+                  : '-'}
+              </b>
+            </p>
+          </fieldset>
+        </div>
+
+        <!-- TODO: Uncomment to use for enhanced simulator -->
+        <!-- <div class="fieldset-container">
+          <fieldset class="fr-fieldset">
+            <legend class="fr-h4">
+              5. Prêt immobilier & prêt à taux zéro (PTZ, lissage)
+            </legend>
 
             <div class="fr-fieldset__element">
               <p class="fr-h5 fr-mb-2w fr-mt-3w"><u>Paramètres du prêt</u></p>
@@ -551,15 +643,144 @@
                   loanAmount = Number((e.target as HTMLInputElement).value);
                 }} />
             </div>
-            <p>
-              <b>
-                Mensualité estimée: {loanMonthlyCost
-                  ? `${loanMonthlyCost}€ (hors assurance)`
-                  : '-'}
-              </b>
-            </p>
+
+            <div class="fr-fieldset__element">
+              <p class="fr-h5 fr-mb-2w fr-mt-5w">
+                <u>Paramètres du prêt à taux zéro (PTZ)</u>
+              </p>
+              <label
+                class="fr-label"
+                for="in-house-people-amount">
+                Nombre de personnes dans le foyer
+              </label>
+              <input
+                class="fr-input"
+                type="number"
+                id="in-house-people-amount"
+                min="1"
+                max="50"
+                step="1"
+                placeholder="2"
+                value={inHousePeopleAmount}
+                oninput={(e) => {
+                  inHousePeopleAmount = Number(
+                    (e.target as HTMLInputElement).value,
+                  );
+                }} />
+            </div>
+
+            <div class="fr-fieldset__element">
+              <label
+                class="fr-label"
+                for="fiscal-income">
+                Revenu fiscal de référence N-2 (€)
+              </label>
+              <input
+                class="fr-input"
+                type="number"
+                id="fiscal-income"
+                min="1"
+                max="1000000"
+                step="1000"
+                placeholder="10000"
+                value={fiscalIncome}
+                oninput={(e) => {
+                  fiscalIncome = Number((e.target as HTMLInputElement).value);
+                }} />
+            </div>
+
+            <div class="fr-fieldset__element">
+              <label
+                for="ptz-type"
+                class="fr-label fr-mb-1w">
+                Nature (PTZ)
+              </label>
+              <div class="fr-input-wrap">
+                <div class="fr-radio-group fr-mb-1v">
+                  <input
+                    type="radio"
+                    id="ptz-neuf"
+                    name="type-ptz"
+                    value="new"
+                    oninput={() => {
+                      ptzType = 'new';
+                    }}
+                    checked={ptzType === 'new'} />
+                  <label for="ptz-neuf">Neuf</label>
+                </div>
+                <div class="fr-radio-group">
+                  <input
+                    type="radio"
+                    id="ptz-ancien"
+                    name="type-ptz"
+                    value="old"
+                    oninput={() => {
+                      ptzType = 'old';
+                    }}
+                    checked={ptzType === 'old'} />
+                  <label for="ptz-ancien">Ancien</label>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="fr-btn fr-btn--secondary fr-btn--download fr-mt-2w"
+              onclick={() => {}}>
+              Calculer prêt à taux zero (ptz) + lissage
+            </button>
+
+            <div class="result-box fr-mt-5w">
+              <p class="fr-h5 fr-mb-2w">
+                <u>Mensualités (hors assurance)</u>
+              </p>
+
+              <ul>
+                <li>
+                  Mensualité <b>brute</b>
+                  (sans PTZ) :
+                </li>
+                <li>
+                  Mensualité <b>lissée</b>
+                  (avec PTZ) :
+                </li>
+              </ul>
+            </div>
+
+            <div class="result-box fr-mt-5w">
+              <p class="fr-h5 fr-mb-2w">
+                <u>Résultats prêt à taux zéro (PTZ) & lissage</u>
+              </p>
+
+              <div class="ptz-result">
+                <div>
+                  <p class="fr-mb-1w"><b>Zone</b></p>
+                  <p class="fr-mb-0">{brsZone}</p>
+                </div>
+                <div>
+                  <p class="fr-mb-1w"><b>Ptz retenu</b></p>
+                  <p class="fr-mb-0">0</p>
+                </div>
+                <div>
+                  <p class="fr-mb-1w"><b>Ptz max</b></p>
+                  <p class="fr-mb-0">0</p>
+                </div>
+                <div>
+                  <p class="fr-mb-1w"><b>Différé (ans)</b></p>
+                  <p class="fr-mb-0">0</p>
+                </div>
+                <div>
+                  <p class="fr-mb-1w"><b>Mens. lissée</b></p>
+                  <p class="fr-mb-0">0</p>
+                </div>
+                <div>
+                  <p class="fr-mb-1w"><b>Mens. pic</b></p>
+                  <p class="fr-mb-0">0</p>
+                </div>
+              </div>
+            </div>
           </fieldset>
-        </div>
+        </div> -->
 
         <div class="fieldset-container">
           <fieldset class="fr-fieldset">
@@ -855,6 +1076,34 @@
     tfoot tr {
       background-color: var(--background-alt-grey);
       border-bottom: 1px solid var(--border-contrast-grey);
+    }
+  }
+
+  .result-box {
+    padding: var(--2w);
+    border: solid 1px var(--border-default-grey);
+    width: 100%;
+    border-radius: var(--border-radius-lg);
+  }
+
+  .ptz-result {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--2w);
+
+    @media (--xxs-viewport) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (--xs-viewport) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    div {
+      padding: var(--2w);
+      border: solid 1px var(--border-default-grey);
+      width: 100%;
+      border-radius: var(--border-radius-sm);
     }
   }
 </style>
