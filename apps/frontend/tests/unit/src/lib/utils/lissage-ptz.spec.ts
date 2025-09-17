@@ -6,18 +6,18 @@ import {
 } from '$lib/utils/lissage-ptz';
 import { describe, it, expect } from 'vitest';
 
-const montantEmprunt = 0;
+const montantTotal = 200000;
 const zone: Zone = 'A';
-const apport = 0;
-const tauxEmprunt = 0;
-const dureeEmprunt = 0;
+const apport = 5000;
+const tauxEmprunt = 4;
+const dureeEmprunt = 25;
 const nbPersonnes = 1;
 const revenuFiscalReference = 24000;
 const typeLogement: Logement = 'collectif';
 
 const pretLisseInitial = () =>
   new PretLisse(
-    montantEmprunt,
+    montantTotal,
     zone,
     apport,
     tauxEmprunt,
@@ -176,4 +176,10 @@ describe('PrêtLissé', () => {
     pretLisse.revenuFiscalReference = 30000;
     expect(pretLisse.calculerMontantPTZ()).toBe(60000);
   });
+
+  // it('devrait lisser le prêt classique et le PTZ', () => {
+  //   const pretLisse = pretLisseInitial();
+
+  //   console.log(pretLisse.lisser());
+  // });
 });

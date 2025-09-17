@@ -8,6 +8,12 @@ type Tranche = {
   anneesDifferees: number;
   dureeRemboursement: number;
 };
+// type PhaseRemboursement = {
+//   dureeAnnees: number;
+//   anneesDifferees: number;
+//   montantMensualitePtz: number;
+//   montantMensualiteClassique: number;
+// };
 
 const plafondsRevenus: PlafondsLocalise[] = [
   {
@@ -112,7 +118,7 @@ const plafondsPTZ: PlafondsLocalise[] = [
 ];
 
 export class PretLisse {
-  public montantEmprunt: number;
+  public montantTotal: number;
   public zone: Zone;
   public apport: number;
   public tauxEmprunt: number;
@@ -120,9 +126,11 @@ export class PretLisse {
   public nbPersonnes: number;
   public revenuFiscalReference: number;
   public typeLogement: Logement;
+  public tranche: Tranche;
+  public montantPTZ: number;
 
   constructor(
-    montantEmprunt: number,
+    montantTotal: number,
     zone: Zone,
     apport: number,
     tauxEmprunt: number,
@@ -131,7 +139,7 @@ export class PretLisse {
     revenuFiscalReference: number,
     typeLogement: Logement,
   ) {
-    this.montantEmprunt = montantEmprunt;
+    this.montantTotal = montantTotal;
     this.zone = zone;
     this.apport = apport;
     this.tauxEmprunt = tauxEmprunt;
@@ -139,6 +147,9 @@ export class PretLisse {
     this.nbPersonnes = nbPersonnes;
     this.revenuFiscalReference = revenuFiscalReference;
     this.typeLogement = typeLogement;
+
+    this.tranche = this.trouverTranche();
+    this.montantPTZ = this.calculerMontantPTZ();
   }
 
   public estElligible(): boolean {
@@ -175,7 +186,10 @@ export class PretLisse {
       }
     });
 
-    return tranches.find((tranche) => tranche.numero === index + 1) as Tranche;
+    this.tranche = tranches.find(
+      (tranche) => tranche.numero === index + 1,
+    ) as Tranche;
+    return this.tranche;
   }
 
   public trouverPlafondPTZ(): number {
@@ -198,6 +212,9 @@ export class PretLisse {
         ? tranche.tauxCollectif
         : tranche.tauxIndividuel;
 
-    return plafondPTZ * (quotite / 100);
+    this.montantPTZ = plafondPTZ * (quotite / 100);
+    return this.montantPTZ;
   }
+
+  // public lisser(): PhaseRemboursement[] {}
 }
