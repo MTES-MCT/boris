@@ -1,8 +1,27 @@
 <script lang="ts">
-  import Autocomplete from '$components/pages/annuaire/Autocomplete.svelte';
+  import Autocomplete from '$components/common/Autocomplete.svelte';
   import Radius from '$components/pages/annuaire/Radius.svelte';
   import Toggle from '$components/pages/annuaire/Toggle.svelte';
   import annuaireManager from '$lib/managers/annuaire.svelte';
+  import type { AutocompleteSuggestion } from '$lib/utils/definitions';
+
+  const handleAutocompleteSelect = async (
+    suggestion: AutocompleteSuggestion,
+  ) => {
+    annuaireManager.isListLoading = true;
+
+    annuaireManager.autocompleteValue = suggestion?.fulltext as string;
+
+    annuaireManager.setListBrsDiffusionWebsites({
+      coords: {
+        latitude: suggestion?.y as number,
+        longitude: suggestion?.x as number,
+      },
+    });
+
+    annuaireManager.zoom = 12;
+    annuaireManager.hasSearchedTroughAutocomplete = true;
+  };
 </script>
 
 <div
@@ -13,7 +32,12 @@
       class={annuaireManager.viewType === 'list'
         ? 'fr-col-12 fr-col-md-6 fr-col-lg-8'
         : 'fr-col-12 fr-col-md-8 fr-col-lg-10'}>
-      <Autocomplete />
+      <Autocomplete
+        bind:value={annuaireManager.autocompleteValue}
+        label="Saisir la ville ou le code postal"
+        placeholder="Bordeaux, Marseille, Paris"
+        onSelect={handleAutocompleteSelect}
+        excludedPois={['commune']} />
     </div>
     <div
       class={annuaireManager.viewType === 'list'
