@@ -12,13 +12,15 @@
     theads: string[];
     tbodies: string[][];
     caption?: string;
+    size?: 'sm' | 'md' | 'lg';
   };
 
-  const { caption, theads, tbodies }: Props = $props();
+  const { caption, theads, tbodies, size = 'lg' }: Props = $props();
 </script>
 
 <div
-  class="fr-table fr-table--lg fr-table--bordered"
+  style="width: 100%;"
+  class="fr-table fr-table--{size} fr-table--bordered"
   id="table-0-component">
   <div class="fr-table__wrapper">
     <div class="fr-table__container">

@@ -8,7 +8,7 @@ type Tranche = {
   anneesDifferees: number;
   dureeRemboursement: number;
 };
-type PhaseRemboursement = {
+export type PhaseRemboursement = {
   dureeAnnees: number;
   anneesDifferees: number;
   mensualitePTZ: string;

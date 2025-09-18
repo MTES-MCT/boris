@@ -5,6 +5,7 @@
 
   import { nanoid } from 'nanoid';
   import type { AriaAttributes, AriaRole, FullAutoFill } from 'svelte/elements';
+  import Tooltip from './Tooltip.svelte';
 
   type Props = {
     id?: string;
@@ -18,9 +19,12 @@
       | 'tel'
       | 'text'
       | 'url'
-      | 'range';
-    value?: string;
+      | 'range'
+      | 'radio';
+    value?: string | number;
     label?: string;
+    labelTooltip?: string;
+    required?: boolean;
     icon?: string;
     role?: AriaRole;
     min?: number;
@@ -40,6 +44,8 @@
     type = 'text',
     value,
     label = '',
+    labelTooltip = '',
+    required = false,
     icon = '',
     role = '',
     ariaAttributes,
@@ -62,6 +68,13 @@
       class="fr-label"
       for={id}>
       {label}
+      {#if labelTooltip}
+        <Tooltip>
+          <div class="fr-p-2w">
+            {@html labelTooltip}
+          </div>
+        </Tooltip>
+      {/if}
     </label>
   {/if}
   {#if icon}
@@ -85,6 +98,7 @@
     {placeholder}
     {type}
     {value}
+    {required}
     {id}
     {role}
     {...ariaAttributes}
@@ -99,6 +113,12 @@
 <style lang="postcss">
   .no-margin-bottom {
     margin-bottom: 0 !important;
+  }
+
+  label {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: var(--1v);
   }
 
   input {
