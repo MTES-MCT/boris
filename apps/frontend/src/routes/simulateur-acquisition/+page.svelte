@@ -20,7 +20,7 @@
   let ownContribution: number = $state(5000);
   let notaryFees: number = $state(0);
   let loanFees: number = $state(0);
-  let realEstateFees: number | undefined = $state(undefined);
+  let realEstateFees: number = $state(0);
   let oneTimeExpenses: number = $state(0);
   let interestRate: number = $state(4);
   let loanDuration: number = $state(25);
@@ -31,10 +31,11 @@
   let totalMeterSquareCost: number = $state(0);
   let homeInsurance: number = $state(150);
   let condominiumFees: number = $derived(35 * surface);
-  let brsZone: Zone | undefined = $state();
+  let brsZone: Zone | undefined = $state('Abis');
   let inHousePeopleAmount: number = $state(1);
-  let fiscalIncome: number | undefined = $state(24000);
+  let fiscalIncome: number = $state(24000);
   let ptzType: Logement = $state('collectif');
+  let lissage: PhaseRemboursement[] = $state([]);
 
   let estimatedNotaryFees: number = $derived.by(() => {
     if (housingPrice) {
@@ -60,16 +61,8 @@
     return '';
   });
 
-  let estimatedLoanFees: number = $derived.by(() => {
-    if (!housingPrice) return 0;
-    return 0;
-    // return Math.round(500 + loanAmount * 0.008);
-  });
-
   let estimatedRealEstateFees: number | undefined = $derived.by(() => {
     if (!housingPrice) return 0;
-
-    console.log(realEstateFees);
 
     if (realEstateFees === 0) return;
 
@@ -84,7 +77,15 @@
 
   let ownContributionAfterFees: number = $derived(ownContribution - totalFees);
 
-  let loanAmount: number = $derived(housingPrice - ownContributionAfterFees);
+  let loanAmount: number = $derived(
+    Math.max(housingPrice - ownContributionAfterFees, 0),
+  );
+
+  let estimatedLoanFees: number = $derived.by(() => {
+    if (!housingPrice) return 0;
+
+    return Math.round(500 + loanAmount * 0.008);
+  });
 
   let loanMonthlyCost = $derived.by(() => {
     if (!loanAmount || !interestRate || !loanDuration) return 0;
@@ -129,26 +130,17 @@
           <fieldset class="fr-fieldset">
             <legend class="fr-h4">1. Votre futur logement</legend>
             <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="housing-price">
-                Prix du logement (€)
-                <Tooltip>
-                  <div class="fr-p-2w">
-                    Prix de vente affiché par l'opérateur ou le promoteur, hors
-                    frais annexes.
-                  </div>
-                </Tooltip>
-              </label>
-              <input
-                class="fr-input"
-                type="number"
+              <Input
+                value={housingPrice}
+                label="Prix du logement (€)"
+                labelTooltip="Prix de vente affiché par l'opérateur ou le promoteur, hors frais annexes."
+                placeholder="200000"
                 id="housing-price"
-                min="10000"
-                step="1000"
+                type="number"
+                min={10000}
+                step={1000}
                 required
-                placeholder="Exemple: 180000"
-                oninput={(e) => {
+                onChange={(e) => {
                   housingPrice = Number((e.target as HTMLInputElement).value);
                 }} />
             </div>
@@ -170,18 +162,13 @@
             </div> -->
 
             <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="surface">
-                Superficie du logement (m²)
-              </label>
-              <input
-                class="fr-input"
-                type="text"
-                id="surface"
+              <Input
+                value={surface}
                 required
-                placeholder="Exemple: 50"
-                oninput={(e) => {
+                id="surface"
+                label="Superficie du logement (m²)"
+                placeholder="50"
+                onChange={(e) => {
                   const value = (e.target as HTMLInputElement).value;
                   const numericValue = value.replace(/\D/g, '').slice(0, 3);
                   (e.target as HTMLInputElement).value = numericValue;
@@ -236,26 +223,18 @@
           <fieldset class="fr-fieldset">
             <legend class="fr-h4">2. Votre apport personnel</legend>
             <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="own-contribution">
-                Montant de votre apport (€)
-                <Tooltip>
-                  <div class="fr-p-2w">
-                    Somme dont vous disposez pour le projet (épargne, donation,
-                    aide familiale, etc.).
-                  </div>
-                </Tooltip>
-              </label>
-              <input
-                class="fr-input"
+              <Input
+                value={ownContribution}
+                label="Montant de votre apport (€)"
+                labelTooltip="Somme dont vous disposez pour le projet (épargne, donation,
+                    aide familiale, etc.)."
                 type="number"
                 id="own-contribution"
-                min="0"
-                step="500"
+                min={0}
+                step={500}
                 required
-                placeholder="Exemple: 25000"
-                oninput={(e) => {
+                placeholder="25000"
+                onChange={(e) => {
                   ownContribution = Number(
                     (e.target as HTMLInputElement).value,
                   );
@@ -268,94 +247,72 @@
           <fieldset class="fr-fieldset">
             <legend class="fr-h4">3. Frais annexes à l'acquisition</legend>
             <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="notary-fees">
-                Frais de notaire (€)
-                <Tooltip>
-                  <div class="fr-p-2w">
-                    Frais obligatoires lors de l'achat, couvrant taxes et
-                    rémunération du notaire.
-                    <ul>
-                      <li>Pour un achat neuf: 2,3% du prix du logement</li>
-                      <li>Pour de l'ancien: 7,8%.</li>
-                    </ul>
-                  </div>
-                </Tooltip>
-              </label>
-              <input
-                class="fr-input"
+              <Input
+                label="Frais de notaire (€)"
+                labelTooltip={`
+                  Frais obligatoires lors de l'achat, couvrant taxes et
+                  rémunération du notaire.
+                  <ul>
+                    <li>Pour un achat neuf: 2,3% du prix du logement</li>
+                    <li>Pour de l'ancien: 7,8%.</li>
+                  </ul>
+                `}
                 type="number"
                 id="notary-fees"
-                min="0"
-                step="100"
+                min={0}
+                step={100}
                 placeholder="Laissez vide pour estimation automatique"
-                oninput={(e) => {
+                forceNoMarginBottom
+                onChange={(e) => {
                   notaryFees = Number((e.target as HTMLInputElement).value);
                 }} />
               {#if notaryFees === 0 && housingPrice}
-                <p>
+                <p class="fr-text--sm fr-mb-1w">
                   Estimation automatique: <b>{estimatedNotaryFeesString}</b>
                 </p>
               {/if}
             </div>
 
             <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="loan-fees">
-                Frais de garantie/prêt (€)
-                <Tooltip>
-                  <div class="fr-p-2w">
-                    Frais liés à la mise en place de votre prêt immobilier
-                    (caution, garantie, dossier). Généralement autour de 0,8% du
-                    montant emprunté + frais de dossier. Environ 70% de cette
-                    somme vous serons reversés lorsque que vous aurez remboursé
-                    l'intégralité de votre prêt.
-                  </div>
-                </Tooltip>
-              </label>
-              <input
-                class="fr-input"
+              <Input
+                label="Frais de garantie/prêt (€)"
+                labelTooltip="Frais liés à la mise en place de votre prêt immobilier
+                  (caution, garantie, dossier). Généralement autour de 0,8% du
+                  montant emprunté + frais de dossier. Environ 70% de cette
+                  somme vous serons reversés lorsque que vous aurez remboursé
+                  l'intégralité de votre prêt."
                 type="number"
                 id="loan-fees"
-                min="0"
-                step="50"
+                min={0}
+                step={50}
                 placeholder="Laissez vide pour estimation automatique"
-                oninput={(e) => {
+                forceNoMarginBottom
+                onChange={(e) => {
                   loanFees = Number((e.target as HTMLInputElement).value);
                 }} />
               {#if loanFees === 0 && housingPrice}
-                <p>
+                <p class="fr-text--sm fr-mb-1w">
                   Estimation automatique: <b>{estimatedLoanFees}€</b>
                 </p>
               {/if}
             </div>
 
             <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="real-estate-fees">
-                Frais d’agence immobilière (€)
-                <Tooltip>
-                  <div class="fr-p-2w">
-                    Si l’achat se fait via une agence, prévoir entre 3% et 8% du
-                    prix du bien. Laissez vide si achat sans agence.
-                  </div>
-                </Tooltip>
-              </label>
-              <input
-                class="fr-input"
+              <Input
+                label="Frais d'agence immobilière (€)"
+                labelTooltip="Si l'achat se fait via une agence, prévoir entre 3% et 8% du
+                  prix du bien. Laissez vide si achat sans agence."
                 type="number"
                 id="real-estate-fees"
-                min="0"
-                step="100"
-                placeholder="Inscrivez 0 si vous n’avez pas de frais d’agence"
-                oninput={(e) => {
+                min={0}
+                step={100}
+                placeholder="Inscrivez 0 si vous n'avez pas de frais d'agence"
+                forceNoMarginBottom
+                onChange={(e) => {
                   realEstateFees = Number((e.target as HTMLInputElement).value);
                 }} />
               {#if realEstateFees === undefined && housingPrice}
-                <p>
+                <p class="fr-text--small">
                   Estimation automatique: <b>
                     {estimatedRealEstateFees}€ (5,5% du prix)
                   </b>
@@ -364,25 +321,15 @@
             </div>
 
             <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="one-time-expenses">
-                Autres frais ponctuels (€)
-                <Tooltip>
-                  <div class="fr-p-2w">
-                    Coût du déménagement, ouverture des compteurs, etc. si
-                    pertinent
-                  </div>
-                </Tooltip>
-              </label>
-              <input
-                class="fr-input"
+              <Input
+                label="Autres frais ponctuels (€)"
+                labelTooltip="Coût du déménagement, ouverture des compteurs, etc. si pertinent"
                 type="number"
                 id="one-time-expenses"
-                min="0"
-                step="100"
-                placeholder="Exemple: 1200€"
-                oninput={(e) => {
+                min={0}
+                step={100}
+                placeholder="1200"
+                onChange={(e) => {
                   oneTimeExpenses = Number(
                     (e.target as HTMLInputElement).value,
                   );
@@ -491,90 +438,74 @@
 
             <div class="fr-fieldset__element">
               <p class="fr-h5 fr-mb-2w fr-mt-3w"><u>Paramètres du prêt</u></p>
-              <label
-                class="fr-label"
-                for="interest-rate">
-                Taux d'intérêt de votre crédit (%)
-                <Tooltip>
-                  <div class="fr-p-2w">
-                    Taux annuel effectif global (TAEG) proposé par votre banque.
-                    Indiquez 0 si vous n'avez pas encore d'offre.
-                  </div>
-                </Tooltip>
-              </label>
-              <input
-                class="fr-input"
+              <Input
+                value={interestRate}
+                label="Taux d'intérêt de votre crédit (%)"
+                labelTooltip="Taux annuel effectif global (TAEG) proposé par votre banque.
+                    Indiquez 0 si vous n'avez pas encore d'offre."
                 type="number"
                 id="interest-rate"
-                min="0"
-                max="100"
-                step="0.01"
-                placeholder="Exemple: 3.25"
-                oninput={(e) => {
+                min={0}
+                step={0.01}
+                placeholder="3.25"
+                onChange={(e) => {
                   interestRate = Number((e.target as HTMLInputElement).value);
                 }} />
             </div>
 
             <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="loan-duration">
-                Durée de remboursement (années)
-                <Tooltip>
-                  <div class="fr-p-2w">Durée classique: 20 à 25 ans.</div>
-                </Tooltip>
-              </label>
-              <input
-                class="fr-input"
+              <Input
+                value={loanDuration}
+                label="Durée de remboursement (années)"
+                labelTooltip="Durée classique: 20 à 25 ans."
                 type="number"
                 id="loan-duration"
-                min="5"
-                max="30"
-                step="1"
-                placeholder="Exemple: 25"
-                oninput={(e) => {
+                min={5}
+                max={30}
+                step={1}
+                placeholder="25"
+                onChange={(e) => {
                   loanDuration = Number((e.target as HTMLInputElement).value);
                 }} />
             </div>
 
             <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="loan-amount">
-                Montant à emprunter (€)
-              </label>
-              <input
-                class="fr-input"
+              <Input
+                label="Montant à emprunter (€)"
                 type="number"
                 id="loan-amount"
-                min="0"
-                step="100"
-                placeholder="Exemple: 180000"
-                value={loanAmount}
-                oninput={(e) => {
+                min={0}
+                step={1000}
+                placeholder="Laissez vide pour estimation automatique"
+                forceNoMarginBottom
+                onChange={(e) => {
                   loanAmount = Number((e.target as HTMLInputElement).value);
+
+                  if (loanAmount === 0) {
+                    loanAmount = housingPrice - ownContributionAfterFees;
+                  }
                 }} />
+              {#if loanAmount}
+                <p class="fr-text--sm fr-mb-1w">
+                  Estimation automatique: <b>{loanAmount}€</b>
+                </p>
+              {/if}
             </div>
 
             <div class="fr-fieldset__element">
               <p class="fr-h5 fr-mb-2w fr-mt-5w">
                 <u>Paramètres du prêt à taux zéro (PTZ)</u>
               </p>
-              <label
-                class="fr-label"
-                for="in-house-people-amount">
-                Nombre de personnes dans le foyer
-              </label>
-              <input
-                class="fr-input"
+              <Input
+                value={inHousePeopleAmount}
+                label="Nombre de personnes dans le foyer"
                 type="number"
                 id="in-house-people-amount"
-                min="1"
-                max="50"
-                step="1"
+                min={1}
+                max={50}
+                step={1}
                 placeholder="2"
-                value={inHousePeopleAmount}
-                oninput={(e) => {
+                onChange={(e) => {
                   inHousePeopleAmount = Number(
                     (e.target as HTMLInputElement).value,
                   );
@@ -582,21 +513,16 @@
             </div>
 
             <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="fiscal-income">
-                Revenu fiscal de référence N-2 (€)
-              </label>
-              <input
-                class="fr-input"
+              <Input
+                value={fiscalIncome}
+                label="Revenu fiscal de référence N-2 (€)"
                 type="number"
                 id="fiscal-income"
-                min="1"
-                max="1000000"
-                step="1000"
+                min={1}
+                max={1000000}
+                step={1000}
                 placeholder="10000"
-                value={fiscalIncome}
-                oninput={(e) => {
+                onChange={(e) => {
                   fiscalIncome = Number((e.target as HTMLInputElement).value);
                 }} />
             </div>
@@ -639,59 +565,30 @@
               type="button"
               class="fr-btn fr-btn--secondary fr-btn--download fr-mt-2w"
               onclick={calculateGlobalLoan}>
-              Calculer prêt à taux zero (ptz) + lissage
+              Simuler le lissage des prêts
             </button>
-
-            <div class="result-box fr-mt-5w">
-              <p class="fr-h5 fr-mb-2w">
-                <u>Mensualités (hors assurance)</u>
-              </p>
-
-              <ul>
-                <li>
-                  Mensualité <b>brute</b>
-                  (sans PTZ) :
-                </li>
-                <li>
-                  Mensualité <b>lissée</b>
-                  (avec PTZ) :
-                </li>
-              </ul>
-            </div>
-
-            <div class="result-box fr-mt-5w">
-              <p class="fr-h5 fr-mb-2w">
-                <u>Résultats prêt à taux zéro (PTZ) & lissage</u>
-              </p>
-
-              <div class="ptz-result">
-                <div>
-                  <p class="fr-mb-1w"><b>Zone</b></p>
-                  <p class="fr-mb-0">{brsZone}</p>
-                </div>
-                <div>
-                  <p class="fr-mb-1w"><b>Ptz retenu</b></p>
-                  <p class="fr-mb-0">0</p>
-                </div>
-                <div>
-                  <p class="fr-mb-1w"><b>Ptz max</b></p>
-                  <p class="fr-mb-0">0</p>
-                </div>
-                <div>
-                  <p class="fr-mb-1w"><b>Différé (ans)</b></p>
-                  <p class="fr-mb-0">0</p>
-                </div>
-                <div>
-                  <p class="fr-mb-1w"><b>Mens. lissée</b></p>
-                  <p class="fr-mb-0">0</p>
-                </div>
-                <div>
-                  <p class="fr-mb-1w"><b>Mens. pic</b></p>
-                  <p class="fr-mb-0">0</p>
-                </div>
-              </div>
-            </div>
           </fieldset>
+
+          {#if lissage.length > 0}
+            <Table
+              caption="Détails du lissage des prêts"
+              size="sm"
+              theads={[
+                'Durée',
+                'Mensualité PTZ',
+                'Mensualité classique',
+                'Mensualité globale',
+              ]}
+              tbodies={lissage.map((phase) => [
+                `${String(phase.dureeAnnees)} ans`,
+                `${String(phase.mensualitePTZ)} €`,
+                `${String(phase.mensualiteClassique)} €`,
+                `${String(
+                  Number(phase.mensualitePTZ) +
+                    Number(phase.mensualiteClassique),
+                )} €`,
+              ])} />
+          {/if}
         </div>
 
         <div class="fieldset-container">
@@ -784,7 +681,7 @@
                 Assurance habitation (€ / an)
                 <Tooltip>
                   <div class="fr-p-2w">
-                    L’assurance habitation est obligatoire pour votre logement,
+                    L'assurance habitation est obligatoire pour votre logement,
                     que vous soyez propriétaire ou locataire.
                   </div>
                 </Tooltip>
@@ -945,7 +842,8 @@
   }
 
   .wrapper {
-    max-width: 700px;
+    max-width: 800px;
+
     margin: 0 auto;
   }
 
@@ -988,34 +886,6 @@
     tfoot tr {
       background-color: var(--background-alt-grey);
       border-bottom: 1px solid var(--border-contrast-grey);
-    }
-  }
-
-  .result-box {
-    padding: var(--2w);
-    border: solid 1px var(--border-default-grey);
-    width: 100%;
-    border-radius: var(--border-radius-lg);
-  }
-
-  .ptz-result {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: var(--2w);
-
-    @media (--xxs-viewport) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (--xs-viewport) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    div {
-      padding: var(--2w);
-      border: solid 1px var(--border-default-grey);
-      width: 100%;
-      border-radius: var(--border-radius-sm);
     }
   }
 </style>
