@@ -8,9 +8,14 @@
 
   import Section from '$components/common/Section.svelte';
   import Tooltip from '$components/common/Tooltip.svelte';
+  import Autocomplete from '$components/common/Autocomplete.svelte';
+  import type { AutocompleteSuggestion } from '$lib/utils/definitions';
+  import { type Zone } from '$lib/utils/lissage-ptz';
 
   let housingPrice: number = $state(0);
   let surface: number = $state(0);
+  let selectedLocation: AutocompleteSuggestion | undefined = $state();
+  let autocompleteValue = $derived(selectedLocation?.fulltext || '');
   let housingType: 'new' | 'old' = $state('new');
   let ownContribution: number = $state(0);
   let notaryFees: number = $state(0);
@@ -26,6 +31,7 @@
   let totalMeterSquareCost: number = $state(0);
   let homeInsurance: number = $state(150);
   let condominiumFees: number = $derived(35 * surface);
+  let brsZone: Zone | undefined = $state();
 
   let estimatedNotaryFees: number = $derived.by(() => {
     if (housingPrice) {
@@ -90,6 +96,16 @@
       brsFees +
       (propertyTax + yearlyExpenses + homeInsurance) / 12,
   );
+
+  const onLocationSelect = async (suggestion: AutocompleteSuggestion) => {
+    selectedLocation = suggestion;
+
+    const response = await fetch(
+      `api/brs-zones?longitude=${selectedLocation.x}&latitude=${selectedLocation.y}`,
+    );
+
+    brsZone = await response.json();
+  };
 </script>
 
 <svelte:head>
@@ -102,7 +118,7 @@
 <div class="container">
   <div class="wrapper">
     <Section
-      title="Simulateur d’acquisition en BRS"
+      title="Simulateur d'acquisition en BRS"
       titleElement="h1">
       <form autocomplete="off">
         <div class="fieldset-container">
@@ -115,7 +131,7 @@
                 Prix du logement (€)
                 <Tooltip>
                   <div class="fr-p-2w">
-                    Prix de vente affiché par l’opérateur ou le promoteur, hors
+                    Prix de vente affiché par l'opérateur ou le promoteur, hors
                     frais annexes.
                   </div>
                 </Tooltip>
@@ -132,25 +148,23 @@
                   housingPrice = Number((e.target as HTMLInputElement).value);
                 }} />
             </div>
+
             <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="zipcode">
-                Code postal du logement
-              </label>
-              <input
-                class="fr-input"
-                type="text"
-                id="zipcode"
-                maxlength="5"
-                required
-                placeholder="Exemple: 29720"
-                oninput={(e) => {
-                  const value = (e.target as HTMLInputElement).value;
-                  const numericValue = value.replace(/\D/g, '').slice(0, 5);
-                  (e.target as HTMLInputElement).value = numericValue;
-                }} />
+              <Autocomplete
+                bind:value={autocompleteValue}
+                excludedPois={['commune', 'département', 'région']}
+                label="Ville ou code postal du logement"
+                placeholder="Quimper ou 23200"
+                onSelect={onLocationSelect} />
+              {#if brsZone}
+                <p class="fr-mt-1w fr-text--sm">
+                  <b>
+                    Zone BRS: {brsZone}
+                  </b>
+                </p>
+              {/if}
             </div>
+
             <div class="fr-fieldset__element">
               <label
                 class="fr-label"
@@ -170,6 +184,7 @@
                   surface = Number(numericValue);
                 }} />
             </div>
+
             <div class="fr-fieldset__element">
               <label class="fr-label fr-mb-1w">
                 Type de bien
@@ -247,7 +262,7 @@
 
         <div class="fieldset-container">
           <fieldset class="fr-fieldset">
-            <legend class="fr-h4">3. Frais annexes à l’acquisition</legend>
+            <legend class="fr-h4">3. Frais annexes à l'acquisition</legend>
             <div class="fr-fieldset__element">
               <label
                 class="fr-label"
@@ -255,11 +270,11 @@
                 Frais de notaire (€)
                 <Tooltip>
                   <div class="fr-p-2w">
-                    Frais obligatoires lors de l’achat, couvrant taxes et
+                    Frais obligatoires lors de l'achat, couvrant taxes et
                     rémunération du notaire.
                     <ul>
                       <li>Pour un achat neuf: 2,3% du prix du logement</li>
-                      <li>Pour de l’ancien: 7,8%.</li>
+                      <li>Pour de l'ancien: 7,8%.</li>
                     </ul>
                   </div>
                 </Tooltip>
@@ -292,7 +307,7 @@
                     (caution, garantie, dossier). Généralement autour de 0,8% du
                     montant emprunté + frais de dossier. Environ 70% de cette
                     somme vous serons reversés lorsque que vous aurez remboursé
-                    l’intégralité de votre prêt.
+                    l'intégralité de votre prêt.
                   </div>
                 </Tooltip>
               </label>
@@ -374,7 +389,7 @@
 
         <div class="fieldset-container">
           <fieldset class="fr-fieldset">
-            <legend class="fr-h4">4. Synthèse de l’apport et des frais</legend>
+            <legend class="fr-h4">4. Synthèse de l'apport et des frais</legend>
             <div class="fr-table fr-table--lg fr-table--no-caption">
               <div class="fr-table__wrapper">
                 <div class="fr-table__container">
