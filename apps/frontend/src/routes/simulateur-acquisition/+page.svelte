@@ -10,7 +10,7 @@
   import Tooltip from '$components/common/Tooltip.svelte';
   import Autocomplete from '$components/common/Autocomplete.svelte';
   import type { AutocompleteSuggestion } from '$lib/utils/definitions';
-  import { type Logement } from '$lib/utils/lissage-ptz';
+  import { type Logement, type Zone } from '$lib/utils/lissage-ptz';
 
   let housingPrice: number = $state(0);
   let surface: number = $state(0);
@@ -31,7 +31,7 @@
   let totalMeterSquareCost: number = $state(0);
   let homeInsurance: number = $state(150);
   let condominiumFees: number = $derived(35 * surface);
-  let brsZone: string = $state('Abis');
+  let brsZone: Zone | undefined = $state();
   let inHousePeopleAmount: number = $state(1);
   let fiscalIncome: number | undefined = $state(24000);
   let ptzType: Logement = $state('collectif');
