@@ -24,7 +24,7 @@ describe('GeocoderService', () => {
 
   it('should return features when geocoding is successful', async () => {
     const municipality = 'Paris';
-    const url = `${geocoderService.baseUrl}/search?q=${municipality}&autocomplete=0&index=address&limit=5&returntruegeometry=false&type=municipality`;
+    const url = `${geocoderService.baseUrl}/search?q=${municipality}&autocomplete=1&index=address&limit=5&returntruegeometry=false&type=municipality`;
 
     const mockApiResponse: GeocodedSearchApiResponse = {
       type: 'FeatureCollection',
@@ -46,7 +46,7 @@ describe('GeocoderService', () => {
   it('should return features when geocoding with inseeCode is successful ', async () => {
     const municipality = 'Paris';
     const inseeCode = '12345';
-    const url = `${geocoderService.baseUrl}/search?q=${municipality}&autocomplete=0&index=address&limit=5&returntruegeometry=false&type=municipality&citycode=${inseeCode}`;
+    const url = `${geocoderService.baseUrl}/search?q=${municipality}&autocomplete=1&index=address&limit=5&returntruegeometry=false&type=municipality&citycode=${inseeCode}`;
 
     const mockApiResponse: GeocodedSearchApiResponse = {
       type: 'FeatureCollection',

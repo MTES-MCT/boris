@@ -93,7 +93,7 @@ describe('DepartementRepository', () => {
 
     const expectedResult = finistere;
 
-    const result = await departementRepository.findOneByCityZipcode('12345');
+    const result = await departementRepository.findOneByInseeCode('12345');
 
     expect(result).toMatchObject(expectedResult);
     expect(mockQueryBuilder.leftJoinAndSelect).toHaveBeenCalledWith(
@@ -101,8 +101,8 @@ describe('DepartementRepository', () => {
       'region',
     );
     expect(mockQueryBuilder.where).toHaveBeenCalledWith(
-      ":cityZipcode LIKE departement.code || '%'",
-      { cityZipcode: '12345' },
+      ":inseeCode LIKE departement.code || '%'",
+      { inseeCode: '12345' },
     );
     expect(mockQueryBuilder.getOne).toHaveBeenCalledTimes(1);
   });

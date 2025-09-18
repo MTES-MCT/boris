@@ -4,12 +4,10 @@
   import Team from '$components/pages/notre-mission/Team.svelte';
   import Chronology from '$components/pages/notre-mission/Chronology.svelte';
   import Stats from '$components/pages/notre-mission/Stats.svelte';
-  import type { Statistic } from '$lib/utils/definitions';
+  import type { DataType } from './+page.server';
 
   type Props = {
-    data: {
-      statistics: Statistic[];
-    };
+    data: DataType;
   };
 
   const { data }: Props = $props();
