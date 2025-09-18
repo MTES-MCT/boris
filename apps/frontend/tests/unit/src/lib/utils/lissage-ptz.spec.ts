@@ -31,26 +31,26 @@ describe('PrêtLissé', () => {
   it('devrait être elligible', () => {
     const pretLisse = pretLisseInitial();
 
-    expect(pretLisse.estElligible()).toBe(true);
+    expect(pretLisse.definirEstElligible()).toBe(true);
 
     pretLisse.zone = 'Abis';
     pretLisse.nbPersonnes = 7;
     pretLisse.revenuFiscalReference = 140000;
-    expect(pretLisse.estElligible()).toBe(true);
+    expect(pretLisse.definirEstElligible()).toBe(true);
 
     pretLisse.zone = 'B1';
     pretLisse.revenuFiscalReference = 90000;
-    expect(pretLisse.estElligible()).toBe(true);
+    expect(pretLisse.definirEstElligible()).toBe(true);
 
     pretLisse.zone = 'B2';
     pretLisse.nbPersonnes = 12;
     pretLisse.revenuFiscalReference = 100000;
-    expect(pretLisse.estElligible()).toBe(true);
+    expect(pretLisse.definirEstElligible()).toBe(true);
 
     pretLisse.zone = 'C';
     pretLisse.nbPersonnes = 5;
     pretLisse.revenuFiscalReference = 68000;
-    expect(pretLisse.estElligible()).toBe(true);
+    expect(pretLisse.definirEstElligible()).toBe(true);
   });
 
   it('ne devrait pas être elligible', () => {
@@ -59,22 +59,22 @@ describe('PrêtLissé', () => {
     pretLisse.zone = 'Abis';
     pretLisse.nbPersonnes = 7;
     pretLisse.revenuFiscalReference = 150000;
-    expect(pretLisse.estElligible()).toBe(false);
+    expect(pretLisse.definirEstElligible()).toBe(false);
 
     pretLisse.zone = 'B1';
     pretLisse.nbPersonnes = 3;
     pretLisse.revenuFiscalReference = 70000;
-    expect(pretLisse.estElligible()).toBe(false);
+    expect(pretLisse.definirEstElligible()).toBe(false);
 
     pretLisse.zone = 'B2';
     pretLisse.nbPersonnes = 12;
     pretLisse.revenuFiscalReference = 200000;
-    expect(pretLisse.estElligible()).toBe(false);
+    expect(pretLisse.definirEstElligible()).toBe(false);
 
     pretLisse.zone = 'C';
     pretLisse.nbPersonnes = 5;
     pretLisse.revenuFiscalReference = 70000;
-    expect(pretLisse.estElligible()).toBe(false);
+    expect(pretLisse.definirEstElligible()).toBe(false);
   });
 
   it('devrait trouver la bonne tranche', () => {
@@ -143,13 +143,14 @@ describe('PrêtLissé', () => {
     pretLisse.zone = 'Abis';
     pretLisse.nbPersonnes = 4;
     pretLisse.revenuFiscalReference = 46000;
-    expect(pretLisse.calculerMontantPTZ()).toBe(157500);
+    expect(pretLisse.calculerMontantPTZ()).toBe(100000);
 
     pretLisse.nbPersonnes = 6;
     pretLisse.revenuFiscalReference = 110000;
-    expect(pretLisse.calculerMontantPTZ()).toBe(72000);
+    expect(pretLisse.calculerMontantPTZ()).toBe(40000);
 
     pretLisse.typeLogement = 'individuel';
+    pretLisse.montantTotal = 400000;
     expect(pretLisse.calculerMontantPTZ()).toBe(36000);
 
     pretLisse.nbPersonnes = 4;
@@ -177,9 +178,181 @@ describe('PrêtLissé', () => {
     expect(pretLisse.calculerMontantPTZ()).toBe(60000);
   });
 
-  // it('devrait lisser le prêt classique et le PTZ', () => {
-  //   const pretLisse = pretLisseInitial();
+  it('devrait lisser le prêt classique et le PTZ', () => {
+    const pretLisse = pretLisseInitial();
+    expect(pretLisse.lisser()).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 10,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '832.85',
+      },
+      {
+        anneesDifferees: 10,
+        dureeAnnees: 15,
+        mensualitePTZ: '416.67',
+        mensualiteClassique: '416.18',
+      },
+    ]);
 
-  //   console.log(pretLisse.lisser());
-  // });
+    pretLisse.dureeEmprunt = 25;
+    pretLisse.tauxEmprunt = 3;
+    pretLisse.typeLogement = 'individuel';
+    pretLisse.nbPersonnes = 3;
+    pretLisse.revenuFiscalReference = 35000;
+    pretLisse.zone = 'B2';
+    pretLisse.montantTotal = 300000;
+    pretLisse.apport = 20000;
+    expect(pretLisse.lisser()).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 8,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '1263.97',
+      },
+      {
+        anneesDifferees: 8,
+        dureeAnnees: 12,
+        mensualitePTZ: '275.00',
+        mensualiteClassique: '988.97',
+      },
+      {
+        anneesDifferees: 20,
+        dureeAnnees: 5,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '1263.97',
+      },
+    ]);
+
+    pretLisse.dureeEmprunt = 25;
+    pretLisse.tauxEmprunt = 3;
+    pretLisse.typeLogement = 'collectif';
+    pretLisse.nbPersonnes = 3;
+    pretLisse.revenuFiscalReference = 35000;
+    pretLisse.zone = 'B2';
+    pretLisse.montantTotal = 300000;
+    pretLisse.apport = 20000;
+    expect(pretLisse.lisser()).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 8,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '1200.14',
+      },
+      {
+        anneesDifferees: 8,
+        dureeAnnees: 12,
+        mensualitePTZ: '550.00',
+        mensualiteClassique: '650.14',
+      },
+      {
+        anneesDifferees: 20,
+        dureeAnnees: 5,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '1200.14',
+      },
+    ]);
+
+    pretLisse.dureeEmprunt = 25;
+    pretLisse.tauxEmprunt = 2;
+    pretLisse.typeLogement = 'collectif';
+    pretLisse.nbPersonnes = 2;
+    pretLisse.revenuFiscalReference = 30000;
+    pretLisse.zone = 'C';
+    pretLisse.montantTotal = 300000;
+    pretLisse.apport = 20000;
+    expect(pretLisse.lisser()).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 2,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '1147.49',
+      },
+      {
+        anneesDifferees: 2,
+        dureeAnnees: 13,
+        mensualitePTZ: '384.62',
+        mensualiteClassique: '762.87',
+      },
+      {
+        anneesDifferees: 15,
+        dureeAnnees: 10,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '1147.49',
+      },
+    ]);
+
+    pretLisse.dureeEmprunt = 25;
+    pretLisse.tauxEmprunt = 2.5;
+    pretLisse.typeLogement = 'collectif';
+    pretLisse.nbPersonnes = 6;
+    pretLisse.revenuFiscalReference = 110000;
+    pretLisse.zone = 'Abis';
+    pretLisse.montantTotal = 500000;
+    pretLisse.apport = 100000;
+    expect(pretLisse.lisser()).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 10,
+        mensualitePTZ: '600.00',
+        mensualiteClassique: '1156.99',
+      },
+      {
+        anneesDifferees: 10,
+        dureeAnnees: 15,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '1756.99',
+      },
+    ]);
+
+    pretLisse.dureeEmprunt = 15;
+    pretLisse.tauxEmprunt = 2.5;
+    pretLisse.typeLogement = 'collectif';
+    pretLisse.nbPersonnes = 6;
+    pretLisse.revenuFiscalReference = 110000;
+    pretLisse.zone = 'Abis';
+    pretLisse.montantTotal = 500000;
+    pretLisse.apport = 100000;
+    expect(pretLisse.lisser()).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 10,
+        mensualitePTZ: '600.00',
+        mensualiteClassique: '2011.46',
+      },
+      {
+        anneesDifferees: 10,
+        dureeAnnees: 5,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '2611.46',
+      },
+    ]);
+
+    pretLisse.dureeEmprunt = 10;
+    pretLisse.tauxEmprunt = 2.5;
+    pretLisse.typeLogement = 'collectif';
+    pretLisse.nbPersonnes = 6;
+    pretLisse.revenuFiscalReference = 110000;
+    pretLisse.zone = 'Abis';
+    pretLisse.montantTotal = 500000;
+    pretLisse.apport = 100000;
+    expect(pretLisse.lisser()).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 10,
+        mensualitePTZ: '600.00',
+        mensualiteClassique: '3092.05',
+      },
+    ]);
+
+    pretLisse.dureeEmprunt = 15;
+    pretLisse.tauxEmprunt = 3;
+    pretLisse.typeLogement = 'individuel';
+    pretLisse.nbPersonnes = 3;
+    pretLisse.revenuFiscalReference = 35000;
+    pretLisse.zone = 'B2';
+    pretLisse.montantTotal = 300000;
+    pretLisse.apport = 20000;
+    // -> on est dans le cas ou le differe + la duree de remboursement du PTZ est superieur a la duree totale de remboursement
+  });
 });
