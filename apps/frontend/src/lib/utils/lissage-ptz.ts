@@ -8,12 +8,12 @@ type Tranche = {
   anneesDifferees: number;
   dureeRemboursement: number;
 };
-// type PhaseRemboursement = {
-//   dureeAnnees: number;
-//   anneesDifferees: number;
-//   montantMensualitePtz: number;
-//   montantMensualiteClassique: number;
-// };
+type PhaseRemboursement = {
+  dureeAnnees: number;
+  anneesDifferees: number;
+  mensualitePTZ: string;
+  mensualiteClassique: string;
+};
 
 const plafondsRevenus: PlafondsLocalise[] = [
   {
@@ -126,8 +126,9 @@ export class PretLisse {
   public nbPersonnes: number;
   public revenuFiscalReference: number;
   public typeLogement: Logement;
-  public tranche: Tranche;
-  public montantPTZ: number;
+  public tranche?: Tranche;
+  public montantPTZ?: number;
+  public estElligible: boolean;
 
   constructor(
     montantTotal: number,
@@ -148,11 +149,15 @@ export class PretLisse {
     this.revenuFiscalReference = revenuFiscalReference;
     this.typeLogement = typeLogement;
 
-    this.tranche = this.trouverTranche();
-    this.montantPTZ = this.calculerMontantPTZ();
+    this.estElligible = this.definirEstElligible();
+
+    if (this.estElligible) {
+      this.tranche = this.trouverTranche();
+      this.montantPTZ = this.calculerMontantPTZ();
+    }
   }
 
-  public estElligible(): boolean {
+  public definirEstElligible(): boolean {
     const plafondsRevenusLocalises = plafondsRevenus.find(
       (item) => item.zone === this.zone,
     ) as PlafondsLocalise;
@@ -212,9 +217,72 @@ export class PretLisse {
         ? tranche.tauxCollectif
         : tranche.tauxIndividuel;
 
-    this.montantPTZ = plafondPTZ * (quotite / 100);
+    this.montantPTZ = Math.min(plafondPTZ, this.montantTotal) * (quotite / 100);
     return this.montantPTZ;
   }
 
-  // public lisser(): PhaseRemboursement[] {}
+  private rho(t: number, D: number) {
+    return t / (1 - Math.pow(1 + t, -D));
+  }
+
+  public lisser() {
+    this.tranche = this.trouverTranche();
+    this.montantPTZ = this.calculerMontantPTZ();
+
+    const tauxMensuel = this.tauxEmprunt / 100 / 12;
+    const dureeRemboursementPTZMois = this.tranche.dureeRemboursement * 12;
+    const montantPretClassique =
+      this.montantTotal - this.montantPTZ - this.apport;
+    const dureeEmpruntMois = this.dureeEmprunt * 12;
+    const differePTZMois = this.tranche.anneesDifferees * 12;
+
+    const mensualitePTZ = (this.montantPTZ / dureeRemboursementPTZMois).toFixed(
+      2,
+    );
+
+    // source: https://res.cloudinary.com/pretto-fr/image/upload/q_auto,f_webp,w_1240/website/content/formule-lissage-pret
+    const somme =
+      Number(mensualitePTZ) /
+      (this.rho(tauxMensuel, dureeRemboursementPTZMois) *
+        Math.pow(1 + tauxMensuel, differePTZMois));
+
+    const mensualiteTotale = (
+      (montantPretClassique + somme) *
+      this.rho(tauxMensuel, dureeEmpruntMois)
+    ).toFixed(2);
+
+    const phasesRemboursement: PhaseRemboursement[] = [];
+
+    if (differePTZMois > 0) {
+      phasesRemboursement.push({
+        anneesDifferees: 0,
+        dureeAnnees: Number((differePTZMois / 12).toFixed(2)),
+        mensualitePTZ: '0.00',
+        mensualiteClassique: mensualiteTotale,
+      });
+    }
+
+    phasesRemboursement.push({
+      anneesDifferees: this.tranche.anneesDifferees,
+      dureeAnnees: this.tranche.dureeRemboursement,
+      mensualitePTZ: mensualitePTZ,
+      mensualiteClassique: (
+        Number(mensualiteTotale) - Number(mensualitePTZ)
+      ).toFixed(2),
+    });
+
+    const dureeRestante =
+      dureeEmpruntMois - (differePTZMois + dureeRemboursementPTZMois);
+    if (dureeRestante > 0) {
+      phasesRemboursement.push({
+        anneesDifferees:
+          this.tranche.anneesDifferees + this.tranche.dureeRemboursement,
+        dureeAnnees: dureeRestante / 12,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: mensualiteTotale,
+      });
+    }
+
+    return phasesRemboursement;
+  }
 }
