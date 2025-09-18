@@ -17,13 +17,13 @@
   let selectedLocation: GeocodedResponse['properties'] | undefined = $state();
   let autocompleteValue = $derived(selectedLocation?.name || '');
   let housingType: 'new' | 'old' = $state('new');
-  let ownContribution: number = $state(0);
+  let ownContribution: number = $state(5000);
   let notaryFees: number = $state(0);
   let loanFees: number = $state(0);
   let realEstateFees: number | undefined = $state(undefined);
   let oneTimeExpenses: number = $state(0);
-  let interestRate: number = $state(0);
-  let loanDuration: number = $state(0);
+  let interestRate: number = $state(4);
+  let loanDuration: number = $state(25);
   let brsFees: number = $state(0);
   let propertyTax: number = $state(0);
   let yearlyExpenses: number = $state(0);
@@ -31,7 +31,10 @@
   let totalMeterSquareCost: number = $state(0);
   let homeInsurance: number = $state(150);
   let condominiumFees: number = $derived(35 * surface);
-  let brsZone: Zone | undefined = $state();
+  let brsZone: string = $state('Abis');
+  let inHousePeopleAmount: number = $state(1);
+  let fiscalIncome: number | undefined = $state(24000);
+  let ptzType: Logement = $state('collectif');
 
   let estimatedNotaryFees: number = $derived.by(() => {
     if (housingPrice) {
@@ -59,7 +62,8 @@
 
   let estimatedLoanFees: number = $derived.by(() => {
     if (!housingPrice) return 0;
-    return Math.round(500 + loanAmount * 0.008);
+    return 0;
+    // return Math.round(500 + loanAmount * 0.008);
   });
 
   let estimatedRealEstateFees: number | undefined = $derived.by(() => {
@@ -481,30 +485,20 @@
 
         <div class="fieldset-container">
           <fieldset class="fr-fieldset">
-            <legend class="fr-h4">5. Simulation de votre emprunt</legend>
+            <legend class="fr-h4">
+              5. Prêt immobilier & prêt à taux zéro (PTZ, lissage)
+            </legend>
 
             <div class="fr-fieldset__element">
-              <a
-                href="https://www.calcul-ptz.fr/lissage.php"
-                class="fr-link fr-text--sm"
-                target="_blank"
-                rel="noopener noreferrer">
-                <b>
-                  Simulez votre prêt immobilier (avec PTZ, lissage, etc.) sur un
-                  simulateur spécialisé
-                </b>
-              </a>
-            </div>
-
-            <div class="fr-fieldset__element">
+              <p class="fr-h5 fr-mb-2w fr-mt-3w"><u>Paramètres du prêt</u></p>
               <label
                 class="fr-label"
                 for="interest-rate">
-                Taux d’intérêt de votre crédit (%)
+                Taux d'intérêt de votre crédit (%)
                 <Tooltip>
                   <div class="fr-p-2w">
                     Taux annuel effectif global (TAEG) proposé par votre banque.
-                    Indiquez 0 si vous n’avez pas encore d’offre.
+                    Indiquez 0 si vous n'avez pas encore d'offre.
                   </div>
                 </Tooltip>
               </label>
@@ -561,13 +555,142 @@
                   loanAmount = Number((e.target as HTMLInputElement).value);
                 }} />
             </div>
-            <p>
-              <b>
-                Mensualité estimée: {loanMonthlyCost
-                  ? `${loanMonthlyCost}€ (hors assurance)`
-                  : '-'}
-              </b>
-            </p>
+
+            <div class="fr-fieldset__element">
+              <p class="fr-h5 fr-mb-2w fr-mt-5w">
+                <u>Paramètres du prêt à taux zéro (PTZ)</u>
+              </p>
+              <label
+                class="fr-label"
+                for="in-house-people-amount">
+                Nombre de personnes dans le foyer
+              </label>
+              <input
+                class="fr-input"
+                type="number"
+                id="in-house-people-amount"
+                min="1"
+                max="50"
+                step="1"
+                placeholder="2"
+                value={inHousePeopleAmount}
+                oninput={(e) => {
+                  inHousePeopleAmount = Number(
+                    (e.target as HTMLInputElement).value,
+                  );
+                }} />
+            </div>
+
+            <div class="fr-fieldset__element">
+              <label
+                class="fr-label"
+                for="fiscal-income">
+                Revenu fiscal de référence N-2 (€)
+              </label>
+              <input
+                class="fr-input"
+                type="number"
+                id="fiscal-income"
+                min="1"
+                max="1000000"
+                step="1000"
+                placeholder="10000"
+                value={fiscalIncome}
+                oninput={(e) => {
+                  fiscalIncome = Number((e.target as HTMLInputElement).value);
+                }} />
+            </div>
+
+            <div class="fr-fieldset__element">
+              <label
+                for="ptz-type"
+                class="fr-label fr-mb-1w">
+                Nature (PTZ)
+              </label>
+              <div class="fr-input-wrap">
+                <div class="fr-radio-group fr-mb-1v">
+                  <input
+                    type="radio"
+                    id="ptz-neuf"
+                    name="type-ptz"
+                    value="new"
+                    oninput={() => {
+                      ptzType = 'collectif';
+                    }}
+                    checked={ptzType === 'collectif'} />
+                  <label for="ptz-neuf">Neuf collectif</label>
+                </div>
+                <div class="fr-radio-group">
+                  <input
+                    type="radio"
+                    id="ptz-ancien"
+                    name="type-ptz"
+                    value="old"
+                    oninput={() => {
+                      ptzType = 'individuel';
+                    }}
+                    checked={ptzType === 'individuel'} />
+                  <label for="ptz-ancien">Neuf individuel</label>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="fr-btn fr-btn--secondary fr-btn--download fr-mt-2w"
+              onclick={calculateGlobalLoan}>
+              Calculer prêt à taux zero (ptz) + lissage
+            </button>
+
+            <div class="result-box fr-mt-5w">
+              <p class="fr-h5 fr-mb-2w">
+                <u>Mensualités (hors assurance)</u>
+              </p>
+
+              <ul>
+                <li>
+                  Mensualité <b>brute</b>
+                  (sans PTZ) :
+                </li>
+                <li>
+                  Mensualité <b>lissée</b>
+                  (avec PTZ) :
+                </li>
+              </ul>
+            </div>
+
+            <div class="result-box fr-mt-5w">
+              <p class="fr-h5 fr-mb-2w">
+                <u>Résultats prêt à taux zéro (PTZ) & lissage</u>
+              </p>
+
+              <div class="ptz-result">
+                <div>
+                  <p class="fr-mb-1w"><b>Zone</b></p>
+                  <p class="fr-mb-0">{brsZone}</p>
+                </div>
+                <div>
+                  <p class="fr-mb-1w"><b>Ptz retenu</b></p>
+                  <p class="fr-mb-0">0</p>
+                </div>
+                <div>
+                  <p class="fr-mb-1w"><b>Ptz max</b></p>
+                  <p class="fr-mb-0">0</p>
+                </div>
+                <div>
+                  <p class="fr-mb-1w"><b>Différé (ans)</b></p>
+                  <p class="fr-mb-0">0</p>
+                </div>
+                <div>
+                  <p class="fr-mb-1w"><b>Mens. lissée</b></p>
+                  <p class="fr-mb-0">0</p>
+                </div>
+                <div>
+                  <p class="fr-mb-1w"><b>Mens. pic</b></p>
+                  <p class="fr-mb-0">0</p>
+                </div>
+              </div>
+            </div>
           </fieldset>
         </div>
 
@@ -865,6 +988,34 @@
     tfoot tr {
       background-color: var(--background-alt-grey);
       border-bottom: 1px solid var(--border-contrast-grey);
+    }
+  }
+
+  .result-box {
+    padding: var(--2w);
+    border: solid 1px var(--border-default-grey);
+    width: 100%;
+    border-radius: var(--border-radius-lg);
+  }
+
+  .ptz-result {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--2w);
+
+    @media (--xxs-viewport) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (--xs-viewport) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    div {
+      padding: var(--2w);
+      border: solid 1px var(--border-default-grey);
+      width: 100%;
+      border-radius: var(--border-radius-sm);
     }
   }
 </style>
