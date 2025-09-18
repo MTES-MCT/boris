@@ -10,20 +10,20 @@
   import Tooltip from '$components/common/Tooltip.svelte';
   import Autocomplete from '$components/common/Autocomplete.svelte';
   import type { AutocompleteSuggestion } from '$lib/utils/definitions';
-  import { type Logement } from '$lib/utils/lissage-ptz';
+  import { type Zone } from '$lib/utils/lissage-ptz';
 
-  let housingPrice: number = $state(200000);
+  let housingPrice: number = $state(0);
   let surface: number = $state(0);
   let selectedLocation: AutocompleteSuggestion | undefined = $state();
   let autocompleteValue = $derived(selectedLocation?.fulltext || '');
   let housingType: 'new' | 'old' = $state('new');
-  let ownContribution: number = $state(5000);
+  let ownContribution: number = $state(0);
   let notaryFees: number = $state(0);
   let loanFees: number = $state(0);
   let realEstateFees: number | undefined = $state(undefined);
   let oneTimeExpenses: number = $state(0);
-  let interestRate: number = $state(4);
-  let loanDuration: number = $state(25);
+  let interestRate: number = $state(0);
+  let loanDuration: number = $state(0);
   let brsFees: number = $state(0);
   let propertyTax: number = $state(0);
   let yearlyExpenses: number = $state(0);
@@ -31,12 +31,7 @@
   let totalMeterSquareCost: number = $state(0);
   let homeInsurance: number = $state(150);
   let condominiumFees: number = $derived(35 * surface);
-
-  // TODO: Uncomment to use for enhanced simulator
-  let brsZone: string = $state('Abis');
-  let inHousePeopleAmount: number = $state(1);
-  let fiscalIncome: number | undefined = $state(24000);
-  let ptzType: Logement = $state('collectif');
+  let brsZone: Zone | undefined = $state();
 
   let estimatedNotaryFees: number = $derived.by(() => {
     if (housingPrice) {
@@ -64,8 +59,7 @@
 
   let estimatedLoanFees: number = $derived.by(() => {
     if (!housingPrice) return 0;
-    return 0;
-    // return Math.round(500 + loanAmount * 0.008);
+    return Math.round(500 + loanAmount * 0.008);
   });
 
   let estimatedRealEstateFees: number | undefined = $derived.by(() => {
@@ -112,8 +106,6 @@
 
     brsZone = await response.json();
   };
-
-  const calculateGlobalLoan = () => {};
 </script>
 
 <svelte:head>
@@ -164,6 +156,13 @@
                 label="Ville ou code postal du logement"
                 placeholder="Quimper ou 23200"
                 onSelect={onLocationSelect} />
+              {#if brsZone}
+                <p class="fr-mt-1w fr-text--sm">
+                  <b>
+                    Zone BRS: {brsZone}
+                  </b>
+                </p>
+              {/if}
             </div>
 
             <div class="fr-fieldset__element">
@@ -481,7 +480,7 @@
         </div>
 
         <!-- TODO: Remove for enhanced simulator -->
-        <!-- <div class="fieldset-container">
+        <div class="fieldset-container">
           <fieldset class="fr-fieldset">
             <legend class="fr-h4">5. Simulation de votre emprunt</legend>
 
@@ -570,218 +569,6 @@
                   : '-'}
               </b>
             </p>
-          </fieldset>
-        </div> -->
-
-        <!-- TODO: Uncomment to use for enhanced simulator -->
-        <div class="fieldset-container">
-          <fieldset class="fr-fieldset">
-            <legend class="fr-h4">
-              5. Prêt immobilier & prêt à taux zéro (PTZ, lissage)
-            </legend>
-
-            <div class="fr-fieldset__element">
-              <p class="fr-h5 fr-mb-2w fr-mt-3w"><u>Paramètres du prêt</u></p>
-              <label
-                class="fr-label"
-                for="interest-rate">
-                Taux d'intérêt de votre crédit (%)
-                <Tooltip>
-                  <div class="fr-p-2w">
-                    Taux annuel effectif global (TAEG) proposé par votre banque.
-                    Indiquez 0 si vous n'avez pas encore d'offre.
-                  </div>
-                </Tooltip>
-              </label>
-              <input
-                class="fr-input"
-                type="number"
-                id="interest-rate"
-                min="0"
-                max="100"
-                step="0.01"
-                placeholder="Exemple: 3.25"
-                oninput={(e) => {
-                  interestRate = Number((e.target as HTMLInputElement).value);
-                }} />
-            </div>
-
-            <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="loan-duration">
-                Durée de remboursement (années)
-                <Tooltip>
-                  <div class="fr-p-2w">Durée classique: 20 à 25 ans.</div>
-                </Tooltip>
-              </label>
-              <input
-                class="fr-input"
-                type="number"
-                id="loan-duration"
-                min="5"
-                max="30"
-                step="1"
-                placeholder="Exemple: 25"
-                oninput={(e) => {
-                  loanDuration = Number((e.target as HTMLInputElement).value);
-                }} />
-            </div>
-
-            <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="loan-amount">
-                Montant à emprunter (€)
-              </label>
-              <input
-                class="fr-input"
-                type="number"
-                id="loan-amount"
-                min="0"
-                step="100"
-                placeholder="Exemple: 180000"
-                value={loanAmount}
-                oninput={(e) => {
-                  loanAmount = Number((e.target as HTMLInputElement).value);
-                }} />
-            </div>
-
-            <div class="fr-fieldset__element">
-              <p class="fr-h5 fr-mb-2w fr-mt-5w">
-                <u>Paramètres du prêt à taux zéro (PTZ)</u>
-              </p>
-              <label
-                class="fr-label"
-                for="in-house-people-amount">
-                Nombre de personnes dans le foyer
-              </label>
-              <input
-                class="fr-input"
-                type="number"
-                id="in-house-people-amount"
-                min="1"
-                max="50"
-                step="1"
-                placeholder="2"
-                value={inHousePeopleAmount}
-                oninput={(e) => {
-                  inHousePeopleAmount = Number(
-                    (e.target as HTMLInputElement).value,
-                  );
-                }} />
-            </div>
-
-            <div class="fr-fieldset__element">
-              <label
-                class="fr-label"
-                for="fiscal-income">
-                Revenu fiscal de référence N-2 (€)
-              </label>
-              <input
-                class="fr-input"
-                type="number"
-                id="fiscal-income"
-                min="1"
-                max="1000000"
-                step="1000"
-                placeholder="10000"
-                value={fiscalIncome}
-                oninput={(e) => {
-                  fiscalIncome = Number((e.target as HTMLInputElement).value);
-                }} />
-            </div>
-
-            <div class="fr-fieldset__element">
-              <label
-                for="ptz-type"
-                class="fr-label fr-mb-1w">
-                Nature (PTZ)
-              </label>
-              <div class="fr-input-wrap">
-                <div class="fr-radio-group fr-mb-1v">
-                  <input
-                    type="radio"
-                    id="ptz-neuf"
-                    name="type-ptz"
-                    value="new"
-                    oninput={() => {
-                      ptzType = 'collectif';
-                    }}
-                    checked={ptzType === 'collectif'} />
-                  <label for="ptz-neuf">Neuf collectif</label>
-                </div>
-                <div class="fr-radio-group">
-                  <input
-                    type="radio"
-                    id="ptz-ancien"
-                    name="type-ptz"
-                    value="old"
-                    oninput={() => {
-                      ptzType = 'individuel';
-                    }}
-                    checked={ptzType === 'individuel'} />
-                  <label for="ptz-ancien">Neuf individuel</label>
-                </div>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              class="fr-btn fr-btn--secondary fr-btn--download fr-mt-2w"
-              onclick={calculateGlobalLoan}>
-              Calculer prêt à taux zero (ptz) + lissage
-            </button>
-
-            <div class="result-box fr-mt-5w">
-              <p class="fr-h5 fr-mb-2w">
-                <u>Mensualités (hors assurance)</u>
-              </p>
-
-              <ul>
-                <li>
-                  Mensualité <b>brute</b>
-                  (sans PTZ) :
-                </li>
-                <li>
-                  Mensualité <b>lissée</b>
-                  (avec PTZ) :
-                </li>
-              </ul>
-            </div>
-
-            <div class="result-box fr-mt-5w">
-              <p class="fr-h5 fr-mb-2w">
-                <u>Résultats prêt à taux zéro (PTZ) & lissage</u>
-              </p>
-
-              <div class="ptz-result">
-                <div>
-                  <p class="fr-mb-1w"><b>Zone</b></p>
-                  <p class="fr-mb-0">{brsZone}</p>
-                </div>
-                <div>
-                  <p class="fr-mb-1w"><b>Ptz retenu</b></p>
-                  <p class="fr-mb-0">0</p>
-                </div>
-                <div>
-                  <p class="fr-mb-1w"><b>Ptz max</b></p>
-                  <p class="fr-mb-0">0</p>
-                </div>
-                <div>
-                  <p class="fr-mb-1w"><b>Différé (ans)</b></p>
-                  <p class="fr-mb-0">0</p>
-                </div>
-                <div>
-                  <p class="fr-mb-1w"><b>Mens. lissée</b></p>
-                  <p class="fr-mb-0">0</p>
-                </div>
-                <div>
-                  <p class="fr-mb-1w"><b>Mens. pic</b></p>
-                  <p class="fr-mb-0">0</p>
-                </div>
-              </div>
-            </div>
           </fieldset>
         </div>
 
