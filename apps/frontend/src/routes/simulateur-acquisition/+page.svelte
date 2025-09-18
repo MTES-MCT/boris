@@ -479,7 +479,6 @@
           </fieldset>
         </div>
 
-        <!-- TODO: Remove for enhanced simulator -->
         <div class="fieldset-container">
           <fieldset class="fr-fieldset">
             <legend class="fr-h4">5. Simulation de votre emprunt</legend>
@@ -866,34 +865,6 @@
     tfoot tr {
       background-color: var(--background-alt-grey);
       border-bottom: 1px solid var(--border-contrast-grey);
-    }
-  }
-
-  .result-box {
-    padding: var(--2w);
-    border: solid 1px var(--border-default-grey);
-    width: 100%;
-    border-radius: var(--border-radius-lg);
-  }
-
-  .ptz-result {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: var(--2w);
-
-    @media (--xxs-viewport) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (--xs-viewport) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    div {
-      padding: var(--2w);
-      border: solid 1px var(--border-default-grey);
-      width: 100%;
-      border-radius: var(--border-radius-sm);
     }
   }
 </style>
