@@ -31,7 +31,7 @@
   let totalMeterSquareCost: number = $state(0);
   let homeInsurance: number = $state(150);
   let condominiumFees: number = $derived(35 * surface);
-  let brsZone: string = $state('Abis');
+  let brsZone: Zone | undefined = $state();
   let inHousePeopleAmount: number = $state(1);
   let fiscalIncome: number | undefined = $state(24000);
   let ptzType: Logement = $state('collectif');
