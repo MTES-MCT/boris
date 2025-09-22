@@ -353,6 +353,77 @@ describe('PrêtLissé', () => {
     pretLisse.zone = 'B2';
     pretLisse.montantTotal = 300000;
     pretLisse.apport = 20000;
-    // -> on est dans le cas ou le differe + la duree de remboursement du PTZ est superieur a la duree totale de remboursement
+    expect(pretLisse.lisser()).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 8,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '1773.25',
+      },
+      {
+        anneesDifferees: 8,
+        dureeAnnees: 7,
+        mensualitePTZ: '275.00',
+        mensualiteClassique: '1498.25',
+      },
+      {
+        anneesDifferees: 15,
+        dureeAnnees: 5,
+        mensualitePTZ: '275.00',
+        mensualiteClassique: '0.00',
+      },
+    ]);
+
+    pretLisse.dureeEmprunt = 10;
+    pretLisse.tauxEmprunt = 3;
+    pretLisse.typeLogement = 'individuel';
+    pretLisse.nbPersonnes = 3;
+    pretLisse.revenuFiscalReference = 35000;
+    pretLisse.zone = 'B2';
+    pretLisse.montantTotal = 300000;
+    pretLisse.apport = 20000;
+    expect(pretLisse.lisser()).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 8,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '2369.93',
+      },
+      {
+        anneesDifferees: 8,
+        dureeAnnees: 2,
+        mensualitePTZ: '275.00',
+        mensualiteClassique: '2094.93',
+      },
+      {
+        anneesDifferees: 10,
+        dureeAnnees: 10,
+        mensualitePTZ: '275.00',
+        mensualiteClassique: '0.00',
+      },
+    ]);
+
+    pretLisse.dureeEmprunt = 8;
+    pretLisse.tauxEmprunt = 4;
+    pretLisse.typeLogement = 'collectif';
+    pretLisse.nbPersonnes = 1;
+    pretLisse.revenuFiscalReference = 24000;
+    pretLisse.zone = 'A';
+    pretLisse.montantTotal = 200000;
+    pretLisse.apport = 5000;
+    expect(pretLisse.lisser()).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 8,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '1462.71',
+      },
+      {
+        anneesDifferees: 10,
+        dureeAnnees: 15,
+        mensualitePTZ: '416.67',
+        mensualiteClassique: '0.00',
+      },
+    ]);
   });
 });
