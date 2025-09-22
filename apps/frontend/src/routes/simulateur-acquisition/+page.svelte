@@ -574,12 +574,14 @@
               caption="Détails du lissage des prêts"
               size="sm"
               theads={[
+                'Différé',
                 'Durée',
                 'Mensualité PTZ',
                 'Mensualité classique',
                 'Mensualité globale',
               ]}
               tbodies={lissage.map((phase) => [
+                `${String(phase.anneesDifferees)} ans`,
                 `${String(phase.dureeAnnees)} ans`,
                 `${String(phase.mensualitePTZ)} €`,
                 `${String(phase.mensualiteClassique)} €`,
