@@ -7,6 +7,7 @@
   import annuaireManager from '$lib/managers/annuaire.svelte';
   import MapView from '$components/pages/annuaire/MapView.svelte';
   import { browser } from '$app/environment';
+  import Notice from '$components/common/Notice.svelte';
 
   type Props = {
     data: DataType;
@@ -16,7 +17,7 @@
 </script>
 
 <svelte:head>
-  <title>Annuaire des sites de diffusion du BRS - BoRiS</title>
+  <title>Trouver un logement en Bail Réel Solidaire - BoRiS</title>
   <meta
     name="description"
     content="Annuaire des sites de diffusion du BRS" />
@@ -24,28 +25,24 @@
 
 <GradientBackgroundWrapper>
   <Section
-    title="Annuaire des sites de diffusion du BRS"
+    title="Trouver un logement en Bail Réel Solidaire disponible à l’achat"
     titleElement="h1">
     <p>
-      Chocolate cake oat cake gummi bears macaroon sugar plum. Muffin toffee
-      gummies cookie muffin tart marzipan jujubes. Halvah lollipop chocolate
-      cake chocolate dragée cake dessert topping sweet. Tootsie roll chocolate
-      cake chocolate cake danish candy canes apple pie. Jelly beans dessert
-      fruitcake candy canes jelly gummi bears. Cookie soufflé sugar plum
-      shortbread macaroon. Sugar plum icing biscuit dragée gummies cotton candy
-      macaroon pudding. Candy halvah tootsie roll jelly beans jelly chocolate
-      cake macaroon halvah dessert. Macaroon cake jelly beans cake jelly-o
-      marzipan.
+      Nous répertorions les sites internet de nos partenaires, qui proposent des
+      logements en Bail Réel Solidaire (BRS) à la vente. Notre annuaire vous
+      permet d'identifier facilement les villes où des programmes sont en cours
+      de commercialisation, et de pouvoir ensuite visiter les sites d'annonces
+      pour trouver les programmes spécifiques. Il n'y a plus qu'à faire sa
+      recherche !
     </p>
     <p>
-      Chocolate cake biscuit powder sweet roll sweet. Muffin brownie candy canes
-      pastry ice cream jelly-o cheesecake. Candy sweet pie lollipop candy canes
-      sweet roll. Gummies lemon drops muffin gummies jujubes sweet roll dessert
-      muffin candy. Jujubes jelly-o jelly biscuit cheesecake biscuit icing
-      carrot cake danish. Jelly-o tiramisu sweet roll gummies tiramisu candy
-      canes. Halvah lemon drops tootsie roll cookie brownie marshmallow sweet
-      ice cream biscuit. Biscuit sweet sweet roll cake topping. Sweet roll
-      liquorice chocolate danish danish.
+      Attention cependant, notre annuaire n'indique pas précisément
+      l'emplacement des programmes en vente, seulement que nous avons
+      connaissance de l'existence d'au moins un programme dans une ville donnée.
+      Ainsi, chaque lien vous redirige vers la page programme de l'Organismes de
+      Foncier Solidaires (OFS) ou de son commercialisateur. Vous pourrez y
+      consulter les logements en BRS disponibles à l'achat ou prendre contact
+      pour trouver un logement en Bail Réel Solidaire.
     </p>
   </Section>
 

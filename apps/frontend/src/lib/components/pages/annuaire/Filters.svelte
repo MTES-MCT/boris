@@ -1,5 +1,6 @@
 <script lang="ts">
   import Autocomplete from '$components/common/Autocomplete.svelte';
+  import Notice from '$components/common/Notice.svelte';
   import Radius from '$components/pages/annuaire/Radius.svelte';
   import Toggle from '$components/pages/annuaire/Toggle.svelte';
   import annuaireManager from '$lib/managers/annuaire.svelte';
@@ -22,6 +23,13 @@
     annuaireManager.zoom = 12;
     annuaireManager.hasSearchedTroughAutocomplete = true;
   };
+
+  let isNoticeVisible = $derived(
+    annuaireManager.viewType === 'map' ||
+      (annuaireManager.viewType === 'list' &&
+        annuaireManager.listBrsDiffusionWebsites?.totalCount &&
+        annuaireManager.listBrsDiffusionWebsites?.totalCount > 0),
+  );
 </script>
 
 <div
@@ -64,6 +72,13 @@
     </p>
   {/if}
 </div>
+
+{#if isNoticeVisible}
+  <div class="fr-mt-4w">
+    <Notice
+      content="Attention, nous ne présentons ici uniquement les villes où nous savons que des programmes sont en vente et non directement les programmes" />
+  </div>
+{/if}
 
 <style lang="postcss">
   .filters {

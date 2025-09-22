@@ -6,8 +6,8 @@
   } from '$lib/utils/api-types';
   import Card from '$lib/components/pages/annuaire/Card.svelte';
   import Pagination from '$components/common/Pagination.svelte';
-  import { default as WomanYoga } from '$assets/illustrations/woman-yoga.svg?raw';
   import Loader from '$components/common/Loader.svelte';
+  import NoResult from './NoResult.svelte';
 </script>
 
 <div class="fr-container">
@@ -40,19 +40,10 @@
         scrollToElementId="brs-diffusion-websites-filters" />
     </div>
   {:else}
-    {@render noResult()}
+    <div class="fr-col-12">
+      <NoResult />
+    </div>
   {/if}
-{/snippet}
-
-{#snippet noResult()}
-  <div class="fr-col-4"></div>
-  <div class="fr-col-4 svg-container">
-    <p class="fr-text--lead fr-my-4w">
-      <b>Oups, pas de resultats pour votre recherche.</b>
-    </p>
-    {@html WomanYoga}
-  </div>
-  <div class="fr-col-4"></div>
 {/snippet}
 
 {#snippet loading()}

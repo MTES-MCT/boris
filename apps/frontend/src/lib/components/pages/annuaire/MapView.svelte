@@ -12,6 +12,8 @@
   import annuaireManager from '$lib/managers/annuaire.svelte';
   import { debounce } from '$lib/utils/helpers';
   import Card from '$components/pages/annuaire/Card.svelte';
+  import NoResult from './NoResult.svelte';
+  import Notice from '$components/common/Notice.svelte';
 
   type Props = {
     brsDiffusionWebsites: PaginationType<BrsDiffusionWebsiteView>;
@@ -187,22 +189,28 @@
       </b>
     </div>
     <ul>
-      {#each brsDiffusionWebsitesInBounds as item}
-        <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-        <!-- svelte-ignore a11y_click_events_have_key_events -->
-        <li
-          id={item.id}
-          onclick={handleCardClick}
-          onmouseenter={handleOnMouseEnter}
-          onmouseleave={handleOnMouseLeave}>
-          <Card
-            {...item}
-            cardTitleElement="h3"
-            narrow
-            selected={item.id === selectedMarker?.id ||
-              item.id === hoveredMarker?.id} />
+      {#if brsDiffusionWebsitesInBounds.length > 0}
+        {#each brsDiffusionWebsitesInBounds as item}
+          <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <li
+            id={item.id}
+            onclick={handleCardClick}
+            onmouseenter={handleOnMouseEnter}
+            onmouseleave={handleOnMouseLeave}>
+            <Card
+              {...item}
+              cardTitleElement="h3"
+              narrow
+              selected={item.id === selectedMarker?.id ||
+                item.id === hoveredMarker?.id} />
+          </li>
+        {/each}
+      {:else}
+        <li>
+          <NoResult />
         </li>
-      {/each}
+      {/if}
     </ul>
   </div>
   <div

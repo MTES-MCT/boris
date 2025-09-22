@@ -86,9 +86,9 @@
 {#snippet badges()}
   <div class="location">
     <Badge
-      status="info"
+      status="success"
       hideIcon>
-      {region.name}
+      {city}
     </Badge>
     <Badge
       status="new"
@@ -96,9 +96,9 @@
       {departement.name}
     </Badge>
     <Badge
-      status="success"
+      status="info"
       hideIcon>
-      {city}
+      {region.name}
     </Badge>
   </div>
 {/snippet}
