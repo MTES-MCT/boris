@@ -136,18 +136,23 @@ export const eligibilityDataTable = {
 export const statistics: Statistic[] = [
   {
     amount: '380 000 €',
-    subtitle: 'd’argent public investi sur notre plateforme.',
+    subtitle: "d'argent public investi sur notre plateforme.",
     content: '',
   },
   {
-    amount: '7 000',
+    amount: '12 000',
     subtitle: 'simulations',
     content: 'dont 90% concernent des ménages éligibles.',
   },
   {
-    amount: '2 000',
+    amount: '4 000',
     subtitle: 'ménages recontactés',
     content:
-      'après simulation d’éligibilité pour avoir les clés de la poursuite de leur projets (dont 65% ne connaissait pas le BRS avant BoRiS)',
+      "après simulation d'éligibilité pour avoir les clés de la poursuite de leur projets (dont 65% ne connaissait pas le BRS avant BoRiS)",
+  },
+  {
+    amount: '100 à 150',
+    subtitle: "ménages avec un projet d'achat",
+    content: '',
   },
 ];
