@@ -19,7 +19,10 @@ test('a11y', async ({ page }) => {
   for (const url of urls) {
     console.log(url);
 
-    if (url.includes('questionnaire') || url.includes('annuaire')) {
+    if (
+      url.includes('questionnaire') ||
+      url.includes('logements-brs-disponibles')
+    ) {
       continue;
     }
 

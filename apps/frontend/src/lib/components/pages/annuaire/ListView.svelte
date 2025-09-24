@@ -8,6 +8,7 @@
   import Pagination from '$components/common/Pagination.svelte';
   import Loader from '$components/common/Loader.svelte';
   import NoResult from './NoResult.svelte';
+  import Notice from '$components/common/Notice.svelte';
 </script>
 
 <div class="fr-container">
@@ -59,12 +60,9 @@
 
 {#snippet hint()}
   <div class="fr-col-12">
-    <p>text à définir</p>
+    <Notice
+      content="Vous n'avez plus qu'à écrire et sélectionner votre commune de recherche
+      dans la barre juste au dessus !">
+    </Notice>
   </div>
 {/snippet}
-
-<style lang="postcss">
-  .fr-text--lead {
-    text-align: center;
-  }
-</style>
