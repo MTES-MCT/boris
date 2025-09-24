@@ -30,7 +30,6 @@ const pretLisseInitial = () =>
 describe('PrêtLissé', () => {
   it('devrait être elligible', () => {
     const pretLisse = pretLisseInitial();
-
     expect(pretLisse.definirEstElligible()).toBe(true);
 
     pretLisse.zone = 'Abis';
@@ -79,7 +78,6 @@ describe('PrêtLissé', () => {
 
   it('devrait trouver la bonne tranche', () => {
     const pretLisse = pretLisseInitial();
-
     expect(pretLisse.trouverTranche()).toBe(tranches[0]);
 
     pretLisse.zone = 'Abis';
@@ -137,7 +135,6 @@ describe('PrêtLissé', () => {
 
   it('devrait calculer le montant du PTZ', () => {
     const pretLisse = pretLisseInitial();
-
     expect(pretLisse.calculerMontantPTZ()).toBe(75000);
 
     pretLisse.zone = 'Abis';
