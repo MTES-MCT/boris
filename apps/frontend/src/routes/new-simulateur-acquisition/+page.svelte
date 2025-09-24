@@ -15,7 +15,7 @@
 
 <Section title="Simulateur d'acquisition">
   <Stepper
-    title={currentStep.title}
+    title={`${currentStep.step}. ${currentStep.title}`}
     nextStepTitle={nextStep?.title}
     currentStep={currentStep.step}
     stepCount={steps.length} />
