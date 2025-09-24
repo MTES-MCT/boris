@@ -1,3 +1,6 @@
+import type { AutocompleteSuggestion } from '$lib/utils/definitions';
+import type { Zone } from '$lib/utils/lissage-ptz';
+
 type Step = {
   title: string;
   step: number;
@@ -45,6 +48,12 @@ class AcquisitionSimulator {
       return this.steps[this.currentStep.step];
     }
   });
+  public housingPrice: number | undefined = $state();
+  public selectedLocation: AutocompleteSuggestion | undefined = $state();
+  public autocompleteValue = $derived(this.selectedLocation?.fulltext || '');
+  public brsZone: Zone | undefined = $state();
+  public surface: number | undefined = $state();
+  public housingType: 'new' | 'old' | undefined = $state();
 
   public goToPreviousStep = () => {
     if (this.previousStep) {

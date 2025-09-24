@@ -67,7 +67,7 @@
     <label
       class="fr-label"
       for={id}>
-      {label}
+      <b>{label} {required ? '*' : ''}</b>
       {#if labelTooltip}
         <Tooltip>
           <div class="fr-p-2w">
