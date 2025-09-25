@@ -9,3 +9,4 @@ Procfile
 **/*.woff
 **/*.woff2
 .gitignore
+favicon.ico

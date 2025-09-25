@@ -6,6 +6,8 @@
   import annuaireManager from '$lib/managers/annuaire.svelte';
   import type { AutocompleteSuggestion } from '$lib/utils/definitions';
 
+  let autocompleteElementRef = $state<HTMLDivElement | null>(null);
+
   const handleAutocompleteSelect = async (
     suggestion: AutocompleteSuggestion,
   ) => {
@@ -22,6 +24,13 @@
 
     annuaireManager.zoom = 12;
     annuaireManager.hasSearchedTroughAutocomplete = true;
+
+    if (annuaireManager.viewType === 'map') {
+      annuaireManager.mapElementRef?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+      });
+    }
   };
 
   let isNoticeVisible = $derived(

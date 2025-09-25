@@ -38,7 +38,7 @@
       const { results } = await autocomplete(value, '10');
 
       suggestions = results
-        .filter(
+        ?.filter(
           (result) =>
             !excludedPois.some((excludedPoi) =>
               result.poiType?.includes(excludedPoi),

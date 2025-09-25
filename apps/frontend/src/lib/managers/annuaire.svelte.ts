@@ -11,8 +11,9 @@ class AnnuaireManager {
   radius = $state<number>(defaultRadius);
   latitude = $state<number>(defaultCoords.latitude);
   longitude = $state<number>(defaultCoords.longitude);
-  zoom = $state<number>(
-    window.innerWidth <= 44 * 16 ? defaultZoomMobile : defaultZoomDesktop,
+  isMobile = $state(window.innerWidth <= 44 * 16);
+  zoom = $derived<number>(
+    this.isMobile ? defaultZoomMobile : defaultZoomDesktop,
   );
   listBrsDiffusionWebsites = $state<Pagination<BrsDiffusionWebsiteView> | null>(
     null,
@@ -21,6 +22,7 @@ class AnnuaireManager {
   autocompleteValue = $state('');
   hasSearchedTroughAutocomplete = $state(false);
   isListLoading = $state(false);
+  mapElementRef = $state<HTMLDivElement | null>(null);
 
   setListBrsDiffusionWebsites = async ({
     page,
@@ -31,6 +33,10 @@ class AnnuaireManager {
     coords?: { latitude: number; longitude: number };
     radius?: number;
   }) => {
+    this.latitude = coords?.latitude || this.latitude;
+    this.longitude = coords?.longitude || this.longitude;
+    this.radius = radius || this.radius;
+
     const query = {
       page: page || defaultPagination.page,
       pageSize: defaultPagination.pageSize,
@@ -52,10 +58,6 @@ class AnnuaireManager {
     const brsDiffusionWebsites = await response.json();
 
     this.listBrsDiffusionWebsites = brsDiffusionWebsites;
-
-    this.latitude = coords?.latitude || this.latitude;
-    this.longitude = coords?.longitude || this.longitude;
-    this.radius = radius || this.radius;
     this.isListLoading = false;
   };
 }
