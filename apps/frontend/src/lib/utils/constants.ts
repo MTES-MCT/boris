@@ -1,4 +1,8 @@
-import type { EligibilityData, Statistic } from '$lib/utils/definitions';
+import type {
+  EligibilityData,
+  MapBounds,
+  Statistic,
+} from '$lib/utils/definitions';
 import { formatEuro } from './formatters';
 
 export const eligibilityData: EligibilityData[] = [
@@ -156,3 +160,31 @@ export const statistics: Statistic[] = [
     content: '',
   },
 ];
+
+export const defaultPagination = {
+  page: 1,
+  pageSize: 24,
+};
+
+// Paris coordinates
+export const defaultCoords: { latitude: number; longitude: number } = {
+  latitude: 46.227638,
+  longitude: 2.213749,
+};
+
+export const parisCoords: { latitude: number; longitude: number } = {
+  latitude: 48.5,
+  longitude: 2.2,
+};
+
+export const defaultBounds: MapBounds = {
+  northEastLat: 52.37559917665913,
+  northEastLng: 12.524414062500002,
+  southWestLat: 39.30029918615029,
+  southWestLng: -8.085937500000002,
+};
+
+export const defaultRadius = 5;
+
+export const defaultZoomDesktop = 6;
+export const defaultZoomMobile = 5;

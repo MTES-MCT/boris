@@ -11,7 +11,7 @@
     value: string;
     label: string;
     placeholder: string;
-    excludedPois: AutocompleteSuggestion['poiType'];
+    excludedPois?: AutocompleteSuggestion['poiType'];
     onSelect: (suggestion: AutocompleteSuggestion) => void;
   };
 
@@ -19,7 +19,7 @@
     value = $bindable(),
     label,
     placeholder,
-    excludedPois,
+    excludedPois = [],
     onSelect,
   }: Props = $props();
 

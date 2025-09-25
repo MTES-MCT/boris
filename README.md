@@ -27,7 +27,13 @@ npm.
 
    Demander à une personne de l'équipe dev les valeurs des variables d'environnement à saisir dans le fichier `.env`
 
-3. Installer les dépendances
+3. Utiliser la version de node du projet
+
+   ```
+   nvm use
+   ```
+
+4. Installer les dépendances
 
    ```
    npm install

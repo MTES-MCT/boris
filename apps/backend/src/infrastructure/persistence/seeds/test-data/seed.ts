@@ -116,8 +116,8 @@ export class TestDataSeed {
     let brsDiffusionWebsitesCount = 0;
 
     for (const geocodedMunicipality of geocodedMunicipalities) {
-      const departement = await this.departementRepository.findOneByCityZipcode(
-        geocodedMunicipality.properties?.postcode,
+      const departement = await this.departementRepository.findOneByInseeCode(
+        geocodedMunicipality.properties?.citycode,
       );
 
       if (!departement) {

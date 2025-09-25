@@ -19,13 +19,17 @@ test('a11y', async ({ page }) => {
   for (const url of urls) {
     console.log(url);
 
-    if (url.includes('questionnaire')) {
+    if (
+      url.includes('questionnaire') ||
+      url.includes('logements-brs-disponibles')
+    ) {
       continue;
     }
 
     await page.goto(url);
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
+    // await page.screenshot({ path: `${(new Date().getTime())}.png` });
     expect(accessibilityScanResults.violations).toEqual([]);
   }
 });

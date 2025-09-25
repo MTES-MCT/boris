@@ -2,6 +2,7 @@
   import '@gouvfr/dsfr/dist/component/card/card.min.css';
   import '@gouvfr/dsfr/dist/utility/icons/icons-editor/icons-editor.min.css';
   import '@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css';
+
   import Img from '@zerodevx/svelte-img';
   import Photograph from '$components/common/Photograph.svelte';
 

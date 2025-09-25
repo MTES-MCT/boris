@@ -70,8 +70,8 @@ export class UpdateBrsDiffusionWebsiteUsecase {
         );
       }
 
-      departement = await this.departementRepository.findOneByCityZipcode(
-        geocodedMunicipality.properties?.postcode as string,
+      departement = await this.departementRepository.findOneByInseeCode(
+        geocodedMunicipality.properties?.citycode as string,
       );
 
       if (!departement) {
