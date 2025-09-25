@@ -8,8 +8,6 @@
 
   let autocompleteElementRef = $state<HTMLDivElement | null>(null);
 
-  $inspect(autocompleteElementRef);
-
   const handleAutocompleteSelect = async (
     suggestion: AutocompleteSuggestion,
   ) => {
