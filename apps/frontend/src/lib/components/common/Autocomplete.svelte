@@ -52,7 +52,7 @@
 
       isListExpanded = true;
 
-      if (suggestions.length > 0) {
+      if (suggestions?.length > 0) {
         focusedSuggestionId = suggestions[0]?.id as string;
       }
 
