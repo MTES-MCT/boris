@@ -24,20 +24,22 @@
   }: Props = $props();
 </script>
 
-<div class="fr-radio-group fr-mb-1v">
-  <input
-    type="radio"
-    {id}
-    {name}
-    {disabled}
-    {checked}
-    {oninput} />
-  <label
-    class="fr-label"
-    for={id}>
-    {label}
-    {#if hint}
-      <span class="fr-hint-text">Hello</span>
-    {/if}
-  </label>
+<div class="fr-fieldset__element">
+  <div class="fr-radio-group">
+    <input
+      type="radio"
+      {id}
+      {name}
+      {disabled}
+      {checked}
+      {oninput} />
+    <label
+      class="fr-label"
+      for={id}>
+      {label}
+      {#if hint}
+        <span class="fr-hint-text">Hello</span>
+      {/if}
+    </label>
+  </div>
 </div>

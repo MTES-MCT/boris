@@ -75,3 +75,7 @@ export type MapBounds = {
   southWestLat: number;
   southWestLng: number;
 };
+
+export type FormFieldError = {
+  [key: string]: string;
+};

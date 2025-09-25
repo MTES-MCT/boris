@@ -1,0 +1,65 @@
+<script lang="ts">
+  import '@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css';
+
+  type Props = {
+    direction: 'previous' | 'next';
+    label: string;
+    type?: HTMLButtonElement['type'];
+    onClick?: () => void;
+  };
+
+  const { direction, label, type = 'button', onClick }: Props = $props();
+</script>
+
+<button
+  class={`fr-btn fr-btn--lg ${direction}`}
+  {type}
+  onclick={onClick}>
+  <div class="surtitle">
+    {#if direction === 'next'}
+      <p>
+        <b>Étape suivante</b>
+      </p>
+      <span
+        class="fr-icon-arrow-right-line"
+        aria-hidden="true">
+      </span>
+    {:else}
+      <span
+        class="fr-icon-arrow-left-line"
+        aria-hidden="true">
+      </span>
+      <p>
+        <b>Étape précédente</b>
+      </p>
+    {/if}
+  </div>
+  <p class="fr-text--sm">{label}</p>
+</button>
+
+<style lang="postcss">
+  button {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    &.previous {
+      align-items: flex-end;
+    }
+
+    &.next {
+      align-items: flex-start;
+    }
+  }
+
+  .surtitle {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
+
+  .fr-icon-arrow-right-line:before,
+  .fr-icon-arrow-left-line:before {
+    --icon-size: 1rem;
+  }
+</style>

@@ -144,4 +144,8 @@
       var(--background-contrast-grey)
     );
   }
+
+  .fr-input-wrap::before {
+    bottom: auto;
+  }
 </style>
