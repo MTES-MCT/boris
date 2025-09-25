@@ -34,6 +34,7 @@
     ariaAutocomplete?: 'none' | 'list' | 'inline' | 'both' | null;
     autocomplete?: FullAutoFill;
     forceNoMarginBottom?: boolean;
+    error?: string;
     onChange?: (event: Event) => void;
     onKeydown?: (event: KeyboardEvent) => void;
   };
@@ -54,6 +55,7 @@
     max,
     step,
     forceNoMarginBottom = false,
+    error,
     onChange,
     onKeydown,
   }: Props = $props();
@@ -61,6 +63,7 @@
 
 <div
   class="fr-input-group"
+  class:fr-input-group--error={error}
   class:no-margin-bottom={forceNoMarginBottom}
   id={`${id}-group`}>
   {#if label}
@@ -94,20 +97,34 @@
 {#snippet input()}
   <input
     class="fr-input"
-    aria-describedby={`${id}-messages`}
     {placeholder}
     {type}
     {value}
     {required}
     {id}
     {role}
-    {...ariaAttributes}
+    {...{
+      ...ariaAttributes,
+      'aria-describedby': `${id}-messages`,
+    }}
     {autocomplete}
     {min}
     {max}
     {step}
     oninput={onChange}
     onkeydown={onKeydown} />
+  <div
+    class="fr-messages-group"
+    id={`${id}-messages`}
+    aria-live="polite">
+    {#if error}
+      <p
+        class="fr-message fr-message--error"
+        id={`${id}-message-error`}>
+        {error}
+      </p>
+    {/if}
+  </div>
 {/snippet}
 
 <style lang="postcss">
