@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   type Props = {
-    onSubmit: () => void;
+    onSubmit: (e: SubmitEvent) => void;
     children: Snippet;
   };
 

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import z from 'zod';
+
   import type { AutocompleteSuggestion } from '$lib/utils/definitions';
 
   import Input from '$components/common/Input.svelte';
@@ -9,6 +11,11 @@
   import Autocomplete from '$components/common/Autocomplete.svelte';
   import Tooltip from '$components/common/Tooltip.svelte';
   import Radio from '$components/common/Radio.svelte';
+
+  const FormData = z.object({
+    housingPrice: z.number().positive().min(50000),
+  });
+
   let { housingPrice, autocompleteValue, surface, housingType } = $derived(
     acquisitionSimulatorManger,
   );
@@ -23,13 +30,11 @@
     acquisitionSimulatorManger.brsZone = await response.json();
   };
 
-  $inspect(
-    housingPrice,
-    autocompleteValue,
-    acquisitionSimulatorManger.brsZone,
-    surface,
-    housingType,
-  );
+  const handleSubmit = (e: SubmitEvent) => {
+    e.preventDefault();
+
+    console.log('submit');
+  };
 </script>
 
 <p>
@@ -37,20 +42,20 @@
   acquérir. Ces informations permettront d'estimer les frais associés à votre
   projet et les facilités d'emprunt auxquelles vous avez droit.
 </p>
-<Form onSubmit={() => console.log('hello')}>
+<Form onSubmit={handleSubmit}>
   <div class="fieldset-container">
     <fieldset class="fr-fieldset">
       <div class="fr-fieldset__element fr-mb-4w">
         <Input
           value={housingPrice}
-          label="Prix du logement (€)"
+          label="Prix du logement (€) *"
           labelTooltip="Prix de vente affiché par l'opérateur ou le promoteur, hors frais annexes."
           placeholder="200000"
           id="housing-price"
           type="number"
           min={10000}
           step={1000}
-          required
+          error="Ce champs est requis"
           onChange={(e) => {
             acquisitionSimulatorManger.housingPrice = Number(
               (e.target as HTMLInputElement).value,
@@ -70,9 +75,8 @@
       <div class="fr-fieldset__element fr-mb-4w">
         <Input
           value={surface}
-          required
           id="surface"
-          label="Surface (m²)"
+          label="Surface (m²) *"
           placeholder="50"
           onChange={(e) => {
             const value = (e.target as HTMLInputElement).value;
@@ -112,17 +116,14 @@
     </fieldset>
   </div>
 
-  <Actions />
+  <button type="submit">Submit</button>
+
+  <!-- <Actions /> -->
 </Form>
 
 <style lang="postcss">
   label {
     display: flex;
     gap: 0.25rem;
-  }
-
-  .fr-input-wrap {
-    display: flex;
-    gap: 2rem;
   }
 </style>
