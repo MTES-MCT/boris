@@ -13,7 +13,7 @@
   import { debounce } from '$lib/utils/helpers';
   import Card from '$components/pages/annuaire/Card.svelte';
   import NoResult from './NoResult.svelte';
-  import Notice from '$components/common/Notice.svelte';
+  import { defaultCoords, defaultZoomDesktop } from '$lib/utils/constants';
 
   type Props = {
     brsDiffusionWebsites: PaginationType<BrsDiffusionWebsiteView>;
@@ -32,7 +32,6 @@
 
   const { brsDiffusionWebsites }: Props = $props();
 
-  let mapRef: HTMLDivElement;
   let map: Map;
   let markers = L.markerClusterGroup(markerClusterGroupOptions);
   let brsDiffusionWebsitesInBounds = $state(brsDiffusionWebsites.items);
@@ -63,7 +62,7 @@
   });
 
   const createMap = () => {
-    map = L.map(mapRef, {
+    map = L.map(annuaireManager.mapElementRef as HTMLElement, {
       center: [annuaireManager.latitude, annuaireManager.longitude],
       zoom: annuaireManager.zoom,
     });
@@ -73,7 +72,14 @@
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
 
-    addMarkersToMap();
+    if (
+      annuaireManager.latitude !== defaultCoords.latitude &&
+      annuaireManager.longitude !== defaultCoords.longitude
+    ) {
+      handleMapBoundsChange();
+    } else {
+      addMarkersToMap();
+    }
 
     map.on('zoomlevelschange', debounce(handleMapBoundsChange, 50));
     map.on('move', handleMapBoundsChange);
@@ -109,25 +115,36 @@
           (brsDiffusionWebsite) => brsDiffusionWebsite.id === item.id,
         ) as BrsDiffusionWebsiteView;
 
-        map.setView([selectedMarker.latitude, selectedMarker.longitude], 13);
+        scrollMapToBottom();
+
+        annuaireManager.zoom = 13;
+        annuaireManager.latitude = selectedMarker.latitude;
+        annuaireManager.longitude = selectedMarker.longitude;
       });
 
       markers.addLayer(markerLayer);
     });
 
     map?.addLayer(markers);
+    markers.on('clusterclick', () => {
+      scrollMapToBottom();
+    });
   };
 
   const handleMapBoundsChange = () => {
     deleteMarkersFromMap();
-    addMarkersToMap();
+
+    if (annuaireManager.isMobile) {
+      addMarkersToMap();
+      return;
+    }
 
     const northEastLat = map.getBounds().getNorthEast().lat;
     const northEastLng = map.getBounds().getNorthEast().lng;
     const southWestLat = map.getBounds().getSouthWest().lat;
     const southWestLng = map.getBounds().getSouthWest().lng;
 
-    brsDiffusionWebsitesInBounds = brsDiffusionWebsites.items.filter(
+    brsDiffusionWebsitesInBounds = brsDiffusionWebsites?.items.filter(
       (item) =>
         item.latitude <= northEastLat &&
         item.latitude >= southWestLat &&
@@ -143,6 +160,8 @@
       block: 'nearest',
       inline: 'nearest',
     });
+
+    addMarkersToMap();
   };
 
   const handleMobileCardClose = () => {
@@ -175,6 +194,13 @@
     ) as BrsDiffusionWebsiteView;
 
     map.setView([selectedMarker.latitude, selectedMarker.longitude], 13);
+  };
+
+  const scrollMapToBottom = () => {
+    annuaireManager.mapElementRef?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+    });
   };
 </script>
 
@@ -215,7 +241,7 @@
   </div>
   <div
     id="map"
-    bind:this={mapRef}>
+    bind:this={annuaireManager.mapElementRef}>
     {#if selectedMarker}
       <div class="mobile-card">
         <Card

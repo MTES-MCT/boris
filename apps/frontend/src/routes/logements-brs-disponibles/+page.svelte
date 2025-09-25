@@ -6,8 +6,6 @@
   import ListView from '$components/pages/annuaire/ListView.svelte';
   import annuaireManager from '$lib/managers/annuaire.svelte';
   import MapView from '$components/pages/annuaire/MapView.svelte';
-  import { browser } from '$app/environment';
-  import Notice from '$components/common/Notice.svelte';
 
   type Props = {
     data: DataType;
@@ -20,12 +18,12 @@
   <title>Trouver un logement en Bail Réel Solidaire - BoRiS</title>
   <meta
     name="description"
-    content="Annuaire des sites de diffusion du BRS" />
+    content="Trouvez un logement en BRS: consultez les biens en BRS disponibles à l’achat partout en France. Appartements et maisons en Bail Réel Solidaire." />
 </svelte:head>
 
 <GradientBackgroundWrapper>
   <Section
-    title="Trouver un logement en Bail Réel Solidaire disponible à l’achat"
+    title="Trouver un logement en Bail Réel Solidaire disponible à l'achat"
     titleElement="h1">
     <p>
       Nous répertorions les sites internet de nos partenaires qui proposent des
