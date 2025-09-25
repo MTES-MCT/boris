@@ -1,5 +1,7 @@
 import type { Page } from '@sveltejs/kit';
 import { PUBLIC_NODE_ENV } from '$env/static/public';
+import type { z, ZodError, ZodIssue } from 'zod';
+import type { FormFieldError } from './definitions';
 
 export const blockSearchEngineIndexing = (page: Page): boolean => {
   const hiddenPaths = ['/questionnaire', '/simulateur-acquisition'];
@@ -46,4 +48,19 @@ export const removeSmoothScroll = () => {
   document
     .getElementsByTagName('html')[0]
     ?.classList.remove('scroll-behavior-smooth');
+};
+
+export const formatFormErrors = (
+  issues: z.core.$ZodIssue[],
+): FormFieldError => {
+  let errors = {};
+
+  issues.forEach((issue) => {
+    errors = {
+      ...errors,
+      [issue.path[0]]: issue.message,
+    };
+  });
+
+  return errors;
 };

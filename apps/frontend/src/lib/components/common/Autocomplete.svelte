@@ -12,6 +12,7 @@
     label: string;
     placeholder: string;
     excludedPois?: AutocompleteSuggestion['poiType'];
+    error?: string;
     onSelect: (suggestion: AutocompleteSuggestion) => void;
   };
 
@@ -20,6 +21,7 @@
     label,
     placeholder,
     excludedPois = [],
+    error,
     onSelect,
   }: Props = $props();
 
@@ -145,6 +147,7 @@
     icon="map-pin-2-line"
     role="combobox"
     autocomplete="off"
+    {error}
     ariaAttributes={{
       'aria-autocomplete': 'list',
       'aria-expanded': isListExpanded,
