@@ -1,19 +1,43 @@
 <script lang="ts">
-  import z from 'zod';
+  import z, { ZodError } from 'zod';
 
-  import type { AutocompleteSuggestion } from '$lib/utils/definitions';
+  import type {
+    AutocompleteSuggestion,
+    FormFieldError,
+  } from '$lib/utils/definitions';
+  import { formatFormErrors } from '$lib/utils/helpers';
 
   import Input from '$components/common/Input.svelte';
-  import Actions from './Actions.svelte';
-  import Form from './Form.svelte';
+  import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
+  import Form from '$components/pages/simulateur-acquisition/Form.svelte';
+  import Autocomplete from '$components/common/Autocomplete.svelte';
+  import Radio from '$components/common/Radio.svelte';
+  import RadioFieldset from '$components/common/RadioFieldset.svelte';
+  import Action from '$components/pages/simulateur-acquisition//Action.svelte';
 
   import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
-  import Autocomplete from '$components/common/Autocomplete.svelte';
-  import Tooltip from '$components/common/Tooltip.svelte';
-  import Radio from '$components/common/Radio.svelte';
+
+  const { nextStep } = acquisitionSimulatorManger;
+
+  let errors: FormFieldError = $state({});
 
   const FormData = z.object({
-    housingPrice: z.number().positive().min(50000),
+    housingPrice: z
+      .number({
+        message: 'Veuillez remplir ce champs.',
+      })
+      .positive('Veuillez saisir un chiffre supérieur à 0.'),
+    brsZone: z.string({
+      message: 'Veuillez selectionner un lieu valide.',
+    }),
+    surface: z
+      .number({
+        message: 'Veuillez remplir ce champs.',
+      })
+      .positive('Veuillez saisir un chiffre supérieur à 0.'),
+    housingType: z.string({
+      message: 'Veuillez selectionner le type du bien.',
+    }),
   });
 
   let { housingPrice, autocompleteValue, surface, housingType } = $derived(
@@ -33,7 +57,18 @@
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
-    console.log('submit');
+    try {
+      FormData.parse({
+        housingPrice: acquisitionSimulatorManger.housingPrice,
+        brsZone: acquisitionSimulatorManger.brsZone,
+        surface: acquisitionSimulatorManger.surface,
+        housingType: acquisitionSimulatorManger.housingType,
+      });
+
+      errors = {};
+    } catch (e) {
+      errors = formatFormErrors((e as ZodError).issues);
+    }
   };
 </script>
 
@@ -53,13 +88,16 @@
           placeholder="200000"
           id="housing-price"
           type="number"
-          min={10000}
-          step={1000}
-          error="Ce champs est requis"
+          min={0}
+          error={errors.housingPrice}
           onChange={(e) => {
-            acquisitionSimulatorManger.housingPrice = Number(
-              (e.target as HTMLInputElement).value,
-            );
+            const value = (e.target as HTMLInputElement).value;
+
+            if (value) {
+              const numericValue = value.replace(/\D/g, '').slice(0, 9);
+              (e.target as HTMLInputElement).value = numericValue;
+              acquisitionSimulatorManger.housingPrice = Number(numericValue);
+            }
           }} />
       </div>
 
@@ -69,6 +107,7 @@
           excludedPois={['commune', 'département', 'région']}
           label="Ville ou code postal du logement *"
           placeholder="Quimper ou 23200"
+          error={errors.brsZone}
           onSelect={onLocationSelect} />
       </div>
 
@@ -78,6 +117,7 @@
           id="surface"
           label="Surface (m²) *"
           placeholder="50"
+          error={errors.surface}
           onChange={(e) => {
             const value = (e.target as HTMLInputElement).value;
 
@@ -88,42 +128,37 @@
             }
           }} />
       </div>
-
-      <div class="fr-fieldset__element fr-mb-4w">
-        <label class="fr-label fr-mb-1w">
-          <span><b>Type de bien *</b></span>
-          <Tooltip>
-            <div class="fr-p-2w">
-              Le taux des frais de notaire dépend du type de bien.
-              <ul>
-                <li>Neuf: logement jamais habité.</li>
-                <li>Ancien: logement déjà occupé.</li>
-              </ul>
-            </div>
-          </Tooltip>
-        </label>
-        <div class="fr-input-wrap">
-          <Radio
-            label="Neuf"
-            checked={housingType === 'new'}
-            oninput={() => (acquisitionSimulatorManger.housingType = 'new')} />
-          <Radio
-            label="Ancien"
-            checked={housingType === 'old'}
-            oninput={() => (acquisitionSimulatorManger.housingType = 'old')} />
-        </div>
-      </div>
     </fieldset>
+
+    <RadioFieldset
+      legend="Type de bien *"
+      legendTooltip={`
+        <div class="fr-p-2w">
+          Le taux des frais de notaire dépend du type de bien.
+          <ul>
+            <li>Neuf: logement jamais habité.</li>
+            <li>Ancien: logement déjà occupé.</li>
+          </ul>
+        </div>
+      `}
+      error={errors.housingType}>
+      <Radio
+        label="Neuf"
+        checked={housingType === 'new'}
+        oninput={() => (acquisitionSimulatorManger.housingType = 'new')} />
+      <Radio
+        label="Ancien"
+        checked={housingType === 'old'}
+        oninput={() => (acquisitionSimulatorManger.housingType = 'old')} />
+    </RadioFieldset>
   </div>
 
-  <button type="submit">Submit</button>
-
-  <!-- <Actions /> -->
+  {#if nextStep}
+    <Actions justifyEnd>
+      <Action
+        direction="next"
+        label={nextStep.title}
+        type="submit" />
+    </Actions>
+  {/if}
 </Form>
-
-<style lang="postcss">
-  label {
-    display: flex;
-    gap: 0.25rem;
-  }
-</style>

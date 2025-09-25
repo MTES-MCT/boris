@@ -1,6 +1,8 @@
 import type { Page } from '@sveltejs/kit';
 import { PUBLIC_NODE_ENV } from '$env/static/public';
 import type { GeocodedResponse } from './definitions';
+import type { z, ZodError, ZodIssue } from 'zod';
+import type { FormFieldError } from './definitions';
 
 export const blockSearchEngineIndexing = (page: Page): boolean => {
   const hiddenPaths = ['/questionnaire', '/simulateur-acquisition'];
@@ -53,4 +55,18 @@ export const getGeocodedResponseLabel = (
   geocodedResponse: GeocodedResponse['properties'],
 ) => {
   return `${geocodedResponse?.name}, ${geocodedResponse?.context}`;
+};
+export const formatFormErrors = (
+  issues: z.core.$ZodIssue[],
+): FormFieldError => {
+  let errors = {};
+
+  issues.forEach((issue) => {
+    errors = {
+      ...errors,
+      [issue.path[0]]: issue.message,
+    };
+  });
+
+  return errors;
 };
