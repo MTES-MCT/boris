@@ -135,6 +135,7 @@
     deleteMarkersFromMap();
 
     if (annuaireManager.isMobile) {
+      addMarkersToMap();
       return;
     }
 
