@@ -15,10 +15,17 @@
     value: string;
     label: string;
     placeholder: string;
+    error?: string;
     onSelect: (suggestion: GeocodedResponse['properties']) => void;
   };
 
-  let { value = $bindable(), label, placeholder, onSelect }: Props = $props();
+  let {
+    value = $bindable(),
+    label,
+    placeholder,
+    error,
+    onSelect,
+  }: Props = $props();
 
   let suggestions = $state<GeocodedResponse['properties'][] | null>(null);
   let isLoading = $state<boolean>(false);
@@ -139,6 +146,7 @@
     icon="map-pin-2-line"
     role="combobox"
     autocomplete="off"
+    {error}
     ariaAttributes={{
       'aria-autocomplete': 'list',
       'aria-expanded': isListExpanded,
