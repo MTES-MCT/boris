@@ -8,6 +8,8 @@
 
   let autocompleteElementRef = $state<HTMLDivElement | null>(null);
 
+  $inspect(autocompleteElementRef);
+
   const handleAutocompleteSelect = async (
     suggestion: AutocompleteSuggestion,
   ) => {
@@ -25,11 +27,8 @@
     annuaireManager.zoom = 12;
     annuaireManager.hasSearchedTroughAutocomplete = true;
 
-    if (annuaireManager.viewType === 'map') {
-      annuaireManager.mapElementRef?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end',
-      });
+    if (annuaireManager.isMobile) {
+      autocompleteElementRef?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -46,6 +45,7 @@
   class="filters fr-container--fluid">
   <div class="fr-grid-row fr-grid-row--gutters">
     <div
+      bind:this={autocompleteElementRef}
       class={annuaireManager.viewType === 'list'
         ? 'fr-col-12 fr-col-md-6 fr-col-lg-8'
         : 'fr-col-12 fr-col-md-8 fr-col-lg-10'}>
