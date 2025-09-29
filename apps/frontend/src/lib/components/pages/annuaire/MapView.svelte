@@ -152,9 +152,9 @@
         item.longitude >= southWestLng,
     );
 
-    if (brsDiffusionWebsites.items) {
+    if (brsDiffusionWebsitesInBounds) {
       const firstElement = document.getElementById(
-        brsDiffusionWebsites.items[0].id,
+        brsDiffusionWebsitesInBounds[0].id,
       );
 
       firstElement?.scrollIntoView({
