@@ -12,7 +12,7 @@
 </script>
 
 <form
-  class="fr-my-6w"
+  class="fr-col-5"
   autocomplete="off"
   onsubmit={onSubmit}>
   {@render children()}
@@ -20,9 +20,7 @@
 
 <style lang="postcss">
   form {
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 2rem;
+    padding: 2rem !important;
     border-radius: var(--border-radius-lg);
     box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
     border: solid 1px rgba(134, 144, 162, 0.1);
