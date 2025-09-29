@@ -18,8 +18,14 @@
 <style lang="postcss">
   nav {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column-reverse;
+    gap: var(--2w);
+
+    @media (--xs-viewport) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: stretch;
+    }
 
     &.justify-end {
       justify-content: flex-end;

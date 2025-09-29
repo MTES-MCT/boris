@@ -20,7 +20,7 @@
 
 <style lang="postcss">
   form {
-    max-width: 500px;
+    max-width: 520px;
     margin: 0 auto;
     padding: 2rem;
     border-radius: var(--border-radius-lg);

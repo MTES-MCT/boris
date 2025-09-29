@@ -54,6 +54,7 @@ class AcquisitionSimulator {
   public brsZone: Zone | undefined = $state();
   public surface: number | undefined = $state();
   public housingType: 'new' | 'old' | undefined = $state();
+  public ownContribution: number | undefined = $state();
 
   public goToPreviousStep = () => {
     if (this.previousStep) {
