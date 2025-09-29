@@ -12,7 +12,8 @@
 </script>
 
 <button
-  class={`fr-btn fr-btn--lg ${direction}`}
+  class={`fr-btn ${direction}`}
+  class:fr-btn--secondary={direction === 'previous'}
   {type}
   onclick={onClick}>
   <div class="surtitle">
@@ -41,14 +42,20 @@
   button {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     text-align: left;
+    width: 100%;
 
-    &.previous {
-      align-items: flex-end;
-    }
+    @media (--xs-viewport) {
+      width: 50%;
 
-    &.next {
-      align-items: flex-start;
+      &.previous {
+        align-items: flex-end;
+      }
+
+      &.next {
+        align-items: flex-start;
+      }
     }
   }
 

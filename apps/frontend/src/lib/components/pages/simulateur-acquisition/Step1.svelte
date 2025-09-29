@@ -17,7 +17,8 @@
 
   import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
 
-  const { nextStep } = acquisitionSimulatorManger;
+  let { housingPrice, autocompleteValue, surface, housingType, nextStep } =
+    $derived(acquisitionSimulatorManger);
 
   let errors: FormFieldError = $state({});
 
@@ -39,10 +40,6 @@
       message: 'Veuillez selectionner le type du bien.',
     }),
   });
-
-  let { housingPrice, autocompleteValue, surface, housingType } = $derived(
-    acquisitionSimulatorManger,
-  );
 
   const onLocationSelect = async (suggestion: AutocompleteSuggestion) => {
     acquisitionSimulatorManger.selectedLocation = suggestion;
@@ -66,6 +63,8 @@
       });
 
       errors = {};
+
+      acquisitionSimulatorManger.goToNextStep();
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }
@@ -85,7 +84,7 @@
           value={housingPrice}
           label="Prix du logement (€) *"
           labelTooltip="Prix de vente affiché par l'opérateur ou le promoteur, hors frais annexes."
-          placeholder="200000"
+          placeholder="200 000 €"
           id="housing-price"
           type="number"
           min={0}
@@ -116,7 +115,7 @@
           value={surface}
           id="surface"
           label="Surface (m²) *"
-          placeholder="50"
+          placeholder="50 m²"
           error={errors.surface}
           onChange={(e) => {
             const value = (e.target as HTMLInputElement).value;
