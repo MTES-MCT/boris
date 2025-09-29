@@ -154,7 +154,7 @@
 
     if (brsDiffusionWebsitesInBounds) {
       const firstElement = document.getElementById(
-        brsDiffusionWebsitesInBounds[0].id,
+        brsDiffusionWebsitesInBounds[0]?.id,
       );
 
       firstElement?.scrollIntoView({
