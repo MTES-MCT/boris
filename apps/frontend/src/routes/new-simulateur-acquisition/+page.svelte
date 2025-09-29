@@ -14,12 +14,6 @@
 </script>
 
 <Section title="Simulateur d'acquisition">
-  <Stepper
-    title={`${currentStep.step}. ${currentStep.title}`}
-    nextStepTitle={nextStep?.title}
-    currentStep={currentStep.step}
-    stepCount={steps.length} />
-
   {#if currentStep.step === 1}
     <Step1 />
   {:else if currentStep.step === 2}
