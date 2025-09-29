@@ -152,14 +152,16 @@
         item.longitude >= southWestLng,
     );
 
-    const firstElement = document.getElementById(
-      brsDiffusionWebsites.items[0].id,
-    );
+    if (brsDiffusionWebsites.items) {
+      const firstElement = document.getElementById(
+        brsDiffusionWebsites.items[0].id,
+      );
 
-    firstElement?.scrollIntoView({
-      block: 'nearest',
-      inline: 'nearest',
-    });
+      firstElement?.scrollIntoView({
+        block: 'nearest',
+        inline: 'nearest',
+      });
+    }
 
     addMarkersToMap();
   };
