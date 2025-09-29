@@ -23,6 +23,7 @@
       | 'radio';
     value?: string | number;
     label?: string;
+    hint?: string;
     labelTooltip?: string;
     required?: boolean;
     icon?: string;
@@ -37,6 +38,7 @@
     error?: string;
     onChange?: (event: Event) => void;
     onKeydown?: (event: KeyboardEvent) => void;
+    onBlur?: (event: Event) => void;
   };
 
   const {
@@ -45,6 +47,7 @@
     type = 'text',
     value,
     label = '',
+    hint,
     labelTooltip = '',
     required = false,
     icon = '',
@@ -58,6 +61,7 @@
     error,
     onChange,
     onKeydown,
+    onBlur,
   }: Props = $props();
 </script>
 
@@ -70,13 +74,18 @@
     <label
       class="fr-label"
       for={id}>
-      <b>{label} {required ? '*' : ''}</b>
-      {#if labelTooltip}
-        <Tooltip>
-          <div class="fr-p-2w">
-            {@html labelTooltip}
-          </div>
-        </Tooltip>
+      <div>
+        <b>{label} {required ? '*' : ''}</b>
+        {#if labelTooltip}
+          <Tooltip>
+            <div class="fr-p-2w">
+              {@html labelTooltip}
+            </div>
+          </Tooltip>
+        {/if}
+      </div>
+      {#if hint}
+        <span class="fr-hint-text">{hint}</span>
       {/if}
     </label>
   {/if}
@@ -112,7 +121,8 @@
     {max}
     {step}
     oninput={onChange}
-    onkeydown={onKeydown} />
+    onkeydown={onKeydown}
+    onblur={onBlur} />
   <div
     class="fr-messages-group"
     id={`${id}-messages`}
@@ -133,9 +143,11 @@
   }
 
   label {
-    display: inline-flex;
-    align-items: flex-end;
-    gap: var(--1v);
+    div {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: var(--1v);
+    }
   }
 
   input {

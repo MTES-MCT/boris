@@ -35,7 +35,7 @@
       </p>
     {/if}
   </div>
-  <p class="fr-text--sm">{label}</p>
+  <p class="fr-text--xs">{label}</p>
 </button>
 
 <style lang="postcss">
@@ -68,5 +68,9 @@
   .fr-icon-arrow-right-line:before,
   .fr-icon-arrow-left-line:before {
     --icon-size: 1rem;
+  }
+
+  .fr-text--xs {
+    line-height: 1rem !important;
   }
 </style>
