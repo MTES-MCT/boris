@@ -23,7 +23,7 @@
 <div class="fr-stepper">
   <svelte:element
     this={titleElement}
-    class="fr-stepper__title">
+    class="fr-stepper__title fr-h4">
     {title}
     <span class="fr-stepper__state">
       Étape {currentStep} sur {stepCount}
