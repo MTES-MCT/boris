@@ -43,6 +43,7 @@
   });
 
   $effect(() => {
+    console.log('effect1');
     map?.setView(
       [annuaireManager.latitude, annuaireManager.longitude],
       annuaireManager.zoom,
@@ -51,6 +52,7 @@
 
   $effect(() => {
     if (selectedMarker) {
+      console.log('effect2');
       const element = document.getElementById(selectedMarker.id);
 
       element?.scrollIntoView({
@@ -82,7 +84,7 @@
     }
 
     map.on('zoomlevelschange', debounce(handleMapBoundsChange, 50));
-    map.on('move', handleMapBoundsChange);
+    map.on('moveend', handleMapBoundsChange);
   };
 
   const deleteMarkersFromMap = () => {
