@@ -43,13 +43,6 @@
   });
 
   $effect(() => {
-    map?.setView(
-      [annuaireManager.latitude, annuaireManager.longitude],
-      annuaireManager.zoom,
-    );
-  });
-
-  $effect(() => {
     if (selectedMarker) {
       const element = document.getElementById(selectedMarker.id);
 
@@ -62,6 +55,7 @@
   });
 
   const createMap = () => {
+    console.log('createMap');
     map = L.map(annuaireManager.mapElementRef as HTMLElement, {
       center: [annuaireManager.latitude, annuaireManager.longitude],
       zoom: annuaireManager.zoom,
@@ -82,7 +76,7 @@
     }
 
     map.on('zoomlevelschange', debounce(handleMapBoundsChange, 50));
-    map.on('move', handleMapBoundsChange);
+    map.on('moveend', handleMapBoundsChange);
   };
 
   const deleteMarkersFromMap = () => {
@@ -120,6 +114,8 @@
         annuaireManager.zoom = 13;
         annuaireManager.latitude = selectedMarker.latitude;
         annuaireManager.longitude = selectedMarker.longitude;
+
+        map?.setView([selectedMarker.latitude, selectedMarker.longitude], 13);
       });
 
       markers.addLayer(markerLayer);
