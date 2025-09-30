@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { formatEuro } from '$lib/utils/formatters';
+
   import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
 
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
@@ -7,30 +9,29 @@
   import Table from '$components/common/Table.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
-  import { formatEuro } from '$lib/utils/formatters';
 
   let {
     housingPrice,
     ownContribution,
     notaryFees,
     estimatedNotaryFees,
-    loanFees,
-    estimatedLoanFees,
+    // loanFees,
+    // estimatedLoanFees,
     realEstateFees,
     estimatedRealEstateFees,
-    oneTimeExpenses,
     totalFees,
     ownContributionAfterFees,
     loanAmount,
     nextStep,
     previousStep,
     goToPreviousStep,
+    goToNextStep,
   } = $derived(acquisitionSimulatorManger);
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
-    console.log('handleSubmit');
+    goToNextStep();
   };
 </script>
 
@@ -40,7 +41,6 @@
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">
-        <legend class="fr-h4">4. Synthèse de l'apport et des frais</legend>
         <Table
           theads={[]}
           tbodies={[
@@ -66,7 +66,7 @@
           size="lg" />
         <button
           type="button"
-          class="fr-btn fr-btn--secondary fr-btn--download fr-mb-4w not-printable"
+          class="fr-btn fr-btn--secondary fr-btn--download fr-mb-2w not-printable"
           onclick={() => window.print()}>
           Télécharger le récapitulatif
         </button>
