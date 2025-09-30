@@ -43,15 +43,6 @@
   });
 
   $effect(() => {
-    console.log('effect1');
-    map?.setView(
-      [annuaireManager.latitude, annuaireManager.longitude],
-      annuaireManager.zoom,
-    );
-  });
-
-  $effect(() => {
-    console.log('effect2');
     if (selectedMarker) {
       const element = document.getElementById(selectedMarker.id);
 
@@ -64,6 +55,7 @@
   });
 
   const createMap = () => {
+    console.log('createMap');
     map = L.map(annuaireManager.mapElementRef as HTMLElement, {
       center: [annuaireManager.latitude, annuaireManager.longitude],
       zoom: annuaireManager.zoom,
@@ -122,6 +114,8 @@
         annuaireManager.zoom = 13;
         annuaireManager.latitude = selectedMarker.latitude;
         annuaireManager.longitude = selectedMarker.longitude;
+
+        map?.setView([selectedMarker.latitude, selectedMarker.longitude], 13);
       });
 
       markers.addLayer(markerLayer);
