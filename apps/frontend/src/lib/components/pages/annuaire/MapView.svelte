@@ -43,6 +43,7 @@
   });
 
   $effect(() => {
+    console.log('effect1');
     map?.setView(
       [annuaireManager.latitude, annuaireManager.longitude],
       annuaireManager.zoom,
@@ -50,6 +51,7 @@
   });
 
   $effect(() => {
+    console.log('effect2');
     if (selectedMarker) {
       const element = document.getElementById(selectedMarker.id);
 
