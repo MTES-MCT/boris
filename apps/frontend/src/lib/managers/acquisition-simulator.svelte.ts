@@ -33,7 +33,7 @@ class AcquisitionSimulator {
       step: 6,
     },
   ];
-  public currentStep: Step = $state(this.steps[0]);
+  public currentStep: Step = $state(this.steps[4]);
   public previousStep: Step | null = $derived.by(() => {
     if (this.currentStep.step < 2) {
       return null;
@@ -62,6 +62,8 @@ class AcquisitionSimulator {
   public loanFees: number | undefined = $state();
   public realEstateFees: number | undefined = $state();
   public oneTimeExpenses: number | undefined = $state();
+
+  public interestRate: number | undefined = $state();
 
   public estimatedNotaryFees: number = $derived.by(() => {
     if (this.housingPrice) {

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import Section from '$components/common/Section.svelte';
-  import Stepper from '$components/common/Stepper.svelte';
   import Step1 from '$components/pages/simulateur-acquisition/Step1.svelte';
   import Step2 from '$components/pages/simulateur-acquisition/Step2.svelte';
   import Step3 from '$components/pages/simulateur-acquisition/Step3.svelte';
@@ -10,7 +8,7 @@
 
   import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
 
-  const { steps, currentStep, nextStep } = $derived(acquisitionSimulatorManger);
+  const { currentStep } = $derived(acquisitionSimulatorManger);
 </script>
 
 {#if currentStep.step === 1}
