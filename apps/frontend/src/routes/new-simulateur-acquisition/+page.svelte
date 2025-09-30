@@ -13,18 +13,16 @@
   const { steps, currentStep, nextStep } = $derived(acquisitionSimulatorManger);
 </script>
 
-<Section title="Simulateur d'acquisition">
-  {#if currentStep.step === 1}
-    <Step1 />
-  {:else if currentStep.step === 2}
-    <Step2 />
-  {:else if currentStep.step === 3}
-    <Step3 />
-  {:else if currentStep.step === 4}
-    <Step4 />
-  {:else if currentStep.step === 5}
-    <Step5 />
-  {:else if currentStep.step === 6}
-    <Step6 />
-  {/if}
-</Section>
+{#if currentStep.step === 1}
+  <Step1 />
+{:else if currentStep.step === 2}
+  <Step2 />
+{:else if currentStep.step === 3}
+  <Step3 />
+{:else if currentStep.step === 4}
+  <Step4 />
+{:else if currentStep.step === 5}
+  <Step5 />
+{:else if currentStep.step === 6}
+  <Step6 />
+{/if}

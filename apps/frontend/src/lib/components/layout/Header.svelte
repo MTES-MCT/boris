@@ -31,7 +31,7 @@
   });
 </script>
 
-<header class="fr-header">
+<header class="fr-header not-printable">
   <div class="fr-header__body">
     <div class="fr-container">
       <div class="fr-header__body-row">
