@@ -47,7 +47,7 @@
     width: 100%;
 
     @media (--xs-viewport) {
-      width: 50%;
+      width: auto;
 
       &.previous {
         align-items: flex-end;

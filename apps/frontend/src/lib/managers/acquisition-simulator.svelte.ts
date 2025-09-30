@@ -33,7 +33,7 @@ class AcquisitionSimulator {
       step: 6,
     },
   ];
-  public currentStep: Step = $state(this.steps[3]);
+  public currentStep: Step = $state(this.steps[0]);
   public previousStep: Step | null = $derived.by(() => {
     if (this.currentStep.step < 2) {
       return null;

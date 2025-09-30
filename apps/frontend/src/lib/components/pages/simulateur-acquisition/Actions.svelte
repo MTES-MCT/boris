@@ -20,6 +20,8 @@
     display: flex;
     flex-direction: column-reverse;
     gap: var(--2w);
+    border-top: solid 1px var(--border-default-grey);
+    padding-top: 1.5rem;
 
     @media (--xs-viewport) {
       flex-direction: row;

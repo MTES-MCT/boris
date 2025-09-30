@@ -5,6 +5,8 @@
   import Description from '$components/pages/simulateur-acquisition/Description.svelte';
   import Form from '$components/pages/simulateur-acquisition/Form.svelte';
   import Table from '$components/common/Table.svelte';
+  import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
+  import Action from '$components/pages/simulateur-acquisition/Action.svelte';
   import { formatEuro } from '$lib/utils/formatters';
 
   let {
@@ -40,17 +42,46 @@
       <fieldset class="fr-fieldset">
         <legend class="fr-h4">4. Synthèse de l'apport et des frais</legend>
         <Table
-          theads={['Poste', 'Montant']}
+          theads={[]}
           tbodies={[
-            ['Prix du logement', housingPrice ? formatEuro(housingPrice) : '-'],
-          ]} />
+            ['Prix du logement', formatEuro(housingPrice || 0)],
+            ['Apport personnel', formatEuro(ownContribution || 0)],
+            ['Frais de notaire', formatEuro(notaryFees || estimatedNotaryFees)],
+            [
+              'Frais de garantie/prêt',
+              // formatEuro(loanFees || estimatedLoanFees),
+              'Définir le calcul',
+            ],
+            [
+              "Frais d'agence",
+              formatEuro(realEstateFees || estimatedRealEstateFees),
+            ],
+            ['Total', formatEuro((housingPrice as number) + totalFees)],
+            [
+              'Apport restant après frais',
+              formatEuro(Math.max(ownContributionAfterFees, 0)),
+            ],
+            ["Besoin d'emprunt", formatEuro(loanAmount)],
+          ]}
+          size="lg" />
         <button
           type="button"
-          class="fr-btn fr-btn--secondary fr-btn--download"
+          class="fr-btn fr-btn--secondary fr-btn--download fr-mb-4w not-printable"
           onclick={() => window.print()}>
           Télécharger le récapitulatif
         </button>
       </fieldset>
     </div>
+
+    <Actions>
+      <Action
+        direction="previous"
+        label={previousStep?.title as string}
+        onClick={goToPreviousStep} />
+      <Action
+        direction="next"
+        label={nextStep?.title as string}
+        type="submit" />
+    </Actions>
   </Form>
 </Wrapper>
