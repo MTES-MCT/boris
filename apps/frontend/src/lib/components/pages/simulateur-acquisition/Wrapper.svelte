@@ -8,15 +8,16 @@
   const { children }: Props = $props();
 </script>
 
-<div class="fr-container--fluid">
-  <div class="fr-grid-row">
-    {@render children()}
-  </div>
+<div class="wrapper">
+  {@render children()}
 </div>
 
 <style lang="postcss">
-  .fr-container--fluid {
-    margin-top: 4rem;
-    overflow: visible;
+  @media (--md-viewport) {
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+    }
   }
 </style>
