@@ -8,21 +8,21 @@ import {
 } from '$lib/utils/constants';
 
 class AnnuaireManager {
-  radius = $state<number>(defaultRadius);
-  latitude = $state<number>(defaultCoords.latitude);
-  longitude = $state<number>(defaultCoords.longitude);
-  isMobile = $state(window.innerWidth <= 44 * 16);
-  zoom = $derived<number>(
+  public radius = $state<number>(defaultRadius);
+  public latitude = $state<number>(defaultCoords.latitude);
+  public longitude = $state<number>(defaultCoords.longitude);
+  public isMobile = $state(window.innerWidth <= 44 * 16);
+  public zoom = $derived<number>(
     this.isMobile ? defaultZoomMobile : defaultZoomDesktop,
   );
-  listBrsDiffusionWebsites = $state<Pagination<BrsDiffusionWebsiteView> | null>(
-    null,
-  );
-  viewType = $state<'list' | 'map'>('map');
-  autocompleteValue = $state('');
-  hasSearchedTroughAutocomplete = $state(false);
-  isListLoading = $state(false);
-  mapElementRef = $state<HTMLDivElement | null>(null);
+  public listBrsDiffusionWebsites =
+    $state<Pagination<BrsDiffusionWebsiteView> | null>(null);
+  public viewType = $state<'list' | 'map'>('map');
+  public autocompleteValue = $state('');
+  public hasSearchedTroughAutocomplete = $state(false);
+  public isListLoading = $state(false);
+  public mapElementRef = $state<HTMLDivElement | null>(null);
+  public updateMapView = $state(false);
 
   setListBrsDiffusionWebsites = async ({
     page,

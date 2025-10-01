@@ -24,6 +24,7 @@
 
     annuaireManager.zoom = 12;
     annuaireManager.hasSearchedTroughAutocomplete = true;
+    annuaireManager.updateMapView = true;
 
     if (annuaireManager.isMobile) {
       autocompleteElementRef?.scrollIntoView({ behavior: 'smooth' });
