@@ -16,15 +16,24 @@
       | 'witness';
   };
 
-  const { content, type = 'info' }: Props = $props();
+  const { content, type }: Props = $props();
 </script>
 
-<div class="fr-notice fr-notice--{type}">
+<div class={`fr-notice ${type ? `fr-notice--${type}` : ''}`}>
   <div class="fr-container">
     <div class="fr-notice__body">
       <p>
+        {#if !type}
+          <span class="fr-icon-information-fill fr-notice__icon"></span>
+        {/if}
         <span class="fr-notice__title">{content}</span>
       </p>
     </div>
   </div>
 </div>
+
+<style lang="postcss">
+  .fr-notice--none {
+    background-color: transparent;
+  }
+</style>

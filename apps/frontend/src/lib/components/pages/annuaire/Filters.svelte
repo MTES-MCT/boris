@@ -84,6 +84,7 @@
 {#if isNoticeVisible}
   <div class="fr-mt-4w">
     <Notice
+      type="info"
       content="Attention, nous ne présentons ici uniquement les villes où nous savons que des programmes sont en vente et non directement les programmes" />
   </div>
 {/if}

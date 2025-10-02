@@ -61,6 +61,7 @@
 {#snippet hint()}
   <div class="fr-col-12">
     <Notice
+      type="info"
       content="Vous n'avez plus qu'à écrire et sélectionner votre commune de recherche
       dans la barre juste au dessus !">
     </Notice>
