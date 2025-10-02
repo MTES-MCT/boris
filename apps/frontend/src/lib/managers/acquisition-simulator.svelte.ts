@@ -56,12 +56,12 @@ class AcquisitionSimulator {
   public surface: number | undefined = $state();
   public housingType: 'new' | 'old' | undefined = $state('new');
 
-  public ownContribution: number | undefined = $state(10000);
+  public ownContribution: number | undefined = $state();
 
   public notaryFees: number | undefined = $state();
   public loanFees: number | undefined = $state();
   public realEstateFees: number | undefined = $state();
-  public oneTimeExpenses: number | undefined = $state(10000);
+  public oneTimeExpenses: number | undefined = $state();
 
   public interestRate: number | undefined = $state();
   public loanDuration: number | undefined = $state();

@@ -25,13 +25,22 @@
 
 {@render row('Montant du logement', formatEuro(housingPrice))}
 {@render row('Frais de notaire', `+ ${formatEuro(notaryFees || 0)}`)}
-{@render row("Frais d'agence", `+ ${formatEuro(realEstateFees || 0)}`)}
-{@render row('Autres frais ponctuels', `+ ${formatEuro(oneTimeExpenses || 0)}`)}
+{#if realEstateFees}
+  {@render row("Frais d'agence", `+ ${formatEuro(realEstateFees || 0)}`)}
+{/if}
+{#if oneTimeExpenses}
+  {@render row(
+    'Autres frais ponctuels',
+    `+ ${formatEuro(oneTimeExpenses || 0)}`,
+  )}
+{/if}
 
 <div class="separator"></div>
 
 {@render row("Coût total de l'opération", formatEuro(totalCost), true)}
-{@render row('Apport personnel', `- ${formatEuro(ownContribution || 0)}`)}
+{#if ownContribution}
+  {@render row('Apport personnel', `- ${formatEuro(ownContribution || 0)}`)}
+{/if}
 
 <div class="separator"></div>
 {@render row("Montant de l'emprunt", formatEuro(loanAmount), true)}

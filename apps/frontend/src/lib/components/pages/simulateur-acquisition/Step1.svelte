@@ -30,9 +30,9 @@
         message: 'Veuillez remplir ce champs.',
       })
       .positive('Veuillez saisir un chiffre supérieur à 0.'),
-    brsZone: z.string({
-      message: 'Veuillez selectionner un lieu valide.',
-    }),
+    // brsZone: z.string({
+    //   message: 'Veuillez selectionner un lieu valide.',
+    // }),
     surface: z
       .number({
         message: 'Veuillez remplir ce champs.',
@@ -46,11 +46,11 @@
   const onLocationSelect = async (suggestion: AutocompleteSuggestion) => {
     acquisitionSimulatorManger.selectedLocation = suggestion;
 
-    const response = await fetch(
-      `api/brs-zones?longitude=${suggestion.x}&latitude=${suggestion.y}`,
-    );
+    // const response = await fetch(
+    //   `api/brs-zones?longitude=${suggestion.x}&latitude=${suggestion.y}`,
+    // );
 
-    acquisitionSimulatorManger.brsZone = await response.json();
+    // acquisitionSimulatorManger.brsZone = await response.json();
   };
 
   const handleSubmit = (e: SubmitEvent) => {
@@ -59,7 +59,7 @@
     try {
       FormData.parse({
         housingPrice: acquisitionSimulatorManger.housingPrice,
-        brsZone: acquisitionSimulatorManger.brsZone,
+        // brsZone: acquisitionSimulatorManger.brsZone,
         surface: acquisitionSimulatorManger.surface,
         housingType: acquisitionSimulatorManger.housingType,
       });
