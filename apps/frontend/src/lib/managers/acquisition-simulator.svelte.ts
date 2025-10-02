@@ -33,7 +33,7 @@ class AcquisitionSimulator {
       step: 6,
     },
   ];
-  public currentStep: Step = $state(this.steps[4]);
+  public currentStep: Step = $state(this.steps[0]);
   public previousStep: Step | null = $derived.by(() => {
     if (this.currentStep.step < 2) {
       return null;
@@ -49,21 +49,22 @@ class AcquisitionSimulator {
     }
   });
 
-  public housingPrice: number | undefined = $state(200000);
+  public housingPrice: number | undefined = $state();
   public selectedLocation: AutocompleteSuggestion | undefined = $state();
   public autocompleteValue = $derived(this.selectedLocation?.fulltext || '');
   public brsZone: Zone | undefined = $state();
   public surface: number | undefined = $state();
   public housingType: 'new' | 'old' | undefined = $state('new');
 
-  public ownContribution: number | undefined = $state();
+  public ownContribution: number | undefined = $state(10000);
 
   public notaryFees: number | undefined = $state();
   public loanFees: number | undefined = $state();
   public realEstateFees: number | undefined = $state();
-  public oneTimeExpenses: number | undefined = $state();
+  public oneTimeExpenses: number | undefined = $state(10000);
 
   public interestRate: number | undefined = $state();
+  public loanDuration: number | undefined = $state();
 
   public estimatedNotaryFees: number = $derived.by(() => {
     if (this.housingPrice) {
@@ -91,13 +92,15 @@ class AcquisitionSimulator {
       (this.oneTimeExpenses || 0),
   );
 
-  public ownContributionAfterFees: number = $derived(
-    (this.ownContribution || 0) - this.totalFees,
+  public totalCost: number = $derived(
+    (this.housingPrice || 0) + (this.totalFees || 0),
   );
 
   public loanAmount: number = $derived(
     Math.max(
-      (this.housingPrice || 0) - (this.ownContributionAfterFees || 0),
+      (this.housingPrice || 0) +
+        (this.totalFees || 0) -
+        (this.ownContribution || 0),
       0,
     ),
   );
