@@ -33,16 +33,21 @@ export const GET = async ({ url }) => {
     formdata.append('source', '1');
     formdata.append('param1', inseeCode);
 
+    console.log(formdata);
+
     const brsZoneResponse = await fetch(API_URL, {
       method: 'POST',
       body: formdata,
     });
+
+    console.log(brsZoneResponse);
 
     const brsZoneData: string = await brsZoneResponse.text();
     const brsZone: ZoneABC = JSON.parse(brsZoneData);
 
     return json(brsZone?.zoneabc || 'C');
   } catch (e) {
+    console.log(e);
     console.log(e);
   }
 };
