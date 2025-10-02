@@ -61,7 +61,7 @@
             hint="Laissez le champs vide si vous n'avez pas d'apport"
             error={errors.ownContribution}
             type="number"
-            placeholder="10 000€"
+            placeholder="Exemple: 10 000€"
             onChange={(e) => {
               acquisitionSimulatorManger.ownContribution = Number(
                 (e.target as HTMLInputElement).value,

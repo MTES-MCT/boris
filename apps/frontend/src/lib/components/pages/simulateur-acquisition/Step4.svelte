@@ -9,6 +9,8 @@
   import Table from '$components/common/Table.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
+  import OperationSynthesis from './OperationSynthesis.svelte';
+  import Notice from '$components/common/Notice.svelte';
 
   let {
     housingPrice,
@@ -20,7 +22,8 @@
     realEstateFees,
     estimatedRealEstateFees,
     totalFees,
-    ownContributionAfterFees,
+    oneTimeExpenses,
+    totalCost,
     loanAmount,
     nextStep,
     previousStep,
@@ -41,35 +44,21 @@
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">
-        <Table
-          theads={[]}
-          tbodies={[
-            ['Prix du logement', formatEuro(housingPrice || 0)],
-            ['Apport personnel', formatEuro(ownContribution || 0)],
-            ['Frais de notaire', formatEuro(notaryFees || estimatedNotaryFees)],
-            [
-              'Frais de garantie/prêt',
-              // formatEuro(loanFees || estimatedLoanFees),
-              'Définir le calcul',
-            ],
-            [
-              "Frais d'agence",
-              formatEuro(realEstateFees || estimatedRealEstateFees),
-            ],
-            ['Total', formatEuro((housingPrice as number) + totalFees)],
-            [
-              'Apport restant après frais',
-              formatEuro(Math.max(ownContributionAfterFees, 0)),
-            ],
-            ["Besoin d'emprunt", formatEuro(loanAmount)],
-          ]}
-          size="lg" />
-        <button
-          type="button"
-          class="fr-btn fr-btn--secondary fr-btn--download fr-mb-2w not-printable"
-          onclick={() => window.print()}>
-          Télécharger le récapitulatif
-        </button>
+        <div class="fr-fieldset__element fr-mb-4w">
+          <OperationSynthesis
+            housingPrice={housingPrice as number}
+            ownContribution={ownContribution as number}
+            notaryFees={notaryFees || estimatedNotaryFees}
+            realEstateFees={realEstateFees || estimatedRealEstateFees}
+            oneTimeExpenses={oneTimeExpenses as number}
+            totalCost={totalCost as number}
+            loanAmount={loanAmount as number} />
+        </div>
+
+        <div class="fr-fieldset__element">
+          <Notice
+            content="Vous pourrez télécharger la synthèse de votre simulation à la fin du parcours." />
+        </div>
       </fieldset>
     </div>
 

@@ -13,9 +13,8 @@
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
 
-  let { interestRate, previousStep, nextStep, goToPreviousStep } = $derived(
-    acquisitionSimulatorManger,
-  );
+  let { interestRate, loanDuration, previousStep, nextStep, goToPreviousStep } =
+    $derived(acquisitionSimulatorManger);
 
   let errors: FormFieldError = $state({});
 
@@ -25,6 +24,12 @@
         message: 'Veuillez remplir ce champs.',
       })
       .positive('Veuillez saisir un chiffre supérieur à 0.'),
+    loanDuration: z
+      .number({
+        message: 'Veuillez remplir ce champs.',
+      })
+      .gte(10, 'La durée du prêt ne peut pas être inférieure à 10 ans.')
+      .lte(25, 'La durée du prêt ne peut pas être supérieure à 25 ans.'),
   });
 
   const handleSubmit = (e: SubmitEvent) => {
@@ -33,6 +38,7 @@
     try {
       FormData.parse({
         interestRate: acquisitionSimulatorManger.interestRate,
+        loanDuration: acquisitionSimulatorManger.loanDuration,
       });
 
       errors = {};
@@ -64,10 +70,27 @@
             id="interest-rate"
             min={0}
             step={0.01}
-            placeholder="3.25"
+            placeholder="Exemple: 3.25"
             error={errors.interestRate}
             onChange={(e) => {
               acquisitionSimulatorManger.interestRate = Number(
+                (e.target as HTMLInputElement).value,
+              );
+            }} />
+        </div>
+
+        <div class="fr-fieldset__element fr-mb-4w">
+          <Input
+            value={loanDuration}
+            label="Durée de remboursement (années)"
+            labelTooltip="Durée classique: 20 à 25 ans."
+            type="number"
+            id="loan-duration"
+            step={1}
+            placeholder="Exemple: 25"
+            error={errors.loanDuration}
+            onChange={(e) => {
+              acquisitionSimulatorManger.loanDuration = Number(
                 (e.target as HTMLInputElement).value,
               );
             }} />

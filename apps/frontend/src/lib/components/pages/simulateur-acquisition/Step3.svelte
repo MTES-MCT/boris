@@ -21,10 +21,6 @@
       .number()
       .gte(0, 'Veuillez saisir un chiffre supérieur à 0.')
       .optional(),
-    loanFees: z
-      .number()
-      .gte(0, 'Veuillez saisir un chiffre supérieur à 0.')
-      .optional(),
     realEstateFees: z
       .number()
       .gte(0, 'Veuillez saisir un chiffre supérieur à 0.')
@@ -37,11 +33,9 @@
 
   let {
     notaryFees,
-    loanFees,
     realEstateFees,
     oneTimeExpenses,
     estimatedNotaryFees,
-    estimatedLoanFees,
     estimatedRealEstateFees,
     nextStep,
     previousStep,
@@ -54,7 +48,6 @@
     try {
       FormData.parse({
         notaryFees: acquisitionSimulatorManger.notaryFees,
-        loanFees: acquisitionSimulatorManger.loanFees,
         realEstateFees: acquisitionSimulatorManger.realEstateFees,
         oneTimeExpenses: acquisitionSimulatorManger.oneTimeExpenses,
       });
@@ -66,8 +59,6 @@
       errors = formatFormErrors((e as ZodError).issues);
     }
   };
-
-  $inspect(notaryFees, loanFees, realEstateFees, oneTimeExpenses);
 </script>
 
 <Wrapper>
@@ -99,7 +90,7 @@
             hint="Laissez le champs vide pour estimation automatique."
             error={errors.notaryFees}
             forceNoMarginBottom
-            placeholder="10 000€"
+            placeholder="Exemple: 10 000€"
             onChange={(e) => {
               const { value } = e.target as HTMLInputElement;
 
@@ -119,38 +110,6 @@
 
         <div class="fr-fieldset__element fr-mb-4w">
           <Input
-            value={loanFees}
-            label="Frais de garantie/prêt (€)"
-            labelTooltip="Frais liés à la mise en place de votre prêt immobilier
-              (caution, garantie, dossier). Généralement autour de 0,8% du
-              montant emprunté + frais de dossier. Environ 70% de cette
-              somme vous serons reversés lorsque que vous aurez remboursé
-              l'intégralité de votre prêt."
-            type="number"
-            id="loan-fees"
-            hint="Laissez le champs vide pour estimation automatique."
-            error={errors.loanFees}
-            forceNoMarginBottom
-            placeholder="10 000€"
-            onChange={(e) => {
-              const { value } = e.target as HTMLInputElement;
-
-              if (value === '') {
-                acquisitionSimulatorManger.loanFees = undefined;
-              } else {
-                acquisitionSimulatorManger.loanFees = Number(value);
-              }
-            }} />
-          {#if !loanFees || loanFees < 0}
-            <span class="fr-text--sm">
-              Estimation
-              <b>{formatEuro(estimatedLoanFees)}</b>
-            </span>
-          {/if}
-        </div>
-
-        <div class="fr-fieldset__element fr-mb-4w">
-          <Input
             value={realEstateFees}
             label="Frais d'agence immobilière (€)"
             labelTooltip="Frais liés à la mise en Si l'achat se fait via une agence, prévoir entre 3% et 8% du
@@ -160,7 +119,7 @@
             hint="Laissez le champs vide si vous n'avez pas de frais d'agence."
             error={errors.realEstateFees}
             forceNoMarginBottom
-            placeholder="5 000€"
+            placeholder="Exemple: 5 000€"
             onChange={(e) => {
               const { value } = e.target as HTMLInputElement;
 
@@ -181,14 +140,14 @@
         <div class="fr-fieldset__element fr-mb-4w">
           <Input
             value={oneTimeExpenses}
-            label="Autres frais ponctuels (€)"
+            label="Frais ponctuels (€)"
             labelTooltip="Coût du déménagement, ouverture des compteurs, etc."
             type="number"
             id="one-time-expenses"
             hint="Laissez le champs vide si vous n'avez pas d'autres frais."
             error={errors.oneTimeExpenses}
             forceNoMarginBottom
-            placeholder="7 500€"
+            placeholder="Exemple: 7 500€"
             onChange={(e) => {
               const { value } = e.target as HTMLInputElement;
 

@@ -86,7 +86,7 @@
             value={housingPrice}
             label="Prix du logement (€) *"
             labelTooltip="Prix de vente affiché par l'opérateur ou le promoteur, hors frais annexes."
-            placeholder="200 000 €"
+            placeholder="Exemple: 200 000 €"
             id="housing-price"
             type="number"
             min={0}
@@ -107,7 +107,7 @@
             bind:value={autocompleteValue}
             excludedPois={['commune', 'département', 'région']}
             label="Ville ou code postal du logement *"
-            placeholder="Quimper ou 23200"
+            placeholder="Exemple: Quimper ou 23200"
             error={errors.brsZone}
             onSelect={onLocationSelect} />
         </div>
@@ -117,7 +117,7 @@
             value={surface}
             id="surface"
             label="Surface (m²) *"
-            placeholder="50 m²"
+            placeholder="Exemple: 50 m²"
             error={errors.surface}
             onChange={(e) => {
               const value = (e.target as HTMLInputElement).value;
