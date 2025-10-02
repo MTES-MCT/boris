@@ -57,14 +57,14 @@
     e.preventDefault();
 
     try {
-      // FormData.parse({
-      //   housingPrice: acquisitionSimulatorManger.housingPrice,
-      //   brsZone: acquisitionSimulatorManger.brsZone,
-      //   surface: acquisitionSimulatorManger.surface,
-      //   housingType: acquisitionSimulatorManger.housingType,
-      // });
+      FormData.parse({
+        housingPrice: acquisitionSimulatorManger.housingPrice,
+        brsZone: acquisitionSimulatorManger.brsZone,
+        surface: acquisitionSimulatorManger.surface,
+        housingType: acquisitionSimulatorManger.housingType,
+      });
 
-      // errors = {};
+      errors = {};
 
       acquisitionSimulatorManger.goToNextStep();
     } catch (e) {
