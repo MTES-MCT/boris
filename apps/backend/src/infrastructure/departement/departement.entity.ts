@@ -12,6 +12,7 @@ import {
 import { RegionEntity } from 'src/infrastructure/region/region.entity';
 import { OfsEntity } from '../ofs/ofs.entity';
 import { BrsDiffusionWebsiteEntity } from '../brs-diffusion-website/brs-diffusion-website.entity';
+import { MunicipalityEntity } from '../municipality/municipality.entity';
 
 @Entity('departement')
 export class DepartementEntity implements DepartementInterface {
@@ -26,6 +27,15 @@ export class DepartementEntity implements DepartementInterface {
 
   @ManyToOne(() => RegionEntity, (region) => region.departements)
   public region: RegionEntity;
+
+  @OneToMany(
+    () => MunicipalityEntity,
+    (municipality) => municipality.departement,
+    {
+      cascade: true,
+    },
+  )
+  public municipalities: MunicipalityEntity[];
 
   @ManyToMany(() => OfsEntity, (ofs) => ofs.departements)
   public ofss: OfsEntity[];
