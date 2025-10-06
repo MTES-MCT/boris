@@ -7,6 +7,7 @@ import { DistributorEntity } from '../distributor/distributor.entity';
 import { SessionEntity } from '../session/session.entity';
 import { UserEntity } from '../user/user.entity';
 import { BrsDiffusionWebsiteEntity } from '../brs-diffusion-website/brs-diffusion-website.entity';
+import { MunicipalityEntity } from '../municipality/municipality.entity';
 dotenv.config();
 
 const test = process.env.NODE_ENV === 'test';
@@ -27,6 +28,7 @@ export const typeormConfig: DataSourceOptions = {
     DepartementEntity,
     DistributorEntity,
     BrsDiffusionWebsiteEntity,
+    MunicipalityEntity,
   ],
   migrations: ['dist/infrastructure/persistence/migrations/**/*{.ts,.js}'],
   synchronize: false,
