@@ -1,12 +1,9 @@
 <script lang="ts">
-  import { formatEuro } from '$lib/utils/formatters';
-
   import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
 
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
   import Description from '$components/pages/simulateur-acquisition/Description.svelte';
   import Form from '$components/pages/simulateur-acquisition/Form.svelte';
-  import Table from '$components/common/Table.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
   import OperationSynthesis from './OperationSynthesis.svelte';
@@ -21,7 +18,6 @@
     // estimatedLoanFees,
     realEstateFees,
     estimatedRealEstateFees,
-    totalFees,
     oneTimeExpenses,
     totalCost,
     loanAmount,

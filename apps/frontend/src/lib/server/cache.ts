@@ -3,6 +3,7 @@ import Keyv from 'keyv';
 export const namespaces = {
   ofss: 'ofss',
   brsDiffusionWebsites: 'brs-diffusion-websites',
+  municipalities: 'municipalities',
 };
 
 const TTL_HOURS = 24;

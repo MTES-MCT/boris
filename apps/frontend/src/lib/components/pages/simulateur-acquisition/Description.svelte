@@ -1,6 +1,4 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte';
-
   import Stepper from '$components/common/Stepper.svelte';
 
   import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
