@@ -18,6 +18,8 @@ export class MunicipalitySeed {
         zone: municipality.zone,
       });
 
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
       count++;
 
       console.log(`${count}/${municipalities.length} - ${municipality.name}`);
