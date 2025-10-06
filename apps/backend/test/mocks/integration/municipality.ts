@@ -16,6 +16,6 @@ export const quimperMunicipality = new MunicipalityEntity(
 
 export const mockMunicipalityRepository = {
   save: jest.fn(),
-  findOneBy: jest.fn(),
+  findOne: jest.fn(),
   findOneByInseeCode: jest.fn(),
 };

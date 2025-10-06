@@ -18,6 +18,9 @@ export class MunicipalityRepository implements MunicipalityRepositoryInterface {
   public findOneByInseeCode(
     inseeCode: string,
   ): Promise<MunicipalityEntity | null> {
-    return this.repository.findOneBy({ inseeCode });
+    return this.repository.findOne({
+      where: { inseeCode },
+      relations: ['departement'],
+    });
   }
 }

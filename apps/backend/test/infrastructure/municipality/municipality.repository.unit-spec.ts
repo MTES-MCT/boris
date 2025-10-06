@@ -38,26 +38,32 @@ describe('MunicipalityRepository', () => {
   });
 
   it('should find a municipality by insee code and return its data', async () => {
-    mockMunicipalityRepository.findOneBy.mockResolvedValue(parisMunicipality);
+    mockMunicipalityRepository.findOne.mockResolvedValue(parisMunicipality);
 
     const result = await municipalityRepository.findOneByInseeCode('75056');
 
     expect(result).toMatchObject(parisMunicipality);
-    expect(mockMunicipalityRepository.findOneBy).toHaveBeenCalledTimes(1);
-    expect(mockMunicipalityRepository.findOneBy).toHaveBeenCalledWith({
-      inseeCode: '75056',
+    expect(mockMunicipalityRepository.findOne).toHaveBeenCalledTimes(1);
+    expect(mockMunicipalityRepository.findOne).toHaveBeenCalledWith({
+      where: {
+        inseeCode: '75056',
+      },
+      relations: ['departement'],
     });
   });
 
   it('should not find a municipality by insee code and return null', async () => {
-    mockMunicipalityRepository.findOneBy.mockResolvedValue(null);
+    mockMunicipalityRepository.findOne.mockResolvedValue(null);
 
     const result = await municipalityRepository.findOneByInseeCode('75056');
 
     expect(result).toBeNull();
-    expect(mockMunicipalityRepository.findOneBy).toHaveBeenCalledTimes(1);
-    expect(mockMunicipalityRepository.findOneBy).toHaveBeenCalledWith({
-      inseeCode: '75056',
+    expect(mockMunicipalityRepository.findOne).toHaveBeenCalledTimes(1);
+    expect(mockMunicipalityRepository.findOne).toHaveBeenCalledWith({
+      where: {
+        inseeCode: '75056',
+      },
+      relations: ['departement'],
     });
   });
 });

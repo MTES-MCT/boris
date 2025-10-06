@@ -9,11 +9,11 @@ import { CreateDistributorUsecase } from 'src/application/distributor/usecases/c
 import { CreateOfsUsecase } from 'src/application/ofs/usecases/create.usecase';
 import { regions } from '../regions-departements/data';
 import { ofss } from '../ofs/data';
-import { CreateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-website/usecases/create.usecase';
 import { BrsDiffusionWebsiteRepositoryInterface } from 'src/domain/brs-diffusion-website/brs-diffusion-website.repository.interface';
 import { geocodedMunicipalities } from './data';
 import { BrsDiffusionWebsiteEntity } from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.entity';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
+import { CreateMunicipalityUsecase } from 'src/application/municipality/usecases/create.usecase';
 
 @Injectable()
 export class TestDataSeed {
@@ -24,7 +24,7 @@ export class TestDataSeed {
     private readonly findOneRegionByNameUsecase: FindOneRegionByNameUsecase,
     private readonly createDistributorUsecase: CreateDistributorUsecase,
     private readonly createOfsUsecase: CreateOfsUsecase,
-    private readonly createBrsDiffusionWebsiteUsecase: CreateBrsDiffusionWebsiteUsecase,
+    private readonly createMunicipalityUsecase: CreateMunicipalityUsecase,
     @Inject('BrsDiffusionWebsiteRepositoryInterface')
     private readonly brsDiffusionWebsiteRepository: BrsDiffusionWebsiteRepositoryInterface,
     @Inject('DepartementRepositoryInterface')
@@ -151,9 +151,30 @@ export class TestDataSeed {
     );
   }
 
+  private async seedMunicipalities() {
+    console.log('Création des communes');
+
+    let municipalitiesCount = 0;
+
+    for (const geocodedMunicipality of geocodedMunicipalities) {
+      await this.createMunicipalityUsecase.execute({
+        name: geocodedMunicipality.properties?.city,
+        inseeCode: geocodedMunicipality.properties?.citycode,
+        zone: 'Abis',
+      });
+
+      municipalitiesCount = municipalitiesCount + 1;
+
+      console.log(
+        `${municipalitiesCount}/${geocodedMunicipalities.length} - ${geocodedMunicipality.properties?.city}`,
+      );
+    }
+  }
+
   async seed() {
     await this.seedRegions();
     await this.seedOfss();
     await this.seedBrsDiffusionWebsites();
+    await this.seedMunicipalities();
   }
 }

@@ -5,10 +5,12 @@ import { MunicipalityEntity } from './municipality.entity';
 import { DepartementEntity } from '../departement/departement.entity';
 import { DepartementRepository } from '../departement/departement.repository';
 import { CreateMunicipalityUsecase } from 'src/application/municipality/usecases/create.usecase';
+import { FindOneMunicipalityByInseeCodeUsecase } from 'src/application/municipality/usecases/findOneByInseeCode.usecase';
+import { GetMunicipalityByInseeCodeApiController } from './controllers/api/get-municipality-by-insee-code';
 
 @Module({
   imports: [TypeOrmModule.forFeature([DepartementEntity, MunicipalityEntity])],
-  controllers: [],
+  controllers: [GetMunicipalityByInseeCodeApiController],
   providers: [
     {
       provide: 'DepartementRepositoryInterface',
@@ -21,6 +23,7 @@ import { CreateMunicipalityUsecase } from 'src/application/municipality/usecases
     DepartementRepository,
     MunicipalityRepository,
     CreateMunicipalityUsecase,
+    FindOneMunicipalityByInseeCodeUsecase,
   ],
   exports: [
     'MunicipalityRepositoryInterface',
