@@ -1,7 +1,7 @@
 import type { Page } from '@sveltejs/kit';
 import { PUBLIC_NODE_ENV } from '$env/static/public';
 import type { GeocodedResponse } from './definitions';
-import type { z, ZodError, ZodIssue } from 'zod';
+import type { z } from 'zod';
 import type { FormFieldError } from './definitions';
 
 export const blockSearchEngineIndexing = (page: Page): boolean => {
