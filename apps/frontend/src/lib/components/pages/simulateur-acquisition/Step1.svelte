@@ -2,10 +2,13 @@
   import z, { ZodError } from 'zod';
 
   import type {
-    AutocompleteSuggestion,
     FormFieldError,
+    GeocodedResponse,
   } from '$lib/utils/definitions';
-  import { formatFormErrors } from '$lib/utils/helpers';
+  import {
+    formatFormErrors,
+    getGeocodedResponseLabel,
+  } from '$lib/utils/helpers';
 
   import Input from '$components/common/Input.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
@@ -18,6 +21,8 @@
   import Description from '$components/pages/simulateur-acquisition/Description.svelte';
 
   import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
+  import type { MunicipalityView } from '$lib/utils/api-types';
+  import type { Zone } from '$lib/utils/lissage-ptz';
 
   let { housingPrice, autocompleteValue, surface, housingType, nextStep } =
     $derived(acquisitionSimulatorManger);
@@ -30,9 +35,9 @@
         message: 'Veuillez remplir ce champs.',
       })
       .positive('Veuillez saisir un chiffre supérieur à 0.'),
-    // brsZone: z.string({
-    //   message: 'Veuillez selectionner un lieu valide.',
-    // }),
+    brsZone: z.string({
+      message: 'Veuillez selectionner un lieu valide.',
+    }),
     surface: z
       .number({
         message: 'Veuillez remplir ce champs.',
@@ -43,14 +48,16 @@
     }),
   });
 
-  const onLocationSelect = async (suggestion: AutocompleteSuggestion) => {
-    acquisitionSimulatorManger.selectedLocation = suggestion;
+  const onLocationSelect = async (
+    suggestion: GeocodedResponse['properties'],
+  ) => {
+    acquisitionSimulatorManger.autocompleteValue =
+      getGeocodedResponseLabel(suggestion);
 
-    // const response = await fetch(
-    //   `api/brs-zones?longitude=${suggestion.x}&latitude=${suggestion.y}`,
-    // );
+    const response = await fetch(`api/municipalities/${suggestion?.citycode}`);
+    const municipality: MunicipalityView = await response.json();
 
-    // acquisitionSimulatorManger.brsZone = await response.json();
+    acquisitionSimulatorManger.brsZone = municipality.zone as Zone;
   };
 
   const handleSubmit = (e: SubmitEvent) => {
@@ -59,7 +66,7 @@
     try {
       FormData.parse({
         housingPrice: acquisitionSimulatorManger.housingPrice,
-        // brsZone: acquisitionSimulatorManger.brsZone,
+        brsZone: acquisitionSimulatorManger.brsZone,
         surface: acquisitionSimulatorManger.surface,
         housingType: acquisitionSimulatorManger.housingType,
       });
@@ -105,7 +112,6 @@
         <div class="fr-fieldset__element fr-mb-4w">
           <Autocomplete
             bind:value={autocompleteValue}
-            excludedPois={['commune', 'département', 'région']}
             label="Ville ou code postal du logement *"
             placeholder="Exemple: Quimper ou 23200"
             error={errors.brsZone}

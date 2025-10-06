@@ -10,7 +10,13 @@
   import Tooltip from '$components/common/Tooltip.svelte';
   import Autocomplete from '$components/common/Autocomplete.svelte';
   import type { GeocodedResponse } from '$lib/utils/definitions';
-  import { type Zone } from '$lib/utils/lissage-ptz';
+  import {
+    type Logement,
+    type PhaseRemboursement,
+    type Zone,
+  } from '$lib/utils/lissage-ptz';
+  import Input from '$components/common/Input.svelte';
+  import Table from '$components/common/Table.svelte';
 
   let housingPrice: number = $state(0);
   let surface: number = $state(0);
@@ -561,12 +567,12 @@
               </div>
             </div>
 
-            <button
+            <!-- <button
               type="button"
               class="fr-btn fr-btn--secondary fr-btn--download fr-mt-2w"
               onclick={calculateGlobalLoan}>
               Simuler le lissage des prêts
-            </button>
+            </button> -->
           </fieldset>
 
           {#if lissage.length > 0}

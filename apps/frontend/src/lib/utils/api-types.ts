@@ -25,3 +25,5 @@ export type RegionRelationnalView =
 
 export type DepartementRelationnalView =
   components['schemas']['DepartementRelationnalView'];
+
+export type MunicipalityView = components['schemas']['MunicipalityView'];
