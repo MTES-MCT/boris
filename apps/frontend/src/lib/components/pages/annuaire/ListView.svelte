@@ -48,7 +48,7 @@
 {/snippet}
 
 {#snippet loading()}
-  {#each Array(24) as _, i}
+  {#each Array(24) as _}
     <div class="fr-col-12 fr-col-md-6">
       <Loader height={200} />
     </div>

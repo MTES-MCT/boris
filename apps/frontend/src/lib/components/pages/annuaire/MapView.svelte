@@ -13,7 +13,7 @@
   import { debounce } from '$lib/utils/helpers';
   import Card from '$components/pages/annuaire/Card.svelte';
   import NoResult from './NoResult.svelte';
-  import { defaultCoords, defaultZoomDesktop } from '$lib/utils/constants';
+  import { defaultCoords } from '$lib/utils/constants';
 
   type Props = {
     brsDiffusionWebsites: PaginationType<BrsDiffusionWebsiteView>;
@@ -179,7 +179,7 @@
     addMarkersToMap();
   };
 
-  const handleOnMouseLeave = (e: MouseEvent) => {
+  const handleOnMouseLeave = () => {
     hoveredMarker = null;
 
     deleteMarkersFromMap();

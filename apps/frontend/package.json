@@ -20,7 +20,8 @@
     "test:unit": "vitest",
     "lighthouse-mobile": "lhci autorun --config=./.lighthouse-mobile.json",
     "lighthouse-desktop": "lhci autorun --config=./.lighthouse-desktop.json",
-    "generate-api-types": "openapi-typescript http://localhost:3000/api/documentation/schema/json --output src/lib/utils/generated-api-types.ts"
+    "generate-api-types": "openapi-typescript http://localhost:3000/api/documentation/schema/json --output src/lib/utils/generated-api-types.ts",
+    "generate-address-datagouv-types": "openapi-typescript https://data.geopf.fr/geocodage/openapi.yaml --output src/lib/utils/generated-address-datagouv-types.ts"
   },
   "dependencies": {
     "@sentry/sveltekit": "^8.42.0"

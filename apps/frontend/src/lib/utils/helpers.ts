@@ -1,5 +1,6 @@
 import type { Page } from '@sveltejs/kit';
 import { PUBLIC_NODE_ENV } from '$env/static/public';
+import type { GeocodedResponse } from './definitions';
 
 export const blockSearchEngineIndexing = (page: Page): boolean => {
   const hiddenPaths = ['/questionnaire', '/simulateur-acquisition'];
@@ -46,4 +47,10 @@ export const removeSmoothScroll = () => {
   document
     .getElementsByTagName('html')[0]
     ?.classList.remove('scroll-behavior-smooth');
+};
+
+export const getGeocodedResponseLabel = (
+  geocodedResponse: GeocodedResponse['properties'],
+) => {
+  return `${geocodedResponse?.name}, ${geocodedResponse?.context}`;
 };

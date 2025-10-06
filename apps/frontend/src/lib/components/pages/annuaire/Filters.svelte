@@ -4,16 +4,17 @@
   import Radius from '$components/pages/annuaire/Radius.svelte';
   import Toggle from '$components/pages/annuaire/Toggle.svelte';
   import annuaireManager from '$lib/managers/annuaire.svelte';
-  import type { AutocompleteSuggestion } from '$lib/utils/definitions';
+  import type { GeocodedResponse } from '$lib/utils/definitions';
+  import { getGeocodedResponseLabel } from '$lib/utils/helpers';
 
   let autocompleteElementRef = $state<HTMLDivElement | null>(null);
 
   const handleAutocompleteSelect = async (
-    suggestion: AutocompleteSuggestion,
+    suggestion: GeocodedResponse['properties'],
   ) => {
     annuaireManager.isListLoading = true;
 
-    annuaireManager.autocompleteValue = suggestion?.fulltext as string;
+    annuaireManager.autocompleteValue = getGeocodedResponseLabel(suggestion);
 
     annuaireManager.setListBrsDiffusionWebsites({
       coords: {
@@ -52,8 +53,7 @@
         bind:value={annuaireManager.autocompleteValue}
         label="Saisir la ville ou le code postal"
         placeholder="Bordeaux, Marseille, Paris"
-        onSelect={handleAutocompleteSelect}
-        excludedPois={['commune']} />
+        onSelect={handleAutocompleteSelect} />
     </div>
     <div
       class={annuaireManager.viewType === 'list'

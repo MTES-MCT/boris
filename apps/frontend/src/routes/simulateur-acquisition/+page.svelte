@@ -9,13 +9,13 @@
   import Section from '$components/common/Section.svelte';
   import Tooltip from '$components/common/Tooltip.svelte';
   import Autocomplete from '$components/common/Autocomplete.svelte';
-  import type { AutocompleteSuggestion } from '$lib/utils/definitions';
+  import type { GeocodedResponse } from '$lib/utils/definitions';
   import { type Zone } from '$lib/utils/lissage-ptz';
 
   let housingPrice: number = $state(0);
   let surface: number = $state(0);
-  let selectedLocation: AutocompleteSuggestion | undefined = $state();
-  let autocompleteValue = $derived(selectedLocation?.fulltext || '');
+  let selectedLocation: GeocodedResponse['properties'] | undefined = $state();
+  let autocompleteValue = $derived(selectedLocation?.name || '');
   let housingType: 'new' | 'old' = $state('new');
   let ownContribution: number = $state(0);
   let notaryFees: number = $state(0);
@@ -97,15 +97,15 @@
       (propertyTax + yearlyExpenses + homeInsurance) / 12,
   );
 
-  const onLocationSelect = async (suggestion: AutocompleteSuggestion) => {
-    selectedLocation = suggestion;
+  // const onLocationSelect = async (suggestion: AutocompleteSuggestion) => {
+  //   selectedLocation = suggestion;
 
-    const response = await fetch(
-      `api/brs-zones?longitude=${selectedLocation.x}&latitude=${selectedLocation.y}`,
-    );
+  //   const response = await fetch(
+  //     `api/brs-zones?longitude=${selectedLocation.x}&latitude=${selectedLocation.y}`,
+  //   );
 
-    brsZone = await response.json();
-  };
+  //   brsZone = await response.json();
+  // };
 </script>
 
 <svelte:head>
@@ -149,7 +149,7 @@
                 }} />
             </div>
 
-            <div class="fr-fieldset__element">
+            <!-- <div class="fr-fieldset__element">
               <Autocomplete
                 bind:value={autocompleteValue}
                 excludedPois={['commune', 'département', 'région']}
@@ -163,7 +163,7 @@
                   </b>
                 </p>
               {/if}
-            </div>
+            </div> -->
 
             <div class="fr-fieldset__element">
               <label
