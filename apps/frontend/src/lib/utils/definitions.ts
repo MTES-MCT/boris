@@ -1,4 +1,8 @@
 import type { OfsView } from './api-types';
+import type {
+  components,
+  operations,
+} from './generated-address-datagouv-types';
 
 export type Heading = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
@@ -52,25 +56,11 @@ export type ArticlePreview = {
   firstPublishedAt: string;
 };
 
-export type AutocompleteSuggestion = {
-  country: string;
-  city: string;
-  x: number;
-  y: number;
-  zipcode: string;
-  street: string;
-  classification: number;
-  kind: string;
-  fulltext: string;
-  metropole: boolean;
-  poiType: ('région' | 'département' | 'commune')[];
-  id?: string;
-};
-
-export type AutocompleteResponse = {
-  status: number;
-  results: AutocompleteSuggestion[];
-};
+export type GeocodedResponse = components['schemas']['Address'];
+export type GeocodedSearchApiResponse =
+  operations['search']['responses']['200']['content']['application/json'] & {
+    features: GeocodedResponse[];
+  };
 
 export type ZoneABC = {
   codeinsee: string;

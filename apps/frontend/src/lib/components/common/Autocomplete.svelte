@@ -1,29 +1,26 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/utility/icons/icons-map/icons-map.min.css';
 
-  import { clickOutside, debounce } from '$lib/utils/helpers';
+  import {
+    clickOutside,
+    debounce,
+    getGeocodedResponseLabel,
+  } from '$lib/utils/helpers';
   import Input from '$components/common/Input.svelte';
   import { autocomplete } from '$lib/api/ign';
-  import type { AutocompleteSuggestion } from '$lib/utils/definitions';
+  import type { GeocodedResponse } from '$lib/utils/definitions';
   import { nanoid } from 'nanoid';
 
   type Props = {
     value: string;
     label: string;
     placeholder: string;
-    excludedPois?: AutocompleteSuggestion['poiType'];
-    onSelect: (suggestion: AutocompleteSuggestion) => void;
+    onSelect: (suggestion: GeocodedResponse['properties']) => void;
   };
 
-  let {
-    value = $bindable(),
-    label,
-    placeholder,
-    excludedPois = [],
-    onSelect,
-  }: Props = $props();
+  let { value = $bindable(), label, placeholder, onSelect }: Props = $props();
 
-  let suggestions = $state<AutocompleteSuggestion[] | null>(null);
+  let suggestions = $state<GeocodedResponse['properties'][] | null>(null);
   let isLoading = $state<boolean>(false);
   let isListExpanded = $state<boolean>(false);
   let isTooShort = $derived(value.length > 0 && value.length < 3);
@@ -35,18 +32,14 @@
 
   const debouncedSearch = debounce(async () => {
     if (hasCorrectLength) {
-      const { results } = await autocomplete(value, '10');
+      const results = await autocomplete(value, '5');
 
       suggestions = results
-        ?.filter(
-          (result) =>
-            !excludedPois.some((excludedPoi) =>
-              result.poiType?.includes(excludedPoi),
-            ),
-        )
-        .map((result, index) => ({
-          ...result,
-          id: `suggestion-${index}`,
+        .map((result) => ({
+          ...result.properties,
+          x: result?.geometry?.coordinates?.[0],
+          y: result?.geometry?.coordinates?.[1],
+          id: `suggestion-${nanoid(15)}`,
         }))
         .slice(0, 5);
 
@@ -77,7 +70,7 @@
       let nextSuggestionIndex: number;
 
       const currentSuggestionIndex = suggestions?.findIndex(
-        (suggestion) => suggestion.id === focusedSuggestionId,
+        (suggestion) => suggestion?.id === focusedSuggestionId,
       );
 
       if (
@@ -86,14 +79,14 @@
         currentSuggestionIndex < suggestions?.length - 1
       ) {
         nextSuggestionIndex = currentSuggestionIndex + 1;
-        focusedSuggestionId = suggestions[nextSuggestionIndex].id as string;
+        focusedSuggestionId = suggestions[nextSuggestionIndex]?.id as string;
       }
     } else if (key === 'ArrowUp') {
       event.preventDefault();
       let previousSuggestionIndex: number;
 
       const currentSuggestionIndex = suggestions?.findIndex(
-        (suggestion) => suggestion.id === focusedSuggestionId,
+        (suggestion) => suggestion?.id === focusedSuggestionId,
       );
 
       if (
@@ -102,7 +95,8 @@
         currentSuggestionIndex > 0
       ) {
         previousSuggestionIndex = currentSuggestionIndex - 1;
-        focusedSuggestionId = suggestions[previousSuggestionIndex].id as string;
+        focusedSuggestionId = suggestions[previousSuggestionIndex]
+          ?.id as string;
       }
     } else if (key === 'Escape') {
       isListExpanded = false;
@@ -120,9 +114,9 @@
   const handleSelect = (id?: string) => {
     const selectedSuggestion = suggestions?.find((suggestion) => {
       if (id) {
-        return suggestion.id === id;
+        return suggestion?.id === id;
       } else {
-        return suggestion.id === focusedSuggestionId;
+        return suggestion?.id === focusedSuggestionId;
       }
     });
 
@@ -189,25 +183,18 @@
 </div>
 
 {#snippet autocompleteSuggestion(
-  suggestion: AutocompleteSuggestion,
+  suggestion: GeocodedResponse['properties'],
   index: number,
 )}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <li
-    id={suggestion.id}
+    id={suggestion?.id}
     role="option"
-    aria-selected={suggestion.id === focusedSuggestionId}
+    aria-selected={suggestion?.id === focusedSuggestionId}
     aria-setsize={suggestions?.length}
     aria-posinset={index}
-    onclick={() => handleSelect(suggestion.id)}>
-    {suggestion.fulltext}
-    {#if suggestion.poiType}
-      {#each suggestion.poiType as poiType}
-        {#if poiType === 'région' || poiType === 'département' || poiType === 'commune'}
-          ({poiType})
-        {/if}
-      {/each}
-    {/if}
+    onclick={() => handleSelect(suggestion?.id)}>
+    {getGeocodedResponseLabel(suggestion)}
   </li>
 {/snippet}
 

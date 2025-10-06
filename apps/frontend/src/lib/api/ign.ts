@@ -1,26 +1,28 @@
-import type { AutocompleteResponse } from '$lib/utils/definitions';
+import type {
+  GeocodedResponse,
+  GeocodedSearchApiResponse,
+} from '$lib/utils/definitions';
 
 const API_URL = 'https://data.geopf.fr/geocodage';
 
 export const autocomplete = async (
   query: string,
   maximumResponses: string,
-): Promise<AutocompleteResponse> => {
+): Promise<GeocodedResponse[]> => {
+  const urlSearch = new URL(`${API_URL}/search`);
+  urlSearch.searchParams.set('q', query);
+  urlSearch.searchParams.set('limit', maximumResponses || '5');
+  urlSearch.searchParams.set('returntruegeometry', 'false');
+  urlSearch.searchParams.set('index', 'address');
+
+  const searchResponse = await fetch(urlSearch);
+  const searchData: GeocodedSearchApiResponse = await searchResponse.json();
+
   if (!query) {
-    return {
-      status: 200,
-      results: [],
-    };
+    return [];
   }
 
-  const url = new URL(`${API_URL}/completion/`);
-  url.searchParams.set('text', query);
-  url.searchParams.set('maximumResponses', maximumResponses || '5');
-
-  const response = await fetch(url);
-  const data: AutocompleteResponse = await response.json();
-
-  return data;
+  return searchData.features;
 };
 
 export const reverse = async (latitude: string, longitude: string) => {
