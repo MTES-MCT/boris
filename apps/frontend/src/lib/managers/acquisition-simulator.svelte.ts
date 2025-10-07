@@ -1,5 +1,6 @@
-import type { AutocompleteSuggestion } from '$lib/utils/definitions';
-import type { Zone } from '$lib/utils/lissage-ptz';
+import type { GeocodedResponse } from '$lib/utils/definitions';
+import { getGeocodedResponseLabel } from '$lib/utils/helpers';
+import type { Logement, PretLisse, Zone } from '$lib/utils/lissage-ptz';
 
 type Step = {
   title: string;
@@ -29,11 +30,15 @@ class AcquisitionSimulator {
       step: 5,
     },
     {
-      title: 'Redevance BRS & charges mensuelles',
+      title: 'Lissage des prêts',
       step: 6,
     },
+    {
+      title: 'Redevance BRS & charges mensuelles',
+      step: 7,
+    },
   ];
-  public currentStep: Step = $state(this.steps[0]);
+  public currentStep: Step = $state(this.steps[3]);
   public previousStep: Step | null = $derived.by(() => {
     if (this.currentStep.step < 2) {
       return null;
@@ -49,22 +54,29 @@ class AcquisitionSimulator {
     }
   });
 
-  public housingPrice: number | undefined = $state();
-  public selectedLocation: AutocompleteSuggestion | undefined = $state();
-  public autocompleteValue = $derived(this.selectedLocation?.fulltext || '');
-  public brsZone: Zone | undefined = $state();
-  public surface: number | undefined = $state();
+  public housingPrice: number | undefined = $state(200000);
+  public selectedLocation: GeocodedResponse['properties'] | undefined =
+    $state();
+  public autocompleteValue = $derived(
+    getGeocodedResponseLabel(this.selectedLocation) || '',
+  );
+  public brsZone: Zone | undefined = $state('Abis');
+  public surface: number | undefined = $state(50);
   public housingType: 'new' | 'old' | undefined = $state('new');
 
-  public ownContribution: number | undefined = $state();
+  public ownContribution: number | undefined = $state(10000);
 
   public notaryFees: number | undefined = $state();
   public loanFees: number | undefined = $state();
   public realEstateFees: number | undefined = $state();
-  public oneTimeExpenses: number | undefined = $state();
+  public oneTimeExpenses: number | undefined = $state(2000);
 
-  public interestRate: number | undefined = $state();
-  public loanDuration: number | undefined = $state();
+  public interestRate: number | undefined = $state(2);
+  public loanDuration: number | undefined = $state(25);
+  public inHousePeopleAmount: number | undefined = $state(1);
+  public fiscalIncome: number | undefined = $state(24000);
+  public ptzType: Logement | undefined = $state('collectif');
+  public pretLisse: PretLisse | undefined = $state();
 
   public estimatedNotaryFees: number = $derived.by(() => {
     if (this.housingPrice) {
@@ -124,5 +136,5 @@ class AcquisitionSimulator {
   };
 }
 
-const acquisitionSimulatorManger = new AcquisitionSimulator();
-export default acquisitionSimulatorManger;
+const acquisitionSimulatorManager = new AcquisitionSimulator();
+export default acquisitionSimulatorManager;

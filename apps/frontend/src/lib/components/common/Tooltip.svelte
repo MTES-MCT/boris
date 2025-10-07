@@ -37,6 +37,7 @@
   .tooltip {
     position: relative;
     cursor: pointer;
+    color: var(--text-title-grey);
   }
 
   .tooltip .tooltip-content {
