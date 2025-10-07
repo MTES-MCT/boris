@@ -36,6 +36,7 @@
     autocomplete?: FullAutoFill;
     forceNoMarginBottom?: boolean;
     error?: string;
+    disabled?: boolean;
     onChange?: (event: Event) => void;
     onKeydown?: (event: KeyboardEvent) => void;
     onBlur?: (event: Event) => void;
@@ -59,6 +60,7 @@
     step,
     forceNoMarginBottom = false,
     error,
+    disabled,
     onChange,
     onKeydown,
     onBlur,
@@ -67,6 +69,7 @@
 
 <div
   class="fr-input-group"
+  class:fr-input-group--disabled={disabled}
   class:fr-input-group--error={error}
   class:no-margin-bottom={forceNoMarginBottom}
   id={`${id}-group`}>
@@ -110,6 +113,7 @@
     {type}
     {value}
     {required}
+    {disabled}
     {id}
     {role}
     {...{

@@ -70,3 +70,14 @@ export const formatFormErrors = (
 
   return errors;
 };
+
+export const formatLoanPhaseDuration = (
+  duration: number,
+  deferment: number,
+) => {
+  if (deferment === 0) {
+    return `Durant les ${duration} premières années`;
+  } else {
+    return `De la ${deferment + 1}ème à la ${deferment + duration}ème année`;
+  }
+};

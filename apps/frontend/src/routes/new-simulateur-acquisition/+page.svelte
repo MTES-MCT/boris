@@ -6,9 +6,9 @@
   import Step5 from '$components/pages/simulateur-acquisition/Step5.svelte';
   import Step6 from '$components/pages/simulateur-acquisition/Step6.svelte';
 
-  import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
-  const { currentStep } = $derived(acquisitionSimulatorManger);
+  const { currentStep } = $derived(acquisitionSimulatorManager);
 </script>
 
 {#if currentStep.step === 1}

@@ -1,6 +1,9 @@
 <script lang="ts">
   import Tooltip from '$components/common/Tooltip.svelte';
   import { formatEuro } from '$lib/utils/formatters';
+  import Element from './synthesis/Element.svelte';
+  import Row from './synthesis/Row.svelte';
+  import RowContainer from './synthesis/RowContainer.svelte';
 
   type Props = {
     housingPrice: number;
@@ -23,33 +26,63 @@
   }: Props = $props();
 </script>
 
-{@render row('Montant du logement', formatEuro(housingPrice))}
-{@render row('Frais de notaire', `+ ${formatEuro(notaryFees || 0)}`)}
-{#if realEstateFees}
-  {@render row("Frais d'agence", `+ ${formatEuro(realEstateFees || 0)}`)}
-{/if}
-{#if oneTimeExpenses}
-  {@render row(
-    'Autres frais ponctuels',
-    `+ ${formatEuro(oneTimeExpenses || 0)}`,
-  )}
-{/if}
+<Element isLast>
+  <RowContainer>
+    <Row
+      title="Montant du logement"
+      value={formatEuro(housingPrice)}
+      status="info" />
+    <Row
+      title="Frais de notaire"
+      value={formatEuro(notaryFees || 0)}
+      status="info"
+      operator="+" />
+    {#if realEstateFees}
+      <Row
+        title="Frais d'agence"
+        value={formatEuro(realEstateFees || 0)}
+        status="info"
+        operator="+" />
+    {/if}
+    {#if oneTimeExpenses}
+      <Row
+        title="Autres frais ponctuels"
+        value={formatEuro(oneTimeExpenses || 0)}
+        status="info"
+        operator="+" />
+    {/if}
 
-<div class="separator"></div>
+    <div class="separator"></div>
 
-{@render row("Coût total de l'opération", formatEuro(totalCost), true)}
-{#if ownContribution}
-  {@render row('Apport personnel', `- ${formatEuro(ownContribution || 0)}`)}
-{/if}
+    <Row
+      title="Coût total de l'opération"
+      value={formatEuro(totalCost)}
+      status="success"
+      operator="=" />
+    {#if ownContribution}
+      <Row
+        title="Apport personnel"
+        value={formatEuro(ownContribution || 0)}
+        status="new"
+        operator="-" />
+    {/if}
 
-<div class="separator"></div>
-{@render row("Montant de l'emprunt", formatEuro(loanAmount), true)}
-{@render row(
-  'Frais de garantie/prêt',
-  `+ ${formatEuro(loanAmount * 0.008 || 0)}`,
-  false,
-  "Frais liés à la mise en place de votre prêt immobilier (caution, garantie, dossier). Généralement autour de 0,8% du montant emprunté + frais de dossier. Environ 70% de cette somme vous serons reversés lorsque que vous aurez remboursé l'intégralité de votre prêt.",
-)}
+    <div class="separator"></div>
+
+    <Row
+      title="Montant de l'emprunt"
+      value={formatEuro(loanAmount)}
+      status="success"
+      operator="=" />
+
+    <Row
+      title="Frais de garantie/prêt"
+      value={formatEuro(loanAmount * 0.008 || 0)}
+      status="info"
+      operator="+"
+      tooltip="Frais liés à la mise en place de votre prêt immobilier (caution, garantie, dossier). Généralement autour de 0,8% du montant emprunté + frais de dossier. Environ 70% de cette somme vous serons reversés lorsque que vous aurez remboursé l'intégralité de votre prêt." />
+  </RowContainer>
+</Element>
 
 {#snippet row(
   label: string,
@@ -98,12 +131,5 @@
       display: flex;
       gap: 0.5rem;
     }
-  }
-
-  .separator {
-    height: 1px;
-    width: 100%;
-    background-color: black;
-    margin-block: 1rem;
   }
 </style>

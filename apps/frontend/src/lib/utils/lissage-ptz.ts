@@ -226,6 +226,21 @@ export class PretLisse {
   }
 
   public lisser() {
+    if (!this.estElligible) {
+      return [
+        {
+          anneesDifferees: 0,
+          dureeAnnees: this.dureeEmprunt,
+          mensualitePTZ: '0.00',
+          mensualiteClassique: this.calculerMensualiteClassique(
+            this.montantTotal,
+            this.tauxEmprunt / 100 / 12,
+            this.dureeEmprunt * 12,
+          ),
+        },
+      ];
+    }
+
     this.tranche = this.trouverTranche();
     this.montantPTZ = this.calculerMontantPTZ();
 
@@ -372,7 +387,7 @@ export class PretLisse {
     return mensualiteTotale;
   }
 
-  private calculerMensualiteClassique(
+  public calculerMensualiteClassique(
     montantEmprunt: number,
     tauxMensuel: number,
     dureeEmprunt: number,

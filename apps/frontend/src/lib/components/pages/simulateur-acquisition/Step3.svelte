@@ -4,7 +4,7 @@
   import type { FormFieldError } from '$lib/utils/definitions';
   import { formatFormErrors } from '$lib/utils/helpers';
 
-  import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
   import Description from '$components/pages/simulateur-acquisition/Description.svelte';
@@ -40,21 +40,21 @@
     nextStep,
     previousStep,
     goToPreviousStep,
-  } = $derived(acquisitionSimulatorManger);
+  } = $derived(acquisitionSimulatorManager);
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
     try {
       FormData.parse({
-        notaryFees: acquisitionSimulatorManger.notaryFees,
-        realEstateFees: acquisitionSimulatorManger.realEstateFees,
-        oneTimeExpenses: acquisitionSimulatorManger.oneTimeExpenses,
+        notaryFees: acquisitionSimulatorManager.notaryFees,
+        realEstateFees: acquisitionSimulatorManager.realEstateFees,
+        oneTimeExpenses: acquisitionSimulatorManager.oneTimeExpenses,
       });
 
       errors = {};
 
-      acquisitionSimulatorManger.goToNextStep();
+      acquisitionSimulatorManager.goToNextStep();
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }
@@ -95,9 +95,9 @@
               const { value } = e.target as HTMLInputElement;
 
               if (value === '') {
-                acquisitionSimulatorManger.notaryFees = undefined;
+                acquisitionSimulatorManager.notaryFees = undefined;
               } else {
-                acquisitionSimulatorManger.notaryFees = Number(value);
+                acquisitionSimulatorManager.notaryFees = Number(value);
               }
             }} />
           {#if !notaryFees || notaryFees < 0}
@@ -124,9 +124,9 @@
               const { value } = e.target as HTMLInputElement;
 
               if (value === '') {
-                acquisitionSimulatorManger.realEstateFees = undefined;
+                acquisitionSimulatorManager.realEstateFees = undefined;
               } else {
-                acquisitionSimulatorManger.realEstateFees = Number(value);
+                acquisitionSimulatorManager.realEstateFees = Number(value);
               }
             }} />
           {#if !realEstateFees || realEstateFees < 0}
@@ -137,7 +137,7 @@
           {/if}
         </div>
 
-        <div class="fr-fieldset__element fr-mb-4w">
+        <div class="fr-fieldset__element">
           <Input
             value={oneTimeExpenses}
             label="Frais ponctuels (€)"
@@ -152,9 +152,9 @@
               const { value } = e.target as HTMLInputElement;
 
               if (value === '') {
-                acquisitionSimulatorManger.oneTimeExpenses = undefined;
+                acquisitionSimulatorManager.oneTimeExpenses = undefined;
               } else {
-                acquisitionSimulatorManger.oneTimeExpenses = Number(value);
+                acquisitionSimulatorManager.oneTimeExpenses = Number(value);
               }
             }} />
         </div>
