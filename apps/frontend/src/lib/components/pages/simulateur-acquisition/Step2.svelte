@@ -7,14 +7,14 @@
   import Form from '$components/pages/simulateur-acquisition/Form.svelte';
   import Input from '$components/common/Input.svelte';
 
-  import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
   import Description from './Description.svelte';
 
   let { ownContribution, nextStep, previousStep, goToPreviousStep } = $derived(
-    acquisitionSimulatorManger,
+    acquisitionSimulatorManager,
   );
 
   let errors: FormFieldError = $state({});
@@ -31,12 +31,12 @@
 
     try {
       FormData.parse({
-        ownContribution: acquisitionSimulatorManger.ownContribution,
+        ownContribution: acquisitionSimulatorManager.ownContribution,
       });
 
       errors = {};
 
-      acquisitionSimulatorManger.goToNextStep();
+      acquisitionSimulatorManager.goToNextStep();
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }
@@ -51,7 +51,7 @@
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">
-        <div class="fr-fieldset__element fr-mb-4w">
+        <div class="fr-fieldset__element">
           <Input
             value={ownContribution}
             label="Montant de votre apport (€)"
@@ -63,7 +63,7 @@
             type="number"
             placeholder="Exemple: 10 000€"
             onChange={(e) => {
-              acquisitionSimulatorManger.ownContribution = Number(
+              acquisitionSimulatorManager.ownContribution = Number(
                 (e.target as HTMLInputElement).value,
               );
             }} />

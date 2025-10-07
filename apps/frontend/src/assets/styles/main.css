@@ -45,6 +45,13 @@
   background-image: none !important;
 }
 
+.separator {
+  height: 1px;
+  width: 100%;
+  background-color: var(--border-default-grey);
+  margin-block: 0.5rem;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

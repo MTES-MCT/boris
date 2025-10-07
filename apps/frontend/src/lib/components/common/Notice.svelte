@@ -6,6 +6,7 @@
     type?:
       | 'info'
       | 'warning'
+      | 'caution'
       | 'alert'
       | 'weather-orange'
       | 'weather-red'
@@ -25,6 +26,8 @@
       <p>
         {#if !type}
           <span class="fr-icon-information-fill fr-notice__icon"></span>
+        {:else if type === 'caution'}
+          <span class="fr-icon-information-line fr-notice__icon"></span>
         {/if}
         <span class="fr-notice__title">{content}</span>
       </p>
@@ -35,5 +38,10 @@
 <style lang="postcss">
   .fr-notice--none {
     background-color: transparent;
+  }
+
+  .fr-notice--caution {
+    color: var(--text-label-pink-tuile);
+    background-color: var(--background-contrast-pink-tuile);
   }
 </style>

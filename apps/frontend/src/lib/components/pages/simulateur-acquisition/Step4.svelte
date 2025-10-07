@@ -1,5 +1,5 @@
 <script lang="ts">
-  import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
   import Description from '$components/pages/simulateur-acquisition/Description.svelte';
@@ -25,7 +25,7 @@
     previousStep,
     goToPreviousStep,
     goToNextStep,
-  } = $derived(acquisitionSimulatorManger);
+  } = $derived(acquisitionSimulatorManager);
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();

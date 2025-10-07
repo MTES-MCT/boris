@@ -20,12 +20,12 @@
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
   import Description from '$components/pages/simulateur-acquisition/Description.svelte';
 
-  import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
   import type { MunicipalityView } from '$lib/utils/api-types';
   import type { Zone } from '$lib/utils/lissage-ptz';
 
   let { housingPrice, autocompleteValue, surface, housingType, nextStep } =
-    $derived(acquisitionSimulatorManger);
+    $derived(acquisitionSimulatorManager);
 
   let errors: FormFieldError = $state({});
 
@@ -51,13 +51,13 @@
   const onLocationSelect = async (
     suggestion: GeocodedResponse['properties'],
   ) => {
-    acquisitionSimulatorManger.autocompleteValue =
+    acquisitionSimulatorManager.autocompleteValue =
       getGeocodedResponseLabel(suggestion);
 
     const response = await fetch(`api/municipalities/${suggestion?.citycode}`);
     const municipality: MunicipalityView = await response.json();
 
-    acquisitionSimulatorManger.brsZone = municipality.zone as Zone;
+    acquisitionSimulatorManager.brsZone = municipality.zone as Zone;
   };
 
   const handleSubmit = (e: SubmitEvent) => {
@@ -65,15 +65,15 @@
 
     try {
       FormData.parse({
-        housingPrice: acquisitionSimulatorManger.housingPrice,
-        brsZone: acquisitionSimulatorManger.brsZone,
-        surface: acquisitionSimulatorManger.surface,
-        housingType: acquisitionSimulatorManger.housingType,
+        housingPrice: acquisitionSimulatorManager.housingPrice,
+        brsZone: acquisitionSimulatorManager.brsZone,
+        surface: acquisitionSimulatorManager.surface,
+        housingType: acquisitionSimulatorManager.housingType,
       });
 
       errors = {};
 
-      acquisitionSimulatorManger.goToNextStep();
+      acquisitionSimulatorManager.goToNextStep();
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }
@@ -104,7 +104,7 @@
               if (value) {
                 const numericValue = value.replace(/\D/g, '').slice(0, 9);
                 (e.target as HTMLInputElement).value = numericValue;
-                acquisitionSimulatorManger.housingPrice = Number(numericValue);
+                acquisitionSimulatorManager.housingPrice = Number(numericValue);
               }
             }} />
         </div>
@@ -118,7 +118,7 @@
             onSelect={onLocationSelect} />
         </div>
 
-        <div class="fr-fieldset__element fr-mb-4w">
+        <div class="fr-fieldset__element">
           <Input
             value={surface}
             id="surface"
@@ -131,7 +131,7 @@
               if (value) {
                 const numericValue = value.replace(/\D/g, '').slice(0, 3);
                 (e.target as HTMLInputElement).value = numericValue;
-                acquisitionSimulatorManger.surface = Number(numericValue);
+                acquisitionSimulatorManager.surface = Number(numericValue);
               }
             }} />
         </div>
@@ -153,11 +153,11 @@
           <Radio
             label="Neuf"
             checked={housingType === 'new'}
-            oninput={() => (acquisitionSimulatorManger.housingType = 'new')} />
+            oninput={() => (acquisitionSimulatorManager.housingType = 'new')} />
           <Radio
             label="Ancien"
             checked={housingType === 'old'}
-            oninput={() => (acquisitionSimulatorManger.housingType = 'old')} />
+            oninput={() => (acquisitionSimulatorManager.housingType = 'old')} />
         </div>
       </RadioFieldset>
     </div>

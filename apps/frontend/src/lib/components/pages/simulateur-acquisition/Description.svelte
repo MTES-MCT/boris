@@ -1,9 +1,9 @@
 <script lang="ts">
   import Stepper from '$components/common/Stepper.svelte';
 
-  import acquisitionSimulatorManger from '$lib/managers/acquisition-simulator.svelte';
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
-  let { steps, currentStep, nextStep } = $derived(acquisitionSimulatorManger);
+  let { steps, currentStep, nextStep } = $derived(acquisitionSimulatorManager);
 
   type Props = {
     content: string;

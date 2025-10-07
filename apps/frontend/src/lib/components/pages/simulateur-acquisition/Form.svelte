@@ -31,6 +31,7 @@
     box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
     border: solid 1px rgba(134, 144, 162, 0.1);
     background-color: white;
+    width: 100%;
   }
 
   @media (--xs-viewport) {
