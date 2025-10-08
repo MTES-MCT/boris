@@ -6,8 +6,8 @@
   import Form from '$components/pages/simulateur-acquisition/Form.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
-  import LissageSynthesis from './LissageSynthesis.svelte';
   import Highlight from '$components/common/Highlight.svelte';
+  import GlobalSynthesis from '$components/pages/simulateur-acquisition/GlobalSynthesis.svelte';
 
   let { nextStep, previousStep, goToPreviousStep, goToNextStep } = $derived(
     acquisitionSimulatorManager,
@@ -27,18 +27,7 @@
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">
         <div class="fr-fieldset__element">
-          <LissageSynthesis />
-        </div>
-      </fieldset>
-
-      <fieldset class="fr-fieldset">
-        <div class="fr-fieldset__element">
-          <Highlight
-            text="Vous pourrez télécharger la simulation du lissage des prêts à la fin du parcours."
-            accent="green-archipel"
-            icon="download-line"
-            size="sm"
-            fontWeight="bold" />
+          <GlobalSynthesis />
         </div>
       </fieldset>
     </div>

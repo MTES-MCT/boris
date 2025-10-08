@@ -209,18 +209,16 @@
         <RadioFieldset
           legend="Type du logement *"
           error={errors.ptzType}>
-          <div class="radios-container">
-            <Radio
-              label="Collectif"
-              checked={ptzType === 'collectif'}
-              oninput={() =>
-                (acquisitionSimulatorManager.ptzType = 'collectif')} />
-            <Radio
-              label="Individuel"
-              checked={ptzType === 'individuel'}
-              oninput={() =>
-                (acquisitionSimulatorManager.ptzType = 'individuel')} />
-          </div>
+          <Radio
+            label="Collectif"
+            checked={ptzType === 'collectif'}
+            oninput={() =>
+              (acquisitionSimulatorManager.ptzType = 'collectif')} />
+          <Radio
+            label="Individuel"
+            checked={ptzType === 'individuel'}
+            oninput={() =>
+              (acquisitionSimulatorManager.ptzType = 'individuel')} />
         </RadioFieldset>
       {/if}
     </div>
@@ -253,9 +251,5 @@
         }
       }
     }
-  }
-
-  .radios-container {
-    display: flex;
   }
 </style>

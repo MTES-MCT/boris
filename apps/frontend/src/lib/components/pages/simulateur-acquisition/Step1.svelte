@@ -149,16 +149,14 @@
         </div>
       `}
         error={errors.housingType}>
-        <div class="radios-container">
-          <Radio
-            label="Neuf"
-            checked={housingType === 'new'}
-            oninput={() => (acquisitionSimulatorManager.housingType = 'new')} />
-          <Radio
-            label="Ancien"
-            checked={housingType === 'old'}
-            oninput={() => (acquisitionSimulatorManager.housingType = 'old')} />
-        </div>
+        <Radio
+          label="Neuf"
+          checked={housingType === 'new'}
+          oninput={() => (acquisitionSimulatorManager.housingType = 'new')} />
+        <Radio
+          label="Ancien"
+          checked={housingType === 'old'}
+          oninput={() => (acquisitionSimulatorManager.housingType = 'old')} />
       </RadioFieldset>
     </div>
 
@@ -172,9 +170,3 @@
     {/if}
   </Form>
 </Wrapper>
-
-<style lang="postcss">
-  .radios-container {
-    display: flex;
-  }
-</style>

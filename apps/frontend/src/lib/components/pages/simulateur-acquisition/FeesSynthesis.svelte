@@ -1,0 +1,126 @@
+<script lang="ts">
+  import { formatEuro } from '$lib/utils/formatters';
+
+  import Element from './Synthesis/Element.svelte';
+  import Row from './Synthesis/Row.svelte';
+  import RowContainer from './Synthesis/RowContainer.svelte';
+
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
+
+  const {
+    monthlyBrsFees,
+    yearlyBrsFees,
+    monthlyPropertyTax,
+    yearlyPropertyTax,
+    monthlyHouseingInsurance,
+    yearlyHouseingInsurance,
+    monthlyCondominiumFees,
+    yearlyCondominiumFees,
+    monthlyExpenses,
+    yearlyExpenses,
+  } = $derived(acquisitionSimulatorManager);
+</script>
+
+<Element>
+  <p class="fr-h6">Coût mensuel</p>
+  <RowContainer>
+    <Row
+      title="Redevance BRS"
+      value={monthlyBrsFees ? formatEuro(monthlyBrsFees, 2) : 'Non renseigné'}
+      status={monthlyBrsFees ? 'info' : 'default'}
+      tooltip="Le resultat est égal à la redevance BRS mensuelle par m² multipliée par la surface du logement." />
+    <Row
+      title="Taxe foncière"
+      value={monthlyPropertyTax
+        ? formatEuro(monthlyPropertyTax, 2)
+        : 'Non renseigné'}
+      status={monthlyPropertyTax ? 'info' : 'default'}
+      operator={monthlyPropertyTax ? '+' : ''} />
+    <Row
+      title="Assurance habitation"
+      value={monthlyHouseingInsurance
+        ? formatEuro(monthlyHouseingInsurance, 2)
+        : 'Non renseigné'}
+      status={monthlyHouseingInsurance ? 'info' : 'default'}
+      operator={monthlyHouseingInsurance ? '+' : ''} />
+    <Row
+      title="Charges de copropriété"
+      value={monthlyCondominiumFees
+        ? formatEuro(monthlyCondominiumFees, 2)
+        : 'Non renseigné'}
+      status={monthlyCondominiumFees ? 'info' : 'default'}
+      operator={monthlyCondominiumFees ? '+' : ''} />
+    <Row
+      title="Autres charges"
+      value={monthlyExpenses ? formatEuro(monthlyExpenses, 2) : 'Non renseigné'}
+      status={monthlyExpenses ? 'info' : 'default'}
+      operator={monthlyExpenses ? '+' : ''} />
+
+    <div class="separator"></div>
+
+    <Row
+      title="Coût total mensuel"
+      value={formatEuro(
+        monthlyBrsFees +
+          monthlyPropertyTax +
+          monthlyHouseingInsurance +
+          monthlyCondominiumFees +
+          monthlyExpenses,
+        2,
+      )}
+      status="success"
+      operator="=" />
+  </RowContainer>
+</Element>
+
+<Element isLast>
+  <p class="fr-h6">Coût annuel</p>
+  <RowContainer>
+    <Row
+      title="Redevance BRS"
+      value={yearlyBrsFees ? formatEuro(yearlyBrsFees, 2) : 'Non renseigné'}
+      status={yearlyBrsFees ? 'info' : 'default'}
+      tooltip="Le resultat est égal à la redevance BRS mensuelle par m² multipliée par la surface du logement." />
+    <Row
+      title="Taxe foncière"
+      value={yearlyPropertyTax
+        ? formatEuro(yearlyPropertyTax, 2)
+        : 'Non renseigné'}
+      status={yearlyPropertyTax ? 'info' : 'default'}
+      operator={yearlyPropertyTax ? '+' : ''} />
+    <Row
+      title="Assurance habitation"
+      value={yearlyHouseingInsurance
+        ? formatEuro(yearlyHouseingInsurance, 2)
+        : 'Non renseigné'}
+      status={yearlyHouseingInsurance ? 'info' : 'default'}
+      operator={yearlyHouseingInsurance ? '+' : ''} />
+    <Row
+      title="Charges de copropriété"
+      value={yearlyCondominiumFees
+        ? formatEuro(yearlyCondominiumFees, 2)
+        : 'Non renseigné'}
+      status={yearlyCondominiumFees ? 'info' : 'default'}
+      operator={yearlyCondominiumFees ? '+' : ''} />
+    <Row
+      title="Autres charges"
+      value={yearlyExpenses ? formatEuro(yearlyExpenses, 2) : 'Non renseigné'}
+      status={yearlyExpenses ? 'info' : 'default'}
+      operator={yearlyExpenses ? '+' : ''} />
+
+    <div class="separator"></div>
+
+    <Row
+      title="Coût total annuel"
+      value={formatEuro(
+        yearlyBrsFees +
+          (yearlyPropertyTax as number) +
+          (yearlyHouseingInsurance as number) +
+          (yearlyCondominiumFees as number) +
+          (yearlyExpenses as number),
+        2,
+      )}
+      status="success"
+      operator="=" />
+  </RowContainer>
+</Element>

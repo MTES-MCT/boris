@@ -71,6 +71,19 @@ export const formatFormErrors = (
   return errors;
 };
 
+export const formatLoanPhaseNumber = (number: number) => {
+  switch (number) {
+    case 1:
+      return 'Première phase de remboursement';
+    case 2:
+      return 'Deuxième phase de remboursement';
+    case 3:
+      return 'Troisième phase de remboursement';
+  }
+
+  return `Phase de remboursement n°${number}`;
+};
+
 export const formatLoanPhaseDuration = (
   duration: number,
   deferment: number,
