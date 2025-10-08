@@ -1,7 +1,7 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/component/callout/callout.min.css';
 
-  import type { Heading } from '$lib/utils/definitions';
+  import type { Accent, FontWeight, Heading } from '$lib/utils/definitions';
   import { nanoid } from 'nanoid';
 
   type Props = {
@@ -9,30 +9,14 @@
     title?: string;
     titleElement?: Heading;
     text?: string;
-    accent:
-      | 'default'
-      | 'green-tilleul-verveine'
-      | 'green-bourgeon'
-      | 'green-emeraude'
-      | 'green-menthe'
-      | 'green-archipel'
-      | 'blue-ecume'
-      | 'blue-cumulus'
-      | 'purple-glycine'
-      | 'pink-macaron'
-      | 'pink-tuile'
-      | 'yellow-tournesol'
-      | 'yellow-moutarde'
-      | 'orange-terre-battue'
-      | 'brown-cafe-creme'
-      | 'brown-caramel'
-      | 'brown-opera'
-      | 'beige-gris-galet';
+    accent?: Accent;
     hasIcon?: boolean;
     icon?: string;
     hasButton?: boolean;
     buttonLabel?: string;
     onClick?: () => void;
+    size?: 'sm' | 'md' | 'lg';
+    fontWeight?: FontWeight;
   };
 
   const {
@@ -46,12 +30,20 @@
     hasButton = false,
     buttonLabel = '',
     onClick,
+    size = 'md',
+    fontWeight = 'normal',
   }: Props = $props();
 </script>
 
 <div
   {id}
-  class={`fr-callout ${hasIcon && icon ? `fr-icon-${icon}` : ''} ${accent && accent !== 'default' ? `fr-callout--${accent}` : ''}`}>
+  class={`
+    fr-callout
+    fr-callout--${size}
+    ${accent && accent !== 'default' ? `fr-callout--${accent}` : ''}`}>
+  {#if icon}
+    <span class={`fr-icon-${icon} fr-icon--${size}`}></span>
+  {/if}
   {#if title}
     <svelte:element
       this={titleElement}
@@ -60,7 +52,7 @@
     </svelte:element>
   {/if}
   {#if text}
-    <p class="fr-callout__text">
+    <p class="fr-callout__text fr-text--{size} fr-text--{fontWeight}">
       {text}
     </p>
   {/if}
@@ -73,3 +65,17 @@
     </button>
   {/if}
 </div>
+
+<style lang="postcss">
+  .fr-callout--sm {
+    @media (min-width: 48em) {
+      padding: 1.5rem;
+    }
+  }
+
+  .fr-callout--md {
+    @media (min-width: 48em) {
+      padding: 2rem;
+    }
+  }
+</style>
