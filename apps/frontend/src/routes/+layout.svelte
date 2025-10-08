@@ -37,11 +37,3 @@
 </main>
 
 <Footer />
-
-<style lang="postcss">
-  @media print {
-    :global(.not-printable) {
-      display: none;
-    }
-  }
-</style>

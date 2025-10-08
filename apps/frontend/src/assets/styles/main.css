@@ -1,6 +1,7 @@
 @import url('./_vars.css');
 @import url('./_icons.css');
 @import url('./map.css');
+@import url('./_utilities.css');
 
 .scroll-behavior-smooth {
   scroll-behavior: smooth;
@@ -50,6 +51,19 @@
   width: 100%;
   background-color: var(--border-default-grey);
   margin-block: 0.5rem;
+}
+
+.pdf-only {
+  display: none;
+}
+
+.not-printable {
+  display: inherit;
+}
+
+.page-break-before {
+  page-break-before: always;
+  break-before: page;
 }
 
 @keyframes fadeIn {

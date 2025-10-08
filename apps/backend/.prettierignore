@@ -8,5 +8,6 @@ Procfile
 **/*.hbs
 **/*.woff
 **/*.woff2
+**/*.jpg
 .gitignore
 favicon.ico

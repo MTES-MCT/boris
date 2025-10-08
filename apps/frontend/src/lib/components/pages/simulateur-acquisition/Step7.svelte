@@ -96,15 +96,6 @@
 
     goToNextStep();
   };
-
-  $inspect(
-    brsFees,
-    yearlyPropertyTax,
-    yearlyHouseingInsurance,
-    condominiumFeesFrequency,
-    condominiumFees,
-    yearlyExpenses,
-  );
 </script>
 
 <Wrapper>

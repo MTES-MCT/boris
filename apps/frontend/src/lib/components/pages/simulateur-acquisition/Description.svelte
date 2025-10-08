@@ -12,7 +12,7 @@
   const { content }: Props = $props();
 </script>
 
-<div class="container not-printable">
+<div class="container">
   <div class="content">
     <h1>Simulateur d'acquisition</h1>
     <div>

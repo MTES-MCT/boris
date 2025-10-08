@@ -11,7 +11,7 @@
   const id = nanoid(10);
 </script>
 
-<div class="tooltip">
+<div class="tooltip not-printable">
   <span
     class="fr-icon-question-line"
     aria-describedby={id}>

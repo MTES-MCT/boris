@@ -2,7 +2,7 @@
   import '@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css';
 
   type Props = {
-    direction: 'previous' | 'next';
+    direction?: 'previous' | 'next';
     label: string;
     type?: HTMLButtonElement['type'];
     onClick?: () => void;
@@ -22,20 +22,31 @@
         <b>Étape suivante</b>
       </p>
       <span
-        class="fr-icon-arrow-right-line"
+        class="fr-icon-arrow-right-line fr-icon--sm"
         aria-hidden="true">
       </span>
-    {:else}
+    {:else if direction === 'previous'}
       <span
-        class="fr-icon-arrow-left-line"
+        class="fr-icon-arrow-left-line fr-icon--sm"
         aria-hidden="true">
       </span>
       <p>
         <b>Étape précédente</b>
       </p>
+    {:else}
+      <span
+        class="fr-icon-download-line fr-icon--sm"
+        aria-hidden="true">
+      </span>
+
+      <p>
+        <b>{label}</b>
+      </p>
     {/if}
   </div>
-  <p class="fr-text--xs">{label}</p>
+  {#if direction}
+    <p class="fr-text--xs">{label}</p>
+  {/if}
 </button>
 
 <style lang="postcss">
@@ -63,11 +74,6 @@
     display: flex;
     gap: 0.25rem;
     align-items: center;
-  }
-
-  .fr-icon-arrow-right-line:before,
-  .fr-icon-arrow-left-line:before {
-    --icon-size: 1rem;
   }
 
   .fr-text--xs {

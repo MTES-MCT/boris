@@ -3,6 +3,7 @@ import { PUBLIC_NODE_ENV } from '$env/static/public';
 import type { GeocodedResponse } from './definitions';
 import type { z } from 'zod';
 import type { FormFieldError } from './definitions';
+import html2pdf from 'html2pdf.js';
 
 export const blockSearchEngineIndexing = (page: Page): boolean => {
   const hiddenPaths = ['/questionnaire', '/simulateur-acquisition'];
@@ -93,4 +94,48 @@ export const formatLoanPhaseDuration = (
   } else {
     return `De la ${deferment + 1}ème à la ${deferment + duration}ème année`;
   }
+};
+
+export const createPDF = async (element: HTMLElement, filename: string) => {
+  const pdfOnlyElements = document.querySelectorAll('.pdf-only');
+  pdfOnlyElements.forEach((el) => el.setAttribute('style', 'display: block;'));
+
+  const notPrintableElements = document.querySelectorAll('.not-printable');
+  notPrintableElements.forEach((el) =>
+    el.setAttribute('style', 'display: none;'),
+  );
+
+  const opt = {
+    margin: 15,
+    html2canvas: {
+      useCORS: true,
+      scale: 2,
+      allowTaint: false,
+    },
+  };
+
+  const worker = html2pdf()
+    .from(element as HTMLElement)
+    .set(opt)
+    .toPdf();
+
+  const pdf = await worker.get('pdf');
+
+  const totalPages = pdf.internal.getNumberOfPages();
+  for (let i = 1; i <= totalPages; i++) {
+    pdf.setPage(i);
+    pdf.setFontSize(10);
+    pdf.text(
+      `Page ${i} / ${totalPages}`,
+      pdf.internal.pageSize.getWidth() - 40,
+      pdf.internal.pageSize.getHeight() - 10,
+    );
+  }
+
+  pdf.save(filename);
+
+  pdfOnlyElements.forEach((el) => el.setAttribute('style', 'display: none;'));
+  notPrintableElements.forEach((el) =>
+    el.setAttribute('style', 'display: inherit;'),
+  );
 };
