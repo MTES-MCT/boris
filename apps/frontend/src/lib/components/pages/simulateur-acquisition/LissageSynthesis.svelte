@@ -7,7 +7,7 @@
   import type { PhaseRemboursement } from '$lib/utils/lissage-ptz';
 
   import Badge from '$components/common/Badge.svelte';
-  import Element from '$components/pages/simulateur-acquisition/Synthesis/Element.svelte';
+  import Block from '$components/pages/simulateur-acquisition/Synthesis/Block.svelte';
   import RowContainer from '$components/pages/simulateur-acquisition/Synthesis/RowContainer.svelte';
   import Row from '$components/pages/simulateur-acquisition/Synthesis/Row.svelte';
   import Highlight from '$components/common/Highlight.svelte';
@@ -20,7 +20,7 @@
 </script>
 
 {#if !pretLisse?.estElligible}
-  <Element>
+  <Block>
     <p class="fr-h6 fr-mb-1w">Remboursement du prêt immobilier</p>
     <p class="fr-text--sm">
       <Badge
@@ -37,7 +37,7 @@
         status="success"
         tooltip="Hors assurance emprunteur." />
     </RowContainer>
-  </Element>
+  </Block>
 
   <Highlight
     text="D'après les informations que vous nous avez fournies, vous n'êtes pas éligible au PTZ."
@@ -47,7 +47,7 @@
     fontWeight="bold" />
 {:else}
   {#each lissage as phase, index}
-    <Element isLast={index === lissage.length - 1}>
+    <Block isLast={index === lissage.length - 1}>
       <p class="fr-mb-0 fr-text--lg fr-text--bold">
         {formatLoanPhaseNumber(index + 1)}
       </p>
@@ -78,7 +78,7 @@
           )}`}
           status="success" />
       </RowContainer>
-    </Element>
+    </Block>
   {/each}
 
   <div class="fr-mt-2w">

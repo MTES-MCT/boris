@@ -1,7 +1,6 @@
 <script lang="ts">
-  import Tooltip from '$components/common/Tooltip.svelte';
   import { formatEuro } from '$lib/utils/formatters';
-  import Element from '$components/pages/simulateur-acquisition/Synthesis/Element.svelte';
+  import Block from '$components/pages/simulateur-acquisition/Synthesis/Block.svelte';
   import Row from '$components/pages/simulateur-acquisition/Synthesis/Row.svelte';
   import RowContainer from '$components/pages/simulateur-acquisition/Synthesis/RowContainer.svelte';
 
@@ -20,7 +19,7 @@
   } = $derived(acquisitionSimulatorManager);
 </script>
 
-<Element isLast>
+<Block isLast>
   <RowContainer>
     <Row
       title="Montant du logement"
@@ -69,4 +68,4 @@
       status="info"
       tooltip="Frais liés à la mise en place de votre prêt immobilier (caution, garantie, dossier). Généralement autour de 0,8% du montant emprunté + frais de dossier. Environ 70% de cette somme vous serons reversés lorsque que vous aurez remboursé l'intégralité de votre prêt." />
   </RowContainer>
-</Element>
+</Block>
