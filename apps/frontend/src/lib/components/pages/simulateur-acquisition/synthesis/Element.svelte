@@ -20,13 +20,11 @@
     border-top-left-radius: var(--border-radius-sm);
     border-top-right-radius: var(--border-radius-sm);
     border: solid 2px var(--background-contrast-info);
-    padding-inline: 0.5rem;
-    padding-block: 0.5rem;
+    padding: 0.5rem;
     box-shadow: 0 3px 6px rgba(134, 144, 162, 0.2);
 
     @media (--xxs-viewport) {
-      padding-inline: 1rem;
-      padding-block: 1rem;
+      padding: 1rem;
     }
 
     @media (--md-viewport) {

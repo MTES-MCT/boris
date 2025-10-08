@@ -1,7 +1,5 @@
 <script lang="ts">
-  import html2pdf from 'html2pdf.js';
-
-  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
+  import { createPDF } from '$lib/utils/helpers';
 
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
   import Description from '$components/pages/simulateur-acquisition/Description.svelte';
@@ -9,7 +7,8 @@
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
   import GlobalSynthesis from '$components/pages/simulateur-acquisition/GlobalSynthesis.svelte';
-  import { createPDF } from '$lib/utils/helpers';
+
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   let { previousStep, goToPreviousStep } = $derived(
     acquisitionSimulatorManager,
@@ -19,6 +18,7 @@
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
+
     createPDF(printableRef as HTMLElement, 'recapitulatif-simulation.pdf');
   };
 </script>

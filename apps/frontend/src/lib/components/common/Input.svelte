@@ -19,8 +19,7 @@
       | 'tel'
       | 'text'
       | 'url'
-      | 'range'
-      | 'radio';
+      | 'range';
     value?: string | number;
     label?: string;
     hint?: string;

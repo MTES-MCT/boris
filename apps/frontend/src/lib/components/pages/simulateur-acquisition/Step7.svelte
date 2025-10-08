@@ -3,8 +3,7 @@
 
   import type { FormFieldError } from '$lib/utils/definitions';
   import { formatFormErrors } from '$lib/utils/helpers';
-
-  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
+  import { formatEuro } from '$lib/utils/formatters';
 
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
   import Description from '$components/pages/simulateur-acquisition/Description.svelte';
@@ -12,9 +11,10 @@
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
   import Input from '$components/common/Input.svelte';
-  import { formatEuro } from '$lib/utils/formatters';
   import Radio from '$components/common/Radio.svelte';
   import RadioFieldset from '$components/common/RadioFieldset.svelte';
+
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   let {
     brsFees,
@@ -90,7 +90,6 @@
 
       goToNextStep();
     } catch (e) {
-      console.log(errors);
       errors = formatFormErrors((e as ZodError).issues);
     }
 
