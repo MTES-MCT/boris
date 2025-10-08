@@ -1,9 +1,9 @@
 <script lang="ts">
   import Tooltip from '$components/common/Tooltip.svelte';
   import { formatEuro } from '$lib/utils/formatters';
-  import Element from './synthesis/Element.svelte';
-  import Row from './synthesis/Row.svelte';
-  import RowContainer from './synthesis/RowContainer.svelte';
+  import Element from '$components/pages/simulateur-acquisition/Synthesis/Element.svelte';
+  import Row from '$components/pages/simulateur-acquisition/Synthesis/Row.svelte';
+  import RowContainer from '$components/pages/simulateur-acquisition/Synthesis/RowContainer.svelte';
 
   type Props = {
     housingPrice: number;
