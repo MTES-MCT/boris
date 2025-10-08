@@ -1,7 +1,7 @@
 <script lang="ts">
   import { formatEuro } from '$lib/utils/formatters';
 
-  import Element from './Synthesis/Element.svelte';
+  import Block from './Synthesis/Block.svelte';
   import Row from './Synthesis/Row.svelte';
   import RowContainer from './Synthesis/RowContainer.svelte';
 
@@ -21,7 +21,7 @@
   } = $derived(acquisitionSimulatorManager);
 </script>
 
-<Element>
+<Block>
   <p class="fr-h6">Coût mensuel</p>
   <RowContainer>
     <Row
@@ -69,9 +69,9 @@
       `}
       status="success" />
   </RowContainer>
-</Element>
+</Block>
 
-<Element isLast>
+<Block isLast>
   <p class="fr-h6">Coût annuel</p>
   <RowContainer>
     <Row
@@ -119,4 +119,4 @@
       `}
       status="success" />
   </RowContainer>
-</Element>
+</Block>
