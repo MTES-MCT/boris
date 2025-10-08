@@ -7,7 +7,7 @@
   import type { PhaseRemboursement } from '$lib/utils/lissage-ptz';
 
   import Badge from '$components/common/Badge.svelte';
-  import Block from '$components/pages/simulateur-acquisition/Synthesis/Block.svelte';
+  import Block from '$components/pages/simulateur-acquisition/Element.svelte';
   import RowContainer from '$components/pages/simulateur-acquisition/Synthesis/RowContainer.svelte';
   import Row from '$components/pages/simulateur-acquisition/Synthesis/Row.svelte';
   import Highlight from '$components/common/Highlight.svelte';
