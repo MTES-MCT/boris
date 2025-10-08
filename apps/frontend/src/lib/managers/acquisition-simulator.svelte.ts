@@ -42,7 +42,7 @@ class AcquisitionSimulator {
       step: 8,
     },
   ];
-  public currentStep: Step = $state(this.steps[4]);
+  public currentStep: Step = $state(this.steps[0]);
   public previousStep: Step | null = $derived.by(() => {
     if (this.currentStep.step < 2) {
       return null;
@@ -58,40 +58,40 @@ class AcquisitionSimulator {
     }
   });
 
-  public housingPrice: number | undefined = $state(200000);
+  public housingPrice: number | undefined = $state();
   public selectedLocation: GeocodedResponse['properties'] | undefined =
     $state();
   public autocompleteValue = $derived(
     getGeocodedResponseLabel(this.selectedLocation) || '',
   );
-  public brsZone: Zone | undefined = $state('Abis');
-  public surface: number | undefined = $state(50);
-  public housingType: 'new' | 'old' | undefined = $state('new');
+  public brsZone: Zone | undefined = $state();
+  public surface: number | undefined = $state();
+  public housingType: 'new' | 'old' | undefined = $state();
 
-  public ownContribution: number | undefined = $state(10000);
+  public ownContribution: number | undefined = $state();
 
   public notaryFees: number | undefined = $state();
   public loanFees: number | undefined = $state();
   public realEstateFees: number | undefined = $state();
-  public oneTimeExpenses: number | undefined = $state(2000);
+  public oneTimeExpenses: number | undefined = $state();
 
-  public interestRate: number | undefined = $state(3);
-  public loanDuration: number | undefined = $state(25);
-  public inHousePeopleAmount: number | undefined = $state(1);
-  public fiscalIncome: number | undefined = $state(24000);
-  public ptzType: Logement | undefined = $state('collectif');
+  public interestRate: number | undefined = $state();
+  public loanDuration: number | undefined = $state();
+  public inHousePeopleAmount: number | undefined = $state();
+  public fiscalIncome: number | undefined = $state();
+  public ptzType: Logement | undefined = $state();
   public pretLisse: PretLisse | undefined = $state();
 
-  public brsFees: number | undefined = $state(3.5);
-  public yearlyPropertyTax: number | undefined = $state(1240);
-  public yearlyHouseingInsurance: number | undefined = $state(350);
+  public brsFees: number | undefined = $state();
+  public yearlyPropertyTax: number | undefined = $state();
+  public yearlyHouseingInsurance: number | undefined = $state();
   public condominiumFeesFrequency:
     | 'yearly'
     | 'monthly'
     | 'trimestrial'
-    | undefined = $state('trimestrial');
-  public condominiumFees: number | undefined = $state(600);
-  public yearlyExpenses: number | undefined = $state(1500);
+    | undefined = $state();
+  public condominiumFees: number | undefined = $state();
+  public yearlyExpenses: number | undefined = $state();
 
   public estimatedNotaryFees: number = $derived.by(() => {
     if (this.housingPrice) {
