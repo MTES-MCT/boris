@@ -34,8 +34,12 @@ class AcquisitionSimulator {
       step: 6,
     },
     {
-      title: 'Redevance BRS & charges mensuelles',
+      title: 'Redevance BRS & charges',
       step: 7,
+    },
+    {
+      title: 'Récapitulatif de la simulation',
+      step: 8,
     },
   ];
   public currentStep: Step = $state(this.steps[4]);
@@ -77,6 +81,17 @@ class AcquisitionSimulator {
   public fiscalIncome: number | undefined = $state(24000);
   public ptzType: Logement | undefined = $state('collectif');
   public pretLisse: PretLisse | undefined = $state();
+
+  public brsFees: number | undefined = $state(3.5);
+  public yearlyPropertyTax: number | undefined = $state(1240);
+  public yearlyHouseingInsurance: number | undefined = $state(350);
+  public condominiumFeesFrequency:
+    | 'yearly'
+    | 'monthly'
+    | 'trimestrial'
+    | undefined = $state('trimestrial');
+  public condominiumFees: number | undefined = $state(600);
+  public yearlyExpenses: number | undefined = $state(1500);
 
   public estimatedNotaryFees: number = $derived.by(() => {
     if (this.housingPrice) {
@@ -122,6 +137,56 @@ class AcquisitionSimulator {
 
     return Math.round(500 + this.loanAmount * 0.008);
   });
+
+  public monthlyBrsFees = $derived(
+    this.brsFees ? (this.brsFees as number) * (this.surface as number) : 0,
+  );
+
+  public yearlyBrsFees = $derived(
+    this.brsFees ? (this.brsFees as number) * (this.surface as number) * 12 : 0,
+  );
+
+  public monthlyPropertyTax = $derived(
+    this.yearlyPropertyTax ? (this.yearlyPropertyTax as number) / 12 : 0,
+  );
+
+  public monthlyHouseingInsurance = $derived(
+    this.yearlyHouseingInsurance
+      ? (this.yearlyHouseingInsurance as number) / 12
+      : 0,
+  );
+
+  public monthlyCondominiumFees = $derived.by(() => {
+    if (this.condominiumFees && this.condominiumFees > 0) {
+      if (this.condominiumFeesFrequency === 'monthly') {
+        return this.condominiumFees as number;
+      } else if (this.condominiumFeesFrequency === 'trimestrial') {
+        return (this.condominiumFees as number) / 3;
+      } else if (this.condominiumFeesFrequency === 'yearly') {
+        return (this.condominiumFees as number) / 12;
+      }
+    }
+
+    return 0;
+  });
+
+  public yearlyCondominiumFees = $derived.by(() => {
+    if (this.condominiumFees && this.condominiumFees > 0) {
+      if (this.condominiumFeesFrequency === 'monthly') {
+        return (this.condominiumFees as number) * 12;
+      } else if (this.condominiumFeesFrequency === 'trimestrial') {
+        return (this.condominiumFees as number) * 3;
+      } else if (this.condominiumFeesFrequency === 'yearly') {
+        return this.condominiumFees as number;
+      }
+    }
+
+    return 0;
+  });
+
+  public monthlyExpenses = $derived(
+    this.yearlyExpenses ? (this.yearlyExpenses as number) / 12 : 0,
+  );
 
   public goToPreviousStep = () => {
     if (this.previousStep) {

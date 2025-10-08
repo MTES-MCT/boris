@@ -7,8 +7,10 @@
   import Element from '$components/pages/simulateur-acquisition/Synthesis/Element.svelte';
   import RowContainer from '$components/pages/simulateur-acquisition/Synthesis/RowContainer.svelte';
   import Row from '$components/pages/simulateur-acquisition/Synthesis/Row.svelte';
-  import { formatLoanPhaseDuration } from '$lib/utils/helpers';
-  import Callout from '$components/common/Callout.svelte';
+  import {
+    formatLoanPhaseDuration,
+    formatLoanPhaseNumber,
+  } from '$lib/utils/helpers';
   import Highlight from '$components/common/Highlight.svelte';
   let { pretLisse } = $derived(acquisitionSimulatorManager);
 
@@ -45,7 +47,9 @@
 {:else}
   {#each lissage as phase, index}
     <Element isLast={index === lissage.length - 1}>
-      <p class="fr-h6 fr-mb-1w">Phase de remboursement n°{index + 1}</p>
+      <p class="fr-mb-0 fr-text--lg fr-text--bold">
+        {formatLoanPhaseNumber(index + 1)}
+      </p>
       <div class="fr-mb-4w">
         <Badge
           status="new"

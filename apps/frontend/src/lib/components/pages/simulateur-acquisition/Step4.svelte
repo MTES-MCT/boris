@@ -7,24 +7,11 @@
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
   import OperationSynthesis from './OperationSynthesis.svelte';
-  import Callout from '$components/common/Callout.svelte';
   import Highlight from '$components/common/Highlight.svelte';
 
-  let {
-    housingPrice,
-    ownContribution,
-    notaryFees,
-    estimatedNotaryFees,
-    realEstateFees,
-    estimatedRealEstateFees,
-    oneTimeExpenses,
-    totalCost,
-    loanAmount,
-    nextStep,
-    previousStep,
-    goToPreviousStep,
-    goToNextStep,
-  } = $derived(acquisitionSimulatorManager);
+  let { nextStep, previousStep, goToPreviousStep, goToNextStep } = $derived(
+    acquisitionSimulatorManager,
+  );
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
@@ -40,14 +27,7 @@
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">
         <div class="fr-fieldset__element fr-mb-4w">
-          <OperationSynthesis
-            housingPrice={housingPrice as number}
-            ownContribution={ownContribution as number}
-            notaryFees={notaryFees || estimatedNotaryFees}
-            realEstateFees={realEstateFees || estimatedRealEstateFees}
-            oneTimeExpenses={oneTimeExpenses as number}
-            totalCost={totalCost as number}
-            loanAmount={loanAmount as number} />
+          <OperationSynthesis />
         </div>
       </fieldset>
 

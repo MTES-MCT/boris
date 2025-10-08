@@ -116,7 +116,7 @@
           prix du bien. Laissez vide si achat sans agence."
             type="number"
             id="real-estate-fees"
-            hint="Laissez le champs vide si vous n'avez pas de frais d'agence."
+            hint="Saisissez 0 si vous n'avez pas de frais d'agence."
             error={errors.realEstateFees}
             forceNoMarginBottom
             placeholder="Exemple: 5 000€"
@@ -129,7 +129,7 @@
                 acquisitionSimulatorManager.realEstateFees = Number(value);
               }
             }} />
-          {#if !realEstateFees || realEstateFees < 0}
+          {#if (realEstateFees && realEstateFees <= 0) || (!realEstateFees && typeof realEstateFees !== 'number')}
             <span class="fr-text--sm">
               Estimation
               <b>{formatEuro(estimatedRealEstateFees)}</b>
@@ -144,7 +144,7 @@
             labelTooltip="Coût du déménagement, ouverture des compteurs, etc."
             type="number"
             id="one-time-expenses"
-            hint="Laissez le champs vide si vous n'avez pas d'autres frais."
+            hint="Laissez le champs vide ou saisissez 0 si vous n'avez pas de frais ponctuels."
             error={errors.oneTimeExpenses}
             forceNoMarginBottom
             placeholder="Exemple: 7 500€"

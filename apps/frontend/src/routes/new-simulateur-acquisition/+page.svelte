@@ -5,6 +5,8 @@
   import Step4 from '$components/pages/simulateur-acquisition/Step4.svelte';
   import Step5 from '$components/pages/simulateur-acquisition/Step5.svelte';
   import Step6 from '$components/pages/simulateur-acquisition/Step6.svelte';
+  import Step7 from '$components/pages/simulateur-acquisition/Step7.svelte';
+  import Step8 from '$components/pages/simulateur-acquisition/Step8.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
@@ -23,4 +25,8 @@
   <Step5 />
 {:else if currentStep.step === 6}
   <Step6 />
+{:else if currentStep.step === 7}
+  <Step7 />
+{:else if currentStep.step === 8}
+  <Step8 />
 {/if}
