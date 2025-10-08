@@ -1,9 +1,9 @@
 <script lang="ts">
   import { formatEuro } from '$lib/utils/formatters';
 
-  import Block from '$components/pages/simulateur-acquisition/Element.svelte';
-  import Row from '$components/pages/simulateur-acquisition/Synthesis/Row.svelte';
-  import RowContainer from '$components/pages/simulateur-acquisition/Synthesis/RowContainer.svelte';
+  import Block from '$components/pages/simulateur-acquisition/synthesis/Block.svelte';
+  import Row from '$components/pages/simulateur-acquisition/synthesis/Row.svelte';
+  import RowContainer from '$components/pages/simulateur-acquisition/synthesis/RowContainer.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
