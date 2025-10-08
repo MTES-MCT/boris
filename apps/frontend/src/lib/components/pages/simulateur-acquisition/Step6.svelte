@@ -8,6 +8,7 @@
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
   import Notice from '$components/common/Notice.svelte';
   import LissageSynthesis from './LissageSynthesis.svelte';
+  import Callout from '$components/common/Callout.svelte';
 
   let { nextStep, previousStep, goToPreviousStep, goToNextStep } = $derived(
     acquisitionSimulatorManager,
@@ -22,7 +23,7 @@
 
 <Wrapper>
   <Description
-    content="Voici un premier récapitulatif de votre apport, du prix du logement et de tous les frais annexes. Cette synthèse vous aide à visualiser le budget global nécessaire et le montant exact à emprunter pour finaliser votre projet." />
+    content="[TEXTE A DEFINIR] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">
@@ -33,6 +34,18 @@
         <div class="fr-fieldset__element">
           <Notice
             content="Vous pourrez télécharger la simulation du lissage des prêts à la fin du parcours." />
+
+          <Callout
+            title="Titre"
+            text="D'après les informations que vous nous avez fournies, vous n'êtes pas éligible au PTZ."
+            accent="brown-opera"
+            hasIcon
+            icon="information-fill"
+            hasButton
+            buttonLabel="Voir les détails"
+            onClick={() => {
+              console.log('coucou');
+            }} />
         </div>
       </fieldset>
     </div>

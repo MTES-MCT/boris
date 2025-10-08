@@ -27,7 +27,8 @@
 
   form {
     padding: 1rem !important;
-    border-radius: var(--border-radius-lg);
+    border-top-left-radius: var(--border-radius-lg);
+    border-top-right-radius: var(--border-radius-lg);
     box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
     border: solid 1px rgba(134, 144, 162, 0.1);
     background-color: white;

@@ -4,10 +4,11 @@
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
   import { formatEuro } from '$lib/utils/formatters';
   import type { PhaseRemboursement } from '$lib/utils/lissage-ptz';
-  import Element from './synthesis/Element.svelte';
-  import RowContainer from './synthesis/RowContainer.svelte';
-  import Row from './synthesis/Row.svelte';
+  import Element from '$components/pages/simulateur-acquisition/Synthesis/Element.svelte';
+  import RowContainer from '$components/pages/simulateur-acquisition/Synthesis/RowContainer.svelte';
+  import Row from '$components/pages/simulateur-acquisition/Synthesis/Row.svelte';
   import { formatLoanPhaseDuration } from '$lib/utils/helpers';
+  import Callout from '$components/common/Callout.svelte';
   let { pretLisse } = $derived(acquisitionSimulatorManager);
 
   const lissage = $derived(pretLisse?.lisser() as PhaseRemboursement[]);

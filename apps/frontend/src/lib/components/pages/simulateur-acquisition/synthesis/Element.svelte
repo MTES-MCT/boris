@@ -17,7 +17,8 @@
 
 <style lang="postcss">
   .element {
-    border-radius: var(--border-radius-sm);
+    border-top-left-radius: var(--border-radius-sm);
+    border-top-right-radius: var(--border-radius-sm);
     border: solid 2px var(--background-contrast-info);
     padding-inline: 0.5rem;
     padding-block: 0.5rem;
