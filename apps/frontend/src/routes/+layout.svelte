@@ -1,5 +1,6 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/core/core.min.css';
+  // import '@gouvfr/dsfr/dist/utility/icons/icons.min.css';
   import '$assets/styles/main.css';
   import { type Snippet } from 'svelte';
 

@@ -38,7 +38,7 @@ class AcquisitionSimulator {
       step: 7,
     },
   ];
-  public currentStep: Step = $state(this.steps[0]);
+  public currentStep: Step = $state(this.steps[4]);
   public previousStep: Step | null = $derived.by(() => {
     if (this.currentStep.step < 2) {
       return null;
@@ -54,28 +54,28 @@ class AcquisitionSimulator {
     }
   });
 
-  public housingPrice: number | undefined = $state();
+  public housingPrice: number | undefined = $state(200000);
   public selectedLocation: GeocodedResponse['properties'] | undefined =
     $state();
   public autocompleteValue = $derived(
     getGeocodedResponseLabel(this.selectedLocation) || '',
   );
-  public brsZone: Zone | undefined = $state();
-  public surface: number | undefined = $state();
-  public housingType: 'new' | 'old' | undefined = $state();
+  public brsZone: Zone | undefined = $state('Abis');
+  public surface: number | undefined = $state(50);
+  public housingType: 'new' | 'old' | undefined = $state('new');
 
-  public ownContribution: number | undefined = $state();
+  public ownContribution: number | undefined = $state(10000);
 
   public notaryFees: number | undefined = $state();
   public loanFees: number | undefined = $state();
   public realEstateFees: number | undefined = $state();
-  public oneTimeExpenses: number | undefined = $state();
+  public oneTimeExpenses: number | undefined = $state(2000);
 
-  public interestRate: number | undefined = $state();
-  public loanDuration: number | undefined = $state();
-  public inHousePeopleAmount: number | undefined = $state();
-  public fiscalIncome: number | undefined = $state();
-  public ptzType: Logement | undefined = $state();
+  public interestRate: number | undefined = $state(3);
+  public loanDuration: number | undefined = $state(25);
+  public inHousePeopleAmount: number | undefined = $state(1);
+  public fiscalIncome: number | undefined = $state(24000);
+  public ptzType: Logement | undefined = $state('collectif');
   public pretLisse: PretLisse | undefined = $state();
 
   public estimatedNotaryFees: number = $derived.by(() => {
