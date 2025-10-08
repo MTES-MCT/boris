@@ -31,9 +31,8 @@
     <RowContainer>
       <Row
         title="Mensualité globale"
-        value={formatEuro(Number(lissage[0].mensualiteClassique), 2)}
+        value={`= ${formatEuro(Number(lissage[0].mensualiteClassique), 2)}`}
         status="success"
-        operator="="
         tooltip="Hors assurance emprunteur." />
     </RowContainer>
   </Element>
@@ -65,18 +64,16 @@
           status={phase.mensualitePTZ === '0.00' ? 'default' : 'info'} />
         <Row
           title="Mensualité principale"
-          value={formatEuro(Number(phase.mensualiteClassique), 2)}
+          value={`+ ${formatEuro(Number(phase.mensualiteClassique), 2)}`}
           status={phase.mensualiteClassique === '0.00' ? 'default' : 'info'}
-          operator="+"
           tooltip="Hors assurance emprunteur." />
         <div class="separator"></div>
         <Row
           title="Mensualité globale"
-          value={formatEuro(
+          value={`= ${formatEuro(
             Number(phase.mensualitePTZ) + Number(phase.mensualiteClassique),
             2,
-          )}
-          operator="="
+          )}`}
           status="success" />
       </RowContainer>
     </Element>

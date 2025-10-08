@@ -5,6 +5,8 @@
     FormFieldError,
     GeocodedResponse,
   } from '$lib/utils/definitions';
+  import type { MunicipalityView } from '$lib/utils/api-types';
+  import type { Zone } from '$lib/utils/lissage-ptz';
   import {
     formatFormErrors,
     getGeocodedResponseLabel,
@@ -21,11 +23,16 @@
   import Description from '$components/pages/simulateur-acquisition/Description.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
-  import type { MunicipalityView } from '$lib/utils/api-types';
-  import type { Zone } from '$lib/utils/lissage-ptz';
 
-  let { housingPrice, autocompleteValue, surface, housingType, nextStep } =
-    $derived(acquisitionSimulatorManager);
+  let {
+    housingPrice,
+    autocompleteValue,
+    surface,
+    housingType,
+    brsZone,
+    nextStep,
+    goToNextStep,
+  } = $derived(acquisitionSimulatorManager);
 
   let errors: FormFieldError = $state({});
 
@@ -65,15 +72,15 @@
 
     try {
       FormData.parse({
-        housingPrice: acquisitionSimulatorManager.housingPrice,
-        brsZone: acquisitionSimulatorManager.brsZone,
-        surface: acquisitionSimulatorManager.surface,
-        housingType: acquisitionSimulatorManager.housingType,
+        housingPrice,
+        brsZone,
+        surface,
+        housingType,
       });
 
       errors = {};
 
-      acquisitionSimulatorManager.goToNextStep();
+      goToNextStep();
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }

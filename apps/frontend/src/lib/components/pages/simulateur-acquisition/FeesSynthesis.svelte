@@ -32,35 +32,33 @@
     <Row
       title="Taxe foncière"
       value={monthlyPropertyTax
-        ? formatEuro(monthlyPropertyTax, 2)
+        ? `+ ${formatEuro(monthlyPropertyTax, 2)}`
         : 'Non renseigné'}
-      status={monthlyPropertyTax ? 'info' : 'default'}
-      operator={monthlyPropertyTax ? '+' : ''} />
+      status={monthlyPropertyTax ? 'info' : 'default'} />
     <Row
       title="Assurance habitation"
       value={monthlyHouseingInsurance
-        ? formatEuro(monthlyHouseingInsurance, 2)
+        ? `+ ${formatEuro(monthlyHouseingInsurance, 2)}`
         : 'Non renseigné'}
-      status={monthlyHouseingInsurance ? 'info' : 'default'}
-      operator={monthlyHouseingInsurance ? '+' : ''} />
+      status={monthlyHouseingInsurance ? 'info' : 'default'} />
     <Row
       title="Charges de copropriété"
       value={monthlyCondominiumFees
-        ? formatEuro(monthlyCondominiumFees, 2)
+        ? `+ ${formatEuro(monthlyCondominiumFees, 2)}`
         : 'Non renseigné'}
-      status={monthlyCondominiumFees ? 'info' : 'default'}
-      operator={monthlyCondominiumFees ? '+' : ''} />
+      status={monthlyCondominiumFees ? 'info' : 'default'} />
     <Row
       title="Autres charges"
-      value={monthlyExpenses ? formatEuro(monthlyExpenses, 2) : 'Non renseigné'}
-      status={monthlyExpenses ? 'info' : 'default'}
-      operator={monthlyExpenses ? '+' : ''} />
+      value={monthlyExpenses
+        ? `+ ${formatEuro(monthlyExpenses, 2)}`
+        : 'Non renseigné'}
+      status={monthlyExpenses ? 'info' : 'default'} />
 
     <div class="separator"></div>
 
     <Row
       title="Coût total mensuel"
-      value={formatEuro(
+      value={`= ${formatEuro(
         monthlyBrsFees +
           monthlyPropertyTax +
           monthlyHouseingInsurance +
@@ -68,8 +66,8 @@
           monthlyExpenses,
         2,
       )}
-      status="success"
-      operator="=" />
+      `}
+      status="success" />
   </RowContainer>
 </Element>
 
@@ -84,35 +82,33 @@
     <Row
       title="Taxe foncière"
       value={yearlyPropertyTax
-        ? formatEuro(yearlyPropertyTax, 2)
+        ? `+ ${formatEuro(yearlyPropertyTax, 2)}`
         : 'Non renseigné'}
-      status={yearlyPropertyTax ? 'info' : 'default'}
-      operator={yearlyPropertyTax ? '+' : ''} />
+      status={yearlyPropertyTax ? 'info' : 'default'} />
     <Row
       title="Assurance habitation"
       value={yearlyHouseingInsurance
-        ? formatEuro(yearlyHouseingInsurance, 2)
+        ? `+ ${formatEuro(yearlyHouseingInsurance, 2)}`
         : 'Non renseigné'}
-      status={yearlyHouseingInsurance ? 'info' : 'default'}
-      operator={yearlyHouseingInsurance ? '+' : ''} />
+      status={yearlyHouseingInsurance ? 'info' : 'default'} />
     <Row
       title="Charges de copropriété"
       value={yearlyCondominiumFees
-        ? formatEuro(yearlyCondominiumFees, 2)
+        ? `+ ${formatEuro(yearlyCondominiumFees, 2)}`
         : 'Non renseigné'}
-      status={yearlyCondominiumFees ? 'info' : 'default'}
-      operator={yearlyCondominiumFees ? '+' : ''} />
+      status={yearlyCondominiumFees ? 'info' : 'default'} />
     <Row
       title="Autres charges"
-      value={yearlyExpenses ? formatEuro(yearlyExpenses, 2) : 'Non renseigné'}
-      status={yearlyExpenses ? 'info' : 'default'}
-      operator={yearlyExpenses ? '+' : ''} />
+      value={yearlyExpenses
+        ? `+ ${formatEuro(yearlyExpenses, 2)}`
+        : 'Non renseigné'}
+      status={yearlyExpenses ? 'info' : 'default'} />
 
     <div class="separator"></div>
 
     <Row
       title="Coût total annuel"
-      value={formatEuro(
+      value={`= ${formatEuro(
         yearlyBrsFees +
           (yearlyPropertyTax as number) +
           (yearlyHouseingInsurance as number) +
@@ -120,7 +116,7 @@
           (yearlyExpenses as number),
         2,
       )}
-      status="success"
-      operator="=" />
+      `}
+      status="success" />
   </RowContainer>
 </Element>

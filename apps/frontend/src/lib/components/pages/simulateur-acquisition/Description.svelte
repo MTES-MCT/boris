@@ -30,14 +30,12 @@
 
 <style lang="postcss">
   .container {
-    padding-inline: 1rem;
-    padding-block: 1rem;
+    padding: 1rem;
   }
 
   @media (--xs-viewport) {
     .container {
-      padding-inline: 2rem;
-      padding-block: 2rem;
+      padding: 2rem;
     }
   }
 

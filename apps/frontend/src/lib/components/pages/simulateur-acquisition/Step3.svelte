@@ -4,8 +4,6 @@
   import type { FormFieldError } from '$lib/utils/definitions';
   import { formatFormErrors } from '$lib/utils/helpers';
 
-  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
-
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
   import Description from '$components/pages/simulateur-acquisition/Description.svelte';
   import Form from '$components/pages/simulateur-acquisition/Form.svelte';
@@ -13,6 +11,8 @@
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
   import { formatEuro } from '$lib/utils/formatters';
+
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   let errors: FormFieldError = $state({});
 
@@ -40,6 +40,7 @@
     nextStep,
     previousStep,
     goToPreviousStep,
+    goToNextStep,
   } = $derived(acquisitionSimulatorManager);
 
   const handleSubmit = (e: SubmitEvent) => {
@@ -47,14 +48,14 @@
 
     try {
       FormData.parse({
-        notaryFees: acquisitionSimulatorManager.notaryFees,
-        realEstateFees: acquisitionSimulatorManager.realEstateFees,
-        oneTimeExpenses: acquisitionSimulatorManager.oneTimeExpenses,
+        notaryFees,
+        realEstateFees,
+        oneTimeExpenses,
       });
 
       errors = {};
 
-      acquisitionSimulatorManager.goToNextStep();
+      goToNextStep();
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }

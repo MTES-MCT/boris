@@ -6,16 +6,20 @@
 
   import Form from '$components/pages/simulateur-acquisition/Form.svelte';
   import Input from '$components/common/Input.svelte';
-
-  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
-  import Description from './Description.svelte';
+  import Description from '$components/pages/simulateur-acquisition/Description.svelte';
 
-  let { ownContribution, nextStep, previousStep, goToPreviousStep } = $derived(
-    acquisitionSimulatorManager,
-  );
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
+
+  let {
+    ownContribution,
+    nextStep,
+    previousStep,
+    goToPreviousStep,
+    goToNextStep,
+  } = $derived(acquisitionSimulatorManager);
 
   let errors: FormFieldError = $state({});
 
@@ -31,12 +35,12 @@
 
     try {
       FormData.parse({
-        ownContribution: acquisitionSimulatorManager.ownContribution,
+        ownContribution,
       });
 
       errors = {};
 
-      acquisitionSimulatorManager.goToNextStep();
+      goToNextStep();
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }

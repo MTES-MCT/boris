@@ -6,12 +6,11 @@
   type Props = {
     title: string;
     value: string;
-    operator?: string;
     status?: ComponentProps<typeof Badge>['status'];
     tooltip?: string;
   };
 
-  const { title, value, operator, status, tooltip }: Props = $props();
+  const { title, value, status, tooltip }: Props = $props();
 </script>
 
 <div class="row">
@@ -28,9 +27,6 @@
   <Badge
     {status}
     hideIcon>
-    {#if operator}
-      {operator}
-    {/if}
     {value}
   </Badge>
 </div>

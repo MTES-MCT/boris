@@ -1,6 +1,4 @@
 <script lang="ts">
-  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
-
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
   import Description from '$components/pages/simulateur-acquisition/Description.svelte';
   import Form from '$components/pages/simulateur-acquisition/Form.svelte';
@@ -8,6 +6,8 @@
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
   import OperationSynthesis from './OperationSynthesis.svelte';
   import Highlight from '$components/common/Highlight.svelte';
+
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   let { nextStep, previousStep, goToPreviousStep, goToNextStep } = $derived(
     acquisitionSimulatorManager,
