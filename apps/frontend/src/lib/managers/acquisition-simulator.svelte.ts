@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import type { GeocodedResponse } from '$lib/utils/definitions';
 import { getGeocodedResponseLabel } from '$lib/utils/helpers';
 import type { Logement, PretLisse, Zone } from '$lib/utils/lissage-ptz';
@@ -197,6 +198,13 @@ class AcquisitionSimulator {
   public goToNextStep = () => {
     if (this.nextStep) {
       this.currentStep = this.nextStep;
+
+      if (browser) {
+        document.getElementById('simulateur-acquisition')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }
     }
   };
 }

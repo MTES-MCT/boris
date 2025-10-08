@@ -8,7 +8,9 @@
   const { children }: Props = $props();
 </script>
 
-<div class="wrapper">
+<div
+  id="simulateur-acquisition"
+  class="wrapper">
   {@render children()}
 </div>
 
