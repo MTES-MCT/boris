@@ -12,6 +12,7 @@
     legendTooltip?: string;
     children: Snippet;
     id?: string;
+    hint?: string;
     error?: string;
   };
 
@@ -20,6 +21,7 @@
     legendTooltip,
     children,
     id = nanoid(10),
+    hint,
     error,
   }: Props = $props();
 </script>
@@ -32,11 +34,16 @@
   <legend
     class="fr-fieldset__legend--regular fr-fieldset__legend"
     id={`${id}-legend`}>
-    <span><b>{legend}</b></span>
-    {#if legendTooltip}
-      <Tooltip>
-        {@html legendTooltip}
-      </Tooltip>
+    <div>
+      <span><b>{legend}</b></span>
+      {#if legendTooltip}
+        <Tooltip>
+          {@html legendTooltip}
+        </Tooltip>
+      {/if}
+    </div>
+    {#if hint}
+      <span class="fr-hint-text">{hint}</span>
     {/if}
   </legend>
   {@render children()}
@@ -56,7 +63,7 @@
 </fieldset>
 
 <style lang="postcss">
-  .fr-fieldset__legend {
+  .fr-fieldset__legend div {
     display: flex;
     gap: 0.25rem;
   }

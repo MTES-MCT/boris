@@ -5,42 +5,36 @@
   import Row from '$components/pages/simulateur-acquisition/Synthesis/Row.svelte';
   import RowContainer from '$components/pages/simulateur-acquisition/Synthesis/RowContainer.svelte';
 
-  type Props = {
-    housingPrice: number;
-    ownContribution: number;
-    notaryFees: number;
-    realEstateFees: number;
-    oneTimeExpenses: number;
-    totalCost: number;
-    loanAmount: number;
-  };
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   const {
     housingPrice,
     ownContribution,
     notaryFees,
+    estimatedNotaryFees,
     realEstateFees,
+    estimatedRealEstateFees,
     oneTimeExpenses,
     totalCost,
     loanAmount,
-  }: Props = $props();
+  } = $derived(acquisitionSimulatorManager);
 </script>
 
 <Element isLast>
   <RowContainer>
     <Row
       title="Montant du logement"
-      value={formatEuro(housingPrice)}
+      value={formatEuro(housingPrice as number)}
       status="info" />
     <Row
       title="Frais de notaire"
-      value={formatEuro(notaryFees || 0)}
+      value={formatEuro(notaryFees || estimatedNotaryFees || 0)}
       status="info"
       operator="+" />
-    {#if realEstateFees}
+    {#if realEstateFees || estimatedRealEstateFees}
       <Row
         title="Frais d'agence"
-        value={formatEuro(realEstateFees || 0)}
+        value={formatEuro(realEstateFees || estimatedRealEstateFees || 0)}
         status="info"
         operator="+" />
     {/if}
