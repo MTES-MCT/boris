@@ -6,9 +6,8 @@
   import Form from '$components/pages/simulateur-acquisition/Form.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
-  import Notice from '$components/common/Notice.svelte';
   import LissageSynthesis from './LissageSynthesis.svelte';
-  import Callout from '$components/common/Callout.svelte';
+  import Highlight from '$components/common/Highlight.svelte';
 
   let { nextStep, previousStep, goToPreviousStep, goToNextStep } = $derived(
     acquisitionSimulatorManager,
@@ -27,25 +26,19 @@
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">
-        <div class="fr-fieldset__element fr-mb-4w">
+        <div class="fr-fieldset__element">
           <LissageSynthesis />
         </div>
+      </fieldset>
 
+      <fieldset class="fr-fieldset">
         <div class="fr-fieldset__element">
-          <Notice
-            content="Vous pourrez télécharger la simulation du lissage des prêts à la fin du parcours." />
-
-          <Callout
-            title="Titre"
-            text="D'après les informations que vous nous avez fournies, vous n'êtes pas éligible au PTZ."
-            accent="brown-opera"
-            hasIcon
-            icon="information-fill"
-            hasButton
-            buttonLabel="Voir les détails"
-            onClick={() => {
-              console.log('coucou');
-            }} />
+          <Highlight
+            text="Vous pourrez télécharger la simulation du lissage des prêts à la fin du parcours."
+            accent="green-archipel"
+            icon="download-line"
+            size="sm"
+            fontWeight="bold" />
         </div>
       </fieldset>
     </div>
