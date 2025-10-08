@@ -9,6 +9,7 @@
   import Row from '$components/pages/simulateur-acquisition/Synthesis/Row.svelte';
   import { formatLoanPhaseDuration } from '$lib/utils/helpers';
   import Callout from '$components/common/Callout.svelte';
+  import Highlight from '$components/common/Highlight.svelte';
   let { pretLisse } = $derived(acquisitionSimulatorManager);
 
   const lissage = $derived(pretLisse?.lisser() as PhaseRemboursement[]);
@@ -35,9 +36,12 @@
     </RowContainer>
   </Element>
 
-  <Notice
-    type="caution"
-    content="D'après les informations que vous nous avez fournies, vous n'êtes pas éligible au PTZ." />
+  <Highlight
+    text="D'après les informations que vous nous avez fournies, vous n'êtes pas éligible au PTZ."
+    accent="pink-tuile"
+    icon="warning-fill"
+    size="sm"
+    fontWeight="bold" />
 {:else}
   {#each lissage as phase, index}
     <Element isLast={index === lissage.length - 1}>

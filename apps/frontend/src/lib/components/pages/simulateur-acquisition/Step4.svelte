@@ -7,15 +7,14 @@
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
   import OperationSynthesis from './OperationSynthesis.svelte';
-  import Notice from '$components/common/Notice.svelte';
+  import Callout from '$components/common/Callout.svelte';
+  import Highlight from '$components/common/Highlight.svelte';
 
   let {
     housingPrice,
     ownContribution,
     notaryFees,
     estimatedNotaryFees,
-    // loanFees,
-    // estimatedLoanFees,
     realEstateFees,
     estimatedRealEstateFees,
     oneTimeExpenses,
@@ -50,10 +49,16 @@
             totalCost={totalCost as number}
             loanAmount={loanAmount as number} />
         </div>
+      </fieldset>
 
+      <fieldset class="fr-fieldset">
         <div class="fr-fieldset__element">
-          <Notice
-            content="Vous pourrez télécharger la synthèse de votre simulation à la fin du parcours." />
+          <Highlight
+            text="Vous pourrez télécharger la synthèse de votre simulation à la fin du parcours."
+            accent="green-archipel"
+            icon="download-line"
+            size="sm"
+            fontWeight="bold" />
         </div>
       </fieldset>
     </div>
