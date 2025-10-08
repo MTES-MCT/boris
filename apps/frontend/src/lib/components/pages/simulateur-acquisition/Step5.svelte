@@ -3,8 +3,7 @@
 
   import type { FormFieldError } from '$lib/utils/definitions';
   import { formatFormErrors } from '$lib/utils/helpers';
-
-  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
+  import { PretLisse, type Logement, type Zone } from '$lib/utils/lissage-ptz';
 
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
   import Description from '$components/pages/simulateur-acquisition/Description.svelte';
@@ -16,7 +15,8 @@
   import Badge from '$components/common/Badge.svelte';
   import RadioFieldset from '$components/common/RadioFieldset.svelte';
   import Radio from '$components/common/Radio.svelte';
-  import { PretLisse, type Logement, type Zone } from '$lib/utils/lissage-ptz';
+
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   let {
     interestRate,
@@ -31,6 +31,7 @@
     previousStep,
     nextStep,
     goToPreviousStep,
+    goToNextStep,
   } = $derived(acquisitionSimulatorManager);
 
   let errors: FormFieldError = $state({});
@@ -87,7 +88,7 @@
         ptzType as Logement,
       );
 
-      acquisitionSimulatorManager.goToNextStep();
+      goToNextStep();
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }
