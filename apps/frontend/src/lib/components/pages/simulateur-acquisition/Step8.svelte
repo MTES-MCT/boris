@@ -1,4 +1,6 @@
 <script lang="ts">
+  import html2pdf from 'html2pdf.js';
+
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
@@ -6,17 +8,18 @@
   import Form from '$components/pages/simulateur-acquisition/Form.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
-  import Highlight from '$components/common/Highlight.svelte';
   import GlobalSynthesis from '$components/pages/simulateur-acquisition/GlobalSynthesis.svelte';
+  import { createPDF } from '$lib/utils/helpers';
 
-  let { nextStep, previousStep, goToPreviousStep, goToNextStep } = $derived(
+  let { previousStep, goToPreviousStep } = $derived(
     acquisitionSimulatorManager,
   );
 
+  let printableRef = $state<HTMLElement | undefined>();
+
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
-
-    goToNextStep();
+    createPDF(printableRef as HTMLElement, 'recapitulatif-simulation.pdf');
   };
 </script>
 
@@ -26,7 +29,9 @@
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">
-        <div class="fr-fieldset__element">
+        <div
+          class="fr-fieldset__element"
+          bind:this={printableRef}>
           <GlobalSynthesis />
         </div>
       </fieldset>
@@ -38,8 +43,7 @@
         label={previousStep?.title as string}
         onClick={goToPreviousStep} />
       <Action
-        direction="next"
-        label={nextStep?.title as string}
+        label="Télécharger le récapitulatif"
         type="submit" />
     </Actions>
   </Form>
