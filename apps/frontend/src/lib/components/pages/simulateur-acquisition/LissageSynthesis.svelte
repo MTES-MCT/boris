@@ -1,17 +1,19 @@
 <script lang="ts">
-  import Badge from '$components/common/Badge.svelte';
-  import Notice from '$components/common/Notice.svelte';
-  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
   import { formatEuro } from '$lib/utils/formatters';
-  import type { PhaseRemboursement } from '$lib/utils/lissage-ptz';
-  import Element from '$components/pages/simulateur-acquisition/Synthesis/Element.svelte';
-  import RowContainer from '$components/pages/simulateur-acquisition/Synthesis/RowContainer.svelte';
-  import Row from '$components/pages/simulateur-acquisition/Synthesis/Row.svelte';
   import {
     formatLoanPhaseDuration,
     formatLoanPhaseNumber,
   } from '$lib/utils/helpers';
+  import type { PhaseRemboursement } from '$lib/utils/lissage-ptz';
+
+  import Badge from '$components/common/Badge.svelte';
+  import Element from '$components/pages/simulateur-acquisition/Synthesis/Element.svelte';
+  import RowContainer from '$components/pages/simulateur-acquisition/Synthesis/RowContainer.svelte';
+  import Row from '$components/pages/simulateur-acquisition/Synthesis/Row.svelte';
   import Highlight from '$components/common/Highlight.svelte';
+  import Callout from '$components/common/Callout.svelte';
+
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
   let { pretLisse } = $derived(acquisitionSimulatorManager);
 
   const lissage = $derived(pretLisse?.lisser() as PhaseRemboursement[]);
@@ -78,4 +80,12 @@
       </RowContainer>
     </Element>
   {/each}
+
+  <div class="fr-mt-2w">
+    <Callout
+      accent="blue-cumulus"
+      size="md"
+      fontWeight="bold"
+      text={`Le montant total du prêt à taux zéro est de ${formatEuro(pretLisse?.montantPTZ || 0)}.`} />
+  </div>
 {/if}

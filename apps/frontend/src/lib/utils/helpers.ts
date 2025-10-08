@@ -3,7 +3,7 @@ import { PUBLIC_NODE_ENV } from '$env/static/public';
 import type { GeocodedResponse } from './definitions';
 import type { z } from 'zod';
 import type { FormFieldError } from './definitions';
-import html2pdf from 'html2pdf.js';
+import { browser } from '$app/environment';
 
 export const blockSearchEngineIndexing = (page: Page): boolean => {
   const hiddenPaths = ['/questionnaire', '/simulateur-acquisition'];
@@ -55,6 +55,10 @@ export const removeSmoothScroll = () => {
 export const getGeocodedResponseLabel = (
   geocodedResponse: GeocodedResponse['properties'],
 ) => {
+  if (!geocodedResponse) {
+    return '';
+  }
+
   return `${geocodedResponse?.name}, ${geocodedResponse?.context}`;
 };
 export const formatFormErrors = (
@@ -97,6 +101,12 @@ export const formatLoanPhaseDuration = (
 };
 
 export const createPDF = async (element: HTMLElement, filename: string) => {
+  if (!browser) {
+    return;
+  }
+
+  const { default: html2pdf } = await import('html2pdf.js');
+
   const pdfOnlyElements = document.querySelectorAll('.pdf-only');
   pdfOnlyElements.forEach((el) => el.setAttribute('style', 'display: block;'));
 

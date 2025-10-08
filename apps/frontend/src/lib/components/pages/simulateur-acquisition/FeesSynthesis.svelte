@@ -109,11 +109,11 @@
     <Row
       title="Coût total annuel"
       value={`= ${formatEuro(
-        yearlyBrsFees +
-          (yearlyPropertyTax as number) +
-          (yearlyHouseingInsurance as number) +
-          (yearlyCondominiumFees as number) +
-          (yearlyExpenses as number),
+        yearlyBrsFees + (yearlyPropertyTax as number) ||
+          0 + (yearlyHouseingInsurance as number) ||
+          0 + (yearlyCondominiumFees as number) ||
+          0 + (yearlyExpenses as number) ||
+          0,
         2,
       )}
       `}
