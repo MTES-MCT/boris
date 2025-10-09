@@ -249,7 +249,7 @@ export class PretLisse {
     const dureeRemboursementPTZMois = this.tranche.dureeRemboursement * 12;
     const tauxMensuel = this.tauxEmprunt / 100 / 12;
     const montantPretClassique =
-      this.montantTotal - this.montantPTZ - this.apport;
+      this.montantTotal - this.montantPTZ - (this.apport || 0);
     const mensualitePTZ = (this.montantPTZ / dureeRemboursementPTZMois).toFixed(
       2,
     );
@@ -396,5 +396,23 @@ export class PretLisse {
       (montantEmprunt * tauxMensuel) /
       (1 - Math.pow(1 + tauxMensuel, -dureeEmprunt))
     ).toFixed(2);
+  }
+
+  public calculateInterestCost(): number {
+    const montantEmprunt =
+      this.montantTotal - (this.montantPTZ || 0) - (this.apport || 0);
+    console.log('montantEmprunt', montantEmprunt);
+    const tauxMensuel = this.tauxEmprunt / 100 / 12;
+    const dureeEmpruntMois = this.dureeEmprunt * 12;
+
+    const paiementMensuel =
+      montantEmprunt *
+      (tauxMensuel / (1 - Math.pow(1 + tauxMensuel, -dureeEmpruntMois)));
+
+    const totalPaye = paiementMensuel * dureeEmpruntMois;
+
+    const totalInterets = totalPaye - montantEmprunt;
+
+    return Number(totalInterets.toFixed(2));
   }
 }

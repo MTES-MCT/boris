@@ -21,10 +21,6 @@
       .number()
       .gte(0, 'Veuillez saisir un chiffre supérieur à 0.')
       .optional(),
-    realEstateFees: z
-      .number()
-      .gte(0, 'Veuillez saisir un chiffre supérieur à 0.')
-      .optional(),
     oneTimeExpenses: z
       .number()
       .gte(0, 'Veuillez saisir un chiffre supérieur à 0.')
@@ -32,11 +28,10 @@
   });
 
   let {
+    housingType,
     notaryFees,
-    realEstateFees,
     oneTimeExpenses,
     estimatedNotaryFees,
-    estimatedRealEstateFees,
     nextStep,
     previousStep,
     goToPreviousStep,
@@ -49,7 +44,6 @@
     try {
       FormData.parse({
         notaryFees,
-        realEstateFees,
         oneTimeExpenses,
       });
 
@@ -104,36 +98,11 @@
           {#if !notaryFees || notaryFees < 0}
             <span class="fr-text--sm">
               Estimation
-              <b>{formatEuro(estimatedNotaryFees)}</b>
-            </span>
-          {/if}
-        </div>
-
-        <div class="fr-fieldset__element fr-mb-4w">
-          <Input
-            value={realEstateFees}
-            label="Frais d'agence immobilière (€)"
-            labelTooltip="Frais liés à la mise en Si l'achat se fait via une agence, prévoir entre 3% et 8% du
-          prix du bien. Laissez vide si achat sans agence."
-            type="number"
-            id="real-estate-fees"
-            hint="Saisissez 0 si vous n'avez pas de frais d'agence."
-            error={errors.realEstateFees}
-            forceNoMarginBottom
-            placeholder="Exemple: 5 000€"
-            onChange={(e) => {
-              const { value } = e.target as HTMLInputElement;
-
-              if (value === '') {
-                acquisitionSimulatorManager.realEstateFees = undefined;
-              } else {
-                acquisitionSimulatorManager.realEstateFees = Number(value);
-              }
-            }} />
-          {#if (realEstateFees && realEstateFees <= 0) || (!realEstateFees && typeof realEstateFees !== 'number')}
-            <span class="fr-text--sm">
-              Estimation
-              <b>{formatEuro(estimatedRealEstateFees)}</b>
+              <b>
+                {formatEuro(estimatedNotaryFees)}
+              </b>
+              <b>({housingType === 'new' ? '2,3%' : '7,8%'})</b>
+              du prix du logement)
             </span>
           {/if}
         </div>
@@ -142,7 +111,7 @@
           <Input
             value={oneTimeExpenses}
             label="Frais ponctuels (€)"
-            labelTooltip="Coût du déménagement, ouverture des compteurs, etc."
+            labelTooltip="Coût du déménagement, ouverture des compteurs, frais d'agence immobilière, etc. Hors frais de garantie et de prêt."
             type="number"
             id="one-time-expenses"
             hint="Laissez le champs vide ou saisissez 0 si vous n'avez pas de frais ponctuels."

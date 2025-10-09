@@ -29,15 +29,13 @@
 
   <ul>
     <li>
-      Page 2: <span class="fr-text--bold">
-        Synthèse de l'apport et des frais
-      </span>
+      1. <span class="fr-text--bold">Synthèse de l'apport et des frais</span>
     </li>
     <li>
-      Page 3: <span class="fr-text--bold">Lissage des prêts</span>
+      2. <span class="fr-text--bold">Lissage des prêts</span>
     </li>
     <li>
-      Page 4: <span class="fr-text--bold">
+      3. <span class="fr-text--bold">
         Synthèse de la redevance BRS et des charges
       </span>
     </li>

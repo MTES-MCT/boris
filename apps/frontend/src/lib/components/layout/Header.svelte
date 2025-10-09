@@ -89,13 +89,35 @@
         aria-label="Menu principal">
         <ul class="fr-nav__list">
           <li class="fr-nav__item">
-            <a
-              class="fr-nav__link"
-              href="/simulateur-eligibilite"
-              aria-current={pathname === '/simulateur-eligibilite'}
-              target="_self">
-              Le simulateur BoRiS
-            </a>
+            <button
+              aria-expanded="false"
+              aria-controls="simulateurs-dropdown"
+              aria-current={pathname.includes('/simulateur')}
+              class="fr-nav__btn">
+              Les simulateurs BoRiS
+            </button>
+            <div
+              class="fr-collapse fr-menu"
+              id="simulateurs-dropdown">
+              <ul class="fr-menu__list">
+                <li>
+                  <a
+                    href="/simulateur-eligibilite"
+                    aria-current={pathname === '/simulateur-eligibilite'}
+                    class="fr-nav__link">
+                    Le simulateur d'éligibilité au BRS
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/simulateur-acquisition"
+                    aria-current={pathname === '/simulateur-acquisition'}
+                    class="fr-nav__link">
+                    Le simulateur de coût d'acquisition en BRS
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
           <li class="fr-nav__item">
             <a

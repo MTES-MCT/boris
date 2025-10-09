@@ -73,7 +73,6 @@ class AcquisitionSimulator {
 
   public notaryFees: number | undefined = $state();
   public loanFees: number | undefined = $state();
-  public realEstateFees: number | undefined = $state();
   public oneTimeExpenses: number | undefined = $state();
 
   public interestRate: number | undefined = $state();
@@ -106,18 +105,8 @@ class AcquisitionSimulator {
     return 0;
   });
 
-  public estimatedRealEstateFees: number = $derived.by(() => {
-    if (!this.housingPrice) return 0;
-
-    if (this.realEstateFees === 0) return 0;
-
-    return Math.round(this.housingPrice * 0.055);
-  });
-
   public totalFees: number = $derived(
-    (this.notaryFees || this.estimatedNotaryFees) +
-      (this.realEstateFees || this.estimatedRealEstateFees || 0) +
-      (this.oneTimeExpenses || 0),
+    (this.notaryFees || this.estimatedNotaryFees) + (this.oneTimeExpenses || 0),
   );
 
   public totalCost: number = $derived(

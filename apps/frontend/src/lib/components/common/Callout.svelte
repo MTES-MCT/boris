@@ -10,7 +10,6 @@
     titleElement?: Heading;
     text?: string;
     accent?: Accent;
-    hasIcon?: boolean;
     icon?: string;
     hasButton?: boolean;
     buttonLabel?: string;
@@ -25,7 +24,6 @@
     titleElement = 'h3',
     text,
     accent = 'default',
-    hasIcon = false,
     icon = '',
     hasButton = false,
     buttonLabel = '',
@@ -53,7 +51,7 @@
   {/if}
   {#if text}
     <p class="fr-callout__text fr-text--{size} fr-text--{fontWeight}">
-      {text}
+      {@html text}
     </p>
   {/if}
   {#if hasButton && buttonLabel}
