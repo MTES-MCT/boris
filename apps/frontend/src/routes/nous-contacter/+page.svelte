@@ -1,5 +1,6 @@
 <script lang="ts">
   import Section from '$components/common/Section.svelte';
+  import { contactEmail } from '$lib/utils/constants';
 </script>
 
 <svelte:head>
@@ -14,8 +15,13 @@
   titleElement="h1">
   <p>
     Si vous avez des questions concernant le BRS, vous pouvez nous contacter à
-    l'adresse courriel suivante: <a href="mailto:nathan.gaudelet@beta.gouv.fr">
-      nathan.gaudelet@beta.gouv.fr
+    l'adresse courriel suivante: <a
+      class="fr-link"
+      href={`mailto:${contactEmail}`}>
+      {contactEmail}
     </a>
+  </p>
+  <p>
+    Nous faisons de notre mieux pour vous répondre dans les meilleurs délais.
   </p>
 </Section>
