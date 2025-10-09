@@ -14,9 +14,12 @@
   import Callout from '$components/common/Callout.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
+  import Notice from '$components/common/Notice.svelte';
   let { pretLisse } = $derived(acquisitionSimulatorManager);
 
   const lissage = $derived(pretLisse?.lisser() as PhaseRemboursement[]);
+
+  $inspect(lissage);
 </script>
 
 {#if !pretLisse?.estElligible}
@@ -46,6 +49,24 @@
     size="sm"
     fontWeight="bold" />
 {:else}
+  <div class="fr-mb-2w">
+    <Callout
+      accent="blue-cumulus"
+      size="sm"
+      text={`
+        <ul>
+          <li>
+            Vous êtes éligible au <b>prêt à taux zéro</b>. Le montant total du <b>prêt à taux zéro</b> est de <b>${formatEuro(pretLisse?.montantPTZ || 0)}</b>.
+          </li>
+          <li>
+            Le montant total du <b>prêt immobilier classique</b> est de <b>${formatEuro(pretLisse?.montantTotal - (pretLisse?.montantPTZ || 0))}</b>.
+          </li>
+          <li>
+            Le montant total des intêrets de votre prêt immobilier classique est estimé à : <b>${formatEuro(pretLisse?.calculateInterestCost() || 0)}</b>.
+          </li>
+        </ul>
+      `} />
+  </div>
   {#each lissage as phase, index}
     <Block isLast={index === lissage.length - 1}>
       <p class="fr-mb-0 fr-text--lg fr-text--bold">
@@ -80,12 +101,4 @@
       </RowContainer>
     </Block>
   {/each}
-
-  <div class="fr-mt-2w">
-    <Callout
-      accent="blue-cumulus"
-      size="md"
-      fontWeight="bold"
-      text={`Le montant total du prêt à taux zéro est de ${formatEuro(pretLisse?.montantPTZ || 0)}.`} />
-  </div>
 {/if}

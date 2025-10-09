@@ -423,4 +423,10 @@ describe('PrêtLissé', () => {
       },
     ]);
   });
+
+  it('devrait calculer le coût des intérêts du prêt immobilier classique', () => {
+    const pretLisse = pretLisseInitial();
+
+    expect(pretLisse.calculateInterestCost()).toBe(70021.26);
+  });
 });
