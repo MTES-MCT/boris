@@ -18,8 +18,6 @@
   let { pretLisse } = $derived(acquisitionSimulatorManager);
 
   const lissage = $derived(pretLisse?.lisser() as PhaseRemboursement[]);
-
-  $inspect(lissage);
 </script>
 
 {#if !pretLisse?.estElligible}
@@ -59,7 +57,7 @@
             Vous êtes éligible au <b>prêt à taux zéro</b>. Le montant total du <b>prêt à taux zéro</b> est de <b>${formatEuro(pretLisse?.montantPTZ || 0)}</b>.
           </li>
           <li>
-            Le montant total du <b>prêt immobilier classique</b> est de <b>${formatEuro(pretLisse?.montantTotal - (pretLisse?.montantPTZ || 0))}</b>.
+            Le montant total du <b>prêt immobilier classique</b> est de <b>${formatEuro(pretLisse?.montantTotal - (pretLisse?.montantPTZ || 0) - (pretLisse?.apport || 0))}</b>.
           </li>
           <li>
             Le montant total des intêrets de votre prêt immobilier classique est estimé à : <b>${formatEuro(pretLisse?.calculateInterestCost() || 0)}</b>.
