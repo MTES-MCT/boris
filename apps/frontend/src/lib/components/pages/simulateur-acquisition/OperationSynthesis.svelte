@@ -11,8 +11,6 @@
     ownContribution,
     notaryFees,
     estimatedNotaryFees,
-    realEstateFees,
-    estimatedRealEstateFees,
     oneTimeExpenses,
     totalCost,
     loanAmount,
@@ -24,17 +22,11 @@
     <Row
       title="Montant du logement"
       value={formatEuro(housingPrice as number)}
-      status="info" />
+      status="default" />
     <Row
       title="Frais de notaire"
       value={`+ ${formatEuro(notaryFees || estimatedNotaryFees || 0)}`}
       status="info" />
-    {#if realEstateFees || estimatedRealEstateFees}
-      <Row
-        title="Frais d'agence"
-        value={`+ ${formatEuro(realEstateFees || estimatedRealEstateFees || 0)}`}
-        status="info" />
-    {/if}
     {#if oneTimeExpenses}
       <Row
         title="Autres frais ponctuels"
@@ -63,7 +55,7 @@
       status="success" />
 
     <Row
-      title="Frais de garantie/prêt"
+      title="Frais de garantie et de prêt"
       value={`+ ${formatEuro(loanAmount * 0.008 || 0)}`}
       status="info"
       tooltip="Frais liés à la mise en place de votre prêt immobilier (caution, garantie, dossier). Généralement autour de 0,8% du montant emprunté + frais de dossier. Environ 70% de cette somme vous serons reversés lorsque que vous aurez remboursé l'intégralité de votre prêt." />

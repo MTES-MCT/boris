@@ -124,8 +124,7 @@
           <Input
             value={interestRate}
             label="Taux d'intérêt de votre crédit (%) *"
-            labelTooltip="Taux annuel effectif global (TAEG) proposé par votre banque.
-              Indiquez 0 si vous n'avez pas encore d'offre."
+            labelTooltip="Renseigner le taux d'intérêt hors assurance."
             type="number"
             id="interest-rate"
             step={0.01}
@@ -142,7 +141,7 @@
           <Input
             value={loanDuration}
             label="Durée de remboursement (années) *"
-            labelTooltip="Durée classique: 20 à 25 ans."
+            labelTooltip="La durée de remboursement est en moyenne de 20 à 25 ans."
             type="number"
             id="loan-duration"
             step={1}
@@ -209,6 +208,11 @@
 
         <RadioFieldset
           legend="Type du logement *"
+          legendTooltip={`
+            <div class="fr-p-2w">
+              Un logement collectif fait partie d'une copropriété, alors que un logement individuel ne fait partie d'aucune copropriété.
+            </div>
+          `}
           error={errors.ptzType}>
           <Radio
             label="Collectif"
