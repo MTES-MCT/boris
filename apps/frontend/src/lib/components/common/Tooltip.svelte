@@ -43,7 +43,7 @@
   .tooltip .tooltip-content {
     position: absolute;
     bottom: var(--1w);
-    transform: translateX(calc(-50% - var(--1w) - var(--1v)));
+    transform: translate(calc(-50% + var(--1v)));
     background: white;
     z-index: 10;
     display: inline;
