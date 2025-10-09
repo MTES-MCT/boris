@@ -13,6 +13,13 @@
   const { currentStep } = $derived(acquisitionSimulatorManager);
 </script>
 
+<svelte:head>
+  <title>Simulateur d'acquisition - Boris</title>
+  <meta
+    name="description"
+    content="Simulez les frais liés à l'acquisition d'un logement en Bail Réel Solidaire (BRS), du financement aux différentes charges liées à la propriété en BRS." />
+</svelte:head>
+
 {#if currentStep.step === 1}
   <Step1 />
 {:else if currentStep.step === 2}
