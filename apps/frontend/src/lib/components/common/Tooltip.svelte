@@ -11,7 +11,7 @@
   const id = nanoid(10);
 </script>
 
-<div class="tooltip">
+<div class="tooltip not-printable">
   <span
     class="fr-icon-question-line"
     aria-describedby={id}>
@@ -37,12 +37,13 @@
   .tooltip {
     position: relative;
     cursor: pointer;
+    color: var(--text-title-grey);
   }
 
   .tooltip .tooltip-content {
     position: absolute;
     bottom: var(--1w);
-    transform: translateX(calc(-50% - var(--1w) - var(--1v)));
+    transform: translate(calc(-50% + var(--1v)));
     background: white;
     z-index: 10;
     display: inline;

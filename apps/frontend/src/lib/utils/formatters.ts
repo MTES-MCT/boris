@@ -29,11 +29,14 @@ export const formatOfss = (ofss: OfsView[]): Region[] => {
   return regions.sort((a, b) => a.name.localeCompare(b.name));
 };
 
-export const formatEuro = (amount: number) => {
+export const formatEuro = (
+  amount: number,
+  maximumFractionDigits: number = 0,
+) => {
   return new Intl.NumberFormat('fr-FR', {
     style: 'currency',
     currency: 'EUR',
-    maximumFractionDigits: 0,
+    maximumFractionDigits,
   })
     .format(amount)
     .replace(/\u202f/g, ' ')
