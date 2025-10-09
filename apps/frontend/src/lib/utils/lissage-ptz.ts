@@ -401,7 +401,6 @@ export class PretLisse {
   public calculateInterestCost(): number {
     const montantEmprunt =
       this.montantTotal - (this.montantPTZ || 0) - (this.apport || 0);
-    console.log('montantEmprunt', montantEmprunt);
     const tauxMensuel = this.tauxEmprunt / 100 / 12;
     const dureeEmpruntMois = this.dureeEmprunt * 12;
 
