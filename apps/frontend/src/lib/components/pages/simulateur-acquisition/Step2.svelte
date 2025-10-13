@@ -48,10 +48,13 @@
 </script>
 
 <Wrapper>
-  <Description
-    content="Renseignez le montant de votre apport personnel. Cela nous permet de
-      calculer la part du financement que vous pouvez couvrir sans emprunter, et
-      d'ajuster le besoin de crédit à solliciter." />
+  <Description>
+    <p>
+      Renseignez le montant de votre apport personnel. Cette somme vous
+      permettra de financer une partie du coût de votre projet et de réduire le
+      montant de l'emprunt.
+    </p>
+  </Description>
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">

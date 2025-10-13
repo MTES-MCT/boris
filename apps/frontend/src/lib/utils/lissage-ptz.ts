@@ -217,7 +217,9 @@ export class PretLisse {
         ? tranche.tauxCollectif
         : tranche.tauxIndividuel;
 
-    this.montantPTZ = Math.min(plafondPTZ, this.montantTotal) * (quotite / 100);
+    this.montantPTZ =
+      Math.min(plafondPTZ, this.montantTotal - this.apport) * (quotite / 100);
+
     return this.montantPTZ;
   }
 

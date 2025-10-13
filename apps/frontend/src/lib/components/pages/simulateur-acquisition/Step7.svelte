@@ -22,7 +22,7 @@
     yearlyHouseingInsurance,
     condominiumFeesFrequency,
     condominiumFees,
-    yearlyExpenses,
+    monthlyExpenses,
     nextStep,
     previousStep,
     goToPreviousStep,
@@ -50,7 +50,7 @@
         .number()
         .gte(0, 'Veuillez saisir un chiffre supérieur ou égal à 0.')
         .optional(),
-      yearlyExpenses: z
+      monthlyExpenses: z
         .number()
         .gte(0, 'Veuillez saisir un chiffre supérieur ou égal à 0.')
         .optional(),
@@ -83,7 +83,7 @@
         yearlyHouseingInsurance,
         condominiumFeesFrequency,
         condominiumFees,
-        yearlyExpenses,
+        monthlyExpenses,
       });
 
       errors = {};
@@ -98,8 +98,15 @@
 </script>
 
 <Wrapper>
-  <Description
-    content="En renseignant cette section, le simulateur vous donne une estimation claire du coût mensuel et annuel à prévoir une fois propriétaire. C’est une bonne idée de planifier votre budget en anticipant bien tous ces frais !" />
+  <Description>
+    <p>
+      En renseignant cette section, le simulateur vous donne une estimation
+      claire du coût mensuel et annuel à prévoir une fois propriétaire. C'est
+      une bonne idée de planifier votre budget en anticipant bien tous ces frais
+      ! Les valeurs préremplies sont des estimations, vous pouvez les modifier
+      si vous le souhaitez.
+    </p>
+  </Description>
 
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
@@ -108,7 +115,7 @@
           <Input
             value={brsFees}
             label="Redevance BRS mensuelle par m² (€)"
-            hint="Laissez le champs vide ou saisissez 0 si vous ne connaissez pas le montant de la redevance BRS mensuelle par m²."
+            hint="Laissez le champs vide si vous ne connaissez pas le montant de la redevance BRS mensuelle par m²."
             labelTooltip={`La redevance BRS mensuelle par m2 se situe en moyenne entre ${formatEuro(0.5, 2)} et ${formatEuro(3.5, 2)}.`}
             placeholder="Exemple: 1,50 € par m²"
             type="number"
@@ -127,7 +134,7 @@
             value={yearlyPropertyTax}
             label="Taxe foncière (€)"
             labelTooltip="La taxe foncière est une taxe annuelle perçue par les communes pour financer les services publics locaux."
-            hint="Laissez le champs vide ou saisissez 0 si vous ne connaissez pas le montant annuel de la taxe foncière."
+            hint="Laissez le champs vide si vous ne connaissez pas le montant annuel de la taxe foncière."
             placeholder="Exemple: 1 000€ par an"
             type="number"
             id="yearly-property-tax"
@@ -145,7 +152,7 @@
             value={yearlyHouseingInsurance}
             label="Assurance habitation (€)"
             labelTooltip="L'assurance habitation est obligatoire pour votre logement, que vous soyez propriétaire ou locataire."
-            hint="Laissez le champs vide ou saisissez 0 si vous ne connaissez pas le montant annuel de l'assurance habitation."
+            hint="Laissez le champs vide si vous ne connaissez pas le montant annuel de l'assurance habitation."
             placeholder="Exemple: 300€ par an"
             type="number"
             id="yearly-houseing-insurance"
@@ -161,7 +168,6 @@
 
       <RadioFieldset
         legend="Fréquence de paiement des charges de copropriété"
-        hint="Laissez le champs vide si vous ne connaissez pas la fréquence de paiement des charges de copropriété."
         error={errors.condominiumFeesFrequency}>
         <Radio
           label="Mensuel"
@@ -203,17 +209,17 @@
 
         <div class="fr-fieldset__element">
           <Input
-            value={yearlyExpenses}
-            label="Autres dépenses annuelles (€)"
+            value={monthlyExpenses}
+            label="Autres dépenses mensuelles (€)"
             labelTooltip="Ces dépenses sont par exemple l'électricité, l'eau, le gaz, internet, etc."
-            hint="Laissez le champs vide ou saisissez 0 si vous ne connaissez pas le montant des autres dépenses annuelles."
-            placeholder="Exemple: 1 000€ par an"
+            hint="Laissez le champs vide si vous ne connaissez pas le montant des autres dépenses mensuelles."
+            placeholder="Exemple: 100€ par mois"
             type="number"
-            id="yearly-expenses"
+            id="monthly-expenses"
             step={1}
-            error={errors.yearlyExpenses}
+            error={errors.monthlyExpenses}
             onChange={(e) => {
-              acquisitionSimulatorManager.yearlyExpenses = Number(
+              acquisitionSimulatorManager.monthlyExpenses = Number(
                 (e.target as HTMLInputElement).value,
               );
             }} />

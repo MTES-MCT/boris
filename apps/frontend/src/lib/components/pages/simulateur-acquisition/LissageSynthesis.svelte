@@ -14,7 +14,7 @@
   import Callout from '$components/common/Callout.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
-  import Notice from '$components/common/Notice.svelte';
+
   let { pretLisse } = $derived(acquisitionSimulatorManager);
 
   const lissage = $derived(pretLisse?.lisser() as PhaseRemboursement[]);
@@ -27,7 +27,7 @@
       <Badge
         status="new"
         hideIcon>
-        {formatLoanPhaseDuration(lissage[0].dureeAnnees, 0)}
+        {`Durée totale: ${lissage[0].dureeAnnees} ans`}
       </Badge>
     </p>
     <div class="separator"></div>
@@ -40,14 +40,46 @@
     </RowContainer>
   </Block>
 
-  <Highlight
-    text="D'après les informations que vous nous avez fournies, vous n'êtes pas éligible au PTZ."
-    accent="pink-tuile"
-    icon="warning-fill"
-    size="sm"
-    fontWeight="bold" />
+  <div class="not-printable">
+    <Highlight
+      text="D'après les informations que vous nous avez fournies, vous n'êtes pas éligible au PTZ."
+      accent="pink-tuile"
+      icon="warning-fill"
+      size="sm"
+      fontWeight="bold"
+      href="https://www.anil.org/pret-taux-zero/" />
+  </div>
 {:else}
-  <div class="fr-mb-2w">
+  <div class="pdf-only">
+    <ul class="fr-text--sm">
+      <li>
+        Vous êtes éligible au <b>prêt à taux zéro</b>
+        . Le montant total du
+        <b>prêt à taux zéro</b>
+        est de
+        <b>{formatEuro(pretLisse?.montantPTZ || 0)}</b>
+        .
+      </li>
+      <li>
+        Le montant total du <b>prêt immobilier classique</b>
+        est de
+        <b>
+          {formatEuro(
+            pretLisse?.montantTotal -
+              (pretLisse?.montantPTZ || 0) -
+              (pretLisse?.apport || 0),
+          )}
+        </b>
+        .
+      </li>
+      <li>
+        Le montant total des intêrets de votre prêt immobilier classique est
+        estimé à <b>{formatEuro(pretLisse?.calculateInterestCost() || 0)}</b>
+        .
+      </li>
+    </ul>
+  </div>
+  <div class="fr-mb-2w not-printable">
     <Callout
       accent="blue-cumulus"
       size="sm"
@@ -60,7 +92,7 @@
             Le montant total du <b>prêt immobilier classique</b> est de <b>${formatEuro(pretLisse?.montantTotal - (pretLisse?.montantPTZ || 0) - (pretLisse?.apport || 0))}</b>.
           </li>
           <li>
-            Le montant total des intêrets de votre prêt immobilier classique est estimé à : <b>${formatEuro(pretLisse?.calculateInterestCost() || 0)}</b>.
+            Le montant total des intêrets de votre prêt immobilier classique est estimé à <b>${formatEuro(pretLisse?.calculateInterestCost() || 0)}</b>.
           </li>
         </ul>
       `} />

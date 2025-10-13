@@ -21,8 +21,14 @@
 </script>
 
 <Wrapper>
-  <Description
-    content="Voici un premier récapitulatif de votre apport, du prix du logement et de tous les frais annexes. Cette synthèse vous aide à visualiser le budget global nécessaire et le montant exact à emprunter pour finaliser votre projet." />
+  <Description>
+    <p>
+      Voici un premier récapitulatif de votre apport, du prix du logement et de
+      tous les frais annexes. Cette synthèse vous aide à visualiser le budget
+      global nécessaire et le montant exact à emprunter pour finaliser votre
+      projet.
+    </p>
+  </Description>
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">

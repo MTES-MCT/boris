@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
+
   import Stepper from '$components/common/Stepper.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
@@ -6,10 +8,10 @@
   let { steps, currentStep, nextStep } = $derived(acquisitionSimulatorManager);
 
   type Props = {
-    content: string;
+    children: Snippet;
   };
 
-  const { content }: Props = $props();
+  const { children }: Props = $props();
 </script>
 
 <div class="container">
@@ -21,9 +23,7 @@
         nextStepTitle={nextStep?.title}
         currentStep={currentStep.step}
         stepCount={steps.length} />
-      <p>
-        {content}
-      </p>
+      {@render children()}
     </div>
   </div>
 </div>

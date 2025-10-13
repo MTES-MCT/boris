@@ -88,10 +88,13 @@
 </script>
 
 <Wrapper>
-  <Description
-    content="Indiquez les principales caractéristiques du logement que vous souhaitez
+  <Description>
+    <p>
+      Indiquez les principales caractéristiques du logement que vous souhaitez
       acquérir. Ces informations permettront d'estimer les frais associés à
-      votre projet et les facilités d'emprunt auxquelles vous avez droit." />
+      votre projet et les facilités d'emprunt auxquelles vous avez droit.
+    </p>
+  </Description>
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">

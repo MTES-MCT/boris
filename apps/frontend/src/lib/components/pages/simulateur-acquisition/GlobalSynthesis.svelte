@@ -9,12 +9,12 @@
 </script>
 
 <div class="pdf-only">
-  <div class="flex justify-center fr-mt-10w">
+  <div class="flex fr-mt-10w">
     <img
       src={blocMarque}
       alt=""
-      width="150"
-      height="117" />
+      width="100"
+      height="78" />
 
     <div class="logo-container">
       {@html Logo}
@@ -27,17 +27,42 @@
 
   <h2 class="fr-mb-6w">Récapitulatif de la simulation</h2>
 
-  <ul>
+  <p class="fr-text--sm">
+    Ce document synthétise la simulation de votre projet d'acquisition en bail
+    réel solidaire (BRS). Les montants et calculs présentés ci-dessous sont des
+    estimations basées sur les informations que vous avez renseignées et ne
+    constituent pas une offre ferme de financement. Cette simulation est fournie
+    à titre informatif uniquement. Les conditions réelles de financement peuvent
+    différer selon votre situation personnelle et les critères d'octroi des
+    organismes prêteurs.
+  </p>
+
+  <ul class="fr-text--sm">
     <li>
       1. <span class="fr-text--bold">Synthèse de l'apport et des frais</span>
+      <p>
+        Cette section présente le montant de l'apport personnel, les frais de
+        notaire et les autres frais ponctuels à prévoir.
+      </p>
     </li>
     <li>
       2. <span class="fr-text--bold">Lissage des prêts</span>
+      <p>
+        Le lissage permet de répartir vos remboursements sur plusieurs phases,
+        en adaptant les mensualités selon votre situation financière. Cette
+        simulation vous montre comment vos prêts seront structurés dans le
+        temps.
+      </p>
     </li>
     <li>
       3. <span class="fr-text--bold">
         Synthèse de la redevance BRS et des charges
       </span>
+      <p>
+        Il s'agit d'une estimation claire du coût mensuel et annuel à prévoir
+        une fois propriétaire. Il est important de planifier votre budget en
+        anticipant bien tous les frais liés à la propriété.
+      </p>
     </li>
   </ul>
 </div>
@@ -65,8 +90,8 @@
 
 <style lang="postcss">
   .logo-container {
-    height: 117px;
-    width: 117px;
+    height: 78px;
+    width: 78px;
 
     :global(svg) {
       width: 100%;

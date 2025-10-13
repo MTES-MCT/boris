@@ -24,8 +24,17 @@
 </script>
 
 <Wrapper>
-  <Description
-    content="[TEXTE A DEFINIR] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+  <Description>
+    <p>
+      Voici le résumé de lasimulation de votre projet d'acquisition en bail réel
+      solidaire (BRS). Les montants et calculs présentés ci-dessous sont des
+      estimations basées sur les informations que vous avez renseignées et ne
+      constituent pas une offre ferme de financement. Cette simulation est
+      fournie à titre informatif uniquement. Les conditions réelles de
+      financement peuvent différer selon votre situation personnelle et les
+      critères d'octroi des organismes prêteurs.
+    </p>
+  </Description>
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">
