@@ -21,8 +21,22 @@
 </script>
 
 <Wrapper>
-  <Description
-    content="[TEXTE A DEFINIR] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+  <Description>
+    <p>
+      Le lissage de prêt permet de structurer vos emprunts (prêt immobilier
+      classique et/ou prêt à taux zéro) avec des mensualités constantes sur
+      plusieurs phases. Cette technique répartit le remboursement en adaptant la
+      durée de chaque prêt selon votre situation financière, tout en maintenant
+      des mensualités stables.
+    </p>
+    <a
+      class="fr-link"
+      href="https://www.anil.org/pret-taux-zero/"
+      target="_blank"
+      rel="noopener noreferrer">
+      En savoir plus sur le prêt à taux zéro
+    </a>
+  </Description>
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">

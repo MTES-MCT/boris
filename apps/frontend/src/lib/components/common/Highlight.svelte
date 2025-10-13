@@ -11,6 +11,7 @@
     size?: 'sm' | 'md' | 'lg';
     icon?: string;
     fontWeight?: FontWeight;
+    href?: string;
   };
 
   const {
@@ -20,6 +21,7 @@
     size = 'md',
     icon = '',
     fontWeight = 'normal',
+    href,
   }: Props = $props();
 </script>
 
@@ -35,4 +37,13 @@
   <p class={`fr-text--${size} fr-text--${fontWeight} fr-mb-0`}>
     {text}
   </p>
+  {#if href}
+    <a
+      class={`fr-link fr-text--${size}`}
+      {href}
+      target="_blank"
+      rel="noopener noreferrer">
+      En savoir plus
+    </a>
+  {/if}
 </div>

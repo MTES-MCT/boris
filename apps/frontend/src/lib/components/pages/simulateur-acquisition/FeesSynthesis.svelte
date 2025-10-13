@@ -6,6 +6,7 @@
   import RowContainer from '$components/pages/simulateur-acquisition/synthesis/RowContainer.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
+  import type { PhaseRemboursement } from '$lib/utils/lissage-ptz';
 
   const {
     monthlyBrsFees,
@@ -18,7 +19,32 @@
     yearlyCondominiumFees,
     monthlyExpenses,
     yearlyExpenses,
+    pretLisse,
   } = $derived(acquisitionSimulatorManager);
+
+  const lissage = $derived(pretLisse?.lisser() as PhaseRemboursement[]);
+
+  let mensualiteDepensesTotales = $derived(
+    monthlyBrsFees +
+      monthlyPropertyTax +
+      monthlyHouseingInsurance +
+      monthlyCondominiumFees +
+      (monthlyExpenses as number),
+  );
+
+  let mensualitePretTotale = $derived(
+    Number(lissage[0].mensualiteClassique) + Number(lissage[0].mensualitePTZ),
+  );
+
+  let annuiteDepensesTotales = $derived(
+    yearlyBrsFees +
+      ((yearlyPropertyTax as number) || 0) +
+      ((yearlyHouseingInsurance as number) || 0) +
+      ((yearlyCondominiumFees as number) || 0) +
+      ((yearlyExpenses as number) || 0),
+  );
+
+  let annuitePretTotalee = $derived(mensualitePretTotale * 12);
 </script>
 
 <Block>
@@ -57,13 +83,22 @@
     <div class="separator"></div>
 
     <Row
+      title="Dépenses mensuelles globales"
+      value={`= ${formatEuro(mensualiteDepensesTotales, 2)}
+      `}
+      status="success" />
+    <Row
+      title="Mensualité du prêt"
+      value={`+ ${formatEuro(mensualitePretTotale, 2)}
+      `}
+      status="info" />
+
+    <div class="separator"></div>
+
+    <Row
       title="Coût total mensuel"
       value={`= ${formatEuro(
-        monthlyBrsFees +
-          monthlyPropertyTax +
-          monthlyHouseingInsurance +
-          monthlyCondominiumFees +
-          monthlyExpenses,
+        mensualiteDepensesTotales + mensualitePretTotale,
         2,
       )}
       `}
@@ -107,15 +142,22 @@
     <div class="separator"></div>
 
     <Row
+      title="Dépenses annuelles globales"
+      value={`= ${formatEuro(annuiteDepensesTotales, 2)}
+      `}
+      status="success" />
+
+    <Row
+      title="Annuité du prêt"
+      value={`+ ${formatEuro(annuitePretTotalee, 2)}
+        `}
+      status="info" />
+
+    <div class="separator"></div>
+
+    <Row
       title="Coût total annuel"
-      value={`= ${formatEuro(
-        yearlyBrsFees + (yearlyPropertyTax as number) ||
-          0 + (yearlyHouseingInsurance as number) ||
-          0 + (yearlyCondominiumFees as number) ||
-          0 + (yearlyExpenses as number) ||
-          0,
-        2,
-      )}
+      value={`= ${formatEuro(annuiteDepensesTotales + annuitePretTotalee, 2)}
       `}
       status="success" />
   </RowContainer>

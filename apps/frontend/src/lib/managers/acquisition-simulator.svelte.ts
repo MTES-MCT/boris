@@ -59,39 +59,39 @@ class AcquisitionSimulator {
     }
   });
 
-  public housingPrice: number | undefined = $state();
+  public housingPrice: number | undefined = $state(200000);
   public selectedLocation: GeocodedResponse['properties'] | undefined =
     $state();
   public autocompleteValue = $derived(
     getGeocodedResponseLabel(this.selectedLocation) || '',
   );
-  public brsZone: Zone | undefined = $state();
-  public surface: number | undefined = $state();
-  public housingType: 'new' | 'old' | undefined = $state();
+  public brsZone: Zone | undefined = $state('Abis');
+  public surface: number | undefined = $state(50);
+  public housingType: 'new' | 'old' | undefined = $state('new');
 
-  public ownContribution: number | undefined = $state();
+  public ownContribution: number | undefined = $state(10000);
 
   public notaryFees: number | undefined = $state();
   public loanFees: number | undefined = $state();
   public oneTimeExpenses: number | undefined = $state();
 
-  public interestRate: number | undefined = $state();
-  public loanDuration: number | undefined = $state();
-  public inHousePeopleAmount: number | undefined = $state();
-  public fiscalIncome: number | undefined = $state();
-  public ptzType: Logement | undefined = $state();
+  public interestRate: number | undefined = $state(3);
+  public loanDuration: number | undefined = $state(25);
+  public inHousePeopleAmount: number | undefined = $state(2);
+  public fiscalIncome: number | undefined = $state(44000);
+  public ptzType: Logement | undefined = $state('collectif');
   public pretLisse: PretLisse | undefined = $state();
 
-  public brsFees: number | undefined = $state();
-  public yearlyPropertyTax: number | undefined = $state();
-  public yearlyHouseingInsurance: number | undefined = $state();
+  public brsFees: number | undefined = $state(3);
+  public yearlyPropertyTax: number | undefined = $state(1000);
+  public yearlyHouseingInsurance: number | undefined = $state(300);
   public condominiumFeesFrequency:
     | 'yearly'
     | 'monthly'
     | 'trimestrial'
-    | undefined = $state();
-  public condominiumFees: number | undefined = $state();
-  public yearlyExpenses: number | undefined = $state();
+    | undefined = $state('monthly');
+  public condominiumFees: number | undefined = $state(150);
+  public monthlyExpenses: number | undefined = $state(100);
 
   public estimatedNotaryFees: number = $derived.by(() => {
     if (this.housingPrice) {
@@ -174,26 +174,30 @@ class AcquisitionSimulator {
     return 0;
   });
 
-  public monthlyExpenses = $derived(
-    this.yearlyExpenses ? (this.yearlyExpenses as number) / 12 : 0,
+  public yearlyExpenses = $derived(
+    this.monthlyExpenses ? (this.monthlyExpenses as number) * 12 : 0,
   );
 
   public goToPreviousStep = () => {
     if (this.previousStep) {
       this.currentStep = this.previousStep;
+      this.resetScroll();
     }
   };
 
   public goToNextStep = () => {
     if (this.nextStep) {
       this.currentStep = this.nextStep;
+      this.resetScroll();
+    }
+  };
 
-      if (browser) {
-        document.getElementById('simulateur-acquisition')?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-      }
+  private resetScroll = () => {
+    if (browser) {
+      document.getElementById('simulateur-acquisition')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     }
   };
 }

@@ -96,8 +96,16 @@
 </script>
 
 <Wrapper>
-  <Description
-    content="[TEXTE A DEFINIR] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+  <Description>
+    <p>
+      Renseignez les différentes informations relatives à un prêt immobilier
+      pour simuler votre projet d'acquisition. Selon les critères que vous aurez
+      rempli, nous allons pouvoir estimer la nature du financement de votre
+      projet en bail réel solidaire (BRS), avec un prêt immobilier classique et
+      éventuellement un prêt à taux zéro (PTZ) si vous êtes éligible.
+    </p>
+  </Description>
+
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
       <fieldset class="fr-fieldset">

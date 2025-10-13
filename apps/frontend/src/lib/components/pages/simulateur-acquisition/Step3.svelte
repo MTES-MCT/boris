@@ -57,11 +57,14 @@
 </script>
 
 <Wrapper>
-  <Description
-    content="Précisez les différents frais liés à l'achat du logement : frais de notaire,
-    de garantie, d'agence ou autres frais ponctuels. Si certains montants sont
-    inconnus, le simulateur peut les estimer automatiquement. Cette section vous
-    permet de ne pas avoir de mauvaise surprise avec des frais non anticipés." />
+  <Description>
+    <p>
+      Précisez les différents frais liés à l'achat du logement : frais de
+      notaire ou autres frais ponctuels. Si certains montants sont inconnus, le
+      simulateur peut les estimer automatiquement. Cette section vous permet de
+      ne pas avoir de mauvaise surprise avec des frais non anticipés.
+    </p>
+  </Description>
 
   <Form onSubmit={handleSubmit}>
     <div class="fieldset-container">
