@@ -35,13 +35,13 @@
       const results = await autocomplete(value, '5');
 
       suggestions = results
-        .map((result) => ({
+        ?.map((result) => ({
           ...result.properties,
           x: result?.geometry?.coordinates?.[0],
           y: result?.geometry?.coordinates?.[1],
           id: `suggestion-${nanoid(15)}`,
         }))
-        .slice(0, 5);
+        ?.slice(0, 5);
 
       isListExpanded = true;
 

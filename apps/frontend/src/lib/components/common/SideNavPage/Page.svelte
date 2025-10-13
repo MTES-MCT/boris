@@ -38,7 +38,7 @@
   }: Props = $props();
 
   let observableSections = $state<ObservableSection[]>(
-    sections.map((section) => ({
+    sections?.map((section) => ({
       id: section.id,
       isVisible: true,
     })),
