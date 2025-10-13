@@ -28,12 +28,12 @@
 <ArticlePage {article}>
   <p>
     Le Bail Réel Solidaire (BRS) permet à des ménages aux revenus modestes de
-    devenir propriétaires de leur logement tout en conservant un prix d’achat
+    devenir propriétaires de leur logement tout en conservant un prix d'achat
     accessible. <br />
     Mais que devient un logement en bail réel solidaire en cas de décès du propriétaire
     ?
     <br />
-    Quelles sont les règles d’héritage bail réel solidaire ?
+    Quelles sont les règles d'héritage bail réel solidaire ?
     <br />
     Quels sont les droits des héritiers ?
     <br />
@@ -44,39 +44,39 @@
     La succession en bail réel solidaire est possible, mais encadrée.
   </h2>
   <p>
-    Lorsqu’un ménage est propriétaire d’un logement en BRS, <b>
-      il partage la propriété avec l’Organisme de Foncier Solidaire (OFS)
+    Lorsqu'un ménage est propriétaire d'un logement en BRS, <b>
+      il partage la propriété avec l'Organisme de Foncier Solidaire (OFS)
     </b>
     .
     <br />
     <b>La succession en bail réel solidaire est donc possible.</b>
     <br />
-    La succession d’un logement brs est également
+    La succession d'un logement brs est également
     <b>
       encadrée quant à la possibilité de conserver le bien en BRS ou
-      l’obligation de revente
+      l'obligation de revente
     </b>
     .
     <br />
     On vous en dit plus ci-dessous.
   </p>
 
-  <h2 class="fr-mt-8w">Qui peut hériter d’un logement en BRS ?</h2>
+  <h2 class="fr-mt-8w">Qui peut hériter d'un logement en BRS ?</h2>
   <p>
     Comme pour tout bien immobilier, le logement acquis en BRS <b>
       entre dans la succession du propriétaire
     </b>
     .
     <br />
-    Les règles de droit commun s’appliquent :
+    Les règles de droit commun s'appliquent :
     <b>les héritiers légaux</b>
     (enfants, conjoint, etc.)
     <b>ou désignés par testament</b>
     peuvent recevoir le bien, au même titre que ses autres biens.
   </p>
   <p class="fr-mb-0">
-    Cependant, les contreparties du dispositif s’appliquent aussi aux héritiers,
-    s’ils souhaitent conserver le logement :
+    Cependant, les contreparties du dispositif s'appliquent aussi aux héritiers,
+    s'ils souhaitent conserver le logement :
   </p>
   <ul>
     <li>
@@ -94,8 +94,8 @@
         Je fais le test
       </a>
       <p>
-        Il existe une seule exception à cette condition d’éligibilité : le cas
-        où le ou la conjoint·e est l’héritier·e du logement, quel que soit le
+        Il existe une seule exception à cette condition d'éligibilité : le cas
+        où le ou la conjoint·e est l'héritier·e du logement, quel que soit le
         régime matrimonial.
       </p>
     </li>
@@ -106,7 +106,7 @@
     </li>
   </ul>
   <p class="fr-mt-4w">
-    Si l’un des héritiers remplit ces deux conditions, il peut <b>
+    Si l'un des héritiers remplit ces deux conditions, il peut <b>
       continuer à occuper le bien dans les conditions du bail réel solidaire
       (BRS)
     </b>
@@ -115,7 +115,7 @@
   </p>
 
   <h2 class="fr-mt-8w">
-    Et si aucun héritier n’est éligible au Bail Réel Solidaire (BRS) ou qu’aucun
+    Et si aucun héritier n'est éligible au Bail Réel Solidaire (BRS) ou qu'aucun
     ne souhaite vivre dans le logement ?
   </h2>
   <p>
@@ -123,16 +123,16 @@
     , selon les conditions encadrées par le BRS.
   </p>
   <p>
-    C’est l’Organisme de Foncier Solidaire (OFS) qui accompagne les héritiers
+    C'est l'Organisme de Foncier Solidaire (OFS) qui accompagne les héritiers
     dans cette démarche. Le logement est alors <b>
       remis sur le marché à prix encadré
     </b>
     , pour être racheté par un autre ménage éligible.
   </p>
   <p>
-    Si les héritiers n’arrivent pas à céder le logement dans ce délai de 12
-    mois, l’OFS peut le prolonger. Si à terme, les héritiers ne trouvent pas
-    d’acquéreurs, alors le BRS peut être résilié de façon conventionnelle, l’OFS
+    Si les héritiers n'arrivent pas à céder le logement dans ce délai de 12
+    mois, l'OFS peut le prolonger. Si à terme, les héritiers ne trouvent pas
+    d'acquéreurs, alors le BRS peut être résilié de façon conventionnelle, l'OFS
     récupère la pleine propriété du logement et il indemnise les héritiers selon
     les conditions définies dans le bail.
   </p>
@@ -141,7 +141,7 @@
     page dédiée : <a
       href="/revendre-mon-bien-en-brs"
       class="fr-link">
-      👉 Revente d’un logement en BRS.
+      👉 Revente d'un logement en BRS.
     </a>
   </p>
 
@@ -150,12 +150,12 @@
     connaître.
   </h2>
   <p>
-    ➡️ Si vous êtes héritier d’un logement en bail réel solidaire (BRS), il est
+    ➡️ Si vous êtes héritier d'un logement en bail réel solidaire (BRS), il est
     recommandé de :
   </p>
   <ul>
     <li>
-      Contacter rapidement l’
+      Contacter rapidement l'
       <b>OFS concerné</b>
     </li>
     <li>
@@ -211,8 +211,7 @@
         <li><a href="/revendre-mon-bien-en-brs" class="fr-link fr-text--sm">👉 Revente d'un logement en BRS.</a></li>
       </ul>`,
       ],
-    ]}
-    caption="Titre du tableau (caption)" />
+    ]} />
 
   <h2 class="fr-mt-8w">📌 Pour aller plus loin</h2>
   <ul>
@@ -234,14 +233,14 @@
       <a
         href="/revendre-mon-bien-en-brs"
         class="fr-link">
-        🔄 Les règles de revente d’un bien en BRS
+        🔄 Les règles de revente d'un bien en BRS
       </a>
     </li>
   </ul>
 
   <p>
-    Vous avez une question spécifique sur votre situation ou celle d’un proche ?
-    Vous avez des questions spécifiques à la revente d’un bien en BRS ?
+    Vous avez une question spécifique sur votre situation ou celle d'un proche ?
+    Vous avez des questions spécifiques à la revente d'un bien en BRS ?
   </p>
 
   <p>

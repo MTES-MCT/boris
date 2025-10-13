@@ -26,7 +26,7 @@
 </div>
 
 {#snippet content(payload: PaginationType<BrsDiffusionWebsiteView>)}
-  {#if payload.items.length > 0}
+  {#if payload.items?.length > 0}
     {#each payload.items as item}
       <div class="fr-col-12 fr-col-md-6">
         <Card
