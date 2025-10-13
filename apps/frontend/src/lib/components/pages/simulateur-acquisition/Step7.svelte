@@ -103,8 +103,11 @@
       En renseignant cette section, le simulateur vous donne une estimation
       claire du coût mensuel et annuel à prévoir une fois propriétaire. C'est
       une bonne idée de planifier votre budget en anticipant bien tous ces frais
-      ! Les valeurs préremplies sont des estimations, vous pouvez les modifier
-      si vous le souhaitez.
+      !
+    </p>
+    <p>
+      Les valeurs préremplies sont des estimations, vous pouvez les modifier si
+      vous le souhaitez.
     </p>
   </Description>
 

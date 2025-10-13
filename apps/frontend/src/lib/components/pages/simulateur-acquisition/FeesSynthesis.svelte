@@ -88,7 +88,7 @@
       `}
       status="success" />
     <Row
-      title="Mensualité du prêt"
+      title="Mensualités du prêt"
       value={`+ ${formatEuro(mensualitePretTotale, 2)}
       `}
       status="info" />
@@ -148,7 +148,7 @@
       status="success" />
 
     <Row
-      title="Annuité du prêt"
+      title="Annuités du prêt"
       value={`+ ${formatEuro(annuitePretTotalee, 2)}
         `}
       status="info" />
