@@ -83,6 +83,7 @@ const translations: translations = {
     address: 'Adresse',
     latitude: 'Latitude',
     longitude: 'Longitude',
+    producesBrs: 'Produit du BRS',
   },
   contents: {
     home: {

@@ -31,7 +31,12 @@ export const setupTestingApp = async (): Promise<INestApplication<App>> => {
 
   const app = moduleFixture.createNestApplication<NestExpressApplication>();
 
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      transformOptions: { enableImplicitConversion: true },
+    }),
+  );
 
   await useSession(app, dataSource);
 
