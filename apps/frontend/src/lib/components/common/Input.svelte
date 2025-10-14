@@ -5,6 +5,7 @@
 
   import { nanoid } from 'nanoid';
   import type { AriaAttributes, AriaRole, FullAutoFill } from 'svelte/elements';
+  import Tooltip from './Tooltip.svelte';
 
   type Props = {
     id?: string;
@@ -19,8 +20,11 @@
       | 'text'
       | 'url'
       | 'range';
-    value?: string;
+    value?: string | number;
     label?: string;
+    hint?: string;
+    labelTooltip?: string;
+    required?: boolean;
     icon?: string;
     role?: AriaRole;
     min?: number;
@@ -30,8 +34,11 @@
     ariaAutocomplete?: 'none' | 'list' | 'inline' | 'both' | null;
     autocomplete?: FullAutoFill;
     forceNoMarginBottom?: boolean;
+    error?: string;
+    disabled?: boolean;
     onChange?: (event: Event) => void;
     onKeydown?: (event: KeyboardEvent) => void;
+    onBlur?: (event: Event) => void;
   };
 
   const {
@@ -40,6 +47,9 @@
     type = 'text',
     value,
     label = '',
+    hint,
+    labelTooltip = '',
+    required = false,
     icon = '',
     role = '',
     ariaAttributes,
@@ -48,20 +58,37 @@
     max,
     step,
     forceNoMarginBottom = false,
+    error,
+    disabled,
     onChange,
     onKeydown,
+    onBlur,
   }: Props = $props();
 </script>
 
 <div
   class="fr-input-group"
+  class:fr-input-group--disabled={disabled}
+  class:fr-input-group--error={error}
   class:no-margin-bottom={forceNoMarginBottom}
   id={`${id}-group`}>
   {#if label}
     <label
       class="fr-label"
       for={id}>
-      {label}
+      <div>
+        <b>{label} {required ? '*' : ''}</b>
+        {#if labelTooltip}
+          <Tooltip>
+            <div class="fr-p-2w">
+              {@html labelTooltip}
+            </div>
+          </Tooltip>
+        {/if}
+      </div>
+      {#if hint}
+        <span class="fr-hint-text">{hint}</span>
+      {/if}
     </label>
   {/if}
   {#if icon}
@@ -81,19 +108,36 @@
 {#snippet input()}
   <input
     class="fr-input"
-    aria-describedby={`${id}-messages`}
     {placeholder}
     {type}
     {value}
+    {required}
+    {disabled}
     {id}
     {role}
-    {...ariaAttributes}
+    {...{
+      ...ariaAttributes,
+      'aria-describedby': `${id}-messages`,
+    }}
     {autocomplete}
     {min}
     {max}
     {step}
     oninput={onChange}
-    onkeydown={onKeydown} />
+    onkeydown={onKeydown}
+    onblur={onBlur} />
+  <div
+    class="fr-messages-group"
+    id={`${id}-messages`}
+    aria-live="polite">
+    {#if error}
+      <p
+        class="fr-message fr-message--error"
+        id={`${id}-message-error`}>
+        {error}
+      </p>
+    {/if}
+  </div>
 {/snippet}
 
 <style lang="postcss">
@@ -101,10 +145,22 @@
     margin-bottom: 0 !important;
   }
 
+  label {
+    div {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: var(--1v);
+    }
+  }
+
   input {
     background-color: var(
       --input-background-color,
       var(--background-contrast-grey)
     );
+  }
+
+  .fr-input-wrap::before {
+    bottom: auto;
   }
 </style>

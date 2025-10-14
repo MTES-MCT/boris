@@ -5,11 +5,11 @@
 
   type Props = {
     children: Snippet;
-    status?: 'success' | 'warning' | 'error' | 'info' | 'new';
+    status?: 'success' | 'warning' | 'error' | 'info' | 'new' | 'default';
     hideIcon?: boolean;
   };
 
-  const { children, status, hideIcon = false }: Props = $props();
+  const { children, status = 'default', hideIcon = false }: Props = $props();
 </script>
 
 <p
@@ -23,5 +23,9 @@
     &:before {
       display: none;
     }
+  }
+
+  .fr-badge {
+    text-transform: none !important;
   }
 </style>
