@@ -10,6 +10,7 @@ export const ofss: Pagination<OfsView> = {
         'https://www.archipel-habitat.fr/trouver-un-logement/acheter-un-logement/programmes-en-cours',
       phone: null,
       email: null,
+      producesBrs: false,
       departements: [
         {
           code: '35',
@@ -31,6 +32,7 @@ export const ofss: Pagination<OfsView> = {
       websiteUrl: null,
       phone: null,
       email: null,
+      producesBrs: false,
       departements: [
         {
           code: '29',

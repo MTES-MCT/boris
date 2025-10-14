@@ -35,6 +35,7 @@ describe('FindAllOfssUsecase', () => {
           ofs1.websiteUrl,
           ofs1.phone,
           ofs1.email,
+          ofs1.producesBrs,
           ofs1.departements.map((d) => ({
             id: d.id,
             name: d.name,
@@ -53,6 +54,7 @@ describe('FindAllOfssUsecase', () => {
           ofs2.websiteUrl,
           ofs2.phone,
           ofs2.email,
+          ofs2.producesBrs,
           ofs2.departements.map((d) => ({
             id: d.id,
             name: d.name,

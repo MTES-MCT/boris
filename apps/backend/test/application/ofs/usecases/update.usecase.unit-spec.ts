@@ -61,6 +61,7 @@ describe('UpdateOfsUsecase', () => {
       updatedOfs.websiteUrl,
       updatedOfs.phone,
       updatedOfs.email,
+      updatedOfs.producesBrs,
       updatedOfs.departements.map((d) => ({
         id: d.id,
         name: d.name,
@@ -251,6 +252,7 @@ describe('UpdateOfsUsecase', () => {
       updatedOfs.websiteUrl,
       updatedOfs.phone,
       updatedOfs.email,
+      updatedOfs.producesBrs,
       updatedOfs.departements.map((d) => ({
         id: d.id,
         name: d.name,

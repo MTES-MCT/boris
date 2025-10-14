@@ -24,9 +24,21 @@ export class FindOfsByIdUsecase {
       ofs.websiteUrl,
       ofs.phone,
       ofs.email,
-      ofs?.departements,
-      ofs?.regions,
-      ofs?.distributors,
+      ofs.producesBrs,
+      ofs?.departements.map((departement) => ({
+        id: departement.id,
+        name: departement.name,
+        code: departement.code,
+      })),
+      ofs?.regions.map((region) => ({
+        id: region.id,
+        name: region.name,
+      })),
+      ofs?.distributors.map((distributor) => ({
+        id: distributor.id,
+        name: distributor.name,
+        websiteUrl: distributor.websiteUrl,
+      })),
     );
   }
 }

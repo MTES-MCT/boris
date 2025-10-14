@@ -31,6 +31,7 @@ describe('DeleteOfsUsecase', () => {
       null,
       null,
       null,
+      null,
       [],
       [],
       [],

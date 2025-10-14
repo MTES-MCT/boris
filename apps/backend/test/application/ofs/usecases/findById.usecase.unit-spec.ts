@@ -30,9 +30,21 @@ describe('FindOfsByIdUsecase', () => {
       ofs1.websiteUrl,
       ofs1.phone,
       ofs1.email,
-      ofs1.departements,
-      ofs1.regions,
-      ofs1.distributors,
+      ofs1.producesBrs,
+      ofs1.departements.map((d) => ({
+        id: d.id,
+        name: d.name,
+        code: d.code,
+      })),
+      ofs1.regions.map((r) => ({
+        id: r.id,
+        name: r.name,
+      })),
+      ofs1.distributors.map((d) => ({
+        id: d.id,
+        name: d.name,
+        websiteUrl: d.websiteUrl,
+      })),
     );
 
     const result = await useCase.execute({ id: '1234' });

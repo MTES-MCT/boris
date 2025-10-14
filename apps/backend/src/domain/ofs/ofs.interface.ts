@@ -1,6 +1,6 @@
-import { DepartementInterface } from '../departement/departement.interface';
-import { DistributorInterface } from '../distributor/distributor.interface';
-import { RegionInterface } from '../region/region.interface';
+import { RegionEntity } from 'src/infrastructure/region/region.entity';
+import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
+import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 
 export interface OfsInterface {
   id?: string;
@@ -8,9 +8,10 @@ export interface OfsInterface {
   phone: string | null;
   websiteUrl: string | null;
   email: string | null;
-  regions: RegionInterface[];
-  departements: DepartementInterface[];
-  distributors: DistributorInterface[];
+  producesBrs: boolean;
+  regions: RegionEntity[];
+  departements: DepartementEntity[];
+  distributors: DistributorEntity[];
   createdAt: Date;
   updatedAt: Date;
 }

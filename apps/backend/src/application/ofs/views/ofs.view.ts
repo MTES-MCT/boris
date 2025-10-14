@@ -19,6 +19,9 @@ export class OfsView {
   @ApiProperty({ example: 'contact@ofs-de-bretagne.fr' })
   public email: string | null;
 
+  @ApiProperty({ example: true })
+  public producesBrs: boolean | null;
+
   @ApiProperty({
     type: /* istanbul ignore next */ () => [DepartementRelationnalView],
   })
@@ -46,6 +49,7 @@ export class OfsView {
     websiteUrl: string | null,
     phone: string | null,
     email: string | null,
+    producesBrs: boolean | null,
     departements: DepartementRelationnalView[],
     regions: RegionRelationnalView[],
     distributors: DistributorRelationnalView[],
@@ -55,6 +59,7 @@ export class OfsView {
     this.websiteUrl = websiteUrl;
     this.phone = phone;
     this.email = email;
+    this.producesBrs = producesBrs;
     this.departements = departements;
     this.regions = regions;
     this.distributors = distributors;

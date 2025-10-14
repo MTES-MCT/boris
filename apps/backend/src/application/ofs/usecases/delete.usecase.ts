@@ -20,6 +20,6 @@ export class DeleteOfsUsecase {
 
     await this.ofsRepository.delete(id);
 
-    return new OfsView(ofs.id, ofs.name, null, null, null, [], [], []);
+    return new OfsView(ofs.id, ofs.name, null, null, null, null, [], [], []);
   }
 }

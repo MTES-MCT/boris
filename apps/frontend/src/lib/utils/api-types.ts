@@ -9,11 +9,12 @@ export type Pagination<T> = Omit<
 
 export type OfsView = Omit<
   components['schemas']['OfsView'],
-  'websiteUrl' | 'phone' | 'email'
+  'websiteUrl' | 'phone' | 'email' | 'producesBrs'
 > & {
   websiteUrl: string | null;
   phone: string | null;
   email: string | null;
+  producesBrs: boolean | null;
 };
 
 export type BrsDiffusionWebsiteView =

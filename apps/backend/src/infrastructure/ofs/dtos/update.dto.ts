@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
+import {
+  IsArray,
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class UpdateOfsDTO {
   @ApiProperty()
@@ -21,6 +28,14 @@ export class UpdateOfsDTO {
   @IsString()
   @IsOptional()
   public email: string;
+
+  @ApiProperty()
+  @Transform(({ value }) => {
+    return typeof value === 'boolean';
+  })
+  @IsBoolean()
+  @IsOptional()
+  public producesBrs: boolean;
 
   @ApiProperty()
   @IsArray()

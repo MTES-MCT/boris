@@ -58,6 +58,7 @@ describe('CreateOfsUsecase', () => {
       ofs1.websiteUrl,
       ofs1.phone,
       ofs1.email,
+      ofs1.producesBrs,
       ofs1.departements.map((d) => ({
         id: d.id,
         name: d.name,
@@ -120,6 +121,7 @@ describe('CreateOfsUsecase', () => {
       minimalOfs.websiteUrl,
       minimalOfs.phone,
       minimalOfs.email,
+      minimalOfs.producesBrs,
       [],
       [],
       [],
@@ -260,6 +262,7 @@ describe('CreateOfsUsecase', () => {
       ofsWithNulls.websiteUrl,
       ofsWithNulls.phone,
       ofsWithNulls.email,
+      ofsWithNulls.producesBrs,
       ofsWithNulls.departements.map((d) => ({
         id: d.id,
         name: d.name,
