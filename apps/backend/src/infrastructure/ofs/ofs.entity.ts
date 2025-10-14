@@ -30,7 +30,7 @@ export class OfsEntity implements OfsInterface {
   public email: string | null;
 
   @Column({ type: 'boolean', nullable: false, default: false })
-  public hasStartedPrograms: boolean;
+  public producesBrs: boolean;
 
   @ManyToMany(() => DepartementEntity, (departement) => departement.ofss)
   @JoinTable({
@@ -61,6 +61,7 @@ export class OfsEntity implements OfsInterface {
     phone: string | null,
     websiteUrl: string | null,
     email: string | null,
+    producesBrs: boolean,
     departements: DepartementEntity[],
     regions: RegionEntity[],
     distributors: DistributorEntity[],
@@ -69,6 +70,7 @@ export class OfsEntity implements OfsInterface {
     this.phone = phone;
     this.websiteUrl = websiteUrl;
     this.email = email;
+    this.producesBrs = producesBrs;
     this.departements = departements;
     this.regions = regions;
     this.distributors = distributors;

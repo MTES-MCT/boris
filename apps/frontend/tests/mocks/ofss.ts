@@ -7,6 +7,7 @@ export const ofss: OfsView[] = [
     websiteUrl: null,
     phone: null,
     email: null,
+    producesBrs: null,
     departements: [
       {
         id: '634ab950-c60b-4021-b865-d0941bf613fd',
@@ -35,6 +36,7 @@ export const ofss: OfsView[] = [
     websiteUrl: null,
     phone: null,
     email: null,
+    producesBrs: null,
     departements: [],
     regions: [
       {
@@ -61,6 +63,7 @@ export const ofss: OfsView[] = [
     websiteUrl: null,
     phone: '06 50 59 31 05',
     email: 'contact@ofs-fst.fr',
+    producesBrs: null,
     departements: [],
     regions: [
       {
@@ -76,6 +79,7 @@ export const ofss: OfsView[] = [
     websiteUrl: 'https://www.foncier-cooperatif-malouin.coop/',
     phone: null,
     email: 'contact.fcm@keredes.coop',
+    producesBrs: null,
     departements: [
       {
         id: '8fb92e67-2a0b-4745-8b1e-e0a76e1e84d2',

@@ -72,14 +72,15 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/api/ofss/errors': {
+  '/api/municipalities/{inseeCode}': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get: operations['GetOfssApiController_errors'];
+    /** Récupérer une commune par son code INSEE */
+    get: operations['GetMunicipalityByInseeCodeApiController_index'];
     put?: never;
     post?: never;
     delete?: never;
@@ -163,6 +164,8 @@ export interface components {
       phone: Record<string, never>;
       /** @example contact@ofs-de-bretagne.fr */
       email: Record<string, never>;
+      /** @example true */
+      producesBrs: Record<string, never>;
       departements: components['schemas']['DepartementRelationnalView'][];
       regions: components['schemas']['RegionRelationnalView'][];
       distributors: components['schemas']['DistributorRelationnalView'][];
@@ -170,6 +173,17 @@ export interface components {
       createdAt?: string;
       /** Format: date-time */
       updatedAt?: string;
+    };
+    MunicipalityView: {
+      /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
+      id: string;
+      /** @example Quimper */
+      name: string;
+      /** @example 29232 */
+      inseeCode: string;
+      /** @example B1 */
+      zone: string;
+      departement: components['schemas']['DepartementRelationnalView'];
     };
   };
   responses: never;
@@ -336,20 +350,24 @@ export interface operations {
       };
     };
   };
-  GetOfssApiController_errors: {
+  GetMunicipalityByInseeCodeApiController_index: {
     parameters: {
       query?: never;
       header?: never;
-      path?: never;
+      path: {
+        inseeCode: string;
+      };
       cookie?: never;
     };
     requestBody?: never;
     responses: {
-      200: {
+      default: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['MunicipalityView'];
+        };
       };
     };
   };

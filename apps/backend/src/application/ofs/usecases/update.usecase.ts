@@ -28,6 +28,7 @@ export class UpdateOfsUsecase {
       phone,
       websiteUrl,
       email,
+      producesBrs,
       regionNames,
       departementNames,
       distributorIds,
@@ -77,6 +78,7 @@ export class UpdateOfsUsecase {
     ofs.phone = phone || null;
     ofs.websiteUrl = websiteUrl || null;
     ofs.email = email || null;
+    ofs.producesBrs = producesBrs || false;
     ofs.departements = existingDepartements;
     ofs.regions = existingRegions;
     ofs.distributors = existingDistributors;
@@ -89,6 +91,7 @@ export class UpdateOfsUsecase {
       updatedOfs.websiteUrl,
       updatedOfs.phone,
       updatedOfs.email,
+      updatedOfs.producesBrs,
       updatedOfs.departements.map((d) => ({
         id: d.id,
         name: d.name,

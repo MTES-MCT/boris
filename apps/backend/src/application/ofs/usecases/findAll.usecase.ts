@@ -27,6 +27,7 @@ export class FindAllOfssUsecase {
         ofs.websiteUrl,
         ofs.phone,
         ofs.email,
+        ofs.producesBrs,
         ofs.departements.map((departement) => ({
           id: departement.id,
           name: departement.name,

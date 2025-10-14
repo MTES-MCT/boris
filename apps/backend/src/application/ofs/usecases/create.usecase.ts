@@ -28,6 +28,7 @@ export class CreateOfsUsecase {
       phone,
       websiteUrl,
       email,
+      producesBrs,
       regionNames,
       departementNames,
       distributorIds,
@@ -73,6 +74,7 @@ export class CreateOfsUsecase {
         phone || null,
         websiteUrl || null,
         email || null,
+        producesBrs || false,
         existingDepartements,
         existingRegions,
         existingDistributors,
@@ -85,6 +87,7 @@ export class CreateOfsUsecase {
       createdOfs.websiteUrl,
       createdOfs.phone,
       createdOfs.email,
+      createdOfs.producesBrs,
       createdOfs.departements.map((d) => ({
         id: d.id,
         name: d.name,
