@@ -29,6 +29,9 @@ export class OfsEntity implements OfsInterface {
   @Column({ type: 'varchar', nullable: true })
   public email: string | null;
 
+  @Column({ type: 'boolean', nullable: false, default: false })
+  public hasStartedPrograms: boolean;
+
   @ManyToMany(() => DepartementEntity, (departement) => departement.ofss)
   @JoinTable({
     name: 'ofs_departement',
