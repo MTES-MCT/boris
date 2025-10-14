@@ -8,6 +8,8 @@ import { FindAllOfssUsecase } from 'src/application/ofs/usecases/findAll.usecase
 import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases/findAll.usecase';
 import { DEFAULT_PAGINATION } from 'src/application/common/pagination';
 import { FindAllBrsDiffusionWebsitesUsecase } from 'src/application/brs-diffusion-website/usecases/findAll.usecase';
+import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.usecase';
+import { FindAllDepartementsUsecase } from 'src/application/departement/usecases/findAll.usecase';
 
 @ApiExcludeController()
 @Controller('/')
@@ -16,6 +18,8 @@ export class AdminHomeController {
     private readonly findAllOfssUsecase: FindAllOfssUsecase,
     private readonly findAllDistributorsUsecase: FindAllDistributorsUsecase,
     private readonly findAllBrsDiffusionWebsitesUsecase: FindAllBrsDiffusionWebsitesUsecase,
+    private readonly findAllRegionsUsecase: FindAllRegionsUsecase,
+    private readonly findAllDepartementsUsecase: FindAllDepartementsUsecase,
   ) {}
 
   @UseGuards(LocalIsAuthenticatedGuard)
@@ -33,6 +37,12 @@ export class AdminHomeController {
     const brsDiffusionWebsites =
       await this.findAllBrsDiffusionWebsitesUsecase.execute(DEFAULT_PAGINATION);
 
+    const regions =
+      await this.findAllRegionsUsecase.execute(DEFAULT_PAGINATION);
+
+    const departements =
+      await this.findAllDepartementsUsecase.execute(DEFAULT_PAGINATION);
+
     res.render('index', {
       layout: 'layouts/main',
       title: translations.contents.home.title,
@@ -40,6 +50,8 @@ export class AdminHomeController {
       ofss,
       distributors,
       brsDiffusionWebsites,
+      regions,
+      departements,
     });
   }
 }
