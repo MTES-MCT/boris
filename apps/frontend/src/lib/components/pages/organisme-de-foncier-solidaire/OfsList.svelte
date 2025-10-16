@@ -10,8 +10,6 @@
   };
 
   const { regions }: Props = $props();
-
-  $inspect(regions);
 </script>
 
 <div class="fr-container rounded-box-lg background-color-white">
