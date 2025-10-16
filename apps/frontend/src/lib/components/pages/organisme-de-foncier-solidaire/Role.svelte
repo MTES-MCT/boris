@@ -4,16 +4,14 @@
 
   import { default as MascotteThinking } from '$assets/icons/mascotte-thinking.svg?raw';
   import Alert from '$components/common/Alert.svelte';
+  import TitleWithMascotte from '$components/pages/organisme-de-foncier-solidaire/TitleWithMascotte.svelte';
 </script>
 
 <div class="wrapper background-color-white">
   <Section>
-    <div class="title-container">
-      <div class="mascotte">
-        {@html MascotteThinking}
-      </div>
-      <h2 class="fr-mb-0">Le rôle des OFS</h2>
-    </div>
+    <TitleWithMascotte
+      title="Le rôle des OFS"
+      mascotte={MascotteThinking} />
 
     <div class="container">
       <div class="actions">
@@ -97,23 +95,6 @@
 <style lang="postcss">
   .wrapper {
     margin-block: 5rem;
-  }
-
-  .title-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  h2 {
-    text-align: center;
-
-    margin-bottom: 3rem;
-    background-color: var(--color-red-primary);
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
   }
 
   .actions {

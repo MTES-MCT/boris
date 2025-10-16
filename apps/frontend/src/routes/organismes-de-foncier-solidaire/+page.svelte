@@ -6,6 +6,9 @@
   import Definition from '$components/pages/organisme-de-foncier-solidaire/Definition.svelte';
   import Role from '$components/pages/organisme-de-foncier-solidaire/Role.svelte';
   import Proximity from '$components/pages/organisme-de-foncier-solidaire/Proximity.svelte';
+  import OfsList from '$components/pages/organisme-de-foncier-solidaire/OfsList.svelte';
+  import { formatOfss } from '$lib/utils/formatters';
+  import Synthesis from '$components/pages/organisme-de-foncier-solidaire/Synthesis.svelte';
 
   type Props = {
     data: DataType;
@@ -14,8 +17,7 @@
   const { data }: Props = $props();
 
   const ofss = data.ofss.items;
-
-  $inspect(ofss);
+  const formattedOfss = formatOfss(ofss);
 </script>
 
 <svelte:head>
@@ -32,5 +34,6 @@
   <Definition />
   <Role />
   <Proximity />
-  <p class="fr-mb-0">Bonjour</p>
+  <OfsList regions={formattedOfss} />
+  <Synthesis />
 </GradientBackgroundWrapper>

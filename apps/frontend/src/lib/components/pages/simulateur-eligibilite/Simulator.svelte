@@ -1,9 +1,9 @@
 <script lang="ts">
-  import BoxBlueOverlayed from '$components/common/ShadowedBox.svelte';
+  import ShadowedBox from '$components/common/ShadowedBox.svelte';
   import Data from '$components/pages/simulateur-eligibilite/Data.svelte';
 </script>
 
-<BoxBlueOverlayed>
+<ShadowedBox>
   <h3 class="fr-h4 heading color-blue-primary">
     Les plafonds de ressources d'éligibilité au Bail Réel Solidaire.
   </h3>
@@ -34,4 +34,4 @@
       Textes de référence
     </a>
   </div>
-</BoxBlueOverlayed>
+</ShadowedBox>

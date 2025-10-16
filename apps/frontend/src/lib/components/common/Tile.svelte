@@ -9,28 +9,24 @@
   import Pictogram from '$components/common/Pictogram.svelte';
 
   type Props = {
-    title: string;
+    title?: string;
     description?: string;
     detail?: string;
     badge?: string;
     pictogram?: keyof typeof pictograms;
   };
 
-  const {
-    title,
-    description,
-    detail,
-    badge,
-    pictogram = 'virus',
-  }: Props = $props();
+  const { title, description, detail, badge, pictogram }: Props = $props();
 </script>
 
 <div class="fr-tile">
   <div class="fr-tile__body">
     <div class="fr-tile__content">
-      <h3 class="fr-tile__title">
-        {title}
-      </h3>
+      {#if title}
+        <h3 class="fr-tile__title">
+          {title}
+        </h3>
+      {/if}
       {#if description}
         <p class="fr-tile__desc">{description}</p>
       {/if}

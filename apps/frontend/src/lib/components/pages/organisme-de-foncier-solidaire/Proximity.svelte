@@ -1,9 +1,9 @@
 <script lang="ts">
-  import BoxBlueOverlayed from '$components/common/ShadowedBox.svelte';
+  import ShadowedBox from '$components/common/ShadowedBox.svelte';
   import Alert from '$components/common/Alert.svelte';
 </script>
 
-<BoxBlueOverlayed>
+<ShadowedBox hidePath>
   <h2>Un acteur de proximité</h2>
   <p>
     On dénombre plus de 155 organismes de foncier solidaire (OFS) agréés au 30
@@ -29,4 +29,4 @@
       en consultant la liste des sites qui proposent des logements en BRS à vendre.
     </p>
   </Alert>
-</BoxBlueOverlayed>
+</ShadowedBox>
