@@ -1,27 +1,38 @@
 <script lang="ts">
   import Notice from '$components/common/Notice.svelte';
   import Promesses from '$components/common/StepPage/Promesses.svelte';
-  import Promess from '$components/common/StepPage/Promess.svelte';
+
+  import { default as MascotteWaving } from '$assets/icons/mascotte-waving.svg?raw';
 </script>
 
-<Promesses title="OFS: définition">
-  <div class="definition-container">
-    <div class="notice-container">
-      <Notice content="OFS = Organisme de Foncier Solidaire." />
-    </div>
+<div class="container">
+  <Promesses title="Définition d'un OFS">
+    <div class="definition-container">
+      <div class="mascotte">
+        {@html MascotteWaving}
+      </div>
 
-    <p>
-      Un Organisme de Foncier Solidaire (OFS) est <span class="fr-text--bold">
-        une structure à but non lucratif ou à lucrativité limitée
-      </span>
-      agréée par l'État. Il peut s'agir d'un établissement public foncier local,
-      d'un bailleur social, d'une association loi 1901, d'un groupe d'intérêt public
-      (GIP) ou d'une société coopérative d'intérêt collectif (SCIC).
-    </p>
-  </div>
-</Promesses>
+      <div class="notice-container">
+        <Notice content="OFS = Organisme de Foncier Solidaire." />
+      </div>
+
+      <p>
+        Un Organisme de Foncier Solidaire (OFS) est <span class="fr-text--bold">
+          une structure à but non lucratif ou à lucrativité limitée
+        </span>
+        agréée par l'État. Il peut s'agir d'un établissement public foncier local,
+        d'un bailleur social, d'une association loi 1901, d'un groupe d'intérêt public
+        (GIP) ou d'une société coopérative d'intérêt collectif (SCIC).
+      </p>
+    </div>
+  </Promesses>
+</div>
 
 <style lang="postcss">
+  .container {
+    position: relative;
+  }
+
   .definition-container {
     display: flex;
     flex-direction: column;
@@ -30,6 +41,12 @@
 
     @media (--sm-viewport) {
       padding-inline: 2rem;
+    }
+
+    .mascotte {
+      position: absolute;
+      top: -52px;
+      right: 40px;
     }
   }
 
