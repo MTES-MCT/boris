@@ -1,0 +1,51 @@
+<script lang="ts">
+  import Notice from '$components/common/Notice.svelte';
+  import Promesses from '$components/common/StepPage/Promesses.svelte';
+  import Promess from '$components/common/StepPage/Promess.svelte';
+</script>
+
+<Promesses title="OFS: définition">
+  <div class="definition-container">
+    <div class="notice-container">
+      <Notice content="OFS = Organisme de Foncier Solidaire." />
+    </div>
+
+    <p>
+      Un Organisme de Foncier Solidaire (OFS) est <span class="fr-text--bold">
+        une structure à but non lucratif ou à lucrativité limitée
+      </span>
+      agréée par l'État. Il peut s'agir d'un établissement public foncier local,
+      d'un bailleur social, d'une association loi 1901, d'un groupe d'intérêt public
+      (GIP) ou d'une société coopérative d'intérêt collectif (SCIC).
+    </p>
+  </div>
+</Promesses>
+
+<style lang="postcss">
+  .definition-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-inline: 1rem;
+
+    @media (--sm-viewport) {
+      padding-inline: 2rem;
+    }
+  }
+
+  .notice-container {
+    display: inline-flex;
+    flex-direction: column;
+  }
+
+  p {
+    text-align: center;
+    font-size: 1rem;
+    margin-block: 2rem;
+
+    @media (--sm-viewport) {
+      font-size: 1.125rem;
+      margin-block: 3rem;
+    }
+  }
+</style>
