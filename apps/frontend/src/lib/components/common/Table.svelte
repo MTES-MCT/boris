@@ -12,13 +12,15 @@
     theads: string[];
     tbodies: string[][];
     caption?: string;
+    multiline?: boolean;
   };
 
-  const { caption, theads, tbodies }: Props = $props();
+  const { caption, theads, tbodies, multiline = false }: Props = $props();
 </script>
 
 <div
   class="fr-table fr-table--lg fr-table--bordered"
+  class:fr-table--multiline={multiline}
   id="table-0-component">
   <div class="fr-table__wrapper">
     <div class="fr-table__container">

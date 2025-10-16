@@ -1,9 +1,11 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import { default as Star } from '$assets/icons/star.svg?raw';
+
   type Props = {
     children: Snippet;
   };
+
   const { children }: Props = $props();
 </script>
 

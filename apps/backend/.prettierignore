@@ -1,5 +1,6 @@
 .svelte-kit/
 package-lock.json
+package.json
 Makefile
 .env.example
 .prettierignore
@@ -10,3 +11,5 @@ Procfile
 **/*.woff2
 .gitignore
 favicon.ico
+**/*.yml
+.nvmrc
