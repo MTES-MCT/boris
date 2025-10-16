@@ -4,8 +4,8 @@
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Hero from '$components/common/StepPage/Hero.svelte';
   import Definition from '$components/pages/organisme-de-foncier-solidaire/Definition.svelte';
-  import Section from '$components/common/Section.svelte';
   import Role from '$components/pages/organisme-de-foncier-solidaire/Role.svelte';
+  import Proximity from '$components/pages/organisme-de-foncier-solidaire/Proximity.svelte';
 
   type Props = {
     data: DataType;
@@ -29,10 +29,8 @@
   <Hero title="Les OFS : à quoi servent-ils, où les trouver ?">
     <span></span>
   </Hero>
-
   <Definition />
-
   <Role />
-
+  <Proximity />
   <p class="fr-mb-0">Bonjour</p>
 </GradientBackgroundWrapper>
