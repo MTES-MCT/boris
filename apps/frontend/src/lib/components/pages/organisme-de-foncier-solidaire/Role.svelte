@@ -1,123 +1,157 @@
 <script lang="ts">
   import Section from '$components/common/Section.svelte';
-  // import '@gouvfr/dsfr/dist/utility/icons/icons-business/icons-business.css';
-  // import '@gouvfr/dsfr/dist/utility/icons/icons-buildings/icons-buildings.min.css';
+  import Tile from '$components/common/Tile.svelte';
+
+  import { default as MascotteThinking } from '$assets/icons/mascotte-thinking.svg?raw';
+  import Alert from '$components/common/Alert.svelte';
 </script>
 
 <div class="wrapper background-color-white">
   <Section>
-    <h2>OFS-BRS : le rôle des OFS</h2>
+    <div class="title-container">
+      <div class="mascotte">
+        {@html MascotteThinking}
+      </div>
+      <h2 class="fr-mb-0">Le rôle des OFS</h2>
+    </div>
 
     <div class="container">
-      <div class="content">
-        <h3>La mission des OFS</h3>
-        <p>
-          Les Organismes de Foncier Solidaire (OFS) ont pour mission de réaliser
-          des logements et de les vendre sous le régime spécifique du Bail Réel
-          Solidaire.
-        </p>
-        <p>
-          Pour réaliser cette mission, l'OFS <span class="fr-text--bold">
-            achète et conserve des terrains
-          </span>
-          , sur lesquels il bâtit des logements, qu'il met ensuite en vente à des
-          ménages modestes et moyens afin qu'ils puissent devenir propriétaires via
-          un
-          <span class="fr-text--bold">bail de très longue durée</span>
-          (de 18 à 99 ans). Ce régime permet ainsi à l'OFS et au ménage de partager
-          la propriété du logement, ce qui se traduit par un prix réduit à l'achat.
-          Attention ! Le dispositif BRS n'est pas exempt de contrepartie.
-        </p>
-        <p>
-          Pour en savoir plus : <a
-            href="/blog/le-bail-reel-solidaire-brs-cest-quoi-exactement"
-            class="fr-link">
-            le Bail Réel Solidaire, c'est quoi exactement ?
-          </a>
-        </p>
+      <div class="actions">
+        <Tile
+          title="Achat"
+          description="Acquisition des terrains pour construire des logements vendus en bail réel solidaire"
+          pictogram="money" />
+
+        <Tile
+          title="Sélection"
+          description="Processus de sélection des ménages éligibles à l'acquisition"
+          pictogram="community" />
+
+        <Tile
+          title="Signature"
+          description="Formalisation de la vente en bail réel solidaire avec les ménages acquéreurs"
+          pictogram="contract" />
+
+        <Tile
+          title="Partage"
+          description="Partage de la propriété des terrains avec les ménages acquéreurs"
+          pictogram="house" />
+
+        <Tile
+          title="Gestion"
+          description="Suivi de la gestion du bien et des potentielles reventes ou transmission du logement"
+          pictogram="binders" />
       </div>
       <div class="content">
-        <h3>Que font les OFS ?</h3>
-
-        <div class="actions">
-          {@render action(
-            "Achat des terrains afin d'y construire des logements vendus en bail réel solidaire",
-            'fr-icon-shake-hands-fill',
-          )}
-          {@render action(
-            'Sélection des ménages acquéreurs',
-            'fr-icon-team-fill',
-          )}
-          {@render action(
-            'Signature de la vente en BRS avec les acquéreurs',
-            'fr-icon-ball-pen-fill',
-          )}
-          {@render action(
-            'Partage de la propriété des terrains avec les ménages acquéreurs',
-            'fr-icon-community-fill',
-          )}
-          {@render action(
-            'Suivi de la gestion du bien et des potentielles reventes ou transmission du logement',
-            'fr-icon-presentation-fill',
-          )}
+        <h3 class="fr-mb-0">La mission des OFS</h3>
+        <div>
+          <p>
+            Les Organismes de Foncier Solidaire (OFS) ont pour mission de
+            réaliser des logements et de les vendre sous le régime spécifique du
+            bail réel solidaire (BRS).
+          </p>
+          <p class="fr-mb-0">
+            Pour réaliser cette mission, l'organisme de fonctier solidaire (OFS) <span
+              class="fr-text--bold">
+              achète et conserve des terrains
+            </span>
+            , sur lesquels il bâtit des logements, qu'il met ensuite en vente à des
+            ménages
+            <a
+              href="/simulateur-eligibilite"
+              class="fr-link">
+              éligibles
+            </a>
+            afin qu'ils puissent devenir propriétaires via un
+            <span class="fr-text--bold">
+              bail réel solidaire, dont la durée est très longue
+            </span>
+            (de 18 à 99 ans). Ce dispositif permet ainsi à l'OFS et au ménage de
+            partager la propriété du logement, ce qui se traduit par un prix réduit
+            à l'achat. Attention ! Le dispositif du bail réel solidaire (BRS) n'est
+            pas exempt de contrepartie.
+          </p>
         </div>
+
+        <Alert type="info">
+          <p class="fr-text--bold">
+            Vous pouvez consulter <a
+              href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
+              class="fr-link">
+              notre page dédiée
+            </a>
+            pour en savoir plus sur le bail réel solidaire (BRS).
+          </p>
+        </Alert>
+
+        <a
+          href="/simulateur-eligibilite"
+          class="fr-btn fr-btn--lg">
+          Simuler mon éligibilité au Bail Réel Solidaire
+        </a>
       </div>
     </div>
   </Section>
 </div>
-
-{#snippet action(content: string, icon: string)}
-  <div class="action">
-    <p class="fr-mb-0 fr-text--bold fr-text--sm">
-      <span
-        class={`${icon}`}
-        aria-hidden="true">
-      </span>
-      {content}
-    </p>
-  </div>
-{/snippet}
 
 <style lang="postcss">
   .wrapper {
     margin-block: 5rem;
   }
 
-  h2 {
-    text-align: center;
-    color: var(--color-blue-primary);
-    margin-bottom: 3rem;
+  .title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
   }
 
-  .container {
+  h2 {
+    text-align: center;
+
+    margin-bottom: 3rem;
+    background-color: var(--color-red-primary);
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+  }
+
+  .actions {
+    --gap: 1rem;
+    --width: calc(100% - var(--gap));
+
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    gap: var(--gap);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
+
+    :global(.fr-tile) {
+      flex: 1 1 var(--width);
+      max-width: var(--width);
+    }
+
+    @media (--xs-viewport) {
+      --width: calc(50% - var(--gap));
+    }
 
     @media (--md-viewport) {
-      flex-direction: row;
+      --gap: 2rem;
+      --width: calc(33.33% - var(--gap));
+
+      margin-bottom: 7rem;
     }
   }
 
   .content {
-    flex: 1;
-  }
-
-  h3 {
-    &:nth-last-child(1) {
-      text-align: right;
-    }
-  }
-
-  .actions {
     display: flex;
+    gap: 2rem;
     flex-direction: column;
-    gap: 1rem;
-  }
+    align-items: center;
+    text-align: center;
 
-  .action {
-    padding: 0.5rem;
-    border: solid 1px var(--color-blue-primary);
-    border-radius: var(--border-radius-md);
+    @media (--md-viewport) {
+      gap: 3rem;
+    }
   }
 </style>
