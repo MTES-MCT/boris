@@ -22,26 +22,26 @@
     position: relative;
     z-index: 10;
     max-width: 992px;
+
     .content {
       padding-block-start: var(--7w);
       padding-block-end: var(--3w);
       padding-inline: var(--2w);
+
       h2 {
-        font-size: 1.5rem;
         text-align: center;
         margin-block-end: var(--6w);
       }
     }
   }
-  @media (--md-viewport) {
+
+  @media (--lg-viewport) {
     .promesse {
       .content {
         position: relative;
         padding-inline: var(--4w);
         transform-style: preserve-3d;
-        h2 {
-          font-size: 1.75rem;
-        }
+
         &::after {
           content: '';
           position: absolute;

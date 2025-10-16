@@ -29,7 +29,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
     "@csstools/postcss-global-data": "^3.0.0",
-    "@gouvfr/dsfr": "^1.12.1",
+    "@gouvfr/dsfr": "^1.14.2",
     "@keyv/serialize": "^1.1.0",
     "@lhci/cli": "^0.14.0",
     "@playwright/test": "^1.28.1",
