@@ -2,16 +2,19 @@
   import type { Snippet } from 'svelte';
 
   type Props = {
+    hidePath?: boolean;
     children: Snippet;
   };
 
-  const { children }: Props = $props();
+  const { children, hidePath = false }: Props = $props();
 </script>
 
 <section
   class="fr-container"
   id="plafonds-de-ressources">
-  <div class="wrapper">
+  <div
+    class="wrapper"
+    class:wrapper--path-hidden={hidePath}>
     <div class="blue-overlay rounded-box-lg"></div>
     <div class="content rounded-box-lg background-color-white">
       {@render children()}
@@ -33,6 +36,12 @@
       height: var(--15w);
       width: var(--path-thickness);
       background-color: var(--color-blue-primary);
+    }
+  }
+
+  .wrapper--path-hidden {
+    &::before {
+      display: none;
     }
   }
 

@@ -14,14 +14,22 @@
     tbodies: string[][];
     caption?: string;
     size?: 'sm' | 'md' | 'lg';
+    multiline?: boolean;
   };
 
-  const { caption, theads, tbodies, size = 'lg' }: Props = $props();
+  const {
+    caption,
+    theads,
+    tbodies,
+    size = 'md',
+    multiline = false,
+  }: Props = $props();
 </script>
 
 <div
   style="width: 100%;"
   class="fr-table fr-table--{size} fr-table--bordered"
+  class:fr-table--multiline={multiline}
   id={nanoid(10)}>
   <div class="fr-table__wrapper">
     <div class="fr-table__container">
