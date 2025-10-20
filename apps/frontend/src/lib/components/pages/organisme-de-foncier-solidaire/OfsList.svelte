@@ -24,9 +24,8 @@
       Voici la <b>
         liste des organismes de foncier solidaire (OFS) agréés en France
       </b>
-      , classés par région puis par ordre alphabétique. Chaque lien vous redirige
-      vers le site web de l'organisme de foncier solidaire (OFS) ou, le cas échéant,
-      vers une actualité concernant l'organisme de foncier solidaire (OFS).
+      , classés par région puis par ordre alphabétique. Certains organismes de foncier
+      solidaire (OFS) ont un lien qui redirige vers leur site web.
     </p>
 
     <div class="legend border-radius-sm">
