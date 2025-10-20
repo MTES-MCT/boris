@@ -46,7 +46,8 @@
           <p>
             Les Organismes de Foncier Solidaire (OFS) ont pour mission de
             réaliser des logements et de les vendre sous le régime spécifique du
-            bail réel solidaire (BRS).
+            bail réel solidaire (BRS), favorisant ainsi l'accession à la
+            propriété des ménages.
           </p>
           <p class="fr-mb-0">
             Pour réaliser cette mission, l'organisme de fonctier solidaire (OFS) <span
@@ -64,10 +65,10 @@
             <span class="fr-text--bold">
               bail réel solidaire, dont la durée est très longue
             </span>
-            (de 18 à 99 ans). Ce dispositif permet ainsi à l'OFS et au ménage de
-            partager la propriété du logement, ce qui se traduit par un prix réduit
-            à l'achat. Attention ! Le dispositif du bail réel solidaire (BRS) n'est
-            pas exempt de contrepartie.
+            (de 18 à 99 ans). Ce dispositif permet ainsi à l'organisme de foncier
+            solidaire (OFS) et au ménage de partager la propriété du logement, ce
+            qui se traduit par un prix réduit à l'achat. Attention ! Le dispositif
+            du bail réel solidaire (BRS) n'est pas exempt de contrepartie.
           </p>
         </div>
 

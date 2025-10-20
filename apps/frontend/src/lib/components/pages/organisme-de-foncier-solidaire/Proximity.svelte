@@ -9,10 +9,13 @@
     On dénombre plus de 155 organismes de foncier solidaire (OFS) agréés au 30
     Janvier 2025. Ils sont répartis sur le territoire: on trouve des organismes
     de foncier solidaire (OFS) dans toutes les régions de France métropolitaine.
-    Des OFS sont également agréés en Martinique, Guyane…
+    Des organismes de foncier solidaire (OFS) sont également agréés en
+    Martinique, Guyane…
   </p>
   <p>
-    Certains couvrent une <b>commune ou une métropole</b>
+    Certains organismes de foncier solidaire (OFS) couvrent une <b>
+      commune ou une métropole
+    </b>
     , d'autres ont un
     <b>rayonnement régional ou inter-régional.</b>
   </p>
@@ -24,9 +27,10 @@
       <a
         href="/logements-brs-disponibles"
         class="fr-link">
-        Trouver un logement près de chez vous
+        Trouvez un logement près de chez vous
       </a>
-      en consultant la liste des sites qui proposent des logements en BRS à vendre.
+      en consultant la carte du bail réel solidaire en France. Découvrez les villes
+      où des logements en bail réel solidaire (BRS) sont en vente !
     </p>
   </Alert>
 </ShadowedBox>

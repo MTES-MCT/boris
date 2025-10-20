@@ -13,7 +13,9 @@
       </div>
 
       <div class="notice-container">
-        <Notice content="OFS = Organisme de Foncier Solidaire." />
+        <Notice
+          content="OFS = Organisme de Foncier Solidaire."
+          type="info" />
       </div>
 
       <p>

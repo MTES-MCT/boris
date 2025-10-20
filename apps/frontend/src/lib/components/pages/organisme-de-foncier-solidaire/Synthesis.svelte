@@ -39,8 +39,9 @@
           class="fr-link">
           BoRiS vous accompagne pas à pas
         </a>
-        pour mieux comprendre ce dispositif et faire les bons choix pour votre projet
-        immobilier. Suivez les étapes pour acquérir un logement abordable.
+        pour mieux comprendre ce dispositif d'accession sociale à la propriété et
+        faire les bons choix pour votre projet immobilier. Suivez les étapes pour
+        acquérir un logement abordable.
       </p>
       <p>
         Votre OFS n'est pas listé ici ? <a
