@@ -15,8 +15,12 @@
         <p>
           L'équipe du projet (1 intrapreneur + 1 coach) ont testé la pertinence
           du projet à travers des interviews d'une vingtaine de personnes
-          (acheteurs en BRS, bénéficiaires potentiels, banques, OFS…) et des
-          travaux de recherche.
+          (acheteurs en BRS, bénéficiaires potentiels, banques, <a
+            href="/organismes-de-foncier-solidaire"
+            class="fr-link fr-text--sm">
+            organismes de foncier solidaire (OFS)
+          </a>
+          , etc.) et des travaux de recherche.
         </p>
       </div>
     </div>

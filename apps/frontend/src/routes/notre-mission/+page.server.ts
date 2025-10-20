@@ -18,7 +18,7 @@ export const load: PageServerLoad = async ({ fetch }): Promise<DataType> => {
       ...statistics,
       {
         amount: ofss.totalCount.toString(),
-        subtitle: 'Organismes de Foncier Solidaire partenaires',
+        subtitle: 'Organismes de foncier solidaire (OFS) partenaires',
         content: '',
       },
     ],

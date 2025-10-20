@@ -27,10 +27,14 @@
         près de chez vous !
       </svelte:element>
       <p>
-        Les OFS partagent la propriété des logements en bail réel solidaire
-        (BRS) avec les ménages bénéficiaires du dispositif, les aident,
-        sécurisent leur achat et les accompagnent tout au long du processus,
-        découvrez leurs offres !
+        Les <a
+          href="/organismes-de-foncier-solidaire"
+          class="fr-link">
+          organismes de foncier solidaire (OFS)
+        </a>
+        partagent la propriété des logements en bail réel solidaire (BRS) avec les
+        ménages bénéficiaires du dispositif, les aident, sécurisent leur achat et
+        les accompagnent tout au long du processus, découvrez leurs offres !
       </p>
       <a
         href="/logements-brs-disponibles"

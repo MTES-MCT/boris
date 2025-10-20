@@ -15,16 +15,16 @@ export const steps: Step[] = [
       {
         id: 'etape-1',
         title:
-          "Notifier l'Organisme de Foncier Solidaire (OFS) et déterminer votre prix de vente",
+          "Notifier l'organisme de foncier solidaire (OFS) et déterminer votre prix de vente",
         content: `
           <p>
-            Quand vous décidez de mettre en vente votre logement, prévenez tout de suite l'OFS avec qui vous avez contractualisé lors de l'achat.
+            Quand vous décidez de mettre en vente votre logement, prévenez tout de suite <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> avec qui vous avez contractualisé lors de l'achat.
           </p>
           <p>
-            L'OFS a un droit de préemption, ce qui signifie qu'il peut racheter le bien avant que celui-ci ne soit proposé à d'autres acheteurs.
+            <a href="/organismes-de-foncier-solidaire" class="fr-link">L'organisme de foncier solidaire (OFS)</a> a un droit de préemption, ce qui signifie qu'il peut racheter le bien avant que celui-ci ne soit proposé à d'autres acheteurs.
           </p>
           <p>
-            De plus, l'OFS pourra vous indiquer le prix de vente maximum autorisé pour votre logement. Ce prix de vente est fixé en fonction de votre prix d'achat ainsi que de l'indice de référence fixé par l'INSEE. L'OFS pourra de plus vous accompagner dans la préparation de la cession.
+            De plus, <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> pourra vous indiquer le prix de vente maximum autorisé pour votre logement. Ce prix de vente est fixé en fonction de votre prix d'achat ainsi que de l'indice de référence fixé par l'INSEE. <a href="/organismes-de-foncier-solidaire" class="fr-link">L'organisme de foncier solidaire (OFS)</a> pourra de plus vous accompagner dans la préparation de la cession.
           </p>
           <p>
             Pour préciser votre prix de vente, vous pouvez également consulter des professionnels de l'immobilier spécialisés en BRS.
@@ -196,7 +196,7 @@ export const steps: Step[] = [
             l'étape cruciale est de trouver un acheteur ! La seule différence est
             que celui-ci doit être éligible au BRS. Cette éligibilité peut être
             vérifiée rapidement en utilisant notre simulateur. Celle-ci devra
-            ensuite être vérifiée officiellement par l'OFS.
+            ensuite être vérifiée officiellement par <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a>.
           </p>
           <a
             href="/simulateur-eligibilite"
@@ -207,7 +207,7 @@ export const steps: Step[] = [
           <p>
             Votre acheteur achète dans les mêmes conditions que vous à l'époque : il
             faut que ce logement devienne sa résidence principale, sa plus-value
-            sera encadrée et il devra payer une redevance mensuelle auprès de l'OFS.
+            sera encadrée et il devra payer une redevance mensuelle auprès de <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a>.
             Mais il a aussi le même avantage principal : il achète un logement
             beaucoup moins cher que le prix du marché !
           </p>
@@ -252,7 +252,7 @@ export const steps: Step[] = [
           <p>
             Comme 70% des ménages, vous pouvez choisir de passer par un professionnel
             de l'immobilier pour commercialiser votre bien à votre place. Demandez à
-            votre OFS s'il a des contacts à vous partager : il est important de choisir
+            votre <a href="/organismes-de-foncier-solidaire" class="fr-link">organisme de foncier solidaire (OFS)</a> s'il a des contacts à vous partager : il est important de choisir
             un agent qui connaît le BRS et pourra l'expliquer aux acheteurs potentiels.
             L'intérêt de cette solution, c'est de gagner du temps sur la vente et de
             toucher plus de ménages potentiels via les outils réservés aux professionnels.
@@ -269,7 +269,7 @@ export const steps: Step[] = [
           <p>
             Une fois que vous avez trouvé un acheteur, vous devez lui faire une
             offre préalable de cession, qui précise toutes les modalités de l’achat
-            en BRS. Un conseil, faites vous-aider par votre OFS ! Nous pouvons
+            en BRS. Un conseil, faites vous-aider par votre <a href="/organismes-de-foncier-solidaire" class="fr-link">organisme de foncier solidaire (OFS)</a> ! Nous pouvons
             également vous accompagner dans cette démarche, alors n’hésitez pas à
             nous contacter.
           </p>
@@ -280,14 +280,14 @@ export const steps: Step[] = [
           </a>
           <p></p>
           <p>
-            Une fois l’offre préalable de cession faite à l’acquéreur, votre OFS
+            Une fois l’offre préalable de cession faite à l’acquéreur, votre <a href="/organismes-de-foncier-solidaire" class="fr-link">organisme de foncier solidaire (OFS)</a>
             doit se charger de vérifier que celui-ci est bien éligible au dispositif
             et que votre offre de cession remplit les conditions nécessaires à la
-            conclusion d’un Bail Réel Solidaire. Dans ce cas, on dit que l’OFS donne
+            conclusion d’un Bail Réel Solidaire. Dans ce cas, on dit que <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> donne
             son agrément.
           </p>
           <p>
-            En cas de refus d’agrément de la part de l’OFS, vous pouvez lui demander
+            En cas de refus d’agrément de la part de <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a>, vous pouvez lui demander
             de vous présenter des acquéreurs potentiels éligibles au dispositif.
           </p>
           <a
@@ -347,11 +347,11 @@ export const steps: Step[] = [
               Vous ne trouvez aucun acheteur pour votre bien
             </li>
             <li>
-              Vous trouvez un acheteur mais l'Organisme de Foncier Solidaire (OFS) refuse de l'agréer
+              Vous trouvez un acheteur mais <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> refuse de l'agréer
             </li>
           </ol>
           <p>
-            Dans les deux cas, pas de panique, l'OFS pourra vous aider ou vous
+            Dans les deux cas, pas de panique, <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> pourra vous aider ou vous
             indemniser selon certaines conditions : explorons ensemble les deux
             scénarios.
           </p>
@@ -359,25 +359,25 @@ export const steps: Step[] = [
             <li>
               <p class="fr-mb-0"><b>Si vous ne trouvez aucun acheteur potentiel :</b></p>
               <p class="fr-mb-1w">
-                Vous pouvez alors demander conseil à votre OFS. Ce dernier pourra par exemple vous renvoyer vers des professionnel·les de l'immobilier formé·es sur la vente en BRS ou vous proposer des acquéreurs potentiels.
+                Vous pouvez alors demander conseil à votre <a href="/organismes-de-foncier-solidaire" class="fr-link">organisme de foncier solidaire (OFS)</a>. Ce dernier pourra par exemple vous renvoyer vers des professionnel·les de l'immobilier formé·es sur la vente en BRS ou vous proposer des acquéreurs potentiels.
               </p>
             </li>
             <li>
-              <p class="fr-mb-0"><b>Si vous trouvez un acheteur mais que l'OFS refuse de l'agréer :</b></p>
+              <p class="fr-mb-0"><b>Si vous trouvez un acheteur mais que <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> refuse de l'agréer :</b></p>
               <p class="fr-mb-1w">
-                Dans certains cas, l'OFS peut refuser l'acheteur pour différentes raisons, par exemple parce qu'il ne respecte pas les conditions d'éligibilité au Bail Réel Solidaire ou parce qu'il n'a pas une capacité de financement suffisante. 
+                Dans certains cas, <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> peut refuser l'acheteur pour différentes raisons, par exemple parce qu'il ne respecte pas les conditions d'éligibilité au Bail Réel Solidaire ou parce qu'il n'a pas une capacité de financement suffisante. 
               </p>
               <p class="fr-mb-0">Plusieurs options sont alors possibles :</p>
               <ul>
                 <li>
-                  Vous pouvez alors rechercher un autre acheteur et le soumettre à l'OFS pour agréement et ce nouveau ménage est accepté.
+                  Vous pouvez alors rechercher un autre acheteur et le soumettre à <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> pour agréement et ce nouveau ménage est accepté.
                 </li>
                 <li>
 
-                Vous pouvez aussi choisir de demander à l'OFS de vous proposer un autre acquéreur qui respecte les conditions prévues par la loi. Le prix de vente doit alors être calculé selon les règles fixées dans le bail.
+                Vous pouvez aussi choisir de demander à <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> de vous proposer un autre acquéreur qui respecte les conditions prévues par la loi. Le prix de vente doit alors être calculé selon les règles fixées dans le bail.
                 </li>
                 <li>
-                  Si dans un délai de 6 mois, l'OFS ne trouve pas d'acquéreur, le bail réel solidaire (BRS) peut être résilié de façon conventionnelle, à votre demande. Dans ce cas, vous recevez une indemnisation correspondant à la valeur de vos droits réels immobiliers, selon les modalités prévues dans le bail. C'est sécurisant pour vous mais attention : <b>le montant de l'indemnisation est la plupart du temps inférieur à votre prix d'achat</b>. Le calcul de ce montant est précisé dans le bail que vous avez signé au moment de l'acquisition de votre logement.
+                  Si dans un délai de 6 mois, <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> ne trouve pas d'acquéreur, le bail réel solidaire (BRS) peut être résilié de façon conventionnelle, à votre demande. Dans ce cas, vous recevez une indemnisation correspondant à la valeur de vos droits réels immobiliers, selon les modalités prévues dans le bail. C'est sécurisant pour vous mais attention : <b>le montant de l'indemnisation est la plupart du temps inférieur à votre prix d'achat</b>. Le calcul de ce montant est précisé dans le bail que vous avez signé au moment de l'acquisition de votre logement.
                 </li>
               </ul>
             </li>

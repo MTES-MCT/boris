@@ -130,12 +130,11 @@
     l’immobilier avec qui vous serez en contact lors de votre achat.
   </p>
   <p>
-    Vous êtes éligible ? <a
-      href="/logements-brs-disponibles"
+    Vous êtes éligible ? Contactez dès à présent <a
+      href="/organismes-de-foncier-solidaire"
       class="fr-link">
-      Contactez dès à présent les OFS ou leurs commercialisateurs dans votre
-      région de recherche pour voir les biens disponibles
+      les organismes de foncier solidaire (OFS) ou leurs commercialisateurs
     </a>
-    .
+    dans votre région de recherche pour voir les biens disponibles .
   </p>
 </ArticlePage>

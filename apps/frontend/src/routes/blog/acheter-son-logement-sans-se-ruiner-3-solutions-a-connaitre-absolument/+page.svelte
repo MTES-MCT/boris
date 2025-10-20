@@ -61,11 +61,13 @@
   <ul>
     <li>Vous achetez votre logement (appartement ou maison).</li>
     <li>
-      Le terrain reste la propriété d'un <b>
-        Organisme de Foncier Solidaire (OFS
-      </b>
-      ), qui vous le loue pour une r
-      <b>edevance modique</b>
+      Le terrain reste la propriété d'un <a
+        href="/organismes-de-foncier-solidaire"
+        class="fr-link">
+        organisme de foncier solidaire (OFS)
+      </a>
+      , qui vous le loue pour une
+      <b>redevance modique</b>
       (entre 10 cts et 3.5€/m² par mois). Résultat ? Le prix d'achat de votre logement
       diminue, parfois jusqu'à
       <b>40%</b>

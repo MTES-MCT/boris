@@ -35,12 +35,17 @@
   <ContentPageSubtitle title="Utilisation et partage des informations" />
   <p>
     Les informations collectées sont utilisées dans le but d’améliorer BoRiS et
-    peuvent être transmises à des entités tierces (Organismes de Foncier
-    Solidaire, commercialisateurs de logements en Bail Réel Solidaire) si vous
-    en donnez le consentement. Nous pouvons également utiliser vos informations
-    pour vous contacter concernant des mises à jour, des offres promotionnelles
-    et des communications liées à BoRiS. Nous gardons l’ensemble des
-    informations que vous nous partagez pendant 3 ans.
+    peuvent être transmises à des entités tierces (
+    <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      organismes de foncier solidaire (OFS)
+    </a>
+    , commercialisateurs de logements en Bail Réel Solidaire) si vous en donnez le
+    consentement. Nous pouvons également utiliser vos informations pour vous contacter
+    concernant des mises à jour, des offres promotionnelles et des communications
+    liées à BoRiS. Nous gardons l’ensemble des informations que vous nous partagez
+    pendant 3 ans.
   </p>
 
   <p>

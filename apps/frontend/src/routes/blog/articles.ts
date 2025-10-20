@@ -15,7 +15,7 @@ export const articles: ArticlePreview[] = [
     slug: 'comment-savoir-si-je-suis-eligible-au-bail-reel-solidaire-brs',
   },
   {
-    title: '5 idées reçues sur le bail réel solidaire (brs)',
+    title: '5 idées reçues sur le bail réel solidaire (BRS)',
     description: `Le bail réel solidaire (BRS) souffre de quelques fausses idées: "je ne pourrai jamais revendre", "je ne suis pas propriétaire"… Découvrez la vérité sur le bail réel solidaire (BRS) via BoRiS, plateforme officielle du gouvernement dédiée au bail réel solidaire.`,
     firstPublishedAt: '2025-06-25T16:12:39.527438+01:00',
     slug: '5-idees-recues-sur-le-bail-reel-solidaire-brs',

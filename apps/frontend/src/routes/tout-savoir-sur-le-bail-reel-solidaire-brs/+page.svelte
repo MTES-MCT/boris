@@ -166,10 +166,14 @@
       titleElement="h2"
       narrow>
       <p>
-        Les OFS partagent la propriété des logements en bail réel solidaire
-        (BRS) avec les ménages bénéficiaires du dispositif, les aident,
-        sécurisent leur achat et les accompagnent tout au long du processus,
-        découvrez leurs offres !
+        Les <a
+          href="/organismes-de-foncier-solidaire"
+          class="fr-link">
+          organismes de foncier solidaire (OFS)
+        </a>
+        partagent la propriété des logements en bail réel solidaire (BRS) avec les
+        ménages bénéficiaires du dispositif, les aident, sécurisent leur achat et
+        les accompagnent tout au long du processus, découvrez leurs offres !
       </p>
       <a
         href="/logements-brs-disponibles"
@@ -281,15 +285,24 @@
         </ul>
         <p>Mais ce ne sont pas les seules!</p>
       </Accordion>
-      <Accordion label="Un Organisme de Foncier Solidaire (OFS), c’est quoi ?">
+      <Accordion label="Un organisme de foncier solidaire (OFS), c'est quoi ?">
         <p class="fr-mt-1w">
-          Un Organisme de Foncier Solidaire est un organisme agréé par l’Etat,
-          qui achète des terrains pour y construire des logements en bail réel
-          solidaire qu’il met ensuite en vente.
+          Un <a
+            href="/organismes-de-foncier-solidaire"
+            class="fr-link">
+            organisme de foncier solidaire (OFS)
+          </a>
+          est un organisme agréé par l'Etat, qui achète des terrains pour y construire
+          des logements en bail réel solidaire qu'il met ensuite en vente.
         </p>
         <p>
-          Les Organismes de Foncier Solidaire (OFS) sont des structures à but
-          non lucratif.
+          Les
+          <a
+            href="/organismes-de-foncier-solidaire"
+            class="fr-link">
+            organismes de foncier solidaire (OFS)
+          </a>
+          sont des structures à but non lucratif.
         </p>
       </Accordion>
       <Accordion

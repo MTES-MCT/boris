@@ -40,7 +40,7 @@
       <div class="border-box"></div>
       <HorizontalCard
         title="BoRiS vous met en relation avec des organismes dans votre zone de recherche."
-        content="BoRiS est en lien avec les Organismes de Foncier Solidaires (OFS) agréés par l’Etat qui font construire des logements en BRS et présentent actuellement des programmes en cours de commercialisation."
+        content="BoRiS est en lien avec les organismes de foncier solidaires (OFS) agréés par l'Etat qui font construire des logements en BRS et présentent actuellement des programmes en cours de commercialisation."
         href="/logements-brs-disponibles"
         imgSrc={card3}
         photograph="Hannah Busing"

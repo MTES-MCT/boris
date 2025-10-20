@@ -86,8 +86,7 @@ export const steps: Step[] = [
               location longue durée et en faire un investissement locatif.
             </li>
             <li>
-              Vous partagez la propriété de votre logement avec un organisme de foncier
-              solidaire et vous vous engagez à lui verser une redevance foncière
+              Vous partagez la propriété de votre logement avec un <a href="/organismes-de-foncier-solidaire" class="fr-link">organisme de foncier solidaire (OFS)</a> et vous vous engagez à lui verser une redevance foncière
               mensuelle. Cette redevance peut varier en fonction de l’emplacement du
               logement, mais reste contenue.
             </li>
@@ -140,9 +139,9 @@ export const steps: Step[] = [
           <p>
             Il y a un dernier acteur important qui est spécifique au BRS : le
             propriétaire du terrain sur lequel est construit le logement. C’est un
-            organisme agréé par l’Etat, dénommé Organisme de Foncier Solidaire (OFS).
+            organisme agréé par l’Etat, dénommé <a href="/organismes-de-foncier-solidaire" class="fr-link">organisme de foncier solidaire (OFS)</a>.
             C’est cet organisme qui est à l’origine de la construction ou de la
-            réhabilitation des logements. C’est à l’OFS que vous verserez une redevance
+            réhabilitation des logements. C’est à <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> que vous verserez une redevance
             mensuelle.
           </p>
           <a class="fr-btn fr-btn--lg" href="/logements-brs-disponibles">
@@ -401,7 +400,7 @@ export const steps: Step[] = [
           <ul class="fr-mb-0">
             <li>mensualités de remboursement de prêt bancaire</li>
             <li>
-              le paiement d’une redevance mensuelle auprès de l’OFS avec qui vous
+              le paiement d’une redevance mensuelle auprès de <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> avec qui vous
               partagez la propriété du logement
             </li>
             <li>les charges de copropriété</li>
@@ -488,7 +487,7 @@ export const steps: Step[] = [
             ménages dans leur projet d’achat de logement en BRS.
           </p>
           <p>
-            Les Organismes de Foncier Solidaire et les professionnel.les de la vente
+            Les <a href="/organismes-de-foncier-solidaire" class="fr-link">organismes de foncier solidaire (OFS)</a> et les professionnel.les de la vente
             travaillent généralement avec des notaires spécialisés. À moins que vous
             teniez à travailler avec un notaire en particulier, nous vous conseillons de
             choisir le notaire qui vous sera proposé.
@@ -514,7 +513,7 @@ export const steps: Step[] = [
               Si vous avez souscrit à un prêt immobilier, un document indiquant le nom
               et l’adresse de la banque, ainsi que le montant et le taux du prêt.
             </li>
-            <li>L’agrément donné par l'Organisme de Foncier Solidaire</li>
+            <li>L’agrément donné par <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a></li>
             <li>Le compromis de vente</li>
           </ul>
         `,
@@ -570,8 +569,7 @@ export const steps: Step[] = [
           </p>
           <p class="fr-mb-0">
             Les conditions de réalisation de travaux sont en général précisées dans le
-            Bail Réel Solidaire et contractualisées entre l’Organisme de Foncier
-            Solidaire et les ménages acheteurs.
+            bail réel solidaire (BRS) et contractualisées entre <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> et les ménages acheteurs.
           </p>
         `,
       },
@@ -585,7 +583,7 @@ export const steps: Step[] = [
             devez ainsi vous acquitter de charges de copropriété.
           </p>
           <p>
-            L’Organisme de Foncier Solidaire disposant de la propriété foncière, il est
+            <a href="/organismes-de-foncier-solidaire" class="fr-link">L'organisme de foncier solidaire (OFS)</a> disposant de la propriété foncière, il est
             membre de la copropriété. En tant que propriétaire, vous pouvez également
             siéger en Assemblée générale des copropriétaires.
           </p>
@@ -614,25 +612,25 @@ export const steps: Step[] = [
           <p>
             Une fois propriétaire de votre logement en BRS, vous pouvez revendre ce
             dernier à n’importe quel moment. Dans ce cas, vous devez notifier
-            l’Organisme de Foncier Solidaire de votre souhait et celui-ci peut décider
+            <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> de votre souhait et celui-ci peut décider
             de racheter lui-même votre logement.
           </p>
           <p>
-            Si l’Organisme de Foncier Solidaire ne souhaite pas racheter votre logement,
+            Si <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> ne souhaite pas racheter votre logement,
             vous pouvez le revendre à un autre ménage. Cependant, puisque le Bail Réel
             Solidaire est un dispositif d’accession abordable à la propriété, vous devez
             le vendre à un ménage sous conditions de ressources. Ce ménage doit par
-            ailleurs être agréé par l’Organisme de Foncier Solidaire pour ensuite vivre
+            ailleurs être agréé par <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> pour ensuite vivre
             dans le logement en BRS à titre de résidence principale.
           </p>
           <p>
             Dans ces deux cas, le prix de vente de votre logement est fixé par
-            l’Organisme de Foncier Solidaire. Ce prix est calculé à partir du prix lors
+            <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a>. Ce prix est calculé à partir du prix lors
             de votre achat, et la plus-value est encadrée, afin de permettre à d’autres
             ménages d’accéder facilement à la propriété. Ce prix est modulé en fonction
             des conditions du marché immobilier et les travaux effectués sont pris en
             compte dans le calcul. Une méthode d’évaluation du logement peut être
-            contractualisée entre et l’Organisme de Foncier Solidaire et le ménage
+            contractualisée entre et <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> et le ménage
             preneur et être inscrite dans le Bail Réel Solidaire.
           </p>
           <p>
@@ -643,11 +641,11 @@ export const steps: Step[] = [
           </p>
           <p>
             Vous pouvez vous-même trouver le ménage remplissant ces conditions ou
-            demander à être accompagné par votre Organisme de Foncier Solidaire dans la
+            demander à être accompagné par votre <a href="/organismes-de-foncier-solidaire" class="fr-link">organisme de foncier solidaire (OFS)</a> dans la
             recherche d’un ménage preneur
           </p>
           <p class="fr-mb-0">
-            Enfin, si vous ne trouvez pas de preneur, l’Organisme de Foncier Solidaire
+            Enfin, si vous ne trouvez pas de preneur, <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a>
             peut racheter votre logement suivant une clause de rachat qui existe dans
             votre acte notarié. Une de ces modalités peut être le rachat du logement à
             un certain pourcentage du prix de vente initial. N’oubliez pas de demander
