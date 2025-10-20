@@ -75,3 +75,29 @@ export type MapBounds = {
   southWestLat: number;
   southWestLng: number;
 };
+
+export type FormFieldError = {
+  [key: string]: string;
+};
+
+export type Accent =
+  | 'default'
+  | 'green-tilleul-verveine'
+  | 'green-bourgeon'
+  | 'green-emeraude'
+  | 'green-menthe'
+  | 'green-archipel'
+  | 'blue-ecume'
+  | 'blue-cumulus'
+  | 'purple-glycine'
+  | 'pink-macaron'
+  | 'pink-tuile'
+  | 'yellow-tournesol'
+  | 'yellow-moutarde'
+  | 'orange-terre-battue'
+  | 'brown-cafe-creme'
+  | 'brown-caramel'
+  | 'brown-opera'
+  | 'beige-gris-galet';
+
+export type FontWeight = 'normal' | 'bold' | 'light';

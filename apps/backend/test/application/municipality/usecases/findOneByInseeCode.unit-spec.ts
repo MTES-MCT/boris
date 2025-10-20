@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { NotFoundException } from '@nestjs/common';
 import {
   mockMunicipalityRepository,
+  parisMunicipality,
   quimperMunicipality,
 } from 'test/mocks/integration/municipality';
 import { FindOneMunicipalityByInseeCodeUsecase } from 'src/application/municipality/usecases/findOneByInseeCode.usecase';
@@ -52,6 +53,99 @@ describe('FindOneMunicipalityByInseeCodeUsecase', () => {
     expect(mockMunicipalityRepository.findOneByInseeCode).toHaveBeenCalledWith(
       '1234',
     );
+  });
+
+  it('should find a municipality by insee code of Paris', async () => {
+    mockMunicipalityRepository.findOneByInseeCode
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(parisMunicipality);
+
+    const expectedResult = new MunicipalityView(
+      parisMunicipality.id,
+      parisMunicipality.name,
+      parisMunicipality.inseeCode,
+      parisMunicipality.zone,
+      {
+        id: parisMunicipality.departement.id,
+        name: parisMunicipality.departement.name,
+        code: parisMunicipality.departement.code,
+      },
+    );
+
+    const result = await useCase.execute({ inseeCode: '75156' });
+
+    expect(result).toEqual(expectedResult);
+    expect(mockMunicipalityRepository.findOneByInseeCode).toHaveBeenCalledTimes(
+      2,
+    );
+    expect(
+      mockMunicipalityRepository.findOneByInseeCode,
+    ).toHaveBeenNthCalledWith(1, '75156');
+    expect(
+      mockMunicipalityRepository.findOneByInseeCode,
+    ).toHaveBeenNthCalledWith(2, '75056');
+  });
+
+  it('should find a municipality by insee code of Lyon', async () => {
+    mockMunicipalityRepository.findOneByInseeCode
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(parisMunicipality);
+
+    const expectedResult = new MunicipalityView(
+      parisMunicipality.id,
+      parisMunicipality.name,
+      parisMunicipality.inseeCode,
+      parisMunicipality.zone,
+      {
+        id: parisMunicipality.departement.id,
+        name: parisMunicipality.departement.name,
+        code: parisMunicipality.departement.code,
+      },
+    );
+
+    const result = await useCase.execute({ inseeCode: '69122' });
+
+    expect(result).toEqual(expectedResult);
+    expect(mockMunicipalityRepository.findOneByInseeCode).toHaveBeenCalledTimes(
+      2,
+    );
+    expect(
+      mockMunicipalityRepository.findOneByInseeCode,
+    ).toHaveBeenNthCalledWith(1, '69122');
+    expect(
+      mockMunicipalityRepository.findOneByInseeCode,
+    ).toHaveBeenNthCalledWith(2, '69123');
+  });
+
+  it('should find a municipality by insee code of Marseille', async () => {
+    mockMunicipalityRepository.findOneByInseeCode
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(parisMunicipality);
+
+    const expectedResult = new MunicipalityView(
+      parisMunicipality.id,
+      parisMunicipality.name,
+      parisMunicipality.inseeCode,
+      parisMunicipality.zone,
+      {
+        id: parisMunicipality.departement.id,
+        name: parisMunicipality.departement.name,
+        code: parisMunicipality.departement.code,
+      },
+    );
+
+    const result = await useCase.execute({ inseeCode: '13056' });
+
+    expect(result).toEqual(expectedResult);
+    expect(mockMunicipalityRepository.findOneByInseeCode).toHaveBeenCalledTimes(
+      2,
+    );
+    expect(
+      mockMunicipalityRepository.findOneByInseeCode,
+    ).toHaveBeenNthCalledWith(1, '13056');
+    expect(
+      mockMunicipalityRepository.findOneByInseeCode,
+    ).toHaveBeenNthCalledWith(2, '13055');
   });
 
   it('should throw NotFoundException when municipality does not exist', async () => {

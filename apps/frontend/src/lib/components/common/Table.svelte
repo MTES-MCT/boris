@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
 
   import '@gouvfr/dsfr/dist/component/table/table.min.css';
+  import { nanoid } from 'nanoid';
 
   onMount(async () => {
     // @ts-expect-error: no declaration file
@@ -12,14 +13,16 @@
     theads: string[];
     tbodies: string[][];
     caption?: string;
+    size?: 'sm' | 'md' | 'lg';
   };
 
-  const { caption, theads, tbodies }: Props = $props();
+  const { caption, theads, tbodies, size = 'lg' }: Props = $props();
 </script>
 
 <div
-  class="fr-table fr-table--lg fr-table--bordered"
-  id="table-0-component">
+  style="width: 100%;"
+  class="fr-table fr-table--{size} fr-table--bordered"
+  id={nanoid(10)}>
   <div class="fr-table__wrapper">
     <div class="fr-table__container">
       <div class="fr-table__content">

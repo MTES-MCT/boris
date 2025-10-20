@@ -1,0 +1,134 @@
+<script lang="ts">
+  import { formatEuro } from '$lib/utils/formatters';
+  import {
+    formatLoanPhaseDuration,
+    formatLoanPhaseNumber,
+  } from '$lib/utils/helpers';
+  import type { PhaseRemboursement } from '$lib/utils/lissage-ptz';
+
+  import Badge from '$components/common/Badge.svelte';
+  import Block from '$components/pages/simulateur-acquisition/synthesis/Block.svelte';
+  import RowContainer from '$components/pages/simulateur-acquisition/synthesis/RowContainer.svelte';
+  import Row from '$components/pages/simulateur-acquisition/synthesis/Row.svelte';
+  import Highlight from '$components/common/Highlight.svelte';
+  import Callout from '$components/common/Callout.svelte';
+
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
+
+  let { pretLisse } = $derived(acquisitionSimulatorManager);
+
+  const lissage = $derived(pretLisse?.lisser() as PhaseRemboursement[]);
+</script>
+
+{#if !pretLisse?.estElligible}
+  <Block>
+    <p class="fr-h6 fr-mb-1w">Remboursement du prêt immobilier</p>
+    <p class="fr-text--sm">
+      <Badge
+        status="new"
+        hideIcon>
+        {`Durée totale: ${lissage[0].dureeAnnees} ans`}
+      </Badge>
+    </p>
+    <div class="separator"></div>
+    <RowContainer>
+      <Row
+        title="Mensualité globale"
+        value={`= ${formatEuro(Number(lissage[0].mensualiteClassique), 2)}`}
+        status="success"
+        tooltip="Hors assurance emprunteur." />
+    </RowContainer>
+  </Block>
+
+  <div class="not-printable">
+    <Highlight
+      text="D'après les informations que vous nous avez fournies, vous n'êtes pas éligible au PTZ."
+      accent="pink-tuile"
+      icon="warning-fill"
+      size="sm"
+      fontWeight="bold"
+      href="https://www.anil.org/pret-taux-zero/" />
+  </div>
+{:else}
+  <div class="pdf-only">
+    <ul class="fr-text--sm">
+      <li>
+        Vous êtes éligible au <b>prêt à taux zéro</b>
+        . Le montant total du
+        <b>prêt à taux zéro</b>
+        est de
+        <b>{formatEuro(pretLisse?.montantPTZ || 0)}</b>
+        .
+      </li>
+      <li>
+        Le montant total du <b>prêt immobilier classique</b>
+        est de
+        <b>
+          {formatEuro(
+            pretLisse?.montantTotal -
+              (pretLisse?.montantPTZ || 0) -
+              (pretLisse?.apport || 0),
+          )}
+        </b>
+        .
+      </li>
+      <li>
+        Le montant total des intêrets de votre prêt immobilier classique est
+        estimé à <b>{formatEuro(pretLisse?.calculateInterestCost() || 0)}</b>
+        .
+      </li>
+    </ul>
+  </div>
+  <div class="fr-mb-2w not-printable">
+    <Callout
+      accent="blue-cumulus"
+      size="sm"
+      text={`
+        <ul>
+          <li>
+            Vous êtes éligible au <b>prêt à taux zéro</b>. Le montant total du <b>prêt à taux zéro</b> est de <b>${formatEuro(pretLisse?.montantPTZ || 0)}</b>.
+          </li>
+          <li>
+            Le montant total du <b>prêt immobilier classique</b> est de <b>${formatEuro(pretLisse?.montantTotal - (pretLisse?.montantPTZ || 0) - (pretLisse?.apport || 0))}</b>.
+          </li>
+          <li>
+            Le montant total des intêrets de votre prêt immobilier classique est estimé à <b>${formatEuro(pretLisse?.calculateInterestCost() || 0)}</b>.
+          </li>
+        </ul>
+      `} />
+  </div>
+  {#each lissage as phase, index}
+    <Block isLast={index === lissage.length - 1}>
+      <p class="fr-mb-0 fr-text--lg fr-text--bold">
+        {formatLoanPhaseNumber(index + 1)}
+      </p>
+      <div class="fr-mb-4w">
+        <Badge
+          status="new"
+          hideIcon>
+          {formatLoanPhaseDuration(phase.dureeAnnees, phase.anneesDifferees)}
+        </Badge>
+      </div>
+
+      <RowContainer>
+        <Row
+          title="Mensualité PTZ"
+          value={formatEuro(Number(phase.mensualitePTZ), 2)}
+          status={phase.mensualitePTZ === '0.00' ? 'default' : 'info'} />
+        <Row
+          title="Mensualité principale"
+          value={`+ ${formatEuro(Number(phase.mensualiteClassique), 2)}`}
+          status={phase.mensualiteClassique === '0.00' ? 'default' : 'info'}
+          tooltip="Hors assurance emprunteur." />
+        <div class="separator"></div>
+        <Row
+          title="Mensualité globale"
+          value={`= ${formatEuro(
+            Number(phase.mensualitePTZ) + Number(phase.mensualiteClassique),
+            2,
+          )}`}
+          status="success" />
+      </RowContainer>
+    </Block>
+  {/each}
+{/if}
