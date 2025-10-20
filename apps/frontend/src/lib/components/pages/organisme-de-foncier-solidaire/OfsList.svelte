@@ -43,22 +43,22 @@
         <li class="fr-mb-1v">
           <Badge
             uppercase={false}
-            accent="purple-glycine">
+            accent="yellow-tournesol">
             <span class="fr-icon fr-icon--sm fr-icon-community-line"></span>
             <span class="fr-pl-1w">Organisme de foncier solidaire (OFS)</span>
           </Badge>
-          <span class="fr-text--sm fr-text--bold text-color-purple-glycine">
+          <span class="fr-text--sm fr-text--bold text-color-yellow-tournesol">
             qui propose des logements en bail réel solidaire (BRS) à vendre.
           </span>
         </li>
         <li>
           <Badge
             uppercase={false}
-            accent="yellow-tournesol">
+            accent="purple-glycine">
             <span class="fr-icon fr-icon--sm fr-icon-draft-line"></span>
             <span class="fr-pl-1w">Organisme de foncier solidaire (OFS)</span>
           </Badge>
-          <span class="fr-text--sm fr-text--bold text-color-yellow-tournesol">
+          <span class="fr-text--sm fr-text--bold text-color-purple-glycine">
             qui a obtenu l'agrément mais ne propose pas encore de logement en
             bail réel solidaire (BRS) à vendre.
           </span>
@@ -83,8 +83,8 @@
               <li>
                 <Badge
                   accent={ofs.producesBrs
-                    ? 'purple-glycine'
-                    : 'yellow-tournesol'}
+                    ? 'yellow-tournesol'
+                    : 'purple-glycine'}
                   uppercase={false}>
                   <span
                     class={`fr-icon fr-icon--sm fr-icon-${ofs.producesBrs ? 'community-line' : 'draft-line'}`}>
