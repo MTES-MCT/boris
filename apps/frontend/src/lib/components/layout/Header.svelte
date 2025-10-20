@@ -134,7 +134,7 @@
               aria-controls="tout-savoir-sur-le-bail-reel-solidaire-brs-dropdown"
               aria-current={pathname.includes(
                 '/tout-savoir-sur-le-bail-reel-solidaire-brs',
-              )}
+              ) || pathname.includes('organismes-de-foncier-solidaire')}
               class="fr-nav__btn">
               Qu'est ce que le BRS ?
             </button>
@@ -163,6 +163,15 @@
                     </a>
                   </li>
                 {/each}
+                <li>
+                  <a
+                    href="/organismes-de-foncier-solidaire"
+                    aria-current={pathname ===
+                      '/organismes-de-foncier-solidaire'}
+                    class="fr-nav__link">
+                    Organismes de foncier solidaire (OFS)
+                  </a>
+                </li>
               </ul>
             </div>
           </li>
