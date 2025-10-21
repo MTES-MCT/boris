@@ -266,7 +266,13 @@
   </p>
 
   <p>
-    Contactez un Organisme de Foncier Solidaire proche de chez vous ou <a
+    Contactez un <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      organisme de foncier solidaire (OFS)
+    </a>
+    proche de chez vous ou
+    <a
       href="/nous-contacter"
       class="fr-link">
       contactez BoRiS

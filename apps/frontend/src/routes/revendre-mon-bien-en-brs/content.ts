@@ -264,7 +264,7 @@ export const steps: Step[] = [
       {
         id: 'etape-4',
         title:
-          'Rédigez votre offre préalable de cession et vérifiez que tout est bon avec votre Organisme de Foncier Solidaire',
+          'Rédigez votre offre préalable de cession et vérifiez que tout est bon avec votre organisme de foncier solidaire (OFS)',
         content: `
           <p>
             Une fois que vous avez trouvé un acheteur, vous devez lui faire une

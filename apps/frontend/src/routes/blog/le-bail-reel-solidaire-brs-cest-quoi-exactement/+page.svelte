@@ -34,7 +34,7 @@
     </b>
   </p>
   <p class="fr-mt-6w fr-mb-1w">
-    <b>Un Organisme de Foncier Solidaire c'est quoi?</b>
+    <b>Un organisme de foncier solidaire (OFS) c'est quoi?</b>
   </p>
   <p>
     <a
@@ -44,8 +44,8 @@
     </a>
     est un organisme, agréé par l'Etat, créé par la loi ALUR en 2014, à but non lucratif,
     qui acquiert et détient des terrains qui accueillent des programmes en Bail Réel
-    Solidaire (BRS). Sur ces terrains, l'Organisme de Foncier Solidaire produit des
-    logements, qui seront vendus en Bail Réel Solidaire (BRS) aux ménages
+    Solidaire (BRS). Sur ces terrains, l'organisme de doncier solidaire (OFS) produit
+    des logements, qui seront vendus en Bail Réel Solidaire (BRS) aux ménages
     <a
       href="/simulateur-eligibilite"
       class="fr-link">

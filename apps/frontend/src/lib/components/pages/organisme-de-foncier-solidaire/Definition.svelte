@@ -19,7 +19,7 @@
       </div>
 
       <p>
-        Un Organisme de Foncier Solidaire (OFS) est <span class="fr-text--bold">
+        Un organisme de foncier solidaire (OFS) est <span class="fr-text--bold">
           une structure à but non lucratif ou à lucrativité limitée
         </span>
         agréée par l'État. Il peut s'agir d'un établissement public foncier local,
