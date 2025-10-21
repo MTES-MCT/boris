@@ -38,7 +38,7 @@ export const setupTestingApp = async (): Promise<INestApplication<App>> => {
     }),
   );
 
-  await useSession(app, dataSource);
+  useSession(app);
 
   configureViewEngine(app);
   configureApiDocumentation(app);

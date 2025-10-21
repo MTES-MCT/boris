@@ -5,23 +5,20 @@ import { DataSource } from 'typeorm';
 import { SessionEntity } from './session.entity';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-export async function useSession(
-  app: NestExpressApplication,
-  dataSource: DataSource,
-) {
-  const sessionStore = new TypeormStore({
-    cleanupLimit: 2,
-    ttl: 60 * 60 * 24 * 7, // 1 week
-  });
-
-  await dataSource.initialize();
+export function useSession(app: NestExpressApplication) {
+  const dataSource = app.get(DataSource);
 
   const sessionRepository =
     dataSource.getRepository<SessionEntity>(SessionEntity);
 
+  const sessionStore = new TypeormStore({
+    cleanupLimit: 2,
+    ttl: 60 * 60 * 24 * 7, // 1 week
+  }).connect(sessionRepository);
+
   app.use(
     session({
-      store: sessionStore.connect(sessionRepository),
+      store: sessionStore,
       secret: process.env.SESSION_SECRET || 'secret',
       resave: false,
       saveUninitialized: false,
