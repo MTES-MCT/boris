@@ -12,17 +12,38 @@
     detail?: string;
     badge?: string;
     pictogram?: keyof typeof pictograms;
+    horizontal?: boolean;
+    enlarge?: boolean;
+    href?: string;
   };
 
-  const { title, description, detail, badge, pictogram }: Props = $props();
+  const {
+    title,
+    description,
+    detail,
+    badge,
+    pictogram,
+    horizontal,
+    enlarge,
+    href,
+  }: Props = $props();
 </script>
 
-<div class="fr-tile">
+<div
+  class="fr-tile"
+  class:fr-tile--horizontal={horizontal}
+  class:fr-enlarge-link={enlarge}>
   <div class="fr-tile__body">
     <div class="fr-tile__content">
       {#if title}
         <h3 class="fr-tile__title">
-          {title}
+          {#if href}
+            <a {href}>
+              {title}
+            </a>
+          {:else}
+            {title}
+          {/if}
         </h3>
       {/if}
       {#if description}
