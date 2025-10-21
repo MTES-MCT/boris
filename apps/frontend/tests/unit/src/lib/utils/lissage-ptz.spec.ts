@@ -6,7 +6,7 @@ import {
 } from '$lib/utils/lissage-ptz';
 import { describe, it, expect } from 'vitest';
 
-const montantTotal = 200000;
+const montantTotalOperation = 200000;
 const zone: Zone = 'A';
 const apport = 5000;
 const tauxEmprunt = 4;
@@ -17,7 +17,7 @@ const typeLogement: Logement = 'collectif';
 
 const pretLisseInitial = () =>
   new PretLisse(
-    montantTotal,
+    montantTotalOperation,
     zone,
     apport,
     tauxEmprunt,
@@ -29,80 +29,117 @@ const pretLisseInitial = () =>
 
 describe('PrêtLissé', () => {
   it('devrait être elligible', () => {
-    const pretLisse = pretLisseInitial();
-    expect(pretLisse.definirEstElligible()).toBe(true);
+    let pretLisse = pretLisseInitial();
+    expect(pretLisse.estElligible).toBe(true);
 
-    pretLisse.zone = 'Abis';
-    pretLisse.nbPersonnes = 7;
-    pretLisse.revenuFiscalReference = 140000;
-    expect(pretLisse.definirEstElligible()).toBe(true);
+    pretLisse = new PretLisse(
+      200000,
+      'Abis',
+      5000,
+      4,
+      25,
+      7,
+      140000,
+      'collectif',
+    );
+    expect(pretLisse.estElligible).toBe(true);
 
-    pretLisse.zone = 'B1';
-    pretLisse.revenuFiscalReference = 90000;
-    expect(pretLisse.definirEstElligible()).toBe(true);
+    pretLisse = new PretLisse(200000, 'B1', 5000, 4, 25, 7, 90000, 'collectif');
+    expect(pretLisse.estElligible).toBe(true);
 
-    pretLisse.zone = 'B2';
-    pretLisse.nbPersonnes = 12;
-    pretLisse.revenuFiscalReference = 100000;
-    expect(pretLisse.definirEstElligible()).toBe(true);
+    pretLisse = new PretLisse(
+      200000,
+      'B2',
+      5000,
+      4,
+      25,
+      12,
+      100000,
+      'collectif',
+    );
+    expect(pretLisse.estElligible).toBe(true);
 
-    pretLisse.zone = 'C';
-    pretLisse.nbPersonnes = 5;
-    pretLisse.revenuFiscalReference = 68000;
-    expect(pretLisse.definirEstElligible()).toBe(true);
+    pretLisse = new PretLisse(200000, 'C', 5000, 4, 25, 5, 68000, 'collectif');
+    expect(pretLisse.estElligible).toBe(true);
   });
 
   it('ne devrait pas être elligible', () => {
-    const pretLisse = pretLisseInitial();
+    let pretLisse = new PretLisse(
+      200000,
+      'Abis',
+      5000,
+      4,
+      25,
+      7,
+      150000,
+      'collectif',
+    );
+    expect(pretLisse.estElligible).toBe(false);
 
-    pretLisse.zone = 'Abis';
-    pretLisse.nbPersonnes = 7;
-    pretLisse.revenuFiscalReference = 150000;
-    expect(pretLisse.definirEstElligible()).toBe(false);
+    pretLisse = new PretLisse(
+      200000,
+      'B1',
+      5000,
+      4,
+      25,
+      7,
+      150000,
+      'collectif',
+    );
+    expect(pretLisse.estElligible).toBe(false);
 
-    pretLisse.zone = 'B1';
-    pretLisse.nbPersonnes = 3;
-    pretLisse.revenuFiscalReference = 70000;
-    expect(pretLisse.definirEstElligible()).toBe(false);
+    pretLisse = new PretLisse(
+      200000,
+      'B2',
+      5000,
+      4,
+      25,
+      12,
+      200000,
+      'collectif',
+    );
+    expect(pretLisse.estElligible).toBe(false);
 
-    pretLisse.zone = 'B2';
-    pretLisse.nbPersonnes = 12;
-    pretLisse.revenuFiscalReference = 200000;
-    expect(pretLisse.definirEstElligible()).toBe(false);
-
-    pretLisse.zone = 'C';
-    pretLisse.nbPersonnes = 5;
-    pretLisse.revenuFiscalReference = 70000;
-    expect(pretLisse.definirEstElligible()).toBe(false);
+    pretLisse = new PretLisse(200000, 'C', 5000, 4, 25, 5, 70000, 'collectif');
+    expect(pretLisse.estElligible).toBe(false);
   });
 
   it('devrait trouver la bonne tranche', () => {
-    const pretLisse = pretLisseInitial();
-    expect(pretLisse.trouverTranche()).toBe(tranches[0]);
+    let pretLisse = pretLisseInitial();
+    expect(pretLisse.tranche).toStrictEqual(tranches[0]);
 
-    pretLisse.zone = 'Abis';
-    pretLisse.nbPersonnes = 4;
-    pretLisse.revenuFiscalReference = 46000;
-    expect(pretLisse.trouverTranche()).toBe(tranches[0]);
+    pretLisse = new PretLisse(
+      200000,
+      'Abis',
+      5000,
+      4,
+      25,
+      4,
+      46000,
+      'collectif',
+    );
+    expect(pretLisse.tranche).toStrictEqual(tranches[0]);
 
-    pretLisse.nbPersonnes = 6;
-    pretLisse.revenuFiscalReference = 110000;
-    expect(pretLisse.trouverTranche()).toBe(tranches[3]);
+    pretLisse = new PretLisse(
+      200000,
+      'Abis',
+      5000,
+      4,
+      25,
+      6,
+      110000,
+      'collectif',
+    );
+    expect(pretLisse.tranche).toStrictEqual(tranches[3]);
 
-    pretLisse.zone = 'B1';
-    pretLisse.nbPersonnes = 3;
-    pretLisse.revenuFiscalReference = 53000;
-    expect(pretLisse.trouverTranche()).toBe(tranches[2]);
+    pretLisse = new PretLisse(200000, 'B1', 5000, 4, 25, 3, 53000, 'collectif');
+    expect(pretLisse.tranche).toStrictEqual(tranches[2]);
 
-    pretLisse.zone = 'B2';
-    pretLisse.nbPersonnes = 4;
-    pretLisse.revenuFiscalReference = 42000;
-    expect(pretLisse.trouverTranche()).toBe(tranches[1]);
+    pretLisse = new PretLisse(200000, 'B2', 5000, 4, 25, 4, 42000, 'collectif');
+    expect(pretLisse.tranche).toStrictEqual(tranches[1]);
 
-    pretLisse.zone = 'C';
-    pretLisse.nbPersonnes = 2;
-    pretLisse.revenuFiscalReference = 30000;
-    expect(pretLisse.trouverTranche()).toBe(tranches[2]);
+    pretLisse = new PretLisse(200000, 'C', 5000, 4, 25, 2, 30000, 'collectif');
+    expect(pretLisse.tranche).toStrictEqual(tranches[2]);
   });
 
   it('devrait trouver le plafond PTZ', () => {
@@ -134,50 +171,97 @@ describe('PrêtLissé', () => {
   });
 
   it('devrait calculer le montant du PTZ', () => {
-    const pretLisse = pretLisseInitial();
-    expect(pretLisse.calculerMontantPTZ()).toBe(75000);
+    let pretLisse = pretLisseInitial();
+    expect(pretLisse.montantPTZ).toBe(75000);
 
-    pretLisse.zone = 'Abis';
-    pretLisse.nbPersonnes = 4;
-    pretLisse.revenuFiscalReference = 46000;
-    expect(pretLisse.calculerMontantPTZ()).toBe(97500);
+    pretLisse = new PretLisse(
+      200000,
+      'Abis',
+      5000,
+      4,
+      25,
+      4,
+      46000,
+      'collectif',
+    );
+    expect(pretLisse.montantPTZ).toBe(97500);
 
     pretLisse.nbPersonnes = 6;
     pretLisse.revenuFiscalReference = 110000;
-    expect(pretLisse.calculerMontantPTZ()).toBe(39000);
+    pretLisse = new PretLisse(
+      200000,
+      'Abis',
+      5000,
+      4,
+      25,
+      6,
+      110000,
+      'collectif',
+    );
+    expect(pretLisse.montantPTZ).toBe(39000);
 
-    pretLisse.typeLogement = 'individuel';
-    pretLisse.montantTotal = 400000;
-    expect(pretLisse.calculerMontantPTZ()).toBe(36000);
+    pretLisse = new PretLisse(
+      400000,
+      'Abis',
+      5000,
+      4,
+      25,
+      6,
+      110000,
+      'individuel',
+    );
+    expect(pretLisse.montantPTZ).toBe(36000);
 
-    pretLisse.nbPersonnes = 4;
-    pretLisse.revenuFiscalReference = 46000;
-    expect(pretLisse.calculerMontantPTZ()).toBe(94500);
+    pretLisse = new PretLisse(
+      200000,
+      'Abis',
+      5000,
+      4,
+      25,
+      4,
+      46000,
+      'individuel',
+    );
+    expect(pretLisse.montantPTZ).toBe(58500);
 
-    pretLisse.zone = 'B1';
-    expect(pretLisse.calculerMontantPTZ()).toBe(56700);
+    pretLisse = new PretLisse(
+      200000,
+      'B1',
+      5000,
+      4,
+      25,
+      4,
+      46000,
+      'individuel',
+    );
 
-    pretLisse.nbPersonnes = 3;
-    pretLisse.revenuFiscalReference = 53000;
-    expect(pretLisse.calculerMontantPTZ()).toBe(48600);
+    expect(pretLisse.montantPTZ).toBe(39000);
 
-    pretLisse.typeLogement = 'collectif';
-    expect(pretLisse.calculerMontantPTZ()).toBe(97200);
+    pretLisse = new PretLisse(
+      200000,
+      'B1',
+      5000,
+      4,
+      25,
+      3,
+      53000,
+      'individuel',
+    );
+    expect(pretLisse.montantPTZ).toBe(39000);
 
-    pretLisse.zone = 'B2';
-    pretLisse.nbPersonnes = 4;
-    pretLisse.revenuFiscalReference = 42000;
-    expect(pretLisse.calculerMontantPTZ()).toBe(92400);
+    pretLisse = new PretLisse(200000, 'B1', 5000, 4, 25, 4, 46000, 'collectif');
+    expect(pretLisse.montantPTZ).toBe(78000);
 
-    pretLisse.zone = 'C';
-    pretLisse.nbPersonnes = 2;
-    pretLisse.revenuFiscalReference = 30000;
-    expect(pretLisse.calculerMontantPTZ()).toBe(60000);
+    pretLisse = new PretLisse(200000, 'B2', 5000, 4, 25, 4, 42000, 'collectif');
+    expect(pretLisse.montantPTZ).toBe(78000);
+
+    pretLisse = new PretLisse(200000, 'C', 5000, 4, 25, 2, 30000, 'collectif');
+    expect(pretLisse.montantPTZ).toBe(60000);
   });
 
   it('devrait lisser le prêt classique et le PTZ', () => {
-    const pretLisse = pretLisseInitial();
-    expect(pretLisse.lisser()).toStrictEqual([
+    let pretLisse = pretLisseInitial();
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
       {
         anneesDifferees: 0,
         dureeAnnees: 10,
@@ -192,15 +276,17 @@ describe('PrêtLissé', () => {
       },
     ]);
 
-    pretLisse.dureeEmprunt = 25;
-    pretLisse.tauxEmprunt = 3;
-    pretLisse.typeLogement = 'individuel';
-    pretLisse.nbPersonnes = 3;
-    pretLisse.revenuFiscalReference = 35000;
-    pretLisse.zone = 'B2';
-    pretLisse.montantTotal = 300000;
-    pretLisse.apport = 20000;
-    expect(pretLisse.lisser()).toStrictEqual([
+    pretLisse = new PretLisse(
+      300000,
+      'B2',
+      20000,
+      3,
+      25,
+      3,
+      35000,
+      'individuel',
+    );
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
       {
         anneesDifferees: 0,
         dureeAnnees: 8,
@@ -221,15 +307,17 @@ describe('PrêtLissé', () => {
       },
     ]);
 
-    pretLisse.dureeEmprunt = 25;
-    pretLisse.tauxEmprunt = 3;
-    pretLisse.typeLogement = 'collectif';
-    pretLisse.nbPersonnes = 3;
-    pretLisse.revenuFiscalReference = 35000;
-    pretLisse.zone = 'B2';
-    pretLisse.montantTotal = 300000;
-    pretLisse.apport = 20000;
-    expect(pretLisse.lisser()).toStrictEqual([
+    pretLisse = new PretLisse(
+      300000,
+      'B2',
+      20000,
+      3,
+      25,
+      3,
+      35000,
+      'collectif',
+    );
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
       {
         anneesDifferees: 0,
         dureeAnnees: 8,
@@ -250,15 +338,8 @@ describe('PrêtLissé', () => {
       },
     ]);
 
-    pretLisse.dureeEmprunt = 25;
-    pretLisse.tauxEmprunt = 2;
-    pretLisse.typeLogement = 'collectif';
-    pretLisse.nbPersonnes = 2;
-    pretLisse.revenuFiscalReference = 30000;
-    pretLisse.zone = 'C';
-    pretLisse.montantTotal = 300000;
-    pretLisse.apport = 20000;
-    expect(pretLisse.lisser()).toStrictEqual([
+    pretLisse = new PretLisse(300000, 'C', 20000, 2, 25, 2, 30000, 'collectif');
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
       {
         anneesDifferees: 0,
         dureeAnnees: 2,
@@ -279,15 +360,17 @@ describe('PrêtLissé', () => {
       },
     ]);
 
-    pretLisse.dureeEmprunt = 25;
-    pretLisse.tauxEmprunt = 2.5;
-    pretLisse.typeLogement = 'collectif';
-    pretLisse.nbPersonnes = 6;
-    pretLisse.revenuFiscalReference = 110000;
-    pretLisse.zone = 'Abis';
-    pretLisse.montantTotal = 500000;
-    pretLisse.apport = 100000;
-    expect(pretLisse.lisser()).toStrictEqual([
+    pretLisse = new PretLisse(
+      500000,
+      'Abis',
+      100000,
+      2.5,
+      25,
+      6,
+      110000,
+      'collectif',
+    );
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
       {
         anneesDifferees: 0,
         dureeAnnees: 10,
@@ -302,15 +385,17 @@ describe('PrêtLissé', () => {
       },
     ]);
 
-    pretLisse.dureeEmprunt = 15;
-    pretLisse.tauxEmprunt = 2.5;
-    pretLisse.typeLogement = 'collectif';
-    pretLisse.nbPersonnes = 6;
-    pretLisse.revenuFiscalReference = 110000;
-    pretLisse.zone = 'Abis';
-    pretLisse.montantTotal = 500000;
-    pretLisse.apport = 100000;
-    expect(pretLisse.lisser()).toStrictEqual([
+    pretLisse = new PretLisse(
+      500000,
+      'Abis',
+      100000,
+      2.5,
+      15,
+      6,
+      110000,
+      'collectif',
+    );
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
       {
         anneesDifferees: 0,
         dureeAnnees: 10,
@@ -325,15 +410,17 @@ describe('PrêtLissé', () => {
       },
     ]);
 
-    pretLisse.dureeEmprunt = 10;
-    pretLisse.tauxEmprunt = 2.5;
-    pretLisse.typeLogement = 'collectif';
-    pretLisse.nbPersonnes = 6;
-    pretLisse.revenuFiscalReference = 110000;
-    pretLisse.zone = 'Abis';
-    pretLisse.montantTotal = 500000;
-    pretLisse.apport = 100000;
-    expect(pretLisse.lisser()).toStrictEqual([
+    pretLisse = new PretLisse(
+      500000,
+      'Abis',
+      100000,
+      2.5,
+      10,
+      6,
+      110000,
+      'collectif',
+    );
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
       {
         anneesDifferees: 0,
         dureeAnnees: 10,
@@ -348,9 +435,19 @@ describe('PrêtLissé', () => {
     pretLisse.nbPersonnes = 3;
     pretLisse.revenuFiscalReference = 35000;
     pretLisse.zone = 'B2';
-    pretLisse.montantTotal = 300000;
+    pretLisse.montantTotalOperation = 300000;
     pretLisse.apport = 20000;
-    expect(pretLisse.lisser()).toStrictEqual([
+    pretLisse = new PretLisse(
+      300000,
+      'B2',
+      20000,
+      3,
+      15,
+      3,
+      35000,
+      'individuel',
+    );
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
       {
         anneesDifferees: 0,
         dureeAnnees: 8,
@@ -371,15 +468,17 @@ describe('PrêtLissé', () => {
       },
     ]);
 
-    pretLisse.dureeEmprunt = 10;
-    pretLisse.tauxEmprunt = 3;
-    pretLisse.typeLogement = 'individuel';
-    pretLisse.nbPersonnes = 3;
-    pretLisse.revenuFiscalReference = 35000;
-    pretLisse.zone = 'B2';
-    pretLisse.montantTotal = 300000;
-    pretLisse.apport = 20000;
-    expect(pretLisse.lisser()).toStrictEqual([
+    pretLisse = new PretLisse(
+      300000,
+      'B2',
+      20000,
+      3,
+      10,
+      3,
+      35000,
+      'individuel',
+    );
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
       {
         anneesDifferees: 0,
         dureeAnnees: 8,
@@ -400,15 +499,8 @@ describe('PrêtLissé', () => {
       },
     ]);
 
-    pretLisse.dureeEmprunt = 8;
-    pretLisse.tauxEmprunt = 4;
-    pretLisse.typeLogement = 'collectif';
-    pretLisse.nbPersonnes = 1;
-    pretLisse.revenuFiscalReference = 24000;
-    pretLisse.zone = 'A';
-    pretLisse.montantTotal = 200000;
-    pretLisse.apport = 5000;
-    expect(pretLisse.lisser()).toStrictEqual([
+    pretLisse = new PretLisse(200000, 'A', 5000, 4, 8, 1, 24000, 'collectif');
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
       {
         anneesDifferees: 0,
         dureeAnnees: 8,
@@ -423,18 +515,8 @@ describe('PrêtLissé', () => {
       },
     ]);
 
-    pretLisse.dureeEmprunt = 25;
-    pretLisse.tauxEmprunt = 3;
-    pretLisse.typeLogement = 'collectif';
-    pretLisse.nbPersonnes = 2;
-    pretLisse.revenuFiscalReference = 44000;
-    pretLisse.zone = 'A';
-    pretLisse.montantTotal = 20460;
-    pretLisse.apport = 10000;
-
-    console.log(pretLisse.lisser());
-
-    expect(pretLisse.lisser()).toStrictEqual([
+    pretLisse = new PretLisse(20460, 'A', 10000, 3, 25, 2, 44000, 'collectif');
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
       {
         anneesDifferees: 0,
         dureeAnnees: 8,
@@ -454,11 +536,70 @@ describe('PrêtLissé', () => {
         mensualiteClassique: '42.86',
       },
     ]);
+
+    pretLisse = new PretLisse(75000, 'B1', 40000, 3, 25, 2, 24000, 'collectif');
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 10,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '132.46',
+      },
+      {
+        anneesDifferees: 10,
+        dureeAnnees: 15,
+        mensualitePTZ: '97.22',
+        mensualiteClassique: '35.24',
+      },
+    ]);
+
+    pretLisse = new PretLisse(75000, 'B1', 40000, 3, 20, 1, 15000, 'collectif');
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 10,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '138.44',
+      },
+      {
+        anneesDifferees: 10,
+        dureeAnnees: 10,
+        mensualitePTZ: '97.22',
+        mensualiteClassique: '41.22',
+      },
+      {
+        anneesDifferees: 20,
+        dureeAnnees: 5,
+        mensualiteClassique: '0.00',
+        mensualitePTZ: '97.22',
+      },
+    ]);
+
+    pretLisse = new PretLisse(270000, 'A', 11000, 3, 25, 2, 50000, 'collectif');
+    expect(pretLisse.phasesRemboursement).toStrictEqual([
+      {
+        anneesDifferees: 0,
+        dureeAnnees: 2,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '1133.93',
+      },
+      {
+        anneesDifferees: 2,
+        dureeAnnees: 13,
+        mensualitePTZ: '576.92',
+        mensualiteClassique: '557.01',
+      },
+      {
+        anneesDifferees: 15,
+        dureeAnnees: 10,
+        mensualitePTZ: '0.00',
+        mensualiteClassique: '1133.93',
+      },
+    ]);
   });
 
   it('devrait calculer le coût des intérêts du prêt immobilier classique', () => {
     const pretLisse = pretLisseInitial();
-
     expect(pretLisse.calculateInterestCost()).toBe(70021.26);
   });
 });

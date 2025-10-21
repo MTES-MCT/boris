@@ -19,6 +19,7 @@
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   let {
+    totalCost,
     interestRate,
     loanDuration,
     loanAmount,
@@ -78,7 +79,7 @@
       errors = {};
 
       acquisitionSimulatorManager.pretLisse = new PretLisse(
-        loanAmount,
+        totalCost,
         brsZone as Zone,
         ownContribution as number,
         interestRate as number,
