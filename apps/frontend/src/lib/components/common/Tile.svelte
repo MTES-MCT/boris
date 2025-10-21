@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   import '@gouvfr/dsfr/dist/component/link/link.min.css';
   import '@gouvfr/dsfr/dist/component/button/button.min.css';
   import '@gouvfr/dsfr/dist/component/tile/tile.min.css';

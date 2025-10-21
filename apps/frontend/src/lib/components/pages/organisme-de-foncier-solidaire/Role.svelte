@@ -33,7 +33,7 @@
         <Tile
           title="Partage"
           description="Partage de la propriété des terrains avec les ménages acquéreurs"
-          pictogram="house" />
+          pictogram="environment" />
 
         <Tile
           title="Gestion"
