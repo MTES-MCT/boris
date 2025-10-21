@@ -1,7 +1,7 @@
 <script lang="ts">
   import Badge from '$components/common/Badge.svelte';
   import Tooltip from '$components/common/Tooltip.svelte';
-  import type { ComponentProps, Snippet } from 'svelte';
+  import type { ComponentProps } from 'svelte';
 
   type Props = {
     title: string;
@@ -24,11 +24,13 @@
       </Tooltip>
     {/if}
   </div>
-  <Badge
-    {status}
-    hideIcon>
-    {value}
-  </Badge>
+  <div class="row-value">
+    <Badge
+      {status}
+      hideIcon>
+      {value}
+    </Badge>
+  </div>
 </div>
 
 <style lang="postcss">
@@ -43,5 +45,6 @@
     display: flex;
     align-items: center;
     gap: 0.25rem;
+    flex: 1;
   }
 </style>

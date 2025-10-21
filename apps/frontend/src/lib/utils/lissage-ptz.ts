@@ -118,7 +118,8 @@ const plafondsPTZ: PlafondsLocalise[] = [
 ];
 
 export class PretLisse {
-  public montantTotal: number;
+  public montantTotalOperation: number;
+  public montantTotalEmprunte: number;
   public zone: Zone;
   public apport: number;
   public tauxEmprunt: number;
@@ -128,10 +129,12 @@ export class PretLisse {
   public typeLogement: Logement;
   public tranche?: Tranche;
   public montantPTZ?: number;
+  public montantPretClassique: number;
   public estElligible: boolean;
+  public phasesRemboursement: PhaseRemboursement[];
 
   constructor(
-    montantTotal: number,
+    montantTotalOperation: number,
     zone: Zone,
     apport: number,
     tauxEmprunt: number,
@@ -140,20 +143,36 @@ export class PretLisse {
     revenuFiscalReference: number,
     typeLogement: Logement,
   ) {
-    this.montantTotal = montantTotal;
+    this.montantTotalOperation = montantTotalOperation;
     this.zone = zone;
     this.apport = apport;
+    this.montantTotalEmprunte = montantTotalOperation - apport;
     this.tauxEmprunt = tauxEmprunt;
     this.dureeEmprunt = dureeEmprunt;
     this.nbPersonnes = nbPersonnes;
     this.revenuFiscalReference = revenuFiscalReference;
     this.typeLogement = typeLogement;
-
     this.estElligible = this.definirEstElligible();
 
     if (this.estElligible) {
       this.tranche = this.trouverTranche();
       this.montantPTZ = this.calculerMontantPTZ();
+      this.montantPretClassique = this.montantTotalEmprunte - this.montantPTZ;
+      this.phasesRemboursement = this.lisser() as PhaseRemboursement[];
+    } else {
+      this.montantPretClassique = this.montantTotalEmprunte;
+
+      this.phasesRemboursement = [
+        {
+          anneesDifferees: 0,
+          dureeAnnees: this.dureeEmprunt,
+          mensualitePTZ: '0.00',
+          mensualiteClassique: this.calculerMensualiteClassique(
+            this.tauxEmprunt / 100 / 12,
+            this.dureeEmprunt * 12,
+          ),
+        },
+      ];
     }
   }
 
@@ -218,7 +237,7 @@ export class PretLisse {
         : tranche.tauxIndividuel;
 
     this.montantPTZ =
-      Math.min(plafondPTZ, this.montantTotal - this.apport) * (quotite / 100);
+      Math.min(plafondPTZ, this.montantTotalEmprunte) * (quotite / 100);
 
     return this.montantPTZ;
   }
@@ -228,142 +247,124 @@ export class PretLisse {
   }
 
   public lisser() {
-    if (!this.estElligible) {
-      return [
-        {
-          anneesDifferees: 0,
-          dureeAnnees: this.dureeEmprunt,
-          mensualitePTZ: '0.00',
-          mensualiteClassique: this.calculerMensualiteClassique(
-            this.montantTotal,
-            this.tauxEmprunt / 100 / 12,
-            this.dureeEmprunt * 12,
-          ),
-        },
-      ];
-    }
+    if (this.tranche && this.montantPTZ) {
+      const dureeEmpruntMois = this.dureeEmprunt * 12;
+      const differePTZMois = this.tranche.anneesDifferees * 12;
+      const dureeRemboursementPTZMois = this.tranche.dureeRemboursement * 12;
+      const tauxMensuel = this.tauxEmprunt / 100 / 12;
+      const mensualitePTZ = (
+        this.montantPTZ / dureeRemboursementPTZMois
+      ).toFixed(2);
+      const phasesRemboursement: PhaseRemboursement[] = [];
 
-    this.tranche = this.trouverTranche();
-    this.montantPTZ = this.calculerMontantPTZ();
+      if (dureeEmpruntMois >= differePTZMois + dureeRemboursementPTZMois) {
+        // cas ou le ptz est remboursé avant ou en meme temps que l'emprunt classique
+        const mensualiteTotale = this.calculerMensualiteTotale(
+          Number(mensualitePTZ),
+          tauxMensuel,
+          dureeRemboursementPTZMois,
+          differePTZMois,
+          dureeEmpruntMois,
+        );
 
-    const dureeEmpruntMois = this.dureeEmprunt * 12;
-    const differePTZMois = this.tranche.anneesDifferees * 12;
-    const dureeRemboursementPTZMois = this.tranche.dureeRemboursement * 12;
-    const tauxMensuel = this.tauxEmprunt / 100 / 12;
-    const montantPretClassique =
-      this.montantTotal - this.montantPTZ - (this.apport || 0);
-    const mensualitePTZ = (this.montantPTZ / dureeRemboursementPTZMois).toFixed(
-      2,
-    );
-    const phasesRemboursement: PhaseRemboursement[] = [];
+        if (differePTZMois > 0) {
+          phasesRemboursement.push({
+            anneesDifferees: 0,
+            dureeAnnees: Number((differePTZMois / 12).toFixed(2)),
+            mensualitePTZ: '0.00',
+            mensualiteClassique: mensualiteTotale,
+          });
+        }
 
-    if (dureeEmpruntMois >= differePTZMois + dureeRemboursementPTZMois) {
-      // cas ou le ptz est remboursé avant ou en meme temps que l'emprunt classique
-      const mensualiteTotale = this.calculerMensualiteTotale(
-        Number(mensualitePTZ),
-        tauxMensuel,
-        dureeRemboursementPTZMois,
-        differePTZMois,
-        montantPretClassique,
-        dureeEmpruntMois,
-      );
-
-      if (differePTZMois > 0) {
         phasesRemboursement.push({
-          anneesDifferees: 0,
-          dureeAnnees: Number((differePTZMois / 12).toFixed(2)),
-          mensualitePTZ: '0.00',
-          mensualiteClassique: mensualiteTotale,
-        });
-      }
-
-      phasesRemboursement.push({
-        anneesDifferees: this.tranche.anneesDifferees,
-        dureeAnnees: this.tranche.dureeRemboursement,
-        mensualitePTZ: mensualitePTZ,
-        mensualiteClassique: (
-          Number(mensualiteTotale) - Number(mensualitePTZ)
-        ).toFixed(2),
-      });
-
-      const dureeRestante =
-        dureeEmpruntMois - (differePTZMois + dureeRemboursementPTZMois);
-      if (dureeRestante > 0) {
-        phasesRemboursement.push({
-          anneesDifferees:
-            this.tranche.anneesDifferees + this.tranche.dureeRemboursement,
-          dureeAnnees: dureeRestante / 12,
-          mensualitePTZ: '0.00',
-          mensualiteClassique: mensualiteTotale,
-        });
-      }
-
-      return phasesRemboursement;
-    } else if (dureeEmpruntMois < this.tranche.anneesDifferees * 12) {
-      // cas où la date de fin du remboursement du pret classique est avant le début du remboursement du PTZ
-      return [
-        {
-          anneesDifferees: 0,
-          dureeAnnees: this.dureeEmprunt,
-          mensualitePTZ: '0.00',
-          mensualiteClassique: this.calculerMensualiteClassique(
-            montantPretClassique,
-            tauxMensuel,
-            dureeEmpruntMois,
-          ),
-        },
-        {
           anneesDifferees: this.tranche.anneesDifferees,
           dureeAnnees: this.tranche.dureeRemboursement,
           mensualitePTZ: mensualitePTZ,
-          mensualiteClassique: '0.00',
-        },
-      ];
-    } else if (dureeEmpruntMois < differePTZMois + dureeRemboursementPTZMois) {
-      // cas où le ptz est remboursé après la fin du remboursement du pret classique
-      const dureeRemboursementPTZSeul =
-        differePTZMois + dureeRemboursementPTZMois - dureeEmpruntMois;
-      const dureePhazePTZEtPretClassique =
-        dureeRemboursementPTZMois - dureeRemboursementPTZSeul;
-
-      const mensualiteTotale = this.calculerMensualiteTotale(
-        Number(mensualitePTZ),
-        tauxMensuel,
-        dureePhazePTZEtPretClassique,
-        differePTZMois,
-        montantPretClassique,
-        dureeEmpruntMois,
-      );
-
-      if (differePTZMois > 0) {
-        phasesRemboursement.push({
-          anneesDifferees: 0,
-          dureeAnnees: Number((differePTZMois / 12).toFixed(2)),
-          mensualitePTZ: '0.00',
-          mensualiteClassique: mensualiteTotale,
+          mensualiteClassique: (
+            Number(mensualiteTotale) - Number(mensualitePTZ)
+          ).toFixed(2),
         });
+
+        const dureeRestante =
+          dureeEmpruntMois - (differePTZMois + dureeRemboursementPTZMois);
+        if (dureeRestante > 0) {
+          phasesRemboursement.push({
+            anneesDifferees:
+              this.tranche.anneesDifferees + this.tranche.dureeRemboursement,
+            dureeAnnees: dureeRestante / 12,
+            mensualitePTZ: '0.00',
+            mensualiteClassique: mensualiteTotale,
+          });
+        }
+
+        return phasesRemboursement;
+      } else if (dureeEmpruntMois < this.tranche.anneesDifferees * 12) {
+        // cas où la date de fin du remboursement du pret classique est avant le début du remboursement du PTZ
+        return [
+          {
+            anneesDifferees: 0,
+            dureeAnnees: this.dureeEmprunt,
+            mensualitePTZ: '0.00',
+            mensualiteClassique: this.calculerMensualiteClassique(
+              tauxMensuel,
+              dureeEmpruntMois,
+            ),
+          },
+          {
+            anneesDifferees: this.tranche.anneesDifferees,
+            dureeAnnees: this.tranche.dureeRemboursement,
+            mensualitePTZ: mensualitePTZ,
+            mensualiteClassique: '0.00',
+          },
+        ];
+      } else if (
+        dureeEmpruntMois <
+        differePTZMois + dureeRemboursementPTZMois
+      ) {
+        // cas où le ptz est remboursé après la fin du remboursement du pret classique
+        const dureeRemboursementPTZSeul =
+          differePTZMois + dureeRemboursementPTZMois - dureeEmpruntMois;
+        const dureePhazePTZEtPretClassique =
+          dureeRemboursementPTZMois - dureeRemboursementPTZSeul;
+
+        const mensualiteTotale = this.calculerMensualiteTotale(
+          Number(mensualitePTZ),
+          tauxMensuel,
+          dureePhazePTZEtPretClassique,
+          differePTZMois,
+          dureeEmpruntMois,
+        );
+
+        if (differePTZMois > 0) {
+          phasesRemboursement.push({
+            anneesDifferees: 0,
+            dureeAnnees: Number((differePTZMois / 12).toFixed(2)),
+            mensualitePTZ: '0.00',
+            mensualiteClassique: mensualiteTotale,
+          });
+        }
+
+        phasesRemboursement.push({
+          anneesDifferees: this.tranche.anneesDifferees,
+          dureeAnnees: dureePhazePTZEtPretClassique / 12,
+          mensualitePTZ: mensualitePTZ,
+          mensualiteClassique: (
+            Number(mensualiteTotale) - Number(mensualitePTZ)
+          ).toFixed(2),
+        });
+
+        phasesRemboursement.push({
+          anneesDifferees:
+            this.tranche.anneesDifferees + dureePhazePTZEtPretClassique / 12,
+          dureeAnnees: dureeRemboursementPTZSeul / 12,
+          mensualitePTZ: mensualitePTZ,
+          mensualiteClassique: '0.00',
+        });
+
+        return phasesRemboursement;
+      } else {
+        return [];
       }
-
-      phasesRemboursement.push({
-        anneesDifferees: this.tranche.anneesDifferees,
-        dureeAnnees: dureePhazePTZEtPretClassique / 12,
-        mensualitePTZ: mensualitePTZ,
-        mensualiteClassique: (
-          Number(mensualiteTotale) - Number(mensualitePTZ)
-        ).toFixed(2),
-      });
-
-      phasesRemboursement.push({
-        anneesDifferees:
-          this.tranche.anneesDifferees + dureePhazePTZEtPretClassique / 12,
-        dureeAnnees: dureeRemboursementPTZSeul / 12,
-        mensualitePTZ: mensualitePTZ,
-        mensualiteClassique: '0.00',
-      });
-
-      return phasesRemboursement;
-    } else {
-      return [];
     }
   }
 
@@ -373,7 +374,6 @@ export class PretLisse {
     tauxMensuel: number,
     dureeRemboursementPTZMois: number,
     differePTZMois: number,
-    montantPretClassique: number,
     dureeEmpruntMois: number,
   ): string {
     const somme =
@@ -382,7 +382,7 @@ export class PretLisse {
         Math.pow(1 + tauxMensuel, differePTZMois));
 
     const mensualiteTotale = (
-      (montantPretClassique + somme) *
+      (this.montantPretClassique + somme) *
       this.rho(tauxMensuel, dureeEmpruntMois)
     ).toFixed(2);
 
@@ -390,29 +390,26 @@ export class PretLisse {
   }
 
   public calculerMensualiteClassique(
-    montantEmprunt: number,
     tauxMensuel: number,
     dureeEmprunt: number,
   ) {
     return (
-      (montantEmprunt * tauxMensuel) /
+      (this.montantPretClassique * tauxMensuel) /
       (1 - Math.pow(1 + tauxMensuel, -dureeEmprunt))
     ).toFixed(2);
   }
 
   public calculateInterestCost(): number {
-    const montantEmprunt =
-      this.montantTotal - (this.montantPTZ || 0) - (this.apport || 0);
     const tauxMensuel = this.tauxEmprunt / 100 / 12;
     const dureeEmpruntMois = this.dureeEmprunt * 12;
 
     const paiementMensuel =
-      montantEmprunt *
+      this.montantPretClassique *
       (tauxMensuel / (1 - Math.pow(1 + tauxMensuel, -dureeEmpruntMois)));
 
     const totalPaye = paiementMensuel * dureeEmpruntMois;
 
-    const totalInterets = totalPaye - montantEmprunt;
+    const totalInterets = totalPaye - this.montantPretClassique;
 
     return Number(totalInterets.toFixed(2));
   }
