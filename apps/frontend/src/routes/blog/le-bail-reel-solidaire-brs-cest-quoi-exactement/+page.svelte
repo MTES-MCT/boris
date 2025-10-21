@@ -18,24 +18,34 @@
 
 <ArticlePage {article}>
   <p>
-    <b>Le Bail Réel Solidaire (BRS) c’est quoi?</b>
+    <b>Le Bail Réel Solidaire (BRS) c'est quoi?</b>
     Le bail réel solidaire (BRS) est un dispositif innovant qui vise à faciliter
-    l’accession à la propriété pour les ménages aux revenus modestes et moyens. Créé
+    l'accession à la propriété pour les ménages aux revenus modestes et moyens. Créé
     par la loi n° 2015-990 du 6 août 2015 pour répondre à la forte hausse des prix
     des logements depuis 2000, il repose sur un principe simple mais puissant :
     <b>
-      devenir propriétaire en réduisant le coût d’achat d’un bien immobilier.
-      Ceci étant possible, en partageant la propriété avec l’Organisme de
-      Foncier Solidaire.
+      devenir propriétaire en réduisant le coût d'achat d'un bien immobilier.
+      Ceci étant possible, en partageant la propriété avec <a
+        href="/organismes-de-foncier-solidaire"
+        class="fr-link">
+        l'organisme de foncier solidaire (OFS)
+      </a>
+      .
     </b>
   </p>
+  <p class="fr-mt-6w fr-mb-1w">
+    <b>Un organisme de foncier solidaire (OFS) c'est quoi?</b>
+  </p>
   <p>
-    <b>Un Organisme de Foncier Solidaire c’est quoi?</b>
-    L’Organisme de Foncier Solidaire (OFS) est un organisme, agréé par l’Etat, créé
-    par la loi ALUR en 2014, à but non lucratif, qui acquiert et détient des terrains
-    qui accueillent des programmes en Bail Réel Solidaire (BRS). Sur ces terrains,
-    l’Organisme de Foncier Solidaire produit des logements, qui seront vendus en
-    Bail Réel Solidaire (BRS) aux ménages
+    <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      L'organisme de foncier solidaire (OFS)
+    </a>
+    est un organisme, agréé par l'Etat, créé par la loi ALUR en 2014, à but non lucratif,
+    qui acquiert et détient des terrains qui accueillent des programmes en Bail Réel
+    Solidaire (BRS). Sur ces terrains, l'organisme de doncier solidaire (OFS) produit
+    des logements, qui seront vendus en Bail Réel Solidaire (BRS) aux ménages
     <a
       href="/simulateur-eligibilite"
       class="fr-link">
@@ -44,30 +54,56 @@
     .
   </p>
 
+  <a
+    href="/organismes-de-foncier-solidaire"
+    class="fr-btn">
+    En savoir plus sur les organismes de foncier solidaire (OFS)
+  </a>
+
   <h2 class="fr-mt-8w">
     <b>🔄 Comment fonctionne le Bail Réel Solidaire (BRS)?</b>
   </h2>
 
   <p>
     Le ménage est pleinement propriétaire du logement (appartement ou maison),
-    et partage la propriété avec <b>l’Organisme de Foncier Solidaire (OFS)</b>
-    . L’achat en Bail Réel Solidaire (BRS) permet au ménage d’acheter son logement
-    30 à 50% moins cher que dans le marché libre. En contrepartie, l’acquéreur verse
-    une redevance contenue à l’Organisme de Foncier Solidaire (OFS), pour l’usage
-    du sol. Ainsi, la charge financière est partagée entre l’OFS et le ménage, puisque
-    l’Organisme de Foncier Solidaire prend pour sa part 30 à 50% du prix du logement
-    lors de la première cession, et ce sont les ménages propriétaires successifs
-    qui payeront, petit à petit, sur le temps très long, cette charge via la redevance.
-    Pour vous projeter sur le financement d’un achat en Bail Réel Solidaire (BRS),
+    et partage la propriété avec un <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      organisme de foncier solidaire (OFS)
+    </a>
+    . L'achat en bail réel solidaire (BRS) permet au ménage d'acheter son logement
+    30 à 50% moins cher que dans le marché libre. En contrepartie, l'acquéreur verse
+    une redevance contenue à
+    <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      l'organisme de foncier solidaire (OFS)
+    </a>
+    , pour l'usage du sol. Ainsi, la charge financière est partagée entre
+    <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      l'organisme de foncier solidaire (OFS)
+    </a>
+    et le ménage, puisque
+    <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      l'organisme de foncier solidaire (OFS)
+    </a>
+    prend pour sa part 30 à 50% du prix du logement lors de la première cession,
+    et ce sont les ménages propriétaires successifs qui payeront, petit à petit,
+    sur le temps très long, cette charge via la redevance. Pour vous projeter sur
+    le financement d'un achat en Bail Réel Solidaire (BRS),
     <a
       href="/blog/un-exemple-pour-vous-projeter-dans-votre-achat-en-brs"
       class="fr-link">
-      n’hésitez pas à lire notre article dédié ici.
+      n'hésitez pas à lire notre article dédié ici.
     </a>
   </p>
 
   <h2 class="fr-mt-8w">
-    <b>👥 Qui peut bénéficier d’un achat en bail réel solidaire?</b>
+    <b>👥 Qui peut bénéficier d'un achat en bail réel solidaire?</b>
   </h2>
 
   <p>Le Bail réel solidaire (BRS) est réservé aux ménages :</p>
@@ -207,9 +243,9 @@
     De plus en plus de programmes immobiliers intègrent le Bail réel solidaire
     (BRS). Vous pouvez consulter la
     <a
-      href="/logements-brs-disponibles"
+      href="/organismes-de-foncier-solidaire"
       class="fr-link">
-      liste des Organismes de Foncier Solidaire agréés (OFS agréés)
+      liste des organismes de foncier solidaire (OFS) agréés
     </a>
     sur BoRiS pour trouver un projet près de chez vous.
   </p>

@@ -18,7 +18,7 @@
   <title>Trouver un logement en Bail Réel Solidaire - BoRiS</title>
   <meta
     name="description"
-    content="Trouvez un logement en BRS: consultez les biens en BRS disponibles à l’achat partout en France. Appartements et maisons en Bail Réel Solidaire." />
+    content="Trouvez un logement en BRS: consultez les biens en BRS disponibles à l'achat partout en France. Appartements et maisons en bail réel solidaire." />
 </svelte:head>
 
 <GradientBackgroundWrapper>
@@ -27,7 +27,7 @@
     titleElement="h1">
     <p>
       Nous répertorions les sites internet de nos partenaires qui proposent des
-      logements en Bail Réel Solidaire (BRS) à la vente. Notre annuaire vous
+      logements en bail réel solidaire (BRS) à la vente. Notre annuaire vous
       permet d'identifier facilement les villes où des programmes sont en cours
       de commercialisation, et de pouvoir ensuite visiter les sites d'annonces
       pour trouver les programmes spécifiques. Il n'y a plus qu'à faire sa
@@ -36,11 +36,15 @@
     <p>
       Attention cependant, notre annuaire n'indique pas précisément
       l'emplacement des programmes en vente. Chaque lien vous redirige vers la
-      page programme de l'Organismes de Foncier Solidaires (OFS) ou de son
-      commercialisateur qui présente au moins un programme dans votre ville de
-      recherche. Vous pourrez y consulter les logements en BRS disponibles à
-      l'achat ou prendre contact pour trouver un logement en Bail Réel
-      Solidaire.
+      page programme de <a
+        href="/organismes-de-foncier-solidaire"
+        class="fr-link">
+        l'organisme de foncier solidaire (OFS)
+      </a>
+      ou de son commercialisateur qui présente au moins un programme dans votre ville
+      de recherche. Vous pourrez y consulter les logements en bail réel solidaire
+      (BRS) disponibles à l'achat ou prendre contact pour trouver un logement en
+      bail réel solidaire.
     </p>
   </Section>
 

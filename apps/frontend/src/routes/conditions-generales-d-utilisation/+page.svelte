@@ -10,13 +10,6 @@
     content="Consultez les conditions générales d'utilisation du site Boris, plateforme officielle dédiée au Bail Réel Solidaire, régissant l'accès et l'utilisation des services en ligne." />
 </svelte:head>
 
-<button
-  onclick={() => {
-    throw new Error('Error for sentry');
-  }}>
-  throw error
-</button>
-
 <Section
   title="Conditions générales d'utilisation"
   titleElement="h1">
@@ -29,13 +22,22 @@
   <ContentPageSubtitle title="Présentation de la plateforme" />
   <p>
     BoRiS est la plateforme officielle d’information sur le dispositif relatif
-    aux Organismes de Foncier Solidaire et au Bail Réel Solidaire. Cette
-    plateforme s’adresse en premier lieu aux particuliers qui souhaitent en
-    apprendre plus sur l’acquisition d’un logement en Bail Réel Solidaire. Il
-    est possible pour ces particuliers de vérifier leur éligibilité au
-    dispositif et de s’informer à chaque étape de leur projet. Enfin, avec cette
-    plateforme, l’Etat se place comme tiers de confiance entre les ménages et
-    les Organismes de Foncier Solidaire et facilite leur mise en relation.
+    aux <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      organismes de foncier solidaire (OFS)
+    </a>
+    et au Bail Réel Solidaire. Cette plateforme s’adresse en premier lieu aux particuliers
+    qui souhaitent en apprendre plus sur l’acquisition d’un logement en Bail Réel
+    Solidaire. Il est possible pour ces particuliers de vérifier leur éligibilité
+    au dispositif et de s’informer à chaque étape de leur projet. Enfin, avec cette
+    plateforme, l’Etat se place comme tiers de confiance entre les ménages et les
+    <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      organismes de foncier solidaire (OFS)
+    </a>
+    et facilite leur mise en relation.
   </p>
 
   <ContentPageSubtitle title="Qualité des informations publiées" />

@@ -18,9 +18,12 @@
             </span>
           </div>
           <p>
-            Vous achetez uniquement le logement tandis qu'un Organisme de
-            Foncier Solidaire (OFS) agréé par l'Etat garde la propriété du
-            terrain.
+            Vous achetez uniquement le logement tandis qu'un <a
+              href="/organismes-de-foncier-solidaire"
+              class="fr-link">
+              organisme de foncier solidaire (OFS)
+            </a>
+            agréé par l'Etat garde la propriété du terrain.
           </p>
         </div>
         <a
@@ -76,8 +79,14 @@
             </span>
           </div>
           <p>
-            Vous devez vous acquitter mensuellement d’une redevance contenue
-            auprès de l’OFS avec qui vous partagez la propriété.
+            Vous devez vous acquitter mensuellement d'une redevance contenue
+            auprès de l'
+            <a
+              href="/organismes-de-foncier-solidaire"
+              class="fr-link">
+              organisme de foncier solidaire (OFS)
+            </a>
+            avec qui vous partagez la propriété.
           </p>
         </div>
         <a

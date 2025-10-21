@@ -45,7 +45,12 @@
   </h2>
   <p>
     Lorsqu'un ménage est propriétaire d'un logement en BRS, <b>
-      il partage la propriété avec l'Organisme de Foncier Solidaire (OFS)
+      il partage la propriété avec
+      <a
+        href="/organismes-de-foncier-solidaire"
+        class="fr-link">
+        l'organisme de foncier solidaire (OFS)
+      </a>
     </b>
     .
     <br />
@@ -123,16 +128,29 @@
     , selon les conditions encadrées par le BRS.
   </p>
   <p>
-    C'est l'Organisme de Foncier Solidaire (OFS) qui accompagne les héritiers
-    dans cette démarche. Le logement est alors <b>
-      remis sur le marché à prix encadré
-    </b>
+    C'est <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      l'organisme de foncier solidaire (OFS)
+    </a>
+    qui accompagne les héritiers dans cette démarche. Le logement est alors
+    <b>remis sur le marché à prix encadré</b>
     , pour être racheté par un autre ménage éligible.
   </p>
   <p>
     Si les héritiers n'arrivent pas à céder le logement dans ce délai de 12
-    mois, l'OFS peut le prolonger. Si à terme, les héritiers ne trouvent pas
-    d'acquéreurs, alors le BRS peut être résilié de façon conventionnelle, l'OFS
+    mois, <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      l'organisme de foncier solidaire (OFS)
+    </a>
+    peut le prolonger. Si à terme, les héritiers ne trouvent pas d'acquéreurs, alors
+    le BRS peut être résilié de façon conventionnelle,
+    <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      l'organisme de foncier solidaire (OFS)
+    </a>
     récupère la pleine propriété du logement et il indemnise les héritiers selon
     les conditions définies dans le bail.
   </p>
@@ -155,8 +173,12 @@
   </p>
   <ul>
     <li>
-      Contacter rapidement l'
-      <b>OFS concerné</b>
+      Contacter rapidement <a
+        href="/organismes-de-foncier-solidaire"
+        class="fr-link">
+        l'organisme de foncier solidaire (OFS)
+      </a>
+      concerné
     </li>
     <li>
       Vérifier votre
@@ -191,7 +213,7 @@
       les conditions du BRS
       <ul>
         <li>Obligation d'user du bien à titre de résidence principale</li>
-        <li>Le ménage doit être agréé par l'OFS</li>
+        <li>Le ménage doit être agréé par <a href="/organismes-de-foncier-solidaire" class="fr-link fr-text--sm">l'organisme de foncier solidaire (OFS)</a></li>
         <li>👉 <a href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif" class="fr-link fr-text--sm">Les règles en BRS</a></li>
       </ul>
       Vous avez aussi la possibilité de vendre le logement
@@ -244,7 +266,13 @@
   </p>
 
   <p>
-    Contactez un Organisme de Foncier Solidaire proche de chez vous ou <a
+    Contactez un <a
+      href="/organismes-de-foncier-solidaire"
+      class="fr-link">
+      organisme de foncier solidaire (OFS)
+    </a>
+    proche de chez vous ou
+    <a
       href="/nous-contacter"
       class="fr-link">
       contactez BoRiS

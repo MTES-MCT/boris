@@ -61,7 +61,14 @@
       </Promess>
       <Promess>
         <p>
-          <b>Il faut impliquer l'OFS dans le processus.</b>
+          <b>
+            Il faut impliquer <a
+              href="/organismes-de-foncier-solidaire"
+              class="fr-link">
+              l'organisme de foncier solidaire (OFS)
+            </a>
+            dans le processus.
+          </b>
         </p>
         <p>
           D'abord parce qu'il a un droit de préemption (il peut racheter le bien
