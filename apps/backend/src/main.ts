@@ -5,7 +5,6 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { useSession } from './infrastructure/session/session.middleware';
-import dataSource from './infrastructure/persistence/typeorm.config';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 import flash = require('connect-flash');
 import { configureViewEngine } from './infrastructure/config/view-engine.config';
@@ -22,7 +21,7 @@ async function bootstrap() {
     }),
   );
 
-  await useSession(app, dataSource);
+  useSession(app);
   configureViewEngine(app);
   configureApiDocumentation(app);
 
