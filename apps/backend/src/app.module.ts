@@ -15,6 +15,7 @@ import { ToLocalsMiddleware } from './infrastructure/middlewares/to-locals.middl
 import { BrsDiffusionWebsiteModule } from './infrastructure/brs-diffusion-website/brs-diffusion-website.module';
 import { APP_FILTER } from '@nestjs/core';
 import { MunicipalityModule } from './infrastructure/municipality/municipality.module';
+import { AcquisitionSimulationModule } from './infrastructure/acquisition-simulation/acquisition-simulation.module';
 
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import { MunicipalityModule } from './infrastructure/municipality/municipality.m
     UserModule,
     BrsDiffusionWebsiteModule,
     MunicipalityModule,
+    AcquisitionSimulationModule,
     AdminHomeModule,
     NotFoundModule,
   ],
