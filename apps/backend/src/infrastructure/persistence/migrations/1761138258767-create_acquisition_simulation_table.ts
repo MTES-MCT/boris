@@ -21,9 +21,6 @@ export class CreateAcquisitionSimulationTable1761138258767
     await queryRunner.query(
       `CREATE TABLE "acquisition_simulation" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "housingPrice" integer, "brsZone" "public"."acquisition_simulation_brszone_enum", "surface" integer, "housingType" "public"."acquisition_simulation_housingtype_enum", "ownContribution" integer, "notaryFees" integer, "oneTimeExpenses" integer, "interestRate" double precision, "loanDuration" integer, "inHousePeopleAmount" integer, "fiscalIncome" integer, "ptzType" "public"."acquisition_simulation_ptztype_enum", "brsFees" integer, "yearlyPropertyTax" integer, "yearlyHouseingInsurance" integer, "condominiumFeesFrequency" "public"."acquisition_simulation_condominiumfeesfrequency_enum", "condominiumFees" integer, "monthlyExpenses" integer, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_c5ed4b03584319c09f583c091d5" PRIMARY KEY ("id"))`,
     );
-    await queryRunner.query(
-      `ALTER TABLE "ofs" ADD "producesBrs" boolean NOT NULL DEFAULT false`,
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
