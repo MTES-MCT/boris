@@ -33,7 +33,7 @@ export class AcquisitionSimulationEntity
   @Column({ type: 'int', nullable: true })
   public surface?: number;
 
-  @Column({ type: 'int', enum: ['new', 'old'], nullable: true })
+  @Column({ type: 'enum', enum: ['new', 'old'], nullable: true })
   public housingType?: HousingType;
 
   @Column({ type: 'int', nullable: true })
@@ -45,7 +45,7 @@ export class AcquisitionSimulationEntity
   @Column({ type: 'int', nullable: true })
   public oneTimeExpenses?: number;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ type: 'float', nullable: true })
   public interestRate?: number;
 
   @Column({ type: 'int', nullable: true })
