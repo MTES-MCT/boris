@@ -30,12 +30,6 @@ mockedAcquisitionSimulation.monthlyExpenses = 2000;
 
 export const mockAcquisitionSimulationRepository = {
   save: jest.fn(),
-  find: jest.fn(),
-  findBy: jest.fn(),
   findOne: jest.fn(),
-  findOneBy: jest.fn(),
   findById: jest.fn(),
-  findAll: jest.fn(),
-  createQueryBuilder: jest.fn(),
-  delete: jest.fn(),
 };
