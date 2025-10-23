@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsIn, IsNumber, IsOptional, IsPositive } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsIn, IsNumber, IsOptional, IsPositive, Min } from 'class-validator';
 import {
   CondominiumFeesFrequency,
   HousingType,
@@ -8,107 +8,106 @@ import {
 import { BrsZone } from 'src/domain/brs-zone/brz-zone.type';
 
 export class UpdateAcquisitionSimulationDTO {
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
   @IsPositive()
   public housingPrice?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsIn(['A', 'Abis', 'B1', 'B2', 'C'])
   public brsZone?: BrsZone;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
   @IsPositive()
   public surface?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsIn(['new', 'old'])
   public housingType?: HousingType;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
-  @IsPositive()
+  @Min(-1)
   public ownContribution?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
   @IsPositive()
   public notaryFees?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
-  @IsPositive()
+  @Min(-1)
   public oneTimeExpenses?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
   @IsPositive()
   public interestRate?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
   @IsPositive()
   public loanDuration?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
   @IsPositive()
   public inHousePeopleAmount?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
-  @IsPositive()
+  @Min(-1)
   public fiscalIncome?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsIn(['collectif', 'individuel'])
   public ptzType?: PtzType;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
-  @IsPositive()
   public brsFees?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
-  @IsPositive()
+  @Min(-1)
   public yearlyPropertyTax?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
-  @IsPositive()
+  @Min(-1)
   public yearlyHouseingInsurance?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsIn(['yearly', 'monthly', 'trimestrial'])
   @IsOptional()
   public condominiumFeesFrequency?: CondominiumFeesFrequency;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
-  @IsPositive()
+  @Min(-1)
   public condominiumFees?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
-  @IsPositive()
+  @Min(-1)
   public monthlyExpenses?: number;
 }

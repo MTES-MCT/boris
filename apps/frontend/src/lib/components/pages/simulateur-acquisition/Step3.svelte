@@ -32,24 +32,32 @@
     notaryFees,
     oneTimeExpenses,
     estimatedNotaryFees,
+    loading,
+    acquisitionSimulation,
     nextStep,
     previousStep,
+    updateAcquisitionSimulation,
     goToPreviousStep,
-    goToNextStep,
   } = $derived(acquisitionSimulatorManager);
 
-  const handleSubmit = (e: SubmitEvent) => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
 
-    try {
-      FormData.parse({
-        notaryFees,
-        oneTimeExpenses,
-      });
+    const payload = {
+      notaryFees,
+      oneTimeExpenses,
+    };
 
+    try {
+      FormData.parse(payload);
       errors = {};
 
-      goToNextStep();
+      if (acquisitionSimulation) {
+        await updateAcquisitionSimulation({
+          notaryFees: notaryFees || estimatedNotaryFees,
+          oneTimeExpenses,
+        });
+      }
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }
@@ -138,11 +146,13 @@
       <Action
         direction="previous"
         label={previousStep?.title as string}
-        onClick={goToPreviousStep} />
+        onClick={goToPreviousStep}
+        {loading} />
       <Action
         direction="next"
         label={nextStep?.title as string}
-        type="submit" />
+        type="submit"
+        {loading} />
     </Actions>
   </Form>
 </Wrapper>

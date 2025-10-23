@@ -27,3 +27,12 @@ export type DepartementRelationnalView =
   components['schemas']['DepartementRelationnalView'];
 
 export type MunicipalityView = components['schemas']['MunicipalityView'];
+
+export type AcquisitionSimulationView =
+  components['schemas']['AcquisitionSimulationView'];
+
+export type CreateAcquisitionSimulationDto =
+  components['schemas']['CreateAcquisitionSimulationDTO'];
+
+export type UpdateAcquisitionSimulationDto =
+  components['schemas']['UpdateAcquisitionSimulationDTO'];

@@ -1,11 +1,12 @@
 import { API_URL, API_KEY } from '$env/static/private';
 import { error, json, type RequestHandler } from '@sveltejs/kit';
 
-export const POST: RequestHandler = async ({ request }) => {
+export const PUT: RequestHandler = async ({ request, params }) => {
+  const { id } = params;
   const body = await request.json();
 
-  const response = await fetch(`${API_URL}/acquisition-simulations`, {
-    method: 'POST',
+  const response = await fetch(`${API_URL}/acquisition-simulations/${id}`, {
+    method: 'PUT',
     body: JSON.stringify(body),
     headers: {
       'x-api-key': API_KEY,
@@ -13,7 +14,9 @@ export const POST: RequestHandler = async ({ request }) => {
     },
   });
 
-  if (response.status !== 201) {
+  console.log(response.status);
+
+  if (response.status !== 200) {
     return error(response.status);
   }
 

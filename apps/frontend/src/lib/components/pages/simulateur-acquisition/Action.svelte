@@ -5,17 +5,25 @@
     direction?: 'previous' | 'next';
     label: string;
     type?: HTMLButtonElement['type'];
+    loading?: boolean;
     onClick?: () => void;
   };
 
-  const { direction, label, type = 'button', onClick }: Props = $props();
+  const {
+    direction,
+    label,
+    type = 'button',
+    loading = false,
+    onClick,
+  }: Props = $props();
 </script>
 
 <button
   class={`fr-btn ${direction}`}
   class:fr-btn--secondary={direction === 'previous'}
   {type}
-  onclick={onClick}>
+  onclick={onClick}
+  disabled={loading}>
   <div class="surtitle">
     {#if direction === 'next'}
       <p>

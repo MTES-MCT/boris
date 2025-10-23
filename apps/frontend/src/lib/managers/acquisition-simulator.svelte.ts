@@ -1,4 +1,9 @@
 import { browser } from '$app/environment';
+import type {
+  AcquisitionSimulationView,
+  CreateAcquisitionSimulationDto,
+  UpdateAcquisitionSimulationDto,
+} from '$lib/utils/api-types';
 import type { GeocodedResponse } from '$lib/utils/definitions';
 import { getGeocodedResponseLabel } from '$lib/utils/helpers';
 import type { Logement, PretLisse, Zone } from '$lib/utils/lissage-ptz';
@@ -92,6 +97,9 @@ class AcquisitionSimulator {
     | undefined = $state('monthly');
   public condominiumFees: number | undefined = $state(150);
   public monthlyExpenses: number | undefined = $state(100);
+
+  public loading = $state(false);
+  public acquisitionSimulation: AcquisitionSimulationView | null = $state(null);
 
   public estimatedNotaryFees: number = $derived.by(() => {
     if (this.housingPrice) {
@@ -199,6 +207,53 @@ class AcquisitionSimulator {
         block: 'start',
       });
     }
+  };
+
+  public createAcquisitionSimulation = async (
+    payload: CreateAcquisitionSimulationDto,
+  ) => {
+    this.loading = true;
+
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    const response = await fetch('/api/acquisition-simulations', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    if (!data.message) {
+      this.acquisitionSimulation = data;
+    }
+
+    this.loading = false;
+    this.goToNextStep();
+  };
+
+  public updateAcquisitionSimulation = async (
+    payload: UpdateAcquisitionSimulationDto,
+  ) => {
+    this.loading = true;
+
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    const response = await fetch(
+      `/api/acquisition-simulations/${this.acquisitionSimulation?.id}`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+      },
+    );
+
+    const data = await response.json();
+
+    if (!data.message) {
+      this.acquisitionSimulation = data;
+    }
+
+    this.loading = false;
+    this.goToNextStep();
   };
 }
 

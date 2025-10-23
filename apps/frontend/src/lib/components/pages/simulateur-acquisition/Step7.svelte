@@ -23,10 +23,12 @@
     condominiumFeesFrequency,
     condominiumFees,
     monthlyExpenses,
+    loading,
+    acquisitionSimulation,
     nextStep,
     previousStep,
+    updateAcquisitionSimulation,
     goToPreviousStep,
-    goToNextStep,
   } = $derived(acquisitionSimulatorManager);
 
   let errors: FormFieldError = $state({});
@@ -73,27 +75,28 @@
       },
     );
 
-  const handleSubmit = (e: SubmitEvent) => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
 
-    try {
-      FormData.parse({
-        brsFees,
-        yearlyPropertyTax,
-        yearlyHouseingInsurance,
-        condominiumFeesFrequency,
-        condominiumFees,
-        monthlyExpenses,
-      });
+    const payload = {
+      brsFees,
+      yearlyPropertyTax,
+      yearlyHouseingInsurance,
+      condominiumFeesFrequency,
+      condominiumFees,
+      monthlyExpenses,
+    };
 
+    try {
+      FormData.parse(payload);
       errors = {};
 
-      goToNextStep();
+      if (acquisitionSimulation) {
+        await updateAcquisitionSimulation(payload);
+      }
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }
-
-    goToNextStep();
   };
 </script>
 
@@ -234,11 +237,13 @@
       <Action
         direction="previous"
         label={previousStep?.title as string}
-        onClick={goToPreviousStep} />
+        onClick={goToPreviousStep}
+        {loading} />
       <Action
         direction="next"
         label={nextStep?.title as string}
-        type="submit" />
+        type="submit"
+        {loading} />
     </Actions>
   </Form>
 </Wrapper>
