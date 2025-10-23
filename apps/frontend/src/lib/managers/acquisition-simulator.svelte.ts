@@ -214,8 +214,6 @@ class AcquisitionSimulator {
   ) => {
     this.loading = true;
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
     const response = await fetch('/api/acquisition-simulations', {
       method: 'POST',
       body: JSON.stringify(payload),
@@ -235,8 +233,6 @@ class AcquisitionSimulator {
     payload: UpdateAcquisitionSimulationDto,
   ) => {
     this.loading = true;
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const response = await fetch(
       `/api/acquisition-simulations/${this.acquisitionSimulation?.id}`,
