@@ -14,8 +14,6 @@ export const PUT: RequestHandler = async ({ request, params }) => {
     },
   });
 
-  console.log(response.status);
-
   if (response.status !== 200) {
     return error(response.status);
   }
