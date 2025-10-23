@@ -89,6 +89,40 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/acquisition-simulations': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Créer une simulation d'acquisition */
+    post: operations['CreateAcquisitionSimulationApiController_createAcquisitionSimulation'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/acquisition-simulations/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    /** Mettre à jour une simulation d'acquisition */
+    put: operations['UpdateAcquisitionSimulationApiController_updateAcquisitionSimulation'];
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -184,6 +218,82 @@ export interface components {
       /** @example B1 */
       zone: string;
       departement: components['schemas']['DepartementRelationnalView'];
+    };
+    CreateAcquisitionSimulationDTO: {
+      housingPrice: number;
+      brsZone: string;
+      surface: number;
+      housingType: string;
+    };
+    AcquisitionSimulationView: {
+      /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
+      id: string;
+      /** @example 250000 */
+      housingPrice: number;
+      /** @example A */
+      brsZone: string;
+      /** @example 75 */
+      surface: number;
+      /** @example new */
+      housingType: string;
+      /** @example 50000 */
+      ownContribution: number;
+      /** @example 8000 */
+      notaryFees: number;
+      /** @example 2000 */
+      oneTimeExpenses: number;
+      /** @example 3.5 */
+      interestRate: number;
+      /** @example 20 */
+      loanDuration: number;
+      /** @example 2 */
+      inHousePeopleAmount: number;
+      /** @example 45000 */
+      fiscalIncome: number;
+      /** @example collectiv */
+      ptzType: string;
+      /** @example 1500 */
+      brsFees: number;
+      /** @example 1200 */
+      yearlyPropertyTax: number;
+      /** @example 300 */
+      yearlyHouseingInsurance: number;
+      /** @example monthly */
+      condominiumFeesFrequency: string;
+      /** @example 150 */
+      condominiumFees: number;
+      /** @example 2000 */
+      monthlyExpenses: number;
+      /**
+       * Format: date-time
+       * @example 2025-10-23T14:41:36.568Z
+       */
+      createdAt: string;
+      /**
+       * Format: date-time
+       * @example 2025-10-23T14:41:36.568Z
+       */
+      updatedAt: string;
+    };
+    UpdateAcquisitionSimulationDTO: {
+      housingPrice?: number;
+      brsZone?: string;
+      surface?: number;
+      housingType?: string;
+      ownContribution?: number;
+      notaryFees?: number;
+      oneTimeExpenses?: number;
+      interestRate?: number;
+      loanDuration?: number;
+      inHousePeopleAmount?: number;
+      fiscalIncome?: number;
+      ptzType?: string;
+      brsFees?: number;
+      yearlyPropertyTax?: number;
+      yearlyHouseingInsurance?: number;
+      condominiumFeesFrequency?: string;
+      condominiumFees?: number;
+      monthlyExpenses?: number;
     };
   };
   responses: never;
@@ -367,6 +477,54 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['MunicipalityView'];
+        };
+      };
+    };
+  };
+  CreateAcquisitionSimulationApiController_createAcquisitionSimulation: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateAcquisitionSimulationDTO'];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AcquisitionSimulationView'];
+        };
+      };
+    };
+  };
+  UpdateAcquisitionSimulationApiController_updateAcquisitionSimulation: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateAcquisitionSimulationDTO'];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AcquisitionSimulationView'];
         };
       };
     };

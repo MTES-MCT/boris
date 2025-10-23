@@ -17,8 +17,10 @@
     ownContribution,
     nextStep,
     previousStep,
+    loading,
+    acquisitionSimulation,
+    updateAcquisitionSimulation,
     goToPreviousStep,
-    goToNextStep,
   } = $derived(acquisitionSimulatorManager);
 
   let errors: FormFieldError = $state({});
@@ -30,17 +32,20 @@
       .optional(),
   });
 
-  const handleSubmit = (e: SubmitEvent) => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
 
-    try {
-      FormData.parse({
-        ownContribution,
-      });
+    const payload = {
+      ownContribution,
+    };
 
+    try {
+      FormData.parse(payload);
       errors = {};
 
-      goToNextStep();
+      if (acquisitionSimulation) {
+        await updateAcquisitionSimulation(payload);
+      }
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }
@@ -82,11 +87,13 @@
       <Action
         direction="previous"
         label={previousStep?.title as string}
-        onClick={goToPreviousStep} />
+        onClick={goToPreviousStep}
+        {loading} />
       <Action
         direction="next"
         label={nextStep?.title as string}
-        type="submit" />
+        type="submit"
+        {loading} />
     </Actions>
   </Form>
 </Wrapper>

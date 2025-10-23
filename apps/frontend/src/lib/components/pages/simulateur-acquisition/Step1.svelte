@@ -5,7 +5,10 @@
     FormFieldError,
     GeocodedResponse,
   } from '$lib/utils/definitions';
-  import type { MunicipalityView } from '$lib/utils/api-types';
+  import type {
+    CreateAcquisitionSimulationDto,
+    MunicipalityView,
+  } from '$lib/utils/api-types';
   import type { Zone } from '$lib/utils/lissage-ptz';
   import {
     formatFormErrors,
@@ -30,8 +33,11 @@
     surface,
     housingType,
     brsZone,
+    loading,
     nextStep,
-    goToNextStep,
+    acquisitionSimulation,
+    createAcquisitionSimulation,
+    updateAcquisitionSimulation,
   } = $derived(acquisitionSimulatorManager);
 
   let errors: FormFieldError = $state({});
@@ -67,20 +73,25 @@
     acquisitionSimulatorManager.brsZone = municipality.zone as Zone;
   };
 
-  const handleSubmit = (e: SubmitEvent) => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
 
-    try {
-      FormData.parse({
-        housingPrice,
-        brsZone,
-        surface,
-        housingType,
-      });
+    const payload: CreateAcquisitionSimulationDto = {
+      housingPrice: housingPrice as number,
+      brsZone: brsZone as CreateAcquisitionSimulationDto['brsZone'],
+      surface: surface as number,
+      housingType: housingType as CreateAcquisitionSimulationDto['housingType'],
+    };
 
+    try {
+      FormData.parse(payload);
       errors = {};
 
-      goToNextStep();
+      if (!acquisitionSimulation) {
+        await createAcquisitionSimulation(payload);
+      } else {
+        await updateAcquisitionSimulation(payload);
+      }
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }
@@ -175,7 +186,8 @@
         <Action
           direction="next"
           label={nextStep.title}
-          type="submit" />
+          type="submit"
+          {loading} />
       </Actions>
     {/if}
   </Form>

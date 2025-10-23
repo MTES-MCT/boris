@@ -29,10 +29,12 @@
     ptzType,
     brsZone,
     ownContribution,
+    loading,
+    acquisitionSimulation,
     previousStep,
     nextStep,
+    updateAcquisitionSimulation,
     goToPreviousStep,
-    goToNextStep,
   } = $derived(acquisitionSimulatorManager);
 
   let errors: FormFieldError = $state({});
@@ -64,18 +66,19 @@
     }),
   });
 
-  const handleSubmit = (e: SubmitEvent) => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
 
-    try {
-      FormData.parse({
-        interestRate,
-        loanDuration,
-        inHousePeopleAmount,
-        fiscalIncome,
-        ptzType,
-      });
+    const payload = {
+      interestRate,
+      loanDuration,
+      inHousePeopleAmount,
+      fiscalIncome,
+      ptzType,
+    };
 
+    try {
+      FormData.parse(payload);
       errors = {};
 
       acquisitionSimulatorManager.pretLisse = new PretLisse(
@@ -89,7 +92,9 @@
         ptzType as Logement,
       );
 
-      goToNextStep();
+      if (acquisitionSimulation) {
+        await updateAcquisitionSimulation(payload);
+      }
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }
@@ -241,11 +246,13 @@
       <Action
         direction="previous"
         label={previousStep?.title as string}
-        onClick={goToPreviousStep} />
+        onClick={goToPreviousStep}
+        {loading} />
       <Action
         direction="next"
         label={nextStep?.title as string}
-        type="submit" />
+        type="submit"
+        {loading} />
     </Actions>
   </Form>
 </Wrapper>
