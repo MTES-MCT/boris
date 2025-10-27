@@ -1,0 +1,56 @@
+.inline-block {
+  display: inline-block;
+}
+
+.flex {
+  display: flex !important;
+}
+
+.none {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+/* --xxs */
+@media (min-width: 28rem) {
+  .xxs_block {
+    display: block;
+  }
+
+  .xxs_none {
+    display: none;
+  }
+
+  .xxs_flex {
+    display: flex;
+  }
+}
+
+/* --sm */
+@media (min-width: 48rem) {
+  .sm_block {
+    display: block;
+  }
+
+  .sm_flex {
+    display: flex;
+  }
+
+  .sm_none {
+    display: none;
+  }
+}
+
+/* --lg */
+@media (min-width: 78rem) {
+  .lg_none {
+    display: none;
+  }
+
+  .lg_block {
+    display: block;
+  }
+}

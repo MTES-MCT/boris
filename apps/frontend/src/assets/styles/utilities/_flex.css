@@ -1,0 +1,49 @@
+/* DIRECTIONS */
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+@media (min-width: 48rem) {
+  .sm_flex-row {
+    flex-direction: row;
+  }
+}
+
+/* ALIGNMENT */
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
+
+/* GAPS */
+.gap-1v {
+  gap: 0.25rem;
+}
+
+.gap-2w {
+  gap: 1rem;
+}
+
+.gap-3w {
+  gap: 1.5rem;
+}
+
+/* FLEX */
+.flex-1 {
+  flex: 1;
+}

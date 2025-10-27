@@ -8,71 +8,26 @@
   const { content }: Props = $props();
 </script>
 
-<div class="disclaimer">
-  <div class="mascotte">
+<div class="disclaimer relative text-center fr-pt-13v">
+  <div class="mascotte absolute">
     {@html MascotteWaving}
   </div>
-  <p class="brand">
-    <span>B</span>
+  <p
+    class="background-color-red-primary inline-block fr-m-0 fr-px-2w fr-py-1w font-size-2">
+    <span class="fr-text--bold">B</span>
     <span>o</span>
-    <span>R</span>
+    <span class="fr-text--bold">R</span>
     <span>i</span>
-    <span>S</span>
+    <span class="fr-text--bold">S</span>
   </p>
 
-  <p>{content}</p>
+  <p class="fr-h2 fr-m-0">{content}</p>
 </div>
 
 <style lang="postcss">
-  .disclaimer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding-block-start: 52px;
-
-    .mascotte {
-      position: absolute;
-      width: 82px;
-      top: 0px;
-      left: 50%;
-    }
-
-    .brand {
-      display: inline-block;
-      font-size: 2rem;
-      padding-block: var(--1w);
-      padding-inline: var(--2w);
-      background-color: var(--color-red-primary);
-      margin: 0;
-      font-weight: normal;
-
-      span:nth-child(odd) {
-        font-weight: 900;
-      }
-    }
-
-    p {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-top: var(--1v);
-    }
-  }
-
-  @media (--sm-viewport) {
-    .disclaimer {
-      p {
-        font-size: 1.5rem;
-      }
-    }
-  }
-
-  @media (--md-viewport) {
-    .disclaimer {
-      p {
-        font-size: 2rem;
-      }
-    }
+  .mascotte {
+    width: 82px;
+    top: 0px;
+    left: 50%;
   }
 </style>

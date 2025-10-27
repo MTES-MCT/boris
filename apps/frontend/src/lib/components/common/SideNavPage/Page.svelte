@@ -79,23 +79,23 @@
 
 <GradientBackgroundWrapper>
   {#if children}
-    <div class="children">
+    <div class="children fr-mb-6w fr-mb-md-12w">
       {@render children()}
     </div>
   {/if}
   <Section>
     <div class="wrapper">
       <div class="fr-grid-row">
-        <div class="fr-col-12 fr-col-sm-3 fr-hidden fr-unhidden-md menu">
+        <div class="fr-col-12 fr-col-sm-3 none sm_flex">
           <Nav
             {sections}
             activeSectionId={activeSection?.id} />
         </div>
 
-        <div class="fr-col-12 fr-col-md-9 content">
+        <div class="fr-col-12 fr-col-md-9 fr-pl-0 fr-pl-md-6w">
           <svelte:element
             this={titleElement}
-            class="fr-h3">
+            class="fr-h3 fr-mb-5w">
             {title}
           </svelte:element>
 
@@ -109,7 +109,7 @@
           {/each}
 
           <nav
-            class="step-links"
+            class="step-links flex flex-column sm_flex-row justify-between gap-3w fr-pt-5w fr-pb-1w"
             aria-label="liens vers les autres étapes du BRS">
             {#if previousStep}
               <StepLink
@@ -134,51 +134,3 @@
     </div>
   </Section>
 </GradientBackgroundWrapper>
-
-<style lang="postcss">
-  .children {
-    margin-block-end: var(--6w);
-  }
-
-  .step-links {
-    display: flex;
-    flex-direction: column;
-    gap: var(--3w);
-    padding-block-start: var(--5w);
-    padding-block-end: var(--1w);
-  }
-
-  h1 {
-    margin-block-end: var(--5w);
-  }
-
-  @media (--sm-viewport) {
-    .menu {
-      display: flex;
-      align-items: flex-start;
-    }
-
-    .content {
-      padding-inline-start: var(--6w);
-    }
-
-    .step-links {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  }
-
-  @media (--md-viewport) {
-    h1 {
-      margin-block-end: var(--6w);
-    }
-
-    .children {
-      margin-block-end: var(--12w);
-    }
-
-    .content {
-      padding-inline-start: var(--12w);
-    }
-  }
-</style>

@@ -9,17 +9,17 @@
   const { titleElement = 'h3' }: Props = $props();
 </script>
 
-<section>
-  <div class="mascotte-mobile">
+<section class="flex relative fr-pt-9w">
+  <div class="mascotte-mobile absolute block lg_none">
     {@html MascotteShowing}
   </div>
-  <div class="border-bottom-right">
-    <div class="mascotte-desktop">
+  <div class="border-bottom-right relative none sm_block flex-1 fr-mt-15v">
+    <div class="mascotte-desktop absolute none lg_block">
       {@html MascotteShowing}
     </div>
   </div>
-  <div class="fr-container">
-    <div class="content">
+  <div class="fr-container relative">
+    <div class="content fr-m-auto fr-pt-4w fr-pb-7w text-center">
       <svelte:element
         this={titleElement}
         class="fr-h3">
@@ -43,38 +43,21 @@
       </a>
     </div>
   </div>
-  <div class="border-bottom-left"></div>
+  <div class="border-bottom-left relative none sm_block flex-1 fr-mt-15v"></div>
 </section>
 
 <style lang="postcss">
-  section {
-    position: relative;
-    padding-top: var(--9w);
-    display: flex;
-  }
-
   .mascotte-mobile {
-    position: absolute;
-    top: var(--3w);
-    left: calc(50% - var(--12w));
-  }
-
-  .mascotte-desktop {
-    display: none;
+    top: 1.5rem;
+    left: calc(50% - 6rem);
   }
 
   .content {
-    padding-block-start: var(--4w);
-    padding-block-end: var(--7w);
     max-width: 636px;
-    margin: 0 auto;
-    text-align: center;
-    border: none;
   }
 
   .fr-container {
-    position: relative;
-    max-width: calc(588px + 2 * var(--12w));
+    max-width: calc(588px + 12rem);
     border-top: solid var(--path-thickness) var(--color-red-primary);
 
     &::before {
@@ -84,12 +67,6 @@
     &::after {
       border: none;
     }
-  }
-
-  .border-bottom-right,
-  .border-bottom-left {
-    display: none;
-    position: relative;
   }
 
   .border-bottom-left {
@@ -115,8 +92,8 @@
         position: absolute;
         top: 0;
         left: calc(-1 * var(--path-thickness));
-        width: var(--15w);
-        height: calc(var(--15w) / 2);
+        width: 7.5rem;
+        height: 3.75rem;
         border-top: solid var(--path-thickness) var(--color-red-primary);
         border-left: solid var(--path-thickness) var(--color-red-primary);
         border-top-left-radius: var(--border-radius-lg);
@@ -127,8 +104,8 @@
         position: absolute;
         top: 0;
         right: calc(-1 * var(--path-thickness));
-        width: var(--15w);
-        height: calc(var(--15w) / 2);
+        width: 7.5rem;
+        height: 3.75rem;
         border-top: solid var(--path-thickness) var(--color-red-primary);
         border-right: solid var(--path-thickness) var(--color-red-primary);
         border-top-right-radius: var(--border-radius-lg);
@@ -137,23 +114,14 @@
 
     .border-bottom-right,
     .border-bottom-left {
-      display: block;
-      flex: 1;
-      height: calc(var(--15w) / 2);
-      margin-block-start: calc(var(--15w) / 2);
+      height: 3.75rem;
       border-bottom: solid var(--path-thickness) var(--color-red-primary);
     }
 
     @media (--lg-viewport) {
-      .mascotte-mobile {
-        display: none;
-      }
-
       .mascotte-desktop {
-        display: block;
-        position: absolute;
         top: 6px;
-        right: var(--3w);
+        right: 1.5rem;
       }
     }
   }

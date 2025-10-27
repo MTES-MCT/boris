@@ -1,0 +1,23 @@
+.color-blue-primary {
+  color: var(--color-blue-primary);
+}
+
+.background-color-white {
+  background-color: white;
+}
+
+.background-color-red-primary {
+  background-color: var(--color-red-primary);
+}
+
+.background-gradient {
+  background: linear-gradient(
+    180deg,
+    var(--color-teal-light) 0%,
+    var(--color-red-light) 100%
+  );
+}
+
+.background-none {
+  background: none;
+}

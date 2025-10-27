@@ -90,7 +90,7 @@
   };
 </script>
 
-<div class="fr-select-group">
+<div class="fr-select-group block xxs_none">
   <Select
     label="Pagination"
     id="page-select"
@@ -104,7 +104,7 @@
 </div>
 
 <nav
-  class="fr-pagination"
+  class="fr-pagination none xxs_flex justify-center"
   aria-label="Pagination"
   data-fr-analytics-page-total={pagesCount}>
   <ul class="fr-pagination__list">
@@ -215,22 +215,3 @@
     </li>
   </ul>
 </nav>
-
-<style lang="postcss">
-  .fr-select-group {
-    display: block;
-
-    @media (--xxs-viewport) {
-      display: none;
-    }
-  }
-
-  .fr-pagination {
-    display: none;
-    justify-content: center;
-
-    @media (--xxs-viewport) {
-      display: flex;
-    }
-  }
-</style>

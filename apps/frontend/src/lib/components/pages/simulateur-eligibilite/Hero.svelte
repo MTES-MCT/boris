@@ -9,7 +9,7 @@
     <br />
     éligible au
     <br />
-    <span>Bail Réel Solidaire !</span>
+    <span class="background-color-red-primary">Bail Réel Solidaire !</span>
   </h1>
   <div class="illustration">
     <div class="image-container">
@@ -35,7 +35,6 @@
     span {
       margin-block-start: var(--1w);
       display: inline-block;
-      background-color: var(--color-red-primary);
       padding-inline: var(--2w);
     }
   }

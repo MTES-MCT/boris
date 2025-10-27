@@ -34,7 +34,7 @@
   <legend
     class="fr-fieldset__legend--regular fr-fieldset__legend"
     id={`${id}-legend`}>
-    <div>
+    <div class="flex gap-1v">
       <span><b>{legend}</b></span>
       {#if legendTooltip}
         <Tooltip>
@@ -61,10 +61,3 @@
     {/if}
   </div>
 </fieldset>
-
-<style lang="postcss">
-  .fr-fieldset__legend div {
-    display: flex;
-    gap: 0.25rem;
-  }
-</style>

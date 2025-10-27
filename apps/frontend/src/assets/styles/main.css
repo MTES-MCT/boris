@@ -1,18 +1,15 @@
 @import url('./_vars.css');
 @import url('./_icons.css');
 @import url('./map.css');
-@import url('./_utilities.css');
+
+@import url('./utilities/_colors.css');
+@import url('./utilities/_display.css');
+@import url('./utilities/_typography.css');
+@import url('./utilities/_position.css');
+@import url('./utilities/_flex.css');
 
 .scroll-behavior-smooth {
   scroll-behavior: smooth;
-}
-
-.background-gradient {
-  background: linear-gradient(
-    180deg,
-    var(--color-teal-light) 0%,
-    var(--color-red-light) 100%
-  );
 }
 
 .rounded-box-md {
@@ -23,14 +20,6 @@
 .rounded-box-lg {
   border-top-left-radius: var(--border-radius-lg);
   border-top-right-radius: var(--border-radius-lg);
-}
-
-.color-blue-primary {
-  color: var(--color-blue-primary);
-}
-
-.background-color-white {
-  background-color: white;
 }
 
 .fade-in {
