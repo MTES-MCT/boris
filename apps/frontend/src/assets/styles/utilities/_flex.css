@@ -11,6 +11,7 @@
   flex-direction: row-reverse;
 }
 
+/* --sm */
 @media (min-width: 48rem) {
   .sm_flex-row {
     flex-direction: row;
@@ -18,6 +19,10 @@
 }
 
 /* ALIGNMENT */
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -28,6 +33,10 @@
 
 .align-center {
   align-items: center;
+}
+
+.align-self-start {
+  align-self: flex-start;
 }
 
 /* GAPS */
@@ -41,6 +50,17 @@
 
 .gap-3w {
   gap: 1.5rem;
+}
+
+.gap-8w {
+  gap: 4rem;
+}
+
+/* --md */
+@media (min-width: 62rem) {
+  .md_gap-0 {
+    gap: 0;
+  }
 }
 
 /* FLEX */

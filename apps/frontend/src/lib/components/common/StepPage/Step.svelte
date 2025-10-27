@@ -26,30 +26,33 @@
 </script>
 
 <article
-  class={`step-${position}`}
+  class={`step-${position} relative block fr-m-auto block md_flex`}
   style={!illustration ? `--illustration-max-height: 0px` : ``}>
   <div class="fr-hidden fr-unhidden-lg column"></div>
 
-  <div class="column">
+  <div class="column flex flex-column">
     <a
+      class="background-none"
       rel="noopener"
       {href}>
       <div class="column-container">
         {#if illustration}
-          <div class="illustration">
+          <div class="illustration hidden md_visible flex justify-center">
             {@html illustration}
           </div>
         {/if}
-        <div class="content">
-          <div class="position color-blue-primary">
+        <div class="content relative flex align-center">
+          <div
+            class="position flex align-center justify-center color-blue-primary">
             <span><b>{position}</b></span>
           </div>
-          <div class="text">
+          <div class="text relative flex-1 fr-ml-3w fr-pt-3w fr-ml-md-10w">
             <h2>
               {title}
             </h2>
             {@render children()}
-            <h3 class="fr-link fr-icon-arrow-right-line fr-link--icon-right">
+            <h3
+              class="fr-link fr-icon-arrow-right-line fr-link--icon-right fr-text--regular underline">
               {linkLabel}
             </h3>
           </div>
@@ -59,134 +62,86 @@
   </div>
 
   {#if isLast}
-    <div class="end-of-path">
+    <div class="end-of-path relative md_absolute fr-mt-2w fr-ml-1v">
       {@html EndOfPath}
     </div>
   {/if}
 </article>
 
 <style lang="postcss">
-  a {
-    background: none;
-  }
-
   article {
-    --illustration-max-height: 150px;
-    margin: 0 auto;
-    display: block;
+    --illustration-max-height: 1px;
 
     h3 {
-      font-weight: normal;
-      text-decoration: underline;
       text-underline-offset: 5px;
     }
 
     .illustration {
-      display: flex;
-      justify-content: center;
-
       :global(svg) {
         max-height: var(--illustration-max-height);
       }
     }
 
-    .content {
-      position: relative;
-      display: flex;
-      align-items: center;
+    .position {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      border: solid 2px var(--color-blue-primary);
 
-      .position {
-        width: var(--5w);
-        height: var(--5w);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 20px;
-        border: solid 2px var(--color-blue-primary);
-
-        &::before,
-        &::after {
-          content: '';
-          position: absolute;
-          background-color: var(--color-blue-primary);
-          width: var(--path-thickness);
-        }
-
-        &::before {
-          top: calc(-1 * (var(--illustration-max-height) + var(--10w)));
-          left: 18px;
-          height: calc(
-            50% - 20px + var(--illustration-max-height) + var(--10w)
-          );
-        }
-
-        &::after {
-          bottom: 0;
-          left: 18px;
-          height: calc(50% - 20px);
-        }
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        background-color: var(--color-blue-primary);
+        width: var(--path-thickness);
       }
 
-      .text {
-        font-size: 0.875rem;
-        position: relative;
-        flex: 1;
-        margin-inline-start: var(--3w);
-        padding-block-start: var(--3w);
+      &::before {
+        top: calc(-1 * (var(--illustration-max-height) + 5rem));
+        left: 18px;
+        height: calc(50% - 20px + var(--illustration-max-height) + 5rem);
       }
-    }
 
-    .end-of-path {
-      margin-top: var(--2w);
-      margin-left: 3px;
+      &::after {
+        bottom: 0;
+        left: 18px;
+        height: calc(50% - 20px);
+      }
     }
   }
 
   @media (--md-viewport) {
     article {
       --illustration-max-height: 162px;
-      position: relative;
-      margin: 0;
-      max-width: 100%;
-      display: flex;
-      justify-content: center;
-
-      .illustration {
-        justify-content: flex-start;
-      }
 
       .column:nth-child(1) {
-        width: calc(50% - 32px);
+        width: calc(50% - 2rem);
       }
 
       .column:nth-child(2) {
-        width: calc(50% + 32px);
-        display: flex;
-        flex-direction: column;
+        width: calc(50% + 2rem);
       }
 
       .content {
         .position {
-          width: var(--8w);
-          height: var(--8w);
-          border-radius: var(--4w);
+          width: 4rem;
+          height: 4rem;
 
           &::before {
             top: calc(-1 * (var(--illustration-max-height)));
-            height: calc(50% - 32px + var(--illustration-max-height));
+            height: calc(50% - 2rem + var(--illustration-max-height));
           }
 
           &::after {
             bottom: 0;
-            height: calc(50% - 32px);
+            height: calc(50% - 2rem);
           }
         }
       }
 
       .end-of-path {
-        position: absolute;
-        bottom: calc(-1 * var(--7w));
-        margin-left: 1px;
+        bottom: -3.5rem;
+        left: calc(50% - 1.25rem);
       }
     }
 
@@ -194,10 +149,8 @@
       .content {
         .position {
           &::before {
-            top: calc(-1 * (var(--illustration-max-height) + var(--15w)));
-            height: calc(
-              50% - 32px + var(--illustration-max-height) + var(--15w)
-            );
+            top: calc(-1 * (var(--illustration-max-height) + 7.5rem));
+            height: calc(50% - 2rem + var(--illustration-max-height) + 7.5rem);
           }
         }
       }
@@ -208,28 +161,22 @@
     .step-5 {
       justify-self: flex-end;
 
-      .illustration {
-        margin-inline-start: var(--16w);
-      }
-
       .content {
         .position {
           &::before,
           &::after {
-            left: 30px;
-            left: 30px;
+            left: 1.875rem;
+            left: 1.875rem;
           }
         }
 
         .text {
-          margin-inline-start: var(--10w);
-
           &::after {
             content: '';
             position: absolute;
             top: calc(50% - 1px);
-            left: calc(-1 * var(--10w));
-            width: calc(var(--10w) - var(--2w));
+            left: -5rem;
+            width: 4rem;
             height: 2px;
             background-color: var(--color-blue-primary);
           }
@@ -256,14 +203,14 @@
         }
 
         .text {
-          margin-inline-end: var(--10w);
+          margin-inline-end: 5rem;
 
           &::after {
             content: '';
             position: absolute;
             top: calc(50% - 1px);
-            right: calc(-1 * var(--10w));
-            width: calc(var(--10w) - var(--2w));
+            right: -5rem;
+            width: 4rem;
             height: 2px;
             background-color: var(--color-blue-primary);
           }

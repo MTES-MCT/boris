@@ -3,16 +3,16 @@
   import HomeHero from '$assets/images/home-hero.jpg?as=run';
 </script>
 
-<section class="hero">
-  <div class="column text-container">
+<section class="hero relative flex">
+  <div class="column text-container flex flex-column fr-pl-1w fr-pt-8w">
     <div class="title background-color-white">
       <h1>
         Acheter son logement
         <br />
-        <span>30 à 50% moins cher</span>
+        <span class="relative inline-block fr-px-1v">30 à 50% moins cher</span>
       </h1>
       <h2 class="caption">
-        Avec le BRS <span>c’est possible !</span>
+        Avec le BRS <span>c'est possible !</span>
       </h2>
     </div>
 
@@ -30,7 +30,7 @@
       </a>
     </div>
   </div>
-  <div class="column illustration-container">
+  <div class="column illustration-container flex">
     <Img
       class="fr-responsive-img"
       src={HomeHero}
@@ -41,26 +41,16 @@
 
 <style lang="postcss">
   .hero {
-    position: relative;
     max-height: 772px;
   }
 
   .text-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-inline: var(--1w);
-    padding-block-start: var(--8w);
     padding-block-end: var(--26w);
 
     h1 {
       font-size: 1.5rem;
 
       span {
-        position: relative;
-        display: inline-block;
-        padding-inline: var(--1v);
-
         &::before {
           content: '';
           position: absolute;
@@ -140,7 +130,7 @@
     }
 
     .title {
-      padding-inline-start: var(--2w);
+      padding-inline-start: 1rem;
     }
   }
 
@@ -152,9 +142,9 @@
 
         span {
           &::before {
-            top: 16px;
+            top: 1rem;
             width: 100%;
-            height: calc(100% - 32px);
+            height: calc(100% - 2rem);
           }
         }
       }
@@ -168,10 +158,6 @@
   }
 
   @media (--md-viewport) {
-    .hero {
-      display: flex;
-    }
-
     .text-container {
       width: 50%;
       justify-content: center;
@@ -196,7 +182,6 @@
 
     .illustration-container {
       position: relative;
-      display: flex;
       justify-content: center;
       width: 50%;
       height: auto;

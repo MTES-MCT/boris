@@ -14,6 +14,14 @@
   display: block;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+
 /* --xxs */
 @media (min-width: 28rem) {
   .xxs_block {
@@ -44,6 +52,16 @@
   }
 }
 
+@media (min-width: 62rem) {
+  .md_visible {
+    visibility: visible;
+  }
+
+  .md_flex {
+    display: flex;
+  }
+}
+
 /* --lg */
 @media (min-width: 78rem) {
   .lg_none {
@@ -52,5 +70,9 @@
 
   .lg_block {
     display: block;
+  }
+
+  .lg_flex {
+    display: flex;
   }
 }

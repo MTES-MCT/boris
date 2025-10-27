@@ -5,3 +5,9 @@
 .absolute {
   position: absolute;
 }
+
+@media (min-width: 62rem) {
+  .md_absolute {
+    position: absolute;
+  }
+}

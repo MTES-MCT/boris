@@ -9,8 +9,8 @@
   const { children }: Props = $props();
 </script>
 
-<div class="fr-col-12 fr-col-lg-4 column">
-  <div>
+<div class="fr-col-12 fr-col-lg-4 flex gap-2w">
+  <div class="svg-container">
     {@html Star}
   </div>
   <div>
@@ -19,17 +19,10 @@
 </div>
 
 <style lang="postcss">
-  .column {
-    display: flex;
-    gap: var(--2w);
+  .svg-container {
     :global(svg) {
-      width: var(--4w);
-      height: var(--4w);
-    }
-  }
-  @media (--md-viewport) {
-    .column {
-      gap: var(--2w);
+      width: 2rem;
+      height: 2rem;
     }
   }
 </style>
