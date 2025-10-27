@@ -60,7 +60,7 @@ export class AcquisitionSimulationEntity
   @Column({ type: 'enum', enum: ['collectif', 'individuel'], nullable: true })
   public ptzType?: PtzType;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ type: 'float', nullable: true })
   public brsFees?: number;
 
   @Column({ type: 'int', nullable: true })
