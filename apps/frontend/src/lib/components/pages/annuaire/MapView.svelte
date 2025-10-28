@@ -204,9 +204,11 @@
   };
 </script>
 
-<div class="fr-col-12 container">
-  <div class="list-container">
-    <div class="fr-mb-0 fr-text--sm search-results">
+<div
+  class="fr-col-12 container relative width-100 flex fr-m-auto fr-pb-8w fr-px-2w">
+  <div class="list-container relative none md_block overflow-hidden">
+    <div
+      class="fr-text--sm fr-py-2w fr-pl-2w fr-mb-0 background-color-white border-bottom-light">
       <b>
         {brsDiffusionWebsitesInBounds.length} résultat{brsDiffusionWebsitesInBounds.length >
         1
@@ -214,12 +216,14 @@
           : ''}
       </b>
     </div>
-    <ul>
+    <ul
+      class="fr-m-auto fr-p-2w fr-pt-0 overflow-y-auto list-style-none background-color-white">
       {#if brsDiffusionWebsitesInBounds.length > 0}
         {#each brsDiffusionWebsitesInBounds as item}
           <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
           <!-- svelte-ignore a11y_click_events_have_key_events -->
           <li
+            class="fr-pt-1w"
             id={item.id}
             onclick={handleCardClick}
             onmouseenter={handleOnMouseEnter}
@@ -241,9 +245,10 @@
   </div>
   <div
     id="map"
+    class="height-100 flex-1 relative"
     bind:this={annuaireManager.mapElementRef}>
     {#if selectedMarker}
-      <div class="mobile-card">
+      <div class="mobile-card absolute block md_none">
         <Card
           {...selectedMarker}
           cardTitleElement="h3"
@@ -257,13 +262,7 @@
 <style lang="postcss">
   .container {
     max-width: 110rem;
-    width: 100%;
-    margin: 0 auto;
     height: calc(100vh - 4rem);
-    display: flex;
-    padding-bottom: 4rem;
-    padding-inline: var(--2w);
-    position: relative;
 
     @media (--md-viewport) {
       height: calc(100vh - 12rem);
@@ -272,58 +271,21 @@
 
   .list-container {
     height: calc(100vh - 16rem);
-    overflow: hidden;
-    position: relative;
-    display: none;
-
-    @media (--md-viewport) {
-      display: block;
-    }
-  }
-
-  .search-results {
-    background-color: white;
-    height: var(--6w);
-    padding-left: var(--2w);
-    display: flex;
-    align-items: center;
-    padding-top: var(--1w);
   }
 
   ul {
     width: 18rem;
-    list-style: none;
-    background-color: white;
-    margin: 0;
-    padding: var(--2w);
-    padding-top: 0;
     height: calc(100% - var(--6w));
-    overflow-y: auto;
 
     @media (--lg-viewport) {
       width: 28rem;
     }
-
-    li {
-      padding-top: var(--1w);
-    }
-  }
-
-  #map {
-    height: 100%;
-    flex: 1;
-    position: relative;
   }
 
   .mobile-card {
-    position: absolute;
-    bottom: var(--1w);
-    left: var(--1w);
-    right: var(--1w);
+    bottom: 0.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
     z-index: 1000;
-
-    @media (--md-viewport) {
-      display: none;
-    }
   }
 </style>

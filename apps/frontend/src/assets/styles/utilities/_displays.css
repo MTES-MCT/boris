@@ -22,6 +22,18 @@
   visibility: visible;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-visible {
+  overflow: visible;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
 /* --xxs */
 @media (min-width: 28rem) {
   .xxs_block {
@@ -59,6 +71,14 @@
 
   .md_flex {
     display: flex;
+  }
+
+  .md_block {
+    display: block;
+  }
+
+  .md_none {
+    display: none;
   }
 }
 

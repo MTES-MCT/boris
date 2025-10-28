@@ -9,3 +9,7 @@
 .underline {
   text-decoration: underline;
 }
+
+.list-style-none {
+  list-style: none;
+}

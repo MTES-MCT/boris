@@ -2,9 +2,10 @@
 @import url('./_icons.css');
 @import url('./map.css');
 
+@import url('./utilities/_borders.css');
 @import url('./utilities/_colors.css');
 @import url('./utilities/_dimensions.css');
-@import url('./utilities/_display.css');
+@import url('./utilities/_displays.css');
 @import url('./utilities/_flex.css');
 @import url('./utilities/_position.css');
 @import url('./utilities/_shapes.css');

@@ -42,7 +42,7 @@
 
 <div
   id="brs-diffusion-websites-filters"
-  class="filters fr-container--fluid">
+  class="filters fr-container--fluid overflow-visible">
   <div class="fr-grid-row fr-grid-row--gutters">
     <div
       bind:this={autocompleteElementRef}
@@ -62,9 +62,10 @@
       <Radius />
     </div>
     <div
-      class={annuaireManager.viewType === 'list'
-        ? 'fr-col-12 fr-col-sm-6 fr-col-md-3 fr-col-lg-2 toggle'
-        : 'fr-col-12 fr-col-md-4 fr-col-lg-2 toggle'}>
+      class="flex align-end fr-col-12 fr-col-lg-2"
+      class:fr-col-sm-6={annuaireManager.viewType === 'list'}
+      class:fr-col-md-3={annuaireManager.viewType === 'list'}
+      class:fr-col-md-4={annuaireManager.viewType === 'map'}>
       <Toggle />
     </div>
   </div>
@@ -92,12 +93,5 @@
 <style lang="postcss">
   .filters {
     --input-background-color: white;
-
-    overflow: visible;
-  }
-
-  .toggle {
-    display: flex;
-    align-items: flex-end;
   }
 </style>
