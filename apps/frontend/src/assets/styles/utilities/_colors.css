@@ -19,7 +19,7 @@
 }
 
 .background-color-blue-deep {
-  background: var(--color-blue-deep);
+  background-color: var(--color-blue-deep) !important;
 }
 
 .background-color-teal-light {

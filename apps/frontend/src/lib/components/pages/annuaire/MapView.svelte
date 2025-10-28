@@ -37,6 +37,7 @@
   let brsDiffusionWebsitesInBounds = $state(brsDiffusionWebsites.items);
   let selectedMarker = $state<BrsDiffusionWebsiteView | null>(null);
   let hoveredMarker = $state<BrsDiffusionWebsiteView | null>(null);
+  // let lockMapMoo
 
   onMount(() => {
     createMap();
@@ -56,7 +57,6 @@
       element?.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
-        inline: 'nearest',
       });
     }
   });
@@ -149,17 +149,6 @@
         item.longitude <= northEastLng &&
         item.longitude >= southWestLng,
     );
-
-    if (brsDiffusionWebsitesInBounds) {
-      const firstElement = document.getElementById(
-        brsDiffusionWebsitesInBounds[0]?.id,
-      );
-
-      firstElement?.scrollIntoView({
-        block: 'nearest',
-        inline: 'nearest',
-      });
-    }
 
     addMarkersToMap();
   };
