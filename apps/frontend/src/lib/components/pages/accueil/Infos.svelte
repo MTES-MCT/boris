@@ -10,8 +10,8 @@
 </script>
 
 <Section>
-  <div class="content">
-    <div class="card-container">
+  <div class="content fr-mt-5w fr-mt-md-8w">
+    <div class="card-container relative fr-pt-0 fr-m-1v fr-mb-0">
       <HorizontalCard
         title="Accédez à une information qualifiée."
         content="Le Bail Réel Solidaire (BRS) est un dispositif permettant à des ménages ne pouvant plus acheter dans le marché libre de devenir propriétaire. Il dispose de nombreux avantages mais aussi beaucoup de particularités à connaître. BoRiS vous propose des renseignements officiels et travaillés de sorte à rendre la propriété accessibles pour tous·tes."
@@ -21,9 +21,9 @@
         linkLabel="Découvrir le BRS et débuter mon parcours" />
     </div>
 
-    <div class="card-container">
-      <div class="border-box"></div>
-      <div class="mascotte">
+    <div class="card-container relative fr-pt-12w fr-m-1v fr-mb-0">
+      <div class="border-box absolute"></div>
+      <div class="mascotte absolute">
         {@html MascotteThinking}
       </div>
       <HorizontalCard
@@ -36,8 +36,8 @@
         reversed />
     </div>
 
-    <div class="card-container">
-      <div class="border-box"></div>
+    <div class="card-container relative fr-pt-12w fr-m-1v fr-mb-0">
+      <div class="border-box absolute"></div>
       <HorizontalCard
         title="BoRiS vous met en relation avec des organismes dans votre zone de recherche."
         content="BoRiS est en lien avec les organismes de foncier solidaires (OFS) agréés par l'Etat qui font construire des logements en BRS et présentent actuellement des programmes en cours de commercialisation."
@@ -47,8 +47,8 @@
         linkLabel="Trouver un logement en BRS" />
     </div>
 
-    <div class="end">
-      <div class="mascotte">
+    <div class="end relative flex justify-center align-end">
+      <div class="mascotte absolute">
         {@html MascotteCelebrating}
       </div>
       {@html EndOfPath}
@@ -57,25 +57,14 @@
 </Section>
 
 <style lang="postcss">
-  .content {
-    margin-block-start: var(--5w);
-  }
-
   .card-container {
     --absolute-inline-offset: calc(-1 * var(--path-thickness));
 
-    position: relative;
-    padding-block-start: var(--12w);
-    margin-block-start: var(--path-thickness);
-    margin-inline-start: var(--path-thickness);
-    margin-inline-end: var(--path-thickness);
-
     .border-box {
-      position: absolute;
       top: var(--absolute-inline-offset);
       right: var(--absolute-inline-offset);
       width: calc(50% + var(--path-thickness) * 1.5);
-      height: calc(var(--12w) + var(--path-thickness));
+      height: calc(6rem + var(--path-thickness));
     }
 
     &::before {
@@ -88,9 +77,6 @@
   }
 
   .card-container:nth-child(3n + 1) {
-    margin-inline-end: calc(1.5 * var(--path-thickness));
-    padding-block-start: 0;
-
     &::before {
       top: 0;
       left: var(--absolute-inline-offset);
@@ -120,12 +106,10 @@
   }
 
   .card-container:nth-child(3n + 2) {
-    margin-inline-start: calc(1.5 * var(--path-thickness));
-
     &::before {
       right: var(--absolute-inline-offset);
-      top: var(--12w);
-      height: calc(100% + var(--path-thickness) - var(--12w));
+      top: 6rem;
+      height: calc(100% + var(--path-thickness) - 6rem);
       border-bottom-right-radius: var(--border-radius-lg);
     }
 
@@ -136,17 +120,16 @@
     }
 
     .mascotte {
-      position: absolute;
-      left: calc(50% - var(--10w));
-      top: var(--3w);
+      left: calc(50% - 7rem);
+      top: 1.5rem;
     }
   }
 
   .card-container:nth-child(3n + 3) {
     &::before {
-      top: var(--12w);
+      top: 6rem;
       left: var(--absolute-inline-offset);
-      height: calc(100% + var(--path-thickness) - var(--12w));
+      height: calc(100% + var(--path-thickness) - 6rem);
       border-bottom-left-radius: var(--border-radius-lg);
     }
 
@@ -159,11 +142,6 @@
   }
 
   .end {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    width: 100%;
     height: 166px;
 
     &::before {
@@ -171,21 +149,14 @@
       position: absolute;
       left: calc(50% - 2px);
       top: 0;
-      width: 4px;
+      width: 0.25rem;
       height: 130px;
       background: var(--color-blue-primary);
     }
 
     .mascotte {
-      position: absolute;
-      top: var(--5w);
-      left: calc(50% + var(--2w));
-    }
-  }
-
-  @media (--md-viewport) {
-    .content {
-      margin-block-start: var(--8w);
+      top: 2.5rem;
+      left: calc(50% + 1rem);
     }
   }
 </style>

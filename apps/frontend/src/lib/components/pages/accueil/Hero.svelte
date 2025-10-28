@@ -4,7 +4,8 @@
 </script>
 
 <section class="hero relative flex">
-  <div class="column text-container flex flex-column fr-pl-1w fr-pt-8w">
+  <div
+    class="column text-container flex flex-column fr-pl-1w fr-pt-8w fr-pt-md-15w">
     <div class="title background-color-white">
       <h1>
         Acheter son logement

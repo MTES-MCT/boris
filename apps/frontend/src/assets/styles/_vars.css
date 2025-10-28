@@ -31,10 +31,10 @@
   --26w: calc(26 * var(--1w));
   --30w: calc(30 * var(--1w));
 
-  --border-radius-xs: var(--1v);
-  --border-radius-sm: var(--1w);
-  --border-radius-md: calc(var(--1w) + var(--1v));
-  --border-radius-lg: var(--2w);
+  --border-radius-xs: 0.25rem;
+  --border-radius-sm: 0.5rem;
+  --border-radius-md: 0.75rem;
+  --border-radius-lg: 1rem;
 
   --path-thickness: 4px;
 
