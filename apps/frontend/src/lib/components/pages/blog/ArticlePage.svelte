@@ -23,20 +23,9 @@
 <Section
   title={article?.title}
   titleElement="h1">
-  <p class="fr-card__detail fr-icon-calendar-2-line">
+  <p class="fr-card__detail flex align-center gap-1v fr-mb-3w">
+    <span class="fr-icon-calendar-2-line fr-icon--sm"></span>
     {formatPublishedAt(article?.firstPublishedAt as string)}
   </p>
   {@render children()}
 </Section>
-
-<style lang="postcss">
-  .fr-card__detail {
-    display: flex;
-    align-items: center;
-    margin-block-end: var(--3w);
-
-    &::before {
-      --icon-size: 1rem;
-    }
-  }
-</style>

@@ -18,6 +18,13 @@
   }
 }
 
+/* --md */
+@media (min-width: 62rem) {
+  .md_flex-row {
+    flex-direction: row;
+  }
+}
+
 /* FLEX */
 .flex-1 {
   flex: 1;

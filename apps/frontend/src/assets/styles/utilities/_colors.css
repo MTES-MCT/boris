@@ -1,3 +1,11 @@
+.color-white {
+  color: white;
+}
+
+.hover-color-white:hover {
+  color: white;
+}
+
 .color-blue-primary {
   color: var(--color-blue-primary);
 }
@@ -16,6 +24,14 @@
 
 .background-color-blue-light {
   background-color: var(--color-blue-light);
+}
+
+.background-color-blue-primary {
+  background-color: var(--color-blue-primary);
+}
+
+.hover-background-color-blue-primary:hover {
+  background-color: var(--color-blue-primary) !important;
 }
 
 .background-color-blue-deep {
