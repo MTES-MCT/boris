@@ -39,12 +39,19 @@
 
 <article
   class="fr-card fr-card--sm"
-  class:narrow
+  class:fr-mb-1v={narrow}
+  class:box-shadow-primary={selected}
+  class:background-color-blue-deep={selected}
   class:selected>
-  <div class="fr-card__body">
-    <div class="fr-card__content">
+  <div
+    class="fr-card__body"
+    class:fr-px-3w={narrow}>
+    <div
+      class="fr-card__content"
+      class:fr-pt-2w={narrow}
+      class:fr-pb-0={narrow}>
       {#if handleClose}
-        <div class="closable">
+        <div class="closable flex justify-between align-start gap-2w">
           {@render badges()}
           <button
             onclick={handleClose}
@@ -67,7 +74,10 @@
         <p class="fr-mb-0">{distributorName}</p>
       </div>
     </div>
-    <div class="fr-card__footer">
+    <div
+      class="fr-card__footer"
+      class:fr-pt-0={narrow}
+      class:fr-pb-1w={narrow}>
       <ul class="fr-links-group fr-links-group--inline">
         <li>
           <a
@@ -84,7 +94,13 @@
 </article>
 
 {#snippet badges()}
-  <div class="location">
+  <div
+    class="flex flex-wrap"
+    class:gap-1w={!narrow}
+    class:fr-mb-2w={!narrow}
+    class:fr-mt-1v={!narrow}
+    class:fr-mb-1w={narrow}
+    class:gap-1v={narrow}>
     <Badge
       status="info"
       hideIcon>
@@ -104,48 +120,7 @@
 {/snippet}
 
 <style lang="postcss">
-  .location {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--1w);
-    margin-bottom: var(--2w);
-    margin-top: calc(var(--1v) / 2);
-  }
-
-  .narrow {
-    margin-bottom: var(--1v);
-
-    .fr-card__body {
-      padding-inline: var(--3w);
-    }
-
-    .fr-card__content {
-      padding-top: var(--2w);
-      padding-bottom: 0;
-
-      .location {
-        gap: var(--1v);
-        margin-bottom: var(--1w);
-      }
-    }
-
-    .fr-card__footer {
-      padding-top: 0;
-      padding-bottom: var(--1w);
-    }
-  }
-
   .selected {
     --border-default-grey: var(--color-blue-primary);
-
-    background-color: var(--color-blue-deep);
-    box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
-  }
-
-  .closable {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: var(--2w);
   }
 </style>

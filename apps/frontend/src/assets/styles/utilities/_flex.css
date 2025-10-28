@@ -18,6 +18,15 @@
   }
 }
 
+/* FLEX */
+.flex-1 {
+  flex: 1;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 /* ALIGNMENT */
 .justify-start {
   justify-content: flex-start;
@@ -52,6 +61,10 @@
   gap: 0.25rem;
 }
 
+.gap-1w {
+  gap: 0.5rem;
+}
+
 .gap-2w {
   gap: 1rem;
 }
@@ -69,9 +82,4 @@
   .md_gap-0 {
     gap: 0;
   }
-}
-
-/* FLEX */
-.flex-1 {
-  flex: 1;
 }

@@ -2,6 +2,10 @@
   color: var(--color-blue-primary);
 }
 
+.color-teal-primary {
+  color: var(--color-teal-primary);
+}
+
 .background-color-white {
   background-color: white;
 }
@@ -14,6 +18,14 @@
   background-color: var(--color-blue-light);
 }
 
+.background-color-blue-deep {
+  background: var(--color-blue-deep);
+}
+
+.background-color-teal-light {
+  background-color: var(--color-teal-light);
+}
+
 .background-gradient {
   background: linear-gradient(
     180deg,
@@ -24,4 +36,8 @@
 
 .background-none {
   background: none;
+}
+
+.box-shadow-primary {
+  box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
 }

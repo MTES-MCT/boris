@@ -14,7 +14,7 @@
         class="flex flex-column justify-between fr-col-12 fr-col-md-6 fr-col-lg-3 fr-my-3w">
         <div>
           <div
-            class="icon relative inline-block fr-p-2w rounded background-color-blue-light">
+            class="relative inline-block fr-p-2w rounded background-color-blue-light">
             <span
               class="fr-icon-community-line fr-icon--lg color-blue-primary"
               aria-hidden="true">
@@ -39,7 +39,7 @@
         class="flex flex-column justify-between fr-col-12 fr-col-md-6 fr-col-lg-3 fr-my-3w">
         <div>
           <div
-            class="icon relative inline-block fr-p-2w rounded background-color-blue-light">
+            class="relative inline-block fr-p-2w rounded background-color-blue-light">
             <span
               class="fr-icon-france-line fr-icon--lg color-blue-primary"
               aria-hidden="true">
@@ -60,7 +60,7 @@
         class="flex flex-column justify-between fr-col-12 fr-col-md-6 fr-col-lg-3 fr-my-3w">
         <div>
           <div
-            class="icon relative inline-block fr-p-2w rounded background-color-blue-light">
+            class="relative inline-block fr-p-2w rounded background-color-blue-light">
             <span
               class="fr-icon-sofa-line fr-icon--lg color-blue-primary"
               aria-hidden="true">
@@ -81,7 +81,7 @@
         class="flex flex-column justify-between fr-col-12 fr-col-md-6 fr-col-lg-3 fr-my-3w">
         <div>
           <div
-            class="icon relative inline-block fr-p-2w rounded background-color-blue-light">
+            class="relative inline-block fr-p-2w rounded background-color-blue-light">
             <span
               class="fr-icon-service-line fr-icon--lg color-blue-primary"
               aria-hidden="true">
