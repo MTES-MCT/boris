@@ -189,4 +189,4 @@ export const defaultRadius = 5;
 export const defaultZoomDesktop = 6;
 export const defaultZoomMobile = 5;
 
-export const contactEmail = 'arthur.massonneau@beta.gouv.fr';
+export const contactEmail = 'nathan.gaudelet@beta.gouv.fr';
