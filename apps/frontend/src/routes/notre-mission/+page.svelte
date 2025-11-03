@@ -7,8 +7,6 @@
   import type { PageProps } from './$types';
 
   const { data }: PageProps = $props();
-
-  $inspect(data);
 </script>
 
 <svelte:head>
