@@ -7,6 +7,10 @@
 @import '@gouvfr/dsfr/dist/utility/icons/icons.min.css';
 @import 'tailwindcss';
 
+@theme {
+  --color-red-primary: #ff5655;
+}
+
 .scroll-behavior-smooth {
   scroll-behavior: smooth;
 }
