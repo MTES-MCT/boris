@@ -3,6 +3,7 @@ import type {
   components,
   operations,
 } from './generated-address-datagouv-types';
+import type { pictograms } from './pictograms';
 
 export type Heading = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
@@ -19,6 +20,7 @@ export type Statistic = {
   amount: string;
   subtitle: string;
   content: string;
+  pictogram: keyof typeof pictograms;
 };
 
 export type StepSection = {

@@ -7,14 +7,14 @@
   import TitleWithMascotte from '$components/pages/organisme-de-foncier-solidaire/TitleWithMascotte.svelte';
 </script>
 
-<div class="wrapper background-color-white">
+<div class="fr-my-10w background-color-white">
   <Section>
     <TitleWithMascotte
       title="Le rôle des OFS"
       mascotte={MascotteThinking} />
 
     <div class="container">
-      <div class="actions">
+      <div class="actions flex flex-wrap justify-center fr-mb-10w fr-mb-md-14w">
         <Tile
           title="Achat"
           description="Acquisition des terrains pour construire des logements vendus en bail réel solidaire"
@@ -40,7 +40,8 @@
           description="Suivi de la gestion du bien et des potentielles reventes ou transmission du logement"
           pictogram="binders" />
       </div>
-      <div class="content">
+      <div
+        class="content flex flex-column align-center gap-4w md_gap-6w text-center">
         <h3 class="fr-mb-0">La mission des OFS</h3>
         <div>
           <p>
@@ -94,19 +95,11 @@
 </div>
 
 <style lang="postcss">
-  .wrapper {
-    margin-block: 5rem;
-  }
-
   .actions {
     --gap: 1rem;
     --width: calc(100% - var(--gap));
 
-    display: flex;
     gap: var(--gap);
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 4rem;
 
     :global(.fr-tile) {
       flex: 1 1 var(--width);
@@ -120,20 +113,6 @@
     @media (--md-viewport) {
       --gap: 2rem;
       --width: calc(33.33% - var(--gap));
-
-      margin-bottom: 7rem;
-    }
-  }
-
-  .content {
-    display: flex;
-    gap: 2rem;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-
-    @media (--md-viewport) {
-      gap: 3rem;
     }
   }
 </style>

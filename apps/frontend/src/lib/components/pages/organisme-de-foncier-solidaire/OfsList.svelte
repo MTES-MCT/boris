@@ -14,13 +14,13 @@
 </script>
 
 <div class="fr-container rounded-box-lg background-color-white">
-  <div class="wrapper">
+  <div class="fr-py-4w fr-px-1v fr-px-md-4w">
     <TitleWithMascotte
       title="Liste des OFS"
       mascotte={MascotteShowing}
       reversed />
 
-    <p class="description">
+    <p>
       Voici la <b>
         liste des organismes de foncier solidaire (OFS) agréés en France
       </b>
@@ -28,9 +28,9 @@
       solidaire (OFS) ont un lien qui redirige vers leur site web.
     </p>
 
-    <div class="legend border-radius-sm">
+    <div class="fr-p-2w fr-mb-4w border-heavy-blue-france border-radius-sm">
       <p class="fr-text--lg fr-text--bold fr-mb-0">Légende:</p>
-      <ul class="fr-mb-4w">
+      <ul class="fr-mb-0">
         <li class="fr-mb-1v">
           <Badge
             uppercase={false}
@@ -47,7 +47,7 @@
             <span class="fr-icon fr-icon--sm fr-icon-community-line"></span>
             <span class="fr-pl-1w">Organisme de foncier solidaire (OFS)</span>
           </Badge>
-          <span class="fr-text--sm fr-text--bold text-color-yellow-tournesol">
+          <span class="fr-text--sm fr-text--bold color-yellow-tournesol">
             qui propose des logements en bail réel solidaire (BRS) à vendre.
           </span>
         </li>
@@ -58,7 +58,7 @@
             <span class="fr-icon fr-icon--sm fr-icon-draft-line"></span>
             <span class="fr-pl-1w">Organisme de foncier solidaire (OFS)</span>
           </Badge>
-          <span class="fr-text--sm fr-text--bold text-color-purple-glycine">
+          <span class="fr-text--sm fr-text--bold color-purple-glycine">
             qui a obtenu l'agrément mais ne propose pas encore de logement en
             bail réel solidaire (BRS) à vendre.
           </span>
@@ -68,9 +68,10 @@
 
     <div class="separator fr-mb-4w"></div>
 
-    <ul class="regions-list">
+    <ul class="regions-list flex flex-column gap-3w list-style-none fr-p-0">
       {#each regions as region}
-        <li class="region-item">
+        <li
+          class="region-item flex flex-column gap-2w fr-p-2w border-default-grey border-radius-sm box-shadow-primary">
           <Badge
             accent="green-menthe"
             uppercase={false}>
@@ -78,9 +79,9 @@
             <span class="fr-pl-1w">{region.name}</span>
           </Badge>
 
-          <ul class="ofs-list">
+          <ul class="ofs-list flex flex-wrap gap-1w list-style-none fr-p-0">
             {#each region.ofss as ofs}
-              <li>
+              <li class="fr-pb-0">
                 <Badge
                   accent={ofs.producesBrs
                     ? 'yellow-tournesol'
@@ -111,83 +112,17 @@
 
     <div class="separator fr-my-4w"></div>
 
-    <div class="map-container">
+    <div class="map-container fr-m-auto">
       <img
+        class="width-100"
         src={ofsMap}
         alt="" />
     </div>
   </div>
 </div>
 
-<style class="wrapper">
-  .wrapper {
-    padding-block: 2rem;
-    padding-inline: 0.25rem;
-
-    @media (--sm-viewport) {
-      padding-inline: 2rem;
-    }
-  }
-
-  .legend {
-    padding: 1rem;
-    border-radius: var(--border-radius-sm);
-    border: 2px solid var(--border-default-blue-france);
-    margin-bottom: 2rem;
-
-    ul {
-      margin-bottom: 0 !important;
-    }
-
-    .text-color-purple-glycine {
-      color: var(--text-label-purple-glycine);
-    }
-
-    .text-color-yellow-tournesol {
-      color: var(--text-label-yellow-tournesol);
-    }
-  }
-
-  .regions-list,
-  .ofs-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .region-item {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    border-radius: var(--border-radius-sm);
-    padding: 1rem;
-    border: 1px solid var(--border-default-grey);
-    box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
-
-    @media (--xs-viewport) {
-      padding: 1.5rem;
-    }
-  }
-
-  .ofs-list {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    gap: 0.5rem;
-
-    li {
-      padding-bottom: 0;
-    }
-  }
-
+<style lang="postcss">
   .map-container {
     max-width: 600px;
-    margin: 0 auto;
-
-    img {
-      width: 100%;
-    }
   }
 </style>

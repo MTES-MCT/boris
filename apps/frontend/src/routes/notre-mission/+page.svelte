@@ -4,13 +4,11 @@
   import Team from '$components/pages/notre-mission/Team.svelte';
   import Chronology from '$components/pages/notre-mission/Chronology.svelte';
   import Stats from '$components/pages/notre-mission/Stats.svelte';
-  import type { DataType } from './+page.server';
+  import type { PageProps } from './$types';
 
-  type Props = {
-    data: DataType;
-  };
+  const { data }: PageProps = $props();
 
-  const { data }: Props = $props();
+  $inspect(data);
 </script>
 
 <svelte:head>

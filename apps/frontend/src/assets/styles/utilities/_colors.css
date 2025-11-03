@@ -14,6 +14,14 @@
   color: var(--color-teal-primary);
 }
 
+.color-purple-glycine {
+  color: var(--text-label-purple-glycine);
+}
+
+.color-yellow-tournesol {
+  color: var(--text-label-yellow-tournesol);
+}
+
 .background-color-white {
   background-color: white;
 }

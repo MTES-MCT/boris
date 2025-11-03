@@ -38,7 +38,7 @@
     n'est pas toujours simple à comprendre.
   </p>
 
-  <p>
+  <p class="fr-mb-0">
     Vous constatez une erreur ? Vous avez un conseil ? N'hésitez pas à
     <a
       class="color-blue-primary"

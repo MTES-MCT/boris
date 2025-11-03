@@ -5,20 +5,18 @@
   import { default as MascotteWaving } from '$assets/icons/mascotte-waving.svg?raw';
 </script>
 
-<div class="container">
+<div class="relative">
   <Promesses title="Définition d'un OFS">
-    <div class="definition-container">
-      <div class="mascotte">
+    <div class="definition-container flex flex-column align-center fr-px-2w">
+      <div class="mascotte absolute">
         {@html MascotteWaving}
       </div>
 
-      <div class="notice-container">
-        <Notice
-          content="OFS = Organisme de Foncier Solidaire."
-          type="info" />
-      </div>
+      <Notice
+        content="OFS = Organisme de Foncier Solidaire."
+        type="info" />
 
-      <p>
+      <p class="text-center fr-my-4w fr-my-md-6w">
         Un organisme de foncier solidaire (OFS) est <span class="fr-text--bold">
           une structure à but non lucratif ou à lucrativité limitée
         </span>
@@ -31,40 +29,8 @@
 </div>
 
 <style lang="postcss">
-  .container {
-    position: relative;
-  }
-
-  .definition-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-inline: 1rem;
-
-    @media (--sm-viewport) {
-      padding-inline: 2rem;
-    }
-
-    .mascotte {
-      position: absolute;
-      top: -52px;
-      right: 40px;
-    }
-  }
-
-  .notice-container {
-    display: inline-flex;
-    flex-direction: column;
-  }
-
-  p {
-    text-align: center;
-    font-size: 1rem;
-    margin-block: 2rem;
-
-    @media (--sm-viewport) {
-      font-size: 1.125rem;
-      margin-block: 3rem;
-    }
+  .mascotte {
+    top: -52px;
+    right: 40px;
   }
 </style>

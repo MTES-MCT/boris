@@ -1,3 +1,19 @@
+.border-default-grey {
+  border: 1px solid var(--border-default-grey);
+}
+
+.border-heavy-blue-france {
+  border: 2px solid var(--border-default-blue-france);
+}
+
+.border-top-light {
+  border-top: 1px solid var(--color-grey-default);
+}
+
 .border-bottom-light {
   border-bottom: 1px solid var(--color-grey-default);
+}
+
+.border-radius-sm {
+  border-radius: var(--border-radius-sm);
 }

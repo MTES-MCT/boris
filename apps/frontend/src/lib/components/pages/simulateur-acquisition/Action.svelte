@@ -19,12 +19,12 @@
 </script>
 
 <button
-  class={`fr-btn ${direction}`}
+  class={`fr-btn flex flex-column justify-center text-left width-100 xs_width-auto ${direction}`}
   class:fr-btn--secondary={direction === 'previous'}
   {type}
   onclick={onClick}
   disabled={loading}>
-  <div class="surtitle">
+  <div class="flex gap-1v align-center">
     {#if direction === 'next'}
       <p>
         <b>Étape suivante</b>
@@ -56,35 +56,3 @@
     <p class="fr-text--xs">{label}</p>
   {/if}
 </button>
-
-<style lang="postcss">
-  button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: left;
-    width: 100%;
-
-    @media (--xs-viewport) {
-      width: auto;
-
-      &.previous {
-        align-items: flex-end;
-      }
-
-      &.next {
-        align-items: flex-start;
-      }
-    }
-  }
-
-  .surtitle {
-    display: flex;
-    gap: 0.25rem;
-    align-items: center;
-  }
-
-  .fr-text--xs {
-    line-height: 1rem !important;
-  }
-</style>

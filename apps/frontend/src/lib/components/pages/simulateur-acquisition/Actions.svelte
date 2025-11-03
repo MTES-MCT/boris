@@ -10,27 +10,9 @@
 </script>
 
 <nav
+  class="flex flex-column-reverse sm_flex-row sm_align-stretch gap-2w fr-pt-3w border-top-light"
   class:justify-end={justifyEnd}
+  class:sm_justify-between={!justifyEnd}
   aria-label="Liens vers les autres étapes du simulateur d'acquisition">
   {@render children()}
 </nav>
-
-<style lang="postcss">
-  nav {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: var(--2w);
-    border-top: solid 1px var(--border-default-grey);
-    padding-top: 1.5rem;
-
-    @media (--xs-viewport) {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: stretch;
-    }
-
-    &.justify-end {
-      justify-content: flex-end;
-    }
-  }
-</style>

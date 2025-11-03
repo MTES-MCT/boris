@@ -8,135 +8,119 @@
   import nathan from '$assets/images/nathan.jpg';
 </script>
 
-<Section>
-  <h2 class="fr-h3 heading color-blue-primary">L’équipe derrière BoRiS.</h2>
+<div class="">
+  <Section>
+    <h2 class="text-center fr-mb-5w fr-mb-8w color-blue-primary">
+      L'équipe derrière BoRiS.
+    </h2>
 
-  <div class="fr-grid-row fr-grid-row--gutters">
-    <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md background-color-white">
-        <div class="picture">
-          <img
-            src={laure}
-            alt="" />
+    <div class="fr-grid-row fr-grid-row--gutters">
+      <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
+        <div
+          class="content flex align-center overflow-hidden rounded-box-md background-color-white">
+          <div class="picture height-100">
+            <img
+              class="width-100 height-100"
+              src={laure}
+              alt="" />
+          </div>
+          <div class="fr-px-3v fr-px-md-3w flex-1">
+            <p class="fr-text--lg fr-text--bold fr-mb-0">Laure Magdelain</p>
+            <p class="fr-text--sm fr-mb-0">Chargée de déploiement</p>
+          </div>
         </div>
-        <div class="text">
-          <p class="title">Chargée de déploiement</p>
-          <p class="name fr-mb-0">Laure Magdelain</p>
+      </div>
+      <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
+        <div
+          class="content flex align-center overflow-hidden rounded-box-md background-color-white">
+          <div class="picture height-100">
+            <img
+              class="width-100 height-100"
+              src={arthur}
+              alt="" />
+          </div>
+          <div class="fr-px-3v fr-px-md-3w flex-1">
+            <p class="fr-text--lg fr-text--bold fr-mb-0">Arthur Massonneau</p>
+            <p class="fr-text--sm fr-mb-0">Coach</p>
+          </div>
+        </div>
+      </div>
+      <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
+        <div
+          class="content flex align-center overflow-hidden rounded-box-md background-color-white">
+          <div class="picture height-100">
+            <img
+              class="width-100 height-100"
+              src={benoit}
+              alt="" />
+          </div>
+          <div class="fr-px-3v fr-px-md-3w flex-1">
+            <p class="fr-text--lg fr-text--bold fr-mb-0">Benoît Paquier</p>
+            <p class="fr-text--sm fr-mb-0">Développeur</p>
+          </div>
+        </div>
+      </div>
+      <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
+        <div
+          class="content flex align-center overflow-hidden rounded-box-md background-color-white">
+          <div class="picture height-100">
+            <img
+              class="width-100 height-100"
+              src={nathan}
+              alt="" />
+          </div>
+          <div class="fr-px-3v fr-px-md-3w flex-1">
+            <p class="fr-text--lg fr-text--bold fr-mb-0">Nathan Gaudelet</p>
+            <p class="fr-text--sm fr-mb-0">Intrapreneur</p>
+          </div>
+        </div>
+      </div>
+      <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
+        <div
+          class="content flex align-center overflow-hidden rounded-box-md background-color-white">
+          <div class="picture height-100">
+            <img
+              class="width-100 height-100"
+              src={mathieu}
+              alt="" />
+          </div>
+          <div class="fr-px-3v fr-px-md-3w flex-1">
+            <p class="fr-text--lg fr-text--bold fr-mb-0">Mathieu Gimenez</p>
+            <p class="fr-text--sm fr-mb-0">Responsable de portefeuille</p>
+          </div>
+        </div>
+      </div>
+      <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
+        <div
+          class="content flex align-center overflow-hidden rounded-box-md background-color-white">
+          <div class="picture height-100">
+            <img
+              class="width-100 height-100"
+              src={amandine}
+              alt="" />
+          </div>
+          <div class="fr-px-3v fr-px-md-3w flex-1">
+            <p class="fr-text--lg fr-text--bold fr-mb-0">Amandine Guegano</p>
+            <p class="fr-text--sm fr-mb-0">Designeuse</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md background-color-white">
-        <div class="picture">
-          <img
-            src={arthur}
-            alt="" />
-        </div>
-        <div class="text">
-          <p class="title">Coach</p>
-          <p class="name fr-mb-0">Arthur Massonneau</p>
-        </div>
-      </div>
-    </div>
-    <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md background-color-white">
-        <div class="picture">
-          <img
-            src={benoit}
-            alt="" />
-        </div>
-        <div class="text">
-          <p class="title">Développeur</p>
-          <p class="name fr-mb-0">Benoît Paquier</p>
-        </div>
-      </div>
-    </div>
-    <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md background-color-white">
-        <div class="picture">
-          <img
-            src={nathan}
-            alt="" />
-        </div>
-        <div class="text">
-          <p class="title">Intrapreneur</p>
-          <p class="name fr-mb-0">Nathan Gaudelet</p>
-        </div>
-      </div>
-    </div>
-    <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md background-color-white">
-        <div class="picture">
-          <img
-            src={mathieu}
-            alt="" />
-        </div>
-        <div class="text">
-          <p class="title">Responsable de portefeuille</p>
-          <p class="name fr-mb-0">Mathieu Gimenez</p>
-        </div>
-      </div>
-    </div>
-    <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md background-color-white">
-        <div class="picture">
-          <img
-            src={amandine}
-            alt="" />
-        </div>
-        <div class="text">
-          <p class="title">Designeuse</p>
-          <p class="name fr-mb-0">Amandine Guegano</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</Section>
+  </Section>
+</div>
 
 <style lang="postcss">
-  .heading {
-    text-align: center;
-    margin-block-end: var(--5w);
-  }
-
   .content {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 128px;
-    overflow: hidden;
+    --square-size: 128px;
+
+    height: var(--square-size);
   }
 
   .picture {
-    width: 128px;
-    height: 100%;
-    background-color: teal;
+    width: var(--square-size);
 
     img {
       object-fit: cover;
-      height: 100%;
-      width: 100%;
-    }
-  }
-
-  .text {
-    padding: var(--3w);
-  }
-
-  .title {
-    font-size: 0.75rem;
-    color: var(--color-grey-primary);
-    margin-block-end: var(--2w);
-  }
-
-  .name {
-    font-size: 1.25rem;
-    font-weight: 700;
-  }
-
-  @media (--md-viewport) {
-    .heading {
-      margin-block-end: var(--10w);
     }
   }
 </style>
