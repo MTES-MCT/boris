@@ -159,7 +159,7 @@
 
   {#if isListExpanded}
     <div
-      class="suggestions absolute z-1001 left-0 top-full w-full bg-white shadow-lg/20"
+      class="absolute z-1001 left-0 top-full w-full bg-white shadow-lg/20"
       id={suggestionsId}>
       <ul
         class="!list-none fr-m-0 fr-p-0"
