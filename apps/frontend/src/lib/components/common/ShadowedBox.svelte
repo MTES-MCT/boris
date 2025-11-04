@@ -16,7 +16,7 @@
     class="wrapper"
     class:wrapper--path-hidden={hidePath}>
     <div class="blue-overlay rounded-box-lg"></div>
-    <div class="content rounded-box-lg background-color-white">
+    <div class="content rounded-box-lg bg-white">
       {@render children()}
     </div>
   </div>

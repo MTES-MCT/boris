@@ -51,7 +51,7 @@
       <p class="fr-card__desc">{content}</p>
     </div>
     <span
-      class="color-blue-primary text-sm md:text-base fr-mb-4w underline underline-offset-6">
+      class="text-blue-primary text-sm md:text-base fr-mb-4w underline underline-offset-6">
       {linkLabel}
       <span
         class="fr-icon-arrow-right-line fr-icon--sm"

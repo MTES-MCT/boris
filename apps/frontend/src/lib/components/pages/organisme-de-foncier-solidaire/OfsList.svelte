@@ -13,7 +13,7 @@
   const { regions }: Props = $props();
 </script>
 
-<div class="fr-container rounded-box-lg background-color-white">
+<div class="fr-container rounded-box-lg bg-white">
   <div class="wrapper">
     <TitleWithMascotte
       title="Liste des OFS"

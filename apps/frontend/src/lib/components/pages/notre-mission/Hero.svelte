@@ -41,7 +41,7 @@
   <p>
     Vous constatez une erreur ? Vous avez un conseil ? N'hésitez pas à
     <a
-      class="color-blue-primary"
+      class="fr-link"
       href="/nous-contacter">
       nous contacter
     </a>

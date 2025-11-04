@@ -8,8 +8,8 @@
 </script>
 
 <section class="fr-container promesse">
-  <div class="content rounded-box-md background-color-white">
-    <h2 class="color-blue-primary">{title}</h2>
+  <div class="content rounded-box-md bg-white">
+    <h2 class="!text-blue-primary">{title}</h2>
 
     <div class="fr-grid-row fr-grid-row--gutters">
       {@render children()}

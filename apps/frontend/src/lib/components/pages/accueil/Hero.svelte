@@ -5,7 +5,7 @@
 
 <section class="hero">
   <div class="column text-container">
-    <div class="title background-color-white">
+    <div class="title bg-white">
       <h1>
         Acheter son logement
         <br />
@@ -16,7 +16,7 @@
       </h2>
     </div>
 
-    <div class="cta background-color-white">
+    <div class="cta bg-white">
       <p>
         <strong>87% des ménages</strong>
         sont éligibles.

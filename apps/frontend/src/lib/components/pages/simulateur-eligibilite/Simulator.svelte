@@ -4,7 +4,7 @@
 </script>
 
 <ShadowedBox>
-  <h3 class="fr-h4 heading color-blue-primary">
+  <h3 class="fr-h4 heading !text-blue-primary">
     Les plafonds de ressources d'éligibilité au Bail Réel Solidaire.
   </h3>
   <p>

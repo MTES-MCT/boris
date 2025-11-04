@@ -3,22 +3,22 @@
 </script>
 
 <section>
-  <h3>Ils en parlent mieux que nous !</h3>
+  <h3 class="text-center">Ils en parlent mieux que nous !</h3>
 
   <div class="fr-container">
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="fr-col-12 fr-col-md-4">
-        <div class="column background-color-white">
+        <div class="column bg-white">
           <div>
             <div class="icon">
               <span
-                class="fr-icon-quote-line"
+                class="fr-icon-quote-line fr-icon--lg"
                 aria-hidden="true">
               </span>
             </div>
             <p class="description">
               « Nous avons finalement trouvé notre logement à Saint-Ouen sur
-              Seine. Nous sommes ravis de ce choix. Encore merci, tout ça c’est
+              Seine. Nous sommes ravis de ce choix. Encore merci, tout ça c'est
               grâce à BoRiS »
             </p>
           </div>
@@ -28,7 +28,7 @@
       </div>
 
       <div class="fr-col-12 fr-col-md-4">
-        <div class="column background-color-white">
+        <div class="column bg-white">
           <div>
             <div class="icon">
               <span
@@ -37,7 +37,7 @@
               </span>
             </div>
             <p class="description">
-              « Nous avons signé l’acte de vente avant-hier, plus qu’à attendre
+              « Nous avons signé l'acte de vente avant-hier, plus qu'à attendre
               la livraison ! Merci encore pour votre suivi au début. »
             </p>
           </div>
@@ -47,7 +47,7 @@
       </div>
 
       <div class="fr-col-12 fr-col-md-4">
-        <div class="column background-color-white">
+        <div class="column bg-white">
           <div>
             <div class="icon">
               <span
@@ -56,7 +56,7 @@
               </span>
             </div>
             <p class="description">
-              « Maintenant que je connais le BRS, j’attend la commercialisation
+              « Maintenant que je connais le BRS, j'attend la commercialisation
               de plusieurs projets sur mon territoire de recherche, plus
               préparée que jamais. »
             </p>
@@ -70,10 +70,6 @@
 </section>
 
 <style lang="postcss">
-  h3 {
-    text-align: center;
-  }
-
   .column {
     display: flex;
     flex-direction: column;

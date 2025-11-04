@@ -7,13 +7,13 @@
 </script>
 
 <Section>
-  <div class="fr-container background-color-white">
+  <div class="fr-container bg-white">
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="column fr-col-12 fr-col-md-6 fr-col-lg-3">
         <div>
           <div class="icon">
             <span
-              class="fr-icon-community-line color-blue-primary"
+              class="fr-icon-community-line text-blue-primary"
               aria-hidden="true">
             </span>
           </div>
@@ -36,13 +36,13 @@
         <div>
           <div class="icon">
             <span
-              class="fr-icon-france-line color-blue-primary"
+              class="fr-icon-france-line text-blue-primary"
               aria-hidden="true">
             </span>
           </div>
           <p>
             Une offre de logements abordables proposée par les Organismes
-            Fonciers Solidaires qui se déploie sur l’ensemble du territoire
+            Fonciers Solidaires qui se déploie sur l'ensemble du territoire
           </p>
         </div>
         <a
@@ -55,13 +55,13 @@
         <div>
           <div class="icon">
             <span
-              class="fr-icon-sofa-line color-blue-primary"
+              class="fr-icon-sofa-line text-blue-primary"
               aria-hidden="true">
             </span>
           </div>
           <p>
             Vous profitez pleinement de votre logement en résidence principale
-            et à condition d’être éligible au dispositif.
+            et à condition d'être éligible au dispositif.
           </p>
         </div>
         <a
@@ -74,7 +74,7 @@
         <div>
           <div class="icon">
             <span
-              class="fr-icon-service-line color-blue-primary"
+              class="fr-icon-service-line text-blue-primary"
               aria-hidden="true">
             </span>
           </div>
