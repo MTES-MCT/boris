@@ -102,7 +102,8 @@ export type Accent =
 
 export type FontWeight = 'normal' | 'bold' | 'light';
 
-export type Icon =
+export type CustomIcon = 'sofa-line';
+export type DsfrIcon =
   | 'accessibility-fill'
   | 'accessibility-line'
   | 'account-circle-fill'
@@ -1145,3 +1146,5 @@ export type Icon =
   | 'zoom-in-line'
   | 'zoom-out-fill'
   | 'zoom-out-line';
+
+export type Icon = CustomIcon | DsfrIcon;
