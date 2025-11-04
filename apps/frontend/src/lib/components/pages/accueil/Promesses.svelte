@@ -45,7 +45,7 @@
 
 <Section>
   <div
-    class="fr-container relative !max-w-[400px] md:!max-w-[576px] lg:!max-w-[1044px] fr-py-1v fr-py-md-4w mt-[-9.5rem] mb-[6rem] rounded-lg bg-white border border-blue-primary border-2">
+    class="fr-container relative !max-w-[400px] md:!max-w-[576px] lg:!max-w-[1044px] fr-py-1v fr-py-md-4w mt-[-9.5rem] mb-[6rem] rounded-lg bg-white border border-blue-primary border-2 lg:border-(length:--path-thickness) lg:border-blue-primary">
     <div class="fr-grid-row fr-grid-row--gutters">
       {#each promises as { icon, content, href, linkLabel }}
         {@render promise(icon, content, href, linkLabel)}

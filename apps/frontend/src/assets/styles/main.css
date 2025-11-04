@@ -1,7 +1,6 @@
 @import url('./_vars.css');
 @import url('./_icons.css');
 @import url('./map.css');
-@import url('./_utilities.css');
 
 @import 'tailwindcss';
 
@@ -13,10 +12,13 @@
   --color-teal-light: #e5fbfd;
   --color-default-grey-active: var(--background-default-grey-active);
 
+  --breakpoint-xs: 28rem;
   --breakpoint-sm: 36rem;
   --breakpoint-md: 48rem;
   --breakpoint-lg: 62rem;
   --breakpoint-xl: 78rem;
+
+  --path-thickness: 4px;
 }
 
 .scroll-behavior-smooth {

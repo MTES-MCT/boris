@@ -31,8 +31,6 @@
   --border-radius-md: calc(var(--1w) + var(--1v));
   --border-radius-lg: var(--2w);
 
-  --path-thickness: 4px;
-
   /* BREAKING POINTS */
   @custom-media --xxs-viewport (min-width: 28rem); /* 448px  */
   @custom-media --xs-viewport (min-width: 36rem); /* 576px  */
