@@ -39,6 +39,10 @@
       ownContribution,
     };
 
+    if (!acquisitionSimulatorManager.ownContribution) {
+      acquisitionSimulatorManager.ownContribution = 0;
+    }
+
     try {
       FormData.parse(payload);
       errors = {};
