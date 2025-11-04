@@ -25,9 +25,7 @@
     {/if}
   </div>
   <div class="row-value">
-    <Badge
-      {status}
-      hideIcon>
+    <Badge {status}>
       {value}
     </Badge>
   </div>

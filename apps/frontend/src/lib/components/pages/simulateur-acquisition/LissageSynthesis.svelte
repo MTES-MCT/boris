@@ -18,7 +18,7 @@
 
 {#if !pretLisse?.estElligible}
   <Block>
-    <p class="fr-h6 fr-mb-1w">Montants de l'opérations</p>
+    <p class="fr-h6 fr-mb-0">Montants de l'opérations</p>
     <RowContainer>
       <Row
         title="Prêt principal"
@@ -32,16 +32,12 @@
   </Block>
   <Block>
     <p class="fr-h6 fr-mb-1w">Remboursement du prêt immobilier</p>
-    <p class="fr-text--sm">
-      <Badge
-        hideIcon
-        uppercase={false}>
-        <span class="fr-icon fr-icon-calendar-line fr-icon--sm"></span>
-        <span class="fr-pl-1v fr-text--xs">
-          {`Durée totale: ${pretLisse?.phasesRemboursement[0].dureeAnnees} ans`}
-        </span>
-      </Badge>
-    </p>
+    <Badge
+      normalCase
+      icon="calendar-line">
+      Durée totale: {pretLisse?.phasesRemboursement[0].dureeAnnees} ans.
+    </Badge>
+
     <div class="separator"></div>
     <RowContainer>
       <Row
@@ -64,14 +60,12 @@
 {:else}
   <div class="fr-mb-2w">
     <Block>
-      <p class="fr-h6 fr-mb-1w">Montants de l'opérations</p>
-      <div class="not-printable fr-mb-1w">
+      <p class="fr-h6 fr-mb-0">Montants de l'opérations</p>
+      <div class="not-printable fr-mb-2w">
         <Badge
           status="success"
-          uppercase={false}>
-          <span class="fr-text--xs">
-            Vous êtes éligible au prêt à taux zéro (PTZ)
-          </span>
+          normalCase>
+          Vous êtes éligible au prêt à taux zéro (PTZ)
         </Badge>
       </div>
       <RowContainer>
@@ -95,14 +89,11 @@
       <p class="fr-mb-0 fr-text--lg fr-text--bold">
         {formatLoanPhaseNumber(index + 1)}
       </p>
-      <div class="fr-mb-4w not-printable">
+      <div class="fr-mb-2w not-printable">
         <Badge
-          hideIcon
-          uppercase={false}>
-          <span class="fr-icon fr-icon-calendar-line fr-icon--sm"></span>
-          <span class="fr-pl-1v fr-text--xs">
-            {formatLoanPhaseDuration(phase.dureeAnnees, phase.anneesDifferees)}
-          </span>
+          icon="calendar-line"
+          normalCase>
+          {formatLoanPhaseDuration(phase.dureeAnnees, phase.anneesDifferees)}
         </Badge>
       </div>
       <div class="pdf-only">

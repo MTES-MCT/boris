@@ -126,9 +126,7 @@
               Le montant à emprunter est pré-calculé en fonction de vos réponses
               précédentes.
             </p>
-            <Badge
-              status="success"
-              hideIcon>
+            <Badge status="success">
               {formatEuro(loanAmount as number)}
             </Badge>
           </div>
