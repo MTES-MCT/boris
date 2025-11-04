@@ -85,19 +85,13 @@
 
 {#snippet badges()}
   <div class="location">
-    <Badge
-      status="info"
-      hideIcon>
+    <Badge status="info">
       {city}
     </Badge>
-    <Badge
-      status="new"
-      hideIcon>
+    <Badge status="new">
       {departement.name}
     </Badge>
-    <Badge
-      status="success"
-      hideIcon>
+    <Badge status="success">
       {region.name}
     </Badge>
   </div>

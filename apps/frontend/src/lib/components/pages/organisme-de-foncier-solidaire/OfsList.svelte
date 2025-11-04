@@ -33,19 +33,18 @@
       <ul class="fr-mb-4w">
         <li class="fr-mb-1v">
           <Badge
-            uppercase={false}
+            normalCase
             accent="green-menthe"
-            hideIcon>
-            <span class="fr-icon fr-icon--sm fr-icon-road-map-line"></span>
-            <span class="fr-pl-1w">Nom de la région</span>
+            icon="road-map-line">
+            Nom de la région
           </Badge>
         </li>
         <li class="fr-mb-1v">
           <Badge
-            uppercase={false}
-            accent="yellow-tournesol">
-            <span class="fr-icon fr-icon--sm fr-icon-community-line"></span>
-            <span class="fr-pl-1w">Organisme de foncier solidaire (OFS)</span>
+            normalCase
+            accent="yellow-tournesol"
+            icon="community-line">
+            Organisme de foncier solidaire (OFS)
           </Badge>
           <span class="fr-text--sm fr-text--bold text-color-yellow-tournesol">
             qui propose des logements en bail réel solidaire (BRS) à vendre.
@@ -53,10 +52,10 @@
         </li>
         <li>
           <Badge
-            uppercase={false}
-            accent="purple-glycine">
-            <span class="fr-icon fr-icon--sm fr-icon-draft-line"></span>
-            <span class="fr-pl-1w">Organisme de foncier solidaire (OFS)</span>
+            normalCase
+            accent="purple-glycine"
+            icon="draft-line">
+            Organisme de foncier solidaire (OFS)
           </Badge>
           <span class="fr-text--sm fr-text--bold text-color-purple-glycine">
             qui a obtenu l'agrément mais ne propose pas encore de logement en
@@ -72,10 +71,10 @@
       {#each regions as region}
         <li class="region-item">
           <Badge
+            icon="road-map-line"
             accent="green-menthe"
-            uppercase={false}>
-            <span class="fr-icon fr-icon--sm fr-icon-road-map-line"></span>
-            <span class="fr-pl-1w">{region.name}</span>
+            normalCase>
+            {region.name}
           </Badge>
 
           <ul class="ofs-list">
@@ -85,21 +84,16 @@
                   accent={ofs.producesBrs
                     ? 'yellow-tournesol'
                     : 'purple-glycine'}
-                  uppercase={false}>
-                  <span
-                    class={`fr-icon fr-icon--sm fr-icon-${ofs.producesBrs ? 'community-line' : 'draft-line'}`}>
-                  </span>
+                  icon={ofs.producesBrs ? 'community-line' : 'draft-line'}
+                  normalCase>
                   {#if ofs.websiteUrl}
                     <a
-                      class="fr-text--sm fr-pl-1w"
                       href={ofs.websiteUrl}
                       target="_blank">
                       {ofs.name}
                     </a>
                   {:else}
-                    <span class="fr-pl-1w">
-                      {ofs.name}
-                    </span>
+                    {ofs.name}
                   {/if}
                 </Badge>
               </li>
