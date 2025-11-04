@@ -135,7 +135,7 @@
 </script>
 
 <div
-  class="autocomplete"
+  class="relative"
   use:clickOutside
   onclickoutside={handleClickOuside}>
   <Input
@@ -159,21 +159,22 @@
 
   {#if isListExpanded}
     <div
-      class="suggestions"
+      class="absolute z-1001 left-0 top-full w-full bg-white shadow-lg/20"
       id={suggestionsId}>
       <ul
+        class="!list-none fr-m-0 fr-p-0"
         aria-labelledby={inputId}
         role="listbox">
         {#if isTooShort}
-          <li>
+          <li class="fr-py-1w fr-px-2w">
             <b>Veuillez saisir au moins 3 caractères.</b>
           </li>
         {:else if isTooLong}
-          <li>
+          <li class="fr-py-1w fr-px-2w">
             <b>Veuillez saisir 200 caractères au maximum.</b>
           </li>
         {:else if isLoading}
-          <li>
+          <li class="fr-py-1w fr-px-2w">
             <i>Recherche...</i>
           </li>
         {:else if suggestions && suggestions.length > 0}
@@ -181,7 +182,7 @@
             {@render autocompleteSuggestion(suggestion, index)}
           {/each}
         {:else if suggestions && suggestions.length === 0 && value.length > 0}
-          <li>
+          <li class="fr-py-1w fr-px-2w">
             <b>Aucun lieu correspondant n'a été trouvé.</b>
           </li>
         {/if}
@@ -196,6 +197,8 @@
 )}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <li
+    class="fr-py-1w fr-px-2w cursor-pointer"
+    class:bg-default-grey-active={suggestion?.id === focusedSuggestionId}
     id={suggestion?.id}
     role="option"
     aria-selected={suggestion?.id === focusedSuggestionId}
@@ -205,35 +208,3 @@
     {getGeocodedResponseLabel(suggestion)}
   </li>
 {/snippet}
-
-<style lang="postcss">
-  .autocomplete {
-    position: relative;
-  }
-
-  .suggestions {
-    position: absolute;
-    z-index: 9999999;
-    left: 0;
-    top: calc(100% + var(--1w));
-    width: 100%;
-    background-color: white;
-    box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
-  }
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    li {
-      padding: var(--1w) var(--2w);
-      cursor: pointer;
-
-      &[aria-selected='true'],
-      &:hover {
-        background-color: var(--background-default-grey-active);
-      }
-    }
-  }
-</style>

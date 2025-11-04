@@ -3,6 +3,16 @@
 @import url('./map.css');
 @import url('./_utilities.css');
 
+@import '@gouvfr/dsfr/dist/core/core.min.css';
+@import '@gouvfr/dsfr/dist/utility/icons/icons.min.css';
+
+@import 'tailwindcss';
+
+@theme {
+  --color-red-primary: #ff5655;
+  --color-default-grey-active: var(--background-default-grey-active);
+}
+
 .scroll-behavior-smooth {
   scroll-behavior: smooth;
 }
