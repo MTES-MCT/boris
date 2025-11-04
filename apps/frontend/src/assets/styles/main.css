@@ -8,6 +8,8 @@
 @theme {
   --color-red-primary: #ff5655;
   --color-blue-primary: #3917b3;
+  --color-teal-primary: #60e0eb;
+  --color-teal-light: #e5fbfd;
   --color-default-grey-active: var(--background-default-grey-active);
 
   --breakpoint-sm: 36rem;
