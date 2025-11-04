@@ -3,9 +3,6 @@
 @import url('./map.css');
 @import url('./_utilities.css');
 
-@import '@gouvfr/dsfr/dist/core/core.min.css';
-@import '@gouvfr/dsfr/dist/utility/icons/icons.min.css';
-
 @import 'tailwindcss';
 
 @theme {
