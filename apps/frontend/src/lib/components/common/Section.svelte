@@ -21,8 +21,10 @@
 
 <section
   {id}
-  class="section"
-  class:narrow>
+  class="section my-4 md:my-8 nth-1:pt-8 md:nth-1:pt-16 nth-last-1:pb-8 md:nth-last-1:pb-16"
+  class:max-w-[636px]={narrow}
+  class:mx-auto={narrow}
+  class:text-center={narrow}>
   <div class="fr-container">
     <div class="fr-col-12">
       {#if title}
@@ -33,38 +35,3 @@
     </div>
   </div>
 </section>
-
-<style lang="postcss">
-  .section {
-    padding-block: var(--2w);
-  }
-
-  .narrow {
-    width: 100%;
-    max-width: 636px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .section:nth-last-child(1) {
-    padding-block-end: var(--4w);
-  }
-
-  .section:nth-child(1) {
-    padding-block-start: var(--4w);
-  }
-
-  @media (--sm-viewport) {
-    .section {
-      padding-block: var(--4w);
-    }
-
-    .section:nth-child(1) {
-      padding-block-start: var(--8w);
-    }
-
-    .section:nth-last-child(1) {
-      padding-block-end: var(--8w);
-    }
-  }
-</style>
