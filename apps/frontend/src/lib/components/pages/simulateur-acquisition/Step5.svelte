@@ -266,7 +266,7 @@
           height: 1px;
           margin: 0 auto;
           margin-bottom: 1rem;
-          background-color: var(--color-grey-default);
+          background-color: var(--color-gray-light);
         }
       }
     }

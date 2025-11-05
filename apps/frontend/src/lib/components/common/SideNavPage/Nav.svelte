@@ -30,7 +30,7 @@
 <style lang="postcss">
   nav {
     margin-block-start: var(--3w);
-    border-bottom: solid 1px var(--color-grey-default);
+    border-bottom: solid 1px var(--color-gray-light);
 
     ul {
       margin: 0;
@@ -54,7 +54,7 @@
       top: var(--6w);
       margin-block-start: 0;
       padding-inline-end: var(--3w);
-      border-right: solid 1px var(--color-grey-default);
+      border-right: solid 1px var(--color-gray-light);
       border-bottom: none;
 
       li {

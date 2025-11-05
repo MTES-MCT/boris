@@ -8,28 +8,9 @@
   const { id, title, content }: Props = $props();
 </script>
 
-<article {id}>
-  <h2 class="fr-h5 heading">{title}</h2>
+<article
+  {id}
+  class="!pb-8 border-b border-gray-light">
+  <h2 class="fr-h5 pt-12">{title}</h2>
   {@html content}
 </article>
-
-<style lang="postcss">
-  article {
-    padding-block-end: var(--3w);
-    border-bottom: solid 1px var(--color-grey-default);
-  }
-
-  .heading {
-    padding-block-start: var(--5w);
-  }
-
-  @media (--sm-viewport) {
-    article {
-      padding-block-end: var(--4w);
-    }
-
-    .heading {
-      padding-block-start: var(--6w);
-    }
-  }
-</style>

@@ -10,6 +10,7 @@
   --color-blue-light: #ececfe;
   --color-teal-primary: #60e0eb;
   --color-teal-light: #e5fbfd;
+  --color-gray-light: #dddddd;
   --color-default-grey-active: var(--background-default-grey-active);
 
   --breakpoint-xs: 28rem;
