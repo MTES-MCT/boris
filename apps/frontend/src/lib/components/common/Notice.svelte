@@ -31,9 +31,3 @@
     </div>
   </div>
 </div>
-
-<style lang="postcss">
-  .fr-notice--none {
-    background-color: transparent;
-  }
-</style>
