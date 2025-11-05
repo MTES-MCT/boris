@@ -41,7 +41,7 @@
           </div>
         {/if}
         <div class="content">
-          <div class="position color-blue-primary">
+          <div class="position text-blue-primary">
             <span><b>{position}</b></span>
           </div>
           <div class="text">

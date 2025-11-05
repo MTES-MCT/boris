@@ -15,8 +15,8 @@
   <div
     class="wrapper"
     class:wrapper--path-hidden={hidePath}>
-    <div class="blue-overlay rounded-box-lg"></div>
-    <div class="content rounded-box-lg background-color-white">
+    <div class="blue-overlay rounded-box-lg bg-teal-light"></div>
+    <div class="content rounded-box-lg bg-white">
       {@render children()}
     </div>
   </div>
@@ -59,7 +59,6 @@
       position: absolute;
       bottom: var(--3w);
       right: var(--3w);
-      background-color: var(--color-teal-light);
       z-index: 1;
     }
   }

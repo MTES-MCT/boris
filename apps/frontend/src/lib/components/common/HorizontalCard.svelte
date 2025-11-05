@@ -32,26 +32,38 @@
 
 <div
   {id}
-  class="fr-card fr-enlarge-link fr-card--horizontal fr-card--horizontal-half fr-card--no-border"
+  class="fr-card fr-enlarge-link fr-card--horizontal fr-card--horizontal-half fr-card--no-border !bg-transparent"
+  class:md:!flex-row-reverse={reversed}
   class:reversed>
-  <div class="fr-card__body">
-    <div class="fr-card__content">
+  <div
+    class={`
+      fr-card__body !h-auto bg-white
+      ${!reversed ? `items-end rounded-bl-xl md:rounded-bl-none` : `rounded-br-xl md:rounded-br-none !items-start`}
+    `}>
+    <div class="fr-card__content !order-0">
       <h3 class="fr-card__title">
-        <a {href}>
+        <a
+          {href}
+          class="after:!hidden">
           {title}
         </a>
       </h3>
       <p class="fr-card__desc">{content}</p>
     </div>
-    <span class="cta color-blue-primary">
+    <span
+      class="text-blue-primary text-sm md:text-base fr-mb-4w underline underline-offset-6">
       {linkLabel}
       <span
-        class="fr-icon-arrow-right-line"
+        class="fr-icon-arrow-right-line fr-icon--sm"
         aria-hidden="true">
       </span>
     </span>
   </div>
-  <div class="fr-card__header">
+  <div
+    class={`
+      fr-card__header overflow-hidden
+      ${!reversed ? `md:rounded-bl-xl` : `md:rounded-br-xl`}
+    `}>
     <div class="fr-card__img">
       <Img
         class="fr-responsive-img"
@@ -65,94 +77,3 @@
     </div>
   </div>
 </div>
-
-<style lang="postcss">
-  .fr-card {
-    background-color: transparent;
-
-    .fr-card__body {
-      overflow: hidden;
-      border-bottom-left-radius: var(--border-radius-md);
-    }
-
-    &.reversed {
-      flex-direction: column;
-
-      .fr-card__body {
-        align-items: flex-start;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: var(--border-radius-md);
-      }
-
-      @media (--sm-viewport) {
-        flex-direction: row-reverse;
-      }
-    }
-
-    .fr-card__title {
-      a::after {
-        display: none;
-      }
-    }
-  }
-
-  .fr-card__body {
-    height: auto;
-    align-items: flex-end;
-    background-color: white;
-
-    .fr-card__content {
-      order: 0;
-    }
-  }
-
-  .cta {
-    position: relative;
-    margin-block-end: 2rem;
-    font-size: 0.875rem;
-    font-weight: 400;
-    text-decoration: underline;
-
-    span {
-      &::before {
-        --icon-size: 1rem;
-      }
-    }
-  }
-
-  @media (--sm-viewport) {
-    .fr-card {
-      .fr-card__header {
-        overflow: hidden;
-        border-bottom-left-radius: var(--border-radius-md);
-      }
-
-      .fr-card__body {
-        border-bottom-left-radius: 0;
-      }
-
-      &.reversed {
-        .fr-card__header {
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: var(--border-radius-md);
-        }
-
-        .fr-card__body {
-          border-bottom-right-radius: 0;
-        }
-      }
-    }
-  }
-
-  @media (--md-viewport) {
-    .cta {
-      font-size: 1rem;
-
-      span {
-        &::before {
-          --icon-size: 1.5rem;
-        }
-      }
-    }
-  }
-</style>

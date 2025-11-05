@@ -9,11 +9,11 @@
 </script>
 
 <Section>
-  <h2 class="fr-h3 heading color-blue-primary">L’équipe derrière BoRiS.</h2>
+  <h2 class="fr-h3 heading !text-blue-primary">L'équipe derrière BoRiS.</h2>
 
   <div class="fr-grid-row fr-grid-row--gutters">
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md background-color-white">
+      <div class="content rounded-box-md bg-white">
         <div class="picture">
           <img
             src={laure}
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md background-color-white">
+      <div class="content rounded-box-md bg-white">
         <div class="picture">
           <img
             src={arthur}
@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md background-color-white">
+      <div class="content rounded-box-md bg-white">
         <div class="picture">
           <img
             src={benoit}
@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md background-color-white">
+      <div class="content rounded-box-md bg-white">
         <div class="picture">
           <img
             src={nathan}
@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md background-color-white">
+      <div class="content rounded-box-md bg-white">
         <div class="picture">
           <img
             src={mathieu}
@@ -78,7 +78,7 @@
       </div>
     </div>
     <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md background-color-white">
+      <div class="content rounded-box-md bg-white">
         <div class="picture">
           <img
             src={amandine}

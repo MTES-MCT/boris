@@ -11,7 +11,7 @@
 </script>
 
 <Section id="statistiques">
-  <div class="content rounded-box-md background-color-white">
+  <div class="content rounded-box-md bg-white">
     <Disclaimer content="en chiffres clés" />
 
     <ul>

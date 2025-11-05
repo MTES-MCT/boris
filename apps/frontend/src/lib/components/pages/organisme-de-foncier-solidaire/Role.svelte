@@ -7,7 +7,7 @@
   import TitleWithMascotte from '$components/pages/organisme-de-foncier-solidaire/TitleWithMascotte.svelte';
 </script>
 
-<div class="wrapper background-color-white">
+<div class="wrapper bg-white">
   <Section>
     <TitleWithMascotte
       title="Le rôle des OFS"

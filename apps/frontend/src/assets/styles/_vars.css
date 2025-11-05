@@ -2,11 +2,7 @@
   /* COLORS */
   --color-red-dark: #c21d1c;
   --color-red-light: #ffeded;
-  --color-blue-primary: #3917b3;
-  --color-blue-light: #ececfe;
   --color-blue-deep: #f5f5fe;
-  --color-teal-primary: #60e0eb;
-  --color-teal-light: #e5fbfd;
   --color-grey-default: #dddddd;
   --color-grey-primary: #666666;
 
@@ -34,8 +30,6 @@
   --border-radius-sm: var(--1w);
   --border-radius-md: calc(var(--1w) + var(--1v));
   --border-radius-lg: var(--2w);
-
-  --path-thickness: 4px;
 
   /* BREAKING POINTS */
   @custom-media --xxs-viewport (min-width: 28rem); /* 448px  */

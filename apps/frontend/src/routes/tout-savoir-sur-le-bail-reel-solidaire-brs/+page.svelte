@@ -184,7 +184,7 @@
   </div>
 
   <div class="fr-container fr-pb-4w fr-mt-8w">
-    <div class="rounded-box-md background-color-white fr-p-4w">
+    <div class="rounded-box-md fr-p-4w bg-white">
       <h2>FAQ : Les réponses à vos questions sur le bail réel solidaire</h2>
 
       <Accordion label="Comment savoir si je suis éligible au BRS ?">

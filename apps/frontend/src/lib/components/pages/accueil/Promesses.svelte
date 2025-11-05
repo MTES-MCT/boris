@@ -1,173 +1,76 @@
-<script>
-  import '@gouvfr/dsfr/dist/utility/icons/icons-buildings/icons-buildings.min.css';
-  import '@gouvfr/dsfr/dist/utility/icons/icons-map/icons-map.min.css';
+<script lang="ts">
+  import type { Icon } from '$lib/utils/definitions';
 
   import Section from '$components/common/Section.svelte';
   import Disclaimer from '$components/common/Disclaimer.svelte';
+
+  type Promise = {
+    icon: Icon;
+    content: string;
+    href: string;
+    linkLabel: string;
+  };
+
+  const promises: Promise[] = [
+    {
+      icon: 'community-line',
+      content:
+        "Vous achetez uniquement le logement tandis qu'un organisme de foncier solidaire (OFS) agréé par l'Etat garde la propriété du terrain.",
+      href: '/tout-savoir-sur-le-bail-reel-solidaire-brs',
+      linkLabel: 'En savoir plus',
+    },
+    {
+      icon: 'france-line',
+      content:
+        "Une offre de logements abordables proposée par les Organismes Fonciers Solidaires qui se déploie sur l'ensemble du territoire",
+      href: '/logements-brs-disponibles',
+      linkLabel: 'Trouver un logement en BRS',
+    },
+    {
+      icon: 'sofa-line',
+      content:
+        "Vous profitez pleinement de votre logement en résidence principale et à condition d'être éligible au dispositif.",
+      href: '/tout-savoir-sur-le-bail-reel-solidaire-brs',
+      linkLabel: 'En savoir plus',
+    },
+    {
+      icon: 'service-line',
+      content:
+        "Vous devez vous acquitter mensuellement d'une redevance contenue auprès de l'organisme de foncier solidaire (OFS) avec qui vous partagez la propriété.",
+      href: '/organismes-de-foncier-solidaire',
+      linkLabel: 'En savoir plus',
+    },
+  ];
 </script>
 
 <Section>
-  <div class="fr-container background-color-white">
+  <div
+    class="fr-container relative !max-w-[400px] md:!max-w-[576px] lg:!max-w-[1044px] fr-py-1v fr-py-md-4w mt-[-9.5rem] mb-[6rem] rounded-lg bg-white border border-blue-primary border-2 lg:border-(length:--path-thickness) lg:border-blue-primary">
     <div class="fr-grid-row fr-grid-row--gutters">
-      <div class="column fr-col-12 fr-col-md-6 fr-col-lg-3">
-        <div>
-          <div class="icon">
-            <span
-              class="fr-icon-community-line color-blue-primary"
-              aria-hidden="true">
-            </span>
-          </div>
-          <p>
-            Vous achetez uniquement le logement tandis qu'un <a
-              href="/organismes-de-foncier-solidaire"
-              class="fr-link">
-              organisme de foncier solidaire (OFS)
-            </a>
-            agréé par l'Etat garde la propriété du terrain.
-          </p>
-        </div>
-        <a
-          class="fr-link"
-          href="/tout-savoir-sur-le-bail-reel-solidaire-brs">
-          En savoir plus
-        </a>
-      </div>
-      <div class="column fr-col-12 fr-col-md-6 fr-col-lg-3">
-        <div>
-          <div class="icon">
-            <span
-              class="fr-icon-france-line color-blue-primary"
-              aria-hidden="true">
-            </span>
-          </div>
-          <p>
-            Une offre de logements abordables proposée par les Organismes
-            Fonciers Solidaires qui se déploie sur l’ensemble du territoire
-          </p>
-        </div>
-        <a
-          class="fr-link"
-          href="/logements-brs-disponibles">
-          Trouver un logement en BRS
-        </a>
-      </div>
-      <div class="column fr-col-12 fr-col-md-6 fr-col-lg-3">
-        <div>
-          <div class="icon">
-            <span
-              class="fr-icon-sofa-line color-blue-primary"
-              aria-hidden="true">
-            </span>
-          </div>
-          <p>
-            Vous profitez pleinement de votre logement en résidence principale
-            et à condition d’être éligible au dispositif.
-          </p>
-        </div>
-        <a
-          class="fr-link"
-          href="/tout-savoir-sur-le-bail-reel-solidaire-brs">
-          En savoir plus
-        </a>
-      </div>
-      <div class="column fr-col-12 fr-col-md-6 fr-col-lg-3">
-        <div>
-          <div class="icon">
-            <span
-              class="fr-icon-service-line color-blue-primary"
-              aria-hidden="true">
-            </span>
-          </div>
-          <p>
-            Vous devez vous acquitter mensuellement d'une redevance contenue
-            auprès de l'
-            <a
-              href="/organismes-de-foncier-solidaire"
-              class="fr-link">
-              organisme de foncier solidaire (OFS)
-            </a>
-            avec qui vous partagez la propriété.
-          </p>
-        </div>
-        <a
-          class="fr-link"
-          href="/tout-savoir-sur-le-bail-reel-solidaire-brs">
-          En savoir plus
-        </a>
-      </div>
+      {#each promises as { icon, content, href, linkLabel }}
+        {@render promise(icon, content, href, linkLabel)}
+      {/each}
     </div>
   </div>
 
   <Disclaimer content="la clef pour devenir propriétaire en BRS." />
 </Section>
 
-<style lang="postcss">
-  .fr-container {
-    position: relative;
-    max-width: 400px;
-    margin-block-start: calc(-1 * var(--19w));
-    margin-block-end: var(--12w);
-    border-radius: var(--border-radius-sm);
-    border: solid 1px var(--color-blue-primary);
-    padding-block: var(--2w);
-  }
+{#snippet promise(icon: Icon, content: string, href: string, linkLabel: string)}
+  <div
+    class="flex flex-col justify-between fr-col-12 fr-col-md-6 fr-col-lg-3 fr-px-2w fr-py-3w fr-py-md-2w fr-my-2w">
+    <div class="flex flex-col items-center gap-none">
+      <span
+        class={`fr-icon-${icon} inline-block fr-p-2w fr-mb-2w fr-mb-md-4w rounded-full bg-blue-light text-blue-primary`}
+        aria-hidden="true">
+      </span>
 
-  .column {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-block: var(--2w);
-    padding-inline: var(--3w);
-
-    p,
-    a {
-      align-self: center;
-      font-size: 0.875rem;
-    }
-  }
-
-  .icon {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: var(--5w);
-    margin-bottom: var(--2w);
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: calc(50% - var(--5w) / 2);
-      width: var(--5w);
-      height: var(--5w);
-      background-color: var(--color-blue-light);
-      border-radius: 50%;
-    }
-  }
-
-  @media (--sm-viewport) {
-    .fr-container {
-      max-width: 576px;
-    }
-
-    .column {
-      margin-block: var(--3w);
-    }
-  }
-
-  @media (--md-viewport) {
-    .fr-container {
-      max-width: 1044px;
-      padding-block: 0;
-    }
-
-    .icon {
-      margin-bottom: var(--4w);
-    }
-
-    .column {
-      margin-block: var(--5w);
-    }
-  }
-</style>
+      <p class="fr-text--sm text-center fr-mb-2w fr-mb-md-4w">{content}</p>
+    </div>
+    <a
+      class="fr-link fr-text--sm self-center"
+      {href}>
+      {linkLabel}
+    </a>
+  </div>
+{/snippet}
