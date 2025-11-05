@@ -21,7 +21,7 @@
 
 <section
   {id}
-  class="section my-4 md:my-8 nth-1:pt-8 md:nth-1:pt-16 nth-last-1:pb-8 md:nth-last-1:pb-16"
+  class="section py-4 md:py-8 nth-1:pt-8 md:nth-1:pt-16 nth-last-1:pb-8 md:nth-last-1:pb-16"
   class:max-w-[636px]={narrow}
   class:mx-auto={narrow}
   class:text-center={narrow}>
