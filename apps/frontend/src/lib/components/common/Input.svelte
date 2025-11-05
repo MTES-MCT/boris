@@ -70,13 +70,13 @@
   class="fr-input-group"
   class:fr-input-group--disabled={disabled}
   class:fr-input-group--error={error}
-  class:no-margin-bottom={forceNoMarginBottom}
+  class:fr-mb-0={forceNoMarginBottom}
   id={`${id}-group`}>
   {#if label}
     <label
       class="fr-label"
       for={id}>
-      <div>
+      <div class="inline-flex items-end gap-1">
         <b>{label} {required ? '*' : ''}</b>
         {#if labelTooltip}
           <Tooltip>
@@ -92,7 +92,7 @@
     </label>
   {/if}
   {#if icon}
-    <div class={`fr-input-wrap fr-icon-${icon}`}>
+    <div class={`fr-input-wrap fr-icon-${icon} before:!bottom-auto`}>
       {@render input()}
     </div>
   {:else}
@@ -107,7 +107,7 @@
 
 {#snippet input()}
   <input
-    class="fr-input"
+    class="fr-input !bg-[var(--input-background-color,var(--background-contrast-grey))]"
     {placeholder}
     {type}
     {value}
@@ -139,28 +139,3 @@
     {/if}
   </div>
 {/snippet}
-
-<style lang="postcss">
-  .no-margin-bottom {
-    margin-bottom: 0 !important;
-  }
-
-  label {
-    div {
-      display: inline-flex;
-      align-items: flex-end;
-      gap: var(--1v);
-    }
-  }
-
-  input {
-    background-color: var(
-      --input-background-color,
-      var(--background-contrast-grey)
-    );
-  }
-
-  .fr-input-wrap::before {
-    bottom: auto;
-  }
-</style>
