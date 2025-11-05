@@ -3,7 +3,12 @@
   import '@gouvfr/dsfr/dist/utility/icons/icons.min.css';
   import '$assets/styles/main.css';
 
-  import { type Snippet } from 'svelte';
+  onMount(async () => {
+    // @ts-expect-error: no declaration file
+    await import('@gouvfr/dsfr/dist/core/core.module.min');
+  });
+
+  import { onMount, type Snippet } from 'svelte';
 
   import Favicon from '$components/layout/Favicon.svelte';
   import SkipLinks from '$components/layout/SkipLinks.svelte';
