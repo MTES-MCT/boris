@@ -2,7 +2,7 @@
   import type { DataType } from './+page.server';
 
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
-  import Hero from '$components/common/StepPage/Hero.svelte';
+  import ContentPageHero from '$components/common/Heros/ContentPageHero.svelte';
   import Definition from '$components/pages/organismes-de-foncier-solidaire/Definition.svelte';
   import Role from '$components/pages/organismes-de-foncier-solidaire/Role.svelte';
   import Proximity from '$components/pages/organismes-de-foncier-solidaire/Proximity.svelte';
@@ -28,9 +28,9 @@
 </svelte:head>
 
 <GradientBackgroundWrapper>
-  <Hero title="Les OFS : à quoi servent-ils, où les trouver ?">
+  <ContentPageHero title="Les OFS : à quoi servent-ils, où les trouver ?">
     <span></span>
-  </Hero>
+  </ContentPageHero>
   <Definition />
   <Role />
   <Proximity />

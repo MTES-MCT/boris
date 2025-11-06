@@ -56,7 +56,6 @@
       element?.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
-        inline: 'nearest',
       });
     }
   });
@@ -117,7 +116,9 @@
 
         scrollMapToBottom();
 
-        map?.setView([selectedMarker.latitude, selectedMarker.longitude], 13);
+        map?.setView([selectedMarker.latitude, selectedMarker.longitude], 13, {
+          animate: false,
+        });
       });
 
       markers.addLayer(markerLayer);
@@ -149,17 +150,6 @@
         item.longitude <= northEastLng &&
         item.longitude >= southWestLng,
     );
-
-    if (brsDiffusionWebsitesInBounds) {
-      const firstElement = document.getElementById(
-        brsDiffusionWebsitesInBounds[0]?.id,
-      );
-
-      firstElement?.scrollIntoView({
-        block: 'nearest',
-        inline: 'nearest',
-      });
-    }
 
     addMarkersToMap();
   };

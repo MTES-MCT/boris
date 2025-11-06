@@ -6,14 +6,12 @@
 <CalloutPanel
   title="Définition d'un OFS"
   mascotte="MascotteWaving">
-  <div class="definition-container">
-    <div class="notice-container">
-      <Notice
-        content="OFS = Organisme de Foncier Solidaire."
-        type="info" />
-    </div>
+  <div class="flex flex-col items-center px-4 md:px-8">
+    <Notice
+      content="OFS = Organisme de Foncier Solidaire."
+      type="info" />
 
-    <p>
+    <p class="text-center !my-8 md:!my-12">
       Un organisme de foncier solidaire (OFS) est <span class="fr-text--bold">
         une structure à but non lucratif ou à lucrativité limitée
       </span>
@@ -23,32 +21,3 @@
     </p>
   </div>
 </CalloutPanel>
-
-<style lang="postcss">
-  .definition-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-inline: 1rem;
-
-    @media (--sm-viewport) {
-      padding-inline: 2rem;
-    }
-  }
-
-  .notice-container {
-    display: inline-flex;
-    flex-direction: column;
-  }
-
-  p {
-    text-align: center;
-    font-size: 1rem;
-    margin-block: 2rem;
-
-    @media (--sm-viewport) {
-      font-size: 1.125rem;
-      margin-block: 3rem;
-    }
-  }
-</style>

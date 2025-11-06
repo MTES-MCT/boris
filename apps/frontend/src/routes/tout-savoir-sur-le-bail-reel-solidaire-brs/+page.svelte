@@ -1,9 +1,8 @@
 <script lang="ts">
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
-  import Hero from '$components/common/StepPage/Hero.svelte';
+  import ContentPageHero from '$components/common/Heros/ContentPageHero.svelte';
   import CalloutPanel from '$components/common/Panels/CalloutPanel.svelte';
-  import Promess from '$components/common/StepPage/Promess.svelte';
-  import Steps from '$components/common/StepPage/Steps.svelte';
+  import KeyPoint from '$components/common/KeyPoint.svelte';
   import Step from '$components/common/StepPage/Step.svelte';
   import Section from '$components/common/Section.svelte';
   import Accordion from '$components/common/Accordion.svelte';
@@ -26,13 +25,13 @@
 </svelte:head>
 
 <GradientBackgroundWrapper>
-  <Hero
-    title="Le bail réel solidaire, qu’est ce que c’est, comment ça marche ?">
+  <ContentPageHero
+    title="Le bail réel solidaire, qu'est ce que c'est, comment ça marche ?">
     <p>
-      Le bail réel solidaire (BRS) est un dispositif mis en place par l’État
+      Le bail réel solidaire (BRS) est un dispositif mis en place par l'État
       permettant à des ménages qui ne pourraient pas devenir propriétaires d'un
       logement au prix du marché <b>
-        d’accéder à la propriété de leur résidence principale.
+        d'accéder à la propriété de leur résidence principale.
       </b>
     </p>
     <a
@@ -40,57 +39,64 @@
       class="fr-btn fr-btn--lg fr-mt-2w">
       Testez votre éligibilité au bail réel solidaire
     </a>
-  </Hero>
+  </ContentPageHero>
 
   <CalloutPanel
     title="Le bail réel solidaire (BRS) en 3 points clés."
     mascotte="MascotteWaving">
-    <Promess>
-      <p>
-        <b>
-          Les logements mis en vente en bail réel solidaire (BRS) sont 30 à 50%
-          moins chers que ceux mis en vente dans le marché traditionnel.
-        </b>
-      </p>
-      <p>
-        Les prix sont encadrés et contrôlés par l'État. Cela est rendu possible
-        notamment parce que les propriétaires d'un logement en bail réel
-        solidaire (BRS) achètent leur logement à 100%, mais pas le terrain sur
-        lequel celui-ci est construit.
-      </p>
-      <p>
-        En échange, les propriétaires d'un logement d'un bail réel solidaire
-        (BRS) s'acquittent d'une redevance mensuelle contenue.
-      </p>
-    </Promess>
-    <Promess>
-      <p>
-        <b>
-          En tant que propriétaire d'un logement en bail réel solidaire (BRS),
-          vous pouvez notamment revendre votre logement (avec une plus-value
-          toutefois encadrée) ou le transmettre à vos proches.
-        </b>
-      </p>
-      <p>
-        Le dispositif se veut ainsi solidaire car il permet aux générations
-        futures d'accéder à la propriété dans des conditions similaires, de
-        manière abordable.
-      </p>
-    </Promess>
-    <Promess>
-      <p>
-        Les premiers logements en bail réel solidaire (BRS) ont vu le jour en
-        2019. Depuis, le dispositif se déploie sur l’ensemble du territoire
-        national.
-      </p>
-      <p>
-        Les acquéreurs sont accompagnés tout au long de leur procédure d'achat
-        par un organisme dédié.
-      </p>
-    </Promess>
+    <div class="fr-col-12 fr-col-lg-4 flex lg:flex-col gap-4">
+      <KeyPoint>
+        <p>
+          <b>
+            Les logements mis en vente en bail réel solidaire (BRS) sont 30 à
+            50% moins chers que ceux mis en vente dans le marché traditionnel.
+          </b>
+        </p>
+        <p>
+          Les prix sont encadrés et contrôlés par l'État. Cela est rendu
+          possible notamment parce que les propriétaires d'un logement en bail
+          réel solidaire (BRS) achètent leur logement à 100%, mais pas le
+          terrain sur lequel celui-ci est construit.
+        </p>
+        <p>
+          En échange, les propriétaires d'un logement d'un bail réel solidaire
+          (BRS) s'acquittent d'une redevance mensuelle contenue.
+        </p>
+      </KeyPoint>
+    </div>
+    <div class="fr-col-12 fr-col-lg-4 flex lg:flex-col gap-4">
+      <KeyPoint>
+        <p>
+          <b>
+            En tant que propriétaire d'un logement en bail réel solidaire (BRS),
+            vous pouvez notamment revendre votre logement (avec une plus-value
+            toutefois encadrée) ou le transmettre à vos proches.
+          </b>
+        </p>
+        <p>
+          Le dispositif se veut ainsi solidaire car il permet aux générations
+          futures d'accéder à la propriété dans des conditions similaires, de
+          manière abordable.
+        </p>
+      </KeyPoint>
+    </div>
+    <div class="fr-col-12 fr-col-lg-4 flex lg:flex-col gap-4">
+      <KeyPoint>
+        <p>
+          Les premiers logements en bail réel solidaire (BRS) ont vu le jour en
+          2019. Depuis, le dispositif se déploie sur l'ensemble du territoire
+          national.
+        </p>
+        <p>
+          Les acquéreurs sont accompagnés tout au long de leur procédure d'achat
+          par un organisme dédié.
+        </p>
+      </KeyPoint>
+    </div>
   </CalloutPanel>
 
-  <Steps>
+  <div
+    class="fr-container flex flex-col gap-16 mt-16 lg:gap-0 lg:mt-30 lg:mb-20">
     <Step
       title="Je me renseigne sur le dispositif du bail réel solidaire (BRS)."
       illustration={BrsEtape1}
@@ -159,7 +165,7 @@
         travaux, la vie en copropriété et la revente du logement.
       </p>
     </Step>
-  </Steps>
+  </div>
 
   <div class="fr-mt-8w">
     <Section

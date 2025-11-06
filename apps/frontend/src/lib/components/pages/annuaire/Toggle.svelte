@@ -12,52 +12,21 @@
   };
 </script>
 
-<div class="toggle">
+<div class="flex p-[2px] w-full h-[2.5rem] bg-(--input-background-color)">
   {@render button('Carte', 'map', 'fr-icon-road-map-line')}
   {@render button('Liste', 'list', 'fr-icon-list-unordered')}
 </div>
 
 {#snippet button(label: string, viewType: 'list' | 'map', icon: string)}
   <button
-    class="fr-text--sm"
-    class:selected={annuaireManager.viewType === viewType}
+    class="fr-text--sm flex gap-1 justify-center items-center h-full flex-1"
+    class:!bg-blue-primary={annuaireManager.viewType === viewType}
+    class:!text-white={annuaireManager.viewType === viewType}
     onclick={handleToggle}>
-    <div class="icon">
-      <span
-        class={icon}
-        aria-hidden="true">
-      </span>
-    </div>
+    <span
+      class={`${icon} fr-icon--sm`}
+      aria-hidden="true">
+    </span>
     <b>{label}</b>
   </button>
 {/snippet}
-
-<style lang="postcss">
-  .toggle {
-    height: 2.5rem;
-    background-color: var(--input-background-color, --background-contrast-grey);
-    width: 100%;
-    display: flex;
-    padding: 2px;
-  }
-
-  button {
-    height: 100%;
-    flex: 1;
-    gap: var(--1v);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    span {
-      &::before {
-        --icon-size: 1rem;
-      }
-    }
-
-    &.selected {
-      background-color: var(--color-blue-primary);
-      color: white;
-    }
-  }
-</style>
