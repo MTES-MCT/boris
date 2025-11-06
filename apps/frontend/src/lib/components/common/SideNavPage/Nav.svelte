@@ -21,8 +21,9 @@
           href={`#${section.id}`}
           class={`
             fr-link relative !block !bg-none !text- fr-text--bold ${isActive ? '!text-blue-active' : '!text-gray-default'}
-            before:content-[''] before:absolute before:left-[-8px] before:top-0 before:h-full before:w-[2px] before:bg-blue-primary before:opacity-${isActive ? '100' : '0'}
-          `}>
+            before:content-[''] before:absolute before:left-[-8px] before:top-0 before:h-full before:w-[2px] before:bg-blue-primary before:opacity-0
+          `}
+          class:before:opacity-100={isActive}>
           {section.title}
         </a>
       </li>
