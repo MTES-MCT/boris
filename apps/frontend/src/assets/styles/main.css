@@ -5,13 +5,18 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-red-primary: #ff5655;
   --color-blue-primary: #3917b3;
   --color-blue-light: #ececfe;
+  --color-blue-active: var(--text-active-blue-france);
+
+  --color-red-primary: #ff5655;
+
   --color-teal-primary: #60e0eb;
   --color-teal-light: #e5fbfd;
+
+  --color-gray-default: var(--text-default-grey);
   --color-gray-light: #dddddd;
-  --color-default-grey-active: var(--background-default-grey-active);
+  --color-default-gray-active: var(--background-default-grey-active);
 
   --breakpoint-xs: 28rem;
   --breakpoint-sm: 36rem;

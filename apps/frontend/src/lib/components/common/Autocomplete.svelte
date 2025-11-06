@@ -198,7 +198,7 @@
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <li
     class="fr-py-1w fr-px-2w cursor-pointer"
-    class:bg-default-grey-active={suggestion?.id === focusedSuggestionId}
+    class:bg-default-gray-active={suggestion?.id === focusedSuggestionId}
     id={suggestion?.id}
     role="option"
     aria-selected={suggestion?.id === focusedSuggestionId}

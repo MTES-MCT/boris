@@ -86,23 +86,24 @@
   <Section>
     <div class="wrapper">
       <div class="fr-grid-row">
-        <div class="fr-col-12 fr-col-sm-3 fr-hidden fr-unhidden-md">
-          <Nav
-            {sections}
-            activeSectionId={activeSection?.id} />
-        </div>
-
-        <div class="fr-col-12 fr-col-md-9 pl-0 md:pl-12 lg:pl-24">
+        <div class="fr-col-12 fr-col-md-3">
           <svelte:element
             this={titleElement}
-            class="fr-h3">
+            class="fr-h3 block md:hidden">
             {title}
           </svelte:element>
 
           <Nav
             {sections}
-            className="fr-col-12 fr-unhidden fr-hidden-md"
             activeSectionId={activeSection?.id} />
+        </div>
+
+        <div class="fr-col-12 fr-col-md-9 pl-0 md:pl-6 lg:pl-24">
+          <svelte:element
+            this={titleElement}
+            class="fr-h3 hidden md:block">
+            {title}
+          </svelte:element>
 
           {#each sections as section}
             <Step {...section} />
