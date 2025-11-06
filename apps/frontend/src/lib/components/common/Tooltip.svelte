@@ -23,7 +23,6 @@
 
 <span
   aria-describedby={id}
-  aria-label="infobulle"
   class="fr-link cursor-pointer">
   <span class="fr-icon-question-line fr-icon--sm"></span>
 </span>
