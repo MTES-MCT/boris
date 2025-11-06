@@ -9,17 +9,23 @@
   const { titleElement = 'h3' }: Props = $props();
 </script>
 
-<section>
-  <div class="mascotte-mobile">
+<section class="relative fr-pt-9w flex">
+  <div class="absolute top-5 left-[calc(50%-6rem)] z-[1]">
     {@html MascotteShowing}
   </div>
-  <div class="border-bottom-right">
-    <div class="mascotte-desktop">
-      {@html MascotteShowing}
-    </div>
+
+  <div
+    class="relative hidden md:block flex-1 h-[60px] mt-15 border-b-(length:--path-thickness) border-b-red-primary border-r-(length:--path-thickness) border-r-red-primary rounded-br-2xl">
   </div>
-  <div class="fr-container">
-    <div class="content">
+
+  <div
+    class={`
+      fr-container relative !max-w-[772px] border-t border-t-(length:--path-thickness) border-red-primary md:border-none
+      md:before:content-[''] md:before:absolute md:before:top-0 md:before:left-[-4px] md:before:w-[120px] md:before:h-[60px] md:before:border-t md:before:border-l md:before:border-l-(length:--path-thickness) md:before:border-t-(length:--path-thickness) md:before:border-red-primary md:before:rounded-tl-2xl
+      md:after:content-[''] md:after:absolute md:after:top-0 md:after:right-[-4px] md:after:w-[120px] md:after:h-[60px] md:after:border-t md:after:border-r md:after:border-r-(length:--path-thickness) md:after:border-t-(length:--path-thickness) md:after:border-red-primary md:after:rounded-tr-2xl
+    `}>
+    <div
+      class="content fr-pt-4w fr-pb-7w max-w-[636px] mx-auto text-center border-w-0 md:border-t md:border-t-4 md:border-red-primary">
       <svelte:element
         this={titleElement}
         class="fr-h3">
@@ -43,118 +49,8 @@
       </a>
     </div>
   </div>
-  <div class="border-bottom-left"></div>
+
+  <div
+    class="relative hidden md:block flex-1 h-[60px] mt-15 border-b-(length:--path-thickness) border-b-red-primary border-l-(length:--path-thickness) border-l-red-primary rounded-bl-2xl">
+  </div>
 </section>
-
-<style lang="postcss">
-  section {
-    position: relative;
-    padding-top: var(--9w);
-    display: flex;
-  }
-
-  .mascotte-mobile {
-    position: absolute;
-    top: var(--3w);
-    left: calc(50% - var(--12w));
-  }
-
-  .mascotte-desktop {
-    display: none;
-  }
-
-  .content {
-    padding-block-start: var(--4w);
-    padding-block-end: var(--7w);
-    max-width: 636px;
-    margin: 0 auto;
-    text-align: center;
-    border: none;
-  }
-
-  .fr-container {
-    position: relative;
-    max-width: calc(588px + 2 * var(--12w));
-    border-top: solid var(--path-thickness) var(--color-red-primary);
-
-    &::before {
-      border: none;
-    }
-
-    &::after {
-      border: none;
-    }
-  }
-
-  .border-bottom-right,
-  .border-bottom-left {
-    display: none;
-    position: relative;
-  }
-
-  .border-bottom-left {
-    border-left: solid var(--path-thickness) var(--color-red-primary);
-    border-bottom-left-radius: var(--border-radius-lg);
-  }
-
-  .border-bottom-right {
-    border-right: solid var(--path-thickness) var(--color-red-primary);
-    border-bottom-right-radius: var(--border-radius-lg);
-  }
-
-  @media (--sm-viewport) {
-    .content {
-      border-top: solid var(--path-thickness) var(--color-red-primary);
-    }
-
-    .fr-container {
-      border: none;
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: calc(-1 * var(--path-thickness));
-        width: var(--15w);
-        height: calc(var(--15w) / 2);
-        border-top: solid var(--path-thickness) var(--color-red-primary);
-        border-left: solid var(--path-thickness) var(--color-red-primary);
-        border-top-left-radius: var(--border-radius-lg);
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: calc(-1 * var(--path-thickness));
-        width: var(--15w);
-        height: calc(var(--15w) / 2);
-        border-top: solid var(--path-thickness) var(--color-red-primary);
-        border-right: solid var(--path-thickness) var(--color-red-primary);
-        border-top-right-radius: var(--border-radius-lg);
-      }
-    }
-
-    .border-bottom-right,
-    .border-bottom-left {
-      display: block;
-      flex: 1;
-      height: calc(var(--15w) / 2);
-      margin-block-start: calc(var(--15w) / 2);
-      border-bottom: solid var(--path-thickness) var(--color-red-primary);
-    }
-
-    @media (--lg-viewport) {
-      .mascotte-mobile {
-        display: none;
-      }
-
-      .mascotte-desktop {
-        display: block;
-        position: absolute;
-        top: 6px;
-        right: var(--3w);
-      }
-    }
-  }
-</style>

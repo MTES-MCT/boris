@@ -3,101 +3,29 @@
 
   type Props = {
     sections: StepSection[];
-    className?: string;
     activeSectionId?: string;
   };
 
-  const { className, sections, activeSectionId }: Props = $props();
+  const { sections, activeSectionId }: Props = $props();
 </script>
 
 <nav
-  class={className}
-  id="navigation">
-  <ul>
+  id="navigation"
+  class="border-b border-b-gray-light md:!sticky md:top-12 md:!mt-0 md:pr-6 md:border-b-0 md:border-r md:border-r-gray-light lg:pr-12">
+  <ul class="!list-none !m-0 !pt-0 !px-0 !pb-4">
     {#each sections as section}
-      <li>
+      {@const isActive = activeSectionId === section.id}
+
+      <li class="!my-2 md:!mb-6">
         <a
           href={`#${section.id}`}
-          class="fr-link"
-          class:active={activeSectionId === section.id}>
+          class={`
+            fr-link relative !block !bg-none !text- fr-text--bold ${isActive ? '!text-blue-active' : '!text-gray-default'}
+            before:content-[''] before:absolute before:left-[-8px] before:top-0 before:h-full before:w-[2px] before:bg-blue-primary before:opacity-${isActive ? '100' : '0'}
+          `}>
           {section.title}
         </a>
       </li>
     {/each}
   </ul>
 </nav>
-
-<style lang="postcss">
-  nav {
-    margin-block-start: var(--3w);
-    border-bottom: solid 1px var(--color-grey-default);
-
-    ul {
-      margin: 0;
-      list-style: none;
-      padding-block-end: var(--3w);
-      padding-inline-start: 0;
-    }
-
-    li {
-      margin-block: var(--1w);
-    }
-
-    a {
-      font-weight: 700;
-    }
-  }
-
-  @media (--sm-viewport) {
-    nav {
-      position: sticky;
-      top: var(--6w);
-      margin-block-start: 0;
-      padding-inline-end: var(--3w);
-      border-right: solid 1px var(--color-grey-default);
-      border-bottom: none;
-
-      li {
-        margin-block-end: var(--3w);
-
-        &:nth-last-child(1) {
-          margin-block-end: 0;
-        }
-      }
-
-      a {
-        position: relative;
-        display: block;
-        background: none;
-        color: black;
-        transition: color 0.1s 0.02s;
-
-        &::before {
-          content: '';
-          position: absolute;
-          left: calc(-1 * var(--1w));
-          top: 0;
-          height: 100%;
-          width: 2px;
-          background-color: var(--text-active-blue-france);
-          opacity: 0;
-          transition: opacity 0.2s 0.1s;
-        }
-
-        &.active {
-          color: var(--text-active-blue-france);
-
-          &::before {
-            opacity: 1;
-          }
-        }
-      }
-    }
-  }
-
-  @media (--md-viewport) {
-    nav {
-      padding-inline-end: var(--6w);
-    }
-  }
-</style>

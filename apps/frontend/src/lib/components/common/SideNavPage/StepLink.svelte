@@ -11,7 +11,7 @@
 </script>
 
 <a
-  class="fr-link"
+  class="fr-link !flex items-center justify-between gap-6 !bg-none"
   {href}>
   <div>
     <p class="fr-text--xs fr-mb-0">
@@ -24,23 +24,7 @@
   </div>
 
   <span
-    class={`fr-icon-arrow-${label === 'Étape précédente' ? 'left' : 'right'}-line`}
+    class={`fr-icon-arrow-${label === 'Étape précédente' ? 'left' : 'right'}-line md:hidden`}
     aria-hidden="true">
   </span>
 </a>
-
-<style lang="postcss">
-  a {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--3w);
-    background: none;
-  }
-
-  @media (--sm-viewport) {
-    [class^='fr-icon-arrow-'] {
-      display: none;
-    }
-  }
-</style>

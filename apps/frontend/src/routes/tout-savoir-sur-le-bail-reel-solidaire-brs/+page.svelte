@@ -1,7 +1,7 @@
 <script lang="ts">
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Hero from '$components/common/StepPage/Hero.svelte';
-  import Promesses from '$components/common/StepPage/Promesses.svelte';
+  import CalloutPanel from '$components/common/Panels/CalloutPanel.svelte';
   import Promess from '$components/common/StepPage/Promess.svelte';
   import Steps from '$components/common/StepPage/Steps.svelte';
   import Step from '$components/common/StepPage/Step.svelte';
@@ -42,7 +42,9 @@
     </a>
   </Hero>
 
-  <Promesses title="Le bail réel solidaire (BRS) en 3 points clés.">
+  <CalloutPanel
+    title="Le bail réel solidaire (BRS) en 3 points clés."
+    mascotte="MascotteWaving">
     <Promess>
       <p>
         <b>
@@ -86,7 +88,7 @@
         par un organisme dédié.
       </p>
     </Promess>
-  </Promesses>
+  </CalloutPanel>
 
   <Steps>
     <Step

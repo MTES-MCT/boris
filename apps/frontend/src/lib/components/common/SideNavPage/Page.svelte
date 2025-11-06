@@ -79,37 +79,38 @@
 
 <GradientBackgroundWrapper>
   {#if children}
-    <div class="children">
+    <div class="mb-12 lg:mb-24">
       {@render children()}
     </div>
   {/if}
   <Section>
     <div class="wrapper">
       <div class="fr-grid-row">
-        <div class="fr-col-12 fr-col-sm-3 fr-hidden fr-unhidden-md menu">
-          <Nav
-            {sections}
-            activeSectionId={activeSection?.id} />
-        </div>
-
-        <div class="fr-col-12 fr-col-md-9 content">
+        <div class="fr-col-12 fr-col-md-3">
           <svelte:element
             this={titleElement}
-            class="fr-h3">
+            class="fr-h3 block md:hidden">
             {title}
           </svelte:element>
 
           <Nav
             {sections}
-            className="fr-col-12 fr-unhidden fr-hidden-md"
             activeSectionId={activeSection?.id} />
+        </div>
+
+        <div class="fr-col-12 fr-col-md-9 pl-0 md:pl-6 lg:pl-24">
+          <svelte:element
+            this={titleElement}
+            class="fr-h3 hidden md:block">
+            {title}
+          </svelte:element>
 
           {#each sections as section}
             <Step {...section} />
           {/each}
 
           <nav
-            class="step-links"
+            class="step-links flex flex-col md:flex-row gap-6 pt-10 p-2 md:justify-between"
             aria-label="liens vers les autres étapes du BRS">
             {#if previousStep}
               <StepLink
@@ -134,51 +135,3 @@
     </div>
   </Section>
 </GradientBackgroundWrapper>
-
-<style lang="postcss">
-  .children {
-    margin-block-end: var(--6w);
-  }
-
-  .step-links {
-    display: flex;
-    flex-direction: column;
-    gap: var(--3w);
-    padding-block-start: var(--5w);
-    padding-block-end: var(--1w);
-  }
-
-  h1 {
-    margin-block-end: var(--5w);
-  }
-
-  @media (--sm-viewport) {
-    .menu {
-      display: flex;
-      align-items: flex-start;
-    }
-
-    .content {
-      padding-inline-start: var(--6w);
-    }
-
-    .step-links {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  }
-
-  @media (--md-viewport) {
-    h1 {
-      margin-block-end: var(--6w);
-    }
-
-    .children {
-      margin-block-end: var(--12w);
-    }
-
-    .content {
-      padding-inline-start: var(--12w);
-    }
-  }
-</style>

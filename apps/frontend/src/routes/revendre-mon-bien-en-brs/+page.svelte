@@ -2,7 +2,7 @@
   import Page from '$components/common/SideNavPage/Page.svelte';
   import Hero from '$components/common/StepPage/Hero.svelte';
   import { steps } from './content';
-  import Promesses from '$components/common/StepPage/Promesses.svelte';
+  import CalloutPanel from '$components/common/Panels/CalloutPanel.svelte';
   import Promess from '$components/common/StepPage/Promess.svelte';
 
   const { title, description, sections, headTitle } = steps[0];
@@ -34,7 +34,9 @@
       </a>
     </Hero>
 
-    <Promesses title="La revente en 3 points clés">
+    <CalloutPanel
+      title="La revente en 3 points clés"
+      mascotte="MascotteWaving">
       <Promess>
         <p>
           <b>Vous êtes libre de vendre votre bien à tout moment.</b>
@@ -78,6 +80,6 @@
           trouver un acheteur !
         </p>
       </Promess>
-    </Promesses>
+    </CalloutPanel>
   </Page>
 {/key}

@@ -4,7 +4,7 @@
 
   import { default as MascotteThinking } from '$assets/icons/mascotte-thinking.svg?raw';
   import Alert from '$components/common/Alert.svelte';
-  import TitleWithMascotte from '$components/pages/organisme-de-foncier-solidaire/TitleWithMascotte.svelte';
+  import TitleWithMascotte from '$components/pages/organismes-de-foncier-solidaire/TitleWithMascotte.svelte';
 </script>
 
 <div class="wrapper bg-white">

@@ -4,39 +4,17 @@
     photograph: string;
   };
 
+  const positionClass = {
+    'top-left': 'top-0 left-0',
+    'top-right': 'top-0 right-0',
+    'bottom-left': 'bottom-0 left-0',
+    'bottom-right': 'bottom-0 right-0',
+  };
+
   const { position, photograph }: Props = $props();
 </script>
 
-<span class={position}>
+<span
+  class={`absolute ${positionClass[position]} fr-text--xs fr-text--bold fr-mb-0 bg-white/70 px-2`}>
   Photo par {photograph}
 </span>
-
-<style lang="postcss">
-  span {
-    display: inherit;
-    position: absolute;
-    font-size: 0.75rem;
-    background-color: rgba(255, 255, 255, 0.6);
-    padding-inline: var(--1w);
-  }
-
-  .top-left {
-    top: 0;
-    left: 0;
-  }
-
-  .top-right {
-    top: 0;
-    right: 0;
-  }
-
-  .bottom-left {
-    bottom: 0;
-    left: 0;
-  }
-
-  .bottom-right {
-    bottom: 0;
-    right: 0;
-  }
-</style>

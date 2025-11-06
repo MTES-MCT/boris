@@ -27,7 +27,7 @@
   {label}
 </label>
 <select
-  class="fr-select"
+  class="fr-select !bg-[var(--input-background-color,var(--background-contrast-grey))]"
   {disabled}
   aria-describedby={`${id}-messages`}
   {id}
@@ -41,9 +41,3 @@
     </option>
   {/each}
 </select>
-
-<style lang="postcss">
-  select {
-    background-color: var(--input-background-color, --background-contrast-grey);
-  }
-</style>
