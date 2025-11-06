@@ -39,12 +39,20 @@
 
 <article
   class="fr-card fr-card--sm"
-  class:narrow
-  class:selected>
-  <div class="fr-card__body">
-    <div class="fr-card__content">
+  class:mb-1={narrow}
+  class:border-1={selected}
+  class:border-blue-primary={selected}
+  class:!bg-blue-deep={selected}
+  class:shadow-lg={selected}>
+  <div
+    class="fr-card__body"
+    class:!px-6={narrow}>
+    <div
+      class="fr-card__content"
+      class:!pt-4={narrow}
+      class:!pb-0={narrow}>
       {#if handleClose}
-        <div class="closable">
+        <div class="flex justify-between items-start gap-4">
           {@render badges()}
           <button
             onclick={handleClose}
@@ -67,7 +75,10 @@
         <p class="fr-mb-0">{distributorName}</p>
       </div>
     </div>
-    <div class="fr-card__footer">
+    <div
+      class="fr-card__footer"
+      class:!pt-0={narrow}
+      class:!pb-2={narrow}>
       <ul class="fr-links-group fr-links-group--inline">
         <li>
           <a
@@ -84,7 +95,7 @@
 </article>
 
 {#snippet badges()}
-  <div class="location">
+  <div class="flex flex-wrap gap-1 mt-[2px] mb-4">
     <Badge status="info">
       {city}
     </Badge>
@@ -96,50 +107,3 @@
     </Badge>
   </div>
 {/snippet}
-
-<style lang="postcss">
-  .location {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--1w);
-    margin-bottom: var(--2w);
-    margin-top: calc(var(--1v) / 2);
-  }
-
-  .narrow {
-    margin-bottom: var(--1v);
-
-    .fr-card__body {
-      padding-inline: var(--3w);
-    }
-
-    .fr-card__content {
-      padding-top: var(--2w);
-      padding-bottom: 0;
-
-      .location {
-        gap: var(--1v);
-        margin-bottom: var(--1w);
-      }
-    }
-
-    .fr-card__footer {
-      padding-top: 0;
-      padding-bottom: var(--1w);
-    }
-  }
-
-  .selected {
-    --border-default-grey: var(--color-blue-primary);
-
-    background-color: var(--color-blue-deep);
-    box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
-  }
-
-  .closable {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: var(--2w);
-  }
-</style>
