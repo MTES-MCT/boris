@@ -1,11 +1,11 @@
 <script lang="ts">
   import CalloutPanel from '$components/common/Panels/CalloutPanel.svelte';
 
-  import { default as MascotteCelebrating } from '$assets/icons/mascotte-celebrating.svg?raw';
   import Table from '$components/common/Table.svelte';
+  import Section from '$components/common/Section.svelte';
 </script>
 
-<div class="mt-48 pb-32">
+<Section>
   <CalloutPanel
     title="En résumé"
     mascotte="MascotteCelebrating">
@@ -49,7 +49,7 @@
       </p>
     </div>
   </CalloutPanel>
-</div>
+</Section>
 
 <style lang="postcss">
   .table-container {

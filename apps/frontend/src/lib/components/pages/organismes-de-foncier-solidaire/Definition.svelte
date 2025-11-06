@@ -1,8 +1,6 @@
 <script lang="ts">
   import Notice from '$components/common/Notice.svelte';
   import CalloutPanel from '$components/common/Panels/CalloutPanel.svelte';
-
-  import { default as MascotteWaving } from '$assets/icons/mascotte-waving.svg?raw';
 </script>
 
 <CalloutPanel
@@ -27,10 +25,6 @@
 </CalloutPanel>
 
 <style lang="postcss">
-  .container {
-    position: relative;
-  }
-
   .definition-container {
     display: flex;
     flex-direction: column;
@@ -39,12 +33,6 @@
 
     @media (--sm-viewport) {
       padding-inline: 2rem;
-    }
-
-    .mascotte {
-      position: absolute;
-      top: -52px;
-      right: 40px;
     }
   }
 

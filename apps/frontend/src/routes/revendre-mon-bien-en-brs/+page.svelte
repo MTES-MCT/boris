@@ -34,55 +34,52 @@
       </a>
     </Hero>
 
-    <div class="mt-8 xl:mt-12">
-      <CalloutPanel
-        title="La revente en 3 points clés"
-        mascotte="MascotteWaving">
-        <Promess>
-          <p>
-            <b>Vous êtes libre de vendre votre bien à tout moment.</b>
-          </p>
-          <p>
-            Que ce soit pour changer de ville ou trouver un nouveau logement
-            plus approprié à vos besoins, c'est vous qui décidez quand vous
-            partez !
-          </p>
-        </Promess>
-        <Promess>
-          <p>
-            <b>La revente d'un bien en BRS est encadrée :</b>
-          </p>
-          <p>
-            Vous ne pouvez pas le vendre à n'importe qui : le ménage acheteur
-            doit respecter les conditions d'éligibilité au BRS (c'est le cas de
-            87% des foyers !)
-          </p>
-          <p>
-            Le prix de revente est encadré : vous pouvez faire une plus value à
-            hauteur de l'inflation depuis votre achat. Le BRS est un dispositif
-            non spéculatif.
-          </p>
-        </Promess>
-        <Promess>
-          <p>
-            <b>
-              Il faut impliquer <a
-                href="/organismes-de-foncier-solidaire"
-                class="fr-link">
-                l'organisme de foncier solidaire (OFS)
-              </a>
-              dans le processus.
-            </b>
-          </p>
-          <p>
-            D'abord parce qu'il a un droit de préemption (il peut racheter le
-            bien avant qu'il soit proposé à d'autres personnes) ; ensuite parce
-            qu'il doit donner son agrément ; parce qu'il doit être impliqué dans
-            la rédaction du contrat de vente ; enfin parce qu'il peut vous aider
-            à trouver un acheteur !
-          </p>
-        </Promess>
-      </CalloutPanel>
-    </div>
+    <CalloutPanel
+      title="La revente en 3 points clés"
+      mascotte="MascotteWaving">
+      <Promess>
+        <p>
+          <b>Vous êtes libre de vendre votre bien à tout moment.</b>
+        </p>
+        <p>
+          Que ce soit pour changer de ville ou trouver un nouveau logement plus
+          approprié à vos besoins, c'est vous qui décidez quand vous partez !
+        </p>
+      </Promess>
+      <Promess>
+        <p>
+          <b>La revente d'un bien en BRS est encadrée :</b>
+        </p>
+        <p>
+          Vous ne pouvez pas le vendre à n'importe qui : le ménage acheteur doit
+          respecter les conditions d'éligibilité au BRS (c'est le cas de 87% des
+          foyers !)
+        </p>
+        <p>
+          Le prix de revente est encadré : vous pouvez faire une plus value à
+          hauteur de l'inflation depuis votre achat. Le BRS est un dispositif
+          non spéculatif.
+        </p>
+      </Promess>
+      <Promess>
+        <p>
+          <b>
+            Il faut impliquer <a
+              href="/organismes-de-foncier-solidaire"
+              class="fr-link">
+              l'organisme de foncier solidaire (OFS)
+            </a>
+            dans le processus.
+          </b>
+        </p>
+        <p>
+          D'abord parce qu'il a un droit de préemption (il peut racheter le bien
+          avant qu'il soit proposé à d'autres personnes) ; ensuite parce qu'il
+          doit donner son agrément ; parce qu'il doit être impliqué dans la
+          rédaction du contrat de vente ; enfin parce qu'il peut vous aider à
+          trouver un acheteur !
+        </p>
+      </Promess>
+    </CalloutPanel>
   </Page>
 {/key}

@@ -14,7 +14,7 @@
 
 <section
   class={`
-    relative mx-auto w-[calc(100%-2rem)] max-w-[992px] z-10 rounded-tl-2xl rounded-tr-2xl border-4 border-red-primary xl:border-0
+    relative mx-auto mt-12 xl:mt-24 w-[calc(100%-2rem)] max-w-[992px] z-10 rounded-tl-2xl rounded-tr-2xl border-4 border-red-primary xl:border-0
     xl:after:content-[''] xl:after:absolute xl:after:bottom-20 xl:after:left-20 xl:after:w-full xl:after:h-full xl:after:border-4 xl:after:border-red-primary xl:after:rounded-2xl xl:after:-z-10
   `}>
   <div class="relative rounded-tl-xl rounded-tr-xl py-8 px-4 md:px-8 bg-white">
