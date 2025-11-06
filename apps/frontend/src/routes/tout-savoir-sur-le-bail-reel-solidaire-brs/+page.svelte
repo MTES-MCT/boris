@@ -3,7 +3,6 @@
   import ContentPageHero from '$components/common/Heros/ContentPageHero.svelte';
   import CalloutPanel from '$components/common/Panels/CalloutPanel.svelte';
   import KeyPoint from '$components/common/KeyPoint.svelte';
-  import Steps from '$components/common/StepPage/Steps.svelte';
   import Step from '$components/common/StepPage/Step.svelte';
   import Section from '$components/common/Section.svelte';
   import Accordion from '$components/common/Accordion.svelte';
@@ -96,7 +95,8 @@
     </div>
   </CalloutPanel>
 
-  <Steps>
+  <div
+    class="fr-container flex flex-col gap-16 mt-16 lg:gap-0 lg:mt-30 lg:mb-20">
     <Step
       title="Je me renseigne sur le dispositif du bail réel solidaire (BRS)."
       illustration={BrsEtape1}
@@ -165,7 +165,7 @@
         travaux, la vie en copropriété et la revente du logement.
       </p>
     </Step>
-  </Steps>
+  </div>
 
   <div class="fr-mt-8w">
     <Section
