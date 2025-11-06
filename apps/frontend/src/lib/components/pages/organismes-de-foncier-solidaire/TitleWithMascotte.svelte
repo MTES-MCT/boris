@@ -11,40 +11,12 @@
 </script>
 
 <div
-  class="title-container"
-  class:title-container--reversed={reversed}>
-  <div class="mascotte">
+  class="flex items-center justify-center gap-4 mb-8"
+  class:flex-row-reverse={reversed}>
+  <div class="hidden xs:block">
     {@html mascotte}
   </div>
-  <h2 class="fr-mb-0">{title}</h2>
+  <h2 class="fr-mb-0 text-center bg-red-primary inline-block py-1 px-3">
+    {title}
+  </h2>
 </div>
-
-<style lang="postcss">
-  .title-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .title-container--reversed {
-    flex-direction: row-reverse;
-  }
-
-  h2 {
-    text-align: center;
-    margin-bottom: 3rem;
-    background-color: var(--color-red-primary);
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-  }
-
-  .mascotte {
-    display: none;
-
-    @media (--xxs-viewport) {
-      display: block;
-    }
-  }
-</style>

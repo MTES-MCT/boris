@@ -14,9 +14,10 @@
   const { children }: Props = $props();
 </script>
 
-<div class="container">
-  <div class="content">
-    <h1>Simulateur d'acquisition</h1>
+<div
+  class="p-4 sm:p-8 lg:py-32 lg:px-8 lg:flex lg:justify-end lg:!w-[calc(50%-6rem)]">
+  <div class="w-full lg:max-w-[28rem]">
+    <h1 class="!text-[2.3rem] underline">Simulateur d'acquisition</h1>
     <div>
       <Stepper
         title={`${currentStep.step}. ${currentStep.title}`}
@@ -27,34 +28,3 @@
     </div>
   </div>
 </div>
-
-<style lang="postcss">
-  .container {
-    padding: 1rem;
-  }
-
-  @media (--xs-viewport) {
-    .container {
-      padding: 2rem;
-    }
-  }
-
-  @media (--md-viewport) {
-    h1 {
-      font-size: 2.3rem;
-      text-decoration: underline;
-    }
-
-    .container {
-      padding-inline: 2rem;
-      padding-block: 8rem;
-      display: flex;
-      justify-content: flex-end;
-      width: calc(50% - 6rem);
-    }
-
-    .content {
-      max-width: 28rem;
-    }
-  }
-</style>

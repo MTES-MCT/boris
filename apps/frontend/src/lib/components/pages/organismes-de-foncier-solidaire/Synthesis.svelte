@@ -8,7 +8,7 @@
 <CalloutPanel
   title="En résumé"
   mascotte="MascotteCelebrating">
-  <div class="fr-col-12 table-container">
+  <div class="fr-col-12">
     <Table
       multiline
       theads={["Rôle de l'OFS", "Pourquoi c'est important"]}
@@ -27,7 +27,7 @@
         ],
       ]} />
   </div>
-  <div class="content">
+  <div class="text-center">
     <p>
       Vous avez encore des questions sur les OFS ou sur la manière dont
       fonctionne le Bail Réel Solidaire ? <a
@@ -48,16 +48,3 @@
     </p>
   </div>
 </CalloutPanel>
-
-<style lang="postcss">
-  .table-container {
-    @media (--sm-viewport) {
-      padding-inline: 2rem;
-    }
-  }
-
-  .content {
-    text-align: center;
-    padding-bottom: 2rem;
-  }
-</style>

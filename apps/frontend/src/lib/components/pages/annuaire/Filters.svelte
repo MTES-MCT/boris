@@ -42,7 +42,7 @@
 
 <div
   id="brs-diffusion-websites-filters"
-  class="filters fr-container--fluid">
+  class="fr-container--fluid overflow-visible [--input-background-color:white]">
   <div class="fr-grid-row fr-grid-row--gutters">
     <div
       bind:this={autocompleteElementRef}
@@ -62,9 +62,11 @@
       <Radius />
     </div>
     <div
-      class={annuaireManager.viewType === 'list'
-        ? 'fr-col-12 fr-col-sm-6 fr-col-md-3 fr-col-lg-2 toggle'
-        : 'fr-col-12 fr-col-md-4 fr-col-lg-2 toggle'}>
+      class={`flex items-end ${
+        annuaireManager.viewType === 'list'
+          ? 'fr-col-12 fr-col-sm-6 fr-col-md-3 fr-col-lg-2'
+          : 'fr-col-12 fr-col-md-4 fr-col-lg-2'
+      }`}>
       <Toggle />
     </div>
   </div>
@@ -88,16 +90,3 @@
       content="Attention, nous ne présentons ici uniquement les villes où nous savons que des programmes sont en vente et non directement les programmes" />
   </div>
 {/if}
-
-<style lang="postcss">
-  .filters {
-    --input-background-color: white;
-
-    overflow: visible;
-  }
-
-  .toggle {
-    display: flex;
-    align-items: flex-end;
-  }
-</style>
