@@ -1,13 +1,10 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/component/tooltip/tooltip.min.css';
 
-  import { onMount, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
   import { nanoid } from 'nanoid';
 
-  onMount(async () => {
-    // @ts-expect-error: no declaration file
-    await import('@gouvfr/dsfr/dist/component/tooltip/tooltip.module.min.js');
-  });
+  import dsfrManager from '$lib/managers/dsfr.svelte';
 
   type Props = {
     children: Snippet;
@@ -15,15 +12,21 @@
 
   const { children }: Props = $props();
   const id = nanoid(10);
+
+  $effect(() => {
+    if (dsfrManager.isWindowDsfrDefined) {
+      // @ts-expect-error: no declaration file
+      import('@gouvfr/dsfr/dist/component/tooltip/tooltip.module.min.js');
+    }
+  });
 </script>
 
-<a
+<span
   aria-describedby={id}
   aria-label="infobulle"
-  href="#"
-  class="fr-link !bg-none">
+  class="fr-link cursor-pointer">
   <span class="fr-icon-question-line fr-icon--sm"></span>
-</a>
+</span>
 <div
   class="fr-tooltip fr-placement"
   {id}
