@@ -1,7 +1,7 @@
 <script lang="ts">
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Hero from '$components/common/StepPage/Hero.svelte';
-  import Promesses from '$components/common/StepPage/Promesses.svelte';
+  import CalloutPanel from '$components/common/Panels/CalloutPanel.svelte';
   import Promess from '$components/common/StepPage/Promess.svelte';
   import Steps from '$components/common/StepPage/Steps.svelte';
   import Step from '$components/common/StepPage/Step.svelte';
@@ -42,51 +42,55 @@
     </a>
   </Hero>
 
-  <Promesses title="Le bail réel solidaire (BRS) en 3 points clés.">
-    <Promess>
-      <p>
-        <b>
-          Les logements mis en vente en bail réel solidaire (BRS) sont 30 à 50%
-          moins chers que ceux mis en vente dans le marché traditionnel.
-        </b>
-      </p>
-      <p>
-        Les prix sont encadrés et contrôlés par l'État. Cela est rendu possible
-        notamment parce que les propriétaires d'un logement en bail réel
-        solidaire (BRS) achètent leur logement à 100%, mais pas le terrain sur
-        lequel celui-ci est construit.
-      </p>
-      <p>
-        En échange, les propriétaires d'un logement d'un bail réel solidaire
-        (BRS) s'acquittent d'une redevance mensuelle contenue.
-      </p>
-    </Promess>
-    <Promess>
-      <p>
-        <b>
-          En tant que propriétaire d'un logement en bail réel solidaire (BRS),
-          vous pouvez notamment revendre votre logement (avec une plus-value
-          toutefois encadrée) ou le transmettre à vos proches.
-        </b>
-      </p>
-      <p>
-        Le dispositif se veut ainsi solidaire car il permet aux générations
-        futures d'accéder à la propriété dans des conditions similaires, de
-        manière abordable.
-      </p>
-    </Promess>
-    <Promess>
-      <p>
-        Les premiers logements en bail réel solidaire (BRS) ont vu le jour en
-        2019. Depuis, le dispositif se déploie sur l’ensemble du territoire
-        national.
-      </p>
-      <p>
-        Les acquéreurs sont accompagnés tout au long de leur procédure d'achat
-        par un organisme dédié.
-      </p>
-    </Promess>
-  </Promesses>
+  <div class="mt-8 xl:mt-12">
+    <CalloutPanel
+      title="Le bail réel solidaire (BRS) en 3 points clés."
+      mascotte="MascotteWaving">
+      <Promess>
+        <p>
+          <b>
+            Les logements mis en vente en bail réel solidaire (BRS) sont 30 à
+            50% moins chers que ceux mis en vente dans le marché traditionnel.
+          </b>
+        </p>
+        <p>
+          Les prix sont encadrés et contrôlés par l'État. Cela est rendu
+          possible notamment parce que les propriétaires d'un logement en bail
+          réel solidaire (BRS) achètent leur logement à 100%, mais pas le
+          terrain sur lequel celui-ci est construit.
+        </p>
+        <p>
+          En échange, les propriétaires d'un logement d'un bail réel solidaire
+          (BRS) s'acquittent d'une redevance mensuelle contenue.
+        </p>
+      </Promess>
+      <Promess>
+        <p>
+          <b>
+            En tant que propriétaire d'un logement en bail réel solidaire (BRS),
+            vous pouvez notamment revendre votre logement (avec une plus-value
+            toutefois encadrée) ou le transmettre à vos proches.
+          </b>
+        </p>
+        <p>
+          Le dispositif se veut ainsi solidaire car il permet aux générations
+          futures d'accéder à la propriété dans des conditions similaires, de
+          manière abordable.
+        </p>
+      </Promess>
+      <Promess>
+        <p>
+          Les premiers logements en bail réel solidaire (BRS) ont vu le jour en
+          2019. Depuis, le dispositif se déploie sur l’ensemble du territoire
+          national.
+        </p>
+        <p>
+          Les acquéreurs sont accompagnés tout au long de leur procédure d'achat
+          par un organisme dédié.
+        </p>
+      </Promess>
+    </CalloutPanel>
+  </div>
 
   <Steps>
     <Step

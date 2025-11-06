@@ -1,18 +1,15 @@
 <script lang="ts">
-  import Notice from '$components/common/Notice.svelte';
-  import Promesses from '$components/common/StepPage/Promesses.svelte';
+  import CalloutPanel from '$components/common/Panels/CalloutPanel.svelte';
 
   import { default as MascotteCelebrating } from '$assets/icons/mascotte-celebrating.svg?raw';
   import Table from '$components/common/Table.svelte';
 </script>
 
-<div class="container">
-  <Promesses title="En résumé">
+<div class="mt-48 pb-32">
+  <CalloutPanel
+    title="En résumé"
+    mascotte="MascotteCelebrating">
     <div class="fr-col-12 table-container">
-      <div class="mascotte">
-        {@html MascotteCelebrating}
-      </div>
-
       <Table
         multiline
         theads={["Rôle de l'OFS", "Pourquoi c'est important"]}
@@ -51,25 +48,13 @@
         du ministère du logement.
       </p>
     </div>
-  </Promesses>
+  </CalloutPanel>
 </div>
 
 <style lang="postcss">
-  .container {
-    position: relative;
-    margin-top: 10rem;
-    padding-bottom: 5rem;
-  }
-
   .table-container {
     @media (--sm-viewport) {
       padding-inline: 2rem;
-    }
-
-    .mascotte {
-      position: absolute;
-      top: -52px;
-      right: 40px;
     }
   }
 

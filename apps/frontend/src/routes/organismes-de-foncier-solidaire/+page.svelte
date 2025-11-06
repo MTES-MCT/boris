@@ -3,12 +3,12 @@
 
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Hero from '$components/common/StepPage/Hero.svelte';
-  import Definition from '$components/pages/organisme-de-foncier-solidaire/Definition.svelte';
-  import Role from '$components/pages/organisme-de-foncier-solidaire/Role.svelte';
-  import Proximity from '$components/pages/organisme-de-foncier-solidaire/Proximity.svelte';
-  import OfsList from '$components/pages/organisme-de-foncier-solidaire/OfsList.svelte';
+  import Definition from '$components/pages/organismes-de-foncier-solidaire/Definition.svelte';
+  import Role from '$components/pages/organismes-de-foncier-solidaire/Role.svelte';
+  import Proximity from '$components/pages/organismes-de-foncier-solidaire/Proximity.svelte';
+  import OfsList from '$components/pages/organismes-de-foncier-solidaire/OfsList.svelte';
   import { formatOfss } from '$lib/utils/formatters';
-  import Synthesis from '$components/pages/organisme-de-foncier-solidaire/Synthesis.svelte';
+  import Synthesis from '$components/pages/organismes-de-foncier-solidaire/Synthesis.svelte';
 
   type Props = {
     data: DataType;
