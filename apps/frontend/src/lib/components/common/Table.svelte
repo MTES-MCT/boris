@@ -1,13 +1,9 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   import '@gouvfr/dsfr/dist/component/table/table.min.css';
+
   import { nanoid } from 'nanoid';
 
-  onMount(async () => {
-    // @ts-expect-error: no declaration file
-    await import('@gouvfr/dsfr/dist/component/table/table.module.min.js');
-  });
+  import dsfrManager from '$lib/managers/dsfr.svelte';
 
   type Props = {
     theads: string[];
@@ -16,6 +12,13 @@
     size?: 'sm' | 'md' | 'lg';
     multiline?: boolean;
   };
+
+  $effect(() => {
+    if (dsfrManager.isWindowDsfrDefined) {
+      // @ts-expect-error: no declaration file
+      import('@gouvfr/dsfr/dist/component/table/table.module.min.js');
+    }
+  });
 
   const {
     caption,

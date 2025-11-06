@@ -3,9 +3,13 @@
   import '@gouvfr/dsfr/dist/utility/icons/icons.min.css';
   import '$assets/styles/main.css';
 
+  import dsfrManager from '$lib/managers/dsfr.svelte';
+
   onMount(async () => {
     // @ts-expect-error: no declaration file
     await import('@gouvfr/dsfr/dist/core/core.module.min');
+
+    dsfrManager.isWindowDsfrDefined = true;
   });
 
   import { onMount, type Snippet } from 'svelte';
