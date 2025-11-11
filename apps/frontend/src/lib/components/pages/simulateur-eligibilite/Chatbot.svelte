@@ -21,12 +21,16 @@
   });
 </script>
 
-<section class="fr-container">
-  <div class="disclaimer rounded-box-lg bg-white">
-    <div class="mascotte">
+<section class="fr-container !mt-16 md:!mt-[-6.5rem]">
+  <div
+    class={`
+      relative max-w-[384px] mx-auto mb-[5rem] p-4 rounded-tl-2xl rounded-tr-2xl bg-white
+      after:content-[''] after:absolute after:top-[100%] after:left-[calc(50%-2px)] after:w-(--path-thickness) after:h-[5rem] after:bg-blue-primary
+    `}>
+    <div class="absolute top-[-52px] left-[40px]">
       {@html MascotteWaving}
     </div>
-    <h2>Voici BoRiS !</h2>
+    <h2 class="fr-h4">Voici BoRiS !</h2>
     <p class="fr-mb-0">
       En quelques questions, grâce à sa connaissance des différents dispositifs,
       il vous indiquera votre éligibilité au BRS et vous aiguillera vers
@@ -36,57 +40,6 @@
 
   <div
     id="landbot"
-    class="landbot">
+    class="h-[90vh] rounded-2xl shadow-lg border-1 border-blue-light">
   </div>
 </section>
-
-<style lang="postcss">
-  section {
-    margin-block-start: var(--6w);
-  }
-
-  .disclaimer {
-    position: relative;
-    max-width: 384px;
-    margin: 0 auto;
-    margin-block-end: var(--10w);
-    padding: 24px;
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: calc(50% - 2px);
-      width: var(--path-thickness);
-      height: var(--10w);
-      background-color: var(--color-blue-primary);
-    }
-  }
-
-  .mascotte {
-    position: absolute;
-    top: -52px;
-    left: 40px;
-  }
-
-  h2 {
-    font-size: 1.25rem;
-    margin-block-end: var(--1w);
-  }
-
-  .landbot {
-    height: calc(90vh);
-    border-radius: var(--border-radius-lg);
-    box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
-  }
-
-  @media (--sm-viewport) {
-    section {
-      margin-block-start: calc(-1 * var(--13w));
-    }
-
-    h2 {
-      font-size: 1.5rem;
-    }
-  }
-</style>

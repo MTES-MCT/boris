@@ -113,132 +113,127 @@
   </Description>
 
   <Form onSubmit={handleSubmit}>
-    <div class="fieldset-container">
+    <fieldset class="fr-fieldset">
+      <div class="fr-fieldset__element">
+        <p class="fr-h6"><u>Paramètres du prêt immobilier</u></p>
+      </div>
+
+      <div class="fr-fieldset__element fr-mb-4w">
+        <div class="fr-input-group">
+          <p class="fr-label fr-mb-0"><b>Montant à emprunter (€)</b></p>
+          <p class="fr-hint-text fr-mb-1w">
+            Le montant à emprunter est pré-calculé en fonction de vos réponses
+            précédentes.
+          </p>
+          <Badge status="success">
+            {formatEuro(loanAmount as number)}
+          </Badge>
+        </div>
+      </div>
+
+      <div class="fr-fieldset__element fr-mb-4w">
+        <Input
+          value={interestRate}
+          label="Taux d'intérêt de votre crédit (%) *"
+          labelTooltip="Renseigner le taux d'intérêt hors assurance."
+          type="number"
+          id="interest-rate"
+          step={0.01}
+          placeholder="Exemple: 3.25"
+          error={errors.interestRate}
+          onChange={(e) => {
+            acquisitionSimulatorManager.interestRate = Number(
+              (e.target as HTMLInputElement).value,
+            );
+          }} />
+      </div>
+
+      <div class="fr-fieldset__element fr-mb-4w">
+        <Input
+          value={loanDuration}
+          label="Durée de remboursement (années) *"
+          labelTooltip="La durée de remboursement est en moyenne de 20 à 25 ans."
+          type="number"
+          id="loan-duration"
+          step={1}
+          placeholder="Exemple: 25"
+          error={errors.loanDuration}
+          onChange={(e) => {
+            acquisitionSimulatorManager.loanDuration = Number(
+              (e.target as HTMLInputElement).value,
+            );
+          }} />
+      </div>
+    </fieldset>
+
+    {#if housingType !== 'new'}
       <fieldset class="fr-fieldset">
         <div class="fr-fieldset__element">
-          <p class="fr-h6"><u>Paramètres du prêt immobilier</u></p>
+          <p class="fr-h6"><u>Paramètres du prêt à taux zéro (PTZ)</u></p>
         </div>
-
-        <div class="fr-fieldset__element fr-mb-4w">
-          <div class="fr-input-group">
-            <p class="fr-label fr-mb-0"><b>Montant à emprunter (€)</b></p>
-            <p class="fr-hint-text fr-mb-1w">
-              Le montant à emprunter est pré-calculé en fonction de vos réponses
-              précédentes.
-            </p>
-            <Badge status="success">
-              {formatEuro(loanAmount as number)}
-            </Badge>
-          </div>
+        <div class="fr-fieldset__element">
+          <p>
+            Notre simulateur ne propose pas encore de simulation de prêt à taux
+            zéro pour les biens anciens.
+          </p>
         </div>
-
+      </fieldset>
+    {:else}
+      <fieldset class="fr-fieldset">
         <div class="fr-fieldset__element fr-mb-4w">
           <Input
-            value={interestRate}
-            label="Taux d'intérêt de votre crédit (%) *"
-            labelTooltip="Renseigner le taux d'intérêt hors assurance."
+            value={inHousePeopleAmount}
+            label="Nombre de personnes dans le foyer *"
             type="number"
-            id="interest-rate"
-            step={0.01}
-            placeholder="Exemple: 3.25"
-            error={errors.interestRate}
+            id="in-house-people-amount"
+            step={1}
+            placeholder="Exemple: 5"
+            error={errors.inHousePeopleAmount}
             onChange={(e) => {
-              acquisitionSimulatorManager.interestRate = Number(
+              acquisitionSimulatorManager.inHousePeopleAmount = Number(
                 (e.target as HTMLInputElement).value,
               );
             }} />
         </div>
 
-        <div class="fr-fieldset__element fr-mb-4w">
+        <div class="fr-fieldset__element">
           <Input
-            value={loanDuration}
-            label="Durée de remboursement (années) *"
-            labelTooltip="La durée de remboursement est en moyenne de 20 à 25 ans."
+            value={fiscalIncome}
+            label="Revenu fiscal de référence N-2 (€) *"
+            labelTooltip={`Le revenu fiscal de référence est la somme des revenus fiscaux de référence de tous les futurs occupants, basée sur l'année n-2.
+                <br/> Exemple : Pour un prêt en 2025, on prend les revenus fiscaux de référence de 2023.`}
             type="number"
-            id="loan-duration"
+            id="fiscal-income"
             step={1}
-            placeholder="Exemple: 25"
-            error={errors.loanDuration}
+            placeholder="Exemple: 25 000€"
+            error={errors.fiscalIncome}
             onChange={(e) => {
-              acquisitionSimulatorManager.loanDuration = Number(
+              acquisitionSimulatorManager.fiscalIncome = Number(
                 (e.target as HTMLInputElement).value,
               );
             }} />
         </div>
       </fieldset>
-    </div>
 
-    <div class="fieldset-container">
-      {#if housingType !== 'new'}
-        <fieldset class="fr-fieldset">
-          <div class="fr-fieldset__element">
-            <p class="fr-h6"><u>Paramètres du prêt à taux zéro (PTZ)</u></p>
-          </div>
-          <div class="fr-fieldset__element">
-            <p>
-              Notre simulateur ne propose pas encore de simulation de prêt à
-              taux zéro pour les biens anciens.
-            </p>
-          </div>
-        </fieldset>
-      {:else}
-        <fieldset class="fr-fieldset">
-          <div class="fr-fieldset__element fr-mb-4w">
-            <Input
-              value={inHousePeopleAmount}
-              label="Nombre de personnes dans le foyer *"
-              type="number"
-              id="in-house-people-amount"
-              step={1}
-              placeholder="Exemple: 5"
-              error={errors.inHousePeopleAmount}
-              onChange={(e) => {
-                acquisitionSimulatorManager.inHousePeopleAmount = Number(
-                  (e.target as HTMLInputElement).value,
-                );
-              }} />
-          </div>
-
-          <div class="fr-fieldset__element">
-            <Input
-              value={fiscalIncome}
-              label="Revenu fiscal de référence N-2 (€) *"
-              labelTooltip={`Le revenu fiscal de référence est la somme des revenus fiscaux de référence de tous les futurs occupants, basée sur l'année n-2.
-                <br/> Exemple : Pour un prêt en 2025, on prend les revenus fiscaux de référence de 2023.`}
-              type="number"
-              id="fiscal-income"
-              step={1}
-              placeholder="Exemple: 25 000€"
-              error={errors.fiscalIncome}
-              onChange={(e) => {
-                acquisitionSimulatorManager.fiscalIncome = Number(
-                  (e.target as HTMLInputElement).value,
-                );
-              }} />
-          </div>
-        </fieldset>
-
-        <RadioFieldset
-          legend="Type du logement *"
-          legendTooltip={`
+      <RadioFieldset
+        legend="Type du logement *"
+        legendTooltip={`
             <div class="fr-p-2w">
               Un logement collectif fait partie d'une copropriété, alors que un logement individuel ne fait partie d'aucune copropriété.
             </div>
           `}
-          error={errors.ptzType}>
-          <Radio
-            label="Collectif"
-            checked={ptzType === 'collectif'}
-            oninput={() =>
-              (acquisitionSimulatorManager.ptzType = 'collectif')} />
-          <Radio
-            label="Individuel"
-            checked={ptzType === 'individuel'}
-            oninput={() =>
-              (acquisitionSimulatorManager.ptzType = 'individuel')} />
-        </RadioFieldset>
-      {/if}
-    </div>
+        error={errors.ptzType}>
+        <Radio
+          label="Collectif"
+          checked={ptzType === 'collectif'}
+          oninput={() => (acquisitionSimulatorManager.ptzType = 'collectif')} />
+        <Radio
+          label="Individuel"
+          checked={ptzType === 'individuel'}
+          oninput={() =>
+            (acquisitionSimulatorManager.ptzType = 'individuel')} />
+      </RadioFieldset>
+    {/if}
 
     <Actions>
       <Action
@@ -254,21 +249,3 @@
     </Actions>
   </Form>
 </Wrapper>
-
-<style lang="postcss">
-  .fieldset-container {
-    &:nth-child(1) {
-      fieldset {
-        &::after {
-          content: '';
-          display: block;
-          width: calc(100% - 8rem);
-          height: 1px;
-          margin: 0 auto;
-          margin-bottom: 1rem;
-          background-color: var(--color-gray-light);
-        }
-      }
-    }
-  }
-</style>

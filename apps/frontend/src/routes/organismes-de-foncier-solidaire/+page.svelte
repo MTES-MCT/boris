@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { DataType } from './+page.server';
+  import type { PageProps } from './$types';
 
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import ContentPageHero from '$components/common/Heros/ContentPageHero.svelte';
@@ -10,11 +10,7 @@
   import { formatOfss } from '$lib/utils/formatters';
   import Synthesis from '$components/pages/organismes-de-foncier-solidaire/Synthesis.svelte';
 
-  type Props = {
-    data: DataType;
-  };
-
-  const { data }: Props = $props();
+  const { data }: PageProps = $props();
 
   const ofss = data.ofss.items;
   const formattedOfss = formatOfss(ofss);

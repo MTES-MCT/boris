@@ -1,9 +1,11 @@
 <script lang="ts">
+  import type { PageProps } from './$types';
+
   import Page from '$components/common/SideNavPage/Page.svelte';
 
-  const { data } = $props();
+  const { data }: PageProps = $props();
   const { title, description, sections, previousStep, nextStep, headTitle } =
-    $derived(data);
+    $derived(data.step);
 </script>
 
 <svelte:head>

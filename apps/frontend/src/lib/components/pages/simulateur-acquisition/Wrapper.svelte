@@ -10,16 +10,6 @@
 
 <div
   id="simulateur-acquisition"
-  class="wrapper">
+  class="lg:flex lg:justify-center lg:items-stretch">
   {@render children()}
 </div>
-
-<style lang="postcss">
-  @media (--md-viewport) {
-    .wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: stretch;
-    }
-  }
-</style>

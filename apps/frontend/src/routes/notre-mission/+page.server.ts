@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { statistics } from '$lib/utils/constants';
 
-export type DataType = {
+type PageData = {
   statistics: {
     amount: string;
     subtitle: string;
@@ -9,7 +9,7 @@ export type DataType = {
   }[];
 };
 
-export const load: PageServerLoad = async ({ fetch }): Promise<DataType> => {
+export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
   const response = await fetch('api/ofss');
   const ofss = await response.json();
 

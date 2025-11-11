@@ -42,7 +42,7 @@
 
 <div
   id="brs-diffusion-websites-filters"
-  class="fr-container--fluid overflow-visible [--input-background-color:white]">
+  class="fr-container--fluid !overflow-visible [--input-background-color:white]">
   <div class="fr-grid-row fr-grid-row--gutters">
     <div
       bind:this={autocompleteElementRef}

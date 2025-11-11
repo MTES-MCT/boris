@@ -30,7 +30,7 @@
 </script>
 
 <div
-  class="fr-tile"
+  class="fr-tile h-full"
   class:fr-tile--horizontal={horizontal}
   class:fr-enlarge-link={enlarge}>
   <div class="fr-tile__body">

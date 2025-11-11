@@ -6,137 +6,56 @@
   import benoit from '$assets/images/benoit.jpg';
   import mathieu from '$assets/images/mathieu.jpg';
   import nathan from '$assets/images/nathan.jpg';
+
+  type Person = {
+    name: string;
+    title: string;
+    image: string;
+  };
+
+  const persons: Person[] = [
+    { name: 'Laure Magdelain', title: 'Chargée de déploiement', image: laure },
+    { name: 'Arthur Massonneau', title: 'Coach', image: arthur },
+    { name: 'Benoît Paquier', title: 'Développeur', image: benoit },
+    { name: 'Nathan Gaudelet', title: 'Intrapreneur', image: nathan },
+    {
+      name: 'Mathieu Gimenez',
+      title: 'Responsable de portefeuille',
+      image: mathieu,
+    },
+    {
+      name: 'Amandine Guegano',
+      title: 'Responsable de portefeuille',
+      image: amandine,
+    },
+  ];
 </script>
 
 <Section>
-  <h2 class="fr-h3 heading !text-blue-primary">L'équipe derrière BoRiS.</h2>
+  <h2 class="fr-h3 text-center !mt-8 !mb-8 md:!mt-16 !text-blue-primary">
+    L'équipe derrière BoRiS.
+  </h2>
 
   <div class="fr-grid-row fr-grid-row--gutters">
-    <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md bg-white">
-        <div class="picture">
-          <img
-            src={laure}
-            alt="" />
-        </div>
-        <div class="text">
-          <p class="title">Chargée de déploiement</p>
-          <p class="name fr-mb-0">Laure Magdelain</p>
-        </div>
-      </div>
-    </div>
-    <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md bg-white">
-        <div class="picture">
-          <img
-            src={arthur}
-            alt="" />
-        </div>
-        <div class="text">
-          <p class="title">Coach</p>
-          <p class="name fr-mb-0">Arthur Massonneau</p>
-        </div>
-      </div>
-    </div>
-    <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md bg-white">
-        <div class="picture">
-          <img
-            src={benoit}
-            alt="" />
-        </div>
-        <div class="text">
-          <p class="title">Développeur</p>
-          <p class="name fr-mb-0">Benoît Paquier</p>
-        </div>
-      </div>
-    </div>
-    <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md bg-white">
-        <div class="picture">
-          <img
-            src={nathan}
-            alt="" />
-        </div>
-        <div class="text">
-          <p class="title">Intrapreneur</p>
-          <p class="name fr-mb-0">Nathan Gaudelet</p>
-        </div>
-      </div>
-    </div>
-    <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md bg-white">
-        <div class="picture">
-          <img
-            src={mathieu}
-            alt="" />
-        </div>
-        <div class="text">
-          <p class="title">Responsable de portefeuille</p>
-          <p class="name fr-mb-0">Mathieu Gimenez</p>
-        </div>
-      </div>
-    </div>
-    <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
-      <div class="content rounded-box-md bg-white">
-        <div class="picture">
-          <img
-            src={amandine}
-            alt="" />
-        </div>
-        <div class="text">
-          <p class="title">Designeuse</p>
-          <p class="name fr-mb-0">Amandine Guegano</p>
-        </div>
-      </div>
-    </div>
+    {#each persons as person}
+      {@render teamMember(person.name, person.title, person.image)}
+    {/each}
   </div>
 </Section>
 
-<style lang="postcss">
-  .heading {
-    text-align: center;
-    margin-block-end: var(--5w);
-  }
-
-  .content {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 128px;
-    overflow: hidden;
-  }
-
-  .picture {
-    width: 128px;
-    height: 100%;
-    background-color: teal;
-
-    img {
-      object-fit: cover;
-      height: 100%;
-      width: 100%;
-    }
-  }
-
-  .text {
-    padding: var(--3w);
-  }
-
-  .title {
-    font-size: 0.75rem;
-    color: var(--color-grey-primary);
-    margin-block-end: var(--2w);
-  }
-
-  .name {
-    font-size: 1.25rem;
-    font-weight: 700;
-  }
-
-  @media (--md-viewport) {
-    .heading {
-      margin-block-end: var(--10w);
-    }
-  }
-</style>
+{#snippet teamMember(name: string, title: string, image: string)}
+  <div class="fr-col-12 fr-col-md-6 fr-col-xl-4">
+    <div
+      class="relative flex items-center h-[128px] overflow-hidden rounded-tl-xl rounded-tr-xl bg-white">
+      <div class="w-[128px] h-full">
+        <img
+          src={image}
+          alt="" />
+      </div>
+      <div class="flex flex-col justify-center px-3 xs:px-6 flex-1">
+        <p class="fr-text--lead fr-text--bold fr-mb-0">{name}</p>
+        <p class="fr-text--sm fr-mb-0">{title}</p>
+      </div>
+    </div>
+  </div>
+{/snippet}

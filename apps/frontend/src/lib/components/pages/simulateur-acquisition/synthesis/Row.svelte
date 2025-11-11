@@ -13,8 +13,8 @@
   const { title, value, status, tooltip }: Props = $props();
 </script>
 
-<div class="row">
-  <div class="row-title">
+<div class="flex items-center justify-between gap-2">
+  <div class="flex items-cemter gap-1 flex-1">
     <p class="fr-text--sm fr-mb-0"><b>{title}</b></p>
     {#if tooltip}
       <Tooltip>
@@ -30,19 +30,3 @@
     </Badge>
   </div>
 </div>
-
-<style lang="postcss">
-  .row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-  }
-
-  .row-title {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    flex: 1;
-  }
-</style>

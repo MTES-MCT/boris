@@ -26,17 +26,21 @@
 </script>
 
 <article
-  class={`step-${position}`}
+  class={`
+    [--illustration-max-height:0px]
+    xs:[--illustration-max-height:150px]
+    step-${position}
+  `}
   style={!illustration ? `--illustration-max-height: 0px` : ``}>
   <div class="fr-hidden fr-unhidden-lg column"></div>
 
   <div class="column">
     <a
-      rel="noopener"
+      class="!bg-none"
       {href}>
       <div class="column-container">
         {#if illustration}
-          <div class="illustration">
+          <div class="illustration flex justify-center">
             {@html illustration}
           </div>
         {/if}
@@ -49,7 +53,8 @@
               {title}
             </h2>
             {@render children()}
-            <h3 class="fr-link fr-icon-arrow-right-line fr-link--icon-right">
+            <h3
+              class="fr-link fr-icon-arrow-right-line fr-link--icon-right fr-text--regular underline underline-offset-5">
               {linkLabel}
             </h3>
           </div>
@@ -66,25 +71,11 @@
 </article>
 
 <style lang="postcss">
-  a {
-    background: none;
-  }
-
   article {
-    --illustration-max-height: 150px;
     margin: 0 auto;
     display: block;
 
-    h3 {
-      font-weight: normal;
-      text-decoration: underline;
-      text-underline-offset: 5px;
-    }
-
     .illustration {
-      display: flex;
-      justify-content: center;
-
       :global(svg) {
         max-height: var(--illustration-max-height);
       }

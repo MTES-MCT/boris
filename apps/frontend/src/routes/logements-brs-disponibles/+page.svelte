@@ -1,17 +1,14 @@
 <script lang="ts">
+  import type { PageProps } from './$types';
+
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Section from '$components/common/Section.svelte';
   import Filters from '$components/pages/annuaire/Filters.svelte';
-  import type { DataType } from './+page';
   import ListView from '$components/pages/annuaire/ListView.svelte';
   import annuaireManager from '$lib/managers/annuaire.svelte';
   import MapView from '$components/pages/annuaire/MapView.svelte';
 
-  type Props = {
-    data: DataType;
-  };
-
-  const { data }: Props = $props();
+  const { data }: PageProps = $props();
 </script>
 
 <svelte:head>

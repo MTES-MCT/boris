@@ -23,6 +23,7 @@
   </p>
 
   <iframe
+    class="aspect-video"
     width="100%"
     src="https://www.youtube.com/embed/w3J98JlSa9o?si=I4T62YZJbEKhTE6X"
     title="YouTube video player"
@@ -95,9 +96,3 @@
     </i>
   </p>
 </Section>
-
-<style>
-  iframe {
-    aspect-ratio: 16 / 9;
-  }
-</style>

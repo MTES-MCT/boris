@@ -14,13 +14,13 @@
 </script>
 
 <div class="fr-container rounded-box-lg bg-white mb-12">
-  <div class="wrapper">
+  <div class="py-4 px-1 md:px-4">
     <TitleWithMascotte
       title="Liste des OFS"
       mascotte={MascotteShowing}
       reversed />
 
-    <p class="description">
+    <p>
       Voici la <b>
         liste des organismes de foncier solidaire (OFS) agréés en France
       </b>
@@ -28,48 +28,47 @@
       solidaire (OFS) ont un lien qui redirige vers leur site web.
     </p>
 
-    <div class="legend border-radius-sm">
-      <p class="fr-text--lg fr-text--bold fr-mb-0">Légende:</p>
-      <ul class="fr-mb-4w">
-        <li class="fr-mb-1v">
-          <Badge
-            normalCase
-            accent="green-menthe"
-            icon="road-map-line">
-            Nom de la région
-          </Badge>
-        </li>
-        <li class="fr-mb-1v">
-          <Badge
-            normalCase
-            accent="yellow-tournesol"
-            icon="community-line">
-            Organisme de foncier solidaire (OFS)
-          </Badge>
-          <span class="fr-text--sm fr-text--bold text-color-yellow-tournesol">
-            qui propose des logements en bail réel solidaire (BRS) à vendre.
-          </span>
-        </li>
-        <li>
-          <Badge
-            normalCase
-            accent="purple-glycine"
-            icon="draft-line">
-            Organisme de foncier solidaire (OFS)
-          </Badge>
-          <span class="fr-text--sm fr-text--bold text-color-purple-glycine">
-            qui a obtenu l'agrément mais ne propose pas encore de logement en
-            bail réel solidaire (BRS) à vendre.
-          </span>
-        </li>
-      </ul>
-    </div>
+    <p class="fr-text--lg fr-text--bold fr-mb-0">Légende:</p>
+    <ul class="fr-mb-4w !list-none !p-0">
+      <li class="fr-mb-1v">
+        <Badge
+          normalCase
+          accent="green-menthe"
+          icon="road-map-line">
+          Nom de la région
+        </Badge>
+      </li>
+      <li class="fr-mb-1v">
+        <Badge
+          normalCase
+          accent="yellow-tournesol"
+          icon="community-line">
+          Organisme de foncier solidaire (OFS)
+        </Badge>
+        <span class="fr-text--sm fr-text--bold">
+          qui propose des logements en bail réel solidaire (BRS) à vendre.
+        </span>
+      </li>
+      <li>
+        <Badge
+          normalCase
+          accent="purple-glycine"
+          icon="draft-line">
+          Organisme de foncier solidaire (OFS)
+        </Badge>
+        <span class="fr-text--sm fr-text--bold">
+          qui a obtenu l'agrément mais ne propose pas encore de logement en bail
+          réel solidaire (BRS) à vendre.
+        </span>
+      </li>
+    </ul>
 
     <div class="separator fr-mb-4w"></div>
 
-    <ul class="regions-list">
+    <ul class="!list-none !p-0 flex flex-col gap-6">
       {#each regions as region}
-        <li class="region-item">
+        <li
+          class="flex flex-col gap-4 p-4 md:p-6 border border-(--border-default-grey) shadow-lg rounded-lg">
           <Badge
             icon="road-map-line"
             accent="green-menthe"
@@ -77,9 +76,9 @@
             {region.name}
           </Badge>
 
-          <ul class="ofs-list">
+          <ul class="!list-none !p-0 flex flex-wrap gap-2">
             {#each region.ofss as ofs}
-              <li>
+              <li class="!pb-0">
                 <Badge
                   accent={ofs.producesBrs
                     ? 'yellow-tournesol'
@@ -105,83 +104,11 @@
 
     <div class="separator fr-my-4w"></div>
 
-    <div class="map-container">
+    <div class="max-w-[600px] mx-auto">
       <img
+        class="w-full"
         src={ofsMap}
         alt="" />
     </div>
   </div>
 </div>
-
-<style class="wrapper">
-  .wrapper {
-    padding-block: 2rem;
-    padding-inline: 0.25rem;
-
-    @media (--sm-viewport) {
-      padding-inline: 2rem;
-    }
-  }
-
-  .legend {
-    padding: 1rem;
-    border-radius: var(--border-radius-sm);
-    border: 2px solid var(--border-default-blue-france);
-    margin-bottom: 2rem;
-
-    ul {
-      margin-bottom: 0 !important;
-    }
-
-    .text-color-purple-glycine {
-      color: var(--text-label-purple-glycine);
-    }
-
-    .text-color-yellow-tournesol {
-      color: var(--text-label-yellow-tournesol);
-    }
-  }
-
-  .regions-list,
-  .ofs-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .region-item {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    border-radius: var(--border-radius-sm);
-    padding: 1rem;
-    border: 1px solid var(--border-default-grey);
-    box-shadow: 0 6px 12px rgba(134, 144, 162, 0.3);
-
-    @media (--xs-viewport) {
-      padding: 1.5rem;
-    }
-  }
-
-  .ofs-list {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    gap: 0.5rem;
-
-    li {
-      padding-bottom: 0;
-    }
-  }
-
-  .map-container {
-    max-width: 600px;
-    margin: 0 auto;
-
-    img {
-      width: 100%;
-    }
-  }
-</style>

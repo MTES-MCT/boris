@@ -5,107 +5,45 @@
 </script>
 
 {#each eligibilityData as data}
-  <div class="category">
+  <div
+    class="py-2 px-0 bg-blue-deep flex justify-center items-center gap-4 mt-6 mb-1">
     <h4 class="fr-mb-0">{data.category}</h4>
     {#if data.options.length}
       <Tooltip>
-        <ul>
+        <ul class="text-left !list-none !p-2">
           {@html `<li>${data.options.join('</li><li><b>ou </b>')}</li>`}
         </ul>
       </Tooltip>
     {/if}
   </div>
-  <div class="grid">
-    <div class="row">
-      <p class="zone fr-mb-0"><b>Zones A et Abis</b></p>
-      <p class="zone fr-mb-0"><b>Zone B1</b></p>
-      <p class="zone fr-mb-0"><b>Zone B2 et C</b></p>
+  <div class="flex gap-1 sm:flex-col">
+    <div class="flex flex-col gap-1 flex-1 sm:flex-row">
+      <p
+        class="text-center !text-sm xs:!text-base flex-1 py-2 px-0 border-2 border-blue-deep fr-mb-0">
+        <b>Zones A et Abis</b>
+      </p>
+      <p
+        class="text-center !text-sm xs:!text-base flex-1 py-2 px-0 border-2 border-blue-deep fr-mb-0">
+        <b>Zone B1</b>
+      </p>
+      <p
+        class="text-center !text-sm xs:!text-base flex-1 py-2 px-0 border-2 border-blue-deep fr-mb-0">
+        <b>Zone B2 et C</b>
+      </p>
     </div>
-    <div class="row values">
-      <p class="value fr-mb-0 fr-artwork-background">
+    <div class="flex flex-col gap-1 flex-1 sm:flex-row bg-white">
+      <p
+        class="text-center !text-sm xs:!text-base flex-1 py-2 px-0 border-2 border-(--grey-975-75) fr-mb-0 bg-(--grey-975-75)">
         {formatEuro(data.zoneAandAbis)}
       </p>
-      <p class="value fr-mb-0 fr-artwork-background">
+      <p
+        class="text-center !text-sm xs:!text-base flex-1 py-2 px-0 border-2 border-(--grey-975-75) fr-mb-0 bg-(--grey-975-75)">
         {formatEuro(data.zoneB1)}
       </p>
-      <p class="value fr-mb-0 fr-artwork-background">
+      <p
+        class="text-center !text-sm xs:!text-base flex-1 py-2 px-0 border-2 border-(--grey-975-75) fr-mb-0 bg-(--grey-975-75)">
         {formatEuro(data.zoneB2andC)}
       </p>
     </div>
   </div>
 {/each}
-
-<style lang="postcss">
-  .grid {
-    display: flex;
-    gap: var(--1v);
-  }
-
-  .row {
-    display: flex;
-    flex-direction: column;
-    gap: var(--1v);
-    flex: 1;
-  }
-
-  p {
-    text-align: center;
-    font-size: 0.875rem;
-  }
-
-  ul {
-    text-align: left;
-    list-style: none;
-    padding-inline: var(--2w);
-  }
-
-  .category {
-    background-color: var(--color-blue-deep);
-    padding: var(--1w) 0;
-    margin-block-start: var(--3w);
-    margin-block-end: var(--1v);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: var(--2w);
-  }
-
-  .zone {
-    border: solid 2px var(--color-blue-deep);
-    padding: var(--1w) 0;
-  }
-
-  .value {
-    background-color: var(--grey-975-75);
-    border: solid 2px var(--grey-975-75);
-    padding: var(--1w) 0;
-  }
-
-  @media (--xxs-viewport) {
-    p {
-      font-size: 1rem;
-    }
-
-    .zone {
-      padding: var(--1w) var(--2w);
-    }
-
-    .value {
-      padding: var(--1w) var(--2w);
-    }
-  }
-
-  @media (--xs-viewport) {
-    .grid {
-      flex-direction: column;
-    }
-
-    .row {
-      flex-direction: row;
-    }
-
-    p {
-      flex: 1;
-    }
-  }
-</style>

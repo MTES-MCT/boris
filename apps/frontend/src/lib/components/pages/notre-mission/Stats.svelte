@@ -11,10 +11,11 @@
 </script>
 
 <Section id="statistiques">
-  <div class="content rounded-box-md bg-white">
+  <div
+    class="max-w-[768px] mx-auto p-4 sm:p-10 rounded-tl-xl rounded-tr-xl bg-white">
     <Disclaimer content="en chiffres clés" />
 
-    <ul>
+    <ul class="!list-none !p-0 flex flex-col gap-4 md:gap-8 !mt-12">
       {#each statistics as statistic}
         {@render stat(statistic)}
       {/each}
@@ -23,75 +24,11 @@
 </Section>
 
 {#snippet stat({ amount, subtitle, content }: Statistic)}
-  <li>
-    <h3 class="numbers fr-mb-0">
-      <span class="fr-h2 fr-mb-0 heading">{amount}</span>
-      <span class="fr-text--md fr-mb-0 subtitle"><b>{subtitle}</b></span>
+  <li class="md:flex md:gap-6 md:items-center">
+    <h3 class="md:flex-1 md:text-right fr-mb-0">
+      <span class="fr-h2 !m-0">{amount}</span>
+      <span class="fr-text--md fr-text--bold fr-mb-0 block">{subtitle}</span>
     </h3>
-    <p class="text">{content}</p>
+    <p class="md:flex-1 md:!m-0">{content}</p>
   </li>
 {/snippet}
-
-<style lang="postcss">
-  .content {
-    max-width: 768px;
-    margin: 0 auto;
-    padding: var(--2w);
-  }
-
-  .heading {
-    margin: 0;
-    display: inline;
-    margin-inline-end: var(--1w);
-  }
-
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .subtitle {
-    display: inline;
-  }
-
-  @media (--xs-viewport) {
-    .content {
-      padding: var(--5w);
-    }
-  }
-
-  @media (--sm-viewport) {
-    ul {
-      display: flex;
-      flex-direction: column;
-      gap: var(--3w);
-      margin-block-start: var(--3w);
-    }
-
-    li {
-      display: flex;
-      gap: var(--3w);
-      align-items: center;
-    }
-
-    .heading {
-      margin-inline-end: 0;
-      display: block;
-    }
-
-    .subtitle {
-      display: block;
-    }
-
-    .numbers {
-      flex: 1;
-      text-align: right;
-    }
-
-    .text {
-      flex: 1;
-      margin: 0;
-    }
-  }
-</style>
