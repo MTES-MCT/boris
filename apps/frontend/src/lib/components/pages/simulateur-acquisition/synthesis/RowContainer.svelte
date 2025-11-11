@@ -8,14 +8,6 @@
   const { children }: Props = $props();
 </script>
 
-<div class="row-container">
+<div class="flex flex-col gap-2">
   {@render children()}
 </div>
-
-<style lang="postcss">
-  .row-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-</style>
