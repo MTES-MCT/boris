@@ -1,17 +1,13 @@
 <script lang="ts">
+  import type { PageProps } from './$types';
+
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Hero from '$components/pages/simulateur-eligibilite/Hero.svelte';
   import Chatbot from '$components/pages/simulateur-eligibilite/Chatbot.svelte';
   import Simulator from '$components/pages/simulateur-eligibilite/Simulator.svelte';
   import PageCta from '$components/common/PageCta.svelte';
 
-  type Props = {
-    data: {
-      landbotConfigUrl: string;
-    };
-  };
-
-  const { data }: Props = $props();
+  const { data }: PageProps = $props();
 </script>
 
 <svelte:head>

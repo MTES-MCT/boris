@@ -94,7 +94,7 @@
 
     return L.divIcon({
       className,
-      html: `<span class="fr-icon-map-pin-2-fill" aria-hidden="true"></span>`,
+      html: `<span class="fr-icon-map-pin-2-fill fr-icon--lg" aria-hidden="true"></span>`,
       iconSize: isSelected || isHovered ? [40, 40] : [32, 32],
       iconAnchor: isSelected || isHovered ? [20, 40] : [16, 32],
     });

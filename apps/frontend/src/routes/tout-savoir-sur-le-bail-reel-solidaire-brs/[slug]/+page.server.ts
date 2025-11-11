@@ -4,7 +4,11 @@ import type { EntryGenerator, PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { steps } from './content';
 
-export const load: PageServerLoad = async ({ params }): Promise<Step> => {
+type PageData = {
+  step: Step;
+};
+
+export const load: PageServerLoad = async ({ params }): Promise<PageData> => {
   const { slug } = params;
 
   const step = steps.find((step) => step.slug === slug);
@@ -12,7 +16,7 @@ export const load: PageServerLoad = async ({ params }): Promise<Step> => {
   if (!step) {
     redirect(301, '/not-found');
   } else {
-    return step;
+    return { step };
   }
 };
 

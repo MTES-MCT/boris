@@ -1,11 +1,11 @@
 import type { PageLoad } from './$types';
 import type { BrsDiffusionWebsiteView, Pagination } from '$lib/utils/api-types';
 
-export type DataType = {
+type PageData = {
   mapBrsDiffusionWebsites: Pagination<BrsDiffusionWebsiteView>;
 };
 
-export const load: PageLoad = async ({ fetch }): Promise<DataType> => {
+export const load: PageLoad = async ({ fetch }): Promise<PageData> => {
   const response = await fetch('api/brs-diffusion-websites/all');
   const mapBrsDiffusionWebsites = await response.json();
 
