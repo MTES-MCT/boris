@@ -6,26 +6,40 @@
   import benoit from '$assets/images/benoit.jpg';
   import mathieu from '$assets/images/mathieu.jpg';
   import nathan from '$assets/images/nathan.jpg';
+
+  type Person = {
+    name: string;
+    title: string;
+    image: string;
+  };
+
+  const persons: Person[] = [
+    { name: 'Laure Magdelain', title: 'Chargée de déploiement', image: laure },
+    { name: 'Arthur Massonneau', title: 'Coach', image: arthur },
+    { name: 'Benoît Paquier', title: 'Développeur', image: benoit },
+    { name: 'Nathan Gaudelet', title: 'Intrapreneur', image: nathan },
+    {
+      name: 'Mathieu Gimenez',
+      title: 'Responsable de portefeuille',
+      image: mathieu,
+    },
+    {
+      name: 'Amandine Guegano',
+      title: 'Responsable de portefeuille',
+      image: amandine,
+    },
+  ];
 </script>
 
 <Section>
-  <h2 class="fr-h3 !text-blue-primary">L'équipe derrière BoRiS.</h2>
+  <h2 class="fr-h3 text-center !mt-8 !mb-8 md:!mt-16 !text-blue-primary">
+    L'équipe derrière BoRiS.
+  </h2>
 
   <div class="fr-grid-row fr-grid-row--gutters">
-    {@render teamMember('Laure Magdelain', 'Chargée de déploiement', laure)}
-    {@render teamMember('Arthur Massonneau', 'Coach', arthur)}
-    {@render teamMember('Benoît Paquier', 'Développeur', benoit)}
-    {@render teamMember('Nathan Gaudelet', 'Intrapreneur', nathan)}
-    {@render teamMember(
-      'Mathieu Gimenez',
-      'Responsable de portefeuille',
-      mathieu,
-    )}
-    {@render teamMember(
-      'Amandine Guegano',
-      'Responsable de portefeuille',
-      amandine,
-    )}
+    {#each persons as person}
+      {@render teamMember(person.name, person.title, person.image)}
+    {/each}
   </div>
 </Section>
 
