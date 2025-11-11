@@ -1,16 +1,8 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
-  import '@gouvfr/dsfr/dist/component/table/table.min.css';
-
-  onMount(async () => {
-    // @ts-expect-error: no declaration file
-    await import('@gouvfr/dsfr/dist/component/table/table.module.min.js');
-  });
-
-  import ArticlePage from '$components/pages/blog/ArticlePage.svelte';
   import type { ArticlePreview } from '$lib/utils/definitions';
   import { articles } from '$routes/blog/articles';
+
+  import ArticlePage from '$components/pages/blog/ArticlePage.svelte';
   import Table from '$components/common/Table.svelte';
 
   const article = articles.find(
