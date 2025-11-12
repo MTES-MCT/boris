@@ -80,7 +80,7 @@
       `}>
       <div
         class={`
-          absolute top-[-16px] left-[-16px] w-[32px] h-[32px] bg-blue-primary rounded-full flex items-center justify-center z-[100000] shadow-lg
+          absolute top-[-16px] left-[-16px] w-[32px] h-[32px] bg-blue-primary rounded-full flex items-center justify-center z-[100000] shadow-lg border-2 border-white
           sm:top-[calc(50%-20px)] sm:left-[-20px] sm:w-[40px] sm:h-[40px]
           lg:top-[calc(50%-25px)] lg:left-[-25px] lg:w-[50px] lg:h-[50px] ${isOdd ? 'lg:left-[-25px] ' : 'lg:right-[-25px] lg:left-auto'}
         `}>
