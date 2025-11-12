@@ -27,7 +27,7 @@ export class LandbotCustomerEntity implements LandbotCustomerInterface {
     (departement) => departement.landbotCustomers,
     { nullable: true },
   )
-  public departement: DepartementEntity;
+  public departement?: DepartementEntity;
 
   @Column({ type: 'enum', enum: LandbotEligibility, nullable: true })
   public eligibility?: LandbotEligibility;
@@ -46,7 +46,7 @@ export class LandbotCustomerEntity implements LandbotCustomerInterface {
 
   constructor(
     date: Date,
-    departement: DepartementEntity,
+    departement?: DepartementEntity,
     eligibility?: LandbotEligibility,
     brsKnowledge?: LandbotBrsKnowledge,
     realEstateSituation?: LandbotRealEstateSituation,
