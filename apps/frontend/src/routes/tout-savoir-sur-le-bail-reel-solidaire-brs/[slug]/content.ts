@@ -1,6 +1,6 @@
 import type { Step } from '$lib/utils/definitions';
 
-const step1 = {
+export const step1 = {
   title: 'Je découvre le dispositif',
   headTitle: 'Découvrir le Bail Réel Solidaire - BRS - BoRiS',
   slug: 'je-decouvre-le-dispositif',
@@ -8,7 +8,7 @@ const step1 = {
     'Vous trouverez ici toutes les informations pour découvrir le Bail Réel Solidaire (BRS). BoRiS est la plateforme de référence du ministère du Logement.',
 };
 
-const step2 = {
+export const step2 = {
   title: 'Je trouve mon logement en BRS',
   headTitle: 'Comment trouver un logement en Bail Réel Solidaire - BRS - BoRiS',
   slug: 'je-trouve-mon-logement-en-BRS',
@@ -16,7 +16,7 @@ const step2 = {
     'Toutes les informations pour trouver un logement en Bail Réel Solidaire (BRS). BoRiS est la plateforme de référence du ministère du Logement.',
 };
 
-const step3 = {
+export const step3 = {
   title: 'Je cherche des financements',
   headTitle:
     'Financer l’achat d’un logement en Bail Réel Solidaire - BRS - BoRiS',
@@ -25,7 +25,7 @@ const step3 = {
     'Toutes les informations pour financer votre projet d’achat en Bail Réel Solidaire (BRS).  BoRiS est la plateforme de référence du ministère du Logement.',
 };
 
-const step4 = {
+export const step4 = {
   title: 'Je passe chez le notaire',
   headTitle: 'Le passage chez le notaire - Bail Réel Solidaire - BRS - BoRiS',
   slug: 'je-deviens-proprietaire',
@@ -33,7 +33,7 @@ const step4 = {
     'Les informations sur le passage chez le notaire pour un achat en Bail Réel Solidaire (BRS). BoRiS est la plateforme de référence du Ministère du Logement.',
 };
 
-const step5 = {
+export const step5 = {
   title: 'Je suis chez moi',
   headTitle:
     'Etre propriétaire d’un logement en Bail Réel Solidaire - BRS - BoRiS',
