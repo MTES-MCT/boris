@@ -9,6 +9,7 @@ import { UserEntity } from '../user/user.entity';
 import { BrsDiffusionWebsiteEntity } from '../brs-diffusion-website/brs-diffusion-website.entity';
 import { MunicipalityEntity } from '../municipality/municipality.entity';
 import { AcquisitionSimulationEntity } from '../acquisition-simulation/acquisition-simulation.entity';
+import { LandbotCustomerEntity } from '../landbot-customer/landbot-customer.entity';
 dotenv.config();
 
 const test = process.env.NODE_ENV === 'test';
@@ -31,6 +32,7 @@ export const typeormConfig: DataSourceOptions = {
     BrsDiffusionWebsiteEntity,
     MunicipalityEntity,
     AcquisitionSimulationEntity,
+    LandbotCustomerEntity,
   ],
   migrations: ['dist/infrastructure/persistence/migrations/**/*{.ts,.js}'],
   synchronize: false,

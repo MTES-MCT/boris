@@ -16,6 +16,7 @@ import { BrsDiffusionWebsiteModule } from './infrastructure/brs-diffusion-websit
 import { APP_FILTER } from '@nestjs/core';
 import { MunicipalityModule } from './infrastructure/municipality/municipality.module';
 import { AcquisitionSimulationModule } from './infrastructure/acquisition-simulation/acquisition-simulation.module';
+import { LandbotCustomerModule } from './infrastructure/landbot-customer/landbot-customer.module';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { AcquisitionSimulationModule } from './infrastructure/acquisition-simula
     AcquisitionSimulationModule,
     AdminHomeModule,
     NotFoundModule,
+    LandbotCustomerModule,
   ],
   controllers: [],
   providers: [
