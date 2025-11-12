@@ -20,8 +20,6 @@
   };
 
   const { steps, stepTitleElement = 'h3' }: Props = $props();
-
-  $inspect(steps);
 </script>
 
 <div
