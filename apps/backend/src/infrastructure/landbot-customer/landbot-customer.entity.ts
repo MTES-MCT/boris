@@ -25,16 +25,17 @@ export class LandbotCustomerEntity implements LandbotCustomerInterface {
   @ManyToOne(
     () => DepartementEntity,
     (departement) => departement.landbotCustomers,
+    { nullable: true },
   )
   public departement: DepartementEntity;
 
-  @Column({ type: 'enum', enum: LandbotEligibility })
+  @Column({ type: 'enum', enum: LandbotEligibility, nullable: true })
   public eligibility?: LandbotEligibility;
 
-  @Column({ type: 'enum', enum: LandbotBrsKnowledge })
+  @Column({ type: 'enum', enum: LandbotBrsKnowledge, nullable: true })
   public brsKnowledge?: LandbotBrsKnowledge;
 
-  @Column({ type: 'enum', enum: LandbotRealEstateSituation })
+  @Column({ type: 'enum', enum: LandbotRealEstateSituation, nullable: true })
   public realEstateSituation?: LandbotRealEstateSituation;
 
   @CreateDateColumn()

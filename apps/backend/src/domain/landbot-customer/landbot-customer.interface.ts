@@ -6,11 +6,13 @@ export enum LandbotEligibility {
   INELIGIBLE = 3,
   ZONE_TRES_TENDUE = 4,
 }
+
 export enum LandbotBrsKnowledge {
   OUI = 'Oui',
   NON = 'Non',
   AUTRE = 'Je ne suis pas sûr·e',
 }
+
 export enum LandbotRealEstateSituation {
   PROPRIETAIRE = "propriétaire d'un logement",
   LOCATAIRE_SOCIAL = "locataire d'un logement social",
