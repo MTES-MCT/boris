@@ -2,6 +2,7 @@
   import Img from '@zerodevx/svelte-img';
   import HomeHero from '$assets/images/home-hero.jpg?as=run';
   import { default as Frame } from '$assets/illustrations/home-hero-trim.svg?raw';
+  import Image from '$components/common/Image.svelte';
 </script>
 
 <section class="relative lg:flex max-h-[772px]">
@@ -38,26 +39,11 @@
   </div>
   <div
     class="illustration-container absolute top-0 left-0 w-full h-full z-[-1] lg:relative lg:flex lg:justify-center lg:w-1/2 lg:h-auto">
-    <Img
-      class="fr-responsive-img"
-      src={HomeHero}
-      loading="eager"
-      alt="" />
+    <Image
+      image={HomeHero}
+      photographPosition="bottom-right" />
     <div class="hidden lg:block absolute top-16 w-[400px] h-[540px]">
       {@html Frame}
     </div>
   </div>
 </section>
-
-<style lang="postcss">
-  .illustration-container {
-    :global(img) {
-      height: 100%;
-      object-fit: cover;
-    }
-
-    :global(picture) {
-      width: 100%;
-    }
-  }
-</style>

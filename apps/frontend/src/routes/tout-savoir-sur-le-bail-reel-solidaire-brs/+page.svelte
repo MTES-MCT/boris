@@ -3,18 +3,13 @@
   import ContentPageHero from '$components/common/Heros/ContentPageHero.svelte';
   import CalloutPanel from '$components/common/Panels/CalloutPanel.svelte';
   import KeyPoint from '$components/common/KeyPoint.svelte';
-  import Step from '$components/common/StepPage/Step.svelte';
   import Section from '$components/common/Section.svelte';
   import Accordion from '$components/common/Accordion.svelte';
   import Table from '$components/common/Table.svelte';
+  import VerticalStepper from '$components/common/Steppers/VerticalStepper.svelte';
 
-  import { default as BrsEtape1 } from '$assets/illustrations/brs-etape-1.svg?raw';
-  import { default as BrsEtape2 } from '$assets/illustrations/brs-etape-2.svg?raw';
-  import { default as BrsEtape3 } from '$assets/illustrations/brs-etape-3.svg?raw';
-  import { default as BrsEtape4 } from '$assets/illustrations/brs-etape-4.svg?raw';
-  import { default as BrsEtape5 } from '$assets/illustrations/brs-etape-5.svg?raw';
-  import { steps } from './[slug]/content';
   import { eligibilityDataTable } from '$lib/utils/constants';
+  import { steps } from './content';
 </script>
 
 <svelte:head>
@@ -95,77 +90,7 @@
     </div>
   </CalloutPanel>
 
-  <div
-    class="fr-container flex flex-col gap-16 mt-16 lg:gap-0 lg:mt-30 lg:mb-20">
-    <Step
-      title="Je me renseigne sur le dispositif du bail réel solidaire (BRS)."
-      illustration={BrsEtape1}
-      linkLabel="Tout savoir sur le bail réel solidaire"
-      href={`/tout-savoir-sur-le-bail-reel-solidaire-brs/${steps[0].slug}`}
-      position={1}>
-      <p>
-        Découvrez les informations relatives au bail réel solidaire : les
-        avantages du bail réel solidaire (BRS), les inconvénients du bail réel
-        solidaire (où plutôt les contreparties), les critères d’éligibilité et
-        les parties prenantes d’un projet en BRS.
-      </p>
-      <p>
-        Quels sont les avantages et les inconvénients du bail réel solidaire ?
-      </p>
-    </Step>
-
-    <Step
-      title="Je trouve mon logement en bail réel solidaire (BRS)."
-      illustration={BrsEtape2}
-      linkLabel="Construire son projet immobilier"
-      href={`/tout-savoir-sur-le-bail-reel-solidaire-brs/${steps[1].slug}`}
-      position={2}>
-      <p>
-        Définissez votre projet d’achat, trouvez le logement de vos rêves en
-        BRS, construisez votre dossier et candidatez pour l'obtenir.
-      </p>
-    </Step>
-
-    <Step
-      title="Je cherche des financements."
-      illustration={BrsEtape3}
-      linkLabel="Définir son projet financier"
-      href={`/tout-savoir-sur-le-bail-reel-solidaire-brs/${steps[2].slug}`}
-      position={3}>
-      <p>
-        Assurez-vous de pouvoir financer votre achat, payer les frais en tant
-        que propriétaire en BRS grâce à vos fonds propres, un emprunt bancaire
-        et des aides éventuelles et projetez-vous à plus long terme.
-      </p>
-    </Step>
-
-    <Step
-      title="Je passe chez le notaire."
-      illustration={BrsEtape4}
-      linkLabel="S'assurer du bon déroulement de l'achat"
-      href={`/tout-savoir-sur-le-bail-reel-solidaire-brs/${steps[3].slug}`}
-      position={4}>
-      <p>
-        Vérifiez toutes les étapes après avoir trouvé un logement, les documents
-        à fournir ainsi que comment choisir son ou sa notaire pour signer l'acte
-        de vente.
-      </p>
-    </Step>
-
-    <Step
-      title="Je suis chez moi !"
-      illustration={BrsEtape5}
-      linkLabel="Découvrez les spécificités pour l’après achat"
-      href={`/tout-savoir-sur-le-bail-reel-solidaire-brs/${steps[4].slug}`}
-      position={5}
-      isLast>
-      <p>
-        Profitez de votre logement et assurez-vous de bien connaître les
-        spécificités liées au BRS : l’assurance logement BRS, réalisation des
-        travaux, la vie en copropriété et la revente du logement.
-      </p>
-    </Step>
-  </div>
+  <VerticalStepper {steps} />
 
   <div class="fr-mt-8w">
     <Section

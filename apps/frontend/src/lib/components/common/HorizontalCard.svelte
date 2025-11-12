@@ -3,8 +3,7 @@
   import '@gouvfr/dsfr/dist/utility/icons/icons-editor/icons-editor.min.css';
   import '@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css';
 
-  import Img from '@zerodevx/svelte-img';
-  import Photograph from '$components/common/Photograph.svelte';
+  import Image from '$components/common/Image.svelte';
 
   type Props = {
     title: string;
@@ -65,15 +64,10 @@
       ${!reversed ? `md:rounded-bl-xl` : `md:rounded-br-xl`}
     `}>
     <div class="fr-card__img">
-      <Img
-        class="fr-responsive-img"
-        src={imgSrc}
-        alt="" />
-      {#if photograph}
-        <Photograph
-          position={reversed ? 'bottom-left' : 'bottom-right'}
-          {photograph} />
-      {/if}
+      <Image
+        image={imgSrc}
+        {photograph}
+        photographPosition={reversed ? 'bottom-left' : 'bottom-right'} />
     </div>
   </div>
 </div>
