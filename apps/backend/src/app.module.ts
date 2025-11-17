@@ -17,11 +17,13 @@ import { APP_FILTER } from '@nestjs/core';
 import { MunicipalityModule } from './infrastructure/municipality/municipality.module';
 import { AcquisitionSimulationModule } from './infrastructure/acquisition-simulation/acquisition-simulation.module';
 import { LandbotCustomerModule } from './infrastructure/landbot-customer/landbot-customer.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
     SentryModule.forRoot(),
     TypeOrmModule.forRoot(typeormConfig),
+    ScheduleModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
         enabled:

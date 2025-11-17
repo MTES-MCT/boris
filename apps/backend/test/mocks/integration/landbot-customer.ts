@@ -17,4 +17,6 @@ export const mockedLandbotCustomer = new LandbotCustomerEntity(
 
 export const mockLandbotCustomerRepository = {
   save: jest.fn(),
+  findLast: jest.fn(),
+  createQueryBuilder: jest.fn(),
 };

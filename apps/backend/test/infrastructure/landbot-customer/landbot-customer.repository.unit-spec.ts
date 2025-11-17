@@ -37,4 +37,56 @@ describe('LandbotCustomerRepository', () => {
       mockedLandbotCustomer,
     );
   });
+
+  it('should find the last landbot customer by date and return its data', async () => {
+    const mockQueryBuilder = {
+      orderBy: jest.fn().mockReturnThis(),
+      getOne: jest.fn().mockResolvedValue(mockedLandbotCustomer),
+    };
+
+    mockLandbotCustomerRepository.createQueryBuilder.mockReturnValue(
+      mockQueryBuilder,
+    );
+
+    const result = await landbotCustomerRepository.findLast();
+
+    expect(result).toMatchObject(mockedLandbotCustomer);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('landbot_customer');
+    expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith(
+      'landbot_customer.date',
+      'DESC',
+    );
+    expect(mockQueryBuilder.getOne).toHaveBeenCalledTimes(1);
+  });
+
+  it('should return null when no landbot customer is found', async () => {
+    const mockQueryBuilder = {
+      orderBy: jest.fn().mockReturnThis(),
+      getOne: jest.fn().mockResolvedValue(null),
+    };
+
+    mockLandbotCustomerRepository.createQueryBuilder.mockReturnValue(
+      mockQueryBuilder,
+    );
+
+    const result = await landbotCustomerRepository.findLast();
+
+    expect(result).toBeNull();
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('landbot_customer');
+    expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith(
+      'landbot_customer.date',
+      'DESC',
+    );
+    expect(mockQueryBuilder.getOne).toHaveBeenCalledTimes(1);
+  });
 });
