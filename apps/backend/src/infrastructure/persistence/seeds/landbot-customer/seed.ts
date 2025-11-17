@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateLandbotCustomerUsecase } from 'src/application/landbot-customer/usecases/create.usecase';
 import { LandbotApiClientRepositoryInterface } from 'src/domain/landbot-api-client/landbot-api-client.repository.interface';
-// import { CreateMunicipalityUsecase } from 'src/application/municipality/usecases/create.usecase';
+import { LandbotRealEstateSituation } from 'src/domain/landbot-customer/landbot-customer.interface';
 
 @Injectable()
 export class LandbotCustomerSeed {
@@ -13,8 +13,9 @@ export class LandbotCustomerSeed {
 
   async seed() {
     const { total } = await this.landbotApiClientRepository.listCustomers(0, 0);
-    let offset = 0;
+    let offset = 5600;
     const limit = 100;
+    let landbotCustomersCount = 0;
 
     while (offset <= total) {
       console.log(`Fetching customers from ${offset} to ${offset + limit}`);
@@ -25,23 +26,35 @@ export class LandbotCustomerSeed {
       );
 
       for (const customer of customers) {
-        // console.log(new Date(customer.register_date * 1000));
+        const {
+          eligibilite1: eligibility,
+          ville_souhaitee: desiredCity,
+          departement: departementCode,
+          situation_immo: realEstateSituation,
+          connaissancebrs: brsKnowledge,
+        } = customer;
 
-        // await this.createLandbotCustomerUsecase.execute({
-        //   date: new Date(customer.register_date * 1000),
-        //   departementCode: customer.custom_fields.departement,
-        //   eligibility: customer.custom_fields.eligibility,
-        //   brsKnowledge: customer.custom_fields.brsKnowledge,
-        //   realEstateSituation: customer.custom_fields.realEstateSituation,
-        // });
+        if (eligibility) {
+          await this.createLandbotCustomerUsecase.execute({
+            date: new Date(customer.register_date * 1000),
+            desiredCity,
+            departementCode,
+            eligibility,
+            brsKnowledge,
+            realEstateSituation: realEstateSituation?.endsWith(' ')
+              ? (realEstateSituation.trimEnd() as LandbotRealEstateSituation)
+              : realEstateSituation,
+          });
 
-        console.log(customer.custom_fields.eligibilite1);
-
-        await new Promise((resolve) => setTimeout(resolve, 100));
+          landbotCustomersCount += 1;
+        }
       }
 
+      console.log(`${landbotCustomersCount} landbot customers créés`);
+
       offset += limit;
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      await new Promise((resolve) => setTimeout(resolve, 1500));
     }
   }
 }

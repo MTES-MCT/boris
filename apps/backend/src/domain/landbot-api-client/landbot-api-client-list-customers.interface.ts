@@ -1,8 +1,8 @@
-type LandbotApiClientCustomerCustomField = {
-  value: string;
-  type: string;
-  name: string;
-};
+import {
+  LandbotBrsKnowledge,
+  LandbotEligibility,
+  LandbotRealEstateSituation,
+} from '../landbot-customer/landbot-customer.interface';
 
 type LandbotApiClientCustomer = {
   id: number;
@@ -10,11 +10,11 @@ type LandbotApiClientCustomer = {
   channel_id: number;
   last_message: number;
   register_date: number;
-  custom_fields: {
-    eligibilite1: LandbotApiClientCustomerCustomField;
-    brsKnowledge: LandbotApiClientCustomerCustomField;
-    realEstateSituation: LandbotApiClientCustomerCustomField;
-  };
+  eligibilite1?: LandbotEligibility;
+  situation_immo?: LandbotRealEstateSituation;
+  connaissancebrs?: LandbotBrsKnowledge;
+  departement?: string;
+  ville_souhaitee?: string;
 };
 
 export type LandbotApiClientListCustomersInterface = {
