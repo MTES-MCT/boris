@@ -18,4 +18,8 @@ export class LandbotCustomerRepository
   ): Promise<LandbotCustomerEntity> {
     return this.repository.save(landbotCustomer);
   }
+
+  public findLast(): Promise<LandbotCustomerEntity | null> {
+    return this.repository.findOne({ order: { date: 'DESC' } });
+  }
 }

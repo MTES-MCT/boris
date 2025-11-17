@@ -37,4 +37,30 @@ describe('LandbotCustomerRepository', () => {
       mockedLandbotCustomer,
     );
   });
+
+  it('should find the last landbot customer by date and return its data', async () => {
+    mockLandbotCustomerRepository.findOne.mockResolvedValue(
+      mockedLandbotCustomer,
+    );
+
+    const result = await landbotCustomerRepository.findLast();
+
+    expect(result).toMatchObject(mockedLandbotCustomer);
+    expect(mockLandbotCustomerRepository.findOne).toHaveBeenCalledTimes(1);
+    expect(mockLandbotCustomerRepository.findOne).toHaveBeenCalledWith({
+      order: { date: 'DESC' },
+    });
+  });
+
+  it('should return null when no landbot customer is found', async () => {
+    mockLandbotCustomerRepository.findOne.mockResolvedValue(null);
+
+    const result = await landbotCustomerRepository.findLast();
+
+    expect(result).toBeNull();
+    expect(mockLandbotCustomerRepository.findOne).toHaveBeenCalledTimes(1);
+    expect(mockLandbotCustomerRepository.findOne).toHaveBeenCalledWith({
+      order: { date: 'DESC' },
+    });
+  });
 });

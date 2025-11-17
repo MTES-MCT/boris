@@ -5,10 +5,13 @@ import { DepartementRepository } from '../departement/departement.repository';
 import { LandbotCustomerEntity } from './landbot-customer.entity';
 import { LandbotCustomerRepository } from './landbot-customer.repository';
 import { CreateLandbotCustomerUsecase } from 'src/application/landbot-customer/usecases/create.usecase';
+import { LandbotApiClientModule } from '../landbot-api-client/landbot-api-client.module';
+import { ImportLandbotCustomersCron } from './cron/import-landbot-customers';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([DepartementEntity, LandbotCustomerEntity]),
+    LandbotApiClientModule,
   ],
   controllers: [],
   providers: [
@@ -23,6 +26,7 @@ import { CreateLandbotCustomerUsecase } from 'src/application/landbot-customer/u
     DepartementRepository,
     LandbotCustomerRepository,
     CreateLandbotCustomerUsecase,
+    ImportLandbotCustomersCron,
   ],
   exports: [
     'LandbotCustomerRepositoryInterface',
