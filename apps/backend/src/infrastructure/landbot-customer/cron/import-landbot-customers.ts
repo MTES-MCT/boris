@@ -14,14 +14,14 @@ export class ImportLandbotCustomersCron {
     private readonly createLandbotCustomerUsecase: CreateLandbotCustomerUsecase,
   ) {}
 
-  @Cron('35 18 * * *', { timeZone: 'Europe/Paris' })
+  @Cron('40 18 * * *', { timeZone: 'Europe/Paris' })
   public async execute() {
     console.log('Import des données Landbot...');
 
     const lastLandbotCustomer =
       await this.findLastLandbotCustomerUsecase.execute();
 
-    const pastDatesTrehshold = 5; // Landbot API sometimes throw customers with register_date in the deep past, so we set a treshold to 10 past dates to avoid missing correct data
+    const pastDatesTrehshold = 5; // Landbot API sometimes throw customers with register_date in the deep past, so we set a treshold to 5 past dates to avoid missing correct data
     let pastDatesCount = 0;
     const { date } = lastLandbotCustomer;
     console.log('Last landbot customer', lastLandbotCustomer);
