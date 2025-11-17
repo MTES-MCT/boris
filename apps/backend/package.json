@@ -36,6 +36,7 @@
     "seed:user": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/user/run.ts",
     "seed:brs-diffusion-website": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/brs-diffusion-website/run.ts",
     "seed:municipality": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/municipality/run.ts",
+    "seed:landbot-customer": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/landbot-customer/run.ts",
     "seed:test-data": "NODE_ENV=test ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/test-data/run.ts",
     "generate-address-datagouv-types": "openapi-typescript https://data.geopf.fr/geocodage/openapi.yaml --output src/infrastructure/common/types/generated-address-datagouv-types.ts"
   },

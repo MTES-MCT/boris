@@ -16,6 +16,11 @@ export class LandbotCustomerView {
   public date: Date;
 
   @ApiProperty({
+    example: 'Paris',
+  })
+  public desiredCity?: string;
+
+  @ApiProperty({
     type: /* istanbul ignore next */ () => DepartementRelationnalView,
   })
   public departement?: DepartementRelationnalView;
@@ -37,6 +42,7 @@ export class LandbotCustomerView {
   constructor(
     id: string,
     date: Date,
+    desiredCity?: string,
     departement?: DepartementRelationnalView,
     eligibility?: LandbotEligibility,
     brsKnowledge?: LandbotBrsKnowledge,
@@ -44,6 +50,7 @@ export class LandbotCustomerView {
   ) {
     this.id = id;
     this.date = date;
+    this.desiredCity = desiredCity;
     this.eligibility = eligibility;
     this.brsKnowledge = brsKnowledge;
     this.realEstateSituation = realEstateSituation;

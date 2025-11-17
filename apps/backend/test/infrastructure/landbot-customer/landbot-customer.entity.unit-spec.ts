@@ -10,6 +10,7 @@ import { LandbotCustomerEntity } from 'src/infrastructure/landbot-customer/landb
 describe('LandbotCustomerEntity', () => {
   it('getters', () => {
     expect(mockedLandbotCustomer.date).toEqual(new Date('2024-01-15'));
+    expect(mockedLandbotCustomer.desiredCity).toBe('Paris');
     expect(mockedLandbotCustomer.departement).toBe(finistere);
     expect(mockedLandbotCustomer.eligibility).toBe(
       LandbotEligibility.ZONE_TENDUE,
@@ -22,7 +23,9 @@ describe('LandbotCustomerEntity', () => {
 
   it('setters', () => {
     const newDate = new Date('2024-02-20');
+    const newDesiredCity = 'Lyon';
     mockedLandbotCustomer.date = newDate;
+    mockedLandbotCustomer.desiredCity = newDesiredCity;
     mockedLandbotCustomer.departement = paris;
     mockedLandbotCustomer.eligibility = LandbotEligibility.ZONE_TRES_TENDUE;
     mockedLandbotCustomer.brsKnowledge = LandbotBrsKnowledge.NON;
@@ -30,6 +33,7 @@ describe('LandbotCustomerEntity', () => {
       LandbotRealEstateSituation.LOCATAIRE_PRIVE;
 
     expect(mockedLandbotCustomer.date).toEqual(newDate);
+    expect(mockedLandbotCustomer.desiredCity).toBe(newDesiredCity);
     expect(mockedLandbotCustomer.departement).toBe(paris);
     expect(mockedLandbotCustomer.eligibility).toBe(
       LandbotEligibility.ZONE_TRES_TENDUE,
@@ -43,10 +47,12 @@ describe('LandbotCustomerEntity', () => {
   it('should allow optional fields to be undefined', () => {
     const customerWithoutOptionalFields = new LandbotCustomerEntity(
       new Date('2024-03-10'),
+      undefined,
       finistere,
     );
 
     expect(customerWithoutOptionalFields.date).toEqual(new Date('2024-03-10'));
+    expect(customerWithoutOptionalFields.desiredCity).toBeUndefined();
     expect(customerWithoutOptionalFields.departement).toBe(finistere);
     expect(customerWithoutOptionalFields.eligibility).toBeUndefined();
     expect(customerWithoutOptionalFields.brsKnowledge).toBeUndefined();

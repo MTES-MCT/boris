@@ -6,7 +6,8 @@ import {
 
 export interface CreateLandbotCustomerParams {
   date: Date;
-  departementCode: string;
+  desiredCity?: string;
+  departementCode?: string;
   eligibility?: LandbotEligibility;
   brsKnowledge?: LandbotBrsKnowledge;
   realEstateSituation?: LandbotRealEstateSituation;

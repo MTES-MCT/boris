@@ -19,8 +19,11 @@ export class LandbotCustomerEntity implements LandbotCustomerInterface {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @Column({ type: 'date', nullable: false })
+  @Column({ type: 'timestamptz', nullable: false })
   public date: Date;
+
+  @Column({ type: 'varchar', nullable: true })
+  public desiredCity?: string;
 
   @ManyToOne(
     () => DepartementEntity,
@@ -46,12 +49,14 @@ export class LandbotCustomerEntity implements LandbotCustomerInterface {
 
   constructor(
     date: Date,
+    desiredCity?: string,
     departement?: DepartementEntity,
     eligibility?: LandbotEligibility,
     brsKnowledge?: LandbotBrsKnowledge,
     realEstateSituation?: LandbotRealEstateSituation,
   ) {
     this.date = date;
+    this.desiredCity = desiredCity;
     this.departement = departement;
     this.eligibility = eligibility;
     this.brsKnowledge = brsKnowledge;
