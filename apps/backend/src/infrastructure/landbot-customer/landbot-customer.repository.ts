@@ -19,7 +19,10 @@ export class LandbotCustomerRepository
     return this.repository.save(landbotCustomer);
   }
 
-  public findLast(): Promise<LandbotCustomerEntity | null> {
-    return this.repository.findOne({ order: { date: 'DESC' } });
+  public async findLast(): Promise<LandbotCustomerEntity | null> {
+    return this.repository
+      .createQueryBuilder('landbot_customer')
+      .orderBy('landbot_customer.date', 'DESC')
+      .getOne();
   }
 }
