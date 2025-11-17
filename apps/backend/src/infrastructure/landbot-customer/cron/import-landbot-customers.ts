@@ -14,7 +14,7 @@ export class ImportLandbotCustomersCron {
     private readonly createLandbotCustomerUsecase: CreateLandbotCustomerUsecase,
   ) {}
 
-  @Cron('40 18 * * *', { timeZone: 'Europe/Paris' })
+  @Cron('0 3 * * *', { timeZone: 'Europe/Paris' })
   public async execute() {
     console.log('Import des données Landbot...');
 
