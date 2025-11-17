@@ -46,6 +46,7 @@ describe('CreateLandbotCustomerUsecase', () => {
     const expectedResult = new LandbotCustomerView(
       mockedLandbotCustomer.id,
       mockedLandbotCustomer.date,
+      mockedLandbotCustomer.desiredCity,
       {
         id: finistere.id,
         name: finistere.name,
@@ -58,6 +59,7 @@ describe('CreateLandbotCustomerUsecase', () => {
 
     const result = await useCase.execute({
       date: new Date('2024-01-15'),
+      desiredCity: mockedLandbotCustomer.desiredCity,
       departementCode: '29',
       eligibility: LandbotEligibility.ZONE_TENDUE,
       brsKnowledge: LandbotBrsKnowledge.OUI,
@@ -71,6 +73,7 @@ describe('CreateLandbotCustomerUsecase', () => {
     expect(mockLandbotCustomerRepository.save).toHaveBeenCalledWith(
       new LandbotCustomerEntity(
         new Date('2024-01-15'),
+        mockedLandbotCustomer.desiredCity,
         finistere,
         LandbotEligibility.ZONE_TENDUE,
         LandbotBrsKnowledge.OUI,
@@ -84,6 +87,7 @@ describe('CreateLandbotCustomerUsecase', () => {
     const landbotCustomerWithoutDepartement = new LandbotCustomerEntity(
       new Date('2024-01-15'),
       undefined,
+      undefined,
       LandbotEligibility.ZONE_TENDUE,
     );
     landbotCustomerWithoutDepartement.id = 'test-id';
@@ -94,6 +98,7 @@ describe('CreateLandbotCustomerUsecase', () => {
     const expectedResult = new LandbotCustomerView(
       landbotCustomerWithoutDepartement.id,
       landbotCustomerWithoutDepartement.date,
+      landbotCustomerWithoutDepartement.desiredCity,
       undefined,
       landbotCustomerWithoutDepartement.eligibility,
       landbotCustomerWithoutDepartement.brsKnowledge,
@@ -113,6 +118,7 @@ describe('CreateLandbotCustomerUsecase', () => {
     expect(mockLandbotCustomerRepository.save).toHaveBeenCalledWith(
       new LandbotCustomerEntity(
         new Date('2024-01-15'),
+        undefined,
         undefined,
         LandbotEligibility.ZONE_TENDUE,
       ),
@@ -137,6 +143,7 @@ describe('CreateLandbotCustomerUsecase', () => {
       undefined,
       undefined,
       undefined,
+      undefined,
     );
 
     const result = await useCase.execute({
@@ -149,7 +156,7 @@ describe('CreateLandbotCustomerUsecase', () => {
     expect(mockDepartementRepository.findOneByCode).toHaveBeenCalledWith('99');
     expect(mockLandbotCustomerRepository.save).toHaveBeenCalledTimes(1);
     expect(mockLandbotCustomerRepository.save).toHaveBeenCalledWith(
-      new LandbotCustomerEntity(new Date('2024-02-20'), undefined),
+      new LandbotCustomerEntity(new Date('2024-02-20'), undefined, undefined),
     );
   });
 });

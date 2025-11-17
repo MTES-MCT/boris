@@ -24,6 +24,7 @@ export enum LandbotRealEstateSituation {
 export interface LandbotCustomerInterface {
   id: string;
   date: Date;
+  desiredCity?: string;
   departement?: DepartementInterface;
   eligibility?: LandbotEligibility;
   brsKnowledge?: LandbotBrsKnowledge;

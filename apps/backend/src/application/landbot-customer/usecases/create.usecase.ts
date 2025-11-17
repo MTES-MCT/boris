@@ -18,18 +18,24 @@ export class CreateLandbotCustomerUsecase {
   ): Promise<LandbotCustomerView> {
     const {
       date,
+      desiredCity,
       departementCode,
       eligibility,
       brsKnowledge,
       realEstateSituation,
     } = params;
 
-    const departement =
-      await this.departementRepository.findOneByCode(departementCode);
+    let departement;
+
+    if (departementCode) {
+      departement =
+        await this.departementRepository.findOneByCode(departementCode);
+    }
 
     const landbotCustomer = await this.landbotCustomerRepository.save(
       new LandbotCustomerEntity(
         date,
+        desiredCity,
         departement || undefined,
         eligibility,
         brsKnowledge,
@@ -40,6 +46,7 @@ export class CreateLandbotCustomerUsecase {
     return new LandbotCustomerView(
       landbotCustomer.id,
       landbotCustomer.date,
+      landbotCustomer.desiredCity,
       landbotCustomer.departement
         ? {
             id: landbotCustomer.departement?.id,
