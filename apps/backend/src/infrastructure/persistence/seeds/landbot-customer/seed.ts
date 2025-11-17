@@ -13,12 +13,14 @@ export class LandbotCustomerSeed {
 
   async seed() {
     const { total } = await this.landbotApiClientRepository.listCustomers(0, 0);
-    let offset = 5600;
+    let offset = 0;
     const limit = 100;
     let landbotCustomersCount = 0;
 
     while (offset <= total) {
-      console.log(`Fetching customers from ${offset} to ${offset + limit}`);
+      console.log(
+        `Récupérations des landbot customers de ${offset} à ${offset + limit}`,
+      );
 
       const { customers } = await this.landbotApiClientRepository.listCustomers(
         offset,
@@ -35,18 +37,22 @@ export class LandbotCustomerSeed {
         } = customer;
 
         if (eligibility) {
-          await this.createLandbotCustomerUsecase.execute({
-            date: new Date(customer.register_date * 1000),
-            desiredCity,
-            departementCode,
-            eligibility,
-            brsKnowledge,
-            realEstateSituation: realEstateSituation?.endsWith(' ')
-              ? (realEstateSituation.trimEnd() as LandbotRealEstateSituation)
-              : realEstateSituation,
-          });
+          try {
+            await this.createLandbotCustomerUsecase.execute({
+              date: new Date(customer.register_date * 1000),
+              desiredCity,
+              departementCode,
+              eligibility,
+              brsKnowledge,
+              realEstateSituation: realEstateSituation?.endsWith(' ')
+                ? (realEstateSituation.trimEnd() as LandbotRealEstateSituation)
+                : realEstateSituation,
+            });
 
-          landbotCustomersCount += 1;
+            landbotCustomersCount += 1;
+          } catch (error) {
+            console.log(error);
+          }
         }
       }
 
@@ -56,5 +62,7 @@ export class LandbotCustomerSeed {
 
       await new Promise((resolve) => setTimeout(resolve, 1500));
     }
+
+    console.log('Création des landbot customers terminée.');
   }
 }
