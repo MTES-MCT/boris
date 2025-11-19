@@ -2,10 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { LandbotCustomerEntity } from 'src/infrastructure/landbot-customer/landbot-customer.entity';
 import { LandbotCustomerRepository } from 'src/infrastructure/landbot-customer/landbot-customer.repository';
-import { LandbotCustomerInterface } from 'src/domain/landbot-customer/landbot-customer.interface';
 import {
   mockedLandbotCustomer,
   mockLandbotCustomerRepository,
+  mockGroupByEligibilityResults,
+  mockGroupByBrsKnowledgeResults,
+  mockGroupByRealEstateSituationResults,
 } from 'test/mocks/integration/landbot-customer';
 
 describe('LandbotCustomerRepository', () => {
@@ -58,6 +60,7 @@ describe('LandbotCustomerRepository', () => {
     expect(
       mockLandbotCustomerRepository.createQueryBuilder,
     ).toHaveBeenCalledWith('landbot_customer');
+    expect(mockQueryBuilder.orderBy).toHaveBeenCalledTimes(1);
     expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith(
       'landbot_customer.date',
       'DESC',
@@ -84,6 +87,7 @@ describe('LandbotCustomerRepository', () => {
     expect(
       mockLandbotCustomerRepository.createQueryBuilder,
     ).toHaveBeenCalledWith('landbot_customer');
+    expect(mockQueryBuilder.orderBy).toHaveBeenCalledTimes(1);
     expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith(
       'landbot_customer.date',
       'DESC',
@@ -91,123 +95,136 @@ describe('LandbotCustomerRepository', () => {
     expect(mockQueryBuilder.getOne).toHaveBeenCalledTimes(1);
   });
 
-  it('should group by a field and return raw results', async () => {
-    const mockResults = [
-      { realEstateSituation: "propriétaire d'un logement", count: '5' },
-      { realEstateSituation: "locataire d'un logement privé", count: '3' },
-      { realEstateSituation: null, count: '2' },
-    ];
-
+  it('should group by eligibility and return raw results', async () => {
     const mockQueryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
       groupBy: jest.fn().mockReturnThis(),
-      getRawMany: jest.fn().mockResolvedValue(mockResults),
+      getRawMany: jest.fn().mockResolvedValue(mockGroupByEligibilityResults),
     };
 
     mockLandbotCustomerRepository.createQueryBuilder.mockReturnValue(
       mockQueryBuilder,
     );
 
-    const result = await landbotCustomerRepository.groupBy(
-      'realEstateSituation',
-    );
+    const result = await landbotCustomerRepository.groupByEligibility();
 
-    expect(result).toEqual(mockResults);
+    expect(result).toEqual(mockGroupByEligibilityResults);
     expect(
       mockLandbotCustomerRepository.createQueryBuilder,
     ).toHaveBeenCalledTimes(1);
     expect(
       mockLandbotCustomerRepository.createQueryBuilder,
     ).toHaveBeenCalledWith('landbot_customer');
-    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith(
-      'realEstateSituation',
-    );
-    expect(mockQueryBuilder.getRawMany).toHaveBeenCalledTimes(1);
-  });
-
-  it('should group by a field with where conditions and return raw results', async () => {
-    const mockResults = [
-      { eligibility: '2', count: '10' },
-      { eligibility: '3', count: '5' },
-    ];
-
-    const mockQueryBuilder = {
-      groupBy: jest.fn().mockReturnThis(),
-      andWhere: jest.fn().mockReturnThis(),
-      getRawMany: jest.fn().mockResolvedValue(mockResults),
-    };
-
-    mockLandbotCustomerRepository.createQueryBuilder.mockReturnValue(
-      mockQueryBuilder,
-    );
-
-    const whereConditions: [keyof LandbotCustomerInterface, string][] = [
-      ['eligibility', 'value1'],
-    ];
-
-    const result = await landbotCustomerRepository.groupBy(
+    expect(mockQueryBuilder.select).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.select).toHaveBeenCalledWith(
+      'landbot_customer.eligibility',
       'eligibility',
-      whereConditions,
     );
-
-    expect(result).toEqual(mockResults);
-    expect(
-      mockLandbotCustomerRepository.createQueryBuilder,
-    ).toHaveBeenCalledTimes(1);
-    expect(
-      mockLandbotCustomerRepository.createQueryBuilder,
-    ).toHaveBeenCalledWith('landbot_customer');
-    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith('eligibility');
-    expect(mockQueryBuilder.andWhere).toHaveBeenCalledWith(
-      'landbot_customer.eligibility :value1',
-      { column: 'eligibility', clause: 'value1' },
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledWith(
+      'COUNT(*)',
+      'count',
+    );
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith(
+      'landbot_customer.eligibility',
     );
     expect(mockQueryBuilder.getRawMany).toHaveBeenCalledTimes(1);
   });
 
-  it('should group by a field with multiple where conditions', async () => {
-    const mockResults = [
-      { brsKnowledge: 'Oui', count: '8' },
-      { brsKnowledge: 'Non', count: '4' },
-    ];
-
+  it('should group by brsKnowledge with where condition and return raw results', async () => {
     const mockQueryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
       groupBy: jest.fn().mockReturnThis(),
-      andWhere: jest.fn().mockReturnThis(),
-      getRawMany: jest.fn().mockResolvedValue(mockResults),
+      getRawMany: jest.fn().mockResolvedValue(mockGroupByBrsKnowledgeResults),
     };
 
     mockLandbotCustomerRepository.createQueryBuilder.mockReturnValue(
       mockQueryBuilder,
     );
 
-    const whereConditions: [keyof LandbotCustomerInterface, string][] = [
-      ['eligibility', 'value1'],
-      ['brsKnowledge', 'value2'],
-    ];
+    const result = await landbotCustomerRepository.groupByBrsKnowledge();
 
-    const result = await landbotCustomerRepository.groupBy(
+    expect(result).toEqual(mockGroupByBrsKnowledgeResults);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('landbot_customer');
+    expect(mockQueryBuilder.select).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.select).toHaveBeenCalledWith(
+      'landbot_customer.brsKnowledge',
       'brsKnowledge',
-      whereConditions,
     );
-
-    expect(result).toEqual(mockResults);
-    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith('brsKnowledge');
-    expect(mockQueryBuilder.andWhere).toHaveBeenCalledTimes(2);
-    expect(mockQueryBuilder.andWhere).toHaveBeenNthCalledWith(
-      1,
-      'landbot_customer.eligibility :value1',
-      { column: 'eligibility', clause: 'value1' },
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledWith(
+      'COUNT(*)',
+      'count',
     );
-    expect(mockQueryBuilder.andWhere).toHaveBeenNthCalledWith(
-      2,
-      'landbot_customer.brsKnowledge :value2',
-      { column: 'brsKnowledge', clause: 'value2' },
+    expect(mockQueryBuilder.where).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.where).toHaveBeenCalledWith(
+      'landbot_customer.desiredCity IS NOT NULL',
+    );
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith(
+      'landbot_customer.brsKnowledge',
     );
     expect(mockQueryBuilder.getRawMany).toHaveBeenCalledTimes(1);
   });
 
-  it('should return empty array when no results are found', async () => {
+  it('should group by realEstateSituation with where condition and return raw results', async () => {
     const mockQueryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      groupBy: jest.fn().mockReturnThis(),
+      getRawMany: jest
+        .fn()
+        .mockResolvedValue(mockGroupByRealEstateSituationResults),
+    };
+
+    mockLandbotCustomerRepository.createQueryBuilder.mockReturnValue(
+      mockQueryBuilder,
+    );
+
+    const result = await landbotCustomerRepository.groupByRealEstateSituation();
+
+    expect(result).toEqual(mockGroupByRealEstateSituationResults);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('landbot_customer');
+    expect(mockQueryBuilder.select).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.select).toHaveBeenCalledWith(
+      'landbot_customer.realEstateSituation',
+      'realEstateSituation',
+    );
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledWith(
+      'COUNT(*)',
+      'count',
+    );
+    expect(mockQueryBuilder.where).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.where).toHaveBeenCalledWith(
+      'landbot_customer.desiredCity IS NOT NULL',
+    );
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith(
+      'landbot_customer.realEstateSituation',
+    );
+    expect(mockQueryBuilder.getRawMany).toHaveBeenCalledTimes(1);
+  });
+
+  it('should return empty array when no results are found for eligibility', async () => {
+    const mockQueryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
       groupBy: jest.fn().mockReturnThis(),
       getRawMany: jest.fn().mockResolvedValue([]),
     };
@@ -216,10 +233,29 @@ describe('LandbotCustomerRepository', () => {
       mockQueryBuilder,
     );
 
-    const result = await landbotCustomerRepository.groupBy('desiredCity');
+    const result = await landbotCustomerRepository.groupByEligibility();
 
     expect(result).toEqual([]);
-    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith('desiredCity');
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('landbot_customer');
+    expect(mockQueryBuilder.select).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.select).toHaveBeenCalledWith(
+      'landbot_customer.eligibility',
+      'eligibility',
+    );
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledWith(
+      'COUNT(*)',
+      'count',
+    );
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith(
+      'landbot_customer.eligibility',
+    );
     expect(mockQueryBuilder.getRawMany).toHaveBeenCalledTimes(1);
   });
 });

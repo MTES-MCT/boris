@@ -1,10 +1,20 @@
 import { LandbotCustomerEntity } from 'src/infrastructure/landbot-customer/landbot-customer.entity';
-import { LandbotCustomerInterface } from './landbot-customer.interface';
+import {
+  LandbotBrsKnowledge,
+  LandbotEligibility,
+  LandbotRealEstateSituation,
+} from './landbot-customer.interface';
 
 export interface LandbotCustomerRepositoryInterface {
   save(landbotCustomer: LandbotCustomerEntity): Promise<LandbotCustomerEntity>;
   findLast(): Promise<LandbotCustomerEntity | null>;
-  groupBy(
-    field: keyof LandbotCustomerInterface,
-  ): Promise<{ [key in keyof LandbotCustomerInterface]: number }[]>;
+  groupByEligibility(): Promise<
+    { eligibility: LandbotEligibility; count: number }[]
+  >;
+  groupByBrsKnowledge(): Promise<
+    { brsKnowledge: LandbotBrsKnowledge; count: number }[]
+  >;
+  groupByRealEstateSituation(): Promise<
+    { realEstateSituation: LandbotRealEstateSituation; count: number }[]
+  >;
 }

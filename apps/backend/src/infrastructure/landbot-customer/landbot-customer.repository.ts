@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LandbotCustomerRepositoryInterface } from 'src/domain/landbot-customer/landbot-customer.repository.interface';
 import { LandbotCustomerEntity } from './landbot-customer.entity';
-import { LandbotCustomerInterface } from 'src/domain/landbot-customer/landbot-customer.interface';
+import {
+  LandbotBrsKnowledge,
+  LandbotEligibility,
+  LandbotRealEstateSituation,
+} from 'src/domain/landbot-customer/landbot-customer.interface';
 
 @Injectable()
 export class LandbotCustomerRepository
@@ -27,22 +31,40 @@ export class LandbotCustomerRepository
       .getOne();
   }
 
-  public async groupBy(
-    field: keyof LandbotCustomerInterface,
-    where?: [key: keyof LandbotCustomerInterface, value: string][],
-  ): Promise<{ [key in keyof LandbotCustomerInterface]: number }[]> {
-    let query = this.repository
+  public async groupByEligibility(): Promise<
+    { eligibility: LandbotEligibility; count: number }[]
+  > {
+    const query = this.repository
       .createQueryBuilder('landbot_customer')
-      .groupBy(field);
+      .select(`landbot_customer.eligibility`, 'eligibility')
+      .addSelect(`COUNT(*)`, 'count')
+      .groupBy(`landbot_customer.eligibility`);
 
-    if (where) {
-      for (const [column, clause] of where) {
-        query = query.andWhere(`landbot_customer.${column} :${clause}`, {
-          column,
-          clause,
-        });
-      }
-    }
+    return query.getRawMany();
+  }
+
+  public async groupByBrsKnowledge(): Promise<
+    { brsKnowledge: LandbotBrsKnowledge; count: number }[]
+  > {
+    const query = this.repository
+      .createQueryBuilder('landbot_customer')
+      .select(`landbot_customer.brsKnowledge`, 'brsKnowledge')
+      .addSelect(`COUNT(*)`, 'count')
+      .where(`landbot_customer.desiredCity IS NOT NULL`)
+      .groupBy(`landbot_customer.brsKnowledge`);
+
+    return query.getRawMany();
+  }
+
+  public async groupByRealEstateSituation(): Promise<
+    { realEstateSituation: LandbotRealEstateSituation; count: number }[]
+  > {
+    const query = this.repository
+      .createQueryBuilder('landbot_customer')
+      .select(`landbot_customer.realEstateSituation`, 'realEstateSituation')
+      .addSelect(`COUNT(*)`, 'count')
+      .where(`landbot_customer.desiredCity IS NOT NULL`)
+      .groupBy(`landbot_customer.realEstateSituation`);
 
     return query.getRawMany();
   }
