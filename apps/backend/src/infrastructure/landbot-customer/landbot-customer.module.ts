@@ -8,6 +8,9 @@ import { CreateLandbotCustomerUsecase } from 'src/application/landbot-customer/u
 import { LandbotApiClientModule } from '../landbot-api-client/landbot-api-client.module';
 import { ImportLandbotCustomersCron } from './cron/import-landbot-customers';
 import { FindLastLandbotCustomerUsecase } from 'src/application/landbot-customer/usecases/findLast.usecase';
+import { GroupByEligibilityUsecase } from 'src/application/landbot-customer/usecases/groupByEligibility.usecase';
+import { GroupByBrsKnowledgeUsecase } from 'src/application/landbot-customer/usecases/groupByBrsKnowledge.usecase';
+import { GroupByRealEstateSituationUsecase } from 'src/application/landbot-customer/usecases/groupByRealEstateSituation.usecase';
 
 @Module({
   imports: [
@@ -28,6 +31,9 @@ import { FindLastLandbotCustomerUsecase } from 'src/application/landbot-customer
     LandbotCustomerRepository,
     CreateLandbotCustomerUsecase,
     FindLastLandbotCustomerUsecase,
+    GroupByEligibilityUsecase,
+    GroupByBrsKnowledgeUsecase,
+    GroupByRealEstateSituationUsecase,
     ImportLandbotCustomersCron,
   ],
   exports: [
@@ -36,6 +42,9 @@ import { FindLastLandbotCustomerUsecase } from 'src/application/landbot-customer
     LandbotCustomerRepository,
     CreateLandbotCustomerUsecase,
     FindLastLandbotCustomerUsecase,
+    GroupByEligibilityUsecase,
+    GroupByBrsKnowledgeUsecase,
+    GroupByRealEstateSituationUsecase,
   ],
 })
 export class LandbotCustomerModule {}

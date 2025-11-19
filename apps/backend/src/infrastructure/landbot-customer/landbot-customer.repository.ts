@@ -32,7 +32,7 @@ export class LandbotCustomerRepository
   }
 
   public async groupByEligibility(): Promise<
-    { eligibility: LandbotEligibility; count: number }[]
+    { eligibility: LandbotEligibility; count: string }[]
   > {
     const query = this.repository
       .createQueryBuilder('landbot_customer')
@@ -44,7 +44,7 @@ export class LandbotCustomerRepository
   }
 
   public async groupByBrsKnowledge(): Promise<
-    { brsKnowledge: LandbotBrsKnowledge; count: number }[]
+    { brsKnowledge: LandbotBrsKnowledge; count: string }[]
   > {
     const query = this.repository
       .createQueryBuilder('landbot_customer')
@@ -57,7 +57,7 @@ export class LandbotCustomerRepository
   }
 
   public async groupByRealEstateSituation(): Promise<
-    { realEstateSituation: LandbotRealEstateSituation; count: number }[]
+    { realEstateSituation: LandbotRealEstateSituation; count: string }[]
   > {
     const query = this.repository
       .createQueryBuilder('landbot_customer')
