@@ -8,13 +8,17 @@ import { CreateLandbotCustomerUsecase } from 'src/application/landbot-customer/u
 import { LandbotApiClientModule } from '../landbot-api-client/landbot-api-client.module';
 import { ImportLandbotCustomersCron } from './cron/import-landbot-customers';
 import { FindLastLandbotCustomerUsecase } from 'src/application/landbot-customer/usecases/findLast.usecase';
+import { GroupByEligibilityUsecase } from 'src/application/landbot-customer/usecases/groupByEligibility.usecase';
+import { GroupByBrsKnowledgeUsecase } from 'src/application/landbot-customer/usecases/groupByBrsKnowledge.usecase';
+import { GroupByRealEstateSituationUsecase } from 'src/application/landbot-customer/usecases/groupByRealEstateSituation.usecase';
+import { GetLandbotCustomersByFieldApiController } from './controllers/api/get-landbot-customers-by-field.controller';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([DepartementEntity, LandbotCustomerEntity]),
     LandbotApiClientModule,
   ],
-  controllers: [],
+  controllers: [GetLandbotCustomersByFieldApiController],
   providers: [
     {
       provide: 'DepartementRepositoryInterface',
@@ -28,6 +32,9 @@ import { FindLastLandbotCustomerUsecase } from 'src/application/landbot-customer
     LandbotCustomerRepository,
     CreateLandbotCustomerUsecase,
     FindLastLandbotCustomerUsecase,
+    GroupByEligibilityUsecase,
+    GroupByBrsKnowledgeUsecase,
+    GroupByRealEstateSituationUsecase,
     ImportLandbotCustomersCron,
   ],
   exports: [
@@ -36,6 +43,9 @@ import { FindLastLandbotCustomerUsecase } from 'src/application/landbot-customer
     LandbotCustomerRepository,
     CreateLandbotCustomerUsecase,
     FindLastLandbotCustomerUsecase,
+    GroupByEligibilityUsecase,
+    GroupByBrsKnowledgeUsecase,
+    GroupByRealEstateSituationUsecase,
   ],
 })
 export class LandbotCustomerModule {}

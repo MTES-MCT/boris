@@ -8,6 +8,7 @@ import { OfsModule } from 'src/infrastructure/ofs/ofs.module';
 import { DistributorModule } from 'src/infrastructure/distributor/distributor.module';
 import { BrsDiffusionWebsiteModule } from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.module';
 import { MunicipalityModule } from 'src/infrastructure/municipality/municipality.module';
+import { LandbotCustomerModule } from 'src/infrastructure/landbot-customer/landbot-customer.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { MunicipalityModule } from 'src/infrastructure/municipality/municipality
     DistributorModule,
     BrsDiffusionWebsiteModule,
     MunicipalityModule,
+    LandbotCustomerModule,
   ],
   providers: [TestDataSeed],
 })

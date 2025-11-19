@@ -62,9 +62,9 @@ import { ScheduleModule } from '@nestjs/schedule';
     BrsDiffusionWebsiteModule,
     MunicipalityModule,
     AcquisitionSimulationModule,
+    LandbotCustomerModule,
     AdminHomeModule,
     NotFoundModule,
-    LandbotCustomerModule,
   ],
   controllers: [],
   providers: [
