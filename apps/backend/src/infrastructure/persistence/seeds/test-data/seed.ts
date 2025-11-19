@@ -10,10 +10,11 @@ import { CreateOfsUsecase } from 'src/application/ofs/usecases/create.usecase';
 import { regions } from '../regions-departements/data';
 import { ofss } from '../ofs/data';
 import { BrsDiffusionWebsiteRepositoryInterface } from 'src/domain/brs-diffusion-website/brs-diffusion-website.repository.interface';
-import { geocodedMunicipalities } from './data';
+import { geocodedMunicipalities, landbotCustomers } from './data';
 import { BrsDiffusionWebsiteEntity } from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.entity';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
 import { CreateMunicipalityUsecase } from 'src/application/municipality/usecases/create.usecase';
+import { CreateLandbotCustomerUsecase } from 'src/application/landbot-customer/usecases/create.usecase';
 
 @Injectable()
 export class TestDataSeed {
@@ -25,6 +26,7 @@ export class TestDataSeed {
     private readonly createDistributorUsecase: CreateDistributorUsecase,
     private readonly createOfsUsecase: CreateOfsUsecase,
     private readonly createMunicipalityUsecase: CreateMunicipalityUsecase,
+    private readonly createLandbotCustomerUsecase: CreateLandbotCustomerUsecase,
     @Inject('BrsDiffusionWebsiteRepositoryInterface')
     private readonly brsDiffusionWebsiteRepository: BrsDiffusionWebsiteRepositoryInterface,
     @Inject('DepartementRepositoryInterface')
@@ -171,10 +173,25 @@ export class TestDataSeed {
     }
   }
 
+  private async seedLandbotCustomers() {
+    console.log('Création des landbot customers');
+
+    let landbotCustomersCount = 0;
+
+    for (const landbotCustomer of landbotCustomers) {
+      await this.createLandbotCustomerUsecase.execute(landbotCustomer);
+
+      landbotCustomersCount = landbotCustomersCount + 1;
+    }
+
+    console.log(`${landbotCustomersCount} landbot customers créés.`);
+  }
+
   async seed() {
     await this.seedRegions();
     await this.seedOfss();
     await this.seedBrsDiffusionWebsites();
     await this.seedMunicipalities();
+    await this.seedLandbotCustomers();
   }
 }

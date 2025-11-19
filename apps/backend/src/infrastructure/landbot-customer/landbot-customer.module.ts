@@ -11,13 +11,14 @@ import { FindLastLandbotCustomerUsecase } from 'src/application/landbot-customer
 import { GroupByEligibilityUsecase } from 'src/application/landbot-customer/usecases/groupByEligibility.usecase';
 import { GroupByBrsKnowledgeUsecase } from 'src/application/landbot-customer/usecases/groupByBrsKnowledge.usecase';
 import { GroupByRealEstateSituationUsecase } from 'src/application/landbot-customer/usecases/groupByRealEstateSituation.usecase';
+import { GetLandbotCustomersByFieldApiController } from './controllers/api/get-landbot-customers-by-field.controller';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([DepartementEntity, LandbotCustomerEntity]),
     LandbotApiClientModule,
   ],
-  controllers: [],
+  controllers: [GetLandbotCustomersByFieldApiController],
   providers: [
     {
       provide: 'DepartementRepositoryInterface',
