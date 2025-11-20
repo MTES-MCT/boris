@@ -98,7 +98,7 @@
       <div class="w-full md:w-[calc(50%-1rem)]">
         <Tile
           title={formatNumber(eligibilityData.total)}
-          pictogram="community">
+          pictogram="application">
           <p class="fr-tile__desc">simulations</p>
           <p class="fr-tile__detail !block">
             {@render detailedPercentage({
@@ -127,7 +127,7 @@
         <Tile
           title={`${ofssAmount}`}
           description="Organismes de foncier solidaire (OFS) partenaires"
-          pictogram="binders" />
+          pictogram="ecosystem" />
       </div>
     </div>
   </div>
