@@ -37,10 +37,7 @@ export const formatEuro = (
     style: 'currency',
     currency: 'EUR',
     maximumFractionDigits,
-  })
-    .format(amount)
-    .replace(/\u202f/g, ' ')
-    .replace(/\u00a0/g, ' ');
+  }).format(amount);
 };
 
 export const formatPublishedAt = (date: string) => {

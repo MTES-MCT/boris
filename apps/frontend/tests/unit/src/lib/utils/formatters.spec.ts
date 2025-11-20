@@ -20,13 +20,15 @@ describe('formatOfss', () => {
 });
 
 describe('formatEuro', () => {
+  const NBSP = '\u202f'; // Espace insécable utilisé par Intl.NumberFormat pour fr-FR
+
   it('should format a number to an amount in euro', () => {
-    expect(formatEuro(1)).toMatch('1 €');
-    expect(formatEuro(123)).toMatch('123 €');
-    expect(formatEuro(1234)).toMatch('1 234 €');
-    expect(formatEuro(123456)).toMatch('123 456 €');
-    expect(formatEuro(123456.22)).toMatch('123 456 €');
-    expect(formatEuro(123456.77)).toMatch('123 457 €');
+    expect(formatEuro(1)).toBe('1\xa0€');
+    expect(formatEuro(123)).toBe('123\xa0€');
+    expect(formatEuro(1234)).toBe(`1${NBSP}234\xa0€`);
+    expect(formatEuro(123456)).toBe(`123${NBSP}456\xa0€`);
+    expect(formatEuro(123456.22)).toBe(`123${NBSP}456\xa0€`);
+    expect(formatEuro(123456.77)).toBe(`123${NBSP}457\xa0€`);
   });
 });
 
@@ -39,28 +41,30 @@ describe('formatPublishedAt', () => {
 });
 
 describe('formatNumber', () => {
+  const NBSP = '\u202f'; // Espace insécable utilisé par Intl.NumberFormat pour fr-FR
+
   it('should format a number with French locale formatting', () => {
     expect(formatNumber(1)).toBe('1');
     expect(formatNumber(123)).toBe('123');
-    expect(formatNumber(1234)).toBe('1 234');
-    expect(formatNumber(12345)).toBe('12 345');
-    expect(formatNumber(123456)).toBe('123 456');
-    expect(formatNumber(1234567)).toBe('1 234 567');
+    expect(formatNumber(1234)).toBe(`1${NBSP}234`);
+    expect(formatNumber(12345)).toBe(`12${NBSP}345`);
+    expect(formatNumber(123456)).toBe(`123${NBSP}456`);
+    expect(formatNumber(1234567)).toBe(`1${NBSP}234${NBSP}567`);
   });
 
   it('should round decimal numbers when maximumFractionDigits is 0 (default)', () => {
     expect(formatNumber(1.5)).toBe('2');
     expect(formatNumber(123.45)).toBe('123');
-    expect(formatNumber(1234.567)).toBe('1 235');
-    expect(formatNumber(123456.789)).toBe('123 457');
+    expect(formatNumber(1234.567)).toBe(`1${NBSP}235`);
+    expect(formatNumber(123456.789)).toBe(`123${NBSP}457`);
     expect(formatNumber(1.4)).toBe('1');
   });
 
   it('should format decimal numbers with specified maximumFractionDigits', () => {
     expect(formatNumber(1.5, 1)).toBe('1,5');
     expect(formatNumber(123.45, 2)).toBe('123,45');
-    expect(formatNumber(1234.567, 3)).toBe('1 234,567');
-    expect(formatNumber(123456.789, 2)).toBe('123 456,79');
+    expect(formatNumber(1234.567, 3)).toBe(`1${NBSP}234,567`);
+    expect(formatNumber(123456.789, 2)).toBe(`123${NBSP}456,79`);
     expect(formatNumber(1.456, 1)).toBe('1,5');
     expect(formatNumber(1.456, 2)).toBe('1,46');
   });
@@ -73,7 +77,7 @@ describe('formatNumber', () => {
 
   it('should format negative numbers correctly', () => {
     expect(formatNumber(-1)).toBe('-1');
-    expect(formatNumber(-1234)).toBe('-1 234');
+    expect(formatNumber(-1234)).toBe(`-1${NBSP}234`);
     expect(formatNumber(-123.45)).toBe('-123');
     expect(formatNumber(-123.45, 2)).toBe('-123,45');
     expect(formatNumber(-1.5)).toBe('-2');
@@ -81,8 +85,8 @@ describe('formatNumber', () => {
   });
 
   it('should format large numbers correctly', () => {
-    expect(formatNumber(1000000)).toBe('1 000 000');
-    expect(formatNumber(1000000000)).toBe('1 000 000 000');
-    expect(formatNumber(1000000.5, 1)).toBe('1 000 000,5');
+    expect(formatNumber(1000000)).toBe(`1${NBSP}000${NBSP}000`);
+    expect(formatNumber(1000000000)).toBe(`1${NBSP}000${NBSP}000${NBSP}000`);
+    expect(formatNumber(1000000.5, 1)).toBe(`1${NBSP}000${NBSP}000,5`);
   });
 });
