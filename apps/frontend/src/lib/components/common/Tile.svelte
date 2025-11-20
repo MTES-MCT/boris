@@ -5,9 +5,10 @@
 
   import { pictograms } from '$lib/utils/pictograms';
   import Pictogram from '$components/common/Pictogram.svelte';
+  import type { Snippet } from 'svelte';
 
   type Props = {
-    title?: string;
+    title: string;
     description?: string;
     detail?: string;
     badge?: string;
@@ -15,6 +16,7 @@
     horizontal?: boolean;
     enlarge?: boolean;
     href?: string;
+    children?: Snippet;
   };
 
   const {
@@ -26,6 +28,7 @@
     horizontal,
     enlarge,
     href,
+    children,
   }: Props = $props();
 </script>
 
@@ -35,25 +38,27 @@
   class:fr-enlarge-link={enlarge}>
   <div class="fr-tile__body">
     <div class="fr-tile__content">
-      {#if title}
-        <h3 class="fr-tile__title">
-          {#if href}
-            <a {href}>
-              {title}
-            </a>
-          {:else}
+      <h3 class="fr-tile__title">
+        {#if href}
+          <a {href}>
             {title}
-          {/if}
-        </h3>
-      {/if}
-      {#if description}
-        <p class="fr-tile__desc">{description}</p>
-      {/if}
-      {#if detail}
-        <p class="fr-tile__detail">{detail}</p>
-      {/if}
-      {#if badge}
-        <p class="fr-badge fr-badge--purple-glycine">{badge}</p>
+          </a>
+        {:else}
+          {title}
+        {/if}
+      </h3>
+      {#if children}
+        {@render children()}
+      {:else}
+        {#if description}
+          <p class="fr-tile__desc">{description}</p>
+        {/if}
+        {#if detail}
+          <p class="fr-tile__detail">{detail}</p>
+        {/if}
+        {#if badge}
+          <p class="fr-badge fr-badge--purple-glycine">{badge}</p>
+        {/if}
       {/if}
     </div>
   </div>
