@@ -79,8 +79,6 @@
       totalsRealEstateSituation,
     };
   });
-
-  $inspect(householdsData);
 </script>
 
 <Section id="statistiques">
