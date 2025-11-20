@@ -37,10 +37,7 @@ export const formatEuro = (
     style: 'currency',
     currency: 'EUR',
     maximumFractionDigits,
-  })
-    .format(amount)
-    .replace(/\u202f/g, ' ')
-    .replace(/\u00a0/g, ' ');
+  }).format(amount);
 };
 
 export const formatPublishedAt = (date: string) => {
@@ -51,4 +48,13 @@ export const formatPublishedAt = (date: string) => {
   }).format(new Date(date));
 
   return `Publié le ${formattedDate}`;
+};
+
+export const formatNumber = (
+  number: number,
+  maximumFractionDigits: number = 0,
+) => {
+  return new Intl.NumberFormat('fr-FR', {
+    maximumFractionDigits,
+  }).format(number);
 };

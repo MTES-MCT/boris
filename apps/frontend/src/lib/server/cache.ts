@@ -4,6 +4,10 @@ export const namespaces = {
   ofss: 'ofss',
   brsDiffusionWebsites: 'brs-diffusion-websites',
   municipalities: 'municipalities',
+  landbotCustomersEligibility: 'landbot-customers-eligibility',
+  landbotCustomersBrsKnowledge: 'landbot-customers-brs-knowledge',
+  landbotCustomersRealEstateSituation:
+    'landbot-customers-real-estate-situation',
 };
 
 const TTL_HOURS = 24;

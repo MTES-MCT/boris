@@ -3,8 +3,8 @@ import { IsEnum, IsNotEmpty } from 'class-validator';
 
 export enum LandbotCustomerGroupByField {
   ELIGIBILITY = 'eligibility',
-  BRS_KNOWLEDGE = 'brsKnowledge',
-  REAL_ESTATE_SITUATION = 'realEstateSituation',
+  BRS_KNOWLEDGE = 'brs-knowledge',
+  REAL_ESTATE_SITUATION = 'real-estate-situation',
 }
 
 export class GetLandbotCustomersByFieldDTO {

@@ -1,4 +1,4 @@
-import type { components } from './generated-api-types';
+import type { components, operations } from './generated-api-types';
 
 export type Pagination<T> = Omit<
   components['schemas']['Pagination'],
@@ -36,3 +36,6 @@ export type CreateAcquisitionSimulationDto =
 
 export type UpdateAcquisitionSimulationDto =
   components['schemas']['UpdateAcquisitionSimulationDTO'];
+
+export type GetLandbotCustomerByFieldsPathParams =
+  operations['GetLandbotCustomersByFieldApiController_index']['parameters']['path']['field'];

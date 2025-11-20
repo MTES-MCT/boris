@@ -36,8 +36,6 @@ describe('UpdateAcquisitionSimulationApiController', () => {
   });
 
   it('should throw 401 if no api key is provided', async () => {
-    console.log(`/api/acquisition-simulations/${resourceId}`);
-
     const { status } = await request(app.getHttpServer()).put(
       `/api/acquisition-simulations/${resourceId}`,
     );

@@ -11,6 +11,7 @@ export const GET = async () => {
         'x-api-key': API_KEY,
       },
     });
+
     ofss = await response.json();
     cache.set(namespaces.ofss, ofss);
   }

@@ -49,7 +49,7 @@ describe('GetLandbotCustomersByFieldApiController', () => {
 
   it('should return landbot customers grouped by brs knowledge', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .get('/api/landbot-customers/brsKnowledge')
+      .get('/api/landbot-customers/brs-knowledge')
       .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(200);
@@ -67,7 +67,7 @@ describe('GetLandbotCustomersByFieldApiController', () => {
 
   it('should return landbot customers grouped by real estate situation', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .get('/api/landbot-customers/realEstateSituation')
+      .get('/api/landbot-customers/real-estate-situation')
       .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(200);
