@@ -28,8 +28,6 @@ export const GET = async ({ params }) => {
 
   let data = await cache.get(cacheNamespace);
 
-  console.log(data);
-
   if (!data) {
     const response = await fetch(`${API_URL}/landbot-customers/${field}`, {
       headers: {
