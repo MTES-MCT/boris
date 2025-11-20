@@ -123,6 +123,23 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/landbot-customers/{field}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Récupérer tous les sites web de diffusion BRS */
+    get: operations['GetLandbotCustomersByFieldApiController_index'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -266,12 +283,12 @@ export interface components {
       monthlyExpenses: number;
       /**
        * Format: date-time
-       * @example 2025-10-23T14:41:36.568Z
+       * @example 2025-11-20T11:11:59.551Z
        */
       createdAt: string;
       /**
        * Format: date-time
-       * @example 2025-10-23T14:41:36.568Z
+       * @example 2025-11-20T11:11:59.551Z
        */
       updatedAt: string;
     };
@@ -294,6 +311,23 @@ export interface components {
       condominiumFeesFrequency?: string;
       condominiumFees?: number;
       monthlyExpenses?: number;
+    };
+    LandbotCustomerGroupByView: {
+      /** @example [
+       *       {
+       *         "eligibility": "1",
+       *         "count": "32"
+       *       },
+       *       {
+       *         "eligibility": "2",
+       *         "count": "18"
+       *       },
+       *       {
+       *         "eligibility": "null",
+       *         "count": "2"
+       *       }
+       *     ] */
+      data: string[];
     };
   };
   responses: never;
@@ -525,6 +559,29 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['AcquisitionSimulationView'];
+        };
+      };
+    };
+  };
+  GetLandbotCustomersByFieldApiController_index: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Le champ par lequel grouper les clients Landbot */
+        field: 'eligibility' | 'brs-knowledge' | 'real-estate-situation';
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Clients Landbot groupés par champs */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['LandbotCustomerGroupByView'];
         };
       };
     };

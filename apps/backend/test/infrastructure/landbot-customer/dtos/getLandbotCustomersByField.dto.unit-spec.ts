@@ -94,7 +94,7 @@ describe('GetLandbotCustomersByFieldDTO', () => {
       'eligibility ',
       ' eligibility',
       'ELIGIBILITY',
-      'brs-knowledge',
+      'brs_knowledge',
       'real_estate_situation',
       'eligibility1',
     ];
