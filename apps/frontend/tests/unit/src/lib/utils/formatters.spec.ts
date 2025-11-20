@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   formatEuro,
+  formatNumber,
   formatOfss,
   formatPublishedAt,
 } from '$lib/utils/formatters';
@@ -34,5 +35,54 @@ describe('formatPublishedAt', () => {
     expect(formatPublishedAt('2025-01-07T15:15:15.899904+01:00')).toMatch(
       'Publié le 7 janvier 2025 à 15:15',
     );
+  });
+});
+
+describe('formatNumber', () => {
+  it('should format a number with French locale formatting', () => {
+    expect(formatNumber(1)).toBe('1');
+    expect(formatNumber(123)).toBe('123');
+    expect(formatNumber(1234)).toBe('1 234');
+    expect(formatNumber(12345)).toBe('12 345');
+    expect(formatNumber(123456)).toBe('123 456');
+    expect(formatNumber(1234567)).toBe('1 234 567');
+  });
+
+  it('should round decimal numbers when maximumFractionDigits is 0 (default)', () => {
+    expect(formatNumber(1.5)).toBe('2');
+    expect(formatNumber(123.45)).toBe('123');
+    expect(formatNumber(1234.567)).toBe('1 235');
+    expect(formatNumber(123456.789)).toBe('123 457');
+    expect(formatNumber(1.4)).toBe('1');
+  });
+
+  it('should format decimal numbers with specified maximumFractionDigits', () => {
+    expect(formatNumber(1.5, 1)).toBe('1,5');
+    expect(formatNumber(123.45, 2)).toBe('123,45');
+    expect(formatNumber(1234.567, 3)).toBe('1 234,567');
+    expect(formatNumber(123456.789, 2)).toBe('123 456,79');
+    expect(formatNumber(1.456, 1)).toBe('1,5');
+    expect(formatNumber(1.456, 2)).toBe('1,46');
+  });
+
+  it('should format zero correctly', () => {
+    expect(formatNumber(0)).toBe('0');
+    expect(formatNumber(0.0)).toBe('0');
+    expect(formatNumber(0, 2)).toBe('0');
+  });
+
+  it('should format negative numbers correctly', () => {
+    expect(formatNumber(-1)).toBe('-1');
+    expect(formatNumber(-1234)).toBe('-1 234');
+    expect(formatNumber(-123.45)).toBe('-123');
+    expect(formatNumber(-123.45, 2)).toBe('-123,45');
+    expect(formatNumber(-1.5)).toBe('-2');
+    expect(formatNumber(-1.5, 1)).toBe('-1,5');
+  });
+
+  it('should format large numbers correctly', () => {
+    expect(formatNumber(1000000)).toBe('1 000 000');
+    expect(formatNumber(1000000000)).toBe('1 000 000 000');
+    expect(formatNumber(1000000.5, 1)).toBe('1 000 000,5');
   });
 });

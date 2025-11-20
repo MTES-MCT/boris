@@ -1,26 +1,46 @@
 import type { PageServerLoad } from './$types';
-import { statistics } from '$lib/utils/constants';
 
 type PageData = {
-  statistics: {
-    amount: string;
-    subtitle: string;
-    content: string;
+  investedAmount: number;
+  purchasePlanAmount: string;
+  eligibility: {
+    eligibility: string;
+    count: string;
   }[];
+  brsKnowledge: {
+    brsKnowledge: string;
+    count: string;
+  }[];
+  realEstateSituation: {
+    realEstateSituation: string;
+    count: string;
+  }[];
+  ofssAmount: number;
 };
 
 export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
   const response = await fetch('api/ofss');
   const ofss = await response.json();
 
+  const eligibilityRespone = await fetch('api/landbot-customers/eligibility');
+  const eligibility = await eligibilityRespone.json();
+
+  const brsKnowledgeResponse = await fetch(
+    'api/landbot-customers/brs-knowledge',
+  );
+  const brsKnowledge = await brsKnowledgeResponse.json();
+
+  const realEstateSituationResponse = await fetch(
+    'api/landbot-customers/real-estate-situation',
+  );
+  const realEstateSituation = await realEstateSituationResponse.json();
+
   return {
-    statistics: [
-      ...statistics,
-      {
-        amount: ofss.totalCount.toString(),
-        subtitle: 'Organismes de foncier solidaire (OFS) partenaires',
-        content: '',
-      },
-    ],
+    investedAmount: 380000,
+    purchasePlanAmount: '100 à 150',
+    eligibility: eligibility.data,
+    brsKnowledge: brsKnowledge.data,
+    realEstateSituation: realEstateSituation.data,
+    ofssAmount: ofss.totalCount,
   };
 };

@@ -8,6 +8,14 @@
   import Stats from '$components/pages/notre-mission/Stats.svelte';
 
   const { data }: PageProps = $props();
+  const {
+    investedAmount,
+    purchasePlanAmount,
+    ofssAmount,
+    eligibility,
+    brsKnowledge,
+    realEstateSituation,
+  } = data;
 </script>
 
 <svelte:head>
@@ -21,5 +29,11 @@
   <Hero />
   <Team />
   <Chronology />
-  <Stats statistics={data.statistics} />
+  <Stats
+    {investedAmount}
+    {eligibility}
+    {brsKnowledge}
+    {realEstateSituation}
+    {purchasePlanAmount}
+    {ofssAmount} />
 </GradientBackgroundWrapper>

@@ -52,3 +52,12 @@ export const formatPublishedAt = (date: string) => {
 
   return `Publié le ${formattedDate}`;
 };
+
+export const formatNumber = (
+  number: number,
+  maximumFractionDigits: number = 0,
+) => {
+  return new Intl.NumberFormat('fr-FR', {
+    maximumFractionDigits,
+  }).format(number);
+};
