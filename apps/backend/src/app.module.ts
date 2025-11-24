@@ -18,6 +18,7 @@ import { MunicipalityModule } from './infrastructure/municipality/municipality.m
 import { AcquisitionSimulationModule } from './infrastructure/acquisition-simulation/acquisition-simulation.module';
 import { LandbotCustomerModule } from './infrastructure/landbot-customer/landbot-customer.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { DatagouvModule } from './infrastructure/datagouv/datagouv.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     MunicipalityModule,
     AcquisitionSimulationModule,
     LandbotCustomerModule,
+    DatagouvModule,
     AdminHomeModule,
     NotFoundModule,
   ],
