@@ -6,6 +6,7 @@ import { GroupByRegionsUsecase } from 'src/application/landbot-customer/usecases
 
 // import { CsvFileServiceInterface } from 'src/domain/csv-file/csv-file.service.interface';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const headers = [
   'administration_rattachement',
   'nom_service_public_numerique',
@@ -32,7 +33,7 @@ type MonthlyStatisticsRow = {
 
 @Injectable()
 export class UploadMonthlyStatisticsCron {
-  private readonly filePathPrefix = 'statistiques-impact-BoRiS';
+  // private readonly filePathPrefix = 'statistiques-impact-BoRiS';
   private readonly initialRow: MonthlyStatisticsRow = {
     administration_rattachement: 'DGALN',
     nom_service_public_numerique: 'BoRiS',
@@ -62,14 +63,14 @@ export class UploadMonthlyStatisticsCron {
 
   @Cron('*/3 * * * * *', { timeZone: 'Europe/Paris' })
   public async execute() {
-    const today = new Date();
-    const lastMonthLastDay = new Date(today.setDate(0));
+    // const today = new Date();
+    // const lastMonthLastDay = new Date(today.setDate(0));
 
-    const monthName = lastMonthLastDay.toLocaleString('fr-FR', {
-      month: 'long',
-    });
-    const year = lastMonthLastDay.toLocaleString('fr-FR', { year: 'numeric' });
-    const filePath = `${this.filePathPrefix}-${monthName}-${year}.csv`;
+    // const monthName = lastMonthLastDay.toLocaleString('fr-FR', {
+    //   month: 'long',
+    // });
+    // const year = lastMonthLastDay.toLocaleString('fr-FR', { year: 'numeric' });
+    // const filePath = `${this.filePathPrefix}-${monthName}-${year}.csv`;
 
     const rows: MonthlyStatisticsRow[] = [];
 
@@ -81,7 +82,7 @@ export class UploadMonthlyStatisticsCron {
 
     console.log(rows);
 
-    await this.csvFileService.create([...headers], filePath, rows);
+    // await this.csvFileService.create([...headers], filePath, rows);
 
     // try {
     //   await this.datagouvRepository.uploadCsvFile(
