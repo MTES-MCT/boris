@@ -17,4 +17,5 @@ export interface LandbotCustomerRepositoryInterface {
   groupByRealEstateSituation(): Promise<
     { realEstateSituation: LandbotRealEstateSituation; count: string }[]
   >;
+  countSimulations(): Promise<number>;
 }
