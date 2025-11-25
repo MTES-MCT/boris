@@ -68,4 +68,15 @@ export class LandbotCustomerRepository
 
     return query.getRawMany();
   }
+
+  public async countSimulations(): Promise<number> {
+    const query = this.repository
+      .createQueryBuilder('landbot_customer')
+      .select(`COUNT(*)`, 'count')
+      .where(`landbot_customer.eligibility = '1'`)
+      .orWhere(`landbot_customer.eligibility = '2'`)
+      .orWhere(`landbot_customer.eligibility = '4'`);
+
+    return query.getCount();
+  }
 }

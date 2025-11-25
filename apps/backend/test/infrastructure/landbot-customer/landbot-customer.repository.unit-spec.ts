@@ -258,4 +258,44 @@ describe('LandbotCustomerRepository', () => {
     );
     expect(mockQueryBuilder.getRawMany).toHaveBeenCalledTimes(1);
   });
+
+  it('should count simulations with eligibility 1, 2, or 4 and return the count', async () => {
+    const expectedCount = 42;
+    const mockQueryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      orWhere: jest.fn().mockReturnThis(),
+      getCount: jest.fn().mockResolvedValue(expectedCount),
+    };
+
+    mockLandbotCustomerRepository.createQueryBuilder.mockReturnValue(
+      mockQueryBuilder,
+    );
+
+    const result = await landbotCustomerRepository.countSimulations();
+
+    expect(result).toBe(expectedCount);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('landbot_customer');
+    expect(mockQueryBuilder.select).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.select).toHaveBeenCalledWith('COUNT(*)', 'count');
+    expect(mockQueryBuilder.where).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.where).toHaveBeenCalledWith(
+      "landbot_customer.eligibility = '1'",
+    );
+    expect(mockQueryBuilder.orWhere).toHaveBeenCalledTimes(2);
+    expect(mockQueryBuilder.orWhere).toHaveBeenNthCalledWith(
+      1,
+      "landbot_customer.eligibility = '2'",
+    );
+    expect(mockQueryBuilder.orWhere).toHaveBeenNthCalledWith(
+      2,
+      "landbot_customer.eligibility = '4'",
+    );
+    expect(mockQueryBuilder.getCount).toHaveBeenCalledTimes(1);
+  });
 });

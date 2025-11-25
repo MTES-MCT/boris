@@ -1,39 +1,99 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
+import { CountSimulationsUsecase } from 'src/application/landbot-customer/usecases/countSimulations.usecase';
 
 import { CsvFileServiceInterface } from 'src/domain/csv-file/csv-file.service.interface';
-import { DatagouvRepositoryInterface } from 'src/domain/datagouv/datagouv.repository.interface';
+
+const headers = [
+  'administration_rattachement',
+  'nom_service_public_numerique',
+  'indicateur',
+  'type_indicateur',
+  'valeur',
+  'unite_mesure',
+  'est_cible',
+  'frequence_monitoring',
+  'date',
+  'est_periode',
+  'date_debut',
+  'est_automatise',
+  'source_collecte',
+  'denom_insee',
+  'code_insee',
+  'dataviz_wish',
+  'commentaires',
+] as const;
+
+type MonthlyStatisticsRow = {
+  [K in (typeof headers)[number]]: string;
+};
 
 @Injectable()
 export class UploadMonthlyStatisticsCron {
+  private readonly filePathPrefix = 'statistiques-impact-BoRiS';
+  private readonly initialRow: MonthlyStatisticsRow = {
+    administration_rattachement: 'DGALN',
+    nom_service_public_numerique: 'BoRiS',
+    indicateur: '',
+    type_indicateur: 'impact',
+    valeur: '',
+    unite_mesure: 'unité',
+    est_cible: 'FALSE',
+    frequence_monitoring: 'trimestrielle',
+    date: '',
+    est_periode: 'TRUE',
+    date_debut: '',
+    est_automatise: 'TRUE',
+    source_collecte: 'script',
+    denom_insee: '',
+    code_insee: '',
+    dataviz_wish: '',
+    commentaires: '',
+  };
+
   constructor(
-    @Inject('DatagouvRepositoryInterface')
-    private readonly datagouvRepository: DatagouvRepositoryInterface,
     @Inject('CsvFileServiceInterface')
     private readonly csvFileService: CsvFileServiceInterface,
+    private readonly countSimulationsUsecase: CountSimulationsUsecase,
   ) {}
 
-  @Cron('*/10 * * * * *', { timeZone: 'Europe/Paris' })
+  @Cron('*/3 * * * * *', { timeZone: 'Europe/Paris' })
   public async execute() {
-    // console.log('Upload des statistiques mensuelles...');
+    const today = new Date();
+    const lastMonthLastDay = new Date(today.setDate(0));
 
-    // const headers = ['name', 'age', 'city'];
-    // const filePath = 'create-test.csv';
-    // const rows = [
-    //   { name: 'John', age: '30', city: 'Paris' },
-    //   { name: 'Jane', age: '25', city: 'Lyon' },
-    // ];
+    const monthName = lastMonthLastDay.toLocaleString('fr-FR', {
+      month: 'long',
+    });
+    const year = lastMonthLastDay.toLocaleString('fr-FR', { year: 'numeric' });
+    const filePath = `${this.filePathPrefix}-${monthName}-${year}.csv`;
 
-    // await this.csvFileService.create(headers, filePath, rows);
+    const rows: MonthlyStatisticsRow[] = [];
 
-    try {
-      await this.datagouvRepository.uploadCsvFile(
-        'data.csv',
-        process.env.DATAGOUV_API_KEY as string,
-        process.env.DATAGOUV_DATASET_ID as string,
-      );
-    } catch (error) {
-      console.error('Error uploading monthly statistics:', error);
-    }
+    const simulationsCountRow = await this.getSimulationsCountRow();
+    rows.push(simulationsCountRow);
+
+    await this.csvFileService.create([...headers], filePath, rows);
+
+    // try {
+    //   await this.datagouvRepository.uploadCsvFile(
+    //     'data.csv',
+    //     process.env.DATAGOUV_API_KEY as string,
+    //     process.env.DATAGOUV_DATASET_ID as string,
+    //   );
+    // } catch (error) {
+    //   console.error('Error uploading monthly statistics:', error);
+    // }
+  }
+
+  private async getSimulationsCountRow(): Promise<MonthlyStatisticsRow> {
+    const simulationsCount = await this.countSimulationsUsecase.execute();
+
+    return {
+      ...this.initialRow,
+      valeur: simulationsCount.toString(),
+      indicateur: 'Nombre de simulation réalisees',
+      commentaires: 'Nombre de simulations réalisées au niveau national',
+    };
   }
 }

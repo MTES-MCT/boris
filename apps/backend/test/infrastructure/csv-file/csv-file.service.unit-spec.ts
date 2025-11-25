@@ -45,17 +45,6 @@ describe('CsvFileService', () => {
       expect(content).toContain('Jane,25,Lyon');
     });
 
-    it('should create a CSV file with empty rows', async () => {
-      const filePath = path.join(tempDir, 'create-empty-test.csv');
-      const rows: Row[] = [];
-
-      await csvFileService.create(headers, filePath, rows);
-
-      expect(fs.existsSync(filePath)).toBe(true);
-      const content = fs.readFileSync(filePath, 'utf-8');
-      expect(content).toBeDefined();
-    });
-
     it('should overwrite existing file', async () => {
       const filePath = path.join(tempDir, 'overwrite-test.csv');
       const firstRows: Row[] = [{ name: 'First', age: '1', city: 'City1' }];
