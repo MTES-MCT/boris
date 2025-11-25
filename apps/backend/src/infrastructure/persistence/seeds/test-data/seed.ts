@@ -15,11 +15,16 @@ import { BrsDiffusionWebsiteEntity } from 'src/infrastructure/brs-diffusion-webs
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
 import { CreateMunicipalityUsecase } from 'src/application/municipality/usecases/create.usecase';
 import { CreateLandbotCustomerUsecase } from 'src/application/landbot-customer/usecases/create.usecase';
+import { inseeRegions } from '../regions-code/data';
+import { UpdateRegionUsecase } from 'src/application/region/usecases/update.usecase';
+import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.usecase';
 
 @Injectable()
 export class TestDataSeed {
   constructor(
     private readonly saveRegionUsecase: SaveRegionUsecase,
+    private readonly updateRegionUsecase: UpdateRegionUsecase,
+    private readonly findAllRegionsUsecase: FindAllRegionsUsecase,
     private readonly saveDepartementUsecase: SaveDepartementUsecase,
     private readonly findManyDepartementsByNamesUsecase: FindManyDepartementsByNamesUsecase,
     private readonly findOneRegionByNameUsecase: FindOneRegionByNameUsecase,
@@ -193,5 +198,26 @@ export class TestDataSeed {
     await this.seedBrsDiffusionWebsites();
     await this.seedMunicipalities();
     await this.seedLandbotCustomers();
+    await this.seedRegionsCode();
+  }
+
+  private async seedRegionsCode() {
+    console.log('Ajout des codes des régions');
+
+    const { items } = await this.findAllRegionsUsecase.execute({
+      page: 1,
+      pageSize: 100,
+    });
+
+    for (const region of items) {
+      const inseeRegion = inseeRegions.find((r) => r.LIBELLE === region.name);
+
+      if (inseeRegion) {
+        await this.updateRegionUsecase.execute({
+          name: region.name,
+          code: inseeRegion.REG,
+        });
+      }
+    }
   }
 }
