@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { GroupByRealEstateSituationUsecase } from 'src/application/landbot-customer/usecases/groupByRealEstateSituation.usecase';
-import { LandbotCustomerGroupByView } from 'src/application/landbot-customer/views/landbot-customer-group-by.view';
+import { LandbotCustomerGroupByFieldView } from 'src/application/landbot-customer/views/landbot-customer-group-by-field.view';
 
 import {
   mockLandbotCustomerRepository,
@@ -33,7 +33,7 @@ describe('GroupByRealEstateSituationUsecase', () => {
 
     const result = await useCase.execute();
 
-    expect(result).toBeInstanceOf(LandbotCustomerGroupByView);
+    expect(result).toBeInstanceOf(LandbotCustomerGroupByFieldView);
     expect(result.data).toEqual(mockGroupByRealEstateSituationResults);
     expect(
       mockLandbotCustomerRepository.groupByRealEstateSituation,
@@ -50,7 +50,7 @@ describe('GroupByRealEstateSituationUsecase', () => {
 
     const result = await useCase.execute();
 
-    expect(result).toBeInstanceOf(LandbotCustomerGroupByView);
+    expect(result).toBeInstanceOf(LandbotCustomerGroupByFieldView);
     expect(result.data).toEqual([]);
     expect(
       mockLandbotCustomerRepository.groupByRealEstateSituation,

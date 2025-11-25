@@ -8,7 +8,7 @@ import {
 // import { FindAllBrsDiffusionWebsitesUsecase } from 'src/application/brs-diffusion-website/usecases/findAll.usecase';
 
 import { ApiKeyGuard } from 'src/infrastructure/auth/guards/api-key.guard';
-import { LandbotCustomerGroupByView } from 'src/application/landbot-customer/views/landbot-customer-group-by.view';
+import { LandbotCustomerGroupByFieldView } from 'src/application/landbot-customer/views/landbot-customer-group-by-field.view';
 import {
   GetLandbotCustomersByFieldDTO,
   LandbotCustomerGroupByField,
@@ -32,7 +32,7 @@ export class GetLandbotCustomersByFieldApiController {
   @ApiResponse({
     status: 200,
     description: 'Clients Landbot groupés par champs',
-    type: LandbotCustomerGroupByView,
+    type: LandbotCustomerGroupByFieldView,
   })
   @ApiOperation({ summary: 'Récupérer tous les sites web de diffusion BRS' })
   index(@Param() { field }: GetLandbotCustomersByFieldDTO) {

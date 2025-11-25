@@ -13,6 +13,7 @@ import { GroupByBrsKnowledgeUsecase } from 'src/application/landbot-customer/use
 import { GroupByRealEstateSituationUsecase } from 'src/application/landbot-customer/usecases/groupByRealEstateSituation.usecase';
 import { GetLandbotCustomersByFieldApiController } from './controllers/api/get-landbot-customers-by-field.controller';
 import { CountSimulationsUsecase } from 'src/application/landbot-customer/usecases/countSimulations.usecase';
+import { GroupByRegionsUsecase } from 'src/application/landbot-customer/usecases/groupByRegions.usecase';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { CountSimulationsUsecase } from 'src/application/landbot-customer/usecas
     GroupByBrsKnowledgeUsecase,
     GroupByRealEstateSituationUsecase,
     CountSimulationsUsecase,
+    GroupByRegionsUsecase,
     ImportLandbotCustomersCron,
   ],
   exports: [
@@ -49,6 +51,7 @@ import { CountSimulationsUsecase } from 'src/application/landbot-customer/usecas
     GroupByBrsKnowledgeUsecase,
     GroupByRealEstateSituationUsecase,
     CountSimulationsUsecase,
+    GroupByRegionsUsecase,
   ],
 })
 export class LandbotCustomerModule {}
