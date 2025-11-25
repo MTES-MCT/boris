@@ -86,6 +86,7 @@ export class LandbotCustomerRepository
   public async groupByRegions(): Promise<
     [GroupByRegionsResult[], total: number]
   > {
+    // TODO: write specs
     const query = this.repository
       .createQueryBuilder('landbot_customer')
       .select(`r.name`, 'regionName')
