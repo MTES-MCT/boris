@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { LandbotCustomerRepositoryInterface } from 'src/domain/landbot-customer/landbot-customer.repository.interface';
+import {
+  GroupByRegionsResult,
+  LandbotCustomerRepositoryInterface,
+} from 'src/domain/landbot-customer/landbot-customer.repository.interface';
 import { LandbotCustomerEntity } from './landbot-customer.entity';
 import {
   LandbotBrsKnowledge,
@@ -78,5 +81,33 @@ export class LandbotCustomerRepository
       .orWhere(`landbot_customer.eligibility = '4'`);
 
     return query.getCount();
+  }
+
+  public async groupByRegions(): Promise<
+    [GroupByRegionsResult[], total: number]
+  > {
+    const query = this.repository
+      .createQueryBuilder('landbot_customer')
+      .select(`r.name`, 'regionName')
+      .addSelect(`r.code`, 'regionCode')
+      .addSelect(`COUNT(*)`, 'count')
+      .innerJoin('departement', 'd', 'd.id = landbot_customer.departementId')
+      .innerJoin('region', 'r', 'r.id = d.regionId')
+      .where(`landbot_customer.desiredCity IS NOT NULL`)
+      .groupBy('r.name')
+      .addGroupBy('r.code');
+
+    const result = await query.getRawMany();
+
+    const totalQuery = this.repository
+      .createQueryBuilder('landbot_customer')
+      .select(`COUNT(*)`, 'count')
+      .innerJoin('departement', 'd', 'd.id = landbot_customer.departementId')
+      .innerJoin('region', 'r', 'r.id = d.regionId')
+      .where(`landbot_customer.desiredCity IS NOT NULL`);
+
+    const total = await totalQuery.getRawOne();
+
+    return [result, total];
   }
 }

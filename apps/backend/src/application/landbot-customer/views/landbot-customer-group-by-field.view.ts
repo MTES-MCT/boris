@@ -8,7 +8,7 @@ export type GroupByViewPayload<K extends PropertyKey, V> = Array<
   }
 >;
 
-export class LandbotCustomerGroupByView<K extends PropertyKey, V> {
+export class LandbotCustomerGroupByFieldView<K extends PropertyKey, V> {
   @ApiProperty({
     example: [
       { eligibility: '1', count: '32' },

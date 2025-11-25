@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { LandbotCustomerRepositoryInterface } from 'src/domain/landbot-customer/landbot-customer.repository.interface';
 import { LandbotRealEstateSituation } from 'src/domain/landbot-customer/landbot-customer.interface';
-import { LandbotCustomerGroupByView } from '../views/landbot-customer-group-by.view';
+import { LandbotCustomerGroupByFieldView } from '../views/landbot-customer-group-by-field.view';
 
 export class GroupByRealEstateSituationUsecase {
   constructor(
@@ -10,7 +10,7 @@ export class GroupByRealEstateSituationUsecase {
   ) {}
 
   public async execute(): Promise<
-    LandbotCustomerGroupByView<
+    LandbotCustomerGroupByFieldView<
       'realEstateSituation',
       LandbotRealEstateSituation
     >
@@ -18,7 +18,7 @@ export class GroupByRealEstateSituationUsecase {
     const result =
       await this.landbotCustomerRepository.groupByRealEstateSituation();
 
-    return new LandbotCustomerGroupByView<
+    return new LandbotCustomerGroupByFieldView<
       'realEstateSituation',
       LandbotRealEstateSituation
     >(result);
