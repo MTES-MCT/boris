@@ -8,6 +8,7 @@ import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.u
 import { GetBrsDiffusionWebsitesByRegionApiController } from './controllers/api/get-brs-diffusion-websites.controller';
 import { FindAllBrsDiffusionWebsitesByRegionUsecase } from 'src/application/brs-diffusion-website/usecases/findAllByRegion.usecase';
 import { BrsDiffusionWebsiteModule } from '../brs-diffusion-website/brs-diffusion-website.module';
+import { UpdateRegionUsecase } from 'src/application/region/usecases/update.usecase';
 
 @Module({
   imports: [
@@ -21,12 +22,14 @@ import { BrsDiffusionWebsiteModule } from '../brs-diffusion-website/brs-diffusio
     FindOneRegionByNameUsecase,
     FindAllRegionsUsecase,
     FindAllBrsDiffusionWebsitesByRegionUsecase,
+    UpdateRegionUsecase,
   ],
   exports: [
     'RegionRepositoryInterface',
     SaveRegionUsecase,
     FindOneRegionByNameUsecase,
     FindAllRegionsUsecase,
+    UpdateRegionUsecase,
   ],
 })
 export class RegionModule {}

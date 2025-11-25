@@ -1,4 +1,7 @@
-import { RegionInterface } from 'src/domain/region/region.interface';
+import {
+  RegionCode,
+  RegionInterface,
+} from 'src/domain/region/region.interface';
 import {
   Column,
   CreateDateColumn,
@@ -19,6 +22,9 @@ export class RegionEntity implements RegionInterface {
 
   @Column({ type: 'varchar', nullable: false })
   public name: string;
+
+  @Column({ type: 'varchar', length: 2, nullable: false, default: '00' })
+  public code: RegionCode;
 
   @OneToMany(() => DepartementEntity, (departement) => departement.region, {
     cascade: true,
