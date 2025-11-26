@@ -298,4 +298,142 @@ describe('LandbotCustomerRepository', () => {
     );
     expect(mockQueryBuilder.getCount).toHaveBeenCalledTimes(1);
   });
+
+  it('should group by regions with joins and return results with total', async () => {
+    const mockGroupByRegionsResults = [
+      { regionName: 'Bretagne', regionCode: '53', count: '10' },
+      { regionName: 'Île-de-France', regionCode: '11', count: '15' },
+    ];
+    const mockTotalResult = { count: '25' };
+
+    const mockQueryBuilderForResults = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      innerJoin: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      groupBy: jest.fn().mockReturnThis(),
+      addGroupBy: jest.fn().mockReturnThis(),
+      getRawMany: jest.fn().mockResolvedValue(mockGroupByRegionsResults),
+    };
+
+    const mockQueryBuilderForTotal = {
+      select: jest.fn().mockReturnThis(),
+      innerJoin: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      getRawOne: jest.fn().mockResolvedValue(mockTotalResult),
+    };
+
+    mockLandbotCustomerRepository.createQueryBuilder
+      .mockReturnValueOnce(mockQueryBuilderForResults)
+      .mockReturnValueOnce(mockQueryBuilderForTotal);
+
+    const result = await landbotCustomerRepository.groupByRegions();
+
+    expect(result).toEqual([mockGroupByRegionsResults, 25]);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledTimes(2);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenNthCalledWith(1, 'landbot_customer');
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenNthCalledWith(2, 'landbot_customer');
+
+    expect(mockQueryBuilderForResults.select).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilderForResults.select).toHaveBeenCalledWith(
+      'r.name',
+      'regionName',
+    );
+    expect(mockQueryBuilderForResults.addSelect).toHaveBeenCalledTimes(2);
+    expect(mockQueryBuilderForResults.addSelect).toHaveBeenNthCalledWith(
+      1,
+      'r.code',
+      'regionCode',
+    );
+    expect(mockQueryBuilderForResults.addSelect).toHaveBeenNthCalledWith(
+      2,
+      'COUNT(*)',
+      'count',
+    );
+    expect(mockQueryBuilderForResults.innerJoin).toHaveBeenCalledTimes(2);
+    expect(mockQueryBuilderForResults.innerJoin).toHaveBeenNthCalledWith(
+      1,
+      'departement',
+      'd',
+      'd.id = landbot_customer.departementId',
+    );
+    expect(mockQueryBuilderForResults.innerJoin).toHaveBeenNthCalledWith(
+      2,
+      'region',
+      'r',
+      'r.id = d.regionId',
+    );
+    expect(mockQueryBuilderForResults.where).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilderForResults.where).toHaveBeenCalledWith(
+      'landbot_customer.desiredCity IS NOT NULL',
+    );
+    expect(mockQueryBuilderForResults.groupBy).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilderForResults.groupBy).toHaveBeenCalledWith('r.name');
+    expect(mockQueryBuilderForResults.addGroupBy).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilderForResults.addGroupBy).toHaveBeenCalledWith(
+      'r.code',
+    );
+    expect(mockQueryBuilderForResults.getRawMany).toHaveBeenCalledTimes(1);
+
+    expect(mockQueryBuilderForTotal.select).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilderForTotal.select).toHaveBeenCalledWith(
+      'COUNT(*)',
+      'count',
+    );
+    expect(mockQueryBuilderForTotal.innerJoin).toHaveBeenCalledTimes(2);
+    expect(mockQueryBuilderForTotal.innerJoin).toHaveBeenNthCalledWith(
+      1,
+      'departement',
+      'd',
+      'd.id = landbot_customer.departementId',
+    );
+    expect(mockQueryBuilderForTotal.innerJoin).toHaveBeenNthCalledWith(
+      2,
+      'region',
+      'r',
+      'r.id = d.regionId',
+    );
+    expect(mockQueryBuilderForTotal.where).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilderForTotal.where).toHaveBeenCalledWith(
+      'landbot_customer.desiredCity IS NOT NULL',
+    );
+    expect(mockQueryBuilderForTotal.getRawOne).toHaveBeenCalledTimes(1);
+  });
+
+  it('should return empty array and 0 total when no results are found', async () => {
+    const mockTotalResult = { count: '0' };
+
+    const mockQueryBuilderForResults = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      innerJoin: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      groupBy: jest.fn().mockReturnThis(),
+      addGroupBy: jest.fn().mockReturnThis(),
+      getRawMany: jest.fn().mockResolvedValue([]),
+    };
+
+    const mockQueryBuilderForTotal = {
+      select: jest.fn().mockReturnThis(),
+      innerJoin: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      getRawOne: jest.fn().mockResolvedValue(mockTotalResult),
+    };
+
+    mockLandbotCustomerRepository.createQueryBuilder
+      .mockReturnValueOnce(mockQueryBuilderForResults)
+      .mockReturnValueOnce(mockQueryBuilderForTotal);
+
+    const result = await landbotCustomerRepository.groupByRegions();
+
+    expect(result).toEqual([[], 0]);
+    expect(mockQueryBuilderForResults.getRawMany).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilderForTotal.getRawOne).toHaveBeenCalledTimes(1);
+  });
 });

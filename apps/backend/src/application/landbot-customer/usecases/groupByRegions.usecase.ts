@@ -3,7 +3,6 @@ import { LandbotCustomerRepositoryInterface } from 'src/domain/landbot-customer/
 import { LandbotCustomerGroupByRegionsView } from '../views/landbot-customer-group-by-regions.view';
 
 export class GroupByRegionsUsecase {
-  // TODO: write specs
   constructor(
     @Inject('LandbotCustomerRepositoryInterface')
     private readonly landbotCustomerRepository: LandbotCustomerRepositoryInterface,
