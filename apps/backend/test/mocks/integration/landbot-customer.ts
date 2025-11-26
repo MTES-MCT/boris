@@ -23,6 +23,7 @@ export const mockLandbotCustomerRepository = {
   groupByBrsKnowledge: jest.fn(),
   groupByRealEstateSituation: jest.fn(),
   countSimulations: jest.fn(),
+  groupByRegions: jest.fn(),
 };
 
 export const mockGroupByEligibilityResults = [
