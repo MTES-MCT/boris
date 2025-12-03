@@ -259,12 +259,14 @@ describe('LandbotCustomerRepository', () => {
     expect(mockQueryBuilder.getRawMany).toHaveBeenCalledTimes(1);
   });
 
-  it('should count simulations with eligibility 1, 2, or 4 and return the count', async () => {
+  it('should count simulations with eligibility 1, 2, or 4 for a given year and month and return the count', async () => {
     const expectedCount = 42;
+    const year = 2024;
+    const month = 3;
     const mockQueryBuilder = {
       select: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
-      orWhere: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
       getCount: jest.fn().mockResolvedValue(expectedCount),
     };
 
@@ -272,7 +274,10 @@ describe('LandbotCustomerRepository', () => {
       mockQueryBuilder,
     );
 
-    const result = await landbotCustomerRepository.countSimulations();
+    const result = await landbotCustomerRepository.countSimulations(
+      year,
+      month,
+    );
 
     expect(result).toBe(expectedCount);
     expect(
@@ -285,16 +290,18 @@ describe('LandbotCustomerRepository', () => {
     expect(mockQueryBuilder.select).toHaveBeenCalledWith('COUNT(*)', 'count');
     expect(mockQueryBuilder.where).toHaveBeenCalledTimes(1);
     expect(mockQueryBuilder.where).toHaveBeenCalledWith(
-      "landbot_customer.eligibility = '1'",
+      'EXTRACT(YEAR FROM landbot_customer.date) = :year',
+      { year },
     );
-    expect(mockQueryBuilder.orWhere).toHaveBeenCalledTimes(2);
-    expect(mockQueryBuilder.orWhere).toHaveBeenNthCalledWith(
+    expect(mockQueryBuilder.andWhere).toHaveBeenCalledTimes(2);
+    expect(mockQueryBuilder.andWhere).toHaveBeenNthCalledWith(
       1,
-      "landbot_customer.eligibility = '2'",
+      'EXTRACT(MONTH FROM landbot_customer.date) = :month',
+      { month },
     );
-    expect(mockQueryBuilder.orWhere).toHaveBeenNthCalledWith(
+    expect(mockQueryBuilder.andWhere).toHaveBeenNthCalledWith(
       2,
-      "landbot_customer.eligibility = '4'",
+      "landbot_customer.eligibility in ('1', '2', '4')",
     );
     expect(mockQueryBuilder.getCount).toHaveBeenCalledTimes(1);
   });
@@ -305,12 +312,15 @@ describe('LandbotCustomerRepository', () => {
       { regionName: 'Île-de-France', regionCode: '11', count: '15' },
     ];
     const mockTotalResult = { count: '25' };
+    const year = 2024;
+    const month = 3;
 
     const mockQueryBuilderForResults = {
       select: jest.fn().mockReturnThis(),
       addSelect: jest.fn().mockReturnThis(),
       innerJoin: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
       groupBy: jest.fn().mockReturnThis(),
       addGroupBy: jest.fn().mockReturnThis(),
       getRawMany: jest.fn().mockResolvedValue(mockGroupByRegionsResults),
@@ -320,6 +330,7 @@ describe('LandbotCustomerRepository', () => {
       select: jest.fn().mockReturnThis(),
       innerJoin: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
       getRawOne: jest.fn().mockResolvedValue(mockTotalResult),
     };
 
@@ -327,7 +338,7 @@ describe('LandbotCustomerRepository', () => {
       .mockReturnValueOnce(mockQueryBuilderForResults)
       .mockReturnValueOnce(mockQueryBuilderForTotal);
 
-    const result = await landbotCustomerRepository.groupByRegions();
+    const result = await landbotCustomerRepository.groupByRegions(year, month);
 
     expect(result).toEqual([mockGroupByRegionsResults, 25]);
     expect(
@@ -373,6 +384,17 @@ describe('LandbotCustomerRepository', () => {
     expect(mockQueryBuilderForResults.where).toHaveBeenCalledWith(
       'landbot_customer.desiredCity IS NOT NULL',
     );
+    expect(mockQueryBuilderForResults.andWhere).toHaveBeenCalledTimes(2);
+    expect(mockQueryBuilderForResults.andWhere).toHaveBeenNthCalledWith(
+      1,
+      'EXTRACT(YEAR FROM landbot_customer.date) = :year',
+      { year },
+    );
+    expect(mockQueryBuilderForResults.andWhere).toHaveBeenNthCalledWith(
+      2,
+      'EXTRACT(MONTH FROM landbot_customer.date) = :month',
+      { month },
+    );
     expect(mockQueryBuilderForResults.groupBy).toHaveBeenCalledTimes(1);
     expect(mockQueryBuilderForResults.groupBy).toHaveBeenCalledWith('r.name');
     expect(mockQueryBuilderForResults.addGroupBy).toHaveBeenCalledTimes(1);
@@ -403,17 +425,31 @@ describe('LandbotCustomerRepository', () => {
     expect(mockQueryBuilderForTotal.where).toHaveBeenCalledWith(
       'landbot_customer.desiredCity IS NOT NULL',
     );
+    expect(mockQueryBuilderForTotal.andWhere).toHaveBeenCalledTimes(2);
+    expect(mockQueryBuilderForTotal.andWhere).toHaveBeenNthCalledWith(
+      1,
+      'EXTRACT(YEAR FROM landbot_customer.date) = :year',
+      { year },
+    );
+    expect(mockQueryBuilderForTotal.andWhere).toHaveBeenNthCalledWith(
+      2,
+      'EXTRACT(MONTH FROM landbot_customer.date) = :month',
+      { month },
+    );
     expect(mockQueryBuilderForTotal.getRawOne).toHaveBeenCalledTimes(1);
   });
 
   it('should return empty array and 0 total when no results are found', async () => {
     const mockTotalResult = { count: '0' };
+    const year = 2024;
+    const month = 3;
 
     const mockQueryBuilderForResults = {
       select: jest.fn().mockReturnThis(),
       addSelect: jest.fn().mockReturnThis(),
       innerJoin: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
       groupBy: jest.fn().mockReturnThis(),
       addGroupBy: jest.fn().mockReturnThis(),
       getRawMany: jest.fn().mockResolvedValue([]),
@@ -423,6 +459,7 @@ describe('LandbotCustomerRepository', () => {
       select: jest.fn().mockReturnThis(),
       innerJoin: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
       getRawOne: jest.fn().mockResolvedValue(mockTotalResult),
     };
 
@@ -430,7 +467,7 @@ describe('LandbotCustomerRepository', () => {
       .mockReturnValueOnce(mockQueryBuilderForResults)
       .mockReturnValueOnce(mockQueryBuilderForTotal);
 
-    const result = await landbotCustomerRepository.groupByRegions();
+    const result = await landbotCustomerRepository.groupByRegions(year, month);
 
     expect(result).toEqual([[], 0]);
     expect(mockQueryBuilderForResults.getRawMany).toHaveBeenCalledTimes(1);

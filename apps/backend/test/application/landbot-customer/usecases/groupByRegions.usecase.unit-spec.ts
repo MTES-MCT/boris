@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { GroupByRegionsUsecase } from 'src/application/landbot-customer/usecases/groupByRegions.usecase';
+import { GroupByRegionsParams } from 'src/application/landbot-customer/usecases/groupByRegion.params';
 import { LandbotCustomerGroupByRegionsView } from 'src/application/landbot-customer/views/landbot-customer-group-by-regions.view';
 import { mockLandbotCustomerRepository } from 'test/mocks/integration/landbot-customer';
 
@@ -26,13 +27,14 @@ describe('GroupByRegionsUsecase', () => {
       { regionName: 'Île-de-France', regionCode: '11', count: '15' },
     ];
     const total = 25;
+    const params: GroupByRegionsParams = { year: 2024, month: 3 };
 
     mockLandbotCustomerRepository.groupByRegions.mockResolvedValue([
       mockGroupByRegionsResults,
       total,
     ]);
 
-    const result = await useCase.execute();
+    const result = await useCase.execute(params);
 
     expect(result).toBeInstanceOf(LandbotCustomerGroupByRegionsView);
     expect(result.data).toEqual(mockGroupByRegionsResults);
@@ -40,13 +42,17 @@ describe('GroupByRegionsUsecase', () => {
     expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledTimes(
       1,
     );
-    expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledWith();
+    expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledWith(
+      params.year,
+      params.month,
+    );
   });
 
   it('should return an empty array and 0 total when no results are found', async () => {
+    const params: GroupByRegionsParams = { year: 2024, month: 3 };
     mockLandbotCustomerRepository.groupByRegions.mockResolvedValue([[], 0]);
 
-    const result = await useCase.execute();
+    const result = await useCase.execute(params);
 
     expect(result).toBeInstanceOf(LandbotCustomerGroupByRegionsView);
     expect(result.data).toEqual([]);
@@ -54,6 +60,9 @@ describe('GroupByRegionsUsecase', () => {
     expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledTimes(
       1,
     );
-    expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledWith();
+    expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledWith(
+      params.year,
+      params.month,
+    );
   });
 });

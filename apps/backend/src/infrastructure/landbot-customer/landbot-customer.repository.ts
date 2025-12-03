@@ -72,20 +72,21 @@ export class LandbotCustomerRepository
     return query.getRawMany();
   }
 
-  public async countSimulations(): Promise<number> {
+  public async countSimulations(year: number, month: number): Promise<number> {
     const query = this.repository
       .createQueryBuilder('landbot_customer')
       .select(`COUNT(*)`, 'count')
-      .where(`landbot_customer.eligibility = '1'`)
-      .orWhere(`landbot_customer.eligibility = '2'`)
-      .orWhere(`landbot_customer.eligibility = '4'`);
+      .where(`EXTRACT(YEAR FROM landbot_customer.date) = :year`, { year })
+      .andWhere(`EXTRACT(MONTH FROM landbot_customer.date) = :month`, { month })
+      .andWhere(`landbot_customer.eligibility in ('1', '2', '4')`);
 
     return query.getCount();
   }
 
-  public async groupByRegions(): Promise<
-    [GroupByRegionsResult[], total: number]
-  > {
+  public async groupByRegions(
+    year: number,
+    month: number,
+  ): Promise<[GroupByRegionsResult[], total: number]> {
     const query = this.repository
       .createQueryBuilder('landbot_customer')
       .select(`r.name`, 'regionName')
@@ -94,6 +95,8 @@ export class LandbotCustomerRepository
       .innerJoin('departement', 'd', 'd.id = landbot_customer.departementId')
       .innerJoin('region', 'r', 'r.id = d.regionId')
       .where(`landbot_customer.desiredCity IS NOT NULL`)
+      .andWhere(`EXTRACT(YEAR FROM landbot_customer.date) = :year`, { year })
+      .andWhere(`EXTRACT(MONTH FROM landbot_customer.date) = :month`, { month })
       .groupBy('r.name')
       .addGroupBy('r.code');
 
@@ -104,7 +107,11 @@ export class LandbotCustomerRepository
       .select(`COUNT(*)`, 'count')
       .innerJoin('departement', 'd', 'd.id = landbot_customer.departementId')
       .innerJoin('region', 'r', 'r.id = d.regionId')
-      .where(`landbot_customer.desiredCity IS NOT NULL`);
+      .where(`landbot_customer.desiredCity IS NOT NULL`)
+      .andWhere(`EXTRACT(YEAR FROM landbot_customer.date) = :year`, { year })
+      .andWhere(`EXTRACT(MONTH FROM landbot_customer.date) = :month`, {
+        month,
+      });
 
     const total = await totalQuery.getRawOne();
 
