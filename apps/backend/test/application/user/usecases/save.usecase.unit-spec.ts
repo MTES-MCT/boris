@@ -51,7 +51,7 @@ describe('SaveUserUsecase', () => {
     expect(mockUserRepository.save).toHaveBeenCalledTimes(1);
   });
 
-  it.skip('should fail if a user with the same email already exists', async () => {
+  it('should fail if a user with the same email already exists', async () => {
     mockUserRepository.findOneByEmail.mockResolvedValue(user1);
     mockUserRepository.save.mockResolvedValue(user1);
     mockPasswordHasher.hash.mockResolvedValue('password');

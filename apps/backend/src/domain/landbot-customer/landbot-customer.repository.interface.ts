@@ -4,6 +4,13 @@ import {
   LandbotEligibility,
   LandbotRealEstateSituation,
 } from './landbot-customer.interface';
+import { RegionCode } from '../region/region.interface';
+
+export type GroupByRegionsResult = {
+  regionName: string;
+  regionCode: RegionCode;
+  count: string;
+};
 
 export interface LandbotCustomerRepositoryInterface {
   save(landbotCustomer: LandbotCustomerEntity): Promise<LandbotCustomerEntity>;
@@ -17,4 +24,9 @@ export interface LandbotCustomerRepositoryInterface {
   groupByRealEstateSituation(): Promise<
     { realEstateSituation: LandbotRealEstateSituation; count: string }[]
   >;
+  countSimulations(year: number, month: number): Promise<number>;
+  groupByRegions(
+    year: number,
+    month: number,
+  ): Promise<[GroupByRegionsResult[], total: number]>;
 }
