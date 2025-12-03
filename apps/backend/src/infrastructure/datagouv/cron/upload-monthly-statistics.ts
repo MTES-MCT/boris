@@ -1,12 +1,9 @@
-import { Injectable } from '@nestjs/common';
-// import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { CountSimulationsUsecase } from 'src/application/landbot-customer/usecases/countSimulations.usecase';
 import { GroupByRegionsUsecase } from 'src/application/landbot-customer/usecases/groupByRegions.usecase';
+import { CsvFileServiceInterface } from 'src/domain/csv-file/csv-file.service.interface';
 
-// import { CsvFileServiceInterface } from 'src/domain/csv-file/csv-file.service.interface';
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const headers = [
   'administration_rattachement',
   'nom_service_public_numerique',
@@ -33,7 +30,7 @@ type MonthlyStatisticsRow = {
 
 @Injectable()
 export class UploadMonthlyStatisticsCron {
-  // private readonly filePathPrefix = 'statistiques-impact-BoRiS';
+  private readonly filePathPrefix = 'statistiques-impact-BoRiS';
   private readonly initialRow: MonthlyStatisticsRow = {
     administration_rattachement: 'DGALN',
     nom_service_public_numerique: 'BoRiS',
@@ -42,7 +39,7 @@ export class UploadMonthlyStatisticsCron {
     valeur: '',
     unite_mesure: 'unité',
     est_cible: 'FALSE',
-    frequence_monitoring: 'trimestrielle',
+    frequence_monitoring: 'mensuelle',
     date: '',
     est_periode: 'TRUE',
     date_debut: '',
@@ -55,13 +52,14 @@ export class UploadMonthlyStatisticsCron {
   };
 
   constructor(
-    // @Inject('CsvFileServiceInterface')
-    // private readonly csvFileService: CsvFileServiceInterface,
+    @Inject('CsvFileServiceInterface')
+    private readonly csvFileService: CsvFileServiceInterface,
     private readonly countSimulationsUsecase: CountSimulationsUsecase,
     private readonly groupByRegionsUsecase: GroupByRegionsUsecase,
   ) {}
 
-  @Cron('*/3 * * * * *', { timeZone: 'Europe/Paris' })
+  // @Cron('*/3 * * * * *', { timeZone: 'Europe/Paris' })
+  @Cron('0 3 1 12 *', { timeZone: 'Europe/Paris' })
   public async execute() {
     // const today = new Date();
     // const lastMonthLastDay = new Date(today.setDate(0));
@@ -70,7 +68,7 @@ export class UploadMonthlyStatisticsCron {
     //   month: 'long',
     // });
     // const year = lastMonthLastDay.toLocaleString('fr-FR', { year: 'numeric' });
-    // const filePath = `${this.filePathPrefix}-${monthName}-${year}.csv`;
+    const filePath = `${this.filePathPrefix}-${this.getLastMonth().monthName}-${this.getLastMonth().year}.csv`;
 
     const rows: MonthlyStatisticsRow[] = [];
 
@@ -80,9 +78,9 @@ export class UploadMonthlyStatisticsCron {
     const regionsCountRows = await this.getRegionsCountRow();
     rows.push(...regionsCountRows);
 
-    console.log(rows);
+    // console.log(rows);
 
-    // await this.csvFileService.create([...headers], filePath, rows);
+    await this.csvFileService.create([...headers], filePath, rows);
 
     // try {
     //   await this.datagouvRepository.uploadCsvFile(
@@ -96,18 +94,30 @@ export class UploadMonthlyStatisticsCron {
   }
 
   private async getSimulationsCountRow(): Promise<MonthlyStatisticsRow> {
-    const simulationsCount = await this.countSimulationsUsecase.execute();
+    const simulationsCount = await this.countSimulationsUsecase.execute({
+      year: this.getLastMonth().year,
+      month: this.getLastMonth().month,
+    });
+
+    console.log('simulationsCount', simulationsCount);
 
     return {
       ...this.initialRow,
       valeur: simulationsCount.toString(),
-      indicateur: 'Nombre de simulation réalisees',
+      indicateur: 'Nombre de simulation réalisées',
+      date: `${this.getToday().year}-${this.getToday().month}-01`,
+      date_debut: `${this.getLastMonth().year}-${this.getLastMonth().month}-01`,
       commentaires: 'Nombre de simulations réalisées au niveau national',
     };
   }
 
   private async getRegionsCountRow(): Promise<MonthlyStatisticsRow[]> {
-    const regionsCountRows = await this.groupByRegionsUsecase.execute();
+    const regionsCountRows = await this.groupByRegionsUsecase.execute({
+      year: this.getLastMonth().year,
+      month: this.getLastMonth().month,
+    });
+
+    console.log(regionsCountRows);
 
     return regionsCountRows.data
       .map((regionRow) => ({
@@ -115,11 +125,31 @@ export class UploadMonthlyStatisticsCron {
         valeur: regionRow.count,
         indicateur:
           'Nombre de ménages mis en relation avec un OFS ou son commercialisateur',
+        date: `${this.getToday().year}-${this.getToday().month}-01`,
+        date_debut: `${this.getLastMonth().year}-${this.getLastMonth().month}-01`,
         denom_insee: 'REG',
         code_insee: regionRow.regionCode,
         dataviz_wish: 'map',
         commentaires: `Nombre de ménages qui ont laissé leur coordonnées et qui on été mis en relation avec les OFS ou leur commercialisateurs dans une région`,
       }))
       .sort((a, b) => a.code_insee.localeCompare(b.code_insee));
+  }
+
+  private getLastMonth(): { year: number; month: number; monthName: string } {
+    const today = new Date();
+    today.setDate(0);
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const monthName = today.toLocaleString('fr-FR', { month: 'long' });
+
+    return { year, month, monthName };
+  }
+
+  private getToday(): { year: number; month: number } {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+
+    return { year, month };
   }
 }
