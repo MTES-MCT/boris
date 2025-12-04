@@ -21,7 +21,7 @@
 </svelte:head>
 
 <Section
-  title={article?.title}
+  title={article?.pageTitle || article?.title}
   titleElement="h1">
   <p
     class="fr-card__detail fr-icon-calendar-2-line flex gap-2 !items-center !mb-6 fr-text--sm fr-text--bold fr-icon--sm">

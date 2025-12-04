@@ -79,7 +79,7 @@ export const steps: Step[] = [
           <p class="fr-mb-0">
             ll y a 3 obligations principales si vous souhaitez acheter en BRS :
           </p>
-          <ol class="fr-mb-0">
+          <ol class="!mb-6">
             <li>
               Vous devez faire de ce logement votre résidence principale et y vivre
               vous-même. Vous ne pouvez donc pas utiliser votre logement pour de la
@@ -95,6 +95,9 @@ export const steps: Step[] = [
               pourra pas dépasser les limites fixées par la loi.
             </li>
           </ol>
+          <a class="fr-link fr-text--bold fr-icon-links-line fr-link--icon-left !bg-none" href="/blog/les-inconvenients-ou-contreparties-du-bail-reel-solidaire-brs">
+            En savoir plus sur les inconvénients du bail réel solidaire - ou plus exactement les contreparties
+          </a>
         `,
       },
       {

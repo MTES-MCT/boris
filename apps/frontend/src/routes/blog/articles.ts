@@ -3,6 +3,16 @@ import type { ArticlePreview } from '$lib/utils/definitions';
 export const articles: ArticlePreview[] = [
   {
     title:
+      'Inconvénients en bail réel solidaire : des règles, des limites à respecter. Renseignez-vous sur la plateforme du gouvernement.',
+    pageTitle:
+      "Les inconvénients du bail réel solidaire - Ou plus exactement ses contreparties. Ce qu'il faut savoir avant de se lancer.",
+    description:
+      "Des inconvénients en bail réel solidaire ? Découvrez les contreparties d'un achat en BRS sur la plateforme du Ministère du logement.",
+    firstPublishedAt: '2025-12-04T10:38:39.527438+01:00',
+    slug: 'les-inconvenients-ou-contreparties-du-bail-reel-solidaire-brs',
+  },
+  {
+    title:
       'La succession en bail réel solidaire (BRS) : quelles sont les règles ?',
     description: `Que devient un logement en bail réel solidaire (BRS) en cas de succession ? Découvrez les règles d'héritage, les droits des héritiers et les conditions pour transmettre un bien en bail réel solidaire. Succession possible mais encadrée.`,
     firstPublishedAt: '2025-08-20T14:23:00.527438+01:00',
@@ -31,7 +41,7 @@ export const articles: ArticlePreview[] = [
     title: 'Puis-je acheter un logement en BRS si je suis déjà propriétaire?',
     description:
       'Si vous êtes déjà propriétaire, êtes-vous éligible au Bail Réel Solidaire ? Nous vous proposons de répondre à cette question dans cet article.',
-    firstPublishedAt: '2025-01-08T17:29:39.527438+01:00',
+    firstPublishedAt: '2025-03-05T17:29:39.527438+01:00',
     slug: 'puis-je-acheter-un-logement-en-brs-si-je-suis-deja-proprietaire',
   },
   {
@@ -46,7 +56,7 @@ export const articles: ArticlePreview[] = [
     title: 'Un exemple pour vous projeter dans votre achat en BRS',
     description:
       'Imaginons que vous avez repéré un appartement NEUF de 70 m² en BRS à 210.000 euros à Lyon. Voici un […]',
-    firstPublishedAt: '2025-01-07T11:18:13.129273+01:00',
+    firstPublishedAt: '2024-11-21T11:18:13.129273+01:00',
     slug: 'un-exemple-pour-vous-projeter-dans-votre-achat-en-brs',
   },
 ];

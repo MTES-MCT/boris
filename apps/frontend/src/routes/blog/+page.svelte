@@ -15,10 +15,10 @@
   title="Blog"
   titleElement="h1">
   <div class="fr-grid-row fr-grid-row--gutters">
-    {#each articles as { title, description, firstPublishedAt, slug }}
+    {#each articles as { title, pageTitle, description, firstPublishedAt, slug }}
       <div class="fr-col-12 fr-col-md-6">
         <ArticleCard
-          {title}
+          title={pageTitle || title}
           {description}
           {slug}
           {firstPublishedAt} />
