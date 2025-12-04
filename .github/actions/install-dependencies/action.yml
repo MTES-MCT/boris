@@ -19,4 +19,4 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      run: npm ci
+      run: npm ci --ignore-scripts
