@@ -105,7 +105,6 @@ npm run seed:seed-name
 ### Lancer le server de développement
 
 ```
-
 npm run dev -w @boris/frontend
 
 ```
