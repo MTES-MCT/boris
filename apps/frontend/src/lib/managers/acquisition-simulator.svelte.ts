@@ -87,7 +87,7 @@ class AcquisitionSimulator {
   public ptzType: Logement | undefined = $state();
   public pretLisse: PretLisse | undefined = $state();
 
-  public brsFees: number | undefined = $state(3);
+  public brsFees: number | undefined = $state(1);
   public yearlyPropertyTax: number | undefined = $state(1000);
   public yearlyHouseingInsurance: number | undefined = $state(300);
   public condominiumFeesFrequency:

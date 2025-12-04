@@ -39,32 +39,36 @@
 
   let errors: FormFieldError = $state({});
 
-  const FormData = z.object({
-    interestRate: z
-      .number({
-        message: 'Veuillez remplir ce champs.',
-      })
-      .positive('Veuillez saisir un chiffre supérieur à 0.'),
-    loanDuration: z
-      .number({
-        message: 'Veuillez remplir ce champs.',
-      })
-      .gte(10, 'La durée du prêt ne peut pas être inférieure à 10 ans.')
-      .lte(25, 'La durée du prêt ne peut pas être supérieure à 25 ans.'),
-    inHousePeopleAmount: z
-      .number({
-        message: 'Veuillez remplir ce champs.',
-      })
-      .positive('Veuillez saisir un chiffre supérieur à 0.'),
-    fiscalIncome: z
-      .number({
-        message: 'Veuillez remplir ce champs.',
-      })
-      .positive('Veuillez saisir un chiffre supérieur à 0.'),
-    ptzType: z.string({
-      message: 'Veuillez selectionner le type du logement.',
+  const FormData = $derived(
+    z.object({
+      interestRate: z
+        .number({
+          message: 'Veuillez remplir ce champs.',
+        })
+        .positive('Veuillez saisir un chiffre supérieur à 0.'),
+      loanDuration: z
+        .number({
+          message: 'Veuillez remplir ce champs.',
+        })
+        .gte(10, 'La durée du prêt ne peut pas être inférieure à 10 ans.')
+        .lte(25, 'La durée du prêt ne peut pas être supérieure à 25 ans.'),
+      ...(housingType === 'new' && {
+        inHousePeopleAmount: z
+          .number({
+            message: 'Veuillez remplir ce champs.',
+          })
+          .positive('Veuillez saisir un chiffre supérieur à 0.'),
+        fiscalIncome: z
+          .number({
+            message: 'Veuillez remplir ce champs.',
+          })
+          .positive('Veuillez saisir un chiffre supérieur à 0.'),
+        ptzType: z.string({
+          message: 'Veuillez selectionner le type du logement.',
+        }),
+      }),
     }),
-  });
+  );
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -72,9 +76,11 @@
     const payload = {
       interestRate,
       loanDuration,
-      inHousePeopleAmount,
-      fiscalIncome,
-      ptzType,
+      ...(housingType === 'new' && {
+        inHousePeopleAmount,
+        fiscalIncome,
+        ptzType,
+      }),
     };
 
     try {

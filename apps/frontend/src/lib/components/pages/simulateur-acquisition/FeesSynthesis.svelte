@@ -6,7 +6,6 @@
   import RowContainer from '$components/pages/simulateur-acquisition/synthesis/RowContainer.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
-  import type { PhaseRemboursement } from '$lib/utils/lissage-ptz';
 
   const {
     monthlyBrsFees,
@@ -22,8 +21,6 @@
     pretLisse,
   } = $derived(acquisitionSimulatorManager);
 
-  const lissage = $derived(pretLisse?.lisser() as PhaseRemboursement[]);
-
   let mensualiteDepensesTotales = $derived(
     monthlyBrsFees +
       monthlyPropertyTax +
@@ -33,7 +30,8 @@
   );
 
   let mensualitePretTotale = $derived(
-    Number(lissage[0].mensualiteClassique) + Number(lissage[0].mensualitePTZ),
+    Number(pretLisse?.phasesRemboursement[0].mensualiteClassique) +
+      Number(pretLisse?.phasesRemboursement[0].mensualitePTZ),
   );
 
   let annuiteDepensesTotales = $derived(
