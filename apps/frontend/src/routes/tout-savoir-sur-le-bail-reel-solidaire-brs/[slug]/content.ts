@@ -366,9 +366,8 @@ export const steps: Step[] = [
           </p>
           <a
             class="fr-btn fr-btn--lg"
-            href="https://www.calcul-ptz.fr/lissage.php"
-            target="_blank">
-            Simulateur prêt normal + PTZ
+            href="/simulateur-acquisition">
+              Notre simulateur d'acquisition
           </a>
         `,
       },
