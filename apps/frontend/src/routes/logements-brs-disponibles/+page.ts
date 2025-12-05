@@ -6,7 +6,9 @@ type PageData = {
 };
 
 export const load: PageLoad = async ({ fetch }): Promise<PageData> => {
-  const response = await fetch('api/brs-diffusion-websites/all');
+  const response = await fetch('api/brs-diffusion-websites/all', {
+    cache: 'no-store',
+  });
   const mapBrsDiffusionWebsites = await response.json();
 
   return {
