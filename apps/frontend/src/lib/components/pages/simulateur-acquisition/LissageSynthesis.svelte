@@ -18,7 +18,7 @@
 
 {#if !pretLisse?.estElligible}
   <Block>
-    <p class="fr-h6 fr-mb-0">Montants de l'opérations</p>
+    <p class="fr-h6 fr-mb-0">Montants de l'opération</p>
     <RowContainer>
       <Row
         title="Prêt principal"
@@ -60,7 +60,7 @@
 {:else}
   <div class="fr-mb-2w">
     <Block>
-      <p class="fr-h6 fr-mb-0">Montants de l'opérations</p>
+      <p class="fr-h6 fr-mb-0">Montants de l'opération</p>
       <div class="not-printable fr-mb-2w">
         <Badge
           status="success"

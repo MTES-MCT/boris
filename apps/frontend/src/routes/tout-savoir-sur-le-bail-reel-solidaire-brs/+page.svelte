@@ -1,15 +1,35 @@
 <script lang="ts">
+  import type { ArticlePreview } from '$lib/utils/definitions';
+
+  import { steps } from './content';
+  import { articles } from '$routes/blog/articles';
+
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import ContentPageHero from '$components/common/Heros/ContentPageHero.svelte';
   import CalloutPanel from '$components/common/Panels/CalloutPanel.svelte';
   import KeyPoint from '$components/common/KeyPoint.svelte';
   import Section from '$components/common/Section.svelte';
   import Accordion from '$components/common/Accordion.svelte';
-  import Table from '$components/common/Table.svelte';
   import VerticalStepper from '$components/common/Steppers/VerticalStepper.svelte';
+  import ShadowedBox from '$components/common/ShadowedBox.svelte';
+  import Data from '$components/pages/simulateur-eligibilite/Data.svelte';
+  import ArticleCard from '$components/pages/blog/ArticleCard.svelte';
 
-  import { eligibilityDataTable } from '$lib/utils/constants';
-  import { steps } from './content';
+  const firstArticle = articles.find(
+    (article) =>
+      article.slug === '5-idees-recues-sur-le-bail-reel-solidaire-brs',
+  ) as ArticlePreview;
+
+  const secondArticle = articles.find(
+    (article) =>
+      article.slug ===
+      'acheter-son-logement-sans-se-ruiner-3-solutions-a-connaitre-absolument',
+  ) as ArticlePreview;
+
+  const thirdArticle = articles.find(
+    (article) =>
+      article.slug === 'un-exemple-pour-vous-projeter-dans-votre-achat-en-brs',
+  ) as ArticlePreview;
 </script>
 
 <svelte:head>
@@ -257,71 +277,78 @@
     </div>
   </div>
 
-  <Section
-    title="Quelques articles de blog pour bien comprendre le bail réel solidaire"
-    titleElement="h2">
-    <ul>
-      <li>
-        <a
-          href="/blog/5-idees-recues-sur-le-bail-reel-solidaire-brs"
-          class="fr-link">
-          5 idées reçues sur le bail réel solidaire (BRS)
-        </a>
-      </li>
-      <li>
-        <a
-          href="/blog/acheter-son-logement-sans-se-ruiner-3-solutions-a-connaitre-absolument"
-          class="fr-link">
-          Acheter son logement sans se ruiner : 3 solutions à connaître
-          absolument
-        </a>
-      </li>
-      <li>
-        <a
-          href="/blog/un-exemple-pour-vous-projeter-dans-votre-achat-en-brs"
-          class="fr-link">
-          Un exemple pour vous projeter dans votre achat en BRS
-        </a>
-      </li>
-    </ul>
+  <Section>
+    <div class="rounded-box-md fr-p-4w bg-white">
+      <h2>
+        Quelques articles de blog pour bien comprendre le bail réel solidaire
+      </h2>
+      <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12 fr-col-md-6">
+          <ArticleCard
+            title={firstArticle?.pageTitle || firstArticle.title}
+            description={firstArticle.description}
+            slug={firstArticle.slug}
+            firstPublishedAt={firstArticle.firstPublishedAt} />
+        </div>
+        <div class="fr-col-12 fr-col-md-6">
+          <ArticleCard
+            title={secondArticle?.pageTitle || secondArticle.title}
+            description={secondArticle.description}
+            slug={secondArticle.slug}
+            firstPublishedAt={secondArticle.firstPublishedAt} />
+        </div>
+        <div class="fr-col-12 fr-col-md-6">
+          <ArticleCard
+            title={thirdArticle?.pageTitle || thirdArticle.title}
+            description={thirdArticle.description}
+            slug={thirdArticle.slug}
+            firstPublishedAt={thirdArticle.firstPublishedAt} />
+        </div>
+      </div>
+    </div>
   </Section>
 
-  <Section
-    title="Les plafonds de revenus en bail réel solidaire (BRS)"
-    titleElement="h2">
-    <p>
-      Les plafonds en vigueur depuis janvier 2025 sont définis à partir de votre
-      catégorie de ménage et la zone de votre futur bien. Elle correspond à la
-      tension immobilière, du plus tendu où les prix sont les plus haut, Abis,
-      au moins tendu, C.
-    </p>
-    <p>
-      Le logement acheté en bail réel solidaire doit être utilisé en tant que
-      résidence principale.
-    </p>
-    <p class="fr-mb-0">
-      Les revenus fiscaux de référence* du ménage ne doivent pas dépasser les
-      plafonds de ressources ci-dessous :
-    </p>
-    <a
-      href="https://drive.google.com/file/d/1mJBo1cj9-idRRmewzR3-cKn87JZ76-A7/view?usp=sharing"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="fr-link fr-text--sm">
-      <i>
-        *Où se situe le revenus fiscal de référence sur votre avis d’imposition
-      </i>
-    </a>
+  <Section>
+    <ShadowedBox hidePath>
+      <h2 id="plafonds-de-ressources">
+        Les plafonds de revenus en bail réel solidaire (BRS)
+      </h2>
+      <p>
+        Les plafonds en vigueur depuis janvier 2025 sont définis à partir de
+        votre catégorie de ménage et la zone de votre futur bien. Elle
+        correspond à la tension immobilière, du plus tendu où les prix sont les
+        plus haut, Abis, au moins tendu, C.
+      </p>
+      <p>
+        Le logement acheté en bail réel solidaire doit être utilisé en tant que
+        résidence principale.
+      </p>
+      <p class="fr-mb-0">
+        Les revenus fiscaux de référence* du ménage ne doivent pas dépasser les
+        plafonds de ressources ci-dessous :
+      </p>
+      <a
+        href="https://drive.google.com/file/d/1mJBo1cj9-idRRmewzR3-cKn87JZ76-A7/view?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="fr-link fr-text--sm">
+        <i>
+          *Où se situe le revenus fiscal de référence sur votre avis
+          d'imposition
+        </i>
+      </a>
 
-    <Table
-      theads={eligibilityDataTable.theads}
-      tbodies={eligibilityDataTable.tbodies} />
-    <a
-      href="https://www.service-public.fr/simulateur/calcul/zonage-abc"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="fr-link fr-text--sm">
-      <i>Pour connaître votre zone</i>
-    </a>
+      <Data />
+
+      <div class="fr-pt-4w">
+        <a
+          href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000437021/2025-02-12/"
+          class="fr-link"
+          target="_blank"
+          rel="noopener">
+          Textes de référence
+        </a>
+      </div>
+    </ShadowedBox>
   </Section>
 </GradientBackgroundWrapper>

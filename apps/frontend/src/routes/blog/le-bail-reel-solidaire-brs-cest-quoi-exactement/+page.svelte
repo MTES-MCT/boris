@@ -214,13 +214,13 @@
 
   <p>
     Vous trouverez plus d’information sur notre article dédié aux <a
-      href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif#les-contreparties-du-BRS"
+      href="/blog/les-inconvenients-ou-contreparties-du-bail-reel-solidaire-brs"
       class="fr-link">
       inconvénients du BRS
     </a>
     - appelé
     <a
-      href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-decouvre-le-dispositif#les-contreparties-du-BRS"
+      href="/blog/les-inconvenients-ou-contreparties-du-bail-reel-solidaire-brs"
       class="fr-link">
       contreparties du Bail Réel Solidaire
     </a>

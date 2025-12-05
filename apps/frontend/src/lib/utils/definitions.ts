@@ -51,6 +51,7 @@ export type Region = {
 
 export type ArticlePreview = {
   title: string;
+  pageTitle?: string;
   description: string;
   slug: string;
   firstPublishedAt: string;

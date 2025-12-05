@@ -1,6 +1,6 @@
 import { API_URL, API_KEY } from '$env/static/private';
 import { error, json } from '@sveltejs/kit';
-import cache, { namespaces } from '$lib/server/cache';
+import cache, { namespaces, TTL_MS } from '$lib/server/cache';
 import type { GetLandbotCustomerByFieldsPathParams } from '$lib/utils/api-types';
 
 export const GET = async ({ params }) => {
@@ -36,7 +36,8 @@ export const GET = async ({ params }) => {
     });
 
     data = await response.json();
-    cache.set(cacheNamespace, data);
+
+    cache.set(cacheNamespace, data, TTL_MS);
   }
 
   return json(data);

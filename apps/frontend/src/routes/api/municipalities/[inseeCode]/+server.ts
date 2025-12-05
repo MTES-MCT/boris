@@ -1,6 +1,6 @@
 import { API_URL, API_KEY } from '$env/static/private';
 import { json } from '@sveltejs/kit';
-import cache, { namespaces } from '$lib/server/cache';
+import cache, { namespaces, TTL_MS } from '$lib/server/cache';
 import type { MunicipalityView } from '$lib/utils/api-types.js';
 
 export const GET = async ({ params }) => {
@@ -23,7 +23,7 @@ export const GET = async ({ params }) => {
     municipality = await response.json();
     municipalities.push(municipality as MunicipalityView);
 
-    cache.set(namespaces.municipalities, municipalities);
+    cache.set(namespaces.municipalities, municipalities, TTL_MS);
   }
 
   return json(municipality);

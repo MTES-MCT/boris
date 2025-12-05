@@ -1,6 +1,6 @@
 import { API_URL, API_KEY } from '$env/static/private';
 import { json } from '@sveltejs/kit';
-import cache, { namespaces } from '$lib/server/cache';
+import cache, { namespaces, TTL_MS } from '$lib/server/cache';
 
 export const GET = async () => {
   let ofss = await cache.get(namespaces.ofss);
@@ -13,7 +13,8 @@ export const GET = async () => {
     });
 
     ofss = await response.json();
-    cache.set(namespaces.ofss, ofss);
+
+    cache.set(namespaces.ofss, ofss, TTL_MS);
   }
 
   return json(ofss);

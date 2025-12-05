@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { API_KEY, API_URL } from '$env/static/private';
-import cache, { namespaces } from '$lib/server/cache';
+import cache, { namespaces, TTL_MS } from '$lib/server/cache';
 
 export const GET = async () => {
   let brsDiffusionWebsites = await cache.get(namespaces.brsDiffusionWebsites);
@@ -41,7 +41,7 @@ export const GET = async () => {
       }
     }
 
-    cache.set(namespaces.brsDiffusionWebsites, brsDiffusionWebsites);
+    cache.set(namespaces.brsDiffusionWebsites, brsDiffusionWebsites, TTL_MS);
   }
 
   return json({

@@ -10,9 +10,9 @@ export const namespaces = {
     'landbot-customers-real-estate-situation',
 };
 
-const TTL_HOURS = 24;
+const TTL_HOURS = 12;
 const TTL_MINS = 60;
-const TTL_MS = TTL_HOURS * TTL_MINS * 60 * 1000;
+export const TTL_MS = TTL_HOURS * TTL_MINS * 60 * 1000;
 
 const keyv = new Keyv({ ttl: TTL_MS });
 

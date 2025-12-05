@@ -121,7 +121,7 @@
           <Input
             value={brsFees}
             label="Redevance BRS mensuelle par m² (€)"
-            hint="Laissez le champs vide si vous ne connaissez pas le montant de la redevance BRS mensuelle par m²."
+            hint="Gardez la valeur par défaut si vous ne connaissez pas le montant de la redevance BRS mensuelle par m²."
             labelTooltip={`La redevance BRS mensuelle par m2 se situe en moyenne entre ${formatEuro(0.5, 2)} et ${formatEuro(3.5, 2)}.`}
             placeholder="Exemple: 1,50 € par m²"
             type="number"
@@ -140,7 +140,7 @@
             value={yearlyPropertyTax}
             label="Taxe foncière (€)"
             labelTooltip="La taxe foncière est une taxe annuelle perçue par les communes pour financer les services publics locaux."
-            hint="Laissez le champs vide si vous ne connaissez pas le montant annuel de la taxe foncière."
+            hint="Gardez la valeur par défaut si vous ne connaissez pas le montant annuel de la taxe foncière."
             placeholder="Exemple: 1 000€ par an"
             type="number"
             id="yearly-property-tax"
@@ -158,7 +158,7 @@
             value={yearlyHouseingInsurance}
             label="Assurance habitation (€)"
             labelTooltip="L'assurance habitation est obligatoire pour votre logement, que vous soyez propriétaire ou locataire."
-            hint="Laissez le champs vide si vous ne connaissez pas le montant annuel de l'assurance habitation."
+            hint="Gardez la valeur par défaut si vous ne connaissez pas le montant annuel de l'assurance habitation."
             placeholder="Exemple: 300€ par an"
             type="number"
             id="yearly-houseing-insurance"
@@ -200,7 +200,7 @@
           <Input
             value={condominiumFees}
             label="Charges de copropriété (€)"
-            hint="Laissez le champs vide ou saisissez 0 si vous ne connaissez pas le montant des charges de copropriété."
+            hint="Gardez la valeur par défaut ou saisissez 0 si vous ne connaissez pas le montant des charges de copropriété."
             placeholder="Exemple: 100€"
             type="number"
             id="condominium-fees"
@@ -218,7 +218,7 @@
             value={monthlyExpenses}
             label="Autres dépenses mensuelles (€)"
             labelTooltip="Ces dépenses sont par exemple l'électricité, l'eau, le gaz, internet, etc."
-            hint="Laissez le champs vide si vous ne connaissez pas le montant des autres dépenses mensuelles."
+            hint="Gardez la valeur par défaut si vous ne connaissez pas le montant des autres dépenses mensuelles."
             placeholder="Exemple: 100€ par mois"
             type="number"
             id="monthly-expenses"

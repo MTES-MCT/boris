@@ -6,6 +6,9 @@
   import LissageSynthesis from './LissageSynthesis.svelte';
 
   import blocMarque from '$assets/images/bloc-marque.jpg';
+  import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
+
+  const { housingType } = $derived(acquisitionSimulatorManager);
 </script>
 
 <div class="pdf-only">
@@ -77,7 +80,11 @@
 <div class="separator fr-my-6w not-printable"></div>
 
 <div class="page-break-before">
-  <p class="fr-h5">Lissage des prêts</p>
+  <p class="fr-h5">
+    {housingType === 'new'
+      ? 'Lissage des prêts'
+      : 'Synthèse du prêt immobilier'}
+  </p>
   <LissageSynthesis />
 </div>
 
