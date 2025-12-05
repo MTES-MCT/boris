@@ -6,7 +6,6 @@ export const GET = async () => {
   let brsDiffusionWebsites = await cache.get(namespaces.brsDiffusionWebsites);
 
   if (!brsDiffusionWebsites) {
-    console.log('cache miss'); // TODO: remove after investigation
     const url = new URL(`${API_URL}/brs-diffusion-websites`);
 
     url.searchParams.set('page', '1');
@@ -43,9 +42,6 @@ export const GET = async () => {
     }
 
     cache.set(namespaces.brsDiffusionWebsites, brsDiffusionWebsites, TTL_MS);
-  } else {
-    // TODO: remove after investigation
-    console.log('cache hit');
   }
 
   return json({
