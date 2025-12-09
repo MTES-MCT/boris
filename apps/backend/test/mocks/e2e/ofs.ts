@@ -11,6 +11,7 @@ export const ofss: Pagination<OfsView> = {
       phone: null,
       email: null,
       producesBrs: false,
+      isPartner: false,
       departements: [
         {
           code: '35',
@@ -33,6 +34,7 @@ export const ofss: Pagination<OfsView> = {
       phone: null,
       email: null,
       producesBrs: false,
+      isPartner: false,
       departements: [
         {
           code: '29',

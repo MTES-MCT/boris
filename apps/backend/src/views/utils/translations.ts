@@ -84,6 +84,7 @@ const translations: translations = {
     latitude: 'Latitude',
     longitude: 'Longitude',
     producesBrs: 'Produit du BRS',
+    isPartner: 'Est partenaire',
   },
   contents: {
     home: {

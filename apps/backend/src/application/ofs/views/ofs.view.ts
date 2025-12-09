@@ -22,6 +22,9 @@ export class OfsView {
   @ApiProperty({ example: true })
   public producesBrs: boolean | null;
 
+  @ApiProperty({ example: true })
+  public isPartner: boolean | null;
+
   @ApiProperty({
     type: /* istanbul ignore next */ () => [DepartementRelationnalView],
   })
@@ -50,6 +53,7 @@ export class OfsView {
     phone: string | null,
     email: string | null,
     producesBrs: boolean | null,
+    isPartner: boolean | null,
     departements: DepartementRelationnalView[],
     regions: RegionRelationnalView[],
     distributors: DistributorRelationnalView[],
@@ -60,6 +64,7 @@ export class OfsView {
     this.phone = phone;
     this.email = email;
     this.producesBrs = producesBrs;
+    this.isPartner = isPartner;
     this.departements = departements;
     this.regions = regions;
     this.distributors = distributors;

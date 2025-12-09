@@ -65,6 +65,7 @@ export class OfsEntity implements OfsInterface {
     websiteUrl: string | null,
     email: string | null,
     producesBrs: boolean,
+    isPartner: boolean,
     departements: DepartementEntity[],
     regions: RegionEntity[],
     distributors: DistributorEntity[],
@@ -74,6 +75,7 @@ export class OfsEntity implements OfsInterface {
     this.websiteUrl = websiteUrl;
     this.email = email;
     this.producesBrs = producesBrs;
+    this.isPartner = isPartner;
     this.departements = departements;
     this.regions = regions;
     this.distributors = distributors;
