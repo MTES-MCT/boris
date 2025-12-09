@@ -42,6 +42,7 @@
     "generate-address-datagouv-types": "openapi-typescript https://data.geopf.fr/geocodage/openapi.yaml --output src/infrastructure/common/types/generated-address-datagouv-types.ts"
   },
   "dependencies": {
+    "@fast-csv/format": "^5.0.5",
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/passport": "^11.0.5",
@@ -68,7 +69,6 @@
     "typeorm": "^0.3.20"
   },
   "devDependencies": {
-    "@fast-csv/format": "^5.0.5",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
