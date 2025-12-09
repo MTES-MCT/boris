@@ -3,6 +3,7 @@ import { Cron } from '@nestjs/schedule';
 import { CountSimulationsUsecase } from 'src/application/landbot-customer/usecases/countSimulations.usecase';
 import { GroupByRegionsUsecase } from 'src/application/landbot-customer/usecases/groupByRegions.usecase';
 import { CsvFileServiceInterface } from 'src/domain/csv-file/csv-file.service.interface';
+import { DatagouvRepositoryInterface } from 'src/domain/datagouv/datagouv.repository.interface';
 
 const headers = [
   'administration_rattachement',
@@ -52,22 +53,17 @@ export class UploadMonthlyStatisticsCron {
   };
 
   constructor(
+    @Inject('DatagouvRepositoryInterface')
+    private readonly datagouvRepository: DatagouvRepositoryInterface,
     @Inject('CsvFileServiceInterface')
     private readonly csvFileService: CsvFileServiceInterface,
     private readonly countSimulationsUsecase: CountSimulationsUsecase,
     private readonly groupByRegionsUsecase: GroupByRegionsUsecase,
   ) {}
 
-  // @Cron('*/3 * * * * *', { timeZone: 'Europe/Paris' })
-  @Cron('0 3 1 12 *', { timeZone: 'Europe/Paris' })
+  // @Cron('*/5 * * * * *', { timeZone: 'Europe/Paris' })
+  @Cron('0 3 2 * *', { timeZone: 'Europe/Paris' })
   public async execute() {
-    // const today = new Date();
-    // const lastMonthLastDay = new Date(today.setDate(0));
-
-    // const monthName = lastMonthLastDay.toLocaleString('fr-FR', {
-    //   month: 'long',
-    // });
-    // const year = lastMonthLastDay.toLocaleString('fr-FR', { year: 'numeric' });
     const filePath = `${this.filePathPrefix}-${this.getLastMonth().monthName}-${this.getLastMonth().year}.csv`;
 
     const rows: MonthlyStatisticsRow[] = [];
@@ -78,19 +74,19 @@ export class UploadMonthlyStatisticsCron {
     const regionsCountRows = await this.getRegionsCountRow();
     rows.push(...regionsCountRows);
 
-    // console.log(rows);
-
     await this.csvFileService.create([...headers], filePath, rows);
 
-    // try {
-    //   await this.datagouvRepository.uploadCsvFile(
-    //     'data.csv',
-    //     process.env.DATAGOUV_API_KEY as string,
-    //     process.env.DATAGOUV_DATASET_ID as string,
-    //   );
-    // } catch (error) {
-    //   console.error('Error uploading monthly statistics:', error);
-    // }
+    try {
+      await this.datagouvRepository.uploadCsvFile(
+        filePath,
+        process.env.DATAGOUV_API_KEY as string,
+        process.env.DATAGOUV_DATASET_ID as string,
+      );
+
+      await this.csvFileService.delete(filePath);
+    } catch (error) {
+      console.error('Error uploading monthly statistics:', error);
+    }
   }
 
   private async getSimulationsCountRow(): Promise<MonthlyStatisticsRow> {
@@ -98,8 +94,6 @@ export class UploadMonthlyStatisticsCron {
       year: this.getLastMonth().year,
       month: this.getLastMonth().month,
     });
-
-    console.log('simulationsCount', simulationsCount);
 
     return {
       ...this.initialRow,
@@ -116,8 +110,6 @@ export class UploadMonthlyStatisticsCron {
       year: this.getLastMonth().year,
       month: this.getLastMonth().month,
     });
-
-    console.log(regionsCountRows);
 
     return regionsCountRows.data
       .map((regionRow) => ({
