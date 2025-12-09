@@ -2,6 +2,7 @@ import Keyv from 'keyv';
 
 export const namespaces = {
   ofss: 'ofss',
+  partnerOfss: 'partner-ofss',
   brsDiffusionWebsites: 'brs-diffusion-websites',
   municipalities: 'municipalities',
   landbotCustomersEligibility: 'landbot-customers-eligibility',

@@ -19,8 +19,8 @@ type PageData = {
 };
 
 export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
-  const response = await fetch('api/ofss', { cache: 'no-store' });
-  const ofss = await response.json();
+  const response = await fetch('api/ofss/partner', { cache: 'no-store' });
+  const partnerOfss = await response.json();
 
   const eligibilityRespone = await fetch('api/landbot-customers/eligibility', {
     cache: 'no-store',
@@ -43,6 +43,6 @@ export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
     eligibility: eligibility.data,
     brsKnowledge: brsKnowledge.data,
     realEstateSituation: realEstateSituation.data,
-    ofssAmount: ofss.totalCount,
+    ofssAmount: partnerOfss.totalCount,
   };
 };
