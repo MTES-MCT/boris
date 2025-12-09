@@ -9,6 +9,7 @@ export const ofs1 = new OfsEntity(
   'https://boris.beta.gouv.fr',
   'ofs@bretagne.fr',
   false,
+  false,
   [finistere, paris],
   [bretagne],
   [distributor1],
@@ -20,6 +21,7 @@ export const ofs2 = new OfsEntity(
   'https://ofs-paris.fr',
   'ofs@paris.fr',
   false,
+  true,
   [paris],
   [],
   [],
@@ -32,4 +34,5 @@ export const mockOfsRepository = {
   findById: jest.fn(),
   findOne: jest.fn(),
   delete: jest.fn(),
+  createQueryBuilder: jest.fn(),
 };

@@ -6,6 +6,7 @@ export type Ofs = {
   lien: string | null;
   telephone: string | null;
   email: string | null;
+  isPartner: boolean;
 };
 
 export const ofss: Ofs[] = [
@@ -17,6 +18,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.hautesavoiehabitat.fr/nous-connaitre/nos-marques-et-filiales/ofis/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'ORSOL',
@@ -26,6 +28,7 @@ export const ofss: Ofs[] = [
     lien: 'https://orsol-brs.fr/references-projets/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Foncière Solidaire du Grand Lyon ',
@@ -35,6 +38,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.grandlyon.com/services/habitat-et-logement/bail-reel-solidaire',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: "SD'SOL",
@@ -44,6 +48,7 @@ export const ofss: Ofs[] = [
     lien: 'https://sdaccess.fr/programmes-neufs/',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: '3F Immobilière Rhône Alpes',
@@ -53,6 +58,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.cityloger.fr/immobiliere-rhone-alpes/logement-a-vendre-6197',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Grand Lyon Habitat',
@@ -62,6 +68,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.grandlyonhabitat.fr/je-cherche-un-bien/devenir-proprietaire/offres-de-vente/',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Lyon métropole Habitat',
@@ -71,6 +78,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.lmhabitat.fr/home/rechercher-un-bien/acheter-un-bien/bail-reel-solidaire-brs.html',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'OPAC du Rhône',
@@ -80,6 +88,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.rhonehabitat.fr/je-veux-acheter/nos-biens-disponibles',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'OPH de Haute-Savoie',
@@ -89,6 +98,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.hautesavoiehabitat.fr/louer-et-acheter/acheter/bail-reel-solidaire-brs/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'VALRIM',
@@ -98,6 +108,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.valrim-immobilier.com/bail-reel-solidaire/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Halpades',
@@ -107,6 +118,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.halpades.fr/je-souhaite-acheter/comment-acheter-un-logement-social/',
     telephone: null,
     email: 'accession@halpades.fr',
+    isPartner: true,
   },
   {
     nom: 'Cristal Habitat',
@@ -116,6 +128,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.cristal-h.fr/achat/programmes-neufs/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Alliade Habitat',
@@ -125,6 +138,7 @@ export const ofss: Ofs[] = [
     lien: 'https://allaccess.immo/',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Sô Alpes',
@@ -134,6 +148,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.samontblanc.com/accession-1155',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Alpes Isère Habitat ',
@@ -143,6 +158,7 @@ export const ofss: Ofs[] = [
     lien: 'https://dauphilogis.fr/nos-programmes-neufs/',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Foncier Coopératif Malouin',
@@ -152,6 +168,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.foncier-cooperatif-malouin.coop/',
     telephone: null,
     email: 'contact.fcm@keredes.coop',
+    isPartner: false,
   },
   {
     nom: 'Aiguillon Construction',
@@ -161,6 +178,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.imoja.fr/habiter/bien-a-acheter/',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Keredes',
@@ -170,6 +188,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.keredes.coop/achat/neuf',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Archipel Habitat',
@@ -179,6 +198,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.archipel-habitat.fr/trouver-un-logement/acheter-un-logement/programmes-en-cours',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Morbihan Habitat',
@@ -188,6 +208,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.morbihan-habitat.fr/achetez-un-bien-neuf/',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Emeraude Habitation',
@@ -197,6 +218,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.emeraude-habitation.fr/je-veux-acheter/biens-a-vendre/',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Procivis Bretagne Ouest',
@@ -206,6 +228,7 @@ export const ofss: Ofs[] = [
     lien: 'https://procivis.fr/notre-reseau/un-reseau-ancre/nos-sacicap/procivis-bretagne/',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Neotoa',
@@ -215,6 +238,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.neotoa.fr/recherche',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'OFS Grand Ouest',
@@ -224,6 +248,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.touraine-logement-promoteur.fr/programme/evidence.html',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'OFS France Loire',
@@ -233,6 +258,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.franceloire.fr/offres-de-vente',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: '3F Centre-Val de Loire',
@@ -242,6 +268,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.cityloger.fr/3f-centre-val-de-loire/logements-a-vendre',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Valloire Habitat',
@@ -251,6 +278,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.valloire-habitat.com/LE-BRS/',
     telephone: '0238540404',
     email: 'accession@valloire-habitat.com',
+    isPartner: false,
   },
   {
     nom: "Habitat de l'Ill",
@@ -260,6 +288,7 @@ export const ofss: Ofs[] = [
     lien: 'https://habitatdelill.com/appartements-a-vendre/',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: "L'OFS d'Alsace",
@@ -269,6 +298,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.ofsa.alsace/operations/',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'Le Foyer Rémois',
@@ -278,6 +308,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.foyer-remois.fr/acheter-un-bien-avec-le-foyer-remois',
     telephone: null,
     email: null,
+    isPartner: false,
   },
   {
     nom: 'OFS de la métropole de Lille',
@@ -287,6 +318,7 @@ export const ofss: Ofs[] = [
     lien: 'https://ofsml.fr/acheter/programmes/',
     telephone: '0320495051',
     email: 'contact@ofsml.fr',
+    isPartner: false,
   },
   {
     nom: 'AMSOM',
@@ -296,6 +328,7 @@ export const ofss: Ofs[] = [
     lien: 'https://amsom-habitat.fr/devenir-proprietaire-3/',
     telephone: null,
     email: 'vente@amsom-habitat.fr',
+    isPartner: false,
   },
   {
     nom: 'La Coop Foncière Francilienne',
@@ -306,6 +339,7 @@ export const ofss: Ofs[] = [
     lien: 'https://coopfoncierefrancilienne.fr/nos-programmes/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Seqens',
@@ -316,6 +350,7 @@ export const ofss: Ofs[] = [
     lien: 'https://seqens-accession.fr/programmes-en-vente/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'OFS Plaine commune',
@@ -325,6 +360,7 @@ export const ofss: Ofs[] = [
     lien: 'https://plainecommune.fr/ofs/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Foncière de la Ville de Paris',
@@ -334,6 +370,7 @@ export const ofss: Ofs[] = [
     lien: 'https://fonciere-ville-paris.fr/operations/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'OFS des Yvelines',
@@ -343,6 +380,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.yvelines.fr/cadre-de-vie/logement/loffice-foncier-solidaire-des-yvelines/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'OFS I3F',
@@ -352,6 +390,7 @@ export const ofss: Ofs[] = [
     lien: 'http:/www.unisson-3faccession.com/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Domofrance',
@@ -361,6 +400,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.exterra.fr/programmes',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Le Col',
@@ -370,6 +410,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.acheteraucol.com/contact/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Le Col',
@@ -379,6 +420,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.acheteraucol.com/contact/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: "L'EPFL des Pays-Basques - Bizitegia",
@@ -388,6 +430,7 @@ export const ofss: Ofs[] = [
     lien: 'https://bizitegia.epfl-pb.fr/nos-operations/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Habitat Sud Atlantic',
@@ -397,6 +440,7 @@ export const ofss: Ofs[] = [
     lien: 'https://immobilier.habitatsudatlantic.fr/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Terra Noé',
@@ -406,6 +450,7 @@ export const ofss: Ofs[] = [
     lien: 'https://terra-noe.fr/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Terra Noé',
@@ -415,6 +460,7 @@ export const ofss: Ofs[] = [
     lien: 'https://terra-noe.fr/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Gironde Habitat - G Logis',
@@ -424,6 +470,7 @@ export const ofss: Ofs[] = [
     lien: 'https://vente.gironde-habitat.fr/achat-maisons-appartements/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Logéo Seine',
@@ -433,6 +480,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.logeo-promotion.fr/logements',
     telephone: '0677846694',
     email: 'logeo-promotion@logeo.fr',
+    isPartner: false,
   },
   {
     nom: 'Caen La mer',
@@ -442,6 +490,7 @@ export const ofss: Ofs[] = [
     lien: 'https://caenlamer.fr/ofs',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Cif Coopérative',
@@ -451,6 +500,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.groupecif.com/recherche/resultats/programmes-neufs',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Occitalys Foncier',
@@ -460,6 +510,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.leschaletsaccession.com/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Occitalys Foncier',
@@ -469,6 +520,7 @@ export const ofss: Ofs[] = [
     lien: 'https://valophis-notremaison.fr/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Un toit pour tous - Solenterra',
@@ -478,6 +530,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.untoitpourtous.fr/acheter/nos-biens-a-la-vente/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'ACM',
@@ -487,6 +540,7 @@ export const ofss: Ofs[] = [
     lien: 'https://acmhabitat.fr/jplatform/jcms/sng_2000753/fr/acheter',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: "L'OFS de Montpellier Métropole",
@@ -496,6 +550,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.ofs-montpellier.fr/nos-programmes-immobiliers',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Promologis',
@@ -505,6 +560,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.zelidom.fr/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'OFS Vendée Habitat',
@@ -514,6 +570,7 @@ export const ofss: Ofs[] = [
     lien: 'https://vendeefonciersolidaire.fr/programme/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'OFS Racines',
@@ -523,6 +580,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.iceo-habitat.fr/programme/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Tous Propriétaires',
@@ -532,6 +590,7 @@ export const ofss: Ofs[] = [
     lien: 'https://ofstousproprietaires.fr/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Erilia',
@@ -541,6 +600,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.erilia.fr/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'OFS Procivis Sud',
@@ -550,6 +610,7 @@ export const ofss: Ofs[] = [
     lien: 'https://procivisprovence.fr/nos_programmes/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'La Coop Foncière Méditerranée ',
@@ -559,6 +620,7 @@ export const ofss: Ofs[] = [
     lien: 'https://maison-familiale-de-provence.fr/, https://www.granddelta.fr/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Groupe CIB',
@@ -568,6 +630,7 @@ export const ofss: Ofs[] = [
     lien: 'https://secib-immobilier.com',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'OFS de Golfe du Morbihan Vannes - agglomération',
@@ -577,6 +640,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.ofsgmva.bzh/',
     telephone: null,
     email: 'ofs@gmvagglo.bzh',
+    isPartner: false,
   },
   {
     nom: 'STON',
@@ -586,6 +650,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.eclisse-promotion.fr',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Icade Pierre Pour Tous',
@@ -595,6 +660,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.icade-immobilier.com',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Breizh Coop',
@@ -604,6 +670,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.lelogisbreton.bzh/logis-news/devenez-proprietaire-grace-au-bail-reel-solidaire/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Tisserin Foncière Solidaire',
@@ -613,6 +680,7 @@ export const ofss: Ofs[] = [
     lien: 'https://nacarat.com, https://www.tisserin-promotion.com',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Coop Habitat',
@@ -622,6 +690,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.coophabitat.fr/nos-programmes/',
     telephone: '02 99 65 41 55',
     email: 'chbrennes@coophabitat.fr',
+    isPartner: false,
   },
   {
     nom: 'Foncière Solucia Territoires',
@@ -631,6 +700,7 @@ export const ofss: Ofs[] = [
     lien: null,
     telephone: '06 50 59 31 05',
     email: 'contact@ofs-fst.fr',
+    isPartner: false,
   },
   {
     nom: 'Foncière Solucia Territoires',
@@ -640,6 +710,7 @@ export const ofss: Ofs[] = [
     lien: null,
     telephone: '06 50 59 31 05',
     email: 'contact@ofs-fst.fr',
+    isPartner: false,
   },
   {
     nom: 'Foncière Solucia Territoires',
@@ -649,6 +720,7 @@ export const ofss: Ofs[] = [
     lien: null,
     telephone: '06 50 59 31 05',
     email: 'contact@ofs-fst.fr',
+    isPartner: false,
   },
   {
     nom: 'Foncière Solucia Territoires',
@@ -658,6 +730,7 @@ export const ofss: Ofs[] = [
     lien: null,
     telephone: '06 50 59 31 05',
     email: 'contact@ofs-fst.fr',
+    isPartner: false,
   },
   {
     nom: 'Foncière Solucia Territoires',
@@ -667,6 +740,7 @@ export const ofss: Ofs[] = [
     lien: null,
     telephone: '06 50 59 31 05',
     email: 'contact@ofs-fst.fr',
+    isPartner: false,
   },
   {
     nom: 'OFS de Habitat et Humanisme',
@@ -677,6 +751,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.runimmo.fr,  https://www.neovarim.com/nos-programmes?reinit=true, https://www.cmkc.fr/programmes/',
     telephone: null,
     email: 'Idf.ofshh@habitat-humanisme.org',
+    isPartner: false,
   },
   {
     nom: 'OFS de Habitat et Humanisme',
@@ -686,6 +761,7 @@ export const ofss: Ofs[] = [
     lien: null,
     telephone: null,
     email: 'Idf.ofshh@habitat-humanisme.org',
+    isPartner: false,
   },
   {
     nom: 'La Foncière 74',
@@ -695,6 +771,7 @@ export const ofss: Ofs[] = [
     lien: 'https://lafonciere74.fr/logements-brs/',
     telephone: null,
     email: 'lafonciere74@lafonciere74.fr',
+    isPartner: false,
   },
   {
     nom: 'OFS Procivis Nouvelle-Aquitaine',
@@ -705,6 +782,7 @@ export const ofss: Ofs[] = [
     lien: 'https://groupe-procivis-na.fr/lhabitat-social/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'FDI Foncier Solidaire',
@@ -714,6 +792,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.fdi-habitat.fr/devenir-proprietaire/guide-bail-reel-solidaire',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'FDI Foncier Solidaire',
@@ -723,6 +802,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.fdi-habitat.fr/devenir-proprietaire/guide-bail-reel-solidaire',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'OFS Procivis Bretagne Ouest',
@@ -732,6 +812,7 @@ export const ofss: Ofs[] = [
     lien: 'https://www.polimmo.fr/immobilier-neuf/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
   {
     nom: 'Proviva',
@@ -741,5 +822,6 @@ export const ofss: Ofs[] = [
     lien: 'https://www.procivis-ouest.fr/annonces/callunes-maisons-individuelles-lhuisserie/',
     telephone: null,
     email: null,
+    isPartner: true,
   },
 ];

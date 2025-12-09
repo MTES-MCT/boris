@@ -29,6 +29,7 @@ export class CreateOfsUsecase {
       websiteUrl,
       email,
       producesBrs,
+      isPartner = false,
       regionNames,
       departementNames,
       distributorIds,
@@ -75,6 +76,7 @@ export class CreateOfsUsecase {
         websiteUrl || null,
         email || null,
         producesBrs || false,
+        isPartner || false,
         existingDepartements,
         existingRegions,
         existingDistributors,
@@ -88,6 +90,7 @@ export class CreateOfsUsecase {
       createdOfs.phone,
       createdOfs.email,
       createdOfs.producesBrs,
+      createdOfs.isPartner,
       createdOfs.departements.map((d) => ({
         id: d.id,
         name: d.name,

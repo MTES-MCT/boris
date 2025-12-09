@@ -5,6 +5,7 @@ export interface UpdateOfsUsecaseParams {
   websiteUrl?: string;
   email?: string;
   producesBrs?: boolean;
+  isPartner?: boolean;
   departementNames: string[];
   regionNames: string[];
   distributorIds: string[];

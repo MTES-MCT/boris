@@ -31,6 +31,7 @@ describe('FindOfsByIdUsecase', () => {
       ofs1.phone,
       ofs1.email,
       ofs1.producesBrs,
+      ofs1.isPartner,
       ofs1.departements.map((d) => ({
         id: d.id,
         name: d.name,

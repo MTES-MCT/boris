@@ -3,7 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OfsEntity } from './ofs.entity';
 import { OfsInterface } from 'src/domain/ofs/ofs.interface';
-import { OfsRepositoryInterface } from 'src/domain/ofs/ofs.repository.interface';
+import {
+  FindAllOfsFilters,
+  OfsRepositoryInterface,
+} from 'src/domain/ofs/ofs.repository.interface';
 import { PaginationProps } from 'src/domain/common/paginationProps';
 
 @Injectable()
@@ -19,6 +22,7 @@ export class OfsRepository implements OfsRepositoryInterface {
 
   public findAll(
     paginationProps: PaginationProps,
+    filters?: FindAllOfsFilters,
   ): Promise<[OfsEntity[], number]> {
     const { pageSize, page } = paginationProps;
 
@@ -26,10 +30,17 @@ export class OfsRepository implements OfsRepositoryInterface {
       .createQueryBuilder('ofs')
       .leftJoinAndSelect('ofs.departements', 'departements')
       .leftJoinAndSelect('ofs.regions', 'regions')
-      .leftJoinAndSelect('ofs.distributors', 'distributors')
-      .skip((page - 1) * pageSize)
-      .take(pageSize)
-      .orderBy('ofs.createdAt', 'DESC');
+      .leftJoinAndSelect('ofs.distributors', 'distributors');
+
+    if (typeof filters?.isPartner === 'boolean') {
+      query.where('ofs.isPartner = :isPartner', {
+        isPartner: filters.isPartner,
+      });
+    }
+
+    query.skip((page - 1) * pageSize);
+    query.take(pageSize);
+    query.orderBy('ofs.createdAt', 'DESC');
 
     return query.getManyAndCount();
   }

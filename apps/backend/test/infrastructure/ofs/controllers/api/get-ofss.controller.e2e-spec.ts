@@ -42,6 +42,7 @@ describe('GetOfssApiController', () => {
         name: expect.any(String),
         departements: expect.any(Array),
         producesBrs: expect.toBeOneOf([expect.any(Boolean), null]),
+        isPartner: expect.toBeOneOf([expect.any(Boolean), null]),
         regions: expect.any(Array),
         distributors: expect.any(Array),
         websiteUrl: expect.toBeOneOf([expect.any(String), null]),
@@ -77,12 +78,51 @@ describe('GetOfssApiController', () => {
         name: expect.any(String),
         departements: expect.any(Array),
         producesBrs: expect.toBeOneOf([expect.any(Boolean), null]),
+        isPartner: expect.toBeOneOf([expect.any(Boolean), null]),
         regions: expect.any(Array),
         distributors: expect.any(Array),
         websiteUrl: expect.toBeOneOf([expect.any(String), null]),
         phone: expect.toBeOneOf([expect.any(String), null]),
         email: expect.toBeOneOf([expect.any(String), null]),
       });
+    });
+  });
+
+  it('should filter ofss by isPartner=false', async () => {
+    const { status, body } = await request(app.getHttpServer())
+      .get('/api/ofss?isPartner=false')
+      .set('x-api-key', process.env.API_KEY as string);
+
+    expect(status).toBe(200);
+    expect(body).toHaveProperty('items');
+    expect(body).toHaveProperty('totalCount');
+    expect(body).toHaveProperty('page');
+    expect(body).toHaveProperty('pageSize');
+    expect(body).toHaveProperty('pagesCount');
+    expect(body).toHaveProperty('hasPreviousPage');
+    expect(body).toHaveProperty('hasNextPage');
+
+    body.items.forEach((item: OfsView) => {
+      expect(item.isPartner).toBe(false);
+    });
+  });
+
+  it('should filter ofss by isPartner=true', async () => {
+    const { status, body } = await request(app.getHttpServer())
+      .get('/api/ofss?isPartner=true')
+      .set('x-api-key', process.env.API_KEY as string);
+
+    expect(status).toBe(200);
+    expect(body).toHaveProperty('items');
+    expect(body).toHaveProperty('totalCount');
+    expect(body).toHaveProperty('page');
+    expect(body).toHaveProperty('pageSize');
+    expect(body).toHaveProperty('pagesCount');
+    expect(body).toHaveProperty('hasPreviousPage');
+    expect(body).toHaveProperty('hasNextPage');
+
+    body.items.forEach((item: OfsView) => {
+      expect(item.isPartner).toBe(true);
     });
   });
 

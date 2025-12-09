@@ -21,6 +21,37 @@ describe('OfsRepository', () => {
     ofsRepository = module.get<OfsRepository>(OfsRepository);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should find all ofs with isPartner filter', async () => {
+    const queryBuilder = {
+      leftJoinAndSelect: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      take: jest.fn().mockReturnThis(),
+      orderBy: jest.fn().mockReturnThis(),
+      getManyAndCount: jest.fn().mockResolvedValue([[ofs1], 1]),
+    };
+    mockOfsRepository.createQueryBuilder.mockReturnValue(queryBuilder);
+
+    const result = await ofsRepository.findAll(
+      { pageSize: 10, page: 1 },
+      { isPartner: true },
+    );
+
+    expect(result).toEqual([[ofs1], 1]);
+    expect(queryBuilder.where).toHaveBeenCalledWith(
+      'ofs.isPartner = :isPartner',
+      { isPartner: true },
+    );
+    expect(queryBuilder.skip).toHaveBeenCalledWith(0);
+    expect(queryBuilder.take).toHaveBeenCalledWith(10);
+    expect(queryBuilder.orderBy).toHaveBeenCalledWith('ofs.createdAt', 'DESC');
+    expect(queryBuilder.getManyAndCount).toHaveBeenCalledTimes(1);
+  });
+
   it('should save an ofs and return its data', async () => {
     mockOfsRepository.save.mockResolvedValue(ofs1);
 

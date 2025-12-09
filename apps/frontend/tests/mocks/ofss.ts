@@ -8,6 +8,7 @@ export const ofss: OfsView[] = [
     phone: null,
     email: null,
     producesBrs: null,
+    isPartner: null,
     departements: [
       {
         id: '634ab950-c60b-4021-b865-d0941bf613fd',
@@ -37,6 +38,7 @@ export const ofss: OfsView[] = [
     phone: null,
     email: null,
     producesBrs: null,
+    isPartner: null,
     departements: [],
     regions: [
       {
@@ -64,6 +66,7 @@ export const ofss: OfsView[] = [
     phone: '06 50 59 31 05',
     email: 'contact@ofs-fst.fr',
     producesBrs: null,
+    isPartner: null,
     departements: [],
     regions: [
       {
@@ -80,6 +83,7 @@ export const ofss: OfsView[] = [
     phone: null,
     email: 'contact.fcm@keredes.coop',
     producesBrs: null,
+    isPartner: null,
     departements: [
       {
         id: '8fb92e67-2a0b-4745-8b1e-e0a76e1e84d2',
@@ -108,6 +112,7 @@ export const expectedResult = [
         phone: null,
         email: null,
         producesBrs: null,
+        isPartner: null,
         departements: [
           {
             id: '634ab950-c60b-4021-b865-d0941bf613fd',
@@ -143,6 +148,7 @@ export const expectedResult = [
         phone: null,
         email: 'contact.fcm@keredes.coop',
         producesBrs: null,
+        isPartner: null,
         departements: [
           {
             id: '8fb92e67-2a0b-4745-8b1e-e0a76e1e84d2',
@@ -165,6 +171,7 @@ export const expectedResult = [
         phone: '06 50 59 31 05',
         email: 'contact@ofs-fst.fr',
         producesBrs: null,
+        isPartner: null,
         departements: [],
         regions: [
           {
@@ -187,6 +194,7 @@ export const expectedResult = [
         phone: null,
         email: null,
         producesBrs: null,
+        isPartner: null,
         departements: [],
         regions: [
           {

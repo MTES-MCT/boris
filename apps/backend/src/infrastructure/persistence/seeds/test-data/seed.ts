@@ -107,6 +107,7 @@ export class TestDataSeed {
         websiteUrl: ofsWebsiteUrl || undefined,
         email: ofs.email || undefined,
         departementNames: departements.map((d) => d.name),
+        isPartner: ofs.isPartner,
         regionNames: [region.name],
         distributorIds,
       });
@@ -192,15 +193,6 @@ export class TestDataSeed {
     console.log(`${landbotCustomersCount} landbot customers créés.`);
   }
 
-  async seed() {
-    await this.seedRegions();
-    await this.seedOfss();
-    await this.seedBrsDiffusionWebsites();
-    await this.seedMunicipalities();
-    await this.seedLandbotCustomers();
-    await this.seedRegionsCode();
-  }
-
   private async seedRegionsCode() {
     console.log('Ajout des codes des régions');
 
@@ -219,5 +211,14 @@ export class TestDataSeed {
         });
       }
     }
+  }
+
+  async seed() {
+    await this.seedRegions();
+    await this.seedOfss();
+    await this.seedBrsDiffusionWebsites();
+    await this.seedMunicipalities();
+    await this.seedLandbotCustomers();
+    await this.seedRegionsCode();
   }
 }

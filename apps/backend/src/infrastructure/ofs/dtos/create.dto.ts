@@ -38,6 +38,14 @@ export class CreateOfsDTO {
   public producesBrs: boolean;
 
   @ApiProperty()
+  @Transform(({ value }) => {
+    return typeof value === 'boolean';
+  })
+  @IsBoolean()
+  @IsOptional()
+  public isPartner: boolean;
+
+  @ApiProperty()
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
