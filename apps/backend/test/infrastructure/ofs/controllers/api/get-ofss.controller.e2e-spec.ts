@@ -88,6 +88,44 @@ describe('GetOfssApiController', () => {
     });
   });
 
+  it('should filter ofss by isPartner=false', async () => {
+    const { status, body } = await request(app.getHttpServer())
+      .get('/api/ofss?isPartner=false')
+      .set('x-api-key', process.env.API_KEY as string);
+
+    expect(status).toBe(200);
+    expect(body).toHaveProperty('items');
+    expect(body).toHaveProperty('totalCount');
+    expect(body).toHaveProperty('page');
+    expect(body).toHaveProperty('pageSize');
+    expect(body).toHaveProperty('pagesCount');
+    expect(body).toHaveProperty('hasPreviousPage');
+    expect(body).toHaveProperty('hasNextPage');
+
+    body.items.forEach((item: OfsView) => {
+      expect(item.isPartner).toBe(false);
+    });
+  });
+
+  it('should filter ofss by isPartner=true', async () => {
+    const { status, body } = await request(app.getHttpServer())
+      .get('/api/ofss?isPartner=true')
+      .set('x-api-key', process.env.API_KEY as string);
+
+    expect(status).toBe(200);
+    expect(body).toHaveProperty('items');
+    expect(body).toHaveProperty('totalCount');
+    expect(body).toHaveProperty('page');
+    expect(body).toHaveProperty('pageSize');
+    expect(body).toHaveProperty('pagesCount');
+    expect(body).toHaveProperty('hasPreviousPage');
+    expect(body).toHaveProperty('hasNextPage');
+
+    body.items.forEach((item: OfsView) => {
+      expect(item.isPartner).toBe(true);
+    });
+  });
+
   it('should throw a 400 when pagination query params are invalid', async () => {
     const { status } = await request(app.getHttpServer())
       .get('/api/ofss?page=deux')

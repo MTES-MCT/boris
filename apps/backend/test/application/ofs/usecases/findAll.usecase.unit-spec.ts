@@ -24,8 +24,13 @@ describe('FindAllOfssUsecase', () => {
     useCase = module.get<FindAllOfssUsecase>(FindAllOfssUsecase);
   });
 
-  it('should return all OFS', async () => {
-    mockOfsRepository.findAll.mockReturnValue([[ofs1, ofs2], 2]);
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return all OFS with the isPartner filter forwarded to repository', async () => {
+    mockOfsRepository.findAll.mockResolvedValue([[ofs1, ofs2], 2]);
+    const params = { ...DEFAULT_PAGINATION, isPartner: true };
 
     const expectedResult = new Pagination(
       [
@@ -74,9 +79,16 @@ describe('FindAllOfssUsecase', () => {
       DEFAULT_PAGINATION,
     );
 
-    const result = await useCase.execute(DEFAULT_PAGINATION);
+    const result = await useCase.execute(params);
 
     expect(result).toMatchObject(expectedResult);
     expect(mockOfsRepository.findAll).toHaveBeenCalledTimes(1);
+    expect(mockOfsRepository.findAll).toHaveBeenCalledWith(
+      {
+        page: DEFAULT_PAGINATION.page,
+        pageSize: DEFAULT_PAGINATION.pageSize,
+      },
+      { isPartner: true },
+    );
   });
 });

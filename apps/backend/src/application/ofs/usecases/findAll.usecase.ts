@@ -13,12 +13,15 @@ export class FindAllOfssUsecase {
   public async execute(
     params: FindAllOfssParams,
   ): Promise<Pagination<OfsView>> {
-    const { page, pageSize } = params;
+    const { page, pageSize, isPartner } = params;
 
-    const [ofss, totalCount] = await this.ofsRepository.findAll({
-      page,
-      pageSize,
-    });
+    const [ofss, totalCount] = await this.ofsRepository.findAll(
+      {
+        page,
+        pageSize,
+      },
+      { isPartner },
+    );
 
     const items = ofss.map((ofs) => {
       return new OfsView(

@@ -34,4 +34,5 @@ export const mockOfsRepository = {
   findById: jest.fn(),
   findOne: jest.fn(),
   delete: jest.fn(),
+  createQueryBuilder: jest.fn(),
 };
