@@ -61,7 +61,6 @@ export class UploadMonthlyStatisticsCron {
     private readonly groupByRegionsUsecase: GroupByRegionsUsecase,
   ) {}
 
-  // @Cron('*/5 * * * * *', { timeZone: 'Europe/Paris' })
   @Cron('0 3 2 * *', { timeZone: 'Europe/Paris' })
   public async execute() {
     const filePath = `${this.filePathPrefix}-${this.getLastMonth().monthName}-${this.getLastMonth().year}.csv`;
