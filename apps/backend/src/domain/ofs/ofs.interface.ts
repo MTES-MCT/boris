@@ -9,6 +9,7 @@ export interface OfsInterface {
   websiteUrl: string | null;
   email: string | null;
   producesBrs: boolean;
+  isPartner: boolean;
   regions: RegionEntity[];
   departements: DepartementEntity[];
   distributors: DistributorEntity[];

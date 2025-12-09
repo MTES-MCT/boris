@@ -32,6 +32,9 @@ export class OfsEntity implements OfsInterface {
   @Column({ type: 'boolean', nullable: false, default: false })
   public producesBrs: boolean;
 
+  @Column({ type: 'boolean', nullable: false, default: false })
+  public isPartner: boolean;
+
   @ManyToMany(() => DepartementEntity, (departement) => departement.ofss)
   @JoinTable({
     name: 'ofs_departement',
