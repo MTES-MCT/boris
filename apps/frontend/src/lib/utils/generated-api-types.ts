@@ -312,7 +312,7 @@ export interface components {
       condominiumFees?: number;
       monthlyExpenses?: number;
     };
-    LandbotCustomerGroupByView: {
+    LandbotCustomerGroupByFieldView: {
       /** @example [
        *       {
        *         "eligibility": "1",
@@ -581,7 +581,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['LandbotCustomerGroupByView'];
+          'application/json': components['schemas']['LandbotCustomerGroupByFieldView'];
         };
       };
     };

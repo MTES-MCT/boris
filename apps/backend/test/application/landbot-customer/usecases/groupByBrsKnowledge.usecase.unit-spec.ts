@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { GroupByBrsKnowledgeUsecase } from 'src/application/landbot-customer/usecases/groupByBrsKnowledge.usecase';
-import { LandbotCustomerGroupByView } from 'src/application/landbot-customer/views/landbot-customer-group-by.view';
+import { LandbotCustomerGroupByFieldView } from 'src/application/landbot-customer/views/landbot-customer-group-by-field.view';
 
 import {
   mockLandbotCustomerRepository,
@@ -33,7 +33,7 @@ describe('GroupByBrsKnowledgeUsecase', () => {
 
     const result = await useCase.execute();
 
-    expect(result).toBeInstanceOf(LandbotCustomerGroupByView);
+    expect(result).toBeInstanceOf(LandbotCustomerGroupByFieldView);
     expect(result.data).toEqual(mockGroupByBrsKnowledgeResults);
     expect(
       mockLandbotCustomerRepository.groupByBrsKnowledge,
@@ -48,7 +48,7 @@ describe('GroupByBrsKnowledgeUsecase', () => {
 
     const result = await useCase.execute();
 
-    expect(result).toBeInstanceOf(LandbotCustomerGroupByView);
+    expect(result).toBeInstanceOf(LandbotCustomerGroupByFieldView);
     expect(result.data).toEqual([]);
     expect(
       mockLandbotCustomerRepository.groupByBrsKnowledge,
