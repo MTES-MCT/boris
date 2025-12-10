@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
   GroupByRegionsResult,
+  GroupSimulationsByYearAndMonthResult,
   LandbotCustomerRepositoryInterface,
 } from 'src/domain/landbot-customer/landbot-customer.repository.interface';
 import { LandbotCustomerEntity } from './landbot-customer.entity';
@@ -116,5 +117,21 @@ export class LandbotCustomerRepository
     const total = await totalQuery.getRawOne();
 
     return [result, Number(total.count)];
+  }
+
+  public async groupSimulationsByYearAndMonth(): Promise<
+    GroupSimulationsByYearAndMonthResult[]
+  > {
+    const query = this.repository
+      .createQueryBuilder('landbot_customer')
+      .select(`EXTRACT(YEAR FROM landbot_customer.date)`, 'year')
+      .addSelect(`EXTRACT(MONTH FROM landbot_customer.date)`, 'month')
+      .addSelect(`COUNT(*)`, 'count')
+      .groupBy('year')
+      .addGroupBy('year')
+      .orderBy('year')
+      .addOrderBy('month');
+
+    return query.getRawMany();
   }
 }

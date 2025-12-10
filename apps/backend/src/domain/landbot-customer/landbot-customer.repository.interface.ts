@@ -12,6 +12,12 @@ export type GroupByRegionsResult = {
   count: string;
 };
 
+export type GroupSimulationsByYearAndMonthResult = {
+  year: number;
+  month: number;
+  count: number;
+};
+
 export interface LandbotCustomerRepositoryInterface {
   save(landbotCustomer: LandbotCustomerEntity): Promise<LandbotCustomerEntity>;
   findLast(): Promise<LandbotCustomerEntity | null>;
@@ -29,4 +35,7 @@ export interface LandbotCustomerRepositoryInterface {
     year: number,
     month: number,
   ): Promise<[GroupByRegionsResult[], total: number]>;
+  groupSimulationsByYearAndMonth(): Promise<
+    GroupSimulationsByYearAndMonthResult[]
+  >;
 }
