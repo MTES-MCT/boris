@@ -127,6 +127,7 @@ export class LandbotCustomerRepository
       .select(`EXTRACT(YEAR FROM landbot_customer.date)`, 'year')
       .addSelect(`EXTRACT(MONTH FROM landbot_customer.date)`, 'month')
       .addSelect(`COUNT(*)`, 'count')
+      .andWhere(`landbot_customer.eligibility in ('1', '2', '4')`)
       .groupBy('EXTRACT(YEAR FROM landbot_customer.date)')
       .addGroupBy('EXTRACT(MONTH FROM landbot_customer.date)')
       .orderBy('year')

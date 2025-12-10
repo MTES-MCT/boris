@@ -1,21 +1,15 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import '@gouvfr/dsfr/dist/dsfr.min.css';
-
-  onMount(async () => {
-    // @ts-expect-error: no declaration file
-    await import('@gouvfr/dsfr/dist/dsfr.module.min.js');
-    // @ts-expect-error: no declaration file
-    await import('@gouvfr/dsfr-chart');
-  });
-
   import Section from '$components/common/Section.svelte';
+  import SimulationsCount from '$components/pages/statistiques/SimulationsCount.svelte';
+
+  import type { PageProps } from './$types';
+  const { data }: PageProps = $props();
 </script>
 
 <Section>
   <h1>Statistiques</h1>
-  <line-chart
-    x="[[1, 2, 3, 4]]"
-    y="[[10, 20, 30, 40]]">
-  </line-chart>
+
+  <SimulationsCount
+    count={data.countSimulations}
+    montlhlySummary={data.simulationsMonthlySummary} />
 </Section>

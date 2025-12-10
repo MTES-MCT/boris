@@ -226,6 +226,7 @@ describe('LandbotCustomerRepository', () => {
     const mockQueryBuilder = {
       select: jest.fn().mockReturnThis(),
       addSelect: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
       groupBy: jest.fn().mockReturnThis(),
       addGroupBy: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
@@ -264,6 +265,10 @@ describe('LandbotCustomerRepository', () => {
       2,
       'COUNT(*)',
       'count',
+    );
+    expect(mockQueryBuilder.andWhere).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.andWhere).toHaveBeenCalledWith(
+      "landbot_customer.eligibility in ('1', '2', '4')",
     );
     expect(mockQueryBuilder.groupBy).toHaveBeenCalledTimes(1);
     expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith(

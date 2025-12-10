@@ -40,3 +40,6 @@ export type UpdateAcquisitionSimulationDto =
 
 export type GetLandbotCustomerByFieldsPathParams =
   operations['GetLandbotCustomersByFieldApiController_index']['parameters']['path']['field'];
+
+export type LandbotCustomerGroupSimulationsByYearAndMonthView =
+  components['schemas']['LandbotCustomerGroupSimulationsByYearAndMonthView'];
