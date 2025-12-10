@@ -266,9 +266,13 @@ describe('LandbotCustomerRepository', () => {
       'count',
     );
     expect(mockQueryBuilder.groupBy).toHaveBeenCalledTimes(1);
-    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith('year');
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith(
+      'EXTRACT(YEAR FROM landbot_customer.date)',
+    );
     expect(mockQueryBuilder.addGroupBy).toHaveBeenCalledTimes(1);
-    expect(mockQueryBuilder.addGroupBy).toHaveBeenCalledWith('year');
+    expect(mockQueryBuilder.addGroupBy).toHaveBeenCalledWith(
+      'EXTRACT(MONTH FROM landbot_customer.date)',
+    );
     expect(mockQueryBuilder.orderBy).toHaveBeenCalledTimes(1);
     expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith('year');
     expect(mockQueryBuilder.addOrderBy).toHaveBeenCalledTimes(1);

@@ -15,13 +15,17 @@ import { GetLandbotCustomersByFieldApiController } from './controllers/api/get-l
 import { CountSimulationsUsecase } from 'src/application/landbot-customer/usecases/countSimulations.usecase';
 import { GroupByRegionsUsecase } from 'src/application/landbot-customer/usecases/groupByRegions.usecase';
 import { GroupSimulationsByYearAndMonthUsecase } from 'src/application/landbot-customer/usecases/groupSimulationsByYearAndMonth.usecase';
+import { GetLandbotCustomersSimulationsMonthlySummaryApiController } from './controllers/api/get-landbot-customers-simulations-monthly-summary.controller';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([DepartementEntity, LandbotCustomerEntity]),
     LandbotApiClientModule,
   ],
-  controllers: [GetLandbotCustomersByFieldApiController],
+  controllers: [
+    GetLandbotCustomersByFieldApiController,
+    GetLandbotCustomersSimulationsMonthlySummaryApiController,
+  ],
   providers: [
     {
       provide: 'DepartementRepositoryInterface',
