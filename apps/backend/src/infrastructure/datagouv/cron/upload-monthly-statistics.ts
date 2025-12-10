@@ -63,7 +63,7 @@ export class UploadMonthlyStatisticsCron {
 
   @Cron('0 3 2 * *', {
     timeZone: 'Europe/Paris',
-    disabled: process.env.NODE_ENV !== 'production',
+    disabled: process.env.CRON_TASKS !== 'enabled',
   })
   public async execute() {
     const filePath = `${this.filePathPrefix}-${this.getLastMonth().monthName}-${this.getLastMonth().year}.csv`;

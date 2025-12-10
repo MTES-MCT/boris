@@ -16,7 +16,7 @@ export class ImportLandbotCustomersCron {
 
   @Cron('0 3 * * *', {
     timeZone: 'Europe/Paris',
-    disabled: process.env.NODE_ENV !== 'production',
+    disabled: process.env.CRON_TASKS !== 'enabled',
   })
   public async execute() {
     console.log('Import des données Landbot...');
