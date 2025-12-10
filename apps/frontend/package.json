@@ -30,6 +30,7 @@
     "@axe-core/playwright": "^4.10.1",
     "@csstools/postcss-global-data": "^3.0.0",
     "@gouvfr/dsfr": "^1.14.2",
+    "@gouvfr/dsfr-chart": "^2.0.4",
     "@keyv/serialize": "^1.1.0",
     "@lhci/cli": "^0.14.0",
     "@playwright/test": "^1.28.1",
@@ -52,8 +53,8 @@
     "prettier-plugin-svelte": "^3.1.2",
     "super-sitemap": "^1.0.3",
     "svelte": "^5.16.6",
-    "tailwindcss": "^4.1.16",
     "svelte-check": "^4.0.0",
+    "tailwindcss": "^4.1.16",
     "vite": "^5.0.3",
     "vitest": "^2.0.0",
     "zod": "^4.1.11"
