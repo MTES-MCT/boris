@@ -165,7 +165,7 @@
         <br />
         {@render detailedPercentage({
           percentage: item.count,
-          detail: `des ménages sont ${item.realEstateSituation}`,
+          detail: `des ménages déclarent être ${item.realEstateSituation}`,
         })}
       {/each}
     </p>
