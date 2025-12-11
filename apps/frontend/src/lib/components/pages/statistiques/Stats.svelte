@@ -13,6 +13,7 @@
     eligibility: PageData['eligibility'];
     brsKnowledge: PageData['brsKnowledge'];
     realEstateSituation: PageData['realEstateSituation'];
+    hideDisclaimer?: boolean;
   };
 
   const {
@@ -22,6 +23,7 @@
     eligibility,
     brsKnowledge,
     realEstateSituation,
+    hideDisclaimer = false,
   }: Props = $props();
 
   const eligibilityData = $derived.by(() => {
@@ -81,57 +83,54 @@
   });
 </script>
 
-<Section id="statistiques">
-  <div
-    class="max-w-[768px] mx-auto p-4 md:p-10 rounded-tl-xl rounded-tr-xl bg-white">
-    <Disclaimer content="en chiffres clés" />
+{#if !hideDisclaimer}
+  <Disclaimer content="en chiffres clés" />
+{/if}
 
-    <div
-      class="flex flex-wrap gap-4 lg:gap-8 justify-center mt-16 mb-16 w-[calc(100%-1rem)] mx-auto">
-      <div class="w-full md:w-[calc(50%-1rem)]">
-        <Tile
-          title={formatEuro(investedAmount)}
-          description="d'argent public investi sur notre plateforme."
-          pictogram="money" />
-      </div>
-
-      <div class="w-full md:w-[calc(50%-1rem)]">
-        <Tile
-          title={formatNumber(eligibilityData.total)}
-          pictogram="application">
-          <p class="fr-tile__desc">simulations</p>
-          <p class="fr-tile__detail !block">
-            {@render detailedPercentage({
-              percentage: eligibilityData.eligiblePercentage,
-              detail: 'des simulations concernent des ménages éligibles.',
-            })}
-          </p>
-        </Tile>
-      </div>
-
-      <div class="w-full hidden md:block">
-        {@render horizontalTile(true)}
-      </div>
-
-      <div class="w-full block md:hidden">
-        {@render horizontalTile()}
-      </div>
-
-      <div class="w-full md:w-[calc(50%-1rem)]">
-        <Tile
-          title={purchasePlanAmount}
-          description="ménages avec un projet d'achat"
-          pictogram="environment" />
-      </div>
-      <div class="w-full md:w-[calc(50%-1rem)]">
-        <Tile
-          title={`${ofssAmount}`}
-          description="Organismes de foncier solidaire (OFS) partenaires"
-          pictogram="ecosystem" />
-      </div>
-    </div>
+<div
+  class="flex flex-wrap gap-4 lg:gap-8 justify-center mt-16 mb-16 w-[calc(100%-1rem)] mx-auto">
+  <div class="w-full md:w-[calc(50%-1rem)]">
+    <Tile
+      title={formatEuro(investedAmount)}
+      description="d'argent public investi sur notre plateforme."
+      pictogram="money" />
   </div>
-</Section>
+
+  <div class="w-full md:w-[calc(50%-1rem)]">
+    <Tile
+      title={formatNumber(eligibilityData.total)}
+      pictogram="application">
+      <p class="fr-tile__desc">simulations</p>
+      <p class="fr-tile__detail !block">
+        {@render detailedPercentage({
+          percentage: eligibilityData.eligiblePercentage,
+          detail: 'des simulations concernent des ménages éligibles.',
+        })}
+      </p>
+    </Tile>
+  </div>
+
+  <div class="w-full hidden md:block">
+    {@render horizontalTile(true)}
+  </div>
+
+  <div class="w-full block md:hidden">
+    {@render horizontalTile()}
+  </div>
+
+  <div class="w-full md:w-[calc(50%-1rem)]">
+    <Tile
+      title={purchasePlanAmount}
+      description="ménages avec un projet d'achat"
+      pictogram="environment" />
+  </div>
+  <div class="w-full md:w-[calc(50%-1rem)]">
+    <Tile
+      title={`${ofssAmount}`}
+      description="Organismes de foncier solidaire (OFS) partenaires"
+      pictogram="ecosystem" />
+  </div>
+</div>
 
 {#snippet detailedPercentage({
   percentage,

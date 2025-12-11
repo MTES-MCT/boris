@@ -14,7 +14,7 @@ export const GET = async () => {
 
     partnerOfss = await response.json();
 
-    cache.set(namespaces.ofss, partnerOfss, TTL_MS);
+    cache.set(namespaces.partnerOfss, partnerOfss, TTL_MS);
   }
 
   return json(partnerOfss);

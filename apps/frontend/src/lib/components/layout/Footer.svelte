@@ -44,7 +44,7 @@
             <li>
               <a
                 class="fr-footer__top-link"
-                href="/notre-mission#statistiques">
+                href="/statistiques">
                 Statistiques
               </a>
             </li>
