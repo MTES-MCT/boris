@@ -13,7 +13,7 @@ export const GET = async ({ params }) => {
   const { field } = params;
 
   if (!allowedFields.includes(field as GetLandbotCustomerByFieldsPathParams)) {
-    return error(400);
+    return error(404);
   }
 
   let cacheNamespace = 'landbotCustomers';

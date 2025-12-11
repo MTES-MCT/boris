@@ -5,7 +5,8 @@
   import Hero from '$components/pages/notre-mission/Hero.svelte';
   import Team from '$components/pages/notre-mission/Team.svelte';
   import Chronology from '$components/pages/notre-mission/Chronology.svelte';
-  import Stats from '$components/pages/notre-mission/Stats.svelte';
+  import Stats from '$components/pages/statistiques/Stats.svelte';
+  import Section from '$components/common/Section.svelte';
 
   const { data }: PageProps = $props();
   const {
@@ -29,11 +30,26 @@
   <Hero />
   <Team />
   <Chronology />
-  <Stats
-    {investedAmount}
-    {eligibility}
-    {brsKnowledge}
-    {realEstateSituation}
-    {purchasePlanAmount}
-    {ofssAmount} />
+
+  <Section id="statistiques">
+    <div
+      class="max-w-[768px] mx-auto p-4 md:p-10 rounded-tl-xl rounded-tr-xl bg-white">
+      <Stats
+        {investedAmount}
+        {eligibility}
+        {brsKnowledge}
+        {realEstateSituation}
+        {purchasePlanAmount}
+        {ofssAmount} />
+
+      <div class="flex justify-center">
+        <a
+          href="/statistiques"
+          class="fr-link fr-text--bold">
+          Plus de détails ici
+          <span class="fr-icon--sm fr-icon-arrow-right-line"></span>
+        </a>
+      </div>
+    </div>
+  </Section>
 </GradientBackgroundWrapper>

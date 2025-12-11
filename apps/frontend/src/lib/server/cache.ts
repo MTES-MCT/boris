@@ -9,6 +9,8 @@ export const namespaces = {
   landbotCustomersBrsKnowledge: 'landbot-customers-brs-knowledge',
   landbotCustomersRealEstateSituation:
     'landbot-customers-real-estate-situation',
+  landbotCustomersSimulationsMonthlySummary:
+    'landbot-customers-simulations-monthly-summary',
 };
 
 const TTL_HOURS = 12;

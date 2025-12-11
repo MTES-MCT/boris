@@ -140,6 +140,23 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/landbot-customers/simulations/monthly-summary': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Récupérer le nombre de simulations par mois */
+    get: operations['GetLandbotCustomersSimulationsMonthlySummaryApiController_index'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -217,6 +234,8 @@ export interface components {
       email: Record<string, never>;
       /** @example true */
       producesBrs: Record<string, never>;
+      /** @example true */
+      isPartner: Record<string, never>;
       departements: components['schemas']['DepartementRelationnalView'][];
       regions: components['schemas']['RegionRelationnalView'][];
       distributors: components['schemas']['DistributorRelationnalView'][];
@@ -225,6 +244,7 @@ export interface components {
       /** Format: date-time */
       updatedAt?: string;
     };
+    Object: Record<string, never>;
     MunicipalityView: {
       /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
       id: string;
@@ -283,12 +303,12 @@ export interface components {
       monthlyExpenses: number;
       /**
        * Format: date-time
-       * @example 2025-11-20T11:11:59.551Z
+       * @example 2025-12-10T14:16:51.009Z
        */
       createdAt: string;
       /**
        * Format: date-time
-       * @example 2025-11-20T11:11:59.551Z
+       * @example 2025-12-10T14:16:51.009Z
        */
       updatedAt: string;
     };
@@ -325,6 +345,21 @@ export interface components {
        *       {
        *         "eligibility": "null",
        *         "count": "2"
+       *       }
+       *     ] */
+      data: string[];
+    };
+    LandbotCustomerGroupSimulationsByYearAndMonthView: {
+      /** @example [
+       *       {
+       *         "year": 2024,
+       *         "month": 1,
+       *         "count": 100
+       *       },
+       *       {
+       *         "year": 2024,
+       *         "month": 2,
+       *         "count": 200
        *       }
        *     ] */
       data: string[];
@@ -460,9 +495,10 @@ export interface operations {
   };
   GetOfssApiController_index: {
     parameters: {
-      query?: {
+      query: {
         page?: number;
         pageSize?: number;
+        isPartner: components['schemas']['Object'];
       };
       header?: never;
       path?: never;
@@ -582,6 +618,26 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['LandbotCustomerGroupByFieldView'];
+        };
+      };
+    };
+  };
+  GetLandbotCustomersSimulationsMonthlySummaryApiController_index: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Nombre de simulations par mois */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['LandbotCustomerGroupSimulationsByYearAndMonthView'];
         };
       };
     };

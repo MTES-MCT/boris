@@ -1,5 +1,5 @@
 <script lang="ts">
-  import '@gouvfr/dsfr/dist/core/core.min.css';
+  import '@gouvfr/dsfr/dist/dsfr.min.css';
   import '@gouvfr/dsfr/dist/utility/icons/icons.min.css';
   import '$assets/styles/main.css';
 
@@ -7,7 +7,7 @@
 
   onMount(async () => {
     // @ts-expect-error: no declaration file
-    await import('@gouvfr/dsfr/dist/core/core.module.min');
+    await import('@gouvfr/dsfr/dist/dsfr.module.min.js');
 
     dsfrManager.isWindowDsfrDefined = true;
   });

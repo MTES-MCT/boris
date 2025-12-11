@@ -24,6 +24,7 @@ export const mockLandbotCustomerRepository = {
   groupByRealEstateSituation: jest.fn(),
   countSimulations: jest.fn(),
   groupByRegions: jest.fn(),
+  groupSimulationsByYearAndMonth: jest.fn(),
 };
 
 export const mockGroupByEligibilityResults = [
@@ -41,4 +42,9 @@ export const mockGroupByRealEstateSituationResults = [
   { realEstateSituation: "propriétaire d'un logement", count: '5' },
   { realEstateSituation: "locataire d'un logement privé", count: '3' },
   { realEstateSituation: null, count: '2' },
+];
+
+export const mockGroupSimulationsByYearAndMonthResults = [
+  { year: 2024, month: 5, count: '7' },
+  { year: 2024, month: 6, count: '3' },
 ];

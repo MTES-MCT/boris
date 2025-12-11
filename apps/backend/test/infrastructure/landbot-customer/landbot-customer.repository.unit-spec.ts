@@ -8,6 +8,7 @@ import {
   mockGroupByEligibilityResults,
   mockGroupByBrsKnowledgeResults,
   mockGroupByRealEstateSituationResults,
+  mockGroupSimulationsByYearAndMonthResults,
 } from 'test/mocks/integration/landbot-customer';
 
 describe('LandbotCustomerRepository', () => {
@@ -218,6 +219,69 @@ describe('LandbotCustomerRepository', () => {
     expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith(
       'landbot_customer.realEstateSituation',
     );
+    expect(mockQueryBuilder.getRawMany).toHaveBeenCalledTimes(1);
+  });
+
+  it('should group simulations by year and month and return raw results', async () => {
+    const mockQueryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
+      groupBy: jest.fn().mockReturnThis(),
+      addGroupBy: jest.fn().mockReturnThis(),
+      orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
+      getRawMany: jest
+        .fn()
+        .mockResolvedValue(mockGroupSimulationsByYearAndMonthResults),
+    };
+
+    mockLandbotCustomerRepository.createQueryBuilder.mockReturnValue(
+      mockQueryBuilder,
+    );
+
+    const result =
+      await landbotCustomerRepository.groupSimulationsByYearAndMonth();
+
+    expect(result).toEqual(mockGroupSimulationsByYearAndMonthResults);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('landbot_customer');
+    expect(mockQueryBuilder.select).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.select).toHaveBeenCalledWith(
+      'EXTRACT(YEAR FROM landbot_customer.date)',
+      'year',
+    );
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledTimes(2);
+    expect(mockQueryBuilder.addSelect).toHaveBeenNthCalledWith(
+      1,
+      'EXTRACT(MONTH FROM landbot_customer.date)',
+      'month',
+    );
+    expect(mockQueryBuilder.addSelect).toHaveBeenNthCalledWith(
+      2,
+      'COUNT(*)',
+      'count',
+    );
+    expect(mockQueryBuilder.andWhere).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.andWhere).toHaveBeenCalledWith(
+      "landbot_customer.eligibility in ('1', '2', '4')",
+    );
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith(
+      'EXTRACT(YEAR FROM landbot_customer.date)',
+    );
+    expect(mockQueryBuilder.addGroupBy).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.addGroupBy).toHaveBeenCalledWith(
+      'EXTRACT(MONTH FROM landbot_customer.date)',
+    );
+    expect(mockQueryBuilder.orderBy).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith('year');
+    expect(mockQueryBuilder.addOrderBy).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.addOrderBy).toHaveBeenCalledWith('month');
     expect(mockQueryBuilder.getRawMany).toHaveBeenCalledTimes(1);
   });
 
