@@ -10,7 +10,7 @@ import { LandbotCustomerGroupSimulationsByYearAndMonthView } from 'src/applicati
 import { ApiKeyGuard } from 'src/infrastructure/auth/guards/api-key.guard';
 
 @Controller('api/landbot-customers')
-@ApiTags('Nombre de simulations par mois')
+@ApiTags("Simulations d'éligibilité")
 export class GetLandbotCustomersSimulationsMonthlySummaryApiController {
   constructor(
     private readonly groupSimulationsByYearAndMonthUsecase: GroupSimulationsByYearAndMonthUsecase,

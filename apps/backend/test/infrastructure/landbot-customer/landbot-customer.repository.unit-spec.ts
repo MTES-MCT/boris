@@ -9,6 +9,7 @@ import {
   mockGroupByBrsKnowledgeResults,
   mockGroupByRealEstateSituationResults,
   mockGroupSimulationsByYearAndMonthResults,
+  mockGroupByDepartementsResults,
 } from 'test/mocks/integration/landbot-customer';
 
 describe('LandbotCustomerRepository', () => {
@@ -536,5 +537,101 @@ describe('LandbotCustomerRepository', () => {
     expect(result).toEqual([[], 0]);
     expect(mockQueryBuilderForResults.getRawMany).toHaveBeenCalledTimes(1);
     expect(mockQueryBuilderForTotal.getRawOne).toHaveBeenCalledTimes(1);
+  });
+
+  it('should group by departements with inner join and where condition and return raw results', async () => {
+    const mockQueryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      innerJoin: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      groupBy: jest.fn().mockReturnThis(),
+      getRawMany: jest.fn().mockResolvedValue(mockGroupByDepartementsResults),
+    };
+
+    mockLandbotCustomerRepository.createQueryBuilder.mockReturnValue(
+      mockQueryBuilder,
+    );
+
+    const result = await landbotCustomerRepository.groupByDepartements();
+
+    expect(result).toEqual(mockGroupByDepartementsResults);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('landbot_customer');
+    expect(mockQueryBuilder.select).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.select).toHaveBeenCalledWith(
+      'd.code',
+      'departementCode',
+    );
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledWith(
+      'COUNT(*)',
+      'count',
+    );
+    expect(mockQueryBuilder.innerJoin).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.innerJoin).toHaveBeenCalledWith(
+      'departement',
+      'd',
+      'd.id = landbot_customer.departementId',
+    );
+    expect(mockQueryBuilder.where).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.where).toHaveBeenCalledWith(
+      'landbot_customer.desiredCity IS NOT NULL',
+    );
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith('d.code');
+    expect(mockQueryBuilder.getRawMany).toHaveBeenCalledTimes(1);
+  });
+
+  it('should return empty array when no departements results are found', async () => {
+    const mockQueryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      innerJoin: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      groupBy: jest.fn().mockReturnThis(),
+      getRawMany: jest.fn().mockResolvedValue([]),
+    };
+
+    mockLandbotCustomerRepository.createQueryBuilder.mockReturnValue(
+      mockQueryBuilder,
+    );
+
+    const result = await landbotCustomerRepository.groupByDepartements();
+
+    expect(result).toEqual([]);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('landbot_customer');
+    expect(mockQueryBuilder.select).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.select).toHaveBeenCalledWith(
+      'd.code',
+      'departementCode',
+    );
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledWith(
+      'COUNT(*)',
+      'count',
+    );
+    expect(mockQueryBuilder.innerJoin).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.innerJoin).toHaveBeenCalledWith(
+      'departement',
+      'd',
+      'd.id = landbot_customer.departementId',
+    );
+    expect(mockQueryBuilder.where).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.where).toHaveBeenCalledWith(
+      'landbot_customer.desiredCity IS NOT NULL',
+    );
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith('d.code');
+    expect(mockQueryBuilder.getRawMany).toHaveBeenCalledTimes(1);
   });
 });

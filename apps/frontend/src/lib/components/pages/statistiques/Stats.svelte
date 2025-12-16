@@ -1,7 +1,5 @@
 <script lang="ts">
-  import Section from '$components/common/Section.svelte';
   import Disclaimer from '$components/common/Disclaimer.svelte';
-  import type { Statistic } from '$lib/utils/definitions';
   import Tile from '$components/common/Tile.svelte';
   import { formatEuro, formatNumber } from '$lib/utils/formatters';
   import type { PageData } from '../../../../routes/notre-mission/$types';

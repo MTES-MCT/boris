@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Img from '@zerodevx/svelte-img';
   import HomeHero from '$assets/images/home-hero.jpg?as=run';
   import { default as Frame } from '$assets/illustrations/home-hero-trim.svg?raw';
   import Image from '$components/common/Image.svelte';

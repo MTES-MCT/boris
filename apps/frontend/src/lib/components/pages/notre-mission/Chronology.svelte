@@ -1,12 +1,6 @@
 <script lang="ts">
   import Section from '$components/common/Section.svelte';
 
-  type Step = {
-    date: string;
-    title: string;
-    description: string;
-  };
-
   const steps = [
     {
       date: 'Mai 2023 - Aout 2023',

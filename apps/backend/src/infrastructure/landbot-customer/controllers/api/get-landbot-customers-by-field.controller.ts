@@ -18,7 +18,7 @@ import { GroupByBrsKnowledgeUsecase } from 'src/application/landbot-customer/use
 import { GroupByRealEstateSituationUsecase } from 'src/application/landbot-customer/usecases/groupByRealEstateSituation.usecase';
 
 @Controller('api/landbot-customers')
-@ApiTags('Clients Landbot groupés par champs')
+@ApiTags("Simulations d'éligibilité")
 export class GetLandbotCustomersByFieldApiController {
   constructor(
     private readonly groupByEligibilityUsecase: GroupByEligibilityUsecase,

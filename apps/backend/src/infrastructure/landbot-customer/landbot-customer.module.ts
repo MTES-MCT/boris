@@ -16,6 +16,8 @@ import { CountSimulationsUsecase } from 'src/application/landbot-customer/usecas
 import { GroupByRegionsUsecase } from 'src/application/landbot-customer/usecases/groupByRegions.usecase';
 import { GroupSimulationsByYearAndMonthUsecase } from 'src/application/landbot-customer/usecases/groupSimulationsByYearAndMonth.usecase';
 import { GetLandbotCustomersSimulationsMonthlySummaryApiController } from './controllers/api/get-landbot-customers-simulations-monthly-summary.controller';
+import { GroupByDepartementsUsecase } from 'src/application/landbot-customer/usecases/groupByDepartements.usecase';
+import { GetLandbotCustomersGrouppedByDepartementsApiController } from './controllers/api/get-landbot-customers-groupped-by-departements.controller';
 
 @Module({
   imports: [
@@ -25,6 +27,7 @@ import { GetLandbotCustomersSimulationsMonthlySummaryApiController } from './con
   controllers: [
     GetLandbotCustomersByFieldApiController,
     GetLandbotCustomersSimulationsMonthlySummaryApiController,
+    GetLandbotCustomersGrouppedByDepartementsApiController,
   ],
   providers: [
     {
@@ -45,6 +48,7 @@ import { GetLandbotCustomersSimulationsMonthlySummaryApiController } from './con
     CountSimulationsUsecase,
     GroupByRegionsUsecase,
     GroupSimulationsByYearAndMonthUsecase,
+    GroupByDepartementsUsecase,
     ImportLandbotCustomersCron,
   ],
   exports: [
@@ -58,6 +62,7 @@ import { GetLandbotCustomersSimulationsMonthlySummaryApiController } from './con
     GroupByRealEstateSituationUsecase,
     CountSimulationsUsecase,
     GroupByRegionsUsecase,
+    GroupByDepartementsUsecase,
     GroupSimulationsByYearAndMonthUsecase,
   ],
 })

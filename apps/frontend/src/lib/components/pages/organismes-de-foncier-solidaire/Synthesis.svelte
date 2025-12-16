@@ -1,8 +1,6 @@
 <script lang="ts">
   import CalloutPanel from '$components/common/Panels/CalloutPanel.svelte';
-
   import Table from '$components/common/Table.svelte';
-  import Section from '$components/common/Section.svelte';
 </script>
 
 <CalloutPanel
