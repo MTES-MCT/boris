@@ -16,7 +16,7 @@ export class GetLandbotCustomersGrouppedByDepartementsApiController {
     private readonly groupByDepartementsUsecase: GroupByDepartementsUsecase,
   ) {}
 
-  @Get('statistics/by-departements')
+  @Get('simulations/by-departements')
   @ApiSecurity('Api key')
   @UseGuards(ApiKeyGuard)
   @ApiResponse({

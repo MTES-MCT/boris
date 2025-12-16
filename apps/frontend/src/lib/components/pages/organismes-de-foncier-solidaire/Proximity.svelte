@@ -1,6 +1,5 @@
 <script lang="ts">
   import ShadowedBox from '$components/common/ShadowedBox.svelte';
-  import Alert from '$components/common/Alert.svelte';
   import Tile from '$components/common/Tile.svelte';
 </script>
 

@@ -18,7 +18,7 @@ describe('GetLandbotCustomersGrouppedByDepartementsApiController', () => {
 
   it('should throw 401 if no api key is provided', async () => {
     const { status } = await request(app.getHttpServer()).get(
-      '/api/landbot-customers/statistics/by-departements',
+      '/api/landbot-customers/simulations/by-departements',
     );
 
     expect(status).toBe(401);
@@ -26,7 +26,7 @@ describe('GetLandbotCustomersGrouppedByDepartementsApiController', () => {
 
   it('should return simulations grouped by departements', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .get('/api/landbot-customers/statistics/by-departements')
+      .get('/api/landbot-customers/simulations/by-departements')
       .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(200);

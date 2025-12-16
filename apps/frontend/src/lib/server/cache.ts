@@ -11,6 +11,8 @@ export const namespaces = {
     'landbot-customers-real-estate-situation',
   landbotCustomersSimulationsMonthlySummary:
     'landbot-customers-simulations-monthly-summary',
+  landbotCustomersSimulationsByDepartements:
+    'landbot-customers-simulations-by-departements',
 };
 
 const TTL_HOURS = 12;
