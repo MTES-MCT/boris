@@ -2,7 +2,7 @@
 {{> page_header title=title}}
 
 <div class="px-4 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-4">
-  <div class="flex flex-col gap-2">
+  <div class="contents">
     <div class="bg-white p-4 rounded-lg shadow-md text-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-gray-200">
       <h3 class="text-2xl font-semibold mb-2">{{ofss.totalCount}}</h3>
       <p class="font-medium text-gray-600 dark:text-gray-400">{{translations.contents.ofs.title}}</p>
@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  <div class="flex flex-col gap-2">
+  <div class="contents">
     <div class="bg-white p-4 rounded-lg shadow-md text-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-gray-200">
       <h3 class="text-2xl font-semibold mb-2">{{distributors.totalCount}}</h3>
       <p class="font-medium text-gray-600 dark:text-gray-400">{{translations.contents.distributors.title}}</p>
@@ -49,7 +49,7 @@
     </div>
   </div>
 
-  <div class="flex flex-col gap-2">
+  <div class="contents">
     <div class="bg-white p-4 rounded-lg shadow-md text-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-gray-200">
       <h3 class="text-2xl font-semibold mb-2">{{brsDiffusionWebsites.totalCount}}</h3>
       <p class="font-medium text-gray-600 dark:text-gray-400">{{translations.contents.brsDiffusionWebsites.title}}</p>
@@ -72,3 +72,11 @@
       {{/modal}}
     </div>
   </div>
+
+  <div class="contents">
+    <div class="bg-white p-4 rounded-lg shadow-md text-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-gray-200">
+      <h3 class="text-2xl font-semibold mb-2">{{acquisitionSimulationsCount}}</h3>
+      <p class="font-medium text-gray-600 dark:text-gray-400">{{translations.contents.acquisitionSimulations.title}}</p>
+    </div>
+  </div>
+</div>

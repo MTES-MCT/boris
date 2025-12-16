@@ -4,6 +4,7 @@ import { OfsView } from 'src/application/ofs/views/ofs.view';
 import { RegionView } from 'src/application/region/views/region.view';
 import { DepartementView } from 'src/application/departement/views/departement.view';
 import { BrsDiffusionWebsiteView } from 'src/application/brs-diffusion-website/views/brs-diffusion-website.view';
+import { AcquisitionSimulationView } from 'src/application/acquisition-simulation/views/acquisition-simulation.view';
 
 type EntityPage<T> = {
   title: string;
@@ -41,6 +42,7 @@ type translations = {
     regions: EntityPage<RegionView>;
     departements: EntityPage<DepartementView>;
     brsDiffusionWebsites: EntityPage<BrsDiffusionWebsiteView>;
+    acquisitionSimulations: EntityPage<AcquisitionSimulationView>;
   };
 };
 
@@ -172,6 +174,9 @@ const translations: translations = {
         },
         { key: 'id', label: 'Actions', type: 'actions' },
       ],
+    },
+    acquisitionSimulations: {
+      title: "Simulations d'acquisition",
     },
   },
 };

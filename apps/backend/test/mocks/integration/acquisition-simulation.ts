@@ -32,4 +32,5 @@ export const mockAcquisitionSimulationRepository = {
   save: jest.fn(),
   findOne: jest.fn(),
   findById: jest.fn(),
+  count: jest.fn(),
 };
