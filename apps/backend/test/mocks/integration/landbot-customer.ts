@@ -25,6 +25,7 @@ export const mockLandbotCustomerRepository = {
   countSimulations: jest.fn(),
   groupByRegions: jest.fn(),
   groupSimulationsByYearAndMonth: jest.fn(),
+  groupByDepartements: jest.fn(),
 };
 
 export const mockGroupByEligibilityResults = [
@@ -47,4 +48,10 @@ export const mockGroupByRealEstateSituationResults = [
 export const mockGroupSimulationsByYearAndMonthResults = [
   { year: 2024, month: 5, count: '7' },
   { year: 2024, month: 6, count: '3' },
+];
+
+export const mockGroupByDepartementsResults = [
+  { departementCode: '29', count: '12' },
+  { departementCode: '75', count: '8' },
+  { departementCode: '13', count: '5' },
 ];

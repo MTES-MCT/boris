@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
+  GroupByDepartementsResult,
   GroupByRegionsResult,
   GroupSimulationsByYearAndMonthResult,
   LandbotCustomerRepositoryInterface,
@@ -132,6 +133,18 @@ export class LandbotCustomerRepository
       .addGroupBy('EXTRACT(MONTH FROM landbot_customer.date)')
       .orderBy('year')
       .addOrderBy('month');
+
+    return query.getRawMany();
+  }
+
+  public async groupByDepartements(): Promise<GroupByDepartementsResult[]> {
+    const query = this.repository
+      .createQueryBuilder('landbot_customer')
+      .select(`d.code`, 'departementCode')
+      .addSelect(`COUNT(*)`, 'count')
+      .innerJoin('departement', 'd', 'd.id = landbot_customer.departementId')
+      .where(`landbot_customer.desiredCity IS NOT NULL`)
+      .groupBy('d.code');
 
     return query.getRawMany();
   }
