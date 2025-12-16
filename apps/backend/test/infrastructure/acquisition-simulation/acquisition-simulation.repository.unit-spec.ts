@@ -72,4 +72,14 @@ describe('AcquisitionSimulationRepository', () => {
       where: { id: '1234' },
     });
   });
+
+  it('should return the total acquisition simulations count', async () => {
+    mockAcquisitionSimulationRepository.count.mockResolvedValue(7);
+
+    const result = await acquisitionSimulationRepository.count();
+
+    expect(result).toBe(7);
+    expect(mockAcquisitionSimulationRepository.count).toHaveBeenCalledTimes(1);
+    expect(mockAcquisitionSimulationRepository.count).toHaveBeenCalledWith();
+  });
 });

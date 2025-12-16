@@ -6,6 +6,7 @@ import { AcquisitionSimulationRepository } from './acquisition-simulation.reposi
 import { CreateAcquisitionSimulationUsecase } from 'src/application/acquisition-simulation/usecases/create.usecase';
 import { UpdateAcquisitionSimulationApiController } from './controllers/api/update-acquisition-simulation.controller';
 import { UpdateAcquisitionSimulationUsecase } from 'src/application/acquisition-simulation/usecases/update.usecase';
+import { CountAcquisitionSimulationsUsecase } from 'src/application/acquisition-simulation/usecases/count.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([AcquisitionSimulationEntity])],
@@ -21,12 +22,14 @@ import { UpdateAcquisitionSimulationUsecase } from 'src/application/acquisition-
     AcquisitionSimulationRepository,
     CreateAcquisitionSimulationUsecase,
     UpdateAcquisitionSimulationUsecase,
+    CountAcquisitionSimulationsUsecase,
   ],
   exports: [
     'AcquisitionSimulationRepositoryInterface',
     AcquisitionSimulationRepository,
     CreateAcquisitionSimulationUsecase,
     UpdateAcquisitionSimulationUsecase,
+    CountAcquisitionSimulationsUsecase,
   ],
 })
 export class AcquisitionSimulationModule {}

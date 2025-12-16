@@ -26,4 +26,8 @@ export class AcquisitionSimulationRepository
       where: { id },
     });
   }
+
+  public async count(): Promise<number> {
+    return this.repository.count();
+  }
 }

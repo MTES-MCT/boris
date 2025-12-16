@@ -5,4 +5,5 @@ export interface AcquisitionSimulationRepositoryInterface {
     acquisitionSimulation: AcquisitionSimulationEntity,
   ): Promise<AcquisitionSimulationEntity>;
   findById(id: string): Promise<AcquisitionSimulationEntity | null>;
+  count(): Promise<number>;
 }

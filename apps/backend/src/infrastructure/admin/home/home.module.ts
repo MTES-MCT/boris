@@ -5,6 +5,7 @@ import { DistributorModule } from 'src/infrastructure/distributor/distributor.mo
 import { BrsDiffusionWebsiteModule } from 'src/infrastructure/brs-diffusion-website/brs-diffusion-website.module';
 import { RegionModule } from 'src/infrastructure/region/region.module';
 import { DepartementModule } from 'src/infrastructure/departement/departement.module';
+import { AcquisitionSimulationModule } from 'src/infrastructure/acquisition-simulation/acquisition-simulation.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { DepartementModule } from 'src/infrastructure/departement/departement.mo
     BrsDiffusionWebsiteModule,
     RegionModule,
     DepartementModule,
+    AcquisitionSimulationModule,
   ],
   controllers: [AdminHomeController],
   providers: [],

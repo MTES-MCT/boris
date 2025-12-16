@@ -10,6 +10,7 @@ import { DEFAULT_PAGINATION } from 'src/application/common/pagination';
 import { FindAllBrsDiffusionWebsitesUsecase } from 'src/application/brs-diffusion-website/usecases/findAll.usecase';
 import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.usecase';
 import { FindAllDepartementsUsecase } from 'src/application/departement/usecases/findAll.usecase';
+import { CountAcquisitionSimulationsUsecase } from 'src/application/acquisition-simulation/usecases/count.usecase';
 
 @ApiExcludeController()
 @Controller('/')
@@ -20,6 +21,7 @@ export class AdminHomeController {
     private readonly findAllBrsDiffusionWebsitesUsecase: FindAllBrsDiffusionWebsitesUsecase,
     private readonly findAllRegionsUsecase: FindAllRegionsUsecase,
     private readonly findAllDepartementsUsecase: FindAllDepartementsUsecase,
+    private readonly countAcquisitionSimulationsUsecase: CountAcquisitionSimulationsUsecase,
   ) {}
 
   @UseGuards(LocalIsAuthenticatedGuard)
@@ -43,6 +45,9 @@ export class AdminHomeController {
     const departements =
       await this.findAllDepartementsUsecase.execute(DEFAULT_PAGINATION);
 
+    const acquisitionSimulationsCount =
+      await this.countAcquisitionSimulationsUsecase.execute();
+
     res.render('index', {
       layout: 'layouts/main',
       title: translations.contents.home.title,
@@ -52,6 +57,7 @@ export class AdminHomeController {
       brsDiffusionWebsites,
       regions,
       departements,
+      acquisitionSimulationsCount,
     });
   }
 }
