@@ -288,7 +288,7 @@ export const defaultRegionsCodesRecord: Record<string, number> = {
   '976': 0,
 };
 
-export const regionCodesAcronymsMathing: Record<string, string> = {
+export const regionCodesAcronymsMatching: Record<string, string> = {
   '84': 'ARA',
   '27': 'BFC',
   '53': 'BRE',

@@ -1,7 +1,7 @@
 import {
   defaultDepartementsCodesRecord,
   defaultRegionsCodesRecord,
-  regionCodesAcronymsMathing,
+  regionCodesAcronymsMatching,
 } from '$lib/utils/constants';
 import type { PageServerLoad } from './$types';
 
@@ -120,7 +120,7 @@ const formatSimulationsByRegions = (
   const formattedItems: Record<string, number> = {};
 
   items.forEach((item) => {
-    const regionAcronym = regionCodesAcronymsMathing[item.regionCode];
+    const regionAcronym = regionCodesAcronymsMatching[item.regionCode];
     formattedItems[regionAcronym] = Number(item.count);
   });
 
