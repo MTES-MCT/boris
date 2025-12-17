@@ -34,7 +34,10 @@ export class GetLandbotCustomersByFieldApiController {
     description: 'Clients Landbot groupés par champs',
     type: LandbotCustomerGroupByFieldView,
   })
-  @ApiOperation({ summary: 'Récupérer tous les sites web de diffusion BRS' })
+  @ApiOperation({
+    summary:
+      'Récupérer tous les sites web de diffusion BRS groupés par un champs spécifique',
+  })
   index(@Param() { field }: GetLandbotCustomersByFieldDTO) {
     if (field === LandbotCustomerGroupByField.ELIGIBILITY) {
       return this.groupByEligibilityUsecase.execute();
