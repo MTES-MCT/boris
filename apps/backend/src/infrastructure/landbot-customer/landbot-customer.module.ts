@@ -18,6 +18,7 @@ import { GroupSimulationsByYearAndMonthUsecase } from 'src/application/landbot-c
 import { GetLandbotCustomersSimulationsMonthlySummaryApiController } from './controllers/api/get-landbot-customers-simulations-monthly-summary.controller';
 import { GroupByDepartementsUsecase } from 'src/application/landbot-customer/usecases/groupByDepartements.usecase';
 import { GetLandbotCustomersGrouppedByDepartementsApiController } from './controllers/api/get-landbot-customers-groupped-by-departements.controller';
+import { GetLandbotCustomersGrouppedByRegionsApiController } from './controllers/api/get-landbot-customers-groupped-by-regions.controller';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { GetLandbotCustomersGrouppedByDepartementsApiController } from './contro
     GetLandbotCustomersByFieldApiController,
     GetLandbotCustomersSimulationsMonthlySummaryApiController,
     GetLandbotCustomersGrouppedByDepartementsApiController,
+    GetLandbotCustomersGrouppedByRegionsApiController,
   ],
   providers: [
     {

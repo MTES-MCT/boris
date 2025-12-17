@@ -38,9 +38,9 @@ describe('GetLandbotCustomersSimulationsMonthlySummaryApiController', () => {
       expect(item).toHaveProperty('month');
       expect(item).toHaveProperty('count');
 
-      expect(Number(item.year)).not.toBeNaN();
-      expect(Number(item.month)).not.toBeNaN();
-      expect(Number(item.count)).not.toBeNaN();
+      expect(Number(item.year)).toBeNumber();
+      expect(Number(item.month)).toBeNumber();
+      expect(Number(item.count)).toBeNumber();
     });
   });
 });
