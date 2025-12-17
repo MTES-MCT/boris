@@ -24,7 +24,9 @@ export class GetLandbotCustomersSimulationsMonthlySummaryApiController {
     description: 'Nombre de simulations par mois',
     type: LandbotCustomerGroupSimulationsByYearAndMonthView,
   })
-  @ApiOperation({ summary: 'Récupérer le nombre de simulations par mois' })
+  @ApiOperation({
+    summary: 'Récupérer le nombre de simulations groupées par mois',
+  })
   index() {
     return this.groupSimulationsByYearAndMonthUsecase.execute();
   }

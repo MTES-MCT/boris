@@ -2,28 +2,26 @@
   import ChartProvider from '$components/common/Charts/ChartProvider.svelte';
   import LineChart from '$components/common/Charts/LineChart.svelte';
   import { formatNumber } from '$lib/utils/formatters';
-  import type { PageProps } from '../../../../routes/statistiques/$types';
+  import type { PageData } from '../../../../routes/statistiques/$types';
   import StatisticBox from './StatisticBox.svelte';
 
   type Props = {
     count: number;
-    montlhlySummary: PageProps['data']['simulationsMonthlySummary'];
+    montlhlySummary: PageData['simulationsMonthlySummary'];
   };
 
   const { count, montlhlySummary }: Props = $props();
 
   const formattedData: Record<
     string,
-    PageProps['data']['simulationsMonthlySummary']['data']
+    PageData['simulationsMonthlySummary']['data']
   > = $derived.by(() => {
     const years = [
       ...new Set(montlhlySummary.data.map((item) => item.year)),
     ].sort((a, b) => Number(a) - Number(b));
 
-    let result: Record<
-      string,
-      PageProps['data']['simulationsMonthlySummary']['data']
-    > = {};
+    let result: Record<string, PageData['simulationsMonthlySummary']['data']> =
+      {};
 
     years.forEach((year) => {
       result = {

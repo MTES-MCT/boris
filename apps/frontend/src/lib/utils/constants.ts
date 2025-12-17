@@ -287,3 +287,24 @@ export const defaultRegionsCodesRecord: Record<string, number> = {
   '974': 0,
   '976': 0,
 };
+
+export const regionCodesAcronymsMatching: Record<string, string> = {
+  '84': 'ARA',
+  '27': 'BFC',
+  '53': 'BRE',
+  '24': 'CVL',
+  '44': 'GES',
+  '32': 'HDF',
+  '11': 'IDF',
+  '28': 'NOR',
+  '75': 'NAQ',
+  '76': 'OCC',
+  '52': 'PDL',
+  '93': 'PAC',
+  '94': '20R',
+  '01': '971',
+  '02': '972',
+  '03': '973',
+  '04': '974',
+  '06': '976',
+};

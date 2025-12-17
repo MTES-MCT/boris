@@ -48,7 +48,7 @@ describe('GroupByRegionsUsecase', () => {
     );
   });
 
-  it('should return an empty array and 0 total when no results are found', async () => {
+  it('should return an empty array and 0 total when no results are found with year and month', async () => {
     const params: GroupByRegionsParams = { year: 2024, month: 3 };
     mockLandbotCustomerRepository.groupByRegions.mockResolvedValue([[], 0]);
 
@@ -62,6 +62,85 @@ describe('GroupByRegionsUsecase', () => {
     );
     expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledWith(
       params.year,
+      params.month,
+    );
+  });
+
+  it('should group by regions without year and month filters', async () => {
+    const mockGroupByRegionsResults = [
+      { regionName: 'Bretagne', regionCode: '53', count: '10' },
+      { regionName: 'Île-de-France', regionCode: '11', count: '15' },
+    ];
+    const total = 25;
+    const params: GroupByRegionsParams = {};
+
+    mockLandbotCustomerRepository.groupByRegions.mockResolvedValue([
+      mockGroupByRegionsResults,
+      total,
+    ]);
+
+    const result = await useCase.execute(params);
+
+    expect(result).toBeInstanceOf(LandbotCustomerGroupByRegionsView);
+    expect(result.data).toEqual(mockGroupByRegionsResults);
+    expect(result.total).toBe(total);
+    expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledTimes(
+      1,
+    );
+    expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledWith(
+      undefined,
+      undefined,
+    );
+  });
+
+  it('should group by regions with only year filter', async () => {
+    const mockGroupByRegionsResults = [
+      { regionName: 'Bretagne', regionCode: '53', count: '10' },
+    ];
+    const total = 10;
+    const params: GroupByRegionsParams = { year: 2024 };
+
+    mockLandbotCustomerRepository.groupByRegions.mockResolvedValue([
+      mockGroupByRegionsResults,
+      total,
+    ]);
+
+    const result = await useCase.execute(params);
+
+    expect(result).toBeInstanceOf(LandbotCustomerGroupByRegionsView);
+    expect(result.data).toEqual(mockGroupByRegionsResults);
+    expect(result.total).toBe(total);
+    expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledTimes(
+      1,
+    );
+    expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledWith(
+      params.year,
+      undefined,
+    );
+  });
+
+  it('should group by regions with only month filter', async () => {
+    const mockGroupByRegionsResults = [
+      { regionName: 'Bretagne', regionCode: '53', count: '5' },
+    ];
+    const total = 5;
+    const params: GroupByRegionsParams = { month: 3 };
+
+    mockLandbotCustomerRepository.groupByRegions.mockResolvedValue([
+      mockGroupByRegionsResults,
+      total,
+    ]);
+
+    const result = await useCase.execute(params);
+
+    expect(result).toBeInstanceOf(LandbotCustomerGroupByRegionsView);
+    expect(result.data).toEqual(mockGroupByRegionsResults);
+    expect(result.total).toBe(total);
+    expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledTimes(
+      1,
+    );
+    expect(mockLandbotCustomerRepository.groupByRegions).toHaveBeenCalledWith(
+      undefined,
       params.month,
     );
   });

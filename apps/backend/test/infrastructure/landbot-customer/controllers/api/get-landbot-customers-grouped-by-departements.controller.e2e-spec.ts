@@ -1,10 +1,10 @@
 import { INestApplication } from '@nestjs/common';
-import { GroupSimulationsByYearAndMonthResult } from 'src/domain/landbot-customer/landbot-customer.repository.interface';
+import { GroupByDepartementsResult } from 'src/domain/landbot-customer/landbot-customer.repository.interface';
 import * as request from 'supertest';
 import { App } from 'supertest/types';
 import { setupTestingApp } from 'test/config/setup.e2e';
 
-describe('GetLandbotCustomersSimulationsMonthlySummaryApiController', () => {
+describe('GetLandbotCustomersGroupedByDepartementsApiController', () => {
   let app: INestApplication<App>;
 
   beforeEach(async () => {
@@ -18,28 +18,27 @@ describe('GetLandbotCustomersSimulationsMonthlySummaryApiController', () => {
 
   it('should throw 401 if no api key is provided', async () => {
     const { status } = await request(app.getHttpServer()).get(
-      '/api/landbot-customers/simulations/monthly-summary',
+      '/api/landbot-customers/simulations/by-departements',
     );
 
     expect(status).toBe(401);
   });
 
-  it('should return simulations grouped by year and month', async () => {
+  it('should return simulations grouped by departements', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .get('/api/landbot-customers/simulations/monthly-summary')
+      .get('/api/landbot-customers/simulations/by-departements')
       .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(200);
     expect(body).toHaveProperty('data');
     expect(body.data).toBeArray();
 
-    body.data.forEach((item: GroupSimulationsByYearAndMonthResult) => {
-      expect(item).toHaveProperty('year');
-      expect(item).toHaveProperty('month');
+    body.data.forEach((item: GroupByDepartementsResult) => {
+      expect(item).toHaveProperty('departementCode');
       expect(item).toHaveProperty('count');
 
-      expect(Number(item.year)).toBeNumber();
-      expect(Number(item.month)).toBeNumber();
+      expect(typeof item.departementCode).toBe('string');
+      expect(typeof item.count).toBe('string');
       expect(Number(item.count)).toBeNumber();
     });
   });

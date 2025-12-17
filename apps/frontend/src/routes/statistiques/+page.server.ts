@@ -1,6 +1,7 @@
 import {
   defaultDepartementsCodesRecord,
   defaultRegionsCodesRecord,
+  regionCodesAcronymsMatching,
 } from '$lib/utils/constants';
 import type { PageServerLoad } from './$types';
 
@@ -70,6 +71,13 @@ export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
   const simulationsByDepartements =
     await simulationsByDepartementsResponse.json();
 
+  const simulationsByRegionsResponse = await fetch(
+    'api/landbot-customers/simulations/by-regions',
+    { cache: 'no-store' },
+  );
+
+  const simulationsByRegions = await simulationsByRegionsResponse.json();
+
   return {
     investedAmount: 380000,
     purchasePlanAmount: '100 à 150',
@@ -85,26 +93,7 @@ export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
     ofssAmount: partnerOfss.totalCount,
     regionalConnectionCount: {
       ...defaultRegionsCodesRecord,
-      ...{
-        IDF: 1430,
-        '976': 1,
-        PAC: 447,
-        NAQ: 512,
-        HDF: 197,
-        ARA: 719,
-        GES: 111,
-        '972': 17,
-        CVL: 65,
-        NOR: 139,
-        OCC: 345,
-        PDL: 197,
-        BRE: 290,
-        '20R': 13,
-        BFC: 61,
-        '971': 93,
-        '974': 45,
-        '973': 9,
-      },
+      ...formatSimulationsByRegions(simulationsByRegions.data),
     },
     departementalConnectionCount: {
       ...defaultDepartementsCodesRecord,
@@ -120,6 +109,19 @@ const formatSimulationsByDepartements = (
 
   items.forEach((item) => {
     formattedItems[item.departementCode] = Number(item.count);
+  });
+
+  return formattedItems;
+};
+
+const formatSimulationsByRegions = (
+  items: { regionName: string; regionCode: string; count: string }[],
+): Record<string, number> => {
+  const formattedItems: Record<string, number> = {};
+
+  items.forEach((item) => {
+    const regionAcronym = regionCodesAcronymsMatching[item.regionCode];
+    formattedItems[regionAcronym] = Number(item.count);
   });
 
   return formattedItems;
