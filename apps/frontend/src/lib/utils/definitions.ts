@@ -1149,3 +1149,12 @@ export type DsfrIcon =
   | 'zoom-out-line';
 
 export type Icon = CustomIcon | DsfrIcon;
+
+export type ChartPalette =
+  | 'default'
+  | 'neutral'
+  | 'categorical'
+  | 'sequentialAscending'
+  | 'sequentialDescending'
+  | 'divergentAscending'
+  | 'divergentDescending';

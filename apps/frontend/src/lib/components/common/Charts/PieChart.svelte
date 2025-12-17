@@ -18,10 +18,10 @@
   }: Props = $props();
 </script>
 
-<line-chart
+<pie-chart
   x={JSON.stringify(x)}
   y={JSON.stringify(y)}
   name={JSON.stringify(name)}
   selected-palette={selectedPalette}
   unit-tooltip={unitTooltip}>
-</line-chart>
+</pie-chart>

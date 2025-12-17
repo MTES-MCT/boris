@@ -1,21 +1,15 @@
 <script lang="ts">
   import StatisticBox from './StatisticBox.svelte';
-  import type { PageProps } from '../../../../routes/statistiques/$types';
+  import type { PageData } from '../../../../routes/statistiques/$types';
   import MapChart from '$components/common/Charts/MapChart.svelte';
   import ChartProvider from '$components/common/Charts/ChartProvider.svelte';
+  import { formattedToday } from '$lib/utils/helpers';
 
   type Props = {
-    regionalConnectionCount: PageProps['data']['regionalConnectionCount'];
+    regionalConnectionCount: PageData['regionalConnectionCount'];
   };
 
   const { regionalConnectionCount }: Props = $props();
-
-  const formattedDate = (): string => {
-    return new Intl.DateTimeFormat('fr-FR', {
-      dateStyle: 'full',
-      timeZone: 'Europe/Paris',
-    }).format(new Date());
-  };
 </script>
 
 <StatisticBox>
@@ -30,6 +24,6 @@
       value="Par région"
       name=""
       level="reg"
-      date={formattedDate()} />
+      date={formattedToday()} />
   </ChartProvider>
 </StatisticBox>

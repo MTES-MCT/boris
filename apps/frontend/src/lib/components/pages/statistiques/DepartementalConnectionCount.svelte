@@ -1,21 +1,15 @@
 <script lang="ts">
   import StatisticBox from './StatisticBox.svelte';
-  import type { PageProps } from '../../../../routes/statistiques/$types';
+  import type { PageData } from '../../../../routes/statistiques/$types';
   import MapChart from '$components/common/Charts/MapChart.svelte';
   import ChartProvider from '$components/common/Charts/ChartProvider.svelte';
+  import { formattedToday } from '$lib/utils/helpers';
 
   type Props = {
-    departementalConnectionCount: PageProps['data']['departementalConnectionCount'];
+    departementalConnectionCount: PageData['departementalConnectionCount'];
   };
 
   const { departementalConnectionCount }: Props = $props();
-
-  const formattedDate = (): string => {
-    return new Intl.DateTimeFormat('fr-FR', {
-      dateStyle: 'full',
-      timeZone: 'Europe/Paris',
-    }).format(new Date());
-  };
 </script>
 
 <StatisticBox>
@@ -30,6 +24,6 @@
       value="Par département"
       name=""
       level="dep"
-      date={formattedDate()} />
+      date={formattedToday()} />
   </ChartProvider>
 </StatisticBox>

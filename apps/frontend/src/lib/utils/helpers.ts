@@ -149,3 +149,10 @@ export const createPDF = async (element: HTMLElement, filename: string) => {
     el.setAttribute('style', 'display: inherit;'),
   );
 };
+
+export const formattedToday = (): string => {
+  return new Intl.DateTimeFormat('fr-FR', {
+    dateStyle: 'full',
+    timeZone: 'Europe/Paris',
+  }).format(new Date());
+};

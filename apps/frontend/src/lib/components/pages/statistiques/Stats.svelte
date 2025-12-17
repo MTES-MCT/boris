@@ -9,9 +9,12 @@
     purchasePlanAmount: PageData['purchasePlanAmount'];
     ofssAmount: PageData['ofssAmount'];
     eligibility: PageData['eligibility'];
-    brsKnowledge: PageData['brsKnowledge'];
-    realEstateSituation: PageData['realEstateSituation'];
     hideDisclaimer?: boolean;
+    householdsData: {
+      total: number;
+      brsUnawarePercentage: number;
+      totalsRealEstateSituation: PageData['realEstateSituation'];
+    };
   };
 
   const {
@@ -19,9 +22,8 @@
     purchasePlanAmount,
     ofssAmount,
     eligibility,
-    brsKnowledge,
-    realEstateSituation,
     hideDisclaimer = false,
+    householdsData,
   }: Props = $props();
 
   const eligibilityData = $derived.by(() => {
@@ -37,46 +39,6 @@
     return {
       total,
       eligiblePercentage: (totalEligible / total) * 100,
-    };
-  });
-
-  const householdsData = $derived.by(() => {
-    const total = brsKnowledge.reduce(
-      (sum, item) => sum + Number(item.count),
-      0,
-    );
-
-    const totalUnawareOfBrs = brsKnowledge
-      .filter((item) => item.brsKnowledge === 'Non')
-      .reduce((sum, item) => sum + Number(item.count), 0);
-
-    const totalsRealEstateSituation = realEstateSituation
-      .filter(
-        (item) =>
-          item.realEstateSituation !== null &&
-          item.realEstateSituation !== 'dans une autre situation immobilière',
-      )
-      .map((item) => {
-        return {
-          realEstateSituation: item.realEstateSituation,
-          count: (Number(item.count) / total) * 100,
-        };
-      });
-
-    totalsRealEstateSituation.push({
-      realEstateSituation: 'dans une autre situation immobilière',
-      count:
-        100 -
-        totalsRealEstateSituation.reduce(
-          (sum, item) => sum + Number(item.count),
-          0,
-        ),
-    });
-
-    return {
-      total: total,
-      brsUnawarePercentage: (totalUnawareOfBrs / total) * 100,
-      totalsRealEstateSituation,
     };
   });
 </script>
@@ -161,7 +123,7 @@
       {#each householdsData.totalsRealEstateSituation as item}
         <br />
         {@render detailedPercentage({
-          percentage: item.count,
+          percentage: Number(item.count),
           detail: `des ménages déclarent être ${item.realEstateSituation}`,
         })}
       {/each}
