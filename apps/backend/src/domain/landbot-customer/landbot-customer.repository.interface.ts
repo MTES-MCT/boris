@@ -37,8 +37,8 @@ export interface LandbotCustomerRepositoryInterface {
   >;
   countSimulations(year: number, month: number): Promise<number>;
   groupByRegions(
-    year: number,
-    month: number,
+    year?: number,
+    month?: number,
   ): Promise<[GroupByRegionsResult[], total: number]>;
   groupByDepartements(): Promise<GroupByDepartementsResult[]>;
   groupSimulationsByYearAndMonth(): Promise<

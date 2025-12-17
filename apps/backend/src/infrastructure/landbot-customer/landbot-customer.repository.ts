@@ -86,8 +86,8 @@ export class LandbotCustomerRepository
   }
 
   public async groupByRegions(
-    year: number,
-    month: number,
+    year?: number,
+    month?: number,
   ): Promise<[GroupByRegionsResult[], total: number]> {
     const query = this.repository
       .createQueryBuilder('landbot_customer')
@@ -96,11 +96,21 @@ export class LandbotCustomerRepository
       .addSelect(`COUNT(*)`, 'count')
       .innerJoin('departement', 'd', 'd.id = landbot_customer.departementId')
       .innerJoin('region', 'r', 'r.id = d.regionId')
-      .where(`landbot_customer.desiredCity IS NOT NULL`)
-      .andWhere(`EXTRACT(YEAR FROM landbot_customer.date) = :year`, { year })
-      .andWhere(`EXTRACT(MONTH FROM landbot_customer.date) = :month`, { month })
-      .groupBy('r.name')
-      .addGroupBy('r.code');
+      .where(`landbot_customer.desiredCity IS NOT NULL`);
+
+    if (year) {
+      query.andWhere(`EXTRACT(YEAR FROM landbot_customer.date) = :year`, {
+        year,
+      });
+    }
+
+    if (month) {
+      query.andWhere(`EXTRACT(MONTH FROM landbot_customer.date) = :month`, {
+        month,
+      });
+    }
+
+    query.groupBy('r.name').addGroupBy('r.code');
 
     const result = await query.getRawMany();
 
@@ -109,11 +119,22 @@ export class LandbotCustomerRepository
       .select(`COUNT(*)`, 'count')
       .innerJoin('departement', 'd', 'd.id = landbot_customer.departementId')
       .innerJoin('region', 'r', 'r.id = d.regionId')
-      .where(`landbot_customer.desiredCity IS NOT NULL`)
-      .andWhere(`EXTRACT(YEAR FROM landbot_customer.date) = :year`, { year })
-      .andWhere(`EXTRACT(MONTH FROM landbot_customer.date) = :month`, {
-        month,
+      .where(`landbot_customer.desiredCity IS NOT NULL`);
+
+    if (year) {
+      totalQuery.andWhere(`EXTRACT(YEAR FROM landbot_customer.date) = :year`, {
+        year,
       });
+    }
+
+    if (month) {
+      totalQuery.andWhere(
+        `EXTRACT(MONTH FROM landbot_customer.date) = :month`,
+        {
+          month,
+        },
+      );
+    }
 
     const total = await totalQuery.getRawOne();
 
