@@ -11,7 +11,7 @@ import { ApiKeyGuard } from 'src/infrastructure/auth/guards/api-key.guard';
 
 @Controller('api/landbot-customers')
 @ApiTags("Simulations d'éligibilité")
-export class GetLandbotCustomersGrouppedByRegionsApiController {
+export class GetLandbotCustomersGroupedByRegionsApiController {
   constructor(private readonly groupByRegionsUsecase: GroupByRegionsUsecase) {}
 
   @Get('simulations/by-regions')

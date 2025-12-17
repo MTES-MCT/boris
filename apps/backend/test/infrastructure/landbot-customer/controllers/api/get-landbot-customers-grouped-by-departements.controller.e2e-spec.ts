@@ -1,10 +1,10 @@
 import { INestApplication } from '@nestjs/common';
-import { GroupByRegionsResult } from 'src/domain/landbot-customer/landbot-customer.repository.interface';
+import { GroupByDepartementsResult } from 'src/domain/landbot-customer/landbot-customer.repository.interface';
 import * as request from 'supertest';
 import { App } from 'supertest/types';
 import { setupTestingApp } from 'test/config/setup.e2e';
 
-describe('GetLandbotCustomersGrouppedByRegionsApiController', () => {
+describe('GetLandbotCustomersGroupedByDepartementsApiController', () => {
   let app: INestApplication<App>;
 
   beforeEach(async () => {
@@ -18,30 +18,26 @@ describe('GetLandbotCustomersGrouppedByRegionsApiController', () => {
 
   it('should throw 401 if no api key is provided', async () => {
     const { status } = await request(app.getHttpServer()).get(
-      '/api/landbot-customers/simulations/by-regions',
+      '/api/landbot-customers/simulations/by-departements',
     );
 
     expect(status).toBe(401);
   });
 
-  it('should return simulations grouped by regions', async () => {
+  it('should return simulations grouped by departements', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .get('/api/landbot-customers/simulations/by-regions')
+      .get('/api/landbot-customers/simulations/by-departements')
       .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(200);
     expect(body).toHaveProperty('data');
-    expect(body).toHaveProperty('total');
     expect(body.data).toBeArray();
-    expect(typeof body.total).toBe('number');
 
-    body.data.forEach((item: GroupByRegionsResult) => {
-      expect(item).toHaveProperty('regionName');
-      expect(item).toHaveProperty('regionCode');
+    body.data.forEach((item: GroupByDepartementsResult) => {
+      expect(item).toHaveProperty('departementCode');
       expect(item).toHaveProperty('count');
 
-      expect(typeof item.regionName).toBe('string');
-      expect(typeof item.regionCode).toBe('string');
+      expect(typeof item.departementCode).toBe('string');
       expect(typeof item.count).toBe('string');
       expect(Number(item.count)).toBeNumber();
     });
