@@ -41,7 +41,7 @@
     "@types/leaflet.markercluster": "^1.5.5",
     "@zerodevx/svelte-img": "^2.1.2",
     "cssnano": "^7.0.6",
-    "eslint-plugin-svelte": "^2.36.0",
+    "eslint-plugin-svelte": "^3.13.1",
     "html2pdf.js": "^0.12.1",
     "keyv": "^5.5.0",
     "leaflet": "^1.9.4",
