@@ -81,7 +81,7 @@
     "@types/hbs": "^4.0.4",
     "@types/jest": "^29.5.14",
     "@types/method-override": "^3.0.0",
-    "@types/node": "^22.13.4",
+    "@types/node": "^25.0.0",
     "@types/passport": "^1.0.17",
     "@types/passport-local": "^1.0.38",
     "@types/supertest": "^6.0.2",
