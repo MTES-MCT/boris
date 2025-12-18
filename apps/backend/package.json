@@ -91,7 +91,7 @@
     "flowbite": "^3.1.2",
     "install": "^0.13.0",
     "jest": "^29.7.0",
-    "jest-extended": "^6.0.0",
+    "jest-extended": "^7.0.0",
     "nodemon": "^3.1.10",
     "openapi-typescript": "^7.8.0",
     "source-map-support": "^0.5.21",
