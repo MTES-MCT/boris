@@ -15,53 +15,11 @@
     eligibility,
     countSimulations,
     simulationsMonthlySummary,
-    brsKnowledge,
-    realEstateSituation,
+    householdsData,
     ofssAmount,
     regionalConnectionCount,
     departementalConnectionCount,
   } = data;
-
-  const householdsData = $derived.by(() => {
-    const total = brsKnowledge.reduce(
-      (sum, item) => sum + Number(item.count),
-      0,
-    );
-
-    const totalUnawareOfBrs = brsKnowledge
-      .filter((item) => item.brsKnowledge === 'Non')
-      .reduce((sum, item) => sum + Number(item.count), 0);
-
-    const totalsRealEstateSituation = realEstateSituation
-      .filter(
-        (item) =>
-          item.realEstateSituation !== null &&
-          item.realEstateSituation !== 'dans une autre situation immobilière',
-      )
-      .map((item) => {
-        return {
-          realEstateSituation: item.realEstateSituation,
-          count: Math.round((Number(item.count) / total) * 100).toString(),
-        };
-      });
-
-    totalsRealEstateSituation.push({
-      realEstateSituation: 'dans une autre situation immobilière',
-      count: (
-        100 -
-        totalsRealEstateSituation.reduce(
-          (sum, item) => sum + Number(item.count),
-          0,
-        )
-      ).toString(),
-    });
-
-    return {
-      total: total,
-      brsUnawarePercentage: (totalUnawareOfBrs / total) * 100,
-      totalsRealEstateSituation,
-    };
-  });
 </script>
 
 <Section>

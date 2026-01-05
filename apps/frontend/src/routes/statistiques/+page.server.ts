@@ -3,6 +3,7 @@ import {
   defaultRegionsCodesRecord,
   regionCodesAcronymsMatching,
 } from '$lib/utils/constants';
+import { formatHouseholdsData } from '$lib/utils/helpers';
 import type { PageServerLoad } from './$types';
 
 type PageData = {
@@ -20,14 +21,7 @@ type PageData = {
     count: string;
   }[];
   countSimulations: number;
-  brsKnowledge: {
-    brsKnowledge: string;
-    count: string;
-  }[];
-  realEstateSituation: {
-    realEstateSituation: string;
-    count: string;
-  }[];
+  householdsData: ReturnType<typeof formatHouseholdsData>;
   ofssAmount: number;
   departementalConnectionCount: Record<string, number>;
   regionalConnectionCount: Record<string, number>;
@@ -88,8 +82,10 @@ export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
       0,
     ),
     simulationsMonthlySummary,
-    brsKnowledge: brsKnowledge.data,
-    realEstateSituation: realEstateSituation.data,
+    householdsData: formatHouseholdsData(
+      brsKnowledge.data,
+      realEstateSituation.data,
+    ),
     ofssAmount: partnerOfss.totalCount,
     regionalConnectionCount: {
       ...defaultRegionsCodesRecord,
