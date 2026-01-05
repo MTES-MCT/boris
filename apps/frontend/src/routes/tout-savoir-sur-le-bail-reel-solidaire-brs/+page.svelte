@@ -178,12 +178,12 @@
         </p>
       </Accordion>
       <Accordion
-        label="Quels sont les plafonds de revenus 2025 en bail réel solidaire (BRS) ?">
+        label="Quels sont les plafonds de revenus 2026 en bail réel solidaire (BRS) ?">
         <p class="fr-mt-1w">
           Consultez le <a
             href="/simulateur-eligibilite#plafonds-de-ressources"
             class="fr-link">
-            tableau des plafonds de revenus brs 2025
+            tableau des plafonds de revenus brs 2026
           </a>
         </p>
       </Accordion>
