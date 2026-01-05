@@ -12,7 +12,7 @@
         Les plafonds de ressources d’éligibilité au Bail Réel Solidaire.
       </h3>
       <p>
-        Les plafonds en vigueur depuis janvier 2025 sont définis à partir de
+        Les plafonds en vigueur depuis janvier 2026 sont définis à partir de
         votre catégorie de ménage et la zone de votre futur bien. Elle
         correspond à la tension immobilière, du plus tendu où les prix sont les
         plus haut, Abis, au moins tendu, C.
