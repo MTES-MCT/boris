@@ -1,3 +1,4 @@
+import { formatHouseholdsData } from '$lib/utils/helpers';
 import type { PageServerLoad } from './$types';
 
 type PageData = {
@@ -7,14 +8,7 @@ type PageData = {
     eligibility: string;
     count: string;
   }[];
-  brsKnowledge: {
-    brsKnowledge: string;
-    count: string;
-  }[];
-  realEstateSituation: {
-    realEstateSituation: string;
-    count: string;
-  }[];
+  householdsData: ReturnType<typeof formatHouseholdsData>;
   ofssAmount: number;
 };
 
@@ -41,8 +35,10 @@ export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
     investedAmount: 380000,
     purchasePlanAmount: '100 à 150',
     eligibility: eligibility.data,
-    brsKnowledge: brsKnowledge.data,
-    realEstateSituation: realEstateSituation.data,
+    householdsData: formatHouseholdsData(
+      brsKnowledge.data,
+      realEstateSituation.data,
+    ),
     ofssAmount: partnerOfss.totalCount,
   };
 };

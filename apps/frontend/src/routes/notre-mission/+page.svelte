@@ -14,8 +14,7 @@
     purchasePlanAmount,
     ofssAmount,
     eligibility,
-    brsKnowledge,
-    realEstateSituation,
+    householdsData,
   } = data;
 </script>
 
@@ -37,8 +36,7 @@
       <Stats
         {investedAmount}
         {eligibility}
-        {brsKnowledge}
-        {realEstateSituation}
+        {householdsData}
         {purchasePlanAmount}
         {ofssAmount} />
 
