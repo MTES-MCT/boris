@@ -19,6 +19,8 @@ import { GetLandbotCustomersSimulationsMonthlySummaryApiController } from './con
 import { GroupByDepartementsUsecase } from 'src/application/landbot-customer/usecases/groupByDepartements.usecase';
 import { GetLandbotCustomersGroupedByDepartementsApiController } from './controllers/api/get-landbot-customers-grouped-by-departements.controller';
 import { GetLandbotCustomersGroupedByRegionsApiController } from './controllers/api/get-landbot-customers-grouped-by-regions.controller';
+import { GetLandbotCustomersConversionFunnelController } from './controllers/api/get-landbot-customers-conversion-funnel.controller';
+import { CalculateConversionFunnelUsecase } from 'src/application/landbot-customer/usecases/calculateConversionFunnel.usecase';
 
 @Module({
   imports: [
@@ -26,10 +28,11 @@ import { GetLandbotCustomersGroupedByRegionsApiController } from './controllers/
     LandbotApiClientModule,
   ],
   controllers: [
-    GetLandbotCustomersByFieldApiController,
+    GetLandbotCustomersConversionFunnelController,
     GetLandbotCustomersSimulationsMonthlySummaryApiController,
     GetLandbotCustomersGroupedByDepartementsApiController,
     GetLandbotCustomersGroupedByRegionsApiController,
+    GetLandbotCustomersByFieldApiController,
   ],
   providers: [
     {
@@ -52,6 +55,7 @@ import { GetLandbotCustomersGroupedByRegionsApiController } from './controllers/
     GroupSimulationsByYearAndMonthUsecase,
     GroupByDepartementsUsecase,
     ImportLandbotCustomersCron,
+    CalculateConversionFunnelUsecase,
   ],
   exports: [
     'LandbotCustomerRepositoryInterface',
@@ -66,6 +70,7 @@ import { GetLandbotCustomersGroupedByRegionsApiController } from './controllers/
     GroupByRegionsUsecase,
     GroupByDepartementsUsecase,
     GroupSimulationsByYearAndMonthUsecase,
+    CalculateConversionFunnelUsecase,
   ],
 })
 export class LandbotCustomerModule {}
