@@ -21,6 +21,22 @@ export enum LandbotRealEstateSituation {
   AUTRE = 'dans une autre situation immobilière',
 }
 
+export enum LandbotHandicap {
+  OUI = 'Oui',
+  NON = 'NON',
+}
+
+export enum LandbotDeclarationSeulCommun {
+  ACHAT_SEUL_SOUHAIT_SEUL = 'Seul·e et vous souhaitez acheter seul·e',
+  ACHAT_SEUL_SOUHAIT_PARTENAIRE = 'Seul·e mais vous souhaitez acheter avec un·e partenaire',
+  ACHAT_COMMUN = 'En commun',
+}
+
+export enum LandbotMiseEnRelation {
+  OUI = 'Oui',
+  NON = 'NON',
+}
+
 export interface LandbotCustomerInterface {
   id: string;
   date: Date;
@@ -29,4 +45,8 @@ export interface LandbotCustomerInterface {
   eligibility?: LandbotEligibility;
   brsKnowledge?: LandbotBrsKnowledge;
   realEstateSituation?: LandbotRealEstateSituation;
+  handicap?: LandbotHandicap;
+  declaration_seul_en_commun?: LandbotDeclarationSeulCommun;
+  miseenrelation_yesno?: LandbotMiseEnRelation;
+  ressources?: number;
 }

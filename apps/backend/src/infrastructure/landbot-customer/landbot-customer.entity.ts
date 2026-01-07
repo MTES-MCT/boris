@@ -1,7 +1,10 @@
 import {
   LandbotBrsKnowledge,
   LandbotCustomerInterface,
+  LandbotDeclarationSeulCommun,
   LandbotEligibility,
+  LandbotHandicap,
+  LandbotMiseEnRelation,
   LandbotRealEstateSituation,
 } from 'src/domain/landbot-customer/landbot-customer.interface';
 import {
@@ -40,6 +43,18 @@ export class LandbotCustomerEntity implements LandbotCustomerInterface {
 
   @Column({ type: 'enum', enum: LandbotRealEstateSituation, nullable: true })
   public realEstateSituation?: LandbotRealEstateSituation;
+
+  @Column({ type: 'enum', enum: LandbotHandicap, nullable: true })
+  public handicap?: LandbotHandicap;
+
+  @Column({ type: 'enum', enum: LandbotDeclarationSeulCommun, nullable: true })
+  public declaration_seul_en_commun?: LandbotDeclarationSeulCommun;
+
+  @Column({ type: 'enum', enum: LandbotMiseEnRelation, nullable: true })
+  public miseenrelation_yesno?: LandbotMiseEnRelation;
+
+  @Column({ type: 'int', nullable: true })
+  public ressources?: number;
 
   @CreateDateColumn()
   createdAt: Date;
