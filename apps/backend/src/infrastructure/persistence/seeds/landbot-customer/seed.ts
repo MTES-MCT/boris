@@ -16,6 +16,7 @@ export class LandbotCustomerSeed {
     let offset = 0;
     const limit = 100;
     let landbotCustomersCount = 0;
+    let errorsCount = 0;
 
     while (offset <= total) {
       console.log(
@@ -29,6 +30,12 @@ export class LandbotCustomerSeed {
 
       for (const customer of customers) {
         const {
+          register_date,
+          email,
+          handicap: disability,
+          declaration_seul_en_commun: declarationType,
+          miseenrelation_yesno: connectionWish,
+          ressources: resources,
           eligibilite1: eligibility,
           ville_souhaitee: desiredCity,
           departement: departementCode,
@@ -36,27 +43,33 @@ export class LandbotCustomerSeed {
           connaissancebrs: brsKnowledge,
         } = customer;
 
-        if (eligibility) {
-          try {
-            await this.createLandbotCustomerUsecase.execute({
-              date: new Date(customer.register_date * 1000),
-              desiredCity,
-              departementCode,
-              eligibility,
-              brsKnowledge,
-              realEstateSituation: realEstateSituation?.endsWith(' ')
-                ? (realEstateSituation.trimEnd() as LandbotRealEstateSituation)
-                : realEstateSituation,
-            });
+        try {
+          await this.createLandbotCustomerUsecase.execute({
+            date: new Date(register_date * 1000),
+            hasProvidedEmail: Boolean(email),
+            desiredCity,
+            departementCode,
+            eligibility,
+            brsKnowledge,
+            realEstateSituation: realEstateSituation?.endsWith(' ')
+              ? (realEstateSituation.trimEnd() as LandbotRealEstateSituation)
+              : realEstateSituation,
+            disability,
+            declarationType,
+            connectionWish,
+            resources: resources ? parseInt(resources) : undefined,
+          });
 
-            landbotCustomersCount += 1;
-          } catch (error) {
-            console.log(error);
-          }
+          landbotCustomersCount += 1;
+        } catch (error) {
+          console.log(error);
+
+          errorsCount += 1;
         }
       }
 
       console.log(`${landbotCustomersCount} landbot customers créés`);
+      console.log(`${errorsCount} erreurs enregistrées`);
 
       offset += limit;
 

@@ -1,5 +1,8 @@
 import {
   LandbotBrsKnowledge,
+  LandbotConnectionWish,
+  LandbotDeclarationType,
+  LandbotDisability,
   LandbotEligibility,
   LandbotRealEstateSituation,
 } from '../landbot-customer/landbot-customer.interface';
@@ -15,10 +18,11 @@ type LandbotApiClientCustomer = {
   connaissancebrs?: LandbotBrsKnowledge;
   departement?: string;
   ville_souhaitee?: string;
-  handicap?: string;
-  declaration_seul_en_commun?: string;
-  miseenrelation_yesno?: string;
+  handicap?: LandbotDisability;
+  declaration_seul_en_commun?: LandbotDeclarationType;
+  miseenrelation_yesno?: LandbotConnectionWish;
   ressources?: string;
+  email?: string;
 };
 
 export type LandbotApiClientListCustomersInterface = {

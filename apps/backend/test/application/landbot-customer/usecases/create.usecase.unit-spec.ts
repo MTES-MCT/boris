@@ -55,15 +55,25 @@ describe('CreateLandbotCustomerUsecase', () => {
       mockedLandbotCustomer.eligibility,
       mockedLandbotCustomer.brsKnowledge,
       mockedLandbotCustomer.realEstateSituation,
+      mockedLandbotCustomer.disability,
+      mockedLandbotCustomer.declarationType,
+      mockedLandbotCustomer.connectionWish,
+      mockedLandbotCustomer.resources,
+      mockedLandbotCustomer.hasProvidedEmail,
     );
 
     const result = await useCase.execute({
+      hasProvidedEmail: mockedLandbotCustomer.hasProvidedEmail,
       date: new Date('2024-01-15'),
       desiredCity: mockedLandbotCustomer.desiredCity,
       departementCode: '29',
       eligibility: LandbotEligibility.ZONE_TENDUE,
       brsKnowledge: LandbotBrsKnowledge.OUI,
       realEstateSituation: LandbotRealEstateSituation.PROPRIETAIRE,
+      disability: mockedLandbotCustomer.disability,
+      declarationType: mockedLandbotCustomer.declarationType,
+      connectionWish: mockedLandbotCustomer.connectionWish,
+      resources: mockedLandbotCustomer.resources,
     });
 
     expect(result).toMatchObject(expectedResult);
@@ -78,6 +88,11 @@ describe('CreateLandbotCustomerUsecase', () => {
         LandbotEligibility.ZONE_TENDUE,
         LandbotBrsKnowledge.OUI,
         LandbotRealEstateSituation.PROPRIETAIRE,
+        mockedLandbotCustomer.disability,
+        mockedLandbotCustomer.declarationType,
+        mockedLandbotCustomer.connectionWish,
+        mockedLandbotCustomer.resources,
+        mockedLandbotCustomer.hasProvidedEmail,
       ),
     );
   });

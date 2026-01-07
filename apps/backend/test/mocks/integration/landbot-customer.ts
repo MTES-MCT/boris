@@ -1,6 +1,9 @@
 import { LandbotCustomerEntity } from 'src/infrastructure/landbot-customer/landbot-customer.entity';
 import {
   LandbotBrsKnowledge,
+  LandbotConnectionWish,
+  LandbotDeclarationType,
+  LandbotDisability,
   LandbotEligibility,
   LandbotRealEstateSituation,
 } from 'src/domain/landbot-customer/landbot-customer.interface';
@@ -13,6 +16,11 @@ export const mockedLandbotCustomer = new LandbotCustomerEntity(
   LandbotEligibility.ZONE_TENDUE,
   LandbotBrsKnowledge.OUI,
   LandbotRealEstateSituation.PROPRIETAIRE,
+  LandbotDisability.NON,
+  LandbotDeclarationType.ACHAT_SEUL_SOUHAIT_SEUL,
+  LandbotConnectionWish.OUI,
+  95000,
+  true,
 );
 
 export const mockLandbotCustomerRepository = {
