@@ -34,6 +34,7 @@ export const mockLandbotCustomerRepository = {
   groupByRegions: jest.fn(),
   groupSimulationsByYearAndMonth: jest.fn(),
   groupByDepartements: jest.fn(),
+  calculateConversionFunnel: jest.fn(),
 };
 
 export const mockGroupByEligibilityResults = [
