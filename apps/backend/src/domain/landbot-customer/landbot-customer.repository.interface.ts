@@ -23,6 +23,15 @@ export type GroupByDepartementsResult = {
   count: string;
 };
 
+export type ConversionFunnelResult = {
+  totalSimulations: number;
+  totalHouseholdProvided: number;
+  totalEligble: number;
+  totalConnectionWish: number;
+  totalEmailProvided: number;
+  totalDesiredCityProvided: number;
+};
+
 export interface LandbotCustomerRepositoryInterface {
   save(landbotCustomer: LandbotCustomerEntity): Promise<LandbotCustomerEntity>;
   findLast(): Promise<LandbotCustomerEntity | null>;
@@ -44,4 +53,5 @@ export interface LandbotCustomerRepositoryInterface {
   groupSimulationsByYearAndMonth(): Promise<
     GroupSimulationsByYearAndMonthResult[]
   >;
+  calculateConversionFunnel(): Promise<ConversionFunnelResult>;
 }

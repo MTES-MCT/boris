@@ -1,7 +1,10 @@
 import {
   LandbotBrsKnowledge,
+  LandbotConnectionWish,
   LandbotCustomerInterface,
+  LandbotDeclarationType,
   LandbotEligibility,
+  LandbotDisability,
   LandbotRealEstateSituation,
 } from 'src/domain/landbot-customer/landbot-customer.interface';
 import {
@@ -41,6 +44,21 @@ export class LandbotCustomerEntity implements LandbotCustomerInterface {
   @Column({ type: 'enum', enum: LandbotRealEstateSituation, nullable: true })
   public realEstateSituation?: LandbotRealEstateSituation;
 
+  @Column({ type: 'enum', enum: LandbotDisability, nullable: true })
+  public disability?: LandbotDisability;
+
+  @Column({ type: 'enum', enum: LandbotDeclarationType, nullable: true })
+  public declarationType?: LandbotDeclarationType;
+
+  @Column({ type: 'enum', enum: LandbotConnectionWish, nullable: true })
+  public connectionWish?: LandbotConnectionWish;
+
+  @Column({ type: 'int', nullable: true })
+  public resources?: number;
+
+  @Column({ type: 'boolean', default: false })
+  public hasProvidedEmail?: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 
@@ -54,6 +72,11 @@ export class LandbotCustomerEntity implements LandbotCustomerInterface {
     eligibility?: LandbotEligibility,
     brsKnowledge?: LandbotBrsKnowledge,
     realEstateSituation?: LandbotRealEstateSituation,
+    disability?: LandbotDisability,
+    declarationType?: LandbotDeclarationType,
+    connectionWish?: LandbotConnectionWish,
+    resources?: number,
+    hasProvidedEmail?: boolean,
   ) {
     this.date = date;
     this.desiredCity = desiredCity;
@@ -61,5 +84,10 @@ export class LandbotCustomerEntity implements LandbotCustomerInterface {
     this.eligibility = eligibility;
     this.brsKnowledge = brsKnowledge;
     this.realEstateSituation = realEstateSituation;
+    this.disability = disability;
+    this.declarationType = declarationType;
+    this.connectionWish = connectionWish;
+    this.resources = resources;
+    this.hasProvidedEmail = hasProvidedEmail;
   }
 }

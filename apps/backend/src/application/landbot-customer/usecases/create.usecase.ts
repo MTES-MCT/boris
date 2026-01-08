@@ -23,6 +23,11 @@ export class CreateLandbotCustomerUsecase {
       eligibility,
       brsKnowledge,
       realEstateSituation,
+      disability,
+      declarationType,
+      connectionWish,
+      resources,
+      hasProvidedEmail,
     } = params;
 
     let departement;
@@ -40,6 +45,11 @@ export class CreateLandbotCustomerUsecase {
         eligibility,
         brsKnowledge,
         realEstateSituation,
+        disability,
+        declarationType,
+        connectionWish,
+        resources,
+        hasProvidedEmail,
       ),
     );
 
@@ -57,6 +67,11 @@ export class CreateLandbotCustomerUsecase {
       landbotCustomer.eligibility,
       landbotCustomer.brsKnowledge,
       landbotCustomer.realEstateSituation,
+      landbotCustomer.disability,
+      landbotCustomer.declarationType,
+      landbotCustomer.connectionWish,
+      landbotCustomer.resources,
+      landbotCustomer.hasProvidedEmail,
     );
   }
 }
