@@ -123,15 +123,15 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/api/landbot-customers/{field}': {
+  '/api/landbot-customers/conversion-funnel': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    /** Récupérer tous les sites web de diffusion BRS */
-    get: operations['GetLandbotCustomersByFieldApiController_index'];
+    /** Récupérer les données du funnel de conversion du simulateur d'éligibilité */
+    get: operations['GetLandbotCustomersConversionFunnelController_index'];
     put?: never;
     post?: never;
     delete?: never;
@@ -147,8 +147,59 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    /** Récupérer le nombre de simulations par mois */
+    /** Récupérer le nombre de simulations groupées par mois */
     get: operations['GetLandbotCustomersSimulationsMonthlySummaryApiController_index'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/landbot-customers/simulations/by-departements': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Récupérer le nombre de simulations groupées par départements */
+    get: operations['GetLandbotCustomersGroupedByDepartementsApiController_index'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/landbot-customers/simulations/by-regions': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Récupérer le nombre de simulations groupées par régions */
+    get: operations['GetLandbotCustomersGroupedByRegionsApiController_index'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/landbot-customers/{field}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Récupérer tous les sites web de diffusion BRS groupés par un champs spécifique */
+    get: operations['GetLandbotCustomersByFieldApiController_index'];
     put?: never;
     post?: never;
     delete?: never;
@@ -303,12 +354,12 @@ export interface components {
       monthlyExpenses: number;
       /**
        * Format: date-time
-       * @example 2025-12-10T14:16:51.009Z
+       * @example 2026-01-08T11:47:03.516Z
        */
       createdAt: string;
       /**
        * Format: date-time
-       * @example 2025-12-10T14:16:51.009Z
+       * @example 2026-01-08T11:47:03.516Z
        */
       updatedAt: string;
     };
@@ -332,6 +383,74 @@ export interface components {
       condominiumFees?: number;
       monthlyExpenses?: number;
     };
+    LandbotCustomerCalculateFunnelConversionView: {
+      /** @example 105 */
+      totalSimulations: number;
+      /** @example 100 */
+      totalHouseholdProvided: number;
+      /** @example 84 */
+      totalEligble: number;
+      /** @example 54 */
+      totalConnectionWish: number;
+      /** @example 32 */
+      totalEmailProvided: number;
+      /** @example 22 */
+      totalDesiredCityProvided: number;
+    };
+    LandbotCustomerGroupSimulationsByYearAndMonthView: {
+      /** @example [
+       *       {
+       *         "year": 2024,
+       *         "month": 1,
+       *         "count": 100
+       *       },
+       *       {
+       *         "year": 2024,
+       *         "month": 2,
+       *         "count": 200
+       *       }
+       *     ] */
+      data: string[];
+    };
+    LandbotCustomerGroupByDepartementsView: {
+      /** @example [
+       *       {
+       *         "departementCode": "29",
+       *         "count": "32"
+       *       },
+       *       {
+       *         "departementCode": "75",
+       *         "count": "18"
+       *       },
+       *       {
+       *         "departementCode": "13",
+       *         "count": "2"
+       *       }
+       *     ] */
+      data: string[];
+    };
+    LandbotCustomerGroupByRegionsView: {
+      /** @example [
+       *       {
+       *         "regionName": "Ile-de-France",
+       *         "regionCode": "11",
+       *         "count": "32"
+       *       },
+       *       {
+       *         "regionName": "Provence-Alpes-Côte d'Azur",
+       *         "regionCode": "93",
+       *         "count": "18"
+       *       },
+       *       {
+       *         "regionName": "Auvergne-Rhône-Alpes",
+       *         "regionCode": "84",
+       *         "count": "2"
+       *       }
+       *     ] */
+      data: string[];
+      /** @example 100 */
+      total: number;
+    };
     LandbotCustomerGroupByFieldView: {
       /** @example [
        *       {
@@ -345,21 +464,6 @@ export interface components {
        *       {
        *         "eligibility": "null",
        *         "count": "2"
-       *       }
-       *     ] */
-      data: string[];
-    };
-    LandbotCustomerGroupSimulationsByYearAndMonthView: {
-      /** @example [
-       *       {
-       *         "year": 2024,
-       *         "month": 1,
-       *         "count": 100
-       *       },
-       *       {
-       *         "year": 2024,
-       *         "month": 2,
-       *         "count": 200
        *       }
        *     ] */
       data: string[];
@@ -599,25 +703,22 @@ export interface operations {
       };
     };
   };
-  GetLandbotCustomersByFieldApiController_index: {
+  GetLandbotCustomersConversionFunnelController_index: {
     parameters: {
       query?: never;
       header?: never;
-      path: {
-        /** @description Le champ par lequel grouper les clients Landbot */
-        field: 'eligibility' | 'brs-knowledge' | 'real-estate-situation';
-      };
+      path?: never;
       cookie?: never;
     };
     requestBody?: never;
     responses: {
-      /** @description Clients Landbot groupés par champs */
+      /** @description Données du funnel de conversion du simulateur d'éligibilité */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['LandbotCustomerGroupByFieldView'];
+          'application/json': components['schemas']['LandbotCustomerCalculateFunnelConversionView'];
         };
       };
     };
@@ -638,6 +739,69 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['LandbotCustomerGroupSimulationsByYearAndMonthView'];
+        };
+      };
+    };
+  };
+  GetLandbotCustomersGroupedByDepartementsApiController_index: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Nombre de simulations groupées par départements */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['LandbotCustomerGroupByDepartementsView'];
+        };
+      };
+    };
+  };
+  GetLandbotCustomersGroupedByRegionsApiController_index: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Nombre de simulations groupées par régions */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['LandbotCustomerGroupByRegionsView'];
+        };
+      };
+    };
+  };
+  GetLandbotCustomersByFieldApiController_index: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        /** @description Le champ par lequel grouper les clients Landbot */
+        field: 'eligibility' | 'brs-knowledge' | 'real-estate-situation';
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Clients Landbot groupés par champs */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['LandbotCustomerGroupByFieldView'];
         };
       };
     };

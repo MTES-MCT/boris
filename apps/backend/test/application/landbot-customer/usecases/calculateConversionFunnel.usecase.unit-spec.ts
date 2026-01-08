@@ -40,7 +40,24 @@ describe('CalculateConversionFunnelUsecase', () => {
     const result = await useCase.execute();
 
     expect(result).toBeInstanceOf(LandbotCustomerCalculateFunnelConversionView);
-    expect(result.data).toEqual(mockConversionFunnelResult);
+    expect(result.totalSimulations).toEqual(
+      mockConversionFunnelResult.totalSimulations,
+    );
+    expect(result.totalHouseholdProvided).toEqual(
+      mockConversionFunnelResult.totalHouseholdProvided,
+    );
+    expect(result.totalEligble).toEqual(
+      mockConversionFunnelResult.totalEligble,
+    );
+    expect(result.totalConnectionWish).toEqual(
+      mockConversionFunnelResult.totalConnectionWish,
+    );
+    expect(result.totalEmailProvided).toEqual(
+      mockConversionFunnelResult.totalEmailProvided,
+    );
+    expect(result.totalDesiredCityProvided).toEqual(
+      mockConversionFunnelResult.totalDesiredCityProvided,
+    );
     expect(
       mockLandbotCustomerRepository.calculateConversionFunnel,
     ).toHaveBeenCalledTimes(1);

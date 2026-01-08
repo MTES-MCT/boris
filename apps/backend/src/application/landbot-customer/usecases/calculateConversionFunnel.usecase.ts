@@ -9,9 +9,22 @@ export class CalculateConversionFunnelUsecase {
   ) {}
 
   public async execute(): Promise<LandbotCustomerCalculateFunnelConversionView> {
-    const result =
-      await this.landbotCustomerRepository.calculateConversionFunnel();
+    const {
+      totalSimulations,
+      totalHouseholdProvided,
+      totalEligble,
+      totalConnectionWish,
+      totalEmailProvided,
+      totalDesiredCityProvided,
+    } = await this.landbotCustomerRepository.calculateConversionFunnel();
 
-    return new LandbotCustomerCalculateFunnelConversionView(result);
+    return new LandbotCustomerCalculateFunnelConversionView(
+      totalSimulations,
+      totalHouseholdProvided,
+      totalEligble,
+      totalConnectionWish,
+      totalEmailProvided,
+      totalDesiredCityProvided,
+    );
   }
 }
