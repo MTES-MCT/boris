@@ -45,17 +45,23 @@ export class ImportLandbotCustomersCron {
       for (const customer of customers) {
         const {
           register_date,
+          email,
           eligibilite1: eligibility,
           ville_souhaitee: desiredCity,
           departement: departementCode,
           situation_immo: realEstateSituation,
           connaissancebrs: brsKnowledge,
+          handicap: disability,
+          declaration_seul_en_commun: declarationType,
+          miseenrelation_yesno: connectionWish,
+          ressources: resources,
         } = customer;
 
         if (new Date(register_date * 1000) > date) {
           try {
             await this.createLandbotCustomerUsecase.execute({
               date: new Date(register_date * 1000),
+              hasProvidedEmail: Boolean(email),
               desiredCity,
               departementCode,
               eligibility,
@@ -63,6 +69,10 @@ export class ImportLandbotCustomersCron {
               realEstateSituation: realEstateSituation?.endsWith(' ')
                 ? (realEstateSituation.trimEnd() as LandbotRealEstateSituation)
                 : realEstateSituation,
+              disability,
+              declarationType,
+              connectionWish,
+              resources: resources ? parseInt(resources) : undefined,
             });
 
             landbotCustomersCount += 1;

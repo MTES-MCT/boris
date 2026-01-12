@@ -763,4 +763,97 @@ describe('LandbotCustomerRepository', () => {
     expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith('d.code');
     expect(mockQueryBuilder.getRawMany).toHaveBeenCalledTimes(1);
   });
+
+  it('should calculate conversion funnel and return all stats', async () => {
+    const mockConversionFunnelResult = {
+      totalSimulations: '1000',
+      totalHouseholdProvided: '800',
+      totalEligble: '600',
+      totalConnectionWish: '400',
+      totalEmailProvided: '300',
+      totalDesiredCityProvided: '200',
+    };
+
+    const mockQueryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      getRawOne: jest.fn().mockResolvedValue(mockConversionFunnelResult),
+    };
+
+    mockLandbotCustomerRepository.createQueryBuilder.mockReturnValue(
+      mockQueryBuilder,
+    );
+
+    const result = await landbotCustomerRepository.calculateConversionFunnel();
+
+    expect(result).toEqual({
+      totalSimulations: 1000,
+      totalHouseholdProvided: 800,
+      totalEligble: 600,
+      totalConnectionWish: 400,
+      totalEmailProvided: 300,
+      totalDesiredCityProvided: 200,
+    });
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      mockLandbotCustomerRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('landbot_customer');
+    expect(mockQueryBuilder.select).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.select).toHaveBeenCalledWith(
+      'COUNT(*)',
+      'totalSimulations',
+    );
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledTimes(5);
+    expect(mockQueryBuilder.addSelect).toHaveBeenNthCalledWith(
+      1,
+      `COUNT(*) FILTER (WHERE landbot_customer.disability IS NOT NULL OR landbot_customer.declarationType IS NOT NULL)`,
+      'totalHouseholdProvided',
+    );
+    expect(mockQueryBuilder.addSelect).toHaveBeenNthCalledWith(
+      2,
+      `COUNT(*) FILTER (WHERE
+        (landbot_customer.disability IS NOT NULL OR landbot_customer.declarationType IS NOT NULL)
+        AND landbot_customer.eligibility IN ('1', '2', '4')
+      )`,
+      'totalEligble',
+    );
+    expect(mockQueryBuilder.addSelect).toHaveBeenNthCalledWith(
+      3,
+      `COUNT(*) FILTER (WHERE
+        (landbot_customer.disability IS NOT NULL OR landbot_customer.declarationType IS NOT NULL)
+        AND landbot_customer.eligibility IN ('1', '2', '4')
+        AND landbot_customer.connectionWish = 'Oui'
+      )`,
+      'totalConnectionWish',
+    );
+    expect(mockQueryBuilder.addSelect).toHaveBeenNthCalledWith(
+      4,
+      `COUNT(*) FILTER (WHERE
+        (landbot_customer.disability IS NOT NULL OR landbot_customer.declarationType IS NOT NULL)
+        AND landbot_customer.eligibility IN ('1', '2', '4')
+        AND landbot_customer.connectionWish = 'Oui'
+        AND landbot_customer.hasProvidedEmail = true
+      )`,
+      'totalEmailProvided',
+    );
+    expect(mockQueryBuilder.addSelect).toHaveBeenNthCalledWith(
+      5,
+      `COUNT(*) FILTER (WHERE
+        (landbot_customer.disability IS NOT NULL OR landbot_customer.declarationType IS NOT NULL)
+        AND landbot_customer.eligibility IN ('1', '2', '4')
+        AND landbot_customer.connectionWish = 'Oui'
+        AND landbot_customer.hasProvidedEmail = true
+        AND landbot_customer.desiredCity IS NOT NULL
+      )`,
+      'totalDesiredCityProvided',
+    );
+    expect(mockQueryBuilder.where).toHaveBeenNthCalledWith(
+      1,
+      `date >= CURRENT_DATE - INTERVAL '30 days'`,
+    );
+    expect(mockQueryBuilder.getRawOne).toHaveBeenCalledTimes(1);
+  });
 });

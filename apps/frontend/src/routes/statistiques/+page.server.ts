@@ -3,6 +3,7 @@ import {
   defaultRegionsCodesRecord,
   regionCodesAcronymsMatching,
 } from '$lib/utils/constants';
+import type { components } from '$lib/utils/generated-api-types';
 import { formatHouseholdsData } from '$lib/utils/helpers';
 import type { PageServerLoad } from './$types';
 
@@ -25,6 +26,7 @@ type PageData = {
   ofssAmount: number;
   departementalConnectionCount: Record<string, number>;
   regionalConnectionCount: Record<string, number>;
+  conversionFunnel: ReturnType<typeof formatConversionFunnel>;
 };
 
 export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
@@ -70,6 +72,12 @@ export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
     { cache: 'no-store' },
   );
 
+  const conversionFunnelResponse = await fetch(
+    'api/landbot-customers/conversion-funnel',
+    { cache: 'no-store' },
+  );
+  const conversionFunnel = await conversionFunnelResponse.json();
+
   const simulationsByRegions = await simulationsByRegionsResponse.json();
 
   return {
@@ -95,6 +103,7 @@ export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
       ...defaultDepartementsCodesRecord,
       ...formatSimulationsByDepartements(simulationsByDepartements.data),
     },
+    conversionFunnel: formatConversionFunnel(conversionFunnel),
   };
 };
 
@@ -121,4 +130,74 @@ const formatSimulationsByRegions = (
   });
 
   return formattedItems;
+};
+
+const formatConversionFunnel = (
+  conversionFunnel: components['schemas']['LandbotCustomerCalculateFunnelConversionView'],
+): {
+  title: string;
+  value: number;
+  conversionRate: number;
+  totalRespondantsRate: number;
+  terminations: number;
+  terminationRate: number;
+}[] => {
+  const initialData = [
+    {
+      title: 'Démarre la simulation',
+      value: conversionFunnel.totalSimulations,
+    },
+    {
+      title: 'Donne la composition de son foyer (taille, âge, handicap)',
+      value: conversionFunnel.totalHouseholdProvided,
+    },
+    {
+      title: 'Donne son RFR et obtient son résultat de simulation',
+      value: conversionFunnel.totalEligble,
+    },
+    {
+      title: 'Souhaite être recontacté',
+      value: conversionFunnel.totalConnectionWish,
+      conversions: conversionFunnel.totalEmailProvided,
+    },
+    {
+      title: 'Donne son email, nom et prénom',
+      value: conversionFunnel.totalEmailProvided,
+      conversions: conversionFunnel.totalDesiredCityProvided,
+    },
+    {
+      title:
+        'Donne son département et sa ville de recherche et a ses coordonnées transmises aux OFS',
+      value: conversionFunnel.totalDesiredCityProvided,
+    },
+  ];
+
+  return initialData.map((item, index) => {
+    const isFirst = index === 0;
+
+    const { value } = item;
+    const { value: initialRespondantsAmount } = initialData[0];
+
+    let conversionRate = 0;
+    let totalRespondantsRate = 0;
+    let terminations = 0;
+    let terminationRate = 0;
+
+    if (!isFirst) {
+      const { value: previousValue } = initialData[index - 1];
+
+      conversionRate = (value / previousValue) * 100;
+      totalRespondantsRate = (value / initialRespondantsAmount) * 100;
+      terminations = previousValue - value;
+      terminationRate = 100 - conversionRate;
+    }
+
+    return {
+      ...item,
+      conversionRate,
+      totalRespondantsRate,
+      terminations,
+      terminationRate,
+    };
+  });
 };

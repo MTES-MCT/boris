@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
+  ConversionFunnelResult,
   GroupByDepartementsResult,
   GroupByRegionsResult,
   GroupSimulationsByYearAndMonthResult,
@@ -168,5 +169,61 @@ export class LandbotCustomerRepository
       .groupBy('d.code');
 
     return query.getRawMany();
+  }
+
+  public async calculateConversionFunnel(): Promise<ConversionFunnelResult> {
+    const query = this.repository
+      .createQueryBuilder('landbot_customer')
+      .select('COUNT(*)', 'totalSimulations')
+      .addSelect(
+        `COUNT(*) FILTER (WHERE landbot_customer.disability IS NOT NULL OR landbot_customer.declarationType IS NOT NULL)`,
+        'totalHouseholdProvided',
+      )
+      .addSelect(
+        `COUNT(*) FILTER (WHERE
+        (landbot_customer.disability IS NOT NULL OR landbot_customer.declarationType IS NOT NULL)
+        AND landbot_customer.eligibility IN ('1', '2', '4')
+      )`,
+        'totalEligble',
+      )
+      .addSelect(
+        `COUNT(*) FILTER (WHERE
+        (landbot_customer.disability IS NOT NULL OR landbot_customer.declarationType IS NOT NULL)
+        AND landbot_customer.eligibility IN ('1', '2', '4')
+        AND landbot_customer.connectionWish = 'Oui'
+      )`,
+        'totalConnectionWish',
+      )
+      .addSelect(
+        `COUNT(*) FILTER (WHERE
+        (landbot_customer.disability IS NOT NULL OR landbot_customer.declarationType IS NOT NULL)
+        AND landbot_customer.eligibility IN ('1', '2', '4')
+        AND landbot_customer.connectionWish = 'Oui'
+        AND landbot_customer.hasProvidedEmail = true
+      )`,
+        'totalEmailProvided',
+      )
+      .addSelect(
+        `COUNT(*) FILTER (WHERE
+        (landbot_customer.disability IS NOT NULL OR landbot_customer.declarationType IS NOT NULL)
+        AND landbot_customer.eligibility IN ('1', '2', '4')
+        AND landbot_customer.connectionWish = 'Oui'
+        AND landbot_customer.hasProvidedEmail = true
+        AND landbot_customer.desiredCity IS NOT NULL
+      )`,
+        'totalDesiredCityProvided',
+      )
+      .where(`date >= CURRENT_DATE - INTERVAL '30 days'`);
+
+    const result = await query.getRawOne();
+
+    return {
+      totalSimulations: Number(result.totalSimulations),
+      totalHouseholdProvided: Number(result.totalHouseholdProvided),
+      totalEligble: Number(result.totalEligble),
+      totalConnectionWish: Number(result.totalConnectionWish),
+      totalEmailProvided: Number(result.totalEmailProvided),
+      totalDesiredCityProvided: Number(result.totalDesiredCityProvided),
+    };
   }
 }
