@@ -212,7 +212,8 @@ export class LandbotCustomerRepository
         AND landbot_customer.desiredCity IS NOT NULL
       )`,
         'totalDesiredCityProvided',
-      );
+      )
+      .where(`date >= CURRENT_DATE - INTERVAL '30 days'`);
 
     const result = await query.getRawOne();
 

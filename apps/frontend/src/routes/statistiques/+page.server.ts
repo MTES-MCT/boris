@@ -137,7 +137,6 @@ const formatConversionFunnel = (
 ): {
   title: string;
   value: number;
-  conversions: number;
   conversionRate: number;
   totalRespondantsRate: number;
   terminations: number;
@@ -174,26 +173,27 @@ const formatConversionFunnel = (
   ];
 
   return initialData.map((item, index) => {
-    const isLast = index === initialData.length - 1;
+    const isFirst = index === 0;
 
     const { value } = item;
+    const { value: initialRespondantsAmount } = initialData[0];
 
-    let conversions = 0;
     let conversionRate = 0;
-    const totalRespondantsRate = (value / initialData[0].value) * 100;
+    let totalRespondantsRate = 0;
     let terminations = 0;
     let terminationRate = 0;
 
-    if (!isLast) {
-      conversions = initialData[index + 1].value;
-      conversionRate = (conversions / value) * 100;
-      terminations = value - conversions;
+    if (!isFirst) {
+      const { value: previousValue } = initialData[index - 1];
+
+      conversionRate = (value / previousValue) * 100;
+      totalRespondantsRate = (value / initialRespondantsAmount) * 100;
+      terminations = previousValue - value;
       terminationRate = 100 - conversionRate;
     }
 
     return {
       ...item,
-      conversions,
       conversionRate,
       totalRespondantsRate,
       terminations,
