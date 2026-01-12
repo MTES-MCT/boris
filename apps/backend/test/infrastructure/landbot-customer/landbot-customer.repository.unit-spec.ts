@@ -777,6 +777,7 @@ describe('LandbotCustomerRepository', () => {
     const mockQueryBuilder = {
       select: jest.fn().mockReturnThis(),
       addSelect: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
       getRawOne: jest.fn().mockResolvedValue(mockConversionFunnelResult),
     };
 
@@ -848,6 +849,10 @@ describe('LandbotCustomerRepository', () => {
         AND landbot_customer.desiredCity IS NOT NULL
       )`,
       'totalDesiredCityProvided',
+    );
+    expect(mockQueryBuilder.where).toHaveBeenNthCalledWith(
+      1,
+      `date >= CURRENT_DATE - INTERVAL '30 days'`,
     );
     expect(mockQueryBuilder.getRawOne).toHaveBeenCalledTimes(1);
   });
