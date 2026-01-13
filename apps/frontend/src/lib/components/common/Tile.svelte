@@ -38,7 +38,7 @@
   class:fr-enlarge-link={enlarge}>
   <div class="fr-tile__body">
     <div class="fr-tile__content">
-      <h3 class="fr-tile__title">
+      <p class="fr-tile__title">
         {#if href}
           <a {href}>
             {title}
@@ -46,7 +46,7 @@
         {:else}
           {title}
         {/if}
-      </h3>
+      </p>
       {#if children}
         {@render children()}
       {:else}
