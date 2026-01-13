@@ -11,18 +11,15 @@ runs:
   using: "composite"
 
   steps:
+    - name: Cache Playwright browsers
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-playwright-
+
     - name: Install Playwright browsers
-      run: echo "Re enable when safe"
-
-    # - name: Cache Playwright browsers
-    #   uses: actions/cache@v4
-    #   with:
-    #     path: |
-    #       ~/.cache/ms-playwright
-    #     key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
-    #     restore-keys: |
-    #       ${{ runner.os }}-playwright-
-
-    # - name: Install Playwright browsers
-    #   shell: bash
-    #   run: npx playwright install chromium --with-deps
+      shell: bash
+      run: npx playwright install chromium --with-deps

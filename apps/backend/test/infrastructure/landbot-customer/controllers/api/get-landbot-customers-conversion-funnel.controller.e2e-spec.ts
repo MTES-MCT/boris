@@ -1,5 +1,4 @@
 import { INestApplication } from '@nestjs/common';
-import { ConversionFunnelResult } from 'src/domain/landbot-customer/landbot-customer.repository.interface';
 import * as request from 'supertest';
 import { App } from 'supertest/types';
 import { setupTestingApp } from 'test/config/setup.e2e';
@@ -30,22 +29,19 @@ describe('GetLandbotCustomersConversionFunnelController', () => {
       .set('x-api-key', process.env.API_KEY as string);
 
     expect(status).toBe(200);
-    expect(body).toHaveProperty('data');
 
-    const data: ConversionFunnelResult = body.data;
+    expect(body).toHaveProperty('totalSimulations');
+    expect(body).toHaveProperty('totalHouseholdProvided');
+    expect(body).toHaveProperty('totalEligble');
+    expect(body).toHaveProperty('totalConnectionWish');
+    expect(body).toHaveProperty('totalEmailProvided');
+    expect(body).toHaveProperty('totalDesiredCityProvided');
 
-    expect(data).toHaveProperty('totalSimulations');
-    expect(data).toHaveProperty('totalHouseholdProvided');
-    expect(data).toHaveProperty('totalEligble');
-    expect(data).toHaveProperty('totalConnectionWish');
-    expect(data).toHaveProperty('totalEmailProvided');
-    expect(data).toHaveProperty('totalDesiredCityProvided');
-
-    expect(typeof data.totalSimulations).toBe('number');
-    expect(typeof data.totalHouseholdProvided).toBe('number');
-    expect(typeof data.totalEligble).toBe('number');
-    expect(typeof data.totalConnectionWish).toBe('number');
-    expect(typeof data.totalEmailProvided).toBe('number');
-    expect(typeof data.totalDesiredCityProvided).toBe('number');
+    expect(typeof body.totalSimulations).toBe('number');
+    expect(typeof body.totalHouseholdProvided).toBe('number');
+    expect(typeof body.totalEligble).toBe('number');
+    expect(typeof body.totalConnectionWish).toBe('number');
+    expect(typeof body.totalEmailProvided).toBe('number');
+    expect(typeof body.totalDesiredCityProvided).toBe('number');
   });
 });

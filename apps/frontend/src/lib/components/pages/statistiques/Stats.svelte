@@ -10,11 +10,7 @@
     ofssAmount: PageData['ofssAmount'];
     eligibility: PageData['eligibility'];
     hideDisclaimer?: boolean;
-    householdsData: {
-      total: number;
-      brsUnawarePercentage: number;
-      totalsRealEstateSituation: PageData['realEstateSituation'];
-    };
+    householdsData: PageData['householdsData'];
   };
 
   const {

@@ -9,83 +9,77 @@ jobs:
   run-lighthouse:
     runs-on: ubuntu-latest
 
+    env:
+      LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
+      PUBLIC_NODE_ENV: ${{ secrets.PUBLIC_NODE_ENV }}
+      API_URL: ${{ secrets.API_URL }}
+      API_KEY: ${{ secrets.API_KEY }}
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5433
+      POSTGRES_USER: boris
+      POSTGRES_PASSWORD: boris
+      POSTGRES_DB: boris
+
+    strategy:
+      matrix:
+        node-version: [20.19.0]
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: boris-test
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U boris-test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Lighthouse
-        run: echo "Re enable when safe"
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    # env:
-    #   LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
-    #   PUBLIC_NODE_ENV: ${{ secrets.PUBLIC_NODE_ENV }}
-    #   API_URL: ${{ secrets.API_URL }}
-    #   API_KEY: ${{ secrets.API_KEY }}
-    #   POSTGRES_HOST: localhost
-    #   POSTGRES_PORT: 5433
-    #   POSTGRES_USER: boris
-    #   POSTGRES_PASSWORD: boris
-    #   POSTGRES_DB: boris
+      - name: Setup database
+        uses: ./.github/actions/setup-database
 
-    # strategy:
-    #   matrix:
-    #     node-version: [20.19.0]
+      - name: Run backend server
+        uses: ./.github/actions/run-backend
 
-    # services:
-    #   postgres:
-    #     image: postgres:16
-    #     env:
-    #       POSTGRES_USER: ${{ env.POSTGRES_USER }}
-    #       POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-    #       POSTGRES_DB: boris-test
-    #     ports:
-    #       - 5433:5432
-    #     options: >-
-    #       --health-cmd "pg_isready -U boris-test"
-    #       --health-interval 10s
-    #       --health-timeout 5s
-    #       --health-retries 5
+      - name: Build frontend
+        run: npm run build -w @boris/frontend
 
-    # steps:
-    #   - uses: actions/checkout@v4
+      - name: Start server
+        run: npm run preview -w @boris/frontend &
 
-    #   - name: Install dependencies
-    #     uses: ./.github/actions/install-dependencies
-    #     with:
-    #       node-version: ${{ matrix.node-version }}
+      - name: Run lighthouse desktop
+        run: npm run lighthouse-desktop -w @boris/frontend
 
-    #   - name: Setup database
-    #     uses: ./.github/actions/setup-database
+      - name: Upload lighthouse desktop report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          include-hidden-files: true
+          name: lighthouse-report-ubuntu-latest
+          path: ${{ github.workspace }}/apps/frontend/.lighthouseci/*
 
-    #   - name: Run backend server
-    #     uses: ./.github/actions/run-backend
+      - name: Run lighthouse mobile
+        # skip for now
+        if: false
+        run: npm run lighthouse-mobile -w @boris/frontend
 
-    #   - name: Build frontend
-    #     run: npm run build -w @boris/frontend
-
-    #   - name: Start server
-    #     run: npm run preview -w @boris/frontend &
-
-    #   - name: Run lighthouse desktop
-    #     run: npm run lighthouse-desktop -w @boris/frontend
-
-    #   - name: Upload lighthouse desktop report
-    #     if: always()
-    #     uses: actions/upload-artifact@v4
-    #     with:
-    #       include-hidden-files: true
-    #       name: lighthouse-report-ubuntu-latest
-    #       path: ${{ github.workspace }}/apps/frontend/.lighthouseci/*
-
-    #   - name: Run lighthouse mobile
-    #     # skip for now
-    #     if: false
-    #     run: npm run lighthouse-mobile -w @boris/frontend
-
-    #   - name: Upload lighthouse mobile report
-    #     # skip for now
-    #     if: false
-    #     uses: actions/upload-artifact@v4
-    #     with:
-    #       include-hidden-files: true
-    #       name: lighthouse-report-ubuntu-latest
-    #       path: ${{ github.workspace }}/apps/frontend/.lighthouseci/*
+      - name: Upload lighthouse mobile report
+        # skip for now
+        if: false
+        uses: actions/upload-artifact@v4
+        with:
+          include-hidden-files: true
+          name: lighthouse-report-ubuntu-latest
+          path: ${{ github.workspace }}/apps/frontend/.lighthouseci/*

@@ -7,7 +7,7 @@
 {#each eligibilityData as data}
   <div
     class="py-2 px-0 bg-blue-deep flex justify-center items-center gap-4 mt-6 mb-1">
-    <h4 class="fr-mb-0">{data.category}</h4>
+    <h3 class="fr-mb-0 fr-h4">{data.category}</h3>
     {#if data.options.length}
       <Tooltip>
         <ul class="text-left !list-none !p-2">
