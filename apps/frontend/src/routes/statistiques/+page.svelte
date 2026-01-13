@@ -24,6 +24,13 @@
   } = data;
 </script>
 
+<svelte:head>
+  <title>Statistiques - BoRiS</title>
+  <meta
+    name="description"
+    content="Voir les statistiques du Bail Réel Solidaire (BRS) sur BoRiS." />
+</svelte:head>
+
 <Section>
   <h1 class="!mb-0">Statistiques</h1>
 
