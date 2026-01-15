@@ -33,4 +33,10 @@ export const mockAcquisitionSimulationRepository = {
   findOne: jest.fn(),
   findById: jest.fn(),
   count: jest.fn(),
+  calculateConversionFunnel: jest.fn(),
+  createQueryBuilder: jest.fn(() => ({
+    select: jest.fn().mockReturnThis(),
+    addSelect: jest.fn().mockReturnThis(),
+    getRawOne: jest.fn(),
+  })),
 };

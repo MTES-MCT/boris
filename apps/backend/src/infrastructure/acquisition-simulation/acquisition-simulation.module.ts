@@ -7,12 +7,15 @@ import { CreateAcquisitionSimulationUsecase } from 'src/application/acquisition-
 import { UpdateAcquisitionSimulationApiController } from './controllers/api/update-acquisition-simulation.controller';
 import { UpdateAcquisitionSimulationUsecase } from 'src/application/acquisition-simulation/usecases/update.usecase';
 import { CountAcquisitionSimulationsUsecase } from 'src/application/acquisition-simulation/usecases/count.usecase';
+import { CalculateAcquisitionSimulationConversionFunnelUsecase } from 'src/application/acquisition-simulation/usecases/calculateConversionFunnel.usecase';
+import { GetAcquisitionSimulationConversionFunnelController } from './controllers/api/get-acquisition-simulation-conversion-funnel.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([AcquisitionSimulationEntity])],
   controllers: [
     CreateAcquisitionSimulationApiController,
     UpdateAcquisitionSimulationApiController,
+    GetAcquisitionSimulationConversionFunnelController,
   ],
   providers: [
     {
@@ -23,6 +26,7 @@ import { CountAcquisitionSimulationsUsecase } from 'src/application/acquisition-
     CreateAcquisitionSimulationUsecase,
     UpdateAcquisitionSimulationUsecase,
     CountAcquisitionSimulationsUsecase,
+    CalculateAcquisitionSimulationConversionFunnelUsecase,
   ],
   exports: [
     'AcquisitionSimulationRepositoryInterface',
@@ -30,6 +34,7 @@ import { CountAcquisitionSimulationsUsecase } from 'src/application/acquisition-
     CreateAcquisitionSimulationUsecase,
     UpdateAcquisitionSimulationUsecase,
     CountAcquisitionSimulationsUsecase,
+    CalculateAcquisitionSimulationConversionFunnelUsecase,
   ],
 })
 export class AcquisitionSimulationModule {}
