@@ -44,8 +44,8 @@
     e.preventDefault();
 
     const payload = {
-      notaryFees,
-      oneTimeExpenses,
+      notaryFees: notaryFees || estimatedNotaryFees,
+      oneTimeExpenses: acquisitionSimulatorManager.oneTimeExpenses || 0,
     };
 
     try {
@@ -53,10 +53,7 @@
       errors = {};
 
       if (acquisitionSimulation) {
-        await updateAcquisitionSimulation({
-          notaryFees: notaryFees || estimatedNotaryFees,
-          oneTimeExpenses,
-        });
+        await updateAcquisitionSimulation(payload);
       }
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);

@@ -8,6 +8,7 @@
   import RegionalConnectionCount from '$components/pages/statistiques/RegionalConnectionCount.svelte';
   import HousingTypesRepartition from '$components/pages/statistiques/HousingTypesRepartition.svelte';
   import ConversionFunnel from '$components/pages/statistiques/ConversionFunnel.svelte';
+  import AcquisitionSimulationsConversionFunnel from '$components/pages/statistiques/AcquisitionSimulationsConversionFunnel.svelte';
   const { data }: PageProps = $props();
 
   const {
@@ -21,6 +22,7 @@
     regionalConnectionCount,
     departementalConnectionCount,
     conversionFunnel,
+    acquisitionSimulationsConversionFunnel,
   } = data;
 </script>
 
@@ -48,6 +50,9 @@
       montlhlySummary={simulationsMonthlySummary} />
 
     <ConversionFunnel {conversionFunnel} />
+
+    <AcquisitionSimulationsConversionFunnel
+      {acquisitionSimulationsConversionFunnel} />
 
     <RegionalConnectionCount {regionalConnectionCount} />
 

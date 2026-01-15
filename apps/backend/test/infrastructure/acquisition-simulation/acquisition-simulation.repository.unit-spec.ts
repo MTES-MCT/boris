@@ -82,4 +82,42 @@ describe('AcquisitionSimulationRepository', () => {
     expect(mockAcquisitionSimulationRepository.count).toHaveBeenCalledTimes(1);
     expect(mockAcquisitionSimulationRepository.count).toHaveBeenCalledWith();
   });
+
+  it('should calculate and return the conversion funnel data', async () => {
+    const mockQueryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      getRawOne: jest.fn().mockResolvedValue({
+        totalHouseInformations: '105',
+        totalOwnContribution: '100',
+        totalBuyingFees: '84',
+        totalLoanInformations: '54',
+        totalBrsHousingFees: '32',
+      }),
+    };
+
+    mockAcquisitionSimulationRepository.createQueryBuilder.mockReturnValue(
+      mockQueryBuilder,
+    );
+
+    const result =
+      await acquisitionSimulationRepository.calculateConversionFunnel();
+
+    expect(result).toEqual({
+      totalHouseInformations: 105,
+      totalOwnContribution: 100,
+      totalBuyingFees: 84,
+      totalLoanInformations: 54,
+      totalBrsHousingFees: 32,
+    });
+    expect(
+      mockAcquisitionSimulationRepository.createQueryBuilder,
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      mockAcquisitionSimulationRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('acquisition_simulation');
+    expect(mockQueryBuilder.select).toHaveBeenCalledTimes(1);
+    expect(mockQueryBuilder.addSelect).toHaveBeenCalledTimes(4);
+    expect(mockQueryBuilder.getRawOne).toHaveBeenCalledTimes(1);
+  });
 });

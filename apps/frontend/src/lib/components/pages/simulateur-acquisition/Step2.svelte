@@ -36,12 +36,10 @@
     e.preventDefault();
 
     const payload = {
-      ownContribution,
+      ownContribution: acquisitionSimulatorManager.ownContribution
+        ? acquisitionSimulatorManager.ownContribution
+        : 0,
     };
-
-    if (!acquisitionSimulatorManager.ownContribution) {
-      acquisitionSimulatorManager.ownContribution = 0;
-    }
 
     try {
       FormData.parse(payload);
