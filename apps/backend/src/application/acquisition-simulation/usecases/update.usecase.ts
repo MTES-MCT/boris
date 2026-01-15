@@ -48,11 +48,15 @@ export class UpdateAcquisitionSimulationUsecase {
     acquisitionSimulation.housingType =
       housingType || acquisitionSimulation.housingType;
     acquisitionSimulation.ownContribution =
-      ownContribution || acquisitionSimulation.ownContribution;
+      typeof ownContribution === 'number'
+        ? ownContribution
+        : acquisitionSimulation.ownContribution;
     acquisitionSimulation.notaryFees =
       notaryFees || acquisitionSimulation.notaryFees;
     acquisitionSimulation.oneTimeExpenses =
-      oneTimeExpenses || acquisitionSimulation.oneTimeExpenses;
+      typeof oneTimeExpenses === 'number'
+        ? oneTimeExpenses
+        : acquisitionSimulation.oneTimeExpenses;
     acquisitionSimulation.interestRate =
       interestRate || acquisitionSimulation.interestRate;
     acquisitionSimulation.loanDuration =
