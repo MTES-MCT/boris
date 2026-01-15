@@ -16,6 +16,8 @@ export const namespaces = {
   landbotCustomersSimulationsByRegions:
     'landbot-customers-simulations-by-regions',
   landbotCustomersConversionFunnel: 'landbot-customers-conversion-funnel',
+  acquisitionSimulationsConversionFunnel:
+    'acquisition-simulations-conversion-funnel',
 };
 
 const TTL_HOURS = 12;

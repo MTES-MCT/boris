@@ -123,6 +123,23 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/acquisition-simulations/conversion-funnel': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Récupérer les données du funnel de conversion du simulateur d'acquisition */
+    get: operations['GetAcquisitionSimulationConversionFunnelController_index'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/landbot-customers/conversion-funnel': {
     parameters: {
       query?: never;
@@ -354,12 +371,12 @@ export interface components {
       monthlyExpenses: number;
       /**
        * Format: date-time
-       * @example 2026-01-08T11:47:03.516Z
+       * @example 2026-01-15T15:57:57.344Z
        */
       createdAt: string;
       /**
        * Format: date-time
-       * @example 2026-01-08T11:47:03.516Z
+       * @example 2026-01-15T15:57:57.344Z
        */
       updatedAt: string;
     };
@@ -382,6 +399,18 @@ export interface components {
       condominiumFeesFrequency?: string;
       condominiumFees?: number;
       monthlyExpenses?: number;
+    };
+    AcquisitionSimulationCalculateFunnelConversionView: {
+      /** @example 105 */
+      totalHouseInformations: number;
+      /** @example 100 */
+      totalOwnContribution: number;
+      /** @example 84 */
+      totalBuyingFees: number;
+      /** @example 54 */
+      totalLoanInformations: number;
+      /** @example 32 */
+      totalBrsHousingFees: number;
     };
     LandbotCustomerCalculateFunnelConversionView: {
       /** @example 105 */
@@ -699,6 +728,26 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['AcquisitionSimulationView'];
+        };
+      };
+    };
+  };
+  GetAcquisitionSimulationConversionFunnelController_index: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Données du funnel de conversion du simulateur d'acquisition */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['AcquisitionSimulationCalculateFunnelConversionView'];
         };
       };
     };

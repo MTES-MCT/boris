@@ -5,17 +5,16 @@
   import StatisticBox from './StatisticBox.svelte';
 
   type Props = {
-    conversionFunnel: PageData['conversionFunnel'];
+    acquisitionSimulationsConversionFunnel: PageData['acquisitionSimulationsConversionFunnel'];
   };
 
-  const { conversionFunnel }: Props = $props();
+  const { acquisitionSimulationsConversionFunnel }: Props = $props();
 </script>
 
 <StatisticBox>
   <h2 class="fr-h3 !mb-0">
-    Le funnel de conversion du simulateur d'éligibilité
+    Le funnel de conversion du simulateur d'acquisition
   </h2>
-  <p class="fr-text--bold">Sur les 30 derniers jours</p>
 
   <Table
     theads={[
@@ -26,7 +25,7 @@
       'Abandon',
       "Taux d'abandon",
     ]}
-    tbodies={conversionFunnel.map((row, index) => {
+    tbodies={acquisitionSimulationsConversionFunnel.map((row, index) => {
       const isFirstRow = index === 0;
 
       if (isFirstRow) {

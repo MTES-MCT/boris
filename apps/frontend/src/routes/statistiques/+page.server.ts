@@ -27,6 +27,9 @@ type PageData = {
   departementalConnectionCount: Record<string, number>;
   regionalConnectionCount: Record<string, number>;
   conversionFunnel: ReturnType<typeof formatConversionFunnel>;
+  acquisitionSimulationsConversionFunnel: ReturnType<
+    typeof formatAcquisitionSimulationsConversionFunnel
+  >;
 };
 
 export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
@@ -78,6 +81,13 @@ export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
   );
   const conversionFunnel = await conversionFunnelResponse.json();
 
+  const acquisitionSimulationsConversionFunnelResponse = await fetch(
+    'api/acquisition-simulations/conversion-funnel',
+    { cache: 'no-store' },
+  );
+  const acquisitionSimulationsConversionFunnel =
+    await acquisitionSimulationsConversionFunnelResponse.json();
+
   const simulationsByRegions = await simulationsByRegionsResponse.json();
 
   return {
@@ -104,6 +114,10 @@ export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
       ...formatSimulationsByDepartements(simulationsByDepartements.data),
     },
     conversionFunnel: formatConversionFunnel(conversionFunnel),
+    acquisitionSimulationsConversionFunnel:
+      formatAcquisitionSimulationsConversionFunnel(
+        acquisitionSimulationsConversionFunnel,
+      ),
   };
 };
 
@@ -169,6 +183,69 @@ const formatConversionFunnel = (
       title:
         'Donne son département et sa ville de recherche et a ses coordonnées transmises aux OFS',
       value: conversionFunnel.totalDesiredCityProvided,
+    },
+  ];
+
+  return initialData.map((item, index) => {
+    const isFirst = index === 0;
+
+    const { value } = item;
+    const { value: initialRespondantsAmount } = initialData[0];
+
+    let conversionRate = 0;
+    let totalRespondantsRate = 0;
+    let terminations = 0;
+    let terminationRate = 0;
+
+    if (!isFirst) {
+      const { value: previousValue } = initialData[index - 1];
+
+      conversionRate = (value / previousValue) * 100;
+      totalRespondantsRate = (value / initialRespondantsAmount) * 100;
+      terminations = previousValue - value;
+      terminationRate = 100 - conversionRate;
+    }
+
+    return {
+      ...item,
+      conversionRate,
+      totalRespondantsRate,
+      terminations,
+      terminationRate,
+    };
+  });
+};
+
+const formatAcquisitionSimulationsConversionFunnel = (
+  conversionFunnel: components['schemas']['AcquisitionSimulationCalculateFunnelConversionView'],
+): {
+  title: string;
+  value: number;
+  conversionRate: number;
+  totalRespondantsRate: number;
+  terminations: number;
+  terminationRate: number;
+}[] => {
+  const initialData = [
+    {
+      title: 'Donne les informations du logement',
+      value: conversionFunnel.totalHouseInformations,
+    },
+    {
+      title: 'Donne le montant de l’apport',
+      value: conversionFunnel.totalOwnContribution,
+    },
+    {
+      title: 'Donne le montant des frais de notaires et frais ponctuels',
+      value: conversionFunnel.totalBuyingFees,
+    },
+    {
+      title: 'Donne les informations du crédit immobilier',
+      value: conversionFunnel.totalLoanInformations,
+    },
+    {
+      title: 'Donne les informations concernant la redevance BRS & charges',
+      value: conversionFunnel.totalBrsHousingFees,
     },
   ];
 
