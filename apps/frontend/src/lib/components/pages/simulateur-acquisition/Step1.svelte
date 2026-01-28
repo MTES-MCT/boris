@@ -17,17 +17,19 @@
 
   import Input from '$components/common/Input.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
-  import Form from '$components/pages/simulateur-acquisition/Form.svelte';
+  import Form from '$components/common/Simulator/Form.svelte';
   import Autocomplete from '$components/common/Autocomplete.svelte';
   import Radio from '$components/common/Radio.svelte';
   import RadioFieldset from '$components/common/RadioFieldset.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
-  import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
-  import Description from '$components/pages/simulateur-acquisition/Description.svelte';
+  import Wrapper from '$components/common/Simulator/Wrapper.svelte';
+  import Description from '$components/common/Simulator/Description.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   let {
+    currentStep,
+    steps,
     housingPrice,
     autocompleteValue,
     surface,
@@ -99,7 +101,12 @@
 </script>
 
 <Wrapper>
-  <Description>
+  <Description
+    title="Simulateur d'acquisition"
+    stepTitle={`${currentStep.step}. ${currentStep.title}`}
+    nextStepTitle={nextStep?.title}
+    currentStep={currentStep.step}
+    stepCount={steps.length}>
     <p>
       Indiquez les principales caractéristiques du logement que vous souhaitez
       acquérir. Ces informations permettront d'estimer les frais associés à

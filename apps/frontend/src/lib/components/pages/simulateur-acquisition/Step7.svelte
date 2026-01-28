@@ -5,9 +5,9 @@
   import { formatFormErrors } from '$lib/utils/helpers';
   import { formatEuro } from '$lib/utils/formatters';
 
-  import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
-  import Description from '$components/pages/simulateur-acquisition/Description.svelte';
-  import Form from '$components/pages/simulateur-acquisition/Form.svelte';
+  import Wrapper from '$components/common/Simulator/Wrapper.svelte';
+  import Description from '$components/common/Simulator/Description.svelte';
+  import Form from '$components/common/Simulator/Form.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
   import Input from '$components/common/Input.svelte';
@@ -17,6 +17,8 @@
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   let {
+    currentStep,
+    steps,
     brsFees,
     yearlyPropertyTax,
     yearlyHouseingInsurance,
@@ -101,7 +103,12 @@
 </script>
 
 <Wrapper>
-  <Description>
+  <Description
+    title="Simulateur d'acquisition"
+    stepTitle={`${currentStep.step}. ${currentStep.title}`}
+    nextStepTitle={nextStep?.title}
+    currentStep={currentStep.step}
+    stepCount={steps.length}>
     <p>
       En renseignant cette section, le simulateur vous donne une estimation
       claire du coût mensuel et annuel à prévoir une fois propriétaire. C'est

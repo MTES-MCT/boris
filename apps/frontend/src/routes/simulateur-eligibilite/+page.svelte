@@ -3,11 +3,9 @@
 
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Hero from '$components/pages/simulateur-eligibilite/Hero.svelte';
+  import SimulationCta from '$components/pages/simulateur-eligibilite/SimulationCta.svelte';
   import EligibilityTresholds from '$components/common/EligibilityTresholds.svelte';
   import PageCta from '$components/common/PageCta.svelte';
-  import SimulationCta from '$components/pages/simulateur-eligibilite/SimulationCta.svelte';
-
-  const { data }: PageProps = $props();
 </script>
 
 <svelte:head>
