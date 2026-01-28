@@ -4,9 +4,9 @@
   import type { FormFieldError } from '$lib/utils/definitions';
   import { formatFormErrors } from '$lib/utils/helpers';
 
-  import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
-  import Description from '$components/pages/simulateur-acquisition/Description.svelte';
-  import Form from '$components/pages/simulateur-acquisition/Form.svelte';
+  import Wrapper from '$components/common/Simulator/Wrapper.svelte';
+  import Description from '$components/common/Simulator/Description.svelte';
+  import Form from '$components/common/Simulator/Form.svelte';
   import Input from '$components/common/Input.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
@@ -28,6 +28,8 @@
   });
 
   let {
+    currentStep,
+    steps,
     housingType,
     notaryFees,
     oneTimeExpenses,
@@ -62,7 +64,12 @@
 </script>
 
 <Wrapper>
-  <Description>
+  <Description
+    title="Simulateur d'acquisition"
+    stepTitle={`${currentStep.step}. ${currentStep.title}`}
+    nextStepTitle={nextStep?.title}
+    currentStep={currentStep.step}
+    stepCount={steps.length}>
     <p>
       Précisez les différents frais liés à l'achat du logement : frais de
       notaire ou autres frais ponctuels. Si certains montants sont inconnus, le
