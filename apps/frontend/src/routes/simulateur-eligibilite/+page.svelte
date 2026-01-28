@@ -3,8 +3,7 @@
 
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Hero from '$components/pages/simulateur-eligibilite/Hero.svelte';
-  import Chatbot from '$components/pages/simulateur-eligibilite/Chatbot.svelte';
-  import Simulator from '$components/pages/simulateur-eligibilite/Simulator.svelte';
+  import EligibilityTresholds from '$components/common/EligibilityTresholds.svelte';
   import PageCta from '$components/common/PageCta.svelte';
 
   const { data }: PageProps = $props();
@@ -19,7 +18,6 @@
 
 <GradientBackgroundWrapper>
   <Hero />
-  <Chatbot landbotConfigUrl={data.landbotConfigUrl} />
-  <Simulator />
+  <EligibilityTresholds />
   <PageCta />
 </GradientBackgroundWrapper>
