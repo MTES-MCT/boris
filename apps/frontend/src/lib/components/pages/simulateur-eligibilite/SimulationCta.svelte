@@ -26,7 +26,7 @@
         ICI].
       </p>
       <a
-        href="/simulateur-eligibilite"
+        href="/simulateur-eligibilite/steps"
         class="fr-btn fr-btn--lg">
         Je lance ma simulation
       </a>

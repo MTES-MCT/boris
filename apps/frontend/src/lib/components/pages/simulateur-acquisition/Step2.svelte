@@ -4,16 +4,18 @@
   import type { FormFieldError } from '$lib/utils/definitions';
   import { formatFormErrors } from '$lib/utils/helpers';
 
-  import Form from '$components/pages/simulateur-acquisition/Form.svelte';
+  import Form from '$components/common/Simulator/Form.svelte';
   import Input from '$components/common/Input.svelte';
   import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
   import Action from '$components/pages/simulateur-acquisition/Action.svelte';
-  import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
-  import Description from '$components/pages/simulateur-acquisition/Description.svelte';
+  import Wrapper from '$components/common/Simulator/Wrapper.svelte';
+  import Description from '$components/common/Simulator/Description.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
   let {
+    currentStep,
+    steps,
     ownContribution,
     nextStep,
     previousStep,
@@ -55,7 +57,12 @@
 </script>
 
 <Wrapper>
-  <Description>
+  <Description
+    title="Simulateur d'acquisition"
+    stepTitle={`${currentStep.step}. ${currentStep.title}`}
+    nextStepTitle={nextStep?.title}
+    currentStep={currentStep.step}
+    stepCount={steps.length}>
     <p>
       Renseignez le montant de votre apport personnel. Cette somme vous
       permettra de financer une partie du coût de votre projet et de réduire le
