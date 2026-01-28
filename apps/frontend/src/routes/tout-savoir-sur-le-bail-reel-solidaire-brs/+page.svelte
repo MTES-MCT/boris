@@ -328,7 +328,7 @@
         plafonds de ressources ci-dessous :
       </p>
       <a
-        href="https://drive.google.com/file/d/1mJBo1cj9-idRRmewzR3-cKn87JZ76-A7/view?usp=sharing"
+        href="/revenu-fiscal-de-reference.png"
         target="_blank"
         rel="noopener noreferrer"
         class="fr-link fr-text--sm">
