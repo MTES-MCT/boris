@@ -42,7 +42,7 @@
       class="fr-link fr-link--icon-right"
       target="_blank"
       rel="noopener">
-      Où Trouver mon revenus fiscal de référence
+      Où trouver mon revenus fiscal de référence
     </a>
   </p>
 
