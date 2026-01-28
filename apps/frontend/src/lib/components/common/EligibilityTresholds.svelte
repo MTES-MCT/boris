@@ -38,11 +38,11 @@
   </p>
   <p>
     <a
-      href="https://drive.google.com/file/d/1mJBo1cj9-idRRmewzR3-cKn87JZ76-A7/view?usp=sharing"
+      href="/revenu-fiscal-de-reference.png"
       class="fr-link fr-link--icon-right"
       target="_blank"
       rel="noopener">
-      Où trouver mon revenus fiscal de référence
+      Où trouver mon revenu fiscal de référence
     </a>
   </p>
 
