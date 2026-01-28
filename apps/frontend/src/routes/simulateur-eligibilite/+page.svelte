@@ -5,6 +5,7 @@
   import Hero from '$components/pages/simulateur-eligibilite/Hero.svelte';
   import EligibilityTresholds from '$components/common/EligibilityTresholds.svelte';
   import PageCta from '$components/common/PageCta.svelte';
+  import SimulationCta from '$components/pages/simulateur-eligibilite/SimulationCta.svelte';
 
   const { data }: PageProps = $props();
 </script>
@@ -18,6 +19,7 @@
 
 <GradientBackgroundWrapper>
   <Hero />
+  <SimulationCta />
   <EligibilityTresholds />
   <PageCta />
 </GradientBackgroundWrapper>
