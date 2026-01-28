@@ -33,10 +33,4 @@
     Ce site est hébergé en France par l'entreprise Scalingo, domiciliée au 15
     avenue du Rhin 67000 Strasbourg.
   </p>
-
-  <ContentPageSubtitle title="Chatbot" />
-  <p>
-    Landbot Hello Umi S.L Av. Josep Tarradellas, 20, Floor 6, CP 08029B
-    Barcelona Spain
-  </p>
 </Section>
