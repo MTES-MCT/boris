@@ -24,7 +24,7 @@
     "generate-address-datagouv-types": "openapi-typescript https://data.geopf.fr/geocodage/openapi.yaml --output src/lib/utils/generated-address-datagouv-types.ts"
   },
   "dependencies": {
-    "@sentry/sveltekit": "^8.42.0"
+    "@sentry/sveltekit": "^10.29.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
