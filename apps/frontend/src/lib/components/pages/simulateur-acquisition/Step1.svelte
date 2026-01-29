@@ -16,12 +16,12 @@
   } from '$lib/utils/helpers';
 
   import Input from '$components/common/Input.svelte';
-  import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
+  import Actions from '$components/common/Simulator/Actions.svelte';
   import Form from '$components/common/Simulator/Form.svelte';
   import Autocomplete from '$components/common/Autocomplete.svelte';
   import Radio from '$components/common/Radio.svelte';
   import RadioFieldset from '$components/common/RadioFieldset.svelte';
-  import Action from '$components/pages/simulateur-acquisition/Action.svelte';
+  import Action from '$components/common/Simulator/Action.svelte';
   import Wrapper from '$components/common/Simulator/Wrapper.svelte';
   import Description from '$components/common/Simulator/Description.svelte';
 
