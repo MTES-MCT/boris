@@ -9,7 +9,7 @@
 </script>
 
 <div
-  id="simulateur-acquisition"
+  data-testid="simulator-wrapper"
   class="lg:flex lg:justify-center lg:items-stretch">
   {@render children()}
 </div>

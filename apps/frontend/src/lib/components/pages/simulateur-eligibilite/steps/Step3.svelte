@@ -7,15 +7,9 @@
 
   import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
 
-  const { currentStep, steps, nextStep, loading, goToNextStep } = $derived(
+  const { currentStep, steps, previousStep, goToPreviousStep } = $derived(
     eligibilitySimulatorManager,
   );
-
-  const handleSubmit = (e: SubmitEvent) => {
-    e.preventDefault();
-
-    goToNextStep();
-  };
 </script>
 
 <Wrapper>
@@ -24,19 +18,19 @@
     stepTitle={`${currentStep.step}. ${currentStep.title}`}
     currentStep={currentStep.step}
     stepCount={steps.length}>
-    <p>Step 1 description</p>
+    <p>Step 3 description</p>
   </Description>
-  <Form onSubmit={handleSubmit}>
-    <p>Step 1 content</p>
+  <Form
+    onSubmit={() => {
+      console.log('submit');
+    }}>
+    <p>Step 3 content</p>
 
-    {#if nextStep}
-      <Actions justifyEnd>
-        <Action
-          direction="next"
-          label={nextStep.title}
-          type="submit"
-          {loading} />
-      </Actions>
-    {/if}
+    <Actions>
+      <Action
+        direction="previous"
+        label={previousStep?.title as string}
+        onClick={goToPreviousStep} />
+    </Actions>
   </Form>
 </Wrapper>

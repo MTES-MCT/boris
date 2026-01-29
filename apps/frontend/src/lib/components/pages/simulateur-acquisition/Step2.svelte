@@ -6,8 +6,8 @@
 
   import Form from '$components/common/Simulator/Form.svelte';
   import Input from '$components/common/Input.svelte';
-  import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
-  import Action from '$components/pages/simulateur-acquisition/Action.svelte';
+  import Actions from '$components/common/Simulator/Actions.svelte';
+  import Action from '$components/common/Simulator/Action.svelte';
   import Wrapper from '$components/common/Simulator/Wrapper.svelte';
   import Description from '$components/common/Simulator/Description.svelte';
 
