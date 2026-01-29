@@ -90,7 +90,7 @@
       acquisitionSimulatorManager.pretLisse = new PretLisse(
         totalCost,
         brsZone as Zone,
-        ownContribution as number,
+        ownContribution || 0,
         interestRate as number,
         loanDuration as number,
         inHousePeopleAmount as number,
