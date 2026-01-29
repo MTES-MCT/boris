@@ -45,17 +45,6 @@
 <Header />
 
 <main id="main">
-  <Notice
-    type="info"
-    content="Aidez-nous à améliorer BoRiS"
-    hasDescription
-    desc="L'équipe BoRiS recherche des volontaires pour participer à des tests utilisateurs par téléphone d'une durée de 30 minutes. Ces sessions nous permettront d'améliorer l'expérience du site pour les dizaines de milliers de visiteurs qui cherchent à se loger en Bail Réel Solidaire. Si vous souhaitez nous aider, nous vous invitons à cliquer sur le lien ci-dessous."
-    hasLink
-    linkHref="https://tally.so/r/ZjoJLB"
-    linkLabel="Répondre au questionnaire"
-    linkTitle="Répondre au questionnaire"
-    blank
-    dismissible />
   {@render children()}
 </main>
 
