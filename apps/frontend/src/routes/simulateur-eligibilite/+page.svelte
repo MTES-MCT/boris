@@ -1,6 +1,4 @@
 <script lang="ts">
-  import type { PageProps } from './$types';
-
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Hero from '$components/pages/simulateur-eligibilite/Hero.svelte';
   import SimulationCta from '$components/pages/simulateur-eligibilite/SimulationCta.svelte';

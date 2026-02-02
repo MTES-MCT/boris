@@ -1,5 +1,4 @@
 import type { EligibilityData, MapBounds } from '$lib/utils/definitions';
-import { formatEuro } from './formatters';
 
 export const eligibilityData: EligibilityData[] = [
   {

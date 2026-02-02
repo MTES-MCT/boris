@@ -1,5 +1,5 @@
 <script>
-  import Step1 from '$components/pages/simulateur-eligibilite/steps/Step1.svelte';
+  import EligibilityDefinition from '$components/pages/simulateur-eligibilite/steps/EligibilityDefinition/EligibilityDefinition.svelte';
   import Step2 from '$components/pages/simulateur-eligibilite/steps/Step2.svelte';
   import Step3 from '$components/pages/simulateur-eligibilite/steps/Step3.svelte';
 
@@ -16,7 +16,7 @@
 </svelte:head>
 
 {#if currentStep.step === 1}
-  <Step1 />
+  <EligibilityDefinition />
 {:else if currentStep.step === 2}
   <Step2 />
 {:else if currentStep.step === 3}

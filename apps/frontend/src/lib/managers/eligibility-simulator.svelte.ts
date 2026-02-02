@@ -37,6 +37,9 @@ class EligibilitySimulator {
   });
   public loading: boolean = $state(false);
 
+  public householdSize: number | undefined = $state(0);
+  public hasDisability: boolean | undefined = $state(undefined);
+
   public goToPreviousStep = () => {
     if (this.previousStep) {
       this.currentStep = this.previousStep;
