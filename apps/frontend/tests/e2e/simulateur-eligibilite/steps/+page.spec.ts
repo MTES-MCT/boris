@@ -17,25 +17,44 @@ test.describe('navigation', () => {
     expect(h1).toHaveText("Simulateur d'éligibilité");
   });
 
-  test('simulator completion', async ({ page }) => {
+  test('Flow with 1 person in household', async ({ page }) => {
     const simulatorWrapper = page.getByTestId('simulator-wrapper');
+    const submitButton = simulatorWrapper.getByRole('button', {
+      name: /Étape suivante/i,
+    });
+    expect(submitButton).toBeVisible();
 
-    // Step 1
-    let stepTitle = simulatorWrapper.getByRole('heading', { level: 2 });
+    const stepTitle = simulatorWrapper.getByRole('heading', { level: 2 });
     expect(stepTitle).toHaveText('1. Définir mon éligibilité Étape 1 sur 3');
-    let nextStepButton = simulatorWrapper.getByRole('button', {
-      name: /Étape suivante/i,
-    });
-    await nextStepButton.click();
 
-    stepTitle = simulatorWrapper.getByRole('heading', { level: 2 });
-    expect(stepTitle).toHaveText("2. Mon résultat d'éligibilité Étape 2 sur 3");
-    nextStepButton = simulatorWrapper.getByRole('button', {
-      name: /Étape suivante/i,
+    const selectHouseholdSize = simulatorWrapper.getByRole('combobox', {
+      name: 'Combien de personnes composent votre foyer ?',
     });
-    await nextStepButton.click();
+    expect(selectHouseholdSize).toBeVisible();
 
-    stepTitle = simulatorWrapper.getByRole('heading', { level: 2 });
-    expect(stepTitle).toHaveText('3. Ma recherche Étape 3 sur 3');
+    // Submit without selecting a household size
+    await submitButton.click();
+    const householdSizeErrorMessage = simulatorWrapper.getByTestId(
+      'select-household-size-error-message',
+    );
+    expect(householdSizeErrorMessage).toBeVisible();
+
+    // Selecting a household size
+    await selectHouseholdSize.selectOption('1');
+    const selectHasDisability = simulatorWrapper.getByRole('combobox', {
+      name: 'Êtes-vous en situation de handicap ?',
+    });
+    expect(selectHasDisability).toBeVisible();
+
+    // Submit without selecting hasDisability
+    await submitButton.click();
+    const hasDisabilityErrorMessage = simulatorWrapper.getByTestId(
+      'select-has-disability-error-message',
+    );
+    expect(hasDisabilityErrorMessage).toBeVisible();
+
+    // Selecting hasDisability
+    await selectHasDisability.selectOption('true');
+    await submitButton.click();
   });
 });

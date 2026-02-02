@@ -23,7 +23,6 @@
   import Consent from '$components/common/Consent.svelte';
   import { blockSearchEngineIndexing } from '$lib/utils/helpers';
   import { page } from '$app/state';
-  import Notice from '$components/common/Notice.svelte';
 
   type Props = { children: Snippet };
   const { children }: Props = $props();
