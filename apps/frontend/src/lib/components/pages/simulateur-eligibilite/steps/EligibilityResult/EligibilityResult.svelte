@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Notice from '$components/common/Notice.svelte';
   import Description from '$components/common/Simulator/Description.svelte';
   import Wrapper from '$components/common/Simulator/Wrapper.svelte';
 

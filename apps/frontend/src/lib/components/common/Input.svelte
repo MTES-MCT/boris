@@ -20,11 +20,13 @@
       | 'text'
       | 'url'
       | 'range';
+    currency?: boolean;
     value?: string | number;
     label?: string;
     hint?: string;
     labelTooltip?: string;
     required?: boolean;
+    skipHTML5Required?: boolean;
     icon?: string;
     role?: AriaRole;
     min?: number;
@@ -35,21 +37,24 @@
     autocomplete?: FullAutoFill;
     forceNoMarginBottom?: boolean;
     error?: string;
+    errorDataTestId?: string;
     disabled?: boolean;
     onChange?: (event: Event) => void;
     onKeydown?: (event: KeyboardEvent) => void;
     onBlur?: (event: Event) => void;
   };
 
-  const {
+  let {
     id = nanoid(10),
     placeholder = '',
     type = 'text',
+    currency = false,
     value,
     label = '',
     hint,
     labelTooltip = '',
     required = false,
+    skipHTML5Required = false,
     icon = '',
     role = '',
     ariaAttributes,
@@ -59,6 +64,7 @@
     step,
     forceNoMarginBottom = false,
     error,
+    errorDataTestId = 'input-error-message',
     disabled,
     onChange,
     onKeydown,
@@ -77,14 +83,10 @@
       class="fr-label"
       for={id}>
       <div class="inline-flex items-end gap-1">
-        <b>{label} {required ? '*' : ''}</b>
-        {#if labelTooltip}
-          <Tooltip>
-            <div class="fr-p-2w">
-              {@html labelTooltip}
-            </div>
-          </Tooltip>
-        {/if}
+        <span>
+          {label}
+          {required ? '*' : ''}
+        </span>
       </div>
       {#if hint}
         <span class="fr-hint-text">{hint}</span>
@@ -111,7 +113,7 @@
     {placeholder}
     {type}
     {value}
-    {required}
+    required={required && !skipHTML5Required}
     {disabled}
     {id}
     {role}
@@ -123,7 +125,20 @@
     {min}
     {max}
     {step}
-    oninput={onChange}
+    oninput={(e) => {
+      // console.log((e.target as HTMLInputElement).value);
+      if (currency) {
+        let { value } = e.target as HTMLInputElement;
+        const lastCharacter = value[value.length - 1];
+
+        if (lastCharacter !== ' ' && isNaN(Number(lastCharacter))) {
+          value = value.substring(0, value.length - 1);
+          (e.target as HTMLInputElement).value = value;
+        }
+      }
+
+      onChange?.(e);
+    }}
     onkeydown={onKeydown}
     onblur={onBlur} />
   <div
@@ -133,6 +148,7 @@
     {#if error}
       <p
         class="fr-message fr-message--error"
+        data-testid={errorDataTestId}
         id={`${id}-message-error`}>
         {error}
       </p>

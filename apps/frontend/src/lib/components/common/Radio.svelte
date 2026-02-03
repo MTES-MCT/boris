@@ -38,7 +38,7 @@
       for={id}>
       {label}
       {#if hint}
-        <span class="fr-hint-text">Hello</span>
+        <span class="fr-hint-text">{hint}</span>
       {/if}
     </label>
   </div>

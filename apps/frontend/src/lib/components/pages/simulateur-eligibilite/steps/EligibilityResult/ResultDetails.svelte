@@ -4,8 +4,14 @@
   import Actions from '$components/common/Simulator/Actions.svelte';
   import Action from '$components/common/Simulator/Action.svelte';
 
-  const { nextPhase, goToNextPhase, previousStep, goToPreviousPhase, loading } =
-    $derived(eligibilitySimulatorManager);
+  const {
+    currentPhase,
+    nextPhase,
+    goToNextPhase,
+    previousStep,
+    goToPreviousPhase,
+    loading,
+  } = $derived(eligibilitySimulatorManager);
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
@@ -17,7 +23,7 @@
 <Form onSubmit={handleSubmit}>
   <fieldset class="fr-fieldset">
     <div class="fr-fieldset__element">
-      <h3 class="fr-h4">Détails du résultat</h3>
+      <h3 class="fr-h4">{currentPhase?.title as string}</h3>
     </div>
   </fieldset>
 
