@@ -4,9 +4,13 @@
   import Wrapper from '$components/common/Simulator/Wrapper.svelte';
 
   import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
-  import HouseholdComposition from './HouseholdComposition.svelte';
+  import FiscalRevenues from '$components/pages/simulateur-eligibilite/steps/EligibilityDefinition/FiscalRevenues.svelte';
+  import HouseholdComposition from '$components/pages/simulateur-eligibilite/steps/EligibilityDefinition/HouseholdComposition.svelte';
+  import PropertySituation from '$components/pages/simulateur-eligibilite/steps/EligibilityDefinition/PropertySituation.svelte';
 
-  const { currentStep, steps } = $derived(eligibilitySimulatorManager);
+  const { currentStep, steps, currentPhase } = $derived(
+    eligibilitySimulatorManager,
+  );
 </script>
 
 <Wrapper>
@@ -35,5 +39,11 @@
     </Notice>
   </Description>
 
-  <HouseholdComposition />
+  {#if currentPhase.phase === 1}
+    <HouseholdComposition />
+  {:else if currentPhase.phase === 2}
+    <FiscalRevenues />
+  {:else if currentPhase.phase === 3}
+    <PropertySituation />
+  {/if}
 </Wrapper>
