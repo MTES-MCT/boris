@@ -11,9 +11,8 @@
   import { formatFormErrors } from '$lib/utils/helpers';
   import Input from '$components/common/Input.svelte';
 
-  const { householdSize, hasDisability, loading } = $derived(
-    eligibilitySimulatorManager,
-  );
+  const { householdSize, hasDisability, nextPhase, goToNextPhase, loading } =
+    $derived(eligibilitySimulatorManager);
 
   let errors: FormFieldError = $state({});
   let selectedHouseholdSize: number | undefined = $derived.by(() => {
@@ -33,6 +32,16 @@
       return householdSize;
     }
   });
+
+  let singlePersonInHousehold: boolean = $derived(selectedHouseholdSize === 1);
+  let twoToSixPersonsInHousehold: boolean = $derived(
+    selectedHouseholdSize !== undefined &&
+      selectedHouseholdSize >= 2 &&
+      selectedHouseholdSize <= 6,
+  );
+  let moreThanSixPersonsInHousehold: boolean = $derived(
+    selectedHouseholdSize === -1,
+  );
 
   let FormData = z
     .object({
@@ -73,25 +82,26 @@
     e.preventDefault();
 
     // TODO: Define type here with DTOs (same as in step1 from acquisition simulator)
-    const payload = {
-      selectedHouseholdSize,
-      inputHouseholdSize,
-      hasDisability,
-    };
+    // const payload = {
+    //   selectedHouseholdSize,
+    //   inputHouseholdSize,
+    //   hasDisability,
+    // };
 
-    try {
-      FormData.parse(payload);
-      errors = {};
-    } catch (e) {
-      errors = formatFormErrors((e as ZodError).issues);
-    }
+    // try {
+    //   FormData.parse(payload);
+    //   errors = {};
+    goToNextPhase();
+    // } catch (e) {
+    //   errors = formatFormErrors((e as ZodError).issues);
+    // }
   };
 </script>
 
 <Form onSubmit={handleSubmit}>
   <fieldset class="fr-fieldset">
     <div class="fr-fieldset__element">
-      <h3>Composition de mon foyer</h3>
+      <h3 class="fr-h4">Composition de mon foyer</h3>
     </div>
 
     <div class="fr-fieldset__element fr-mb-4w">
@@ -149,8 +159,7 @@
         errorDataTestId="select-household-size-error-message" />
     </div>
 
-    <!-- Flow 1 person in household -->
-    {#if selectedHouseholdSize === 1}
+    {#if singlePersonInHousehold}
       <div class="fr-fieldset__element fr-mb-4w">
         <Select
           label="Êtes-vous en situation de handicap ?"
@@ -184,9 +193,9 @@
           error={errors.hasDisability}
           errorDataTestId="select-has-disability-error-message" />
       </div>
-    {/if}
-
-    {#if selectedHouseholdSize === -1}
+    {:else if twoToSixPersonsInHousehold}
+      <p>2 to 6 persons in household</p>
+    {:else if moreThanSixPersonsInHousehold}
       <div class="fr-fieldset__element">
         <Input
           value={inputHouseholdSize}
@@ -213,7 +222,7 @@
   <Actions justifyEnd>
     <Action
       direction="next"
-      label="Revenu fiscal"
+      label={nextPhase?.title as string}
       type="submit"
       {loading} />
   </Actions>
