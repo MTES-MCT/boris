@@ -4,7 +4,7 @@
   import Actions from '$components/common/Simulator/Actions.svelte';
   import Action from '$components/common/Simulator/Action.svelte';
 
-  const { previousStep, goToPreviousPhase, loading } = $derived(
+  const { currentPhase, previousStep, goToPreviousPhase, loading } = $derived(
     eligibilitySimulatorManager,
   );
 
@@ -16,7 +16,7 @@
 <Form onSubmit={handleSubmit}>
   <fieldset class="fr-fieldset">
     <div class="fr-fieldset__element">
-      <h3 class="fr-h4">Contenu de la synthèse</h3>
+      <h3 class="fr-h4">{currentPhase?.title as string}</h3>
     </div>
   </fieldset>
 

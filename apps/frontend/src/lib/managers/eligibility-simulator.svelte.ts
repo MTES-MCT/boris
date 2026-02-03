@@ -1,79 +1,19 @@
 import { browser } from '$app/environment';
+import {
+  steps,
+  type Phase,
+  type Step,
+} from '$routes/simulateur-eligibilite/steps/steps';
 
-type Phase = {
-  title: string;
-  phase: number;
-};
-
-type Step = {
-  title: string;
-  step: number;
-  phases: Phase[];
-};
+export type PropertySituation =
+  | 'LOCATAIRE_SOCIAL'
+  | 'LOCATAIRE_PRIVE'
+  | 'PROPRIETAIRE'
+  | 'HEBERGE'
+  | 'AUTRE';
 
 class EligibilitySimulator {
-  public steps: Step[] = [
-    {
-      title: 'Définir mon éligibilité',
-      step: 1,
-      phases: [
-        {
-          title: 'Composition de mon foyer',
-          phase: 1,
-        },
-        {
-          title: 'Revenus fiscaux',
-          phase: 2,
-        },
-        {
-          title: 'Situation immobilière',
-          phase: 3,
-        },
-      ],
-    },
-    {
-      title: "Mon résultat d'éligibilité",
-      step: 2,
-      phases: [
-        {
-          title: 'Détail du resultat',
-          phase: 1,
-        },
-        {
-          title: 'Informations personnelles',
-          phase: 2,
-        },
-      ],
-    },
-    {
-      title: 'Ma recherche',
-      step: 3,
-      phases: [
-        {
-          title: 'Informations sur le logement',
-          phase: 1,
-        },
-        {
-          title: 'Informations financières',
-          phase: 2,
-        },
-        {
-          title: 'Informations additionnelles',
-          phase: 3,
-        },
-      ],
-    },
-    {
-      title: 'Synthése',
-      step: 4,
-      phases: [
-        {
-          title: 'Synthèse',
-          phase: 1,
-        },
-      ],
-    },
-  ];
+  public steps: Step[] = steps;
 
   public currentStep: Step = $state(this.steps[0]);
   public previousStep: Step | null = $derived.by(() => {
@@ -112,8 +52,11 @@ class EligibilitySimulator {
   });
 
   public loading: boolean = $state(false);
-  public householdSize: number | undefined = $state(0);
+  public householdSize: number | undefined = $state(undefined);
   public hasDisability: boolean | undefined = $state(undefined);
+  public propertySituation: PropertySituation | undefined = $state(undefined);
+
+  public formattedTaxableIncome: string | undefined = $state(undefined);
 
   public goToPreviousPhase = () => {
     if (this.previousPhase) {
@@ -124,6 +67,8 @@ class EligibilitySimulator {
       if (shouldGoToPreviousStep && this.previousStep) {
         this.currentStep = this.previousStep;
       }
+
+      this.resetScroll();
     }
   };
 
@@ -137,6 +82,8 @@ class EligibilitySimulator {
       if (shouldGoToNextStep && this.nextStep) {
         this.currentStep = this.nextStep;
       }
+
+      this.resetScroll();
     }
   };
 

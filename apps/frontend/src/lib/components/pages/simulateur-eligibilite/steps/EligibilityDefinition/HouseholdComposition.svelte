@@ -1,18 +1,24 @@
 <script lang="ts">
   import z, { ZodError } from 'zod';
+  import type { FormFieldError } from '$lib/utils/definitions';
+  import { formatFormErrors } from '$lib/utils/helpers';
 
   import Select from '$components/common/Select.svelte';
-
-  import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
-  import type { FormFieldError } from '$lib/utils/definitions';
   import Form from '$components/common/Simulator/Form.svelte';
   import Actions from '$components/common/Simulator/Actions.svelte';
   import Action from '$components/common/Simulator/Action.svelte';
-  import { formatFormErrors } from '$lib/utils/helpers';
   import Input from '$components/common/Input.svelte';
 
-  const { householdSize, hasDisability, nextPhase, goToNextPhase, loading } =
-    $derived(eligibilitySimulatorManager);
+  import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
+
+  const {
+    currentPhase,
+    householdSize,
+    hasDisability,
+    nextPhase,
+    goToNextPhase,
+    loading,
+  } = $derived(eligibilitySimulatorManager);
 
   let errors: FormFieldError = $state({});
   let selectedHouseholdSize: number | undefined = $derived.by(() => {
@@ -82,26 +88,32 @@
     e.preventDefault();
 
     // TODO: Define type here with DTOs (same as in step1 from acquisition simulator)
-    // const payload = {
-    //   selectedHouseholdSize,
-    //   inputHouseholdSize,
-    //   hasDisability,
-    // };
+    const payload = {
+      selectedHouseholdSize,
+      inputHouseholdSize,
+      hasDisability,
+    };
 
-    // try {
-    //   FormData.parse(payload);
-    //   errors = {};
-    goToNextPhase();
-    // } catch (e) {
-    //   errors = formatFormErrors((e as ZodError).issues);
-    // }
+    try {
+      FormData.parse(payload);
+      errors = {};
+
+      eligibilitySimulatorManager.householdSize = Math.max(
+        selectedHouseholdSize || 0,
+        inputHouseholdSize || 0,
+      );
+
+      goToNextPhase();
+    } catch (e) {
+      errors = formatFormErrors((e as ZodError).issues);
+    }
   };
 </script>
 
 <Form onSubmit={handleSubmit}>
   <fieldset class="fr-fieldset">
     <div class="fr-fieldset__element">
-      <h3 class="fr-h4">Composition de mon foyer</h3>
+      <h3 class="fr-h4">{currentPhase?.title as string}</h3>
     </div>
 
     <div class="fr-fieldset__element fr-mb-4w">
@@ -184,9 +196,6 @@
           onChange={(e) => {
             const { value } = e.target as HTMLSelectElement;
 
-            console.log(value);
-            console.log(typeof value);
-
             eligibilitySimulatorManager.hasDisability =
               value === '' ? undefined : value === 'true' ? true : false;
           }}
@@ -201,6 +210,7 @@
           value={inputHouseholdSize}
           label="Pouvez vous indiquer précisément le nombre de personnes qui composent votre foyer ?"
           required
+          skipHTML5Required
           type="number"
           id="input-household-size"
           step={1}

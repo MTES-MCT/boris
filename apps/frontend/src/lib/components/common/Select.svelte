@@ -31,7 +31,7 @@
   class="fr-select-group"
   class:fr-select-group--error={error}>
   <label
-    class="fr-label fr-text--bold"
+    class="fr-label"
     for={id}>
     {label}
     {required ? '*' : ''}

@@ -5,6 +5,7 @@
   import Action from '$components/common/Simulator/Action.svelte';
 
   const {
+    currentPhase,
     nextPhase,
     goToNextPhase,
     previousPhase,
@@ -22,7 +23,7 @@
 <Form onSubmit={handleSubmit}>
   <fieldset class="fr-fieldset">
     <div class="fr-fieldset__element">
-      <h3 class="fr-h4">Informations financières</h3>
+      <h3 class="fr-h4">{currentPhase?.title as string}</h3>
     </div>
   </fieldset>
 

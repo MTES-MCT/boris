@@ -1,10 +1,8 @@
 <script lang="ts">
-  import Notice from '$components/common/Notice.svelte';
   import Description from '$components/common/Simulator/Description.svelte';
   import Wrapper from '$components/common/Simulator/Wrapper.svelte';
 
   import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
-  import ResultDetail from '$components/pages/simulateur-eligibilite/steps/EligibilityResult/ResultDetails.svelte';
   import HousingInformations from '$components/pages/simulateur-eligibilite/steps/SearchInformations/HousingInformations.svelte';
   import FinancialInformations from '$components/pages/simulateur-eligibilite/steps/SearchInformations/FinancialInformations.svelte';
   import AdditionalInformations from './AdditionalInformations.svelte';
