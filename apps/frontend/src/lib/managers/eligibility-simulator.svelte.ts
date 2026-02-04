@@ -55,8 +55,10 @@ class EligibilitySimulator {
   public householdSize: number | undefined = $state(undefined);
   public hasDisability: boolean | undefined = $state(undefined);
   public propertySituation: PropertySituation | undefined = $state(undefined);
-
+  public dependantsAmount: number | undefined = $state(undefined);
   public formattedTaxableIncome: string | undefined = $state(undefined);
+  public birthday: string | undefined = $state(undefined);
+  public coBuyerBirthday: string | undefined = $state(undefined);
 
   public goToPreviousPhase = () => {
     if (this.previousPhase) {
