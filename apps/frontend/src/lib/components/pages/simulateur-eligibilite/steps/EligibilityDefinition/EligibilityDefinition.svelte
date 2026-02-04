@@ -7,6 +7,7 @@
   import FiscalRevenues from '$components/pages/simulateur-eligibilite/steps/EligibilityDefinition/FiscalRevenues.svelte';
   import HouseholdComposition from '$components/pages/simulateur-eligibilite/steps/EligibilityDefinition/HouseholdComposition.svelte';
   import PropertySituation from '$components/pages/simulateur-eligibilite/steps/EligibilityDefinition/PropertySituation.svelte';
+  import { formatYearMinusN } from '$lib/utils/formatters';
 
   const { currentStep, steps, currentPhase } = $derived(
     eligibilitySimulatorManager,
@@ -35,7 +36,7 @@
 
     <Notice
       type="info"
-      content="Pensez à vous vous munir de votre avis d'imposition des années (n-1 et n-2)/(n-2 et n-3) pour pouvoir renseigner vos revenus fiscaux.">
+      content={`Pensez à vous vous munir de votre avis d'imposition de l'année ${formatYearMinusN(1)}, concernant vos revenus de l'année ${formatYearMinusN(2)}, afin de renseigner vos revenus fiscaux.`}>
     </Notice>
   </Description>
 

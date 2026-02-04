@@ -70,7 +70,7 @@
     <div class="fr-fieldset__element fr-mb-4w">
       <Input
         value={formattedTaxableIncome}
-        label={`Quel est le revenu fiscal de référence présent sur votre avis d'imposition l'année ${formatYearMinusN(1)}, concernant les revenus de l'année ${formatYearMinusN(2)}) ?`}
+        label={`Quel est le revenu fiscal de référence présent sur votre avis d'imposition l'année ${formatYearMinusN(1)}, concernant vos revenus de l'année ${formatYearMinusN(2)}) ?`}
         type="text"
         currency
         icon="euro-line"

@@ -11,6 +11,8 @@
 
   import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
 
+  import { questions } from '$lib/utils/eligibility-simulator';
+
   const {
     currentPhase,
     householdSize,
@@ -85,6 +87,16 @@
           }),
         });
       }
+    } else if (moreThanSixPersonsInHousehold) {
+      schema = schema.extend({
+        inputHouseholdSize: z
+          .number({
+            message: 'Veuillez saisir un chiffre supérieur à .',
+          })
+          .refine((value) => {
+            return value > 6;
+          }, 'Veuillez saisir un chiffre supérieur à 6.'),
+      });
     }
 
     return schema;
@@ -96,6 +108,7 @@
     // TODO: Define type here with DTOs (same as in step1 from acquisition simulator)
     const payload = {
       selectedHouseholdSize,
+      inputHouseholdSize,
       dependantsAmount,
       hasDisability,
       birthday,
@@ -117,8 +130,6 @@
       errors = formatFormErrors((e as ZodError).issues);
     }
   };
-
-  $inspect(birthday, coBuyerBirthday);
 </script>
 
 <Form onSubmit={handleSubmit}>
@@ -129,81 +140,32 @@
 
     <div class="fr-fieldset__element fr-mb-4w">
       <Select
-        label="Combien de personnes composent votre foyer ?"
+        label={questions.selectedHouseholdSize.label}
         required
-        options={[
-          {
-            value: undefined,
-            label: 'Veuillez sélectionner une option',
-            selected: selectedHouseholdSize === undefined,
-          },
-          {
-            value: 1,
-            label: '1 personne',
-            selected: selectedHouseholdSize === 1,
-          },
-          {
-            value: 2,
-            label: '2 personnes',
-            selected: selectedHouseholdSize === 2,
-          },
-          {
-            value: 3,
-            label: '3 personnes',
-            selected: selectedHouseholdSize === 3,
-          },
-          {
-            value: 4,
-            label: '4 personnes',
-            selected: selectedHouseholdSize === 4,
-          },
-          {
-            value: 5,
-            label: '5 personnes',
-            selected: selectedHouseholdSize === 5,
-          },
-          {
-            value: 6,
-            label: '6 personnes',
-            selected: selectedHouseholdSize === 6,
-          },
-          {
-            value: -1,
-            label: 'Plus de 6 personnes',
-            selected: selectedHouseholdSize === -1,
-          },
-        ]}
+        options={questions.selectedHouseholdSize.options.map((question) => ({
+          ...question,
+          selected: selectedHouseholdSize === question.value,
+        }))}
         onChange={(e) => {
           const { value } = e.target as HTMLSelectElement;
 
           selectedHouseholdSize = value ? Number(value) : undefined;
         }}
         error={errors.selectedHouseholdSize}
-        errorDataTestId="select-household-size-error-message" />
+        errorDataTestId={questions.selectedHouseholdSize.dataTestId} />
     </div>
 
     {#if singlePersonInHousehold}
       <div class="fr-fieldset__element fr-mb-4w">
         <Select
-          label="Êtes-vous en situation de handicap ?"
+          label={questions.singlePersonInHouseholdHasDisability.label}
           required
-          options={[
-            {
-              value: undefined,
-              label: 'Veuillez sélectionner une option',
-              selected: hasDisability === undefined,
-            },
-            {
-              value: true,
-              label: 'Oui',
-              selected: hasDisability === true,
-            },
-            {
-              value: false,
-              label: 'Non',
-              selected: hasDisability === false,
-            },
-          ]}
+          options={questions.singlePersonInHouseholdHasDisability.options.map(
+            (question) => ({
+              ...question,
+              selected: hasDisability === question.value,
+            }),
+          )}
           onChange={(e) => {
             const { value } = e.target as HTMLSelectElement;
 
@@ -211,60 +173,18 @@
               value === '' ? undefined : value === 'true' ? true : false;
           }}
           error={errors.hasDisability}
-          errorDataTestId="select-has-disability-error-message" />
+          errorDataTestId={questions.singlePersonInHouseholdHasDisability
+            .dataTestId} />
       </div>
     {:else if twoToSixPersonsInHousehold}
       <div class="fr-fieldset__element fr-mb-4w">
         <Select
-          label="Combien avez-vous de personnes à charge (enfants compris) ?"
+          label={questions.dependantsAmount.label}
           required
-          options={[
-            {
-              value: undefined,
-              label: 'Veuillez sélectionner une option',
-              selected: dependantsAmount === undefined,
-            },
-            {
-              value: 0,
-              label: '0 personne',
-              selected: dependantsAmount === 0,
-            },
-            {
-              value: 1,
-              label: '1 personne',
-              selected: dependantsAmount === 1,
-            },
-            {
-              value: 2,
-              label: '2 personnes',
-              selected: dependantsAmount === 2,
-            },
-            {
-              value: 3,
-              label: '3 personnes',
-              selected: dependantsAmount === 3,
-            },
-            {
-              value: 4,
-              label: '4 personnes',
-              selected: dependantsAmount === 4,
-            },
-            {
-              value: 5,
-              label: '5 personnes',
-              selected: dependantsAmount === 5,
-            },
-            {
-              value: 6,
-              label: '6 personnes',
-              selected: dependantsAmount === 6,
-            },
-            {
-              value: -1,
-              label: 'Plus de 6 personnes',
-              selected: dependantsAmount === -1,
-            },
-          ]}
+          options={questions.dependantsAmount.options.map((question) => ({
+            ...question,
+            selected: dependantsAmount === question.value,
+          }))}
           onChange={(e) => {
             const { value } = e.target as HTMLSelectElement;
 
@@ -273,29 +193,18 @@
               : undefined;
           }}
           error={errors.dependantsAmount}
-          errorDataTestId="select-dependants-amount-error-message" />
+          errorDataTestId={questions.dependantsAmount.dataTestId} />
       </div>
       <div class="fr-fieldset__element fr-mb-4w">
         <Select
-          label="Dans votre foyer (vous y compris), est-ce qu'une ou plusieurs personnes sont en situation de handicap ?"
+          label={questions.twoToSixPersonsInHouseholdHasDisability.label}
           required
-          options={[
-            {
-              value: undefined,
-              label: 'Veuillez sélectionner une option',
-              selected: hasDisability === undefined,
-            },
-            {
-              value: true,
-              label: 'Oui',
-              selected: hasDisability === true,
-            },
-            {
-              value: false,
-              label: 'Non',
-              selected: hasDisability === false,
-            },
-          ]}
+          options={questions.twoToSixPersonsInHouseholdHasDisability.options.map(
+            (question) => ({
+              ...question,
+              selected: hasDisability === question.value,
+            }),
+          )}
           onChange={(e) => {
             const { value } = e.target as HTMLSelectElement;
 
@@ -303,13 +212,14 @@
               value === '' ? undefined : value === 'true' ? true : false;
           }}
           error={errors.hasDisability}
-          errorDataTestId="select-has-disability-error-message" />
+          errorDataTestId={questions.twoToSixPersonsInHouseholdHasDisability
+            .dataTestId} />
       </div>
       {#if selectedHouseholdSize === 2 && dependantsAmount === 0}
         <div class="fr-fieldset__element fr-mb-4w">
           <Input
             value={birthday}
-            label="Quelle est votre date de naissance ?"
+            label={questions.birthday.label}
             required
             skipHTML5Required
             type="date"
@@ -320,12 +230,12 @@
               eligibilitySimulatorManager.birthday = value;
             }}
             error={errors.birthday}
-            errorDataTestId="input-birthday-error-message" />
+            errorDataTestId={questions.birthday.dataTestId} />
         </div>
         <div class="fr-fieldset__element fr-mb-4w">
           <Input
             value={coBuyerBirthday}
-            label="Quelle est la date de naissance de votre co-acquéreur·euse ?"
+            label={questions.coBuyerBirthday.label}
             required
             skipHTML5Required
             type="date"
@@ -337,14 +247,14 @@
               eligibilitySimulatorManager.coBuyerBirthday = value;
             }}
             error={errors.coBuyerBirthday}
-            errorDataTestId="input-co-buyer-birthday-error-message" />
+            errorDataTestId={questions.coBuyerBirthday.dataTestId} />
         </div>
       {/if}
     {:else if moreThanSixPersonsInHousehold}
       <div class="fr-fieldset__element">
         <Input
           value={inputHouseholdSize}
-          label="Pouvez vous indiquer précisément le nombre de personnes qui composent votre foyer ?"
+          label={questions.inputHouseholdSize.label}
           required
           skipHTML5Required
           type="number"
@@ -360,7 +270,8 @@
               inputHouseholdSize = Number(numericValue);
             }
           }}
-          error={errors.inputHouseholdSize} />
+          error={errors.inputHouseholdSize}
+          errorDataTestId={questions.inputHouseholdSize.dataTestId} />
       </div>
     {/if}
   </fieldset>

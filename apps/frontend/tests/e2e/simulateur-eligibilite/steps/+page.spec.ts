@@ -1,67 +1,130 @@
-import { steps } from '$routes/simulateur-eligibilite/steps/steps';
+import { questions } from '$lib/utils/eligibility-simulator';
+import { steps } from '$lib/utils/eligibility-simulator';
 import { test, expect, type Locator } from '@playwright/test';
 
 test.describe('navigation', () => {
   let simulatorWrapper: Locator;
+  let stepTitle: Locator;
+  let phaseTitle: Locator;
   let submitButton: Locator;
   let householdSizeSelect: Locator;
   let householdSizeErrorMessage: Locator;
-  let hasDisabilitySelect: Locator;
-  let hasDisabilityErrorMessage: Locator;
+  let singlePersonInHouseholdHasDisabilitySelect: Locator;
+  let singlePersonInHouseholdHasDisabilityErrorMessage: Locator;
+  let twoToSixPersonsInHouseholdHasDisabilitySelect: Locator;
+  let twoToSixPersonsInHouseholdHasDisabilityErrorMessage: Locator;
   let dependantsAmountSelect: Locator;
   let dependantsAmountErrorMessage: Locator;
   let birthdayInput: Locator;
   let birthdayErrorMessage: Locator;
   let coBuyerBirthdayInput: Locator;
   let coBuyerBirthdayErrorMessage: Locator;
+  let inputHouseholdSizeInput: Locator;
+  let inputHouseholdSizeErrorMessage: Locator;
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/simulateur-eligibilite/steps');
 
     simulatorWrapper = page.getByTestId('simulator-wrapper');
+    stepTitle = simulatorWrapper.getByRole('heading', { level: 2 });
+    phaseTitle = simulatorWrapper.getByRole('heading', { level: 3 });
     submitButton = simulatorWrapper.getByRole('button', {
       name: /Étape suivante/i,
     });
-
     householdSizeSelect = simulatorWrapper.getByRole('combobox', {
-      name: 'Combien de personnes composent votre foyer ?',
+      name: questions.selectedHouseholdSize.label,
     });
     householdSizeErrorMessage = simulatorWrapper.getByTestId(
-      'select-household-size-error-message',
+      questions.selectedHouseholdSize.dataTestId,
     );
-
-    hasDisabilitySelect = simulatorWrapper.getByRole('combobox', {
-      name: /situation de handicap/i,
-    });
-    hasDisabilityErrorMessage = simulatorWrapper.getByTestId(
-      'select-has-disability-error-message',
+    singlePersonInHouseholdHasDisabilitySelect = simulatorWrapper.getByRole(
+      'combobox',
+      {
+        name: questions.singlePersonInHouseholdHasDisability.label,
+      },
     );
-
+    singlePersonInHouseholdHasDisabilityErrorMessage =
+      simulatorWrapper.getByTestId(
+        questions.singlePersonInHouseholdHasDisability.dataTestId,
+      );
+    twoToSixPersonsInHouseholdHasDisabilitySelect = simulatorWrapper.getByRole(
+      'combobox',
+      {
+        name: questions.twoToSixPersonsInHouseholdHasDisability.label,
+      },
+    );
+    twoToSixPersonsInHouseholdHasDisabilityErrorMessage =
+      simulatorWrapper.getByTestId(
+        questions.twoToSixPersonsInHouseholdHasDisability.dataTestId,
+      );
     dependantsAmountSelect = simulatorWrapper.getByRole('combobox', {
-      name: 'Combien avez-vous de personnes à charge (enfants compris) ?',
+      name: questions.dependantsAmount.label,
     });
     dependantsAmountErrorMessage = simulatorWrapper.getByTestId(
-      'select-dependants-amount-error-message',
+      questions.dependantsAmount.dataTestId,
     );
-
     birthdayInput = simulatorWrapper.getByRole('textbox', {
-      name: 'Quelle est votre date de naissance ?',
+      name: questions.birthday.label,
     });
     birthdayErrorMessage = simulatorWrapper.getByTestId(
-      'input-birthday-error-message',
+      questions.birthday.dataTestId,
     );
-
     coBuyerBirthdayInput = simulatorWrapper.getByRole('textbox', {
-      name: 'Quelle est la date de naissance de votre co-acquéreur·euse ?',
+      name: questions.coBuyerBirthday.label,
     });
     coBuyerBirthdayErrorMessage = simulatorWrapper.getByTestId(
-      'input-co-buyer-birthday-error-message',
+      questions.coBuyerBirthday.dataTestId,
+    );
+    inputHouseholdSizeInput = simulatorWrapper.getByRole('spinbutton', {
+      name: questions.inputHouseholdSize.label,
+    });
+    inputHouseholdSizeErrorMessage = simulatorWrapper.getByTestId(
+      questions.inputHouseholdSize.dataTestId,
     );
   });
 
+  const scenarii = {
+    singlePersonInHousehold: {
+      performHouseholdComposition: async () => {
+        await householdSizeSelect.selectOption('1');
+        await singlePersonInHouseholdHasDisabilitySelect.selectOption('false');
+        await submitButton.click();
+      },
+    },
+    twoPersonsInHouseholdWithoutDependants: {
+      performHouseholdComposition: async () => {
+        await householdSizeSelect.selectOption('2');
+        await dependantsAmountSelect.selectOption('0');
+        await twoToSixPersonsInHouseholdHasDisabilitySelect.selectOption(
+          'false',
+        );
+        await birthdayInput.fill('2000-01-01');
+        await coBuyerBirthdayInput.fill('2000-01-01');
+        await submitButton.click();
+      },
+    },
+    fourPersonsInHouseholdWithDependants: {
+      performHouseholdComposition: async () => {
+        await householdSizeSelect.selectOption('4');
+        await dependantsAmountSelect.selectOption('2');
+        await twoToSixPersonsInHouseholdHasDisabilitySelect.selectOption(
+          'false',
+        );
+        await submitButton.click();
+      },
+    },
+    moreThanSixPersonsInHousehold: {
+      performHouseholdComposition: async () => {
+        await householdSizeSelect.selectOption('-1');
+        await inputHouseholdSizeInput.fill('7');
+        await submitButton.click();
+      },
+    },
+  };
+
   test.describe('Définir mon éligibilité', () => {
     test.describe('Composition de mon foyer', () => {
-      test.describe('Form validation', () => {
+      test.describe('Form errors', () => {
         test('Submit without householdSize', async () => {
           await submitButton.click();
           expect(householdSizeErrorMessage).toBeVisible();
@@ -69,18 +132,22 @@ test.describe('navigation', () => {
 
         test('1 person in household, submit without hasDisability', async () => {
           await householdSizeSelect.selectOption('1');
-          expect(hasDisabilitySelect).toBeVisible();
+          expect(singlePersonInHouseholdHasDisabilitySelect).toBeVisible();
           await submitButton.click();
-          expect(hasDisabilityErrorMessage).toBeVisible();
+          expect(
+            singlePersonInHouseholdHasDisabilityErrorMessage,
+          ).toBeVisible();
         });
 
         test('2 persons in household, submit without dependantsAmount & hasDisability', async () => {
           await householdSizeSelect.selectOption('2');
           expect(dependantsAmountSelect).toBeVisible();
-          expect(hasDisabilitySelect).toBeVisible();
+          expect(twoToSixPersonsInHouseholdHasDisabilitySelect).toBeVisible();
           await submitButton.click();
           expect(dependantsAmountErrorMessage).toBeVisible();
-          expect(hasDisabilityErrorMessage).toBeVisible();
+          expect(
+            twoToSixPersonsInHouseholdHasDisabilityErrorMessage,
+          ).toBeVisible();
         });
 
         test('2 persons in household, submit without hasDisability & birthday & coBuyerBirthday', async () => {
@@ -89,9 +156,11 @@ test.describe('navigation', () => {
           await dependantsAmountSelect.selectOption('0');
           expect(birthdayInput).toBeVisible();
           expect(coBuyerBirthdayInput).toBeVisible();
-          expect(hasDisabilitySelect).toBeVisible();
+          expect(twoToSixPersonsInHouseholdHasDisabilitySelect).toBeVisible();
           await submitButton.click();
-          expect(hasDisabilityErrorMessage).toBeVisible();
+          expect(
+            twoToSixPersonsInHouseholdHasDisabilityErrorMessage,
+          ).toBeVisible();
           expect(birthdayErrorMessage).toBeVisible();
           expect(coBuyerBirthdayErrorMessage).toBeVisible();
         });
@@ -99,224 +168,61 @@ test.describe('navigation', () => {
         test('4 persons in household, submit without dependantsAmount & hasDisability', async () => {
           await householdSizeSelect.selectOption('2');
           expect(dependantsAmountSelect).toBeVisible();
-          expect(hasDisabilitySelect).toBeVisible();
+          expect(twoToSixPersonsInHouseholdHasDisabilitySelect).toBeVisible();
           await submitButton.click();
           expect(dependantsAmountErrorMessage).toBeVisible();
-          expect(hasDisabilityErrorMessage).toBeVisible();
+          expect(
+            twoToSixPersonsInHouseholdHasDisabilityErrorMessage,
+          ).toBeVisible();
+        });
+
+        test('More than 6 persons in selectedHousholdSize, submit without inputHouseholdSize', async () => {
+          await householdSizeSelect.selectOption('-1');
+          expect(inputHouseholdSizeInput).toBeVisible();
+          await submitButton.click();
+          expect(inputHouseholdSizeErrorMessage).toBeVisible();
+        });
+
+        test('More than 6 persons in selectedHousholdSize, submit with invalid inputHouseholdSize', async () => {
+          await householdSizeSelect.selectOption('-1');
+          expect(inputHouseholdSizeInput).toBeVisible();
+          await inputHouseholdSizeInput.fill('5');
+          await submitButton.click();
+          expect(inputHouseholdSizeErrorMessage).toBeVisible();
+        });
+      });
+
+      test.describe('Form success', () => {
+        test.beforeEach(async () => {
+          expect(stepTitle).toHaveText(
+            `1. ${steps[0].title} Étape 1 sur ${steps.length}`,
+          );
+          expect(phaseTitle).toHaveText(`${steps[0].phases[0].title}`);
+        });
+
+        test.afterEach(async () => {
+          expect(stepTitle).toHaveText(
+            `1. ${steps[0].title} Étape 1 sur ${steps.length}`,
+          );
+          expect(phaseTitle).toHaveText(`${steps[0].phases[1].title}`);
+        });
+
+        test('1 person in household', async () => {
+          await scenarii.singlePersonInHousehold.performHouseholdComposition();
+        });
+
+        test('2 persons in household without dependants', async () => {
+          await scenarii.twoPersonsInHouseholdWithoutDependants.performHouseholdComposition();
+        });
+
+        test('4 persons in household with dependants', async () => {
+          await scenarii.fourPersonsInHouseholdWithDependants.performHouseholdComposition();
+        });
+
+        test('More than 6 persons in household', async () => {
+          await scenarii.moreThanSixPersonsInHousehold.performHouseholdComposition();
         });
       });
     });
   });
-
-  // test('Flow with 1 person in household', async ({ page }) => {
-  //   const simulatorWrapper = page.getByTestId('simulator-wrapper');
-  //   const submitButton = simulatorWrapper.getByRole('button', {
-  //     name: /Étape suivante/i,
-  //   });
-
-  //   /**
-  //    * -------------
-  //    * Phase "Composition de mon foyer"
-  //    * -------------
-  //    */
-  //   const stepTitle = simulatorWrapper.getByRole('heading', { level: 2 });
-  //   expect(stepTitle).toHaveText(
-  //     `1. ${steps[0].title} Étape 1 sur ${steps.length}`,
-  //   );
-
-  //   const phaseTitle = simulatorWrapper.getByRole('heading', { level: 3 });
-  //   expect(phaseTitle).toHaveText(`${steps[0].phases[0].title}`);
-
-  //   expect(submitButton).toHaveText(
-  //     `Étape suivante ${steps[0].phases[1].title}`,
-  //   );
-
-  //   const selectHouseholdSize = simulatorWrapper.getByRole('combobox', {
-  //     name: 'Combien de personnes composent votre foyer ?',
-  //   });
-  //   expect(selectHouseholdSize).toBeVisible();
-
-  //   // Submit without selecting a household size
-  //   await submitButton.click();
-  //   const householdSizeErrorMessage = simulatorWrapper.getByTestId(
-  //     'select-household-size-error-message',
-  //   );
-  //   expect(householdSizeErrorMessage).toBeVisible();
-
-  //   // Selecting a household size
-  //   await selectHouseholdSize.selectOption('1');
-  //   const selectHasDisability = simulatorWrapper.getByRole('combobox', {
-  //     name: 'Êtes-vous en situation de handicap ?',
-  //   });
-  //   expect(selectHasDisability).toBeVisible();
-
-  //   // Submit without selecting hasDisability
-  //   await submitButton.click();
-  //   const hasDisabilityErrorMessage = simulatorWrapper.getByTestId(
-  //     'select-has-disability-error-message',
-  //   );
-  //   expect(hasDisabilityErrorMessage).toBeVisible();
-
-  //   // Selecting hasDisability
-  //   await selectHasDisability.selectOption('true');
-  //   await submitButton.click();
-
-  //   /**
-  //    * -------------
-  //    * Phase "Revenus fiscaux"
-  //    * -------------
-  //    */
-  //   expect(stepTitle).toHaveText(
-  //     `1. ${steps[0].title} Étape 1 sur ${steps.length}`,
-  //   );
-  //   expect(phaseTitle).toHaveText(`${steps[0].phases[1].title}`);
-  //   expect(submitButton).toHaveText(
-  //     `Étape suivante ${steps[0].phases[2].title}`,
-  //   );
-  //   await submitButton.click();
-
-  //   // Submit without providing a formatted taxable income
-  //   const formattedTaxableErrorMessage = simulatorWrapper.getByTestId(
-  //     'formatted-taxable-income-error-message',
-  //   );
-  //   expect(formattedTaxableErrorMessage).toBeVisible();
-
-  //   // Providing invalid value for formatted taxable income
-  //   const formattedTaxableIncomeInput = simulatorWrapper.getByRole('textbox', {
-  //     name: /revenu fiscal de référence/i,
-  //   });
-  //   await formattedTaxableIncomeInput.fill('sss');
-  //   await submitButton.click();
-  //   expect(formattedTaxableErrorMessage).toBeVisible();
-
-  //   // Providing valid value for formatted taxable income
-  //   await formattedTaxableIncomeInput.fill('25000');
-  //   await submitButton.click();
-
-  //   /**
-  //    * -------------
-  //    * Phase "Situation immobilière"
-  //    * -------------
-  //    */
-  //   expect(stepTitle).toHaveText(
-  //     `1. ${steps[0].title} Étape 1 sur ${steps.length}`,
-  //   );
-  //   expect(phaseTitle).toHaveText(`${steps[0].phases[2].title}`);
-  //   expect(submitButton).toHaveText(`Étape suivante ${steps[1].title}`);
-
-  //   const selectPropertySituation = simulatorWrapper.getByRole('combobox', {
-  //     name: 'Quelle est votre situation immobilière ?',
-  //   });
-  //   expect(selectPropertySituation).toBeVisible();
-
-  //   // Submit without selecting a property situation
-  //   await submitButton.click();
-  //   const propertySituationErrorMessage = simulatorWrapper.getByTestId(
-  //     'select-property-situation-error-message',
-  //   );
-  //   expect(propertySituationErrorMessage).toBeVisible();
-
-  //   // Selecting a property situation
-  //   await selectPropertySituation.selectOption('LOCATAIRE_SOCIAL');
-  //   await submitButton.click();
-
-  //   /**
-  //    * -------------
-  //    * Phase "Détail du resultat"
-  //    */
-  //   expect(stepTitle).toHaveText(
-  //     `2. ${steps[1].title} Étape 2 sur ${steps.length}`,
-  //   );
-  //   expect(phaseTitle).toHaveText(`${steps[1].phases[0].title}`);
-  //   expect(submitButton).toHaveText(
-  //     `Étape suivante ${steps[1].phases[1].title}`,
-  //   );
-  // });
-
-  // test('Flow with between 2 and 6 persons in household', async ({ page }) => {
-  //   const simulatorWrapper = page.getByTestId('simulator-wrapper');
-  //   const submitButton = simulatorWrapper.getByRole('button', {
-  //     name: /Étape suivante/i,
-  //   });
-
-  //   /**
-  //    * -------------
-  //    * Phase "Composition de mon foyer"
-  //    * -------------
-  //    */
-  //   const stepTitle = simulatorWrapper.getByRole('heading', { level: 2 });
-  //   expect(stepTitle).toHaveText(
-  //     `1. ${steps[0].title} Étape 1 sur ${steps.length}`,
-  //   );
-
-  //   const phaseTitle = simulatorWrapper.getByRole('heading', { level: 3 });
-  //   expect(phaseTitle).toHaveText(`${steps[0].phases[0].title}`);
-
-  //   expect(submitButton).toHaveText(
-  //     `Étape suivante ${steps[0].phases[1].title}`,
-  //   );
-
-  //   const selectHouseholdSize = simulatorWrapper.getByRole('combobox', {
-  //     name: 'Combien de personnes composent votre foyer ?',
-  //   });
-  //   expect(selectHouseholdSize).toBeVisible();
-
-  //   // Submit without selecting a household size
-  //   await submitButton.click();
-  //   const householdSizeErrorMessage = simulatorWrapper.getByTestId(
-  //     'select-household-size-error-message',
-  //   );
-  //   expect(householdSizeErrorMessage).toBeVisible();
-
-  //   // Selecting a household size
-  //   await selectHouseholdSize.selectOption('2');
-
-  //   const selectDependantsAmount = simulatorWrapper.getByRole('combobox', {
-  //     name: 'Combien avez-vous de personnes à charge (enfants compris) ?',
-  //   });
-  //   expect(selectDependantsAmount).toBeVisible();
-
-  //   const selectHasDisability = simulatorWrapper.getByRole('combobox', {
-  //     name: "Dans votre foyer (vous y compris), est-ce qu'une ou plusieurs personnes sont en situation de handicap ?",
-  //   });
-  //   expect(selectDependantsAmount).toBeVisible();
-
-  //   await submitButton.click();
-
-  //   // Submit without selecting a dependants amount and hasDisability
-  //   const dependantsAmountErrorMessage = simulatorWrapper.getByTestId(
-  //     'select-dependants-amount-error-message',
-  //   );
-  //   expect(dependantsAmountErrorMessage).toBeVisible();
-  //   const hasDisabilityErrorMessage = simulatorWrapper.getByTestId(
-  //     'select-has-disability-error-message',
-  //   );
-  //   expect(hasDisabilityErrorMessage).toBeVisible();
-
-  //   // Selecting a dependants amount
-  //   await selectDependantsAmount.selectOption('0');
-
-  //   // Selecting hasDisability
-  //   await selectHasDisability.selectOption('false');
-
-  //   await submitButton.click();
-
-  //   /**
-  //    * -------------
-  //    * Phase "Revenus fiscaux"
-  //    * -------------
-  //    */
-  //   expect(stepTitle).toHaveText(
-  //     `1. ${steps[0].title} Étape 1 sur ${steps.length}`,
-  //   );
-  //   expect(phaseTitle).toHaveText(`${steps[0].phases[1].title}`);
-  //   expect(submitButton).toHaveText(
-  //     `Étape suivante ${steps[0].phases[2].title}`,
-  //   );
-
-  //   // await submitButton.click();
-  // });
 });
-
-// test errors messages
-// test flow screen by screen
