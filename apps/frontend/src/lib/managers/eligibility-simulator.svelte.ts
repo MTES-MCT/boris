@@ -1,9 +1,5 @@
 import { browser } from '$app/environment';
-import {
-  steps,
-  type Phase,
-  type Step,
-} from '$routes/simulateur-eligibilite/steps/steps';
+import { steps, type Phase, type Step } from '$lib/utils/eligibility-simulator';
 
 export type PropertySituation =
   | 'LOCATAIRE_SOCIAL'
