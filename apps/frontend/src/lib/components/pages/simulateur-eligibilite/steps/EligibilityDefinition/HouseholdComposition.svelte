@@ -15,6 +15,9 @@
     currentPhase,
     householdSize,
     hasDisability,
+    dependantsAmount,
+    birthday,
+    coBuyerBirthday,
     nextPhase,
     goToNextPhase,
     loading,
@@ -49,40 +52,43 @@
     selectedHouseholdSize === -1,
   );
 
-  let FormData = z
-    .object({
+  let formData = $derived.by(() => {
+    let schema = z.object({
       selectedHouseholdSize: z.number({
         message: 'Veuillez sélectionner une option',
       }),
-      inputHouseholdSize: z
-        .number()
-        .min(7, 'Le nombre de personnes doit être supérieur ou égal à 7.')
-        .optional(),
-      hasDisability: z.boolean().optional(),
-    })
-    .superRefine(
-      ({ selectedHouseholdSize, inputHouseholdSize, hasDisability }, ctx) => {
-        if (selectedHouseholdSize === 1 && hasDisability === undefined) {
-          ctx.addIssue({
-            code: 'custom',
+    });
 
-            message: 'Veuillez sélectionner une option',
-            path: ['hasDisability'],
-          });
-        }
+    if (singlePersonInHousehold) {
+      schema = schema.extend({
+        hasDisability: z.boolean({
+          message: 'Veuillez sélectionner une option',
+        }),
+      });
+    } else if (twoToSixPersonsInHousehold) {
+      schema = schema.extend({
+        dependantsAmount: z.number({
+          message: 'Veuillez sélectionner une option',
+        }),
+        hasDisability: z.boolean({
+          message: 'Veuillez sélectionner une option',
+        }),
+      });
 
-        if (
-          selectedHouseholdSize === -1 &&
-          (inputHouseholdSize === undefined || inputHouseholdSize < 7)
-        ) {
-          ctx.addIssue({
-            code: 'custom',
-            message: 'Le nombre de personnes doit être supérieur ou égal à 7.',
-            path: ['inputHouseholdSize'],
-          });
-        }
-      },
-    );
+      if (selectedHouseholdSize === 2 && dependantsAmount === 0) {
+        schema = schema.extend({
+          birthday: z.iso.date({
+            message: 'Veuillez saisir une date valide',
+          }),
+          coBuyerBirthday: z.iso.date({
+            message: 'Veuillez saisir une date valide',
+          }),
+        });
+      }
+    }
+
+    return schema;
+  });
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
@@ -90,12 +96,14 @@
     // TODO: Define type here with DTOs (same as in step1 from acquisition simulator)
     const payload = {
       selectedHouseholdSize,
-      inputHouseholdSize,
+      dependantsAmount,
       hasDisability,
+      birthday,
+      coBuyerBirthday,
     };
 
     try {
-      FormData.parse(payload);
+      formData.parse(payload);
       errors = {};
 
       eligibilitySimulatorManager.householdSize = Math.max(
@@ -105,9 +113,12 @@
 
       goToNextPhase();
     } catch (e) {
+      console.log(e);
       errors = formatFormErrors((e as ZodError).issues);
     }
   };
+
+  $inspect(birthday, coBuyerBirthday);
 </script>
 
 <Form onSubmit={handleSubmit}>
@@ -203,7 +214,132 @@
           errorDataTestId="select-has-disability-error-message" />
       </div>
     {:else if twoToSixPersonsInHousehold}
-      <p>2 to 6 persons in household</p>
+      <div class="fr-fieldset__element fr-mb-4w">
+        <Select
+          label="Combien avez-vous de personnes à charge (enfants compris) ?"
+          required
+          options={[
+            {
+              value: undefined,
+              label: 'Veuillez sélectionner une option',
+              selected: dependantsAmount === undefined,
+            },
+            {
+              value: 0,
+              label: '0 personne',
+              selected: dependantsAmount === 0,
+            },
+            {
+              value: 1,
+              label: '1 personne',
+              selected: dependantsAmount === 1,
+            },
+            {
+              value: 2,
+              label: '2 personnes',
+              selected: dependantsAmount === 2,
+            },
+            {
+              value: 3,
+              label: '3 personnes',
+              selected: dependantsAmount === 3,
+            },
+            {
+              value: 4,
+              label: '4 personnes',
+              selected: dependantsAmount === 4,
+            },
+            {
+              value: 5,
+              label: '5 personnes',
+              selected: dependantsAmount === 5,
+            },
+            {
+              value: 6,
+              label: '6 personnes',
+              selected: dependantsAmount === 6,
+            },
+            {
+              value: -1,
+              label: 'Plus de 6 personnes',
+              selected: dependantsAmount === -1,
+            },
+          ]}
+          onChange={(e) => {
+            const { value } = e.target as HTMLSelectElement;
+
+            eligibilitySimulatorManager.dependantsAmount = value
+              ? Number(value)
+              : undefined;
+          }}
+          error={errors.dependantsAmount}
+          errorDataTestId="select-dependants-amount-error-message" />
+      </div>
+      <div class="fr-fieldset__element fr-mb-4w">
+        <Select
+          label="Dans votre foyer (vous y compris), est-ce qu'une ou plusieurs personnes sont en situation de handicap ?"
+          required
+          options={[
+            {
+              value: undefined,
+              label: 'Veuillez sélectionner une option',
+              selected: hasDisability === undefined,
+            },
+            {
+              value: true,
+              label: 'Oui',
+              selected: hasDisability === true,
+            },
+            {
+              value: false,
+              label: 'Non',
+              selected: hasDisability === false,
+            },
+          ]}
+          onChange={(e) => {
+            const { value } = e.target as HTMLSelectElement;
+
+            eligibilitySimulatorManager.hasDisability =
+              value === '' ? undefined : value === 'true' ? true : false;
+          }}
+          error={errors.hasDisability}
+          errorDataTestId="select-has-disability-error-message" />
+      </div>
+      {#if selectedHouseholdSize === 2 && dependantsAmount === 0}
+        <div class="fr-fieldset__element fr-mb-4w">
+          <Input
+            value={birthday}
+            label="Quelle est votre date de naissance ?"
+            required
+            skipHTML5Required
+            type="date"
+            max={new Date().toLocaleDateString('fr-ca')}
+            onChange={(e) => {
+              const { value } = e.target as HTMLInputElement;
+
+              eligibilitySimulatorManager.birthday = value;
+            }}
+            error={errors.birthday}
+            errorDataTestId="input-birthday-error-message" />
+        </div>
+        <div class="fr-fieldset__element fr-mb-4w">
+          <Input
+            value={coBuyerBirthday}
+            label="Quelle est la date de naissance de votre co-acquéreur·euse ?"
+            required
+            skipHTML5Required
+            type="date"
+            max={new Date().toLocaleDateString('fr-ca')}
+            onChange={(e) => {
+              const { value } = e.target as HTMLInputElement;
+              console.log(value);
+
+              eligibilitySimulatorManager.coBuyerBirthday = value;
+            }}
+            error={errors.coBuyerBirthday}
+            errorDataTestId="input-co-buyer-birthday-error-message" />
+        </div>
+      {/if}
     {:else if moreThanSixPersonsInHousehold}
       <div class="fr-fieldset__element">
         <Input

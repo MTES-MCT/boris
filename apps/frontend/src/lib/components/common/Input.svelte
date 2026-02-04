@@ -29,8 +29,8 @@
     skipHTML5Required?: boolean;
     icon?: string;
     role?: AriaRole;
-    min?: number;
-    max?: number;
+    min?: number | string;
+    max?: number | string;
     step?: number;
     ariaAttributes?: AriaAttributes;
     ariaAutocomplete?: 'none' | 'list' | 'inline' | 'both' | null;
