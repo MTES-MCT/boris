@@ -16,6 +16,10 @@
   const {
     currentPhase,
     householdSize,
+    selectedHouseholdSize,
+    singlePersonInHousehold,
+    twoToSixPersonsInHousehold,
+    moreThanSixPersonsInHousehold,
     hasDisability,
     dependantsAmount,
     birthday,
@@ -26,15 +30,6 @@
   } = $derived(eligibilitySimulatorManager);
 
   let errors: FormFieldError = $state({});
-  let selectedHouseholdSize: number | undefined = $derived.by(() => {
-    if (!householdSize) {
-      return undefined;
-    } else if (householdSize < 7) {
-      return householdSize;
-    } else {
-      return -1;
-    }
-  });
 
   let inputHouseholdSize: number | undefined = $derived.by(() => {
     if (!householdSize || (householdSize && householdSize < 7)) {
@@ -43,16 +38,6 @@
       return householdSize;
     }
   });
-
-  let singlePersonInHousehold: boolean = $derived(selectedHouseholdSize === 1);
-  let twoToSixPersonsInHousehold: boolean = $derived(
-    selectedHouseholdSize !== undefined &&
-      selectedHouseholdSize >= 2 &&
-      selectedHouseholdSize <= 6,
-  );
-  let moreThanSixPersonsInHousehold: boolean = $derived(
-    selectedHouseholdSize === -1,
-  );
 
   let formData = $derived.by(() => {
     let schema = z.object({
@@ -126,7 +111,6 @@
 
       goToNextPhase();
     } catch (e) {
-      console.log(e);
       errors = formatFormErrors((e as ZodError).issues);
     }
   };
@@ -149,10 +133,16 @@
         onChange={(e) => {
           const { value } = e.target as HTMLSelectElement;
 
-          selectedHouseholdSize = value ? Number(value) : undefined;
+          if (value) {
+            delete errors.selectedHouseholdSize;
+          }
+
+          eligibilitySimulatorManager.selectedHouseholdSize = value
+            ? Number(value)
+            : undefined;
         }}
         error={errors.selectedHouseholdSize}
-        errorDataTestId={questions.selectedHouseholdSize.dataTestId} />
+        errorDataTestId={questions.selectedHouseholdSize.errorDataTestId} />
     </div>
 
     {#if singlePersonInHousehold}
@@ -169,12 +159,16 @@
           onChange={(e) => {
             const { value } = e.target as HTMLSelectElement;
 
+            if (value) {
+              delete errors.hasDisability;
+            }
+
             eligibilitySimulatorManager.hasDisability =
               value === '' ? undefined : value === 'true' ? true : false;
           }}
           error={errors.hasDisability}
           errorDataTestId={questions.singlePersonInHouseholdHasDisability
-            .dataTestId} />
+            .errorDataTestId} />
       </div>
     {:else if twoToSixPersonsInHousehold}
       <div class="fr-fieldset__element fr-mb-4w">
@@ -188,12 +182,16 @@
           onChange={(e) => {
             const { value } = e.target as HTMLSelectElement;
 
+            if (value) {
+              delete errors.dependantsAmount;
+            }
+
             eligibilitySimulatorManager.dependantsAmount = value
               ? Number(value)
               : undefined;
           }}
           error={errors.dependantsAmount}
-          errorDataTestId={questions.dependantsAmount.dataTestId} />
+          errorDataTestId={questions.dependantsAmount.errorDataTestId} />
       </div>
       <div class="fr-fieldset__element fr-mb-4w">
         <Select
@@ -208,12 +206,16 @@
           onChange={(e) => {
             const { value } = e.target as HTMLSelectElement;
 
+            if (value) {
+              delete errors.hasDisability;
+            }
+
             eligibilitySimulatorManager.hasDisability =
               value === '' ? undefined : value === 'true' ? true : false;
           }}
           error={errors.hasDisability}
           errorDataTestId={questions.twoToSixPersonsInHouseholdHasDisability
-            .dataTestId} />
+            .errorDataTestId} />
       </div>
       {#if selectedHouseholdSize === 2 && dependantsAmount === 0}
         <div class="fr-fieldset__element fr-mb-4w">
@@ -230,7 +232,7 @@
               eligibilitySimulatorManager.birthday = value;
             }}
             error={errors.birthday}
-            errorDataTestId={questions.birthday.dataTestId} />
+            errorDataTestId={questions.birthday.errorDataTestId} />
         </div>
         <div class="fr-fieldset__element fr-mb-4w">
           <Input
@@ -242,12 +244,11 @@
             max={new Date().toLocaleDateString('fr-ca')}
             onChange={(e) => {
               const { value } = e.target as HTMLInputElement;
-              console.log(value);
 
               eligibilitySimulatorManager.coBuyerBirthday = value;
             }}
             error={errors.coBuyerBirthday}
-            errorDataTestId={questions.coBuyerBirthday.dataTestId} />
+            errorDataTestId={questions.coBuyerBirthday.errorDataTestId} />
         </div>
       {/if}
     {:else if moreThanSixPersonsInHousehold}
@@ -271,7 +272,7 @@
             }
           }}
           error={errors.inputHouseholdSize}
-          errorDataTestId={questions.inputHouseholdSize.dataTestId} />
+          errorDataTestId={questions.inputHouseholdSize.errorDataTestId} />
       </div>
     {/if}
   </fieldset>

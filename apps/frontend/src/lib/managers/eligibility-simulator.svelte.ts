@@ -1,12 +1,12 @@
 import { browser } from '$app/environment';
-import { steps, type Phase, type Step } from '$lib/utils/eligibility-simulator';
 
-export type PropertySituation =
-  | 'LOCATAIRE_SOCIAL'
-  | 'LOCATAIRE_PRIVE'
-  | 'PROPRIETAIRE'
-  | 'HEBERGE'
-  | 'AUTRE';
+import {
+  steps,
+  type DeclarationType,
+  type Phase,
+  type PropertySituation,
+  type Step,
+} from '$lib/utils/eligibility-simulator';
 
 class EligibilitySimulator {
   public steps: Step[] = steps;
@@ -48,13 +48,42 @@ class EligibilitySimulator {
   });
 
   public loading: boolean = $state(false);
+
+  // Household Composition
   public householdSize: number | undefined = $state(undefined);
+  public selectedHouseholdSize: number | undefined = $derived.by(() => {
+    if (!this.householdSize) {
+      return undefined;
+    } else if (this.householdSize < 7) {
+      return this.householdSize;
+    } else {
+      return -1;
+    }
+  });
+  public singlePersonInHousehold: boolean = $derived(
+    this.selectedHouseholdSize === 1,
+  );
+  public twoToSixPersonsInHousehold: boolean = $derived(
+    this.selectedHouseholdSize !== undefined &&
+      this.selectedHouseholdSize >= 2 &&
+      this.selectedHouseholdSize <= 6,
+  );
+  public moreThanSixPersonsInHousehold: boolean = $derived(
+    this.selectedHouseholdSize === -1,
+  );
   public hasDisability: boolean | undefined = $state(undefined);
   public propertySituation: PropertySituation | undefined = $state(undefined);
   public dependantsAmount: number | undefined = $state(undefined);
-  public formattedTaxableIncome: string | undefined = $state(undefined);
   public birthday: string | undefined = $state(undefined);
   public coBuyerBirthday: string | undefined = $state(undefined);
+
+  // Fiscal Revenues
+  public formattedTaxableIncome: string | undefined = $state(undefined);
+  public declarationType: DeclarationType | undefined = $state(undefined);
+  public firstCoBuyerFormattedTaxableIncome: string | undefined =
+    $state(undefined);
+  public secondCoBuyerFormattedTaxableIncome: string | undefined =
+    $state(undefined);
 
   public goToPreviousPhase = () => {
     if (this.previousPhase) {
