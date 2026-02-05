@@ -2,8 +2,8 @@ import {
   questions,
   type DeclarationType,
   type PropertySituation,
-} from '$lib/utils/eligibility-simulator';
-import { steps } from '$lib/utils/eligibility-simulator';
+} from '../../../../src/lib/utils/eligibility-simulator';
+import { steps } from '../../../../src/lib/utils/eligibility-simulator';
 import { test, expect, type Locator } from '@playwright/test';
 
 test.describe('Eligibility simulator', () => {
