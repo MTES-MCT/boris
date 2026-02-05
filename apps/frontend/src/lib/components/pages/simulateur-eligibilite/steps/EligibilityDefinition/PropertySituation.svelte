@@ -5,10 +5,12 @@
   import Actions from '$components/common/Simulator/Actions.svelte';
   import Action from '$components/common/Simulator/Action.svelte';
   import Select from '$components/common/Select.svelte';
-  import eligibilitySimulatorManager, {
-    type PropertySituation,
-  } from '$lib/managers/eligibility-simulator.svelte';
+  import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
   import { formatFormErrors } from '$lib/utils/helpers';
+  import {
+    questions,
+    type PropertySituation,
+  } from '$lib/utils/eligibility-simulator';
 
   const {
     currentPhase,
@@ -48,8 +50,6 @@
       FormData.parse(payload);
       errors = {};
 
-      eligibilitySimulatorManager.propertySituation = propertySituation;
-
       goToNextPhase();
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
@@ -65,48 +65,24 @@
 
     <div class="fr-fieldset__element fr-mb-4w">
       <Select
-        label="Quelle est votre situation immobilière ?"
+        label={questions.propertySituation.label}
         required
-        options={[
-          {
-            value: undefined,
-            label: 'Veuillez sélectionner une option',
-            selected: propertySituation === undefined,
-          },
-          {
-            value: 'LOCATAIRE_SOCIAL',
-            label: "Locataire d'un logement social",
-            selected: propertySituation === 'LOCATAIRE_SOCIAL',
-          },
-          {
-            value: 'LOCATAIRE_PRIVE',
-            label: "Locataire d'un logement privé",
-            selected: propertySituation === 'LOCATAIRE_PRIVE',
-          },
-          {
-            value: 'PROPRIETAIRE',
-            label: "Propriétaire d'un logement",
-            selected: propertySituation === 'PROPRIETAIRE',
-          },
-          {
-            value: 'HEBERGE',
-            label: 'Hébergé-e',
-            selected: propertySituation === 'HEBERGE',
-          },
-          {
-            value: 'AUTRE',
-            label: 'Dans une autre situation immobilière',
-            selected: propertySituation === 'AUTRE',
-          },
-        ]}
+        options={questions.propertySituation.options.map((question) => ({
+          ...question,
+          selected: propertySituation === question.value,
+        }))}
         onChange={(e) => {
           const { value } = e.target as HTMLSelectElement;
 
+          if (value) {
+            delete errors.propertySituation;
+          }
+
           eligibilitySimulatorManager.propertySituation =
-            value as PropertySituation;
+            value === '' ? undefined : (value as PropertySituation);
         }}
         error={errors.propertySituation}
-        errorDataTestId="select-property-situation-error-message" />
+        errorDataTestId={questions.propertySituation.errorDataTestId} />
     </div>
   </fieldset>
 

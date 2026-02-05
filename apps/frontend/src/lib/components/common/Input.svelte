@@ -6,6 +6,7 @@
   import { nanoid } from 'nanoid';
   import type { AriaAttributes, AriaRole, FullAutoFill } from 'svelte/elements';
   import Tooltip from './Tooltip.svelte';
+  import type { boolean } from 'zod';
 
   type Props = {
     id?: string;
@@ -23,6 +24,7 @@
     currency?: boolean;
     value?: string | number;
     label?: string;
+    rawLabel?: boolean;
     hint?: string;
     labelTooltip?: string;
     required?: boolean;
@@ -38,6 +40,7 @@
     forceNoMarginBottom?: boolean;
     error?: string;
     errorDataTestId?: string;
+    dataTestId?: string;
     disabled?: boolean;
     onChange?: (event: Event) => void;
     onKeydown?: (event: KeyboardEvent) => void;
@@ -51,6 +54,7 @@
     currency = false,
     value,
     label = '',
+    rawLabel = false,
     hint,
     labelTooltip = '',
     required = false,
@@ -64,6 +68,7 @@
     step,
     forceNoMarginBottom = false,
     error,
+    dataTestId,
     errorDataTestId = 'input-error-message',
     disabled,
     onChange,
@@ -84,9 +89,20 @@
       for={id}>
       <div class="inline-flex items-end gap-1">
         <span>
-          {label}
+          {#if rawLabel}
+            {@html label}
+          {:else}
+            {label}
+          {/if}
           {required ? '*' : ''}
         </span>
+        {#if labelTooltip}
+          <Tooltip>
+            <div class="fr-p-2w">
+              {@html labelTooltip}
+            </div>
+          </Tooltip>
+        {/if}
       </div>
       {#if hint}
         <span class="fr-hint-text">{hint}</span>
@@ -125,8 +141,8 @@
     {min}
     {max}
     {step}
+    data-testid={dataTestId}
     oninput={(e) => {
-      // console.log((e.target as HTMLInputElement).value);
       if (currency) {
         let { value } = e.target as HTMLInputElement;
         const lastCharacter = value[value.length - 1];

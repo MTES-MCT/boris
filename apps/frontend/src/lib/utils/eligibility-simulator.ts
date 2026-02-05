@@ -1,3 +1,5 @@
+import { formatYearMinusN } from './formatters';
+
 export type Phase = {
   title: string;
   phase: number;
@@ -8,6 +10,18 @@ export type Step = {
   step: number;
   phases: Phase[];
 };
+
+export type PropertySituation =
+  | 'LOCATAIRE_SOCIAL'
+  | 'LOCATAIRE_PRIVE'
+  | 'PROPRIETAIRE'
+  | 'HEBERGE'
+  | 'AUTRE';
+
+export type DeclarationType =
+  | 'SEUL_SOUHAIT_SEUL'
+  | 'COMMUN'
+  | 'SEUL_SOUHAIT_PARTENAIRE';
 
 export const steps: Step[] = [
   {
@@ -75,7 +89,7 @@ export const steps: Step[] = [
 export const questions = {
   selectedHouseholdSize: {
     label: 'Combien de personnes composent votre foyer ?',
-    dataTestId: 'select-household-size-error-message',
+    errorDataTestId: 'select-household-size-error-message',
     options: [
       {
         value: undefined,
@@ -113,7 +127,7 @@ export const questions = {
   },
   singlePersonInHouseholdHasDisability: {
     label: 'Êtes-vous en situation de handicap ?',
-    dataTestId: 'select-has-disability-error-message',
+    errorDataTestId: 'select-has-disability-error-message',
     options: [
       {
         value: undefined,
@@ -131,7 +145,7 @@ export const questions = {
   },
   dependantsAmount: {
     label: 'Combien avez-vous de personnes à charge (enfants compris) ?',
-    dataTestId: 'select-dependants-amount-error-message',
+    errorDataTestId: 'select-dependants-amount-error-message',
     options: [
       {
         value: undefined,
@@ -174,7 +188,7 @@ export const questions = {
   twoToSixPersonsInHouseholdHasDisability: {
     label:
       "Dans votre foyer (vous y compris), est-ce qu'une ou plusieurs personnes sont en situation de handicap ?",
-    dataTestId: 'select-has-disability-error-message',
+    errorDataTestId: 'select-has-disability-error-message',
     options: [
       {
         value: undefined,
@@ -192,15 +206,89 @@ export const questions = {
   },
   birthday: {
     label: 'Quelle est votre date de naissance ?',
-    dataTestId: 'input-birthday-error-message',
+    errorDataTestId: 'input-birthday-error-message',
   },
   coBuyerBirthday: {
     label: 'Quelle est la date de naissance de votre co-acquéreur·euse ?',
-    dataTestId: 'input-co-buyer-birthday-error-message',
+    errorDataTestId: 'input-co-buyer-birthday-error-message',
   },
   inputHouseholdSize: {
     label:
       'Pouvez vous indiquer précisément le nombre de personnes qui composent votre foyer ?',
-    dataTestId: 'input-household-size-error-message',
+    errorDataTestId: 'input-household-size-error-message',
+  },
+  formattedTaxableIncome: {
+    label: `Quel est le revenu fiscal de référence présent sur votre avis d'imposition de l'année ${formatYearMinusN(1)}, concernant vos revenus de l'année ${formatYearMinusN(2)} ?`,
+    labelInCommon: `Quel est le revenu fiscal de référence présent sur <span class="fr-text--bold">votre avis d'imposition commun</span> de l'année ${formatYearMinusN(1)}, concernant vos revenus de l'année ${formatYearMinusN(2)} ?`,
+    inputDataTestId: 'input-formatted-taxable-income',
+    errorDataTestId: 'input-formatted-taxable-income-error-message',
+    errorMessage: 'Veuillez saisir un chiffre supérieur à 0.',
+  },
+  firstCoBuyerFormattedTaxableIncome: {
+    label: `Quel est le revenu fiscal de référence présent sur votre avis d'imposition de l'année ${formatYearMinusN(1)}, concernant vos revenus de l'année ${formatYearMinusN(2)} ?`,
+    inputDataTestId: 'input-first-co-buyer-formatted-taxable-income',
+    errorDataTestId:
+      'input-first-co-buyer-formatted-taxable-income-error-message',
+    errorMessage: 'Veuillez saisir un chiffre supérieur à 0.',
+  },
+  secondCoBuyerFormattedTaxableIncome: {
+    label: `Quel est le revenu fiscal de référence <span class="fr-text--bold">votre co-acquéreur·euse</span> présent sur votre avis d'imposition de l'année ${formatYearMinusN(1)}, concernant vos revenus de l'année ${formatYearMinusN(2)} ?`,
+    inputDataTestId: 'input-second-co-buyer-formatted-taxable-income',
+    errorDataTestId:
+      'input-second-co-buyer-formatted-taxable-income-error-message',
+    errorMessage: 'Veuillez saisir un chiffre supérieur à 0.',
+  },
+  declarationType: {
+    label: `En ${formatYearMinusN(1)}, comment avez vous déclaré vos revenus fiscaux ${formatYearMinusN(2)} ?`,
+    errorDataTestId: 'select-declaration-type-error-message',
+    options: [
+      {
+        value: undefined,
+        label: 'Veuillez sélectionner une option',
+      },
+      {
+        value: 'SEUL_SOUHAIT_SEUL',
+        label: 'Seul·e et vous souhaitez acheter seul·e',
+      },
+      {
+        value: 'COMMUN',
+        label: 'En commun',
+      },
+      {
+        value: 'SEUL_SOUHAIT_PARTENAIRE',
+        label: 'Seul·e mais vous souhaitez acheter avec un·e partenaire',
+      },
+    ],
+    errorMessage: 'Veuillez sélectionner une option',
+  },
+  propertySituation: {
+    label: 'Quelle est votre situation immobilière ?',
+    errorDataTestId: 'select-property-situation-error-message',
+    options: [
+      {
+        value: undefined,
+        label: 'Veuillez sélectionner une option',
+      },
+      {
+        value: 'LOCATAIRE_SOCIAL',
+        label: "Locataire d'un logement social",
+      },
+      {
+        value: 'LOCATAIRE_PRIVE',
+        label: "Locataire d'un logement privé",
+      },
+      {
+        value: 'PROPRIETAIRE',
+        label: "Propriétaire d'un logement",
+      },
+      {
+        value: 'HEBERGE',
+        label: 'Hébergé-e',
+      },
+      {
+        value: 'AUTRE',
+        label: 'Dans une autre situation immobilière',
+      },
+    ],
   },
 };
