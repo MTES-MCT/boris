@@ -40,6 +40,15 @@ export const formatEuro = (
   }).format(amount);
 };
 
+export const formatThousands = (amount: string) => {
+  const value = amount.replace(/[^0-9,]/g, '').replace(',', '.');
+
+  return new Intl.NumberFormat('fr-FR', {
+    style: 'decimal',
+    useGrouping: true,
+  }).format(Number(value));
+};
+
 export const formatPublishedAt = (date: string) => {
   const formattedDate = new Intl.DateTimeFormat('fr-FR', {
     dateStyle: 'long',
@@ -57,4 +66,16 @@ export const formatNumber = (
   return new Intl.NumberFormat('fr-FR', {
     maximumFractionDigits,
   }).format(number);
+};
+
+export const formattedThousandsToNumber = (amount: string) => {
+  const value = amount.replace(/[^0-9,]/g, '').replace(',', '.');
+
+  return Number(value);
+};
+
+export const formatYearMinusN = (n: number) => {
+  const currentYear = new Date().getFullYear();
+
+  return currentYear - n;
 };
