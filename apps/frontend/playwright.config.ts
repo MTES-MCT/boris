@@ -18,6 +18,13 @@ const config: PlaywrightTestConfig = {
       },
     },
   ],
+  use: {
+    headless: true,
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+  },
+  retries: 2,
 };
 
 export default config;
