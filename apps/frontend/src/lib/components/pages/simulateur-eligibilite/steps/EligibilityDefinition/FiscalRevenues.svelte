@@ -26,6 +26,7 @@
     declarationType,
     firstCoBuyerFormattedTaxableIncome,
     secondCoBuyerFormattedTaxableIncome,
+    taxableIncome,
     currentPhase,
     nextPhase,
     goToNextPhase,
@@ -153,6 +154,7 @@
               skipHTML5Required
               id="first-co-buyer-taxable-income"
               step={1000}
+              maxlength={7}
               placeholder="Exemple: 25 000€"
               onChange={(e) => {
                 eligibilitySimulatorManager.firstCoBuyerFormattedTaxableIncome =
@@ -176,6 +178,7 @@
               skipHTML5Required
               id="second-co-buyer-taxable-income"
               step={1000}
+              maxlength={7}
               placeholder="Exemple: 26 000€"
               onChange={(e) => {
                 eligibilitySimulatorManager.secondCoBuyerFormattedTaxableIncome =
@@ -221,6 +224,7 @@
       skipHTML5Required
       id="taxable-income"
       step={1000}
+      maxlength={7}
       placeholder="Exemple: 25 000€"
       onChange={(e) => {
         eligibilitySimulatorManager.formattedTaxableIncome = formatThousands(

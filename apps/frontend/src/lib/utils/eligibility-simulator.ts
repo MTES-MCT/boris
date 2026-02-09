@@ -1,4 +1,85 @@
+import type { EligibilityData } from './definitions';
 import { formatYearMinusN } from './formatters';
+import { calculateAge } from './helpers';
+
+export const eligibilityData: EligibilityData[] = [
+  {
+    category: 'Catégorie 1',
+    value: 1,
+    options: ['1 seule personne'],
+    zoneAandAbis: 38844,
+    zoneB1: 38844,
+    zoneB2andC: 33771,
+  },
+  {
+    category: 'Catégorie 2',
+    value: 2,
+    options: [
+      '2 personnes ne comportant aucune personne à charge hors jeunes ménages',
+      '1 personne seule en situation de handicap',
+    ],
+    zoneAandAbis: 58057,
+    zoneB1: 58057,
+    zoneB2andC: 45100,
+  },
+  {
+    category: 'Catégorie 3',
+    value: 3,
+    options: [
+      '3 personnes',
+      '1 personne seule avec 1 personne à charge',
+      'Jeune ménage: 2 personnes dont la somme des âges ne dépasse pas 55 ans',
+      '2 personnes dont au moins 1 est en situation de handicap',
+    ],
+    zoneAandAbis: 76105,
+    zoneB1: 69786,
+    zoneB2andC: 54235,
+  },
+  {
+    category: 'Catégorie 4',
+    value: 4,
+    options: [
+      '4 personnes',
+      '1 personne seule avec 2 personnes à charge',
+      '3 personnes dont au moins 1 est en situation de handicap',
+    ],
+    zoneAandAbis: 90863,
+    zoneB1: 83594,
+    zoneB2andC: 65476,
+  },
+  {
+    category: 'Catégorie 5',
+    value: 5,
+    options: [
+      '5 personnes',
+      '1 personne avec 3 personnes à charge',
+      '4 personnes dont au moins 1 est en situation de handicap',
+    ],
+    zoneAandAbis: 108107,
+    zoneB1: 98956,
+    zoneB2andC: 77023,
+  },
+  {
+    category: 'Catégorie 6',
+    value: 6,
+    options: [
+      '6 personnes',
+      '1 personne seule avec 4 personnes à charge',
+      '5 personnes dont au moins 1 est en situation de handicap',
+    ],
+    zoneAandAbis: 121650,
+    zoneB1: 111359,
+    zoneB2andC: 86805,
+  },
+  {
+    category: 'Personne supplémentaire',
+    value: 7,
+    options: [],
+    zoneAandAbis: 13557,
+    zoneB1: 12408,
+    zoneB2andC: 9683,
+  },
+];
 
 export type Phase = {
   title: string;
@@ -291,4 +372,84 @@ export const questions = {
       },
     ],
   },
+};
+
+export const defineCategory = (
+  householdSize: number,
+  dependantsAmount: number,
+  hasDisability: boolean,
+  birthday?: string,
+  coBuyerBirthday?: string,
+): number => {
+  let category = 1;
+  let ageSum = 56;
+
+  if (birthday && coBuyerBirthday) {
+    ageSum = calculateAge(birthday) + calculateAge(coBuyerBirthday);
+  }
+
+  if (
+    householdSize >= 6 ||
+    (householdSize === 5 && dependantsAmount === 4) ||
+    (householdSize === 5 && hasDisability)
+  ) {
+    category = 6;
+  } else if (
+    householdSize === 5 ||
+    (householdSize === 4 && dependantsAmount === 3) ||
+    (householdSize === 4 && hasDisability)
+  ) {
+    category = 5;
+  } else if (
+    householdSize === 4 ||
+    (householdSize === 3 && dependantsAmount === 2) ||
+    (householdSize === 3 && hasDisability)
+  ) {
+    category = 4;
+  } else if (
+    householdSize === 3 ||
+    (householdSize === 2 && dependantsAmount === 1) ||
+    (householdSize === 2 && ageSum <= 55) ||
+    (householdSize == 2 && hasDisability)
+  ) {
+    category = 3;
+  } else if (
+    (householdSize === 2 && dependantsAmount === 0 && ageSum > 55) || // 2 personnes ne comportant aucune personne à charge hors jeunes ménages
+    (householdSize === 1 && hasDisability)
+  ) {
+    category = 2;
+  }
+
+  return category;
+};
+
+export const getEligibleZone = (
+  taxableIncome: number,
+  householdSize: number,
+  dependantsAmount: number,
+  hasDisability: boolean,
+  birthday?: string,
+  coBuyerBirthday?: string,
+): {
+  category: number;
+  eligibleZoneAandAbis: boolean;
+  eligibleZoneB1: boolean;
+  eligibleZoneB2andC: boolean;
+} => {
+  const category = defineCategory(
+    householdSize,
+    dependantsAmount,
+    hasDisability,
+    birthday,
+    coBuyerBirthday,
+  );
+
+  const eligibilityCategory = eligibilityData[category - 1];
+
+  return {
+    category,
+    eligibleZoneAandAbis: taxableIncome < eligibilityCategory.zoneAandAbis,
+    eligibleZoneB1: taxableIncome < eligibilityCategory.zoneB1,
+    eligibleZoneB2andC: taxableIncome < eligibilityCategory.zoneB2andC,
+  };
 };
