@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { eligibilityData } from '$lib/utils/constants';
+  import { eligibilityData } from '$lib/utils/eligibility-simulator';
   import { formatEuro } from '$lib/utils/formatters';
 
   import ShadowedBox from '$components/common/ShadowedBox.svelte';

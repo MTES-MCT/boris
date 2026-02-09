@@ -33,6 +33,7 @@
     role?: AriaRole;
     min?: number | string;
     max?: number | string;
+    maxlength?: number;
     step?: number;
     ariaAttributes?: AriaAttributes;
     ariaAutocomplete?: 'none' | 'list' | 'inline' | 'both' | null;
@@ -65,6 +66,7 @@
     autocomplete,
     min,
     max,
+    maxlength,
     step,
     forceNoMarginBottom = false,
     error,
@@ -140,6 +142,7 @@
     {autocomplete}
     {min}
     {max}
+    {maxlength}
     {step}
     data-testid={dataTestId}
     oninput={(e) => {

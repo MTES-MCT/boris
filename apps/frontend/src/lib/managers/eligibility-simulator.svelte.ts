@@ -7,6 +7,7 @@ import {
   type PropertySituation,
   type Step,
 } from '$lib/utils/eligibility-simulator';
+import { formattedThousandsToNumber } from '$lib/utils/formatters';
 
 class EligibilitySimulator {
   public steps: Step[] = steps;
@@ -84,6 +85,21 @@ class EligibilitySimulator {
     $state(undefined);
   public secondCoBuyerFormattedTaxableIncome: string | undefined =
     $state(undefined);
+  public taxableIncome: number | undefined = $derived.by(() => {
+    if (
+      this.firstCoBuyerFormattedTaxableIncome &&
+      this.secondCoBuyerFormattedTaxableIncome
+    ) {
+      return (
+        formattedThousandsToNumber(this.firstCoBuyerFormattedTaxableIncome) +
+        formattedThousandsToNumber(this.secondCoBuyerFormattedTaxableIncome)
+      );
+    } else if (this.formattedTaxableIncome) {
+      return formattedThousandsToNumber(this.formattedTaxableIncome);
+    }
+
+    return undefined;
+  });
 
   public goToPreviousPhase = () => {
     if (this.previousPhase) {
