@@ -9,6 +9,7 @@
 
   const {
     eligibility,
+    propertySituation,
     currentPhase,
     nextPhase,
     goToNextPhase,
@@ -22,6 +23,8 @@
 
     goToNextPhase();
   };
+
+  $inspect(eligibility);
 </script>
 
 <Form onSubmit={handleSubmit}>
@@ -31,7 +34,10 @@
     </div>
 
     <div class="fr-fieldset__element fr-mb-4w">
-      {#if eligibility?.eligibleZoneB2andC}
+      {#if propertySituation === 'PROPRIETAIRE'}
+        {@render resultAlert(stepsContent.eligibility.isOwner.title, 'error')}
+        <p>{stepsContent.eligibility.isOwner.content}</p>
+      {:else if eligibility?.eligibleZoneB2andC}
         {@render resultAlert(stepsContent.eligibility.zoneB2andC.title)}
         <p>{stepsContent.eligibility.zoneB2andC.content}</p>
       {:else if eligibility?.eligibleZoneB1}
@@ -67,7 +73,11 @@
 {#snippet resultAlert(content: string, type: 'success' | 'error' = 'success')}
   <div class="!mb-4">
     <Alert {type}>
-      <p class="fr-text--bold">{@html content}</p>
+      <p
+        class="fr-text--bold"
+        data-testid="eligibility-result-text">
+        {@html content}
+      </p>
     </Alert>
   </div>
 {/snippet}

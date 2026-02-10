@@ -107,13 +107,12 @@ class EligibilitySimulator {
   public eligibility: EligibilityCategory | undefined = $derived.by(() => {
     if (
       typeof this.taxableIncome === 'number' &&
-      typeof this.householdSize === 'number' &&
-      typeof this.hasDisability === 'boolean'
+      typeof this.householdSize === 'number'
     ) {
       return defineEligibleZone(
         this.taxableIncome,
         this.householdSize,
-        this.hasDisability,
+        this.hasDisability || false,
         this.dependantsAmount,
         this.birthday,
         this.coBuyerBirthday,
