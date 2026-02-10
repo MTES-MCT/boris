@@ -2,6 +2,24 @@ import type { EligibilityData } from './definitions';
 import { formatYearMinusN } from './formatters';
 import { calculateAge } from './helpers';
 
+export type Phase = {
+  title: string;
+  phase: number;
+};
+
+export type Step = {
+  title: string;
+  step: number;
+  phases: Phase[];
+};
+
+export type EligibilityCategory = {
+  category: number;
+  eligibleZoneAandAbis: boolean;
+  eligibleZoneB1: boolean;
+  eligibleZoneB2andC: boolean;
+};
+
 export const eligibilityData: EligibilityData[] = [
   {
     category: 'Catégorie 1',
@@ -81,17 +99,6 @@ export const eligibilityData: EligibilityData[] = [
   },
 ];
 
-export type Phase = {
-  title: string;
-  phase: number;
-};
-
-export type Step = {
-  title: string;
-  step: number;
-  phases: Phase[];
-};
-
 export type PropertySituation =
   | 'LOCATAIRE_SOCIAL'
   | 'LOCATAIRE_PRIVE'
@@ -167,7 +174,7 @@ export const steps: Step[] = [
   },
 ];
 
-export const questions = {
+export const stepsContent = {
   selectedHouseholdSize: {
     label: 'Combien de personnes composent votre foyer ?',
     errorDataTestId: 'select-household-size-error-message',
@@ -372,12 +379,37 @@ export const questions = {
       },
     ],
   },
+  eligibility: {
+    zoneAandAbis: {
+      title:
+        'Vous êtes éligible au dispositif du BRS <u>en zone A et Abis</u>.',
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    zoneB1: {
+      title:
+        'Vous êtes éligible au dispositif du BRS <u>en zone tendue (A, Abis et B1)</u>.',
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    zoneB2andC: {
+      title:
+        'Vous êtes éligible au dispositif du BRS <u>dans toute la France</u>!',
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    notEligible: {
+      title: "Vous n'êtes pas éligible au dispositif du BRS.",
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+  },
 };
 
 export const defineCategory = (
   householdSize: number,
-  dependantsAmount: number,
   hasDisability: boolean,
+  dependantsAmount?: number,
   birthday?: string,
   coBuyerBirthday?: string,
 ): number => {
@@ -423,23 +455,18 @@ export const defineCategory = (
   return category;
 };
 
-export const getEligibleZone = (
+export const defineEligibleZone = (
   taxableIncome: number,
   householdSize: number,
-  dependantsAmount: number,
   hasDisability: boolean,
+  dependantsAmount?: number,
   birthday?: string,
   coBuyerBirthday?: string,
-): {
-  category: number;
-  eligibleZoneAandAbis: boolean;
-  eligibleZoneB1: boolean;
-  eligibleZoneB2andC: boolean;
-} => {
+): EligibilityCategory => {
   const category = defineCategory(
     householdSize,
-    dependantsAmount,
     hasDisability,
+    dependantsAmount,
     birthday,
     coBuyerBirthday,
   );

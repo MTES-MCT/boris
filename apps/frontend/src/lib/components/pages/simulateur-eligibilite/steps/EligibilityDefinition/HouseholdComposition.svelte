@@ -11,7 +11,7 @@
 
   import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
 
-  import { questions } from '$lib/utils/eligibility-simulator';
+  import { stepsContent } from '$lib/utils/eligibility-simulator';
 
   const {
     currentPhase,
@@ -124,12 +124,14 @@
 
     <div class="fr-fieldset__element fr-mb-4w">
       <Select
-        label={questions.selectedHouseholdSize.label}
+        label={stepsContent.selectedHouseholdSize.label}
         required
-        options={questions.selectedHouseholdSize.options.map((question) => ({
-          ...question,
-          selected: selectedHouseholdSize === question.value,
-        }))}
+        options={stepsContent.selectedHouseholdSize.options.map(
+          (stepContent) => ({
+            ...stepContent,
+            selected: selectedHouseholdSize === stepContent.value,
+          }),
+        )}
         onChange={(e) => {
           const { value } = e.target as HTMLSelectElement;
 
@@ -142,18 +144,18 @@
             : undefined;
         }}
         error={errors.selectedHouseholdSize}
-        errorDataTestId={questions.selectedHouseholdSize.errorDataTestId} />
+        errorDataTestId={stepsContent.selectedHouseholdSize.errorDataTestId} />
     </div>
 
     {#if singlePersonInHousehold}
       <div class="fr-fieldset__element fr-mb-4w">
         <Select
-          label={questions.singlePersonInHouseholdHasDisability.label}
+          label={stepsContent.singlePersonInHouseholdHasDisability.label}
           required
-          options={questions.singlePersonInHouseholdHasDisability.options.map(
-            (question) => ({
-              ...question,
-              selected: hasDisability === question.value,
+          options={stepsContent.singlePersonInHouseholdHasDisability.options.map(
+            (stepContent) => ({
+              ...stepContent,
+              selected: hasDisability === stepContent.value,
             }),
           )}
           onChange={(e) => {
@@ -167,17 +169,17 @@
               value === '' ? undefined : value === 'true' ? true : false;
           }}
           error={errors.hasDisability}
-          errorDataTestId={questions.singlePersonInHouseholdHasDisability
+          errorDataTestId={stepsContent.singlePersonInHouseholdHasDisability
             .errorDataTestId} />
       </div>
     {:else if twoToSixPersonsInHousehold}
       <div class="fr-fieldset__element fr-mb-4w">
         <Select
-          label={questions.dependantsAmount.label}
+          label={stepsContent.dependantsAmount.label}
           required
-          options={questions.dependantsAmount.options.map((question) => ({
-            ...question,
-            selected: dependantsAmount === question.value,
+          options={stepsContent.dependantsAmount.options.map((stepContent) => ({
+            ...stepContent,
+            selected: dependantsAmount === stepContent.value,
           }))}
           onChange={(e) => {
             const { value } = e.target as HTMLSelectElement;
@@ -191,16 +193,16 @@
               : undefined;
           }}
           error={errors.dependantsAmount}
-          errorDataTestId={questions.dependantsAmount.errorDataTestId} />
+          errorDataTestId={stepsContent.dependantsAmount.errorDataTestId} />
       </div>
       <div class="fr-fieldset__element fr-mb-4w">
         <Select
-          label={questions.twoToSixPersonsInHouseholdHasDisability.label}
+          label={stepsContent.twoToSixPersonsInHouseholdHasDisability.label}
           required
-          options={questions.twoToSixPersonsInHouseholdHasDisability.options.map(
-            (question) => ({
-              ...question,
-              selected: hasDisability === question.value,
+          options={stepsContent.twoToSixPersonsInHouseholdHasDisability.options.map(
+            (stepContent) => ({
+              ...stepContent,
+              selected: hasDisability === stepContent.value,
             }),
           )}
           onChange={(e) => {
@@ -214,14 +216,14 @@
               value === '' ? undefined : value === 'true' ? true : false;
           }}
           error={errors.hasDisability}
-          errorDataTestId={questions.twoToSixPersonsInHouseholdHasDisability
+          errorDataTestId={stepsContent.twoToSixPersonsInHouseholdHasDisability
             .errorDataTestId} />
       </div>
       {#if selectedHouseholdSize === 2 && dependantsAmount === 0}
         <div class="fr-fieldset__element fr-mb-4w">
           <Input
             value={birthday}
-            label={questions.birthday.label}
+            label={stepsContent.birthday.label}
             required
             skipHTML5Required
             type="date"
@@ -232,12 +234,12 @@
               eligibilitySimulatorManager.birthday = value;
             }}
             error={errors.birthday}
-            errorDataTestId={questions.birthday.errorDataTestId} />
+            errorDataTestId={stepsContent.birthday.errorDataTestId} />
         </div>
         <div class="fr-fieldset__element fr-mb-4w">
           <Input
             value={coBuyerBirthday}
-            label={questions.coBuyerBirthday.label}
+            label={stepsContent.coBuyerBirthday.label}
             required
             skipHTML5Required
             type="date"
@@ -248,14 +250,14 @@
               eligibilitySimulatorManager.coBuyerBirthday = value;
             }}
             error={errors.coBuyerBirthday}
-            errorDataTestId={questions.coBuyerBirthday.errorDataTestId} />
+            errorDataTestId={stepsContent.coBuyerBirthday.errorDataTestId} />
         </div>
       {/if}
     {:else if moreThanSixPersonsInHousehold}
       <div class="fr-fieldset__element">
         <Input
           value={inputHouseholdSize}
-          label={questions.inputHouseholdSize.label}
+          label={stepsContent.inputHouseholdSize.label}
           required
           skipHTML5Required
           type="number"
@@ -272,7 +274,7 @@
             }
           }}
           error={errors.inputHouseholdSize}
-          errorDataTestId={questions.inputHouseholdSize.errorDataTestId} />
+          errorDataTestId={stepsContent.inputHouseholdSize.errorDataTestId} />
       </div>
     {/if}
   </fieldset>

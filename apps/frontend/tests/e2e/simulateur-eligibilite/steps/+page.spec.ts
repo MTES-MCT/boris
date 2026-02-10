@@ -1,5 +1,5 @@
 import {
-  questions,
+  stepsContent,
   type DeclarationType,
   type PropertySituation,
 } from '../../../../src/lib/utils/eligibility-simulator';
@@ -54,90 +54,90 @@ test.describe('Eligibility simulator', () => {
 
     // EligibilityDefinition
     householdSizeSelect = simulatorWrapper.getByRole('combobox', {
-      name: questions.selectedHouseholdSize.label,
+      name: stepsContent.selectedHouseholdSize.label,
     });
     householdSizeErrorMessage = simulatorWrapper.getByTestId(
-      questions.selectedHouseholdSize.errorDataTestId,
+      stepsContent.selectedHouseholdSize.errorDataTestId,
     );
     singlePersonInHouseholdHasDisabilitySelect = simulatorWrapper.getByRole(
       'combobox',
       {
-        name: questions.singlePersonInHouseholdHasDisability.label,
+        name: stepsContent.singlePersonInHouseholdHasDisability.label,
       },
     );
     singlePersonInHouseholdHasDisabilityErrorMessage =
       simulatorWrapper.getByTestId(
-        questions.singlePersonInHouseholdHasDisability.errorDataTestId,
+        stepsContent.singlePersonInHouseholdHasDisability.errorDataTestId,
       );
     twoToSixPersonsInHouseholdHasDisabilitySelect = simulatorWrapper.getByRole(
       'combobox',
       {
-        name: questions.twoToSixPersonsInHouseholdHasDisability.label,
+        name: stepsContent.twoToSixPersonsInHouseholdHasDisability.label,
       },
     );
     twoToSixPersonsInHouseholdHasDisabilityErrorMessage =
       simulatorWrapper.getByTestId(
-        questions.twoToSixPersonsInHouseholdHasDisability.errorDataTestId,
+        stepsContent.twoToSixPersonsInHouseholdHasDisability.errorDataTestId,
       );
     dependantsAmountSelect = simulatorWrapper.getByRole('combobox', {
-      name: questions.dependantsAmount.label,
+      name: stepsContent.dependantsAmount.label,
     });
     dependantsAmountErrorMessage = simulatorWrapper.getByTestId(
-      questions.dependantsAmount.errorDataTestId,
+      stepsContent.dependantsAmount.errorDataTestId,
     );
     birthdayInput = simulatorWrapper.getByRole('textbox', {
-      name: questions.birthday.label,
+      name: stepsContent.birthday.label,
     });
     birthdayErrorMessage = simulatorWrapper.getByTestId(
-      questions.birthday.errorDataTestId,
+      stepsContent.birthday.errorDataTestId,
     );
     coBuyerBirthdayInput = simulatorWrapper.getByRole('textbox', {
-      name: questions.coBuyerBirthday.label,
+      name: stepsContent.coBuyerBirthday.label,
     });
     coBuyerBirthdayErrorMessage = simulatorWrapper.getByTestId(
-      questions.coBuyerBirthday.errorDataTestId,
+      stepsContent.coBuyerBirthday.errorDataTestId,
     );
     inputHouseholdSizeInput = simulatorWrapper.getByRole('spinbutton', {
-      name: questions.inputHouseholdSize.label,
+      name: stepsContent.inputHouseholdSize.label,
     });
     inputHouseholdSizeErrorMessage = simulatorWrapper.getByTestId(
-      questions.inputHouseholdSize.errorDataTestId,
+      stepsContent.inputHouseholdSize.errorDataTestId,
     );
 
     // FiscalRevenues
     taxableIncomeInput = simulatorWrapper.getByTestId(
-      questions.formattedTaxableIncome.inputDataTestId,
+      stepsContent.formattedTaxableIncome.inputDataTestId,
     );
     taxableIncomeErrorMessage = simulatorWrapper.getByTestId(
-      questions.formattedTaxableIncome.errorDataTestId,
+      stepsContent.formattedTaxableIncome.errorDataTestId,
     );
     declarationTypeSelect = simulatorWrapper.getByRole('combobox', {
-      name: questions.declarationType.label,
+      name: stepsContent.declarationType.label,
     });
     declarationTypeErrorMessage = simulatorWrapper.getByTestId(
-      questions.declarationType.errorDataTestId,
+      stepsContent.declarationType.errorDataTestId,
     );
     firstCoBuyerFormattedTaxableIncomeInput = simulatorWrapper.getByTestId(
-      questions.firstCoBuyerFormattedTaxableIncome.inputDataTestId,
+      stepsContent.firstCoBuyerFormattedTaxableIncome.inputDataTestId,
     );
     firstCoBuyerFormattedTaxableIncomeErrorMessage =
       simulatorWrapper.getByTestId(
-        questions.firstCoBuyerFormattedTaxableIncome.errorDataTestId,
+        stepsContent.firstCoBuyerFormattedTaxableIncome.errorDataTestId,
       );
     secondCoBuyerFormattedTaxableIncomeInput = simulatorWrapper.getByTestId(
-      questions.secondCoBuyerFormattedTaxableIncome.inputDataTestId,
+      stepsContent.secondCoBuyerFormattedTaxableIncome.inputDataTestId,
     );
     secondCoBuyerFormattedTaxableIncomeErrorMessage =
       simulatorWrapper.getByTestId(
-        questions.secondCoBuyerFormattedTaxableIncome.errorDataTestId,
+        stepsContent.secondCoBuyerFormattedTaxableIncome.errorDataTestId,
       );
 
     // PropertySituation
     propertySituationSelect = simulatorWrapper.getByRole('combobox', {
-      name: questions.propertySituation.label,
+      name: stepsContent.propertySituation.label,
     });
     propertySituationErrorMessage = simulatorWrapper.getByTestId(
-      questions.propertySituation.errorDataTestId,
+      stepsContent.propertySituation.errorDataTestId,
     );
   });
 
@@ -314,7 +314,7 @@ test.describe('Eligibility simulator', () => {
           await submitButton.click();
           expect(taxableIncomeErrorMessage).toBeVisible();
           expect(taxableIncomeErrorMessage).toHaveText(
-            questions.formattedTaxableIncome.errorMessage,
+            stepsContent.formattedTaxableIncome.errorMessage,
           );
         });
 
@@ -323,7 +323,7 @@ test.describe('Eligibility simulator', () => {
           await submitButton.click();
           expect(declarationTypeErrorMessage).toBeVisible();
           expect(declarationTypeErrorMessage).toHaveText(
-            questions.declarationType.errorMessage,
+            stepsContent.declarationType.errorMessage,
           );
         });
 
@@ -333,7 +333,7 @@ test.describe('Eligibility simulator', () => {
           await submitButton.click();
           expect(taxableIncomeErrorMessage).toBeVisible();
           expect(taxableIncomeErrorMessage).toHaveText(
-            questions.formattedTaxableIncome.errorMessage,
+            stepsContent.formattedTaxableIncome.errorMessage,
           );
         });
 
@@ -343,7 +343,7 @@ test.describe('Eligibility simulator', () => {
           await submitButton.click();
           expect(taxableIncomeErrorMessage).toBeVisible();
           expect(taxableIncomeErrorMessage).toHaveText(
-            questions.formattedTaxableIncome.errorMessage,
+            stepsContent.formattedTaxableIncome.errorMessage,
           );
         });
 
@@ -352,7 +352,7 @@ test.describe('Eligibility simulator', () => {
           await submitButton.click();
           expect(declarationTypeErrorMessage).toBeVisible();
           expect(declarationTypeErrorMessage).toHaveText(
-            questions.declarationType.errorMessage,
+            stepsContent.declarationType.errorMessage,
           );
         });
 
@@ -362,7 +362,7 @@ test.describe('Eligibility simulator', () => {
           await submitButton.click();
           expect(taxableIncomeErrorMessage).toBeVisible();
           expect(taxableIncomeErrorMessage).toHaveText(
-            questions.formattedTaxableIncome.errorMessage,
+            stepsContent.formattedTaxableIncome.errorMessage,
           );
         });
 
@@ -372,11 +372,11 @@ test.describe('Eligibility simulator', () => {
           await submitButton.click();
           expect(firstCoBuyerFormattedTaxableIncomeErrorMessage).toBeVisible();
           expect(firstCoBuyerFormattedTaxableIncomeErrorMessage).toHaveText(
-            questions.firstCoBuyerFormattedTaxableIncome.errorMessage,
+            stepsContent.firstCoBuyerFormattedTaxableIncome.errorMessage,
           );
           expect(secondCoBuyerFormattedTaxableIncomeErrorMessage).toBeVisible();
           expect(secondCoBuyerFormattedTaxableIncomeErrorMessage).toHaveText(
-            questions.secondCoBuyerFormattedTaxableIncome.errorMessage,
+            stepsContent.secondCoBuyerFormattedTaxableIncome.errorMessage,
           );
         });
       });
