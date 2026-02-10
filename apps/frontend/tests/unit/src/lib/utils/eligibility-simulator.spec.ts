@@ -408,5 +408,32 @@ describe('eligibility-simulator', () => {
         });
       });
     });
+
+    describe('Category 6 with more than 6 persons', () => {
+      const householdSize = 12;
+      const dependantsAmount = 0;
+      const hasDisability = false;
+      const birthday = '1950-01-01';
+      const coBuyerBirthday = '1950-01-01';
+
+      it('should be elibile all zones', () => {
+        const taxableIncome = 38000;
+        expect(
+          defineEligibleZone(
+            taxableIncome,
+            householdSize,
+            hasDisability,
+            dependantsAmount,
+            birthday,
+            coBuyerBirthday,
+          ),
+        ).toStrictEqual({
+          category: 6,
+          eligibleZoneAandAbis: true,
+          eligibleZoneB1: true,
+          eligibleZoneB2andC: true,
+        });
+      });
+    });
   });
 });

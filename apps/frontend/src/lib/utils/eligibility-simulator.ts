@@ -1,6 +1,5 @@
 import type { EligibilityData } from './definitions';
 import { formatYearMinusN } from './formatters';
-import { calculateAge } from './helpers';
 
 export type Phase = {
   title: string;
@@ -403,7 +402,32 @@ export const stepsContent = {
       content:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     },
+    isOwner: {
+      title:
+        "En tant que propriétaire, vous n'êtes pas éligible au dispositif du BRS.",
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
   },
+};
+
+const calculateAge = (birthDate: string) => {
+  const today = new Date();
+  const birth = new Date(birthDate);
+
+  let age = today.getFullYear() - birth.getFullYear();
+
+  const currentMonth = today.getMonth();
+  const birthMonth = birth.getMonth();
+
+  if (
+    currentMonth < birthMonth ||
+    (currentMonth === birthMonth && today.getDate() < birth.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
 };
 
 export const defineCategory = (
@@ -473,10 +497,28 @@ export const defineEligibleZone = (
 
   const eligibilityCategory = eligibilityData[category - 1];
 
+  const zoneAandAbisTreshold =
+    householdSize < 7
+      ? eligibilityCategory.zoneAandAbis
+      : eligibilityCategory.zoneAandAbis +
+        (householdSize - 6) * eligibilityData[6].zoneAandAbis;
+
+  const zoneB1Treshold =
+    householdSize < 7
+      ? eligibilityCategory.zoneB1
+      : eligibilityCategory.zoneB1 +
+        (householdSize - 6) * eligibilityData[6].zoneB1;
+
+  const zoneB2andCTreshold =
+    householdSize < 7
+      ? eligibilityCategory.zoneB2andC
+      : eligibilityCategory.zoneB2andC +
+        (householdSize - 6) * eligibilityData[6].zoneB2andC;
+
   return {
     category,
-    eligibleZoneAandAbis: taxableIncome < eligibilityCategory.zoneAandAbis,
-    eligibleZoneB1: taxableIncome < eligibilityCategory.zoneB1,
+    eligibleZoneAandAbis: taxableIncome < zoneAandAbisTreshold,
+    eligibleZoneB1: taxableIncome < zoneB1Treshold,
     eligibleZoneB2andC: taxableIncome < eligibilityCategory.zoneB2andC,
   };
 };

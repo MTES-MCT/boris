@@ -210,22 +210,3 @@ export const formatHouseholdsData = (
     totalsRealEstateSituation,
   };
 };
-
-export const calculateAge = (birthDate: string) => {
-  const today = new Date();
-  const birth = new Date(birthDate);
-
-  let age = today.getFullYear() - birth.getFullYear();
-
-  const currentMonth = today.getMonth();
-  const birthMonth = birth.getMonth();
-
-  if (
-    currentMonth < birthMonth ||
-    (currentMonth === birthMonth && today.getDate() < birth.getDate())
-  ) {
-    age--;
-  }
-
-  return age;
-};
