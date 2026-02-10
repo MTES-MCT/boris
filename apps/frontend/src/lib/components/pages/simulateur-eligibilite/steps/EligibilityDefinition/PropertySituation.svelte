@@ -8,7 +8,7 @@
   import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
   import { formatFormErrors } from '$lib/utils/helpers';
   import {
-    questions,
+    stepsContent,
     type PropertySituation,
   } from '$lib/utils/eligibility-simulator';
 
@@ -65,11 +65,11 @@
 
     <div class="fr-fieldset__element fr-mb-4w">
       <Select
-        label={questions.propertySituation.label}
+        label={stepsContent.propertySituation.label}
         required
-        options={questions.propertySituation.options.map((question) => ({
-          ...question,
-          selected: propertySituation === question.value,
+        options={stepsContent.propertySituation.options.map((stepContent) => ({
+          ...stepContent,
+          selected: propertySituation === stepContent.value,
         }))}
         onChange={(e) => {
           const { value } = e.target as HTMLSelectElement;
@@ -82,7 +82,7 @@
             value === '' ? undefined : (value as PropertySituation);
         }}
         error={errors.propertySituation}
-        errorDataTestId={questions.propertySituation.errorDataTestId} />
+        errorDataTestId={stepsContent.propertySituation.errorDataTestId} />
     </div>
   </fieldset>
 

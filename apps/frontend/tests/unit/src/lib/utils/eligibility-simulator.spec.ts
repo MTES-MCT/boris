@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   defineCategory,
-  getEligibleZone,
+  defineEligibleZone,
 } from '$lib/utils/eligibility-simulator';
 
 describe('eligibility-simulator', () => {
@@ -11,7 +11,7 @@ describe('eligibility-simulator', () => {
       const dependantsAmount = 0;
       const hasDisability = false;
       expect(
-        defineCategory(householdSize, dependantsAmount, hasDisability),
+        defineCategory(householdSize, hasDisability, dependantsAmount),
       ).toBe(1);
     });
 
@@ -24,8 +24,8 @@ describe('eligibility-simulator', () => {
       expect(
         defineCategory(
           householdSize,
-          dependantsAmount,
           hasDisability,
+          dependantsAmount,
           birthday,
           coBuyerBirthday,
         ),
@@ -36,8 +36,8 @@ describe('eligibility-simulator', () => {
       expect(
         defineCategory(
           householdSize,
-          dependantsAmount,
           hasDisability,
+          dependantsAmount,
           birthday,
           coBuyerBirthday,
         ),
@@ -53,8 +53,8 @@ describe('eligibility-simulator', () => {
       expect(
         defineCategory(
           householdSize,
-          dependantsAmount,
           hasDisability,
+          dependantsAmount,
           birthday,
           coBuyerBirthday,
         ),
@@ -65,8 +65,8 @@ describe('eligibility-simulator', () => {
       expect(
         defineCategory(
           householdSize,
-          dependantsAmount,
           hasDisability,
+          dependantsAmount,
           birthday,
           coBuyerBirthday,
         ),
@@ -76,8 +76,8 @@ describe('eligibility-simulator', () => {
       expect(
         defineCategory(
           householdSize,
-          dependantsAmount,
           hasDisability,
+          dependantsAmount,
           birthday,
           coBuyerBirthday,
         ),
@@ -88,8 +88,8 @@ describe('eligibility-simulator', () => {
       expect(
         defineCategory(
           householdSize,
-          dependantsAmount,
           hasDisability,
+          dependantsAmount,
           birthday,
           coBuyerBirthday,
         ),
@@ -101,18 +101,18 @@ describe('eligibility-simulator', () => {
       let dependantsAmount = 0;
       let hasDisability = false;
       expect(
-        defineCategory(householdSize, dependantsAmount, hasDisability),
+        defineCategory(householdSize, hasDisability, dependantsAmount),
       ).toBe(4);
 
       householdSize = 3;
       dependantsAmount = 2;
       expect(
-        defineCategory(householdSize, dependantsAmount, hasDisability),
+        defineCategory(householdSize, hasDisability, dependantsAmount),
       ).toBe(4);
 
       hasDisability = true;
       expect(
-        defineCategory(householdSize, dependantsAmount, hasDisability),
+        defineCategory(householdSize, hasDisability, dependantsAmount),
       ).toBe(4);
     });
 
@@ -121,18 +121,18 @@ describe('eligibility-simulator', () => {
       let dependantsAmount = 0;
       let hasDisability = false;
       expect(
-        defineCategory(householdSize, dependantsAmount, hasDisability),
+        defineCategory(householdSize, hasDisability, dependantsAmount),
       ).toBe(5);
 
       householdSize = 4;
       dependantsAmount = 3;
       expect(
-        defineCategory(householdSize, dependantsAmount, hasDisability),
+        defineCategory(householdSize, hasDisability, dependantsAmount),
       ).toBe(5);
 
       hasDisability = true;
       expect(
-        defineCategory(householdSize, dependantsAmount, hasDisability),
+        defineCategory(householdSize, hasDisability, dependantsAmount),
       ).toBe(5);
     });
 
@@ -141,28 +141,28 @@ describe('eligibility-simulator', () => {
       let dependantsAmount = 0;
       let hasDisability = false;
       expect(
-        defineCategory(householdSize, dependantsAmount, hasDisability),
+        defineCategory(householdSize, hasDisability, dependantsAmount),
       ).toBe(6);
 
       householdSize = 5;
       dependantsAmount = 4;
       expect(
-        defineCategory(householdSize, dependantsAmount, hasDisability),
+        defineCategory(householdSize, hasDisability, dependantsAmount),
       ).toBe(6);
 
       hasDisability = true;
       expect(
-        defineCategory(householdSize, dependantsAmount, hasDisability),
+        defineCategory(householdSize, hasDisability, dependantsAmount),
       ).toBe(6);
 
       householdSize = 10;
       expect(
-        defineCategory(householdSize, dependantsAmount, hasDisability),
+        defineCategory(householdSize, hasDisability, dependantsAmount),
       ).toBe(6);
     });
   });
 
-  describe('getEligibleZone', () => {
+  describe('defineEligibleZone', () => {
     describe('Category 1', () => {
       const householdSize = 1;
       const dependantsAmount = 0;
@@ -172,11 +172,11 @@ describe('eligibility-simulator', () => {
         const taxableIncome = 30000;
 
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             householdSize,
-            dependantsAmount,
             hasDisability,
+            dependantsAmount,
           ),
         ).toStrictEqual({
           category: 1,
@@ -189,11 +189,11 @@ describe('eligibility-simulator', () => {
       it('should be eligible zone A, A bis and B1', () => {
         const taxableIncome = 38000;
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             householdSize,
-            dependantsAmount,
             hasDisability,
+            dependantsAmount,
           ),
         ).toStrictEqual({
           category: 1,
@@ -206,11 +206,11 @@ describe('eligibility-simulator', () => {
       it('should not be eligible in any zone', () => {
         const taxableIncome = 100000;
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             householdSize,
-            dependantsAmount,
             hasDisability,
+            dependantsAmount,
           ),
         ).toStrictEqual({
           category: 1,
@@ -230,11 +230,11 @@ describe('eligibility-simulator', () => {
       it('should be elibile all zones', () => {
         const taxableIncome = 38000;
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             householdSize,
-            dependantsAmount,
             hasDisability,
+            dependantsAmount,
             birthday,
             coBuyerBirthday,
           ),
@@ -245,11 +245,11 @@ describe('eligibility-simulator', () => {
           eligibleZoneB2andC: true,
         });
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             1,
-            dependantsAmount,
             true,
+            dependantsAmount,
             birthday,
             coBuyerBirthday,
           ),
@@ -264,11 +264,11 @@ describe('eligibility-simulator', () => {
       it('should be eligible zone A, A bis and B1', () => {
         const taxableIncome = 58000;
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             householdSize,
-            dependantsAmount,
             hasDisability,
+            dependantsAmount,
             birthday,
             coBuyerBirthday,
           ),
@@ -279,11 +279,11 @@ describe('eligibility-simulator', () => {
           eligibleZoneB2andC: false,
         });
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             1,
-            dependantsAmount,
             true,
+            dependantsAmount,
             birthday,
             coBuyerBirthday,
           ),
@@ -298,11 +298,11 @@ describe('eligibility-simulator', () => {
       it('should not be eligible in any zone', () => {
         const taxableIncome = 100000;
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             householdSize,
-            dependantsAmount,
             hasDisability,
+            dependantsAmount,
             birthday,
             coBuyerBirthday,
           ),
@@ -324,11 +324,11 @@ describe('eligibility-simulator', () => {
       it('should be elibile all zones', () => {
         const taxableIncome = 38000;
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             householdSize,
-            dependantsAmount,
             hasDisability,
+            dependantsAmount,
             birthday,
             coBuyerBirthday,
           ),
@@ -339,11 +339,11 @@ describe('eligibility-simulator', () => {
           eligibleZoneB2andC: true,
         });
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             1,
-            dependantsAmount,
             true,
+            dependantsAmount,
             birthday,
             coBuyerBirthday,
           ),
@@ -358,11 +358,11 @@ describe('eligibility-simulator', () => {
       it('should be eligible zone A, A bis', () => {
         const taxableIncome = 76000;
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             householdSize,
-            dependantsAmount,
             hasDisability,
+            dependantsAmount,
             birthday,
             coBuyerBirthday,
           ),
@@ -373,11 +373,11 @@ describe('eligibility-simulator', () => {
           eligibleZoneB2andC: false,
         });
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             2,
-            dependantsAmount,
             true,
+            dependantsAmount,
             birthday,
             coBuyerBirthday,
           ),
@@ -392,11 +392,11 @@ describe('eligibility-simulator', () => {
       it('should not be eligible in any zone', () => {
         const taxableIncome = 100000;
         expect(
-          getEligibleZone(
+          defineEligibleZone(
             taxableIncome,
             householdSize,
-            dependantsAmount,
             hasDisability,
+            dependantsAmount,
             birthday,
             coBuyerBirthday,
           ),

@@ -1,8 +1,10 @@
 import { browser } from '$app/environment';
 
 import {
+  defineEligibleZone,
   steps,
   type DeclarationType,
+  type EligibilityCategory,
   type Phase,
   type PropertySituation,
   type Step,
@@ -96,6 +98,26 @@ class EligibilitySimulator {
       );
     } else if (this.formattedTaxableIncome) {
       return formattedThousandsToNumber(this.formattedTaxableIncome);
+    }
+
+    return undefined;
+  });
+
+  // Eligibility
+  public eligibility: EligibilityCategory | undefined = $derived.by(() => {
+    if (
+      typeof this.taxableIncome === 'number' &&
+      typeof this.householdSize === 'number' &&
+      typeof this.hasDisability === 'boolean'
+    ) {
+      return defineEligibleZone(
+        this.taxableIncome,
+        this.householdSize,
+        this.hasDisability,
+        this.dependantsAmount,
+        this.birthday,
+        this.coBuyerBirthday,
+      );
     }
 
     return undefined;

@@ -3,8 +3,12 @@
   import Form from '$components/common/Simulator/Form.svelte';
   import Actions from '$components/common/Simulator/Actions.svelte';
   import Action from '$components/common/Simulator/Action.svelte';
+  import { stepsContent } from '$lib/utils/eligibility-simulator';
+  import Notice from '$components/common/Notice.svelte';
+  import Alert from '$components/common/Alert.svelte';
 
   const {
+    eligibility,
     currentPhase,
     nextPhase,
     goToNextPhase,
@@ -25,6 +29,19 @@
     <div class="fr-fieldset__element">
       <h3 class="fr-h4">{currentPhase?.title as string}</h3>
     </div>
+
+    <div class="fr-fieldset__element fr-mb-4w">
+      {#if eligibility?.eligibleZoneB2andC}
+        {@render resultAlert(stepsContent.eligibility.zoneB2andC.title)}
+        <p>{stepsContent.eligibility.zoneB2andC.content}</p>
+      {:else if eligibility?.eligibleZoneB1}
+        {@render resultAlert(stepsContent.eligibility.zoneB1.title)}
+        <p>{stepsContent.eligibility.zoneB1.content}</p>
+      {:else if eligibility?.eligibleZoneAandAbis}
+        {@render resultAlert(stepsContent.eligibility.zoneAandAbis.title)}
+        <p>{stepsContent.eligibility.zoneAandAbis.content}</p>
+      {/if}
+    </div>
   </fieldset>
 
   <Actions>
@@ -40,3 +57,11 @@
       {loading} />
   </Actions>
 </Form>
+
+{#snippet resultAlert(content: string)}
+  <div class="!mb-4">
+    <Alert type="success">
+      <p class="fr-text--bold">{@html content}</p>
+    </Alert>
+  </div>
+{/snippet}

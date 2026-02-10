@@ -15,7 +15,7 @@
   } from '$lib/utils/formatters';
 
   import {
-    questions,
+    stepsContent,
     type DeclarationType,
   } from '$lib/utils/eligibility-simulator';
   import Select from '$components/common/Select.svelte';
@@ -43,10 +43,10 @@
     if (singlePersonInHousehold) {
       schema = schema.extend({
         formattedTaxableIncome: z
-          .string(questions.formattedTaxableIncome.errorMessage)
+          .string(stepsContent.formattedTaxableIncome.errorMessage)
           .refine((value) => {
             return formattedThousandsToNumber(value) > 0;
-          }, questions.formattedTaxableIncome.errorMessage),
+          }, stepsContent.formattedTaxableIncome.errorMessage),
       });
     } else {
       schema = schema.extend({
@@ -61,23 +61,27 @@
       if (declarationType !== 'SEUL_SOUHAIT_PARTENAIRE') {
         schema = schema.extend({
           formattedTaxableIncome: z
-            .string(questions.formattedTaxableIncome.errorMessage)
+            .string(stepsContent.formattedTaxableIncome.errorMessage)
             .refine((value) => {
               return formattedThousandsToNumber(value) > 0;
-            }, questions.formattedTaxableIncome.errorMessage),
+            }, stepsContent.formattedTaxableIncome.errorMessage),
         });
       } else {
         schema = schema.extend({
           firstCoBuyerFormattedTaxableIncome: z
-            .string(questions.firstCoBuyerFormattedTaxableIncome.errorMessage)
+            .string(
+              stepsContent.firstCoBuyerFormattedTaxableIncome.errorMessage,
+            )
             .refine((value) => {
               return formattedThousandsToNumber(value) > 0;
-            }, questions.firstCoBuyerFormattedTaxableIncome.errorMessage),
+            }, stepsContent.firstCoBuyerFormattedTaxableIncome.errorMessage),
           secondCoBuyerFormattedTaxableIncome: z
-            .string(questions.secondCoBuyerFormattedTaxableIncome.errorMessage)
+            .string(
+              stepsContent.secondCoBuyerFormattedTaxableIncome.errorMessage,
+            )
             .refine((value) => {
               return formattedThousandsToNumber(value) > 0;
-            }, questions.secondCoBuyerFormattedTaxableIncome.errorMessage),
+            }, stepsContent.secondCoBuyerFormattedTaxableIncome.errorMessage),
         });
       }
     }
@@ -118,11 +122,11 @@
     {:else}
       <div class="fr-fieldset__element fr-mb-4w">
         <Select
-          label={questions.declarationType.label}
+          label={stepsContent.declarationType.label}
           required
-          options={questions.declarationType.options.map((question) => ({
-            ...question,
-            selected: declarationType === question.value,
+          options={stepsContent.declarationType.options.map((stepContent) => ({
+            ...stepContent,
+            selected: declarationType === stepContent.value,
           }))}
           onChange={(e) => {
             const { value } = e.target as HTMLSelectElement;
@@ -135,7 +139,7 @@
               value === '' ? undefined : (value as DeclarationType);
           }}
           error={errors.declarationType}
-          errorDataTestId={questions.declarationType.errorDataTestId} />
+          errorDataTestId={stepsContent.declarationType.errorDataTestId} />
       </div>
 
       {#if declarationType}
@@ -145,7 +149,7 @@
           <div class="fr-fieldset__element fr-mb-4w">
             <Input
               value={firstCoBuyerFormattedTaxableIncome}
-              label={questions.firstCoBuyerFormattedTaxableIncome.label}
+              label={stepsContent.firstCoBuyerFormattedTaxableIncome.label}
               rawLabel
               type="text"
               currency
@@ -160,16 +164,16 @@
                 eligibilitySimulatorManager.firstCoBuyerFormattedTaxableIncome =
                   formatThousands((e.target as HTMLInputElement).value);
               }}
-              dataTestId={questions.firstCoBuyerFormattedTaxableIncome
+              dataTestId={stepsContent.firstCoBuyerFormattedTaxableIncome
                 .inputDataTestId}
               error={errors.firstCoBuyerFormattedTaxableIncome}
-              errorDataTestId={questions.firstCoBuyerFormattedTaxableIncome
+              errorDataTestId={stepsContent.firstCoBuyerFormattedTaxableIncome
                 .errorDataTestId} />
           </div>
           <div class="fr-fieldset__element fr-mb-4w">
             <Input
               value={secondCoBuyerFormattedTaxableIncome}
-              label={questions.secondCoBuyerFormattedTaxableIncome.label}
+              label={stepsContent.secondCoBuyerFormattedTaxableIncome.label}
               rawLabel
               type="text"
               currency
@@ -184,10 +188,10 @@
                 eligibilitySimulatorManager.secondCoBuyerFormattedTaxableIncome =
                   formatThousands((e.target as HTMLInputElement).value);
               }}
-              dataTestId={questions.secondCoBuyerFormattedTaxableIncome
+              dataTestId={stepsContent.secondCoBuyerFormattedTaxableIncome
                 .inputDataTestId}
               error={errors.secondCoBuyerFormattedTaxableIncome}
-              errorDataTestId={questions.secondCoBuyerFormattedTaxableIncome
+              errorDataTestId={stepsContent.secondCoBuyerFormattedTaxableIncome
                 .errorDataTestId} />
           </div>
         {/if}
@@ -214,8 +218,8 @@
     <Input
       value={formattedTaxableIncome}
       label={declarationType === 'COMMUN'
-        ? questions.formattedTaxableIncome.labelInCommon
-        : questions.formattedTaxableIncome.label}
+        ? stepsContent.formattedTaxableIncome.labelInCommon
+        : stepsContent.formattedTaxableIncome.label}
       rawLabel
       type="text"
       currency
@@ -231,8 +235,8 @@
           (e.target as HTMLInputElement).value,
         );
       }}
-      dataTestId={questions.formattedTaxableIncome.inputDataTestId}
+      dataTestId={stepsContent.formattedTaxableIncome.inputDataTestId}
       error={errors.formattedTaxableIncome}
-      errorDataTestId={questions.formattedTaxableIncome.errorDataTestId} />
+      errorDataTestId={stepsContent.formattedTaxableIncome.errorDataTestId} />
   </div>
 {/snippet}
