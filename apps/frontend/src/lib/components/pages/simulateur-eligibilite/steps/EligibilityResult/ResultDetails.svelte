@@ -40,6 +40,12 @@
       {:else if eligibility?.eligibleZoneAandAbis}
         {@render resultAlert(stepsContent.eligibility.zoneAandAbis.title)}
         <p>{stepsContent.eligibility.zoneAandAbis.content}</p>
+      {:else}
+        {@render resultAlert(
+          stepsContent.eligibility.notEligible.title,
+          'error',
+        )}
+        <p>{stepsContent.eligibility.notEligible.content}</p>
       {/if}
     </div>
   </fieldset>
@@ -58,9 +64,9 @@
   </Actions>
 </Form>
 
-{#snippet resultAlert(content: string)}
+{#snippet resultAlert(content: string, type: 'success' | 'error' = 'success')}
   <div class="!mb-4">
-    <Alert type="success">
+    <Alert {type}>
       <p class="fr-text--bold">{@html content}</p>
     </Alert>
   </div>
