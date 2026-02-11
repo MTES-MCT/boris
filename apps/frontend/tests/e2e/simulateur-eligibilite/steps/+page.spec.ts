@@ -11,6 +11,7 @@ test.describe('Eligibility simulator', () => {
   let stepTitle: Locator;
   let phaseTitle: Locator;
   let submitButton: Locator;
+  let previousPhaseButton: Locator;
 
   // EligibilityDefinition
   let householdSizeSelect: Locator;
@@ -44,6 +45,17 @@ test.describe('Eligibility simulator', () => {
 
   // Résultat d'éligibilité
   let resultText: Locator;
+  let refuseConnectionLink: Locator;
+
+  // Informations personnelles
+  let firstNameInput: Locator;
+  let firstNameErrorMessage: Locator;
+  let lastNameInput: Locator;
+  let lastNameErrorMessage: Locator;
+  let emailInput: Locator;
+  let emailErrorMessage: Locator;
+  let phoneInput: Locator;
+  let phoneErrorMessage: Locator;
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/simulateur-eligibilite/steps');
@@ -53,6 +65,9 @@ test.describe('Eligibility simulator', () => {
     phaseTitle = simulatorWrapper.getByRole('heading', { level: 3 });
     submitButton = simulatorWrapper.getByRole('button', {
       name: /Étape suivante/i,
+    });
+    previousPhaseButton = simulatorWrapper.getByRole('button', {
+      name: /Étape précédente/i,
     });
 
     // EligibilityDefinition
@@ -145,6 +160,35 @@ test.describe('Eligibility simulator', () => {
 
     // Résultat d'éligibilité
     resultText = simulatorWrapper.getByTestId('eligibility-result-text');
+    refuseConnectionLink = simulatorWrapper.getByTestId(
+      'refuse-connection-link',
+    );
+
+    // Informations personnelles
+    firstNameInput = simulatorWrapper.getByRole('textbox', {
+      name: stepsContent.firstName.label,
+    });
+    firstNameErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.firstName.errorDataTestId,
+    );
+    lastNameInput = simulatorWrapper.getByRole('textbox', {
+      name: stepsContent.lastName.label,
+    });
+    lastNameErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.lastName.errorDataTestId,
+    );
+    emailInput = simulatorWrapper.getByRole('textbox', {
+      name: stepsContent.email.label,
+    });
+    emailErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.email.errorDataTestId,
+    );
+    phoneInput = simulatorWrapper.getByRole('textbox', {
+      name: stepsContent.phone.label,
+    });
+    phoneErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.phone.errorDataTestId,
+    );
   });
 
   const performHouseholdComposition = async (
@@ -231,6 +275,39 @@ test.describe('Eligibility simulator', () => {
     propertySituation: PropertySituation,
   ) => {
     await propertySituationSelect.selectOption(propertySituation);
+    await submitButton.click();
+  };
+
+  const performResultDetails = async () => {
+    await submitButton.click();
+  };
+
+  const performRefuseConnection = async () => {
+    await refuseConnectionLink.click();
+  };
+
+  const performUserDetails = async (
+    firstName?: string,
+    lastName?: string,
+    email?: string,
+    phone?: string,
+  ) => {
+    if (typeof firstName === 'string') {
+      await firstNameInput.fill(firstName);
+    }
+
+    if (typeof lastName === 'string') {
+      await lastNameInput.fill(lastName);
+    }
+
+    if (typeof email === 'string') {
+      await emailInput.fill(email);
+    }
+
+    if (typeof phone === 'string') {
+      await phoneInput.fill(phone);
+    }
+
     await submitButton.click();
   };
 
@@ -520,875 +597,945 @@ test.describe('Eligibility simulator', () => {
   });
 
   test.describe("Résultat d'éligibilité", () => {
-    const validateStepAndPhaseTitles = () => {
+    test.describe('Détails du résultat', () => {
+      const validateStepAndPhaseTitles = () => {
+        expect(stepTitle).toHaveText(
+          `2. ${steps[1].title} Étape 2 sur ${steps.length}`,
+        );
+        expect(phaseTitle).toHaveText(`${steps[1].phases[0].title}`);
+      };
+
+      test.describe('Personne seule sans handicap', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(1, false);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('25000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('35000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('100000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('Personne seule en situation de handicap', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(1, true);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('25000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('50000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('100000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('2 personnes ne comportant aucune personne à charge hors jeunes ménages ayant déclaré en commun', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(
+            2,
+            false,
+            0,
+            '1950-01-01',
+            '1950-01-01',
+          );
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('25000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('50000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('100000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('2 personnes ne comportant aucune personne à charge hors jeunes ménages ayant déclaré en "Seul·e et vous souhaitez et vous souhaitez acheter avec un·e partenaire"', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(
+            2,
+            false,
+            0,
+            '1950-01-01',
+            '1950-01-01',
+          );
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues(
+            undefined,
+            'SEUL_SOUHAIT_PARTENAIRE',
+            '20000',
+            '20000',
+          );
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues(
+            undefined,
+            'SEUL_SOUHAIT_PARTENAIRE',
+            '30000',
+            '20000',
+          );
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues(
+            undefined,
+            'SEUL_SOUHAIT_PARTENAIRE',
+            '50000',
+            '50000',
+          );
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('3 personnes, les co-acquéreurs ayant déclaré en commun', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(3, false, 1);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('50000', 'COMMUN');
+          await performPropertySituation('AUTRE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('68000', 'COMMUN');
+          await performPropertySituation('HEBERGE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('75000', 'COMMUN');
+          await performPropertySituation('HEBERGE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('100000', 'COMMUN');
+          await performPropertySituation('HEBERGE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('Personne seule avec 1 personne à charge', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(2, false, 1);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('50000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('AUTRE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('68000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('HEBERGE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('75000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('HEBERGE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('100000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('HEBERGE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('Jeune ménage, où la somme des ages des co-acquéreurs ne dépasse pas 55 ans', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(
+            2,
+            false,
+            0,
+            '2000-01-01',
+            '2000-01-01',
+          );
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('50000', 'COMMUN');
+          await performPropertySituation('AUTRE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('68000', 'COMMUN');
+          await performPropertySituation('HEBERGE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('75000', 'COMMUN');
+          await performPropertySituation('HEBERGE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('100000', 'COMMUN');
+          await performPropertySituation('HEBERGE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('2 personnes dont au moins 1 est en situation de handicap', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(
+            2,
+            true,
+            0,
+            '2000-01-01',
+            '2000-01-01',
+          );
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('50000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('68000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('75000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('100000', 'COMMUN');
+          await performPropertySituation('HEBERGE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('4 personnes', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(4, false, 2);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues(
+            undefined,
+            'SEUL_SOUHAIT_PARTENAIRE',
+            '30000',
+            '30000',
+          );
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues(
+            undefined,
+            'SEUL_SOUHAIT_PARTENAIRE',
+            '40000',
+            '40000',
+          );
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues(
+            undefined,
+            'SEUL_SOUHAIT_PARTENAIRE',
+            '44000',
+            '44000',
+          );
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues(
+            undefined,
+            'SEUL_SOUHAIT_PARTENAIRE',
+            '50000',
+            '50000',
+          );
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('Personne seule avec 2 personne à charge', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(3, false, 2);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('60000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('68000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('90000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('100000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('3 personnes dont au moins 1 est en situation de handicap', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(3, true, 1);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('60000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('68000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('90000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('100000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('5 personnes', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(5, false, 2);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('60000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('90000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('100000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('110000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('Personne seule avec 3 personne à charge', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(4, false, 3);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('60000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('90000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('100000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('110000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('4 personnes dont au moins 1 est en situation de handicap', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(4, true, 1);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('60000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('90000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('100000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('110000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('6 personnes', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(6, false, 2);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('80000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('110000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('121000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('130000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('Personne seule avec 4 personne à charge', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(5, false, 4);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('80000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('110000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('121000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('130000', 'SEUL_SOUHAIT_SEUL');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('5 personnes dont au moins 1 est en situation de handicap', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(5, true, 1);
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('80000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('110000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('121000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('130000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('12 personnes', () => {
+        test.beforeEach(async () => {
+          await performHouseholdComposition(
+            -1,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            '12',
+          );
+        });
+
+        test('Devrait être éligible dans toutes les zones', async () => {
+          await performFiscalRevenues('40000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être éligible dans les zones A, Abis et B1', async () => {
+          await performFiscalRevenues('170000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+        });
+
+        test('Devrait être éligible dans les zones A et Abis', async () => {
+          await performFiscalRevenues('200000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+
+        test('Devrait être inéligible', async () => {
+          await performFiscalRevenues('210000', 'COMMUN');
+          await performPropertySituation('LOCATAIRE_SOCIAL');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+
+      test.describe('Personne seule propriétaire', () => {
+        test('Devrait être inéligible', async () => {
+          await performHouseholdComposition(1, false);
+          await performFiscalRevenues('25000');
+          await performPropertySituation('PROPRIETAIRE');
+          validateStepAndPhaseTitles();
+          expect(resultText).toBeVisible();
+          expect(resultText).toHaveText(
+            stepsContent.eligibility.isOwner.title.replace(/<[^>]*>/g, ''),
+          );
+        });
+      });
+    });
+
+    test.describe('Informations personnelles', () => {
+      test.describe("Cas d'erreur du formulaire", () => {
+        test('Soumettre sans prénom, sans nom de famille, sans adresse email ou sans numéro de téléphone', async () => {
+          await performHouseholdComposition(1, false);
+          await performFiscalRevenues('25000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          await performResultDetails();
+          await performUserDetails();
+          expect(firstNameErrorMessage).toBeVisible();
+          expect(firstNameErrorMessage).toHaveText(
+            stepsContent.firstName.errorMessage,
+          );
+          expect(lastNameErrorMessage).toBeVisible();
+          expect(lastNameErrorMessage).toHaveText(
+            stepsContent.lastName.errorMessage,
+          );
+          expect(emailErrorMessage).toBeVisible();
+          expect(emailErrorMessage).toHaveText(stepsContent.email.errorMessage);
+          expect(phoneErrorMessage).toBeVisible();
+          expect(phoneErrorMessage).toHaveText(stepsContent.phone.errorMessage);
+        });
+      });
+
+      test.describe('Scenarii valides', () => {
+        const validateStepAndPhaseTitles = () => {
+          expect(stepTitle).toHaveText(
+            `2. ${steps[1].title} Étape 2 sur ${steps.length}`,
+          );
+          expect(phaseTitle).toHaveText(`${steps[1].phases[1].title}`);
+        };
+
+        test.afterEach(async () => {
+          expect(stepTitle).toHaveText(
+            `3. ${steps[2].title} Étape 3 sur ${steps.length}`,
+          );
+          expect(phaseTitle).toHaveText(`${steps[2].phases[0].title}`);
+        });
+
+        test('Soumettre avec prénom, nom de famille, adresse email et numéro de téléphone', async () => {
+          await performHouseholdComposition(1, false);
+          await performFiscalRevenues('25000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          await performResultDetails();
+          validateStepAndPhaseTitles();
+          await performUserDetails(
+            'Gandalf',
+            'Le Gris',
+            'gandalf.legris@example.com',
+            '+33122334455',
+          );
+        });
+      });
+    });
+  });
+
+  test.describe('Synthèse', () => {
+    test("L'utilisateur obtient son résultat d'éligibilité et refuse la mise en relation", async () => {
+      await performHouseholdComposition(1, false);
+      await performFiscalRevenues('25000');
+      await performPropertySituation('LOCATAIRE_PRIVE');
+      await performRefuseConnection();
       expect(stepTitle).toHaveText(
-        `2. ${steps[1].title} Étape 2 sur ${steps.length}`,
+        `4. ${steps[3].title} Étape 4 sur ${steps.length}`,
       );
-      expect(phaseTitle).toHaveText(`${steps[1].phases[0].title}`);
-    };
-
-    test.describe('Personne seule sans handicap', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(1, false);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('25000');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('35000');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('100000');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('Personne seule en situation de handicap', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(1, true);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('25000');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('50000');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('100000');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('2 personnes ne comportant aucune personne à charge hors jeunes ménages ayant déclaré en commun', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(
-          2,
-          false,
-          0,
-          '1950-01-01',
-          '1950-01-01',
-        );
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('25000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('50000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('100000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('2 personnes ne comportant aucune personne à charge hors jeunes ménages ayant déclaré en "Seul·e et vous souhaitez et vous souhaitez acheter avec un·e partenaire"', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(
-          2,
-          false,
-          0,
-          '1950-01-01',
-          '1950-01-01',
-        );
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues(
-          undefined,
-          'SEUL_SOUHAIT_PARTENAIRE',
-          '20000',
-          '20000',
-        );
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues(
-          undefined,
-          'SEUL_SOUHAIT_PARTENAIRE',
-          '30000',
-          '20000',
-        );
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues(
-          undefined,
-          'SEUL_SOUHAIT_PARTENAIRE',
-          '50000',
-          '50000',
-        );
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('3 personnes, les co-acquéreurs ayant déclaré en commun', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(3, false, 1);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('50000', 'COMMUN');
-        await performPropertySituation('AUTRE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('68000', 'COMMUN');
-        await performPropertySituation('HEBERGE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('75000', 'COMMUN');
-        await performPropertySituation('HEBERGE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('100000', 'COMMUN');
-        await performPropertySituation('HEBERGE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('Personne seule avec 1 personne à charge', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(2, false, 1);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('50000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('AUTRE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('68000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('HEBERGE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('75000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('HEBERGE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('100000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('HEBERGE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('Jeune ménage, où la somme des ages des co-acquéreurs ne dépasse pas 55 ans', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(
-          2,
-          false,
-          0,
-          '2000-01-01',
-          '2000-01-01',
-        );
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('50000', 'COMMUN');
-        await performPropertySituation('AUTRE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('68000', 'COMMUN');
-        await performPropertySituation('HEBERGE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('75000', 'COMMUN');
-        await performPropertySituation('HEBERGE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('100000', 'COMMUN');
-        await performPropertySituation('HEBERGE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('2 personnes dont au moins 1 est en situation de handicap', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(
-          2,
-          true,
-          0,
-          '2000-01-01',
-          '2000-01-01',
-        );
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('50000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('68000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('75000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('100000', 'COMMUN');
-        await performPropertySituation('HEBERGE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('4 personnes', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(4, false, 2);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues(
-          undefined,
-          'SEUL_SOUHAIT_PARTENAIRE',
-          '30000',
-          '30000',
-        );
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues(
-          undefined,
-          'SEUL_SOUHAIT_PARTENAIRE',
-          '40000',
-          '40000',
-        );
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues(
-          undefined,
-          'SEUL_SOUHAIT_PARTENAIRE',
-          '44000',
-          '44000',
-        );
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues(
-          undefined,
-          'SEUL_SOUHAIT_PARTENAIRE',
-          '50000',
-          '50000',
-        );
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('Personne seule avec 2 personne à charge', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(3, false, 2);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('60000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('68000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('90000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('100000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('3 personnes dont au moins 1 est en situation de handicap', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(3, true, 1);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('60000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('68000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('90000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('100000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('5 personnes', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(5, false, 2);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('60000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('90000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('100000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('110000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('Personne seule avec 3 personne à charge', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(4, false, 3);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('60000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('90000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('100000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('110000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('4 personnes dont au moins 1 est en situation de handicap', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(4, true, 1);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('60000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('90000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('100000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('110000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('6 personnes', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(6, false, 2);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('80000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('110000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('121000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('130000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('Personne seule avec 4 personne à charge', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(5, false, 4);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('80000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('110000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('121000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('130000', 'SEUL_SOUHAIT_SEUL');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('5 personnes dont au moins 1 est en situation de handicap', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(5, true, 1);
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('80000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('110000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB1.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('121000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('130000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('12 personnes', () => {
-      test.beforeEach(async () => {
-        await performHouseholdComposition(
-          -1,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          '12',
-        );
-      });
-
-      test('Devrait être éligible dans toutes les zones', async () => {
-        await performFiscalRevenues('40000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneB2andC.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être éligible dans les zones A, Abis et B1', async () => {
-        await performFiscalRevenues('170000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_PRIVE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-      });
-
-      test('Devrait être éligible dans les zones A et Abis', async () => {
-        await performFiscalRevenues('200000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.zoneAandAbis.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-
-      test('Devrait être inéligible', async () => {
-        await performFiscalRevenues('210000', 'COMMUN');
-        await performPropertySituation('LOCATAIRE_SOCIAL');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.notEligible.title.replace(/<[^>]*>/g, ''),
-        );
-      });
-    });
-
-    test.describe('Personne seule propriétaire', () => {
-      test('Devrait être inéligible', async () => {
-        await performHouseholdComposition(1, false);
-        await performFiscalRevenues('25000');
-        await performPropertySituation('PROPRIETAIRE');
-        validateStepAndPhaseTitles();
-        expect(resultText).toBeVisible();
-        expect(resultText).toHaveText(
-          stepsContent.eligibility.isOwner.title.replace(/<[^>]*>/g, ''),
-        );
-      });
+      expect(phaseTitle).toHaveText(`${steps[3].phases[0].title}`);
+      expect(previousPhaseButton).toContainText(`${steps[1].title}`);
     });
   });
 });

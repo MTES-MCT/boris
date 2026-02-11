@@ -424,6 +424,19 @@ export const stepsContent = {
     errorDataTestId: 'input-email-error-message',
     errorMessage: 'Veuillez saisir votre adresse email',
   },
+  phone: {
+    label: 'Numéro de téléphone',
+    errorDataTestId: 'input-phone-error-message',
+    errorMessage:
+      'Veuillez saisir un numéro de téléphone valide. Le format attendu est: +33122334455',
+  },
+  connection: {
+    title: 'Mise en relation',
+    connectionCtaText:
+      'Si vous le souhaitez, nous pouvons vous mettre en relation avec les professionnels du Bail Réel Solidaire. Pour cela, vous pouvez cliquer sur le bouton "Étape suivante" ci-dessous et renseigner vos informations personnelles.',
+  },
+  exitSimulatorText:
+    'Si vous ne souhaitez pas continuer, vous pouvez quitter le simulateur en cliquant ',
 };
 
 const calculateAge = (birthDate: string) => {

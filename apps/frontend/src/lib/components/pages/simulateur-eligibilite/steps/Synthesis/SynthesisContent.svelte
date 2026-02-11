@@ -3,10 +3,23 @@
   import Form from '$components/common/Simulator/Form.svelte';
   import Actions from '$components/common/Simulator/Actions.svelte';
   import Action from '$components/common/Simulator/Action.svelte';
+  import { steps } from '$lib/utils/eligibility-simulator';
 
-  const { currentPhase, previousStep, goToPreviousPhase, loading } = $derived(
-    eligibilitySimulatorManager,
-  );
+  const {
+    hasRefusedConnection,
+    currentPhase,
+    previousStep,
+    goToPreviousPhase,
+    loading,
+  } = $derived(eligibilitySimulatorManager);
+
+  let previousPhaseTitle = $derived.by(() => {
+    if (hasRefusedConnection) {
+      return steps[1].title;
+    }
+
+    return previousStep?.title as string;
+  });
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
@@ -23,7 +36,7 @@
   <Actions>
     <Action
       direction="previous"
-      label={previousStep?.title as string}
+      label={previousPhaseTitle}
       onClick={goToPreviousPhase}
       {loading} />
   </Actions>
