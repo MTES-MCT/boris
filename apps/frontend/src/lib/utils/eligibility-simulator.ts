@@ -409,6 +409,21 @@ export const stepsContent = {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     },
   },
+  firstName: {
+    label: 'Prénom',
+    errorDataTestId: 'input-first-name-error-message',
+    errorMessage: 'Veuillez saisir votre prénom',
+  },
+  lastName: {
+    label: 'Nom de famille',
+    errorDataTestId: 'input-last-name-error-message',
+    errorMessage: 'Veuillez saisir votre nom de famille',
+  },
+  email: {
+    label: 'Adresse email',
+    errorDataTestId: 'input-email-error-message',
+    errorMessage: 'Veuillez saisir votre adresse email',
+  },
 };
 
 const calculateAge = (birthDate: string) => {

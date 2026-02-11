@@ -14,7 +14,7 @@ import { formattedThousandsToNumber } from '$lib/utils/formatters';
 class EligibilitySimulator {
   public steps: Step[] = steps;
 
-  public currentStep: Step = $state(this.steps[0]);
+  public currentStep: Step = $state(this.steps[1]);
   public previousStep: Step | null = $derived.by(() => {
     if (this.currentStep.step < 2) {
       return null;
@@ -30,7 +30,7 @@ class EligibilitySimulator {
     }
   });
 
-  public currentPhase: Phase = $state(this.steps[0].phases[0]);
+  public currentPhase: Phase = $state(this.steps[1].phases[1]);
   public previousPhase: Phase | null = $derived.by(() => {
     if (this.currentPhase.phase > 1) {
       return this.currentStep.phases[this.currentPhase.phase - 2];
@@ -121,6 +121,11 @@ class EligibilitySimulator {
 
     return undefined;
   });
+
+  // User details
+  public firstName: string | undefined = $state(undefined);
+  public lastName: string | undefined = $state(undefined);
+  public email: string | undefined = $state(undefined);
 
   public goToPreviousPhase = () => {
     if (this.previousPhase) {
