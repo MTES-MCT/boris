@@ -16,6 +16,8 @@
     label: string;
     placeholder: string;
     error?: string;
+    dataTestId?: string;
+    errorDataTestId?: string;
     onSelect: (suggestion: GeocodedResponse['properties']) => void;
   };
 
@@ -25,6 +27,8 @@
     placeholder,
     error,
     onSelect,
+    dataTestId,
+    errorDataTestId,
   }: Props = $props();
 
   let suggestions = $state<GeocodedResponse['properties'][] | null>(null);
@@ -155,7 +159,9 @@
     }}
     forceNoMarginBottom
     onChange={handleChange}
-    onKeydown={handleKeydown} />
+    onKeydown={handleKeydown}
+    {dataTestId}
+    {errorDataTestId} />
 
   {#if isListExpanded}
     <div
@@ -204,7 +210,8 @@
     aria-selected={suggestion?.id === focusedSuggestionId}
     aria-setsize={suggestions?.length}
     aria-posinset={index}
-    onclick={() => handleSelect(suggestion?.id)}>
+    onclick={() => handleSelect(suggestion?.id)}
+    data-testid={`suggestion-${index}-data-test-id`}>
     {getGeocodedResponseLabel(suggestion)}
   </li>
 {/snippet}

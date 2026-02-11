@@ -19,6 +19,8 @@ export type EligibilityCategory = {
   eligibleZoneB2andC: boolean;
 };
 
+export type HousingType = 'T1' | 'T2' | 'T3' | 'T4' | 'T5';
+
 export const eligibilityData: EligibilityData[] = [
   {
     category: 'Catégorie 1',
@@ -437,6 +439,44 @@ export const stepsContent = {
   },
   exitSimulatorText:
     'Si vous ne souhaitez pas continuer, vous pouvez quitter le simulateur en cliquant ',
+  location: {
+    label: 'À quel endroit souhaitez-vous acheter votre logement ? *',
+    placeholder: 'Exemple: Quimper, Paris, Lyon, etc.',
+    errorMessage: 'Veuillez saisir un lieu valide.',
+    errorDataTestId: 'location-autocomplete-error-message',
+    dataTestId: 'location-autocomplete',
+  },
+  housingType: {
+    label: `Quel type de logement recherchez-vous ?`,
+    errorDataTestId: 'select-housing-type-error-message',
+    options: [
+      {
+        value: undefined,
+        label: 'Veuillez sélectionner une option',
+      },
+      {
+        value: 'T1',
+        label: 'T1 (1 pièce)',
+      },
+      {
+        value: 'T2',
+        label: 'T2 (2 pièces)',
+      },
+      {
+        value: 'T3',
+        label: 'T3 (3 pièces)',
+      },
+      {
+        value: 'T4',
+        label: 'T4 (4 pièces)',
+      },
+      {
+        value: 'T5',
+        label: 'T5 (5 pièces) ou plus grand',
+      },
+    ],
+    errorMessage: 'Veuillez sélectionner une option',
+  },
 };
 
 const calculateAge = (birthDate: string) => {

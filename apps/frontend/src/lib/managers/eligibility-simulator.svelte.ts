@@ -1,10 +1,12 @@
 import { browser } from '$app/environment';
+import type { GeocodedResponse } from '$lib/utils/definitions';
 
 import {
   defineEligibleZone,
   steps,
   type DeclarationType,
   type EligibilityCategory,
+  type HousingType,
   type Phase,
   type PropertySituation,
   type Step,
@@ -128,6 +130,12 @@ class EligibilitySimulator {
   public email: string | undefined = $state(undefined);
   public phone: string | undefined = $state(undefined);
   public hasRefusedConnection: boolean = $state(false);
+
+  // Search informations
+  public selectedLocation: GeocodedResponse['properties'] | undefined =
+    $state();
+  public autocompleteValue = $derived(this.selectedLocation?.label || '');
+  public housingType: HousingType | undefined = $state(undefined);
 
   public goToPreviousPhase = () => {
     if (this.hasRefusedConnection) {

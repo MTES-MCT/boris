@@ -3,8 +3,9 @@ import {
   steps,
   type DeclarationType,
   type PropertySituation,
+  type HousingType,
 } from '../../../../src/lib/utils/eligibility-simulator';
-import { test, expect, type Locator } from '@playwright/test';
+import { test, expect, type Locator, type Page } from '@playwright/test';
 
 test.describe('Eligibility simulator', () => {
   let simulatorWrapper: Locator;
@@ -56,6 +57,13 @@ test.describe('Eligibility simulator', () => {
   let emailErrorMessage: Locator;
   let phoneInput: Locator;
   let phoneErrorMessage: Locator;
+
+  // Informations sur le logement
+  let locationInput: Locator;
+  let locationErrorMessage: Locator;
+
+  let housingTypeSelect: Locator;
+  let housingTypeErrorMessage: Locator;
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/simulateur-eligibilite/steps');
@@ -189,6 +197,20 @@ test.describe('Eligibility simulator', () => {
     phoneErrorMessage = simulatorWrapper.getByTestId(
       stepsContent.phone.errorDataTestId,
     );
+
+    // Informations sur le logement
+    locationInput = simulatorWrapper.getByTestId(
+      stepsContent.location.dataTestId,
+    );
+    locationErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.location.errorDataTestId,
+    );
+    housingTypeSelect = simulatorWrapper.getByRole('combobox', {
+      name: stepsContent.housingType.label,
+    });
+    housingTypeErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.housingType.errorDataTestId,
+    );
   });
 
   const performHouseholdComposition = async (
@@ -306,6 +328,33 @@ test.describe('Eligibility simulator', () => {
 
     if (typeof phone === 'string') {
       await phoneInput.fill(phone);
+    }
+
+    await submitButton.click();
+  };
+
+  const performHousingInformations = async (
+    location?: string,
+    housingType?: HousingType,
+    selectedSuggestionDataTestId?: string,
+    page?: Page,
+  ) => {
+    if (typeof location === 'string') {
+      await locationInput.fill(location);
+    }
+
+    if (
+      typeof page !== 'undefined' &&
+      typeof selectedSuggestionDataTestId === 'string'
+    ) {
+      await page.waitForTimeout(2000);
+      const suggestion = page.getByTestId(selectedSuggestionDataTestId);
+      await suggestion.click();
+      await page.waitForTimeout(1000);
+    }
+
+    if (typeof housingType === 'string') {
+      await housingTypeSelect.selectOption(housingType);
     }
 
     await submitButton.click();
@@ -1522,6 +1571,96 @@ test.describe('Eligibility simulator', () => {
           );
         });
       });
+    });
+  });
+
+  test.describe('Ma recherche', () => {
+    test.describe('Informations sur le logement', () => {
+      test.describe("Cas d'erreur du formulaire", () => {
+        test('Soumettre sans lieu de recherche et sans type de logement', async () => {
+          await performHouseholdComposition(1, false);
+          await performFiscalRevenues('25000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          await performResultDetails();
+          await performUserDetails(
+            'Gandalf',
+            'Le Gris',
+            'gandalf.legris@example.com',
+            '+33122334455',
+          );
+          await performHousingInformations();
+          expect(locationErrorMessage).toBeVisible();
+          expect(locationErrorMessage).toHaveText(
+            stepsContent.location.errorMessage,
+          );
+          expect(housingTypeErrorMessage).toBeVisible();
+          expect(housingTypeErrorMessage).toHaveText(
+            stepsContent.housingType.errorMessage,
+          );
+        });
+
+        test('Soumettre avec un lieu de recherche invalide et un type de logement valide', async () => {
+          await performHouseholdComposition(1, false);
+          await performFiscalRevenues('25000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          await performResultDetails();
+          await performUserDetails(
+            'Gandalf',
+            'Le Gris',
+            'gandalf.legris@example.com',
+            '+33122334455',
+          );
+          await performHousingInformations('Invalid Location', 'T1');
+          expect(locationErrorMessage).toBeVisible();
+          expect(locationErrorMessage).toHaveText(
+            stepsContent.location.errorMessage,
+          );
+        });
+      });
+
+      test.describe('Scénarii valides', () => {
+        const validateStepAndPhaseTitles = () => {
+          expect(stepTitle).toHaveText(
+            `3. ${steps[2].title} Étape 3 sur ${steps.length}`,
+          );
+          expect(phaseTitle).toHaveText(`${steps[2].phases[0].title}`);
+        };
+
+        test.afterEach(async () => {
+          expect(stepTitle).toHaveText(
+            `3. ${steps[2].title} Étape 3 sur ${steps.length}`,
+          );
+          expect(phaseTitle).toHaveText(`${steps[2].phases[1].title}`);
+        });
+
+        test('Soumettre avec un lieu de recherche valide et un type de logement valide', async ({
+          page,
+        }) => {
+          await performHouseholdComposition(1, false);
+          await performFiscalRevenues('25000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          await performResultDetails();
+          await performUserDetails(
+            'Gandalf',
+            'Le Gris',
+            'gandalf.legris@example.com',
+            '+33122334455',
+          );
+          validateStepAndPhaseTitles();
+          await performHousingInformations(
+            'Paris',
+            'T1',
+            'suggestion-3-data-test-id',
+            page,
+          );
+        });
+      });
+    });
+
+    test.describe('Informations financières', () => {
+      test.describe("Cas d'erreur du formulaire", () => {});
+
+      test.describe('Scénarii valides', () => {});
     });
   });
 
