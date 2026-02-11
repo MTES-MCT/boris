@@ -137,6 +137,24 @@ class EligibilitySimulator {
   public autocompleteValue = $derived(this.selectedLocation?.label || '');
   public housingType: HousingType | undefined = $state(undefined);
 
+  // Financial informations
+  public formattedContribution: string | undefined = $state(undefined);
+  public formattedResources: string | undefined = $state(undefined);
+  public contribution: number | undefined = $derived.by(() => {
+    if (this.formattedContribution) {
+      return formattedThousandsToNumber(this.formattedContribution);
+    }
+
+    return undefined;
+  });
+  public resources: number | undefined = $derived.by(() => {
+    if (this.formattedResources) {
+      return formattedThousandsToNumber(this.formattedResources);
+    }
+
+    return undefined;
+  });
+
   public goToPreviousPhase = () => {
     if (this.hasRefusedConnection) {
       this.currentStep = this.steps[1];
