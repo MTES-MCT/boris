@@ -61,9 +61,14 @@ test.describe('Eligibility simulator', () => {
   // Informations sur le logement
   let locationInput: Locator;
   let locationErrorMessage: Locator;
-
   let housingTypeSelect: Locator;
   let housingTypeErrorMessage: Locator;
+
+  // Informations financières
+  let contributionInput: Locator;
+  let contributionErrorMessage: Locator;
+  let resourcesInput: Locator;
+  let resourcesErrorMessage: Locator;
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/simulateur-eligibilite/steps');
@@ -211,6 +216,20 @@ test.describe('Eligibility simulator', () => {
     housingTypeErrorMessage = simulatorWrapper.getByTestId(
       stepsContent.housingType.errorDataTestId,
     );
+
+    // Informations financières
+    contributionInput = simulatorWrapper.getByTestId(
+      stepsContent.contribution.inputDataTestId,
+    );
+    contributionErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.contribution.errorDataTestId,
+    );
+    resourcesInput = simulatorWrapper.getByTestId(
+      stepsContent.resources.inputDataTestId,
+    );
+    resourcesErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.resources.errorDataTestId,
+    );
   });
 
   const performHouseholdComposition = async (
@@ -355,6 +374,21 @@ test.describe('Eligibility simulator', () => {
 
     if (typeof housingType === 'string') {
       await housingTypeSelect.selectOption(housingType);
+    }
+
+    await submitButton.click();
+  };
+
+  const performFinancialInformations = async (
+    contribution?: string,
+    resources?: string,
+  ) => {
+    if (typeof contribution === 'string') {
+      await contributionInput.fill(contribution);
+    }
+
+    if (typeof resources === 'string') {
+      await resourcesInput.fill(resources);
     }
 
     await submitButton.click();
@@ -1658,9 +1692,91 @@ test.describe('Eligibility simulator', () => {
     });
 
     test.describe('Informations financières', () => {
-      test.describe("Cas d'erreur du formulaire", () => {});
+      test.describe("Cas d'erreur du formulaire", () => {
+        test.beforeEach(async ({ page }) => {
+          await performHouseholdComposition(1, false);
+          await performFiscalRevenues('25000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          await performResultDetails();
+          await performUserDetails(
+            'Gandalf',
+            'Le Gris',
+            'gandalf.legris@example.com',
+            '+33122334455',
+          );
+          await performHousingInformations(
+            'Paris',
+            'T1',
+            'suggestion-3-data-test-id',
+            page,
+          );
+        });
 
-      test.describe('Scénarii valides', () => {});
+        test('Soumettre sans apport et sans ressources', async () => {
+          await performFinancialInformations();
+          expect(contributionErrorMessage).toBeVisible();
+          expect(contributionErrorMessage).toHaveText(
+            stepsContent.contribution.errorMessage,
+          );
+          expect(resourcesErrorMessage).toBeVisible();
+          expect(resourcesErrorMessage).toHaveText(
+            stepsContent.resources.errorMessage,
+          );
+        });
+
+        test('Soumettre avec apport et sans ressources', async () => {
+          await performFinancialInformations('10000');
+          expect(resourcesErrorMessage).toBeVisible();
+          expect(resourcesErrorMessage).toHaveText(
+            stepsContent.resources.errorMessage,
+          );
+        });
+
+        test('Soumettre sans apport et avec ressources', async () => {
+          await performFinancialInformations(undefined, '10000');
+          expect(contributionErrorMessage).toBeVisible();
+          expect(contributionErrorMessage).toHaveText(
+            stepsContent.contribution.errorMessage,
+          );
+        });
+      });
+
+      test.describe('Scénarii valides', () => {
+        const validateStepAndPhaseTitles = () => {
+          expect(stepTitle).toHaveText(
+            `3. ${steps[2].title} Étape 3 sur ${steps.length}`,
+          );
+          expect(phaseTitle).toHaveText(`${steps[2].phases[1].title}`);
+        };
+
+        test.afterEach(async () => {
+          expect(stepTitle).toHaveText(
+            `3. ${steps[2].title} Étape 3 sur ${steps.length}`,
+          );
+          expect(phaseTitle).toHaveText(`${steps[2].phases[2].title}`);
+        });
+
+        test('Soumettre avec apport et avec ressources', async ({ page }) => {
+          await performHouseholdComposition(1, false);
+          await performFiscalRevenues('25000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          await performResultDetails();
+          await performUserDetails(
+            'Gandalf',
+            'Le Gris',
+            'gandalf.legris@example.com',
+            '+33122334455',
+          );
+          await performHousingInformations(
+            'Paris',
+            'T1',
+            'suggestion-3-data-test-id',
+            page,
+          );
+          validateStepAndPhaseTitles();
+          await performFinancialInformations('10000', '10000');
+        });
+      });
     });
   });
 

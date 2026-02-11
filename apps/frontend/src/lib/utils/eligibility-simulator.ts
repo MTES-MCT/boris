@@ -477,6 +477,19 @@ export const stepsContent = {
     ],
     errorMessage: 'Veuillez sélectionner une option',
   },
+  contribution: {
+    label: 'Quel est le montant de votre apport ?',
+    errorDataTestId: 'input-contribution-error-message',
+    errorMessage: 'Veuillez saisir un chiffre supérieur à 0.',
+    inputDataTestId: 'input-contribution',
+  },
+  resources: {
+    label:
+      'Quelle est la somme des salaires nets mensuels et autres ressources mensuelles que touchent chaque personnes de votre ménage ?',
+    errorDataTestId: 'input-resources-error-message',
+    errorMessage: 'Veuillez saisir un chiffre supérieur à 0.',
+    inputDataTestId: 'input-resources',
+  },
 };
 
 const calculateAge = (birthDate: string) => {
