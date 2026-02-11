@@ -14,7 +14,7 @@ import { formattedThousandsToNumber } from '$lib/utils/formatters';
 class EligibilitySimulator {
   public steps: Step[] = steps;
 
-  public currentStep: Step = $state(this.steps[1]);
+  public currentStep: Step = $state(this.steps[0]);
   public previousStep: Step | null = $derived.by(() => {
     if (this.currentStep.step < 2) {
       return null;
@@ -30,7 +30,7 @@ class EligibilitySimulator {
     }
   });
 
-  public currentPhase: Phase = $state(this.steps[1].phases[1]);
+  public currentPhase: Phase = $state(this.steps[0].phases[0]);
   public previousPhase: Phase | null = $derived.by(() => {
     if (this.currentPhase.phase > 1) {
       return this.currentStep.phases[this.currentPhase.phase - 2];
@@ -126,9 +126,15 @@ class EligibilitySimulator {
   public firstName: string | undefined = $state(undefined);
   public lastName: string | undefined = $state(undefined);
   public email: string | undefined = $state(undefined);
+  public phone: string | undefined = $state(undefined);
+  public hasRefusedConnection: boolean = $state(false);
 
   public goToPreviousPhase = () => {
-    if (this.previousPhase) {
+    if (this.hasRefusedConnection) {
+      this.currentStep = this.steps[1];
+      this.currentPhase = this.steps[1].phases[0];
+      this.resetScroll();
+    } else if (this.previousPhase) {
       const shouldGoToPreviousStep = this.currentPhase.phase === 1;
 
       this.currentPhase = this.previousPhase;
@@ -154,6 +160,13 @@ class EligibilitySimulator {
 
       this.resetScroll();
     }
+  };
+
+  public refuseConnection = () => {
+    this.currentStep = this.steps[3];
+    this.currentPhase = this.steps[3].phases[0];
+    this.hasRefusedConnection = true;
+    this.resetScroll();
   };
 
   private resetScroll = () => {

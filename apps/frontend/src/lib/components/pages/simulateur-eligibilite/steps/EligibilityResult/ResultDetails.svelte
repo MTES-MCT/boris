@@ -15,6 +15,7 @@
     goToNextPhase,
     previousStep,
     goToPreviousPhase,
+    refuseConnection,
     loading,
   } = $derived(eligibilitySimulatorManager);
 
@@ -37,15 +38,19 @@
       {#if propertySituation === 'PROPRIETAIRE'}
         {@render resultAlert(stepsContent.eligibility.isOwner.title, 'error')}
         <p>{stepsContent.eligibility.isOwner.content}</p>
+        {@render connectionCta()}
       {:else if eligibility?.eligibleZoneB2andC}
         {@render resultAlert(stepsContent.eligibility.zoneB2andC.title)}
         <p>{stepsContent.eligibility.zoneB2andC.content}</p>
+        {@render connectionCta()}
       {:else if eligibility?.eligibleZoneB1}
         {@render resultAlert(stepsContent.eligibility.zoneB1.title)}
         <p>{stepsContent.eligibility.zoneB1.content}</p>
+        {@render connectionCta()}
       {:else if eligibility?.eligibleZoneAandAbis}
         {@render resultAlert(stepsContent.eligibility.zoneAandAbis.title)}
         <p>{stepsContent.eligibility.zoneAandAbis.content}</p>
+        {@render connectionCta()}
       {:else}
         {@render resultAlert(
           stepsContent.eligibility.notEligible.title,
@@ -79,5 +84,26 @@
         {@html content}
       </p>
     </Alert>
+  </div>
+{/snippet}
+
+{#snippet connectionCta()}
+  <div class="fr-fieldset__element">
+    <div class="separator !mb-8"></div>
+    <h4 class="fr-h5">{stepsContent.connection.title}</h4>
+    <p>
+      {stepsContent.connection.connectionCtaText}
+    </p>
+    <p class="!mb-0">
+      {stepsContent.exitSimulatorText}
+      <button
+        type="button"
+        class="fr-link !inline underline"
+        data-testid="refuse-connection-link"
+        onclick={refuseConnection}>
+        ici
+      </button>
+      .
+    </p>
   </div>
 {/snippet}
