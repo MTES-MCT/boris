@@ -4,6 +4,9 @@ import {
   type DeclarationType,
   type PropertySituation,
   type HousingType,
+  type EmploymentStatus,
+  type PositionType,
+  type ContractType,
 } from '../../../../src/lib/utils/eligibility-simulator';
 import { test, expect, type Locator, type Page } from '@playwright/test';
 
@@ -69,6 +72,28 @@ test.describe('Eligibility simulator', () => {
   let contributionErrorMessage: Locator;
   let resourcesInput: Locator;
   let resourcesErrorMessage: Locator;
+
+  // Informations complémentaires
+  let hadBrsKnowledgeSelect: Locator;
+  let hadBrsKnowledgeErrorMessage: Locator;
+  let employmentStatusSelect: Locator;
+  let employmentStatusErrorMessage: Locator;
+  let laposteEmployerInput: Locator;
+  let laposteEmployerErrorMessage: Locator;
+  let canSendInformationsToLaposteSelect: Locator;
+  let canSendInformationsToLaposteErrorMessage: Locator;
+  let positionTypeSelect: Locator;
+  let positionTypeErrorMessage: Locator;
+  let positionStageSelect: Locator;
+  let positionStageErrorMessage: Locator;
+  let hasCompanyMoreThan10EmployeesSelect: Locator;
+  let hasCompanyMoreThan10EmployeesErrorMessage: Locator;
+  let hasCompanyMoreThan50EmployeesSelect: Locator;
+  let hasCompanyMoreThan50EmployeesErrorMessage: Locator;
+  let allowFinancingAndOwnershipAdvicesSelect: Locator;
+  let allowFinancingAndOwnershipAdvicesErrorMessage: Locator;
+  let positionContractTypeSelect: Locator;
+  let positionContractTypeErrorMessage: Locator;
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/simulateur-eligibilite/steps');
@@ -230,6 +255,81 @@ test.describe('Eligibility simulator', () => {
     resourcesErrorMessage = simulatorWrapper.getByTestId(
       stepsContent.resources.errorDataTestId,
     );
+
+    // Informations complémentaires
+    hadBrsKnowledgeSelect = simulatorWrapper.getByRole('combobox', {
+      name: stepsContent.hadBrsKnowledge.label,
+    });
+    hadBrsKnowledgeErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.hadBrsKnowledge.errorDataTestId,
+    );
+    employmentStatusSelect = simulatorWrapper.getByRole('combobox', {
+      name: stepsContent.employmentStatus.label,
+    });
+    employmentStatusErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.employmentStatus.errorDataTestId,
+    );
+    laposteEmployerInput = simulatorWrapper.getByTestId(
+      stepsContent.laposteEmployer.inputDataTestId,
+    );
+    laposteEmployerErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.laposteEmployer.errorDataTestId,
+    );
+    canSendInformationsToLaposteSelect = simulatorWrapper.getByRole(
+      'combobox',
+      {
+        name: stepsContent.canSendInformationsToLaposte.label,
+      },
+    );
+    canSendInformationsToLaposteErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.canSendInformationsToLaposte.errorDataTestId,
+    );
+    positionTypeSelect = simulatorWrapper.getByRole('combobox', {
+      name: stepsContent.positionType.label,
+    });
+    positionTypeErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.positionType.errorDataTestId,
+    );
+    positionStageSelect = simulatorWrapper.getByRole('combobox', {
+      name: stepsContent.positionStage.label,
+    });
+    positionStageErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.positionStage.errorDataTestId,
+    );
+    hasCompanyMoreThan10EmployeesSelect = simulatorWrapper.getByRole(
+      'combobox',
+      {
+        name: stepsContent.hasCompanyMoreThan10Employees.label,
+      },
+    );
+    hasCompanyMoreThan10EmployeesErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.hasCompanyMoreThan10Employees.errorDataTestId,
+    );
+    hasCompanyMoreThan50EmployeesSelect = simulatorWrapper.getByRole(
+      'combobox',
+      {
+        name: stepsContent.hasCompanyMoreThan50Employees.label,
+      },
+    );
+    hasCompanyMoreThan50EmployeesErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.hasCompanyMoreThan50Employees.errorDataTestId,
+    );
+    allowFinancingAndOwnershipAdvicesSelect = simulatorWrapper.getByRole(
+      'combobox',
+      {
+        name: stepsContent.allowFinancingAndOwnershipAdvices.label,
+      },
+    );
+    allowFinancingAndOwnershipAdvicesErrorMessage =
+      simulatorWrapper.getByTestId(
+        stepsContent.allowFinancingAndOwnershipAdvices.errorDataTestId,
+      );
+    positionContractTypeSelect = simulatorWrapper.getByRole('combobox', {
+      name: stepsContent.positionContractType.label,
+    });
+    positionContractTypeErrorMessage = simulatorWrapper.getByTestId(
+      stepsContent.positionContractType.errorDataTestId,
+    );
   });
 
   const performHouseholdComposition = async (
@@ -389,6 +489,91 @@ test.describe('Eligibility simulator', () => {
 
     if (typeof resources === 'string') {
       await resourcesInput.fill(resources);
+    }
+
+    await submitButton.click();
+  };
+
+  const performAdditionalInformations = async (
+    hadBrsKnowledge?: boolean,
+    employmentStatus?: EmploymentStatus,
+    laposteEmployer?: string,
+    canSendInformationsToLaposte?: boolean,
+    positionType?: PositionType,
+    positionStage?: boolean,
+    hasCompanyMoreThan10Employees?: boolean,
+    allowFinancingAndOwnershipAdvices?: boolean,
+    positionContractType?: ContractType,
+    hasCompanyMoreThan50Employees?: boolean,
+  ) => {
+    if (typeof hadBrsKnowledge === 'boolean') {
+      await hadBrsKnowledgeSelect.selectOption(hadBrsKnowledge.toString());
+    }
+
+    if (typeof employmentStatus === 'string') {
+      await employmentStatusSelect.selectOption(employmentStatus);
+
+      if (employmentStatus === 'SALARIE_GROUPE_LA_POSTE') {
+        expect(laposteEmployerInput).toBeVisible();
+
+        if (typeof laposteEmployer === 'string') {
+          await laposteEmployerInput.fill(laposteEmployer);
+        }
+
+        if (typeof canSendInformationsToLaposte === 'boolean') {
+          await canSendInformationsToLaposteSelect.selectOption(
+            canSendInformationsToLaposte.toString(),
+          );
+        }
+
+        if (typeof positionType === 'string') {
+          await positionTypeSelect.selectOption(positionType);
+        }
+
+        if (typeof positionStage === 'boolean') {
+          await positionStageSelect.selectOption(positionStage.toString());
+        }
+      } else if (employmentStatus === 'SALARIE_PUBLIC_OU_FONCTIONNAIRE') {
+        if (typeof positionType === 'string') {
+          await positionTypeSelect.selectOption(positionType);
+        }
+
+        if (typeof positionStage === 'boolean') {
+          await positionStageSelect.selectOption(positionStage.toString());
+        }
+      } else if (employmentStatus === 'SALARIE_PRIVE_NON_AGRICOLE') {
+        if (typeof hasCompanyMoreThan10Employees === 'boolean') {
+          await hasCompanyMoreThan10EmployeesSelect.selectOption(
+            hasCompanyMoreThan10Employees.toString(),
+          );
+        }
+
+        if (typeof allowFinancingAndOwnershipAdvices === 'boolean') {
+          await allowFinancingAndOwnershipAdvicesSelect.selectOption(
+            allowFinancingAndOwnershipAdvices.toString(),
+          );
+        }
+
+        if (typeof positionContractType === 'string') {
+          await positionContractTypeSelect.selectOption(positionContractType);
+        }
+      } else if (employmentStatus === 'SALARIE_AGRICOLE') {
+        if (typeof hasCompanyMoreThan50Employees === 'boolean') {
+          await hasCompanyMoreThan50EmployeesSelect.selectOption(
+            hasCompanyMoreThan50Employees.toString(),
+          );
+        }
+
+        if (typeof allowFinancingAndOwnershipAdvices === 'boolean') {
+          await allowFinancingAndOwnershipAdvicesSelect.selectOption(
+            allowFinancingAndOwnershipAdvices.toString(),
+          );
+        }
+
+        if (typeof positionContractType === 'string') {
+          await positionContractTypeSelect.selectOption(positionContractType);
+        }
+      }
     }
 
     await submitButton.click();
@@ -1775,6 +1960,279 @@ test.describe('Eligibility simulator', () => {
           );
           validateStepAndPhaseTitles();
           await performFinancialInformations('10000', '10000');
+        });
+      });
+    });
+
+    test.describe('Informations complémentaires', () => {
+      test.describe("Cas d'erreur du formulaire", () => {
+        test.beforeEach(async ({ page }) => {
+          await performHouseholdComposition(1, false);
+          await performFiscalRevenues('25000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          await performResultDetails();
+          await performUserDetails(
+            'Gandalf',
+            'Le Gris',
+            'gandalf.legris@example.com',
+            '+33122334455',
+          );
+          await performHousingInformations(
+            'Paris',
+            'T1',
+            'suggestion-3-data-test-id',
+            page,
+          );
+          await performFinancialInformations('10000', '10000');
+        });
+
+        test('Soumettre sans connaissance du BRS et sans statut professionnel', async () => {
+          await performAdditionalInformations();
+          expect(hadBrsKnowledgeErrorMessage).toBeVisible();
+          expect(hadBrsKnowledgeErrorMessage).toHaveText(
+            stepsContent.hadBrsKnowledge.errorMessage,
+          );
+          expect(employmentStatusErrorMessage).toBeVisible();
+          expect(employmentStatusErrorMessage).toHaveText(
+            stepsContent.employmentStatus.errorMessage,
+          );
+        });
+
+        test(`Soumettre avec connaissance du BRS et statut professionnel "Salarié du groupe La Poste", sans remplir les informations supplémentaires`, async () => {
+          await performAdditionalInformations(true, 'SALARIE_GROUPE_LA_POSTE');
+          expect(laposteEmployerErrorMessage).toBeVisible();
+          expect(laposteEmployerErrorMessage).toHaveText(
+            stepsContent.laposteEmployer.errorMessage,
+          );
+          expect(canSendInformationsToLaposteErrorMessage).toBeVisible();
+          expect(canSendInformationsToLaposteErrorMessage).toHaveText(
+            stepsContent.canSendInformationsToLaposte.errorMessage,
+          );
+          expect(positionTypeErrorMessage).toBeVisible();
+          expect(positionTypeErrorMessage).toHaveText(
+            stepsContent.positionType.errorMessage,
+          );
+          expect(positionStageErrorMessage).toBeVisible();
+          expect(positionStageErrorMessage).toHaveText(
+            stepsContent.positionStage.errorMessage,
+          );
+        });
+
+        test(`Soumettre avec connaissance du BRS et statut professionnel "Salarié du secteur public ou fonctionnaire", sans remplir les informations supplémentaires`, async () => {
+          await performAdditionalInformations(
+            true,
+            'SALARIE_PUBLIC_OU_FONCTIONNAIRE',
+          );
+          expect(positionTypeErrorMessage).toBeVisible();
+          expect(positionTypeErrorMessage).toHaveText(
+            stepsContent.positionType.errorMessage,
+          );
+          expect(positionStageErrorMessage).toBeVisible();
+          expect(positionStageErrorMessage).toHaveText(
+            stepsContent.positionStage.errorMessage,
+          );
+        });
+
+        test(`Soumettre avec connaissance du BRS et statut professionnel "Salarié privé non agricole", sans remplir les informations supplémentaires`, async () => {
+          await performAdditionalInformations(
+            true,
+            'SALARIE_PRIVE_NON_AGRICOLE',
+          );
+          expect(hasCompanyMoreThan10EmployeesErrorMessage).toBeVisible();
+          expect(hasCompanyMoreThan10EmployeesErrorMessage).toHaveText(
+            stepsContent.hasCompanyMoreThan10Employees.errorMessage,
+          );
+          expect(positionContractTypeErrorMessage).toBeVisible();
+          expect(positionContractTypeErrorMessage).toHaveText(
+            stepsContent.positionContractType.errorMessage,
+          );
+        });
+
+        test('Soumettre avec connaissance du BRS et statut professionnel "Salarié privé non agricole", avec remplissage partiel des informations supplémentaires', async () => {
+          await performAdditionalInformations(
+            true,
+            'SALARIE_PRIVE_NON_AGRICOLE',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            true,
+          );
+          expect(allowFinancingAndOwnershipAdvicesErrorMessage).toBeVisible();
+          expect(allowFinancingAndOwnershipAdvicesErrorMessage).toHaveText(
+            stepsContent.allowFinancingAndOwnershipAdvices.errorMessage,
+          );
+          expect(positionContractTypeErrorMessage).toBeVisible();
+          expect(positionContractTypeErrorMessage).toHaveText(
+            stepsContent.positionContractType.errorMessage,
+          );
+        });
+
+        test(`Soumettre avec connaissance du BRS et statut professionnel "Salarié agricole", sans remplir les informations supplémentaires`, async () => {
+          await performAdditionalInformations(true, 'SALARIE_AGRICOLE');
+          expect(hasCompanyMoreThan50EmployeesErrorMessage).toBeVisible();
+          expect(hasCompanyMoreThan50EmployeesErrorMessage).toHaveText(
+            stepsContent.hasCompanyMoreThan50Employees.errorMessage,
+          );
+          expect(positionContractTypeErrorMessage).toBeVisible();
+          expect(positionContractTypeErrorMessage).toHaveText(
+            stepsContent.positionContractType.errorMessage,
+          );
+        });
+
+        test('Soumettre avec connaissance du BRS et statut professionnel "Salarié agricole", avec remplissage partiel des informations supplémentaires', async () => {
+          await performAdditionalInformations(
+            false,
+            'SALARIE_AGRICOLE',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            true,
+          );
+          expect(allowFinancingAndOwnershipAdvicesErrorMessage).toBeVisible();
+          expect(allowFinancingAndOwnershipAdvicesErrorMessage).toHaveText(
+            stepsContent.allowFinancingAndOwnershipAdvices.errorMessage,
+          );
+          expect(positionContractTypeErrorMessage).toBeVisible();
+          expect(positionContractTypeErrorMessage).toHaveText(
+            stepsContent.positionContractType.errorMessage,
+          );
+        });
+      });
+
+      test.describe('Scénarii valides', () => {
+        const validateStepAndPhaseTitles = () => {
+          expect(stepTitle).toHaveText(
+            `3. ${steps[2].title} Étape 3 sur ${steps.length}`,
+          );
+          expect(phaseTitle).toHaveText(`${steps[2].phases[2].title}`);
+        };
+
+        test.beforeEach(async ({ page }) => {
+          await performHouseholdComposition(1, false);
+          await performFiscalRevenues('25000');
+          await performPropertySituation('LOCATAIRE_PRIVE');
+          await performResultDetails();
+          await performUserDetails(
+            'Gandalf',
+            'Le Gris',
+            'gandalf.legris@example.com',
+            '+33122334455',
+          );
+          await performHousingInformations(
+            'Paris',
+            'T1',
+            'suggestion-3-data-test-id',
+            page,
+          );
+          await performFinancialInformations('10000', '10000');
+          validateStepAndPhaseTitles();
+        });
+
+        test.afterEach(async () => {
+          expect(stepTitle).toHaveText(
+            `4. ${steps[3].title} Étape 4 sur ${steps.length}`,
+          );
+          expect(phaseTitle).toHaveText(`${steps[3].phases[0].title}`);
+        });
+
+        test('Soumettre avec connaissance du BRS et statut professionnel "Salarié du groupe La Poste", avec remplissage des informations supplémentaires', async () => {
+          await performAdditionalInformations(
+            true,
+            'SALARIE_GROUPE_LA_POSTE',
+            'La Banque Postale',
+            true,
+            'CADRE',
+            true,
+          );
+        });
+
+        test('Soumettre avec connaissance du BRS et statut professionnel "Salarié du secteur public ou fonctionnaire", avec remplissage des informations supplémentaires', async () => {
+          await performAdditionalInformations(
+            true,
+            'SALARIE_PUBLIC_OU_FONCTIONNAIRE',
+            undefined,
+            undefined,
+            'CADRE',
+            true,
+          );
+        });
+
+        test('Soumettre avec connaissance du BRS et statut professionnel "Salarié privé non agricole", avec remplissage des informations supplémentaires, entreprise de moins de 10 salariés', async () => {
+          await performAdditionalInformations(
+            true,
+            'SALARIE_PRIVE_NON_AGRICOLE',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            false,
+            undefined,
+            'CDI',
+          );
+        });
+
+        test('Soumettre avec connaissance du BRS et statut professionnel "Salarié privé non agricole", avec remplissage des informations supplémentaires, entreprise de plus de 10 salariés', async () => {
+          await performAdditionalInformations(
+            true,
+            'SALARIE_PRIVE_NON_AGRICOLE',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            true,
+            true,
+            'CDD',
+          );
+        });
+
+        test('Soumettre avec connaissance du BRS et statut professionnel "Salarié agricole", avec remplissage des informations supplémentaires, entreprise de moins de 50 salariés', async () => {
+          await performAdditionalInformations(
+            true,
+            'SALARIE_AGRICOLE',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            'CDI',
+            false,
+          );
+        });
+
+        test('Soumettre avec connaissance du BRS et statut professionnel "Salarié agricole", avec remplissage des informations supplémentaires, entreprise de plus de 50 salariés', async () => {
+          await performAdditionalInformations(
+            true,
+            'SALARIE_AGRICOLE',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            true,
+            'CDD',
+            true,
+          );
+        });
+
+        test('Soumettre avec connaissance du BRS et statut professionnel "Retraité-e"', async () => {
+          await performAdditionalInformations(true, 'RETRAITE');
+        });
+
+        test('Soumettre avec connaissance du BRS et statut professionnel "Sans activité professionnelle"', async () => {
+          await performAdditionalInformations(
+            true,
+            'SANS_ACTIVITE_PROFESSIONNELLE',
+          );
+        });
+
+        test('Soumettre avec connaissance du BRS et statut professionnel "Indépendant-e"', async () => {
+          await performAdditionalInformations(true, 'INDEPENDANT');
         });
       });
     });

@@ -21,6 +21,8 @@ export type EligibilityCategory = {
 
 export type HousingType = 'T1' | 'T2' | 'T3' | 'T4' | 'T5';
 
+export type ContractType = 'CDI' | 'CDD';
+
 export const eligibilityData: EligibilityData[] = [
   {
     category: 'Catégorie 1',
@@ -100,6 +102,11 @@ export const eligibilityData: EligibilityData[] = [
   },
 ];
 
+export type PositionType =
+  | 'CADRE'
+  | 'NON_CADRE'
+  | 'NO_CATEGORIE_PROFESSIONNELLE';
+
 export type PropertySituation =
   | 'LOCATAIRE_SOCIAL'
   | 'LOCATAIRE_PRIVE'
@@ -111,6 +118,15 @@ export type DeclarationType =
   | 'SEUL_SOUHAIT_SEUL'
   | 'COMMUN'
   | 'SEUL_SOUHAIT_PARTENAIRE';
+
+export type EmploymentStatus =
+  | 'SALARIE_PRIVE_NON_AGRICOLE'
+  | 'SALARIE_AGRICOLE'
+  | 'SALARIE_PUBLIC_OU_FONCTIONNAIRE'
+  | 'INDEPENDANT'
+  | 'SALARIE_GROUPE_LA_POSTE'
+  | 'SANS_ACTIVITE_PROFESSIONNELLE'
+  | 'RETRAITE';
 
 export const steps: Step[] = [
   {
@@ -489,6 +505,210 @@ export const stepsContent = {
     errorDataTestId: 'input-resources-error-message',
     errorMessage: 'Veuillez saisir un chiffre supérieur à 0.',
     inputDataTestId: 'input-resources',
+  },
+  hadBrsKnowledge: {
+    label:
+      "Connaissiez-vous le dispositif du Bail Réel Solidaire (BRS) avant d'entendre parler de BoRiS ?",
+    errorDataTestId: 'select-had-brs-knowledge-error-message',
+    options: [
+      {
+        value: undefined,
+        label: 'Veuillez sélectionner une option',
+      },
+      {
+        value: true,
+        label: 'Oui',
+      },
+      {
+        value: false,
+        label: 'Non',
+      },
+    ],
+    errorMessage: 'Veuillez sélectionner une option',
+  },
+  employmentStatus: {
+    label: "Quel est votre statut professionnel aujourd'hui ?",
+    errorDataTestId: 'select-employment-status-error-message',
+    errorMessage: 'Veuillez sélectionner une option',
+    options: [
+      {
+        value: undefined,
+        label: 'Veuillez sélectionner une option',
+      },
+      {
+        value: 'SALARIE_PRIVE_NON_AGRICOLE',
+        label: 'Salarié·e du secteur privé non agricole',
+      },
+      {
+        value: 'SALARIE_AGRICOLE',
+        label: 'Salarié·e du secteur agricole',
+      },
+      {
+        value: 'SALARIE_PUBLIC_OU_FONCTIONNAIRE',
+        label: 'Salarié·e du secteur public ou fonctionnaire',
+      },
+      {
+        value: 'INDEPENDANT',
+        label: 'Indépendant·e',
+      },
+      {
+        value: 'SALARIE_GROUPE_LA_POSTE',
+        label: 'Salarié·e du Groupe La Poste',
+      },
+      {
+        value: 'SANS_ACTIVITE_PROFESSIONNELLE',
+        label: 'Sans activité professionnelle',
+      },
+      {
+        value: 'RETRAITE',
+        label: 'Actuellement retraité·e',
+      },
+    ],
+  },
+  laposteEmployer: {
+    label: 'Au sein du groupe La Poste, quel est votre employeur ?',
+    errorDataTestId: 'select-laposte-employer-error-message',
+    errorMessage: 'Veuillez renseigner ce champ',
+    inputDataTestId: 'input-laposte-employer',
+  },
+  canSendInformationsToLaposte: {
+    label:
+      'Souhaitez-vous que nous transmettions les informations personnelles que vous avez renseigné au Service Logement du Groupe La Poste ?',
+    errorDataTestId: 'select-laposte-connection-error-message',
+    options: [
+      {
+        value: undefined,
+        label: 'Veuillez sélectionner une option',
+      },
+      {
+        value: true,
+        label: 'Oui',
+      },
+      {
+        value: false,
+        label: 'Non',
+      },
+    ],
+    errorMessage: 'Veuillez sélectionner une option',
+  },
+  positionType: {
+    label: 'Quelle est votre catégorie professionnelle ?',
+    errorDataTestId: 'select-position-type-error-message',
+    options: [
+      {
+        value: undefined,
+        label: 'Veuillez sélectionner une option',
+      },
+      {
+        value: 'CADRE',
+        label: 'Cadre',
+      },
+      {
+        value: 'NON_CADRE',
+        label: 'Non cadre',
+      },
+      {
+        value: 'NO_CATEGORIE_PROFESSIONNELLE',
+        label: "Vous ne savez pas/Ne s'applique pas",
+      },
+    ],
+    errorMessage: 'Veuillez sélectionner une option',
+  },
+  positionStage: {
+    label: "Êtes vous actuellement en période d'essai ?",
+    errorDataTestId: 'select-position-stage-error-message',
+    options: [
+      {
+        value: undefined,
+        label: 'Veuillez sélectionner une option',
+      },
+      {
+        value: true,
+        label: 'Oui',
+      },
+      {
+        value: false,
+        label: 'Non',
+      },
+    ],
+    errorMessage: 'Veuillez sélectionner une option',
+  },
+  hasCompanyMoreThan10Employees: {
+    label: 'Travaillez-vous dans une entreprise de 10 salarié·es ou plus ? ',
+    errorDataTestId: 'select-has-company-more-than-10-employees-error-message',
+    options: [
+      {
+        value: undefined,
+        label: 'Veuillez sélectionner une option',
+      },
+      {
+        value: true,
+        label: 'Oui',
+      },
+      {
+        value: false,
+        label: 'Non',
+      },
+    ],
+    errorMessage: 'Veuillez sélectionner une option',
+  },
+  hasCompanyMoreThan50Employees: {
+    label: 'Travaillez-vous dans une entreprise de 50 salarié·es ou plus ? ',
+    errorDataTestId: 'select-has-company-more-than-50-employees-error-message',
+    options: [
+      {
+        value: undefined,
+        label: 'Veuillez sélectionner une option',
+      },
+      {
+        value: true,
+        label: 'Oui',
+      },
+      {
+        value: false,
+        label: 'Non',
+      },
+    ],
+    errorMessage: 'Veuillez sélectionner une option',
+  },
+  allowFinancingAndOwnershipAdvices: {
+    label: 'Souhaitez-vous avoir recours à ce service de conseil ?',
+    errorDataTestId:
+      'select-allow-financing-and-ownership-advices-error-message',
+    options: [
+      {
+        value: undefined,
+        label: 'Veuillez sélectionner une option',
+      },
+      {
+        value: true,
+        label: 'Oui',
+      },
+      {
+        value: false,
+        label: 'Non',
+      },
+    ],
+    errorMessage: 'Veuillez sélectionner une option',
+  },
+  positionContractType: {
+    label: 'Quel est le type de votre contrat de travail ?',
+    errorDataTestId: 'select-position-contract-type-error-message',
+    options: [
+      {
+        value: undefined,
+        label: 'Veuillez sélectionner une option',
+      },
+      {
+        value: 'CDI',
+        label: 'CDI',
+      },
+      {
+        value: 'CDD',
+        label: 'CDD',
+      },
+    ],
+    errorMessage: 'Veuillez sélectionner une option',
   },
 };
 
