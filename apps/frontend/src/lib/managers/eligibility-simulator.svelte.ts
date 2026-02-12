@@ -4,10 +4,13 @@ import type { GeocodedResponse } from '$lib/utils/definitions';
 import {
   defineEligibleZone,
   steps,
+  type ContractType,
   type DeclarationType,
   type EligibilityCategory,
+  type EmploymentStatus,
   type HousingType,
   type Phase,
+  type PositionType,
   type PropertySituation,
   type Step,
 } from '$lib/utils/eligibility-simulator';
@@ -154,6 +157,19 @@ class EligibilitySimulator {
 
     return undefined;
   });
+
+  // Additional informations
+  public hadBrsKnowledge: boolean | undefined = $state(undefined);
+  public employmentStatus: EmploymentStatus | undefined = $state(undefined);
+  public laposteEmployer: string | undefined = $state(undefined);
+  public canSendInformationsToLaposte: boolean | undefined = $state(undefined);
+  public positionType: PositionType | undefined = $state(undefined);
+  public positionStage: boolean | undefined = $state(undefined);
+  public hasCompanyMoreThan10Employees: boolean | undefined = $state(undefined);
+  public hasCompanyMoreThan50Employees: boolean | undefined = $state(undefined);
+  public allowFinancingAndOwnershipAdvices: boolean | undefined =
+    $state(undefined);
+  public positionContractType: ContractType | undefined = $state(undefined);
 
   public goToPreviousPhase = () => {
     if (this.hasRefusedConnection) {
