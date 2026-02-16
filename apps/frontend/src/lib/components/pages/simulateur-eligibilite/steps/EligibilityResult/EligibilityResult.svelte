@@ -18,17 +18,14 @@
     currentStep={currentStep.step}
     stepCount={steps.length}>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam veritatis,
-      quidem perspiciatis aspernatur id tempora, esse quis saepe necessitatibus
-      similique animi praesentium? Distinctio sunt rerum quidem. Hic error natus
-      facere?
+      La deuxième étape du simulateur <span class="fr-text--bold">BoRiS</span>
+      consiste à présenter votre résultat d'éligibilité, et, si vous le souhaitez,
+      à vous mettre en relation avec les professionnels du Bail Réel Solidaire.
     </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga accusantium
-      a error praesentium veritatis quisquam officia iste sit eveniet dolorem
-      deserunt ut, laborum dolores. Nesciunt nisi soluta minima provident
-      voluptatibus.
-    </p>
+    <ol class="!mb-8">
+      <li class="fr-text--bold">{currentStep.phases[0].title}</li>
+      <li class="fr-text--bold">{currentStep.phases[1].title}</li>
+    </ol>
   </Description>
 
   {#if currentPhase.phase === 1}

@@ -53,17 +53,29 @@
         }),
       });
     } else if (twoToSixPersonsInHousehold) {
-      schema = schema.extend({
-        dependantsAmount: z.number({
-          message: 'Veuillez sélectionner une option',
-        }),
-        hasDisability: z.boolean({
-          message: 'Veuillez sélectionner une option',
-        }),
-      });
+      schema = schema
+        .extend({
+          dependantsAmount: z.number({
+            message: 'Veuillez sélectionner une option',
+          }),
+          hasDisability: z.boolean({
+            message: 'Veuillez sélectionner une option',
+          }),
+        })
+        .refine(
+          ({ selectedHouseholdSize, dependantsAmount }) => {
+            return dependantsAmount < selectedHouseholdSize;
+          },
+          {
+            message:
+              stepsContent.dependantsAmount
+                .moreDependantsThanHouseholdSizeErrorMessage,
+            path: ['dependantsAmount'],
+          },
+        );
 
       if (selectedHouseholdSize === 2 && dependantsAmount === 0) {
-        schema = schema.extend({
+        schema = schema.safeExtend({
           birthday: z.iso.date({
             message: 'Veuillez saisir une date valide',
           }),

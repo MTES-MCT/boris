@@ -95,6 +95,14 @@ test.describe('Eligibility simulator', () => {
   let positionContractTypeSelect: Locator;
   let positionContractTypeErrorMessage: Locator;
 
+  // Synthesis
+  let synthesisHouseholdSize: Locator;
+  let synthesisDependantsAmount: Locator;
+  let synthesisHasDisability: Locator;
+  let synthesisDeclarationType: Locator;
+  let synthesisFiscalRevenues: Locator;
+  let synthesisPropertySituation: Locator;
+
   test.beforeEach(async ({ page }) => {
     await page.goto('/simulateur-eligibilite/steps');
 
@@ -329,6 +337,26 @@ test.describe('Eligibility simulator', () => {
     });
     positionContractTypeErrorMessage = simulatorWrapper.getByTestId(
       stepsContent.positionContractType.errorDataTestId,
+    );
+
+    // Synthesis
+    synthesisHouseholdSize = simulatorWrapper.getByTestId(
+      stepsContent.synthesis.householdSize.dataTestId,
+    );
+    synthesisDependantsAmount = simulatorWrapper.getByTestId(
+      stepsContent.synthesis.dependantsAmount.dataTestId,
+    );
+    synthesisHasDisability = simulatorWrapper.getByTestId(
+      stepsContent.synthesis.hasDisability.dataTestId,
+    );
+    synthesisDeclarationType = simulatorWrapper.getByTestId(
+      stepsContent.synthesis.declarationType.dataTestId,
+    );
+    synthesisFiscalRevenues = simulatorWrapper.getByTestId(
+      stepsContent.synthesis.fiscalRevenues.dataTestId,
+    );
+    synthesisPropertySituation = simulatorWrapper.getByTestId(
+      stepsContent.synthesis.propertySituation.dataTestId,
     );
   });
 
@@ -639,6 +667,15 @@ test.describe('Eligibility simulator', () => {
           await inputHouseholdSizeInput.fill('5');
           await submitButton.click();
           expect(inputHouseholdSizeErrorMessage).toBeVisible();
+        });
+
+        test('2 personnes dans le foyer, soumettre avec un nombre de personnes à charge supérieur au nombre de personnes qui composent le foyer', async () => {
+          await performHouseholdComposition(2, false, 3);
+          expect(dependantsAmountErrorMessage).toBeVisible();
+          expect(dependantsAmountErrorMessage).toHaveText(
+            stepsContent.dependantsAmount
+              .moreDependantsThanHouseholdSizeErrorMessage,
+          );
         });
       });
 
@@ -2249,6 +2286,263 @@ test.describe('Eligibility simulator', () => {
       );
       expect(phaseTitle).toHaveText(`${steps[3].phases[0].title}`);
       expect(previousPhaseButton).toContainText(`${steps[1].title}`);
+    });
+
+    test("Foyer composé d'une seule personne seule qui n'est pas en situation de handicap, actuellement hébergé", async () => {
+      await performHouseholdComposition(1, false);
+      await performFiscalRevenues('25000');
+      await performPropertySituation('HEBERGE');
+      await performRefuseConnection();
+      expect(synthesisHouseholdSize).toHaveText(
+        stepsContent.synthesis.householdSize.singlePerson.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+      expect(synthesisHasDisability).toHaveText(
+        stepsContent.synthesis.hasDisability.singlePerson.no.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+      expect(synthesisFiscalRevenues).toHaveText(
+        stepsContent.synthesis.fiscalRevenues
+          .singlePerson('25 000')
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisPropertySituation).toHaveText(
+        stepsContent.synthesis.propertySituation.housed.replace(/<[^>]*>/g, ''),
+      );
+    });
+
+    test("Foyer composé d'une seule personne en situation de handicap, actuellement dans une autre situation immobilière", async () => {
+      await performHouseholdComposition(1, true);
+      await performFiscalRevenues('25000');
+      await performPropertySituation('AUTRE');
+      await performRefuseConnection();
+      expect(synthesisHouseholdSize).toHaveText(
+        stepsContent.synthesis.householdSize.singlePerson.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+      expect(synthesisHasDisability).toHaveText(
+        stepsContent.synthesis.hasDisability.singlePerson.yes.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+      expect(synthesisFiscalRevenues).toHaveText(
+        stepsContent.synthesis.fiscalRevenues
+          .singlePerson('25 000')
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisPropertySituation).toHaveText(
+        stepsContent.synthesis.propertySituation.other.replace(/<[^>]*>/g, ''),
+      );
+    });
+
+    test('Foyer composé de 2 personnes, sans personnes à charge et sans personnes en situation de handicap, déclaration "Seul·e et vous souhaitez acheter seul·e", actuellement locataire privé', async () => {
+      await performHouseholdComposition(
+        2,
+        false,
+        0,
+        '2000-01-01',
+        '2000-01-01',
+      );
+      await performFiscalRevenues('25000', 'SEUL_SOUHAIT_SEUL');
+      await performPropertySituation('LOCATAIRE_PRIVE');
+      await performRefuseConnection();
+      expect(synthesisHouseholdSize).toHaveText(
+        stepsContent.synthesis.householdSize
+          .severalPersons(2)
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisDependantsAmount).toHaveText(
+        stepsContent.synthesis.dependantsAmount
+          .severalPersons(0)
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisHasDisability).toHaveText(
+        stepsContent.synthesis.hasDisability.severalPersons.no.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+      expect(synthesisDeclarationType).toHaveText(
+        stepsContent.synthesis.declarationType.severalPersons.seulSouhaitSeul.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+      expect(synthesisFiscalRevenues).toHaveText(
+        stepsContent.synthesis.fiscalRevenues.severalPersons
+          .seulSouhaitSeul('25 000')
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisPropertySituation).toHaveText(
+        stepsContent.synthesis.propertySituation.privateTenant.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+    });
+
+    test('Foyer composé de 2 personnes, sans personnes à charge et avec une personne en situation de handicap, déclaration "Seul·e et vous souhaitez acheter avec un·e partenaire", actuellement locataire social', async () => {
+      await performHouseholdComposition(2, true, 0, '2000-01-01', '2000-01-01');
+      await performFiscalRevenues(
+        undefined,
+        'SEUL_SOUHAIT_PARTENAIRE',
+        '25000',
+        '35000',
+      );
+      await performPropertySituation('LOCATAIRE_SOCIAL');
+      await performRefuseConnection();
+      expect(synthesisHouseholdSize).toHaveText(
+        stepsContent.synthesis.householdSize
+          .severalPersons(2)
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisDependantsAmount).toHaveText(
+        stepsContent.synthesis.dependantsAmount
+          .severalPersons(0)
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisHasDisability).toHaveText(
+        stepsContent.synthesis.hasDisability.severalPersons.yes.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+      expect(synthesisDeclarationType).toHaveText(
+        stepsContent.synthesis.declarationType.severalPersons.seulSouhaitPartenaire.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+      expect(synthesisFiscalRevenues).toHaveText(
+        stepsContent.synthesis.fiscalRevenues.severalPersons
+          .seulSouhaitPartenaire('25 000', '35 000')
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisPropertySituation).toHaveText(
+        stepsContent.synthesis.propertySituation.socialTenant.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+    });
+
+    test('Foyer composé de 4 personnes, 2 personnes à charge, sans personnes en situation de handicap, déclaration "En commun", actuellement propriétaire', async () => {
+      await performHouseholdComposition(4, false, 2);
+      await performFiscalRevenues('25000', 'COMMUN');
+      await performPropertySituation('PROPRIETAIRE');
+      await performRefuseConnection();
+      expect(synthesisHouseholdSize).toHaveText(
+        stepsContent.synthesis.householdSize
+          .severalPersons(4)
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisDependantsAmount).toHaveText(
+        stepsContent.synthesis.dependantsAmount
+          .severalPersons(2)
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisHasDisability).toHaveText(
+        stepsContent.synthesis.hasDisability.severalPersons.no.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+      expect(synthesisDeclarationType).toHaveText(
+        stepsContent.synthesis.declarationType.severalPersons.commun.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+      expect(synthesisFiscalRevenues).toHaveText(
+        stepsContent.synthesis.fiscalRevenues.severalPersons
+          .commun('25 000')
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisPropertySituation).toHaveText(
+        stepsContent.synthesis.propertySituation.owner.replace(/<[^>]*>/g, ''),
+      );
+    });
+
+    test('Foyer composé de 5 personnes, 4 personnes à charge, avec une personne en situation de handicap, déclaration "Seul·e et vous souhaitez acheter avec un·e partenaire", actuellement locataire social', async () => {
+      await performHouseholdComposition(5, true, 4);
+      await performFiscalRevenues(
+        undefined,
+        'SEUL_SOUHAIT_PARTENAIRE',
+        '25000',
+        '35000',
+      );
+      await performPropertySituation('LOCATAIRE_SOCIAL');
+      await performRefuseConnection();
+      expect(synthesisHouseholdSize).toHaveText(
+        stepsContent.synthesis.householdSize
+          .severalPersons(5)
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisDependantsAmount).toHaveText(
+        stepsContent.synthesis.dependantsAmount
+          .severalPersons(4)
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisHasDisability).toHaveText(
+        stepsContent.synthesis.hasDisability.severalPersons.yes.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+      expect(synthesisDeclarationType).toHaveText(
+        stepsContent.synthesis.declarationType.severalPersons.seulSouhaitPartenaire.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+      expect(synthesisFiscalRevenues).toHaveText(
+        stepsContent.synthesis.fiscalRevenues.severalPersons
+          .seulSouhaitPartenaire('25 000', '35 000')
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisPropertySituation).toHaveText(
+        stepsContent.synthesis.propertySituation.socialTenant.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
+    });
+
+    test('Foyer composé de 12 personnes, avec une personne en situation de handicap, déclaration "En commun", actuellement locataire privé', async () => {
+      await performHouseholdComposition(
+        -1,
+        true,
+        undefined,
+        undefined,
+        undefined,
+        '12',
+      );
+      await performFiscalRevenues('65000', 'COMMUN');
+      await performPropertySituation('LOCATAIRE_PRIVE');
+      await performRefuseConnection();
+      expect(synthesisHouseholdSize).toHaveText(
+        stepsContent.synthesis.householdSize
+          .severalPersons(12)
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisFiscalRevenues).toHaveText(
+        stepsContent.synthesis.fiscalRevenues.severalPersons
+          .commun('65 000')
+          .replace(/<[^>]*>/g, ''),
+      );
+      expect(synthesisPropertySituation).toHaveText(
+        stepsContent.synthesis.propertySituation.privateTenant.replace(
+          /<[^>]*>/g,
+          '',
+        ),
+      );
     });
   });
 });

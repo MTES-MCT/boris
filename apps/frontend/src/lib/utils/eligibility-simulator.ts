@@ -152,7 +152,7 @@ export const steps: Step[] = [
     step: 2,
     phases: [
       {
-        title: 'Détail du resultat',
+        title: 'Détails du résultat',
         phase: 1,
       },
       {
@@ -180,7 +180,7 @@ export const steps: Step[] = [
     ],
   },
   {
-    title: 'Synthése',
+    title: 'Synthèse',
     step: 4,
     phases: [
       {
@@ -289,6 +289,8 @@ export const stepsContent = {
         label: 'Plus de 6 personnes',
       },
     ],
+    moreDependantsThanHouseholdSizeErrorMessage:
+      'Le nombre de personnes à charge doit être inférieur au nombre de personnes qui composent votre foyer',
   },
   twoToSixPersonsInHouseholdHasDisability: {
     label:
@@ -710,6 +712,80 @@ export const stepsContent = {
     ],
     errorMessage: 'Veuillez sélectionner une option',
   },
+  synthesis: {
+    householdSize: {
+      dataTestId: 'synthesis-household-size',
+      singlePerson:
+        "Votre foyer est composé <span class='fr-text--bold text-blue-primary'>d'une seule personne</span>, vous même.",
+      severalPersons: (householdSize: number) => {
+        return `Votre foyer est composé <span class='fr-text--bold text-blue-primary'>de ${householdSize} personnes</span>${householdSize > 6 ? '.' : ','}`;
+      },
+    },
+    dependantsAmount: {
+      dataTestId: 'synthesis-dependants-amount',
+      severalPersons: (dependantsAmount: number) => {
+        if (dependantsAmount === 0) {
+          return 'sans personne à charge.';
+        } else if (dependantsAmount === 1) {
+          return 'dont <span class="fr-text--bold text-blue-primary">une personne à charge</span>.';
+        } else {
+          return `dont <span class="fr-text--bold text-blue-primary">${dependantsAmount} personnes à charge</span>.`;
+        }
+      },
+    },
+    hasDisability: {
+      dataTestId: 'synthesis-has-disability',
+      singlePerson: {
+        yes: "Vous avez déclaré <span class='fr-text--bold text-blue-primary'>être en situation de handicap</span>.",
+        no: "Vous avez déclaré <span class='fr-text--bold text-blue-primary'>ne pas être en situation de handicap</span>.",
+      },
+      severalPersons: {
+        yes: "Vous avez également déclaré qu'<span class='fr-text--bold text-blue-primary'>une ou plusieurs personnes sont en situation de handicap</span> dans votre foyer (vous y compris).",
+        no: "Vous avez également déclaré qu'<span class='fr-text--bold text-blue-primary'>aucune personne n'est en situation de handicap</span> dans votre foyer (vous y compris).",
+      },
+    },
+    declarationType: {
+      dataTestId: 'synthesis-declaration-type',
+      severalPersons: {
+        seulSouhaitSeul: `En <span class='fr-text--bold text-blue-primary'>${formatYearMinusN(1)}</span>, vous avez déclaré vos revenus fiscaux de ${formatYearMinusN(2)} <span class='fr-text--bold text-blue-primary'>seul·e</span> et vous souhaitez acheter seul·e.`,
+        seulSouhaitPartenaire: `En <span class='fr-text--bold text-blue-primary'>${formatYearMinusN(1)}</span>, vous avez déclaré vos revenus fiscaux de ${formatYearMinusN(2)} <span class='fr-text--bold text-blue-primary'>seul·e</span>, mais vous souhaitez acheter avec un·e partenaire.`,
+        commun: `En <span class='fr-text--bold text-blue-primary'>${formatYearMinusN(1)}</span>, vous avez déclaré vos revenus fiscaux de ${formatYearMinusN(2)} <span class='fr-text--bold text-blue-primary'>en commun</span>.`,
+      },
+    },
+    fiscalRevenues: {
+      dataTestId: 'synthesis-fiscal-revenues',
+      singlePerson: (formattedTaxableIncome: string) => {
+        return `Le <span class='fr-text--bold text-blue-primary'>revenu fiscal de référence</span> présent sur votre avis d'imposition de l'année <span class='fr-text--bold text-blue-primary'>${formatYearMinusN(1)}</span>, concernant vos revenus de l'année ${formatYearMinusN(2)} est de <span class='fr-text--bold text-blue-primary'>${formattedTaxableIncome} €</span>.`;
+      },
+      severalPersons: {
+        seulSouhaitSeul: (formattedTaxableIncome: string) => {
+          return `Le <span class='fr-text--bold text-blue-primary'>revenu fiscal de référence</span> présent sur votre avis d'imposition de l'année <span class='fr-text--bold text-blue-primary'>${formatYearMinusN(1)}</span>, concernant vos revenus de l'année ${formatYearMinusN(2)} est de <span class='fr-text--bold text-blue-primary'>${formattedTaxableIncome} €</span>.`;
+        },
+        seulSouhaitPartenaire: (
+          firstCoBuyerFormattedTaxableIncome: string,
+          secondCoBuyerFormattedTaxableIncome: string,
+        ) => {
+          return `Le <span class='fr-text--bold text-blue-primary'>revenu fiscal de référence</span> présent sur l'avis d'imposition de l'année <span class='fr-text--bold text-blue-primary'> ${formatYearMinusN(1)}</span>, concernant les revenus de l'année ${formatYearMinusN(2)} est de <span class='fr-text--bold text-blue-primary'>${firstCoBuyerFormattedTaxableIncome} €</span> pour vous, et de <span class='fr-text--bold text-blue-primary'>${secondCoBuyerFormattedTaxableIncome} €</span> pour votre co-acquéreur·euse.`;
+        },
+        commun: (formattedTaxableIncome: string) => {
+          return `Le <span class='fr-text--bold text-blue-primary'>revenu fiscal de référence</span> présent sur votre avis d'imposition de l'année <span class='fr-text--bold text-blue-primary'>${formatYearMinusN(1)}</span>, concernant vos revenus de l'année ${formatYearMinusN(2)} est de <span class='fr-text--bold text-blue-primary'>${formattedTaxableIncome} €</span>.`;
+        },
+      },
+    },
+    propertySituation: {
+      dataTestId: 'synthesis-property-situation',
+      owner:
+        'Vous êtes <span class="fr-text--bold text-blue-primary">propriétaire·e</span> de votre bien.',
+      socialTenant:
+        "Vous êtes <span class='fr-text--bold text-blue-primary'>locataire·e d'un logement social</span>.",
+      privateTenant:
+        "Vous êtes <span class='fr-text--bold text-blue-primary'>locataire·e d'un logement privé</span>.",
+      housed:
+        "Vous êtes <span class='fr-text--bold text-blue-primary'>hébergé·e</span>.",
+      other:
+        "Vous êtes <span class='fr-text--bold text-blue-primary'>dans une autre situation immobilière</span>.",
+    },
+  },
 };
 
 const calculateAge = (birthDate: string) => {
@@ -809,12 +885,6 @@ export const defineEligibleZone = (
       ? eligibilityCategory.zoneB1
       : eligibilityCategory.zoneB1 +
         (householdSize - 6) * eligibilityData[6].zoneB1;
-
-  const zoneB2andCTreshold =
-    householdSize < 7
-      ? eligibilityCategory.zoneB2andC
-      : eligibilityCategory.zoneB2andC +
-        (householdSize - 6) * eligibilityData[6].zoneB2andC;
 
   return {
     category,
