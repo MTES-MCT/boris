@@ -1,17 +1,22 @@
 <script lang="ts">
-  import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
-  import Description from '$components/pages/simulateur-acquisition/Description.svelte';
-  import Form from '$components/pages/simulateur-acquisition/Form.svelte';
-  import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
-  import Action from '$components/pages/simulateur-acquisition/Action.svelte';
+  import Wrapper from '$components/common/Simulator/Wrapper.svelte';
+  import Description from '$components/common/Simulator/Description.svelte';
+  import Form from '$components/common/Simulator/Form.svelte';
+  import Actions from '$components/common/Simulator/Actions.svelte';
+  import Action from '$components/common/Simulator/Action.svelte';
   import OperationSynthesis from './OperationSynthesis.svelte';
   import Highlight from '$components/common/Highlight.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
-  let { nextStep, previousStep, goToPreviousStep, goToNextStep } = $derived(
-    acquisitionSimulatorManager,
-  );
+  let {
+    currentStep,
+    steps,
+    nextStep,
+    previousStep,
+    goToPreviousStep,
+    goToNextStep,
+  } = $derived(acquisitionSimulatorManager);
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
@@ -21,7 +26,12 @@
 </script>
 
 <Wrapper>
-  <Description>
+  <Description
+    title="Simulateur d'acquisition"
+    stepTitle={`${currentStep.step}. ${currentStep.title}`}
+    nextStepTitle={nextStep?.title}
+    currentStep={currentStep.step}
+    stepCount={steps.length}>
     <p>
       Voici un premier récapitulatif de votre apport, du prix du logement et de
       tous les frais annexes. Cette synthèse vous aide à visualiser le budget

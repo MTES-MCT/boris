@@ -20,45 +20,57 @@
       | 'text'
       | 'url'
       | 'range';
+    currency?: boolean;
     value?: string | number;
     label?: string;
+    rawLabel?: boolean;
     hint?: string;
     labelTooltip?: string;
     required?: boolean;
+    skipHTML5Required?: boolean;
     icon?: string;
     role?: AriaRole;
-    min?: number;
-    max?: number;
+    min?: number | string;
+    max?: number | string;
+    maxlength?: number;
     step?: number;
     ariaAttributes?: AriaAttributes;
     ariaAutocomplete?: 'none' | 'list' | 'inline' | 'both' | null;
     autocomplete?: FullAutoFill;
     forceNoMarginBottom?: boolean;
     error?: string;
+    errorDataTestId?: string;
+    dataTestId?: string;
     disabled?: boolean;
     onChange?: (event: Event) => void;
     onKeydown?: (event: KeyboardEvent) => void;
     onBlur?: (event: Event) => void;
   };
 
-  const {
+  let {
     id = nanoid(10),
     placeholder = '',
     type = 'text',
+    currency = false,
     value,
     label = '',
+    rawLabel = false,
     hint,
     labelTooltip = '',
     required = false,
+    skipHTML5Required = false,
     icon = '',
     role = '',
     ariaAttributes,
     autocomplete,
     min,
     max,
+    maxlength,
     step,
     forceNoMarginBottom = false,
     error,
+    dataTestId,
+    errorDataTestId = 'input-error-message',
     disabled,
     onChange,
     onKeydown,
@@ -77,7 +89,14 @@
       class="fr-label"
       for={id}>
       <div class="inline-flex items-end gap-1">
-        <b>{label} {required ? '*' : ''}</b>
+        <span>
+          {#if rawLabel}
+            {@html label}
+          {:else}
+            {label}
+          {/if}
+          {required ? '*' : ''}
+        </span>
         {#if labelTooltip}
           <Tooltip>
             <div class="fr-p-2w">
@@ -111,7 +130,7 @@
     {placeholder}
     {type}
     {value}
-    {required}
+    required={required && !skipHTML5Required}
     {disabled}
     {id}
     {role}
@@ -122,8 +141,22 @@
     {autocomplete}
     {min}
     {max}
+    {maxlength}
     {step}
-    oninput={onChange}
+    data-testid={dataTestId}
+    oninput={(e) => {
+      if (currency) {
+        let { value } = e.target as HTMLInputElement;
+        const lastCharacter = value[value.length - 1];
+
+        if (lastCharacter !== ' ' && isNaN(Number(lastCharacter))) {
+          value = value.substring(0, value.length - 1);
+          (e.target as HTMLInputElement).value = value;
+        }
+      }
+
+      onChange?.(e);
+    }}
     onkeydown={onKeydown}
     onblur={onBlur} />
   <div
@@ -133,6 +166,7 @@
     {#if error}
       <p
         class="fr-message fr-message--error"
+        data-testid={errorDataTestId}
         id={`${id}-message-error`}>
         {error}
       </p>

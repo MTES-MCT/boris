@@ -202,7 +202,7 @@ class AcquisitionSimulator {
 
   private resetScroll = () => {
     if (browser) {
-      document.getElementById('simulateur-acquisition')?.scrollIntoView({
+      document.getElementById('simulateur')?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
