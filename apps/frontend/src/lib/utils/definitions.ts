@@ -33,6 +33,7 @@ export type Step = {
   description: string;
   slug: string;
   sections: StepSection[];
+  showAdilSnippet: boolean;
   previousStep?: {
     title: string;
     slug: string;

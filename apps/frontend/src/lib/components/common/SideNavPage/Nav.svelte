@@ -1,12 +1,18 @@
 <script lang="ts">
   import type { StepSection } from '$lib/utils/definitions';
+  import AdilSnippet from '$components/common/AdilSnippet.svelte';
 
   type Props = {
     sections: StepSection[];
     activeSectionId?: string;
+    showAdilSnippet?: boolean;
   };
 
-  const { sections, activeSectionId }: Props = $props();
+  const {
+    sections,
+    activeSectionId,
+    showAdilSnippet = false,
+  }: Props = $props();
 </script>
 
 <nav
@@ -29,4 +35,7 @@
       </li>
     {/each}
   </ul>
+  {#if showAdilSnippet}
+    <AdilSnippet />
+  {/if}
 </nav>

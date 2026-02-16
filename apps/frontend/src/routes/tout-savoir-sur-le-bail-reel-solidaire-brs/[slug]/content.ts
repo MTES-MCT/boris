@@ -6,6 +6,7 @@ export const step1 = {
   slug: 'je-decouvre-le-dispositif',
   description:
     'Vous trouverez ici toutes les informations pour découvrir le Bail Réel Solidaire (BRS). BoRiS est la plateforme de référence du ministère du Logement.',
+  showAdilSnippet: true,
 };
 
 export const step2 = {
@@ -14,6 +15,7 @@ export const step2 = {
   slug: 'je-trouve-mon-logement-en-BRS',
   description:
     'Toutes les informations pour trouver un logement en Bail Réel Solidaire (BRS). BoRiS est la plateforme de référence du ministère du Logement.',
+  showAdilSnippet: true,
 };
 
 export const step3 = {
@@ -23,6 +25,7 @@ export const step3 = {
   slug: 'je-cherche-des-financements',
   description:
     'Toutes les informations pour financer votre projet d’achat en Bail Réel Solidaire (BRS).  BoRiS est la plateforme de référence du ministère du Logement.',
+  showAdilSnippet: true,
 };
 
 export const step4 = {
@@ -31,6 +34,7 @@ export const step4 = {
   slug: 'je-deviens-proprietaire',
   description:
     'Les informations sur le passage chez le notaire pour un achat en Bail Réel Solidaire (BRS). BoRiS est la plateforme de référence du Ministère du Logement.',
+  showAdilSnippet: true,
 };
 
 export const step5 = {
@@ -40,6 +44,7 @@ export const step5 = {
   slug: 'je-suis-chez-moi',
   description:
     'Toutes les informations nécessaires pour les ménages déjà propriétaires en Bail Réel Solidaire. BoRiS est la plateforme de référence du Ministère du Logement.',
+  showAdilSnippet: true,
 };
 
 export const steps: Step[] = [
