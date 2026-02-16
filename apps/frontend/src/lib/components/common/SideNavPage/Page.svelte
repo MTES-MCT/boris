@@ -21,6 +21,7 @@
       title: string;
       slug: string;
     };
+    showAdilSnippet?: boolean;
   };
 
   type ObservableSection = {
@@ -34,6 +35,7 @@
     titleElement = 'h1',
     previousStep,
     nextStep,
+    showAdilSnippet = false,
     children = undefined,
   }: Props = $props();
 
@@ -95,7 +97,8 @@
 
           <Nav
             {sections}
-            activeSectionId={activeSection?.id} />
+            activeSectionId={activeSection?.id}
+            {showAdilSnippet} />
         </div>
 
         <div class="fr-col-12 fr-col-md-9 pl-0 md:pl-6 lg:pl-24">
