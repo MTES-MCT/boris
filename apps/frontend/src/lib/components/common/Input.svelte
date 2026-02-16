@@ -6,7 +6,6 @@
   import { nanoid } from 'nanoid';
   import type { AriaAttributes, AriaRole, FullAutoFill } from 'svelte/elements';
   import Tooltip from './Tooltip.svelte';
-  import type { boolean } from 'zod';
 
   type Props = {
     id?: string;

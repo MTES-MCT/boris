@@ -26,7 +26,6 @@
     declarationType,
     firstCoBuyerFormattedTaxableIncome,
     secondCoBuyerFormattedTaxableIncome,
-    taxableIncome,
     currentPhase,
     nextPhase,
     goToNextPhase,
