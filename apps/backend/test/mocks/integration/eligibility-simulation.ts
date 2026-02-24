@@ -54,3 +54,8 @@ export const mockedEligibilitySimulation = Object.assign(
     updatedAt: new Date('2024-01-15'),
   },
 );
+
+export const mockEligibilitySimulationRepository = {
+  save: jest.fn(),
+  findOne: jest.fn(),
+};
