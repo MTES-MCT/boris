@@ -13,8 +13,7 @@
   };
 </script>
 
-<!-- {#if cookieConsentManager.needsConsentDecision} -->
-{#if false}
+{#if cookieConsentManager.needsConsentDecision}
   <div class="fr-consent-banner fade-in">
     <h2 class="fr-h6">À propos des cookies sur BoRiS.</h2>
     <div class="fr-consent-banner__content">
