@@ -90,7 +90,7 @@
         label={stepsContent.location.label}
         placeholder={stepsContent.location.placeholder}
         disabled={selectedLocations.length === 3}
-        error={errors.selectedLocations}
+        error={errors.autocompleteValue}
         dataTestId={stepsContent.location.dataTestId}
         errorDataTestId={stepsContent.location.errorDataTestId}
         onSelect={onLocationSelect} />

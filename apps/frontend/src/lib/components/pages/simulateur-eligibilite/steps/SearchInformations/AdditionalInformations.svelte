@@ -394,7 +394,9 @@
       Etant donné votre situation professionnelle, vous êtes également éligible
       au service de <a
         href="https://www.actionlogement.fr/le-conseil-en-accession?ept-publisher=boris&ept-name=boris-partenariat&eseg-name=site&eseg-item=test-eligibilite"
-        class="fr-link">
+        class="fr-link"
+        target="_blank"
+        rel="noopener">
         Conseil en financement et en accession
       </a>
       de notre partenaire Action Logement.
