@@ -459,8 +459,9 @@ export const stepsContent = {
     'Si vous ne souhaitez pas continuer, vous pouvez quitter le simulateur en cliquant ',
   location: {
     label: 'À quel endroit souhaitez-vous acheter votre logement ? *',
+    hint: 'Vous pouvez selectionner 3 localisations au maximum.',
     placeholder: 'Exemple: Quimper, Paris, Lyon, etc.',
-    errorMessage: 'Veuillez saisir un lieu valide.',
+    errorMessage: 'Veuillez saisir au moins un lieu valide.',
     errorDataTestId: 'location-autocomplete-error-message',
     dataTestId: 'location-autocomplete',
   },

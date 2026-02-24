@@ -135,9 +135,7 @@ class EligibilitySimulator {
   public hasRefusedConnection: boolean = $state(false);
 
   // Search informations
-  public selectedLocation: GeocodedResponse['properties'] | undefined =
-    $state();
-  public autocompleteValue = $derived(this.selectedLocation?.label || '');
+  public selectedLocations: GeocodedResponse['properties'][] = $state([]);
   public housingType: HousingType | undefined = $state(undefined);
 
   // Financial informations

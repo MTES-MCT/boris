@@ -8,17 +8,22 @@
     FormFieldError,
     GeocodedResponse,
   } from '$lib/utils/definitions';
-  import { formatFormErrors } from '$lib/utils/helpers';
+  import {
+    formatFormErrors,
+    getGeocodedResponseLabel,
+  } from '$lib/utils/helpers';
   import z, { ZodError } from 'zod';
   import {
     stepsContent,
     type HousingType,
   } from '$lib/utils/eligibility-simulator';
   import Select from '$components/common/Select.svelte';
+  import Badge from '$components/common/Badge.svelte';
+
+  let autocompleteValue = $state('');
 
   let {
-    autocompleteValue,
-    selectedLocation,
+    selectedLocations,
     housingType,
     currentPhase,
     nextPhase,
@@ -31,11 +36,10 @@
   let errors = $state<FormFieldError>({});
 
   const FormData = z.object({
-    autocompleteValue: z
-      .string({
-        message: stepsContent.location.errorMessage,
-      })
-      .min(3, stepsContent.location.errorMessage),
+    selectedLocations: z
+      .array(z.any())
+      .min(1, stepsContent.location.errorMessage)
+      .max(3, stepsContent.location.errorMessage),
     housingType: z.enum(['T1', 'T2', 'T3', 'T4', 'T5'], {
       message: stepsContent.housingType.errorMessage,
     }),
@@ -44,14 +48,22 @@
   const onLocationSelect = async (
     suggestion: GeocodedResponse['properties'],
   ) => {
-    eligibilitySimulatorManager.selectedLocation = suggestion;
+    autocompleteValue = '';
+
+    const existingLocation = selectedLocations.find(
+      (location) => location?.label === suggestion?.label,
+    );
+
+    if (!existingLocation) {
+      selectedLocations.push(suggestion);
+    }
   };
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
     const payload = {
-      autocompleteValue: selectedLocation?.label,
+      selectedLocations,
       housingType,
     };
 
@@ -74,12 +86,26 @@
     <div class="fr-fieldset__element fr-mb-4w">
       <Autocomplete
         bind:value={autocompleteValue}
+        hint={stepsContent.location.hint}
         label={stepsContent.location.label}
         placeholder={stepsContent.location.placeholder}
-        error={errors.autocompleteValue}
+        disabled={selectedLocations.length === 3}
+        error={errors.selectedLocations}
         dataTestId={stepsContent.location.dataTestId}
         errorDataTestId={stepsContent.location.errorDataTestId}
         onSelect={onLocationSelect} />
+      <div class="flex gap-2 flex-wrap mt-2">
+        {#each selectedLocations as location, i}
+          <Badge
+            status="info"
+            onClose={() => {
+              selectedLocations.splice(i, 1);
+            }}
+            normalCase>
+            {getGeocodedResponseLabel(location)}
+          </Badge>
+        {/each}
+      </div>
     </div>
 
     <div class="fr-fieldset__element">

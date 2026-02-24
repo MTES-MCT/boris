@@ -15,6 +15,8 @@
     value: string;
     label: string;
     placeholder: string;
+    hint?: string;
+    disabled?: boolean;
     error?: string;
     dataTestId?: string;
     errorDataTestId?: string;
@@ -25,6 +27,8 @@
     value = $bindable(),
     label,
     placeholder,
+    hint,
+    disabled = false,
     error,
     onSelect,
     dataTestId,
@@ -150,6 +154,8 @@
     icon="map-pin-2-line"
     role="combobox"
     autocomplete="off"
+    {disabled}
+    {hint}
     {error}
     ariaAttributes={{
       'aria-autocomplete': 'list',
