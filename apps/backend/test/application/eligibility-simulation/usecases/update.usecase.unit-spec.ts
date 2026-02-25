@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { SaveLocationUsecase } from 'src/application/location/usecases/save.usecase';
 import { UpdateEligibilitySimulationUsecase } from 'src/application/eligibility-simulation/usecases/update.usecase';
 import { EligibilitySimulationView } from 'src/application/eligibility-simulation/views/eligibility-simulation.view';
 import type {
@@ -11,14 +12,15 @@ import {
   mockedEligibilitySimulation,
   mockEligibilitySimulationRepository,
 } from 'test/mocks/integration/eligibility-simulation';
-import {
-  mockedLocation,
-  mockLocationRepository,
-} from 'test/mocks/integration/location';
+import { mockedLocation } from 'test/mocks/integration/location';
 
 const mockEligibilitySimulationRepositoryWithFindById = {
   ...mockEligibilitySimulationRepository,
   findById: jest.fn(),
+};
+
+const mockSaveLocationUsecase = {
+  execute: jest.fn(),
 };
 
 describe('UpdateEligibilitySimulationUsecase', () => {
@@ -29,12 +31,12 @@ describe('UpdateEligibilitySimulationUsecase', () => {
       providers: [
         UpdateEligibilitySimulationUsecase,
         {
-          provide: 'LocationRepositoryInterface',
-          useValue: mockLocationRepository,
-        },
-        {
           provide: 'EligibilitySimulationRepositoryInterface',
           useValue: mockEligibilitySimulationRepositoryWithFindById,
+        },
+        {
+          provide: SaveLocationUsecase,
+          useValue: mockSaveLocationUsecase,
         },
       ],
     }).compile();
@@ -181,8 +183,9 @@ describe('UpdateEligibilitySimulationUsecase', () => {
     expect(saveCallArg).toMatchObject(updatedData);
   });
 
-  it('should update locations when provided and save each via location repository', async () => {
+  it('should update locations when provided and call SaveLocationUsecase for each', async () => {
     const locationParams = {
+      name: 'Paris',
       latitude: 48.8566,
       longitude: 2.3522,
       city: 'Paris',
@@ -197,13 +200,10 @@ describe('UpdateEligibilitySimulationUsecase', () => {
       locations: [{ ...mockedLocation, ...locationParams }],
     };
 
-    mockEligibilitySimulationRepositoryWithFindById.findById.mockResolvedValue({
-      ...mockedEligibilitySimulation,
-    });
-    mockLocationRepository.save.mockResolvedValue({
-      ...mockedLocation,
-      ...locationParams,
-    });
+    mockEligibilitySimulationRepositoryWithFindById.findById
+      .mockResolvedValueOnce({ ...mockedEligibilitySimulation })
+      .mockResolvedValueOnce(simulationWithLocations);
+    mockSaveLocationUsecase.execute.mockResolvedValue(undefined);
     mockEligibilitySimulationRepositoryWithFindById.save.mockResolvedValue(
       simulationWithLocations,
     );
@@ -213,18 +213,17 @@ describe('UpdateEligibilitySimulationUsecase', () => {
       locations: [locationParams],
     });
 
-    expect(mockLocationRepository.save).toHaveBeenCalledTimes(1);
+    expect(mockSaveLocationUsecase.execute).toHaveBeenCalledTimes(1);
+    expect(mockSaveLocationUsecase.execute).toHaveBeenCalledWith({
+      ...locationParams,
+      eligibilitySimulationId: mockedEligibilitySimulation.id,
+    });
+    expect(
+      mockEligibilitySimulationRepositoryWithFindById.findById,
+    ).toHaveBeenCalledTimes(2);
     expect(
       mockEligibilitySimulationRepositoryWithFindById.save,
     ).toHaveBeenCalledTimes(1);
-    expect(
-      mockEligibilitySimulationRepositoryWithFindById.save,
-    ).toHaveBeenCalledWith(
-      expect.objectContaining({
-        ...mockedEligibilitySimulation,
-        locations: expect.any(Array),
-      }),
-    );
   });
 
   it('should throw NotFoundException when eligibility simulation does not exist', async () => {

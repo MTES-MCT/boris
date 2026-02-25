@@ -3,15 +3,14 @@ import { EligibilitySimulationRepositoryInterface } from 'src/domain/eligibility
 import { UpdateEligibilitySimulationParams } from './update.params';
 import { EligibilitySimulationView } from '../views/eligibility-simulation.view';
 import { LocationEntity } from 'src/infrastructure/location/location.entity';
-import { LocationRepositoryInterface } from 'src/domain/location/location.repository.interface';
 import { LocationView } from 'src/application/location/views/location.view';
+import { SaveLocationUsecase } from 'src/application/location/usecases/save.usecase';
 
 export class UpdateEligibilitySimulationUsecase {
   constructor(
-    @Inject('LocationRepositoryInterface')
-    private readonly locationRepository: LocationRepositoryInterface,
     @Inject('EligibilitySimulationRepositoryInterface')
     private readonly eligibilitySimulationRepository: EligibilitySimulationRepositoryInterface,
+    private readonly saveLocationUsecase: SaveLocationUsecase,
   ) {}
 
   public async execute(
@@ -25,8 +24,6 @@ export class UpdateEligibilitySimulationUsecase {
     }
 
     if (params.locations) {
-      const temporaryLocations = [];
-
       for (const location of params.locations) {
         const locationEntity = new LocationEntity();
         locationEntity.latitude = location.latitude;
@@ -37,11 +34,17 @@ export class UpdateEligibilitySimulationUsecase {
         locationEntity.municipality = location.municipality;
         locationEntity.postalCode = location.postalCode;
 
-        const result = await this.locationRepository.save(locationEntity);
+        await this.saveLocationUsecase.execute({
+          ...location,
+          eligibilitySimulationId: eligibilitySimulation?.id,
+        });
+      }
 
-        temporaryLocations.push(result);
+      eligibilitySimulation =
+        await this.eligibilitySimulationRepository.findById(params.id);
 
-        eligibilitySimulation.locations = temporaryLocations;
+      if (!eligibilitySimulation) {
+        throw new NotFoundException();
       }
     }
 
@@ -51,12 +54,12 @@ export class UpdateEligibilitySimulationUsecase {
       params.taxableIncome || eligibilitySimulation.taxableIncome;
     eligibilitySimulation.declarationType =
       params.declarationType || eligibilitySimulation.declarationType;
-    eligibilitySimulation.firstCoBuyerFormattedTaxableIncome =
-      params.firstCoBuyerFormattedTaxableIncome ||
-      eligibilitySimulation.firstCoBuyerFormattedTaxableIncome;
-    eligibilitySimulation.secondCoBuyerFormattedTaxableIncome =
-      params.secondCoBuyerFormattedTaxableIncome ||
-      eligibilitySimulation.secondCoBuyerFormattedTaxableIncome;
+    eligibilitySimulation.firstCoBuyerTaxableIncome =
+      params.firstCoBuyerTaxableIncome ||
+      eligibilitySimulation.firstCoBuyerTaxableIncome;
+    eligibilitySimulation.secondCoBuyerTaxableIncome =
+      params.secondCoBuyerTaxableIncome ||
+      eligibilitySimulation.secondCoBuyerTaxableIncome;
     eligibilitySimulation.eligibility =
       params.eligibility || eligibilitySimulation.eligibility;
     eligibilitySimulation.firstName =

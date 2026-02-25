@@ -64,10 +64,10 @@ export class EligibilitySimulationEntity
   public declarationType?: DeclarationType;
 
   @Column({ type: 'int', nullable: true })
-  public firstCoBuyerFormattedTaxableIncome?: number;
+  public firstCoBuyerTaxableIncome?: number;
 
   @Column({ type: 'int', nullable: true })
-  public secondCoBuyerFormattedTaxableIncome?: number;
+  public secondCoBuyerTaxableIncome?: number;
 
   @Column({ type: 'json', nullable: true })
   public eligibility?: EligibilityCategory;

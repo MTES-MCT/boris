@@ -16,11 +16,6 @@ import {
   mockedEligibilitySimulation,
 } from 'test/mocks/integration/eligibility-simulation';
 
-const mockEligibilitySimulationRepositoryWithFindById = {
-  ...mockEligibilitySimulationRepository,
-  findById: jest.fn(),
-};
-
 describe('SaveLocationUsecase', () => {
   let useCase: SaveLocationUsecase;
 
@@ -38,7 +33,7 @@ describe('SaveLocationUsecase', () => {
         },
         {
           provide: 'EligibilitySimulationRepositoryInterface',
-          useValue: mockEligibilitySimulationRepositoryWithFindById,
+          useValue: mockEligibilitySimulationRepository,
         },
       ],
     }).compile();
@@ -85,9 +80,7 @@ describe('SaveLocationUsecase', () => {
     expect(mockDepartementRepository.findOneByInseeCode).toHaveBeenCalledWith(
       '29019',
     );
-    expect(
-      mockEligibilitySimulationRepositoryWithFindById.findById,
-    ).not.toHaveBeenCalled();
+    expect(mockEligibilitySimulationRepository.findById).not.toHaveBeenCalled();
     expect(mockLocationRepository.save).toHaveBeenCalledTimes(1);
     const savedLocation = mockLocationRepository.save.mock.calls[0][0];
     expect(savedLocation.latitude).toBe(params.latitude);
@@ -103,7 +96,7 @@ describe('SaveLocationUsecase', () => {
 
   it('should save a location with eligibilitySimulation when eligibilitySimulationId is provided', async () => {
     mockDepartementRepository.findOneByInseeCode.mockResolvedValue(finistere);
-    mockEligibilitySimulationRepositoryWithFindById.findById.mockResolvedValue(
+    mockEligibilitySimulationRepository.findById.mockResolvedValue(
       mockedEligibilitySimulation,
     );
     mockLocationRepository.save.mockResolvedValue(mockedLocation);
@@ -137,12 +130,12 @@ describe('SaveLocationUsecase', () => {
     expect(mockDepartementRepository.findOneByInseeCode).toHaveBeenCalledWith(
       '29019',
     );
-    expect(
-      mockEligibilitySimulationRepositoryWithFindById.findById,
-    ).toHaveBeenCalledTimes(1);
-    expect(
-      mockEligibilitySimulationRepositoryWithFindById.findById,
-    ).toHaveBeenCalledWith(mockedEligibilitySimulation.id);
+    expect(mockEligibilitySimulationRepository.findById).toHaveBeenCalledTimes(
+      1,
+    );
+    expect(mockEligibilitySimulationRepository.findById).toHaveBeenCalledWith(
+      mockedEligibilitySimulation.id,
+    );
     expect(mockLocationRepository.save).toHaveBeenCalledTimes(1);
     const savedLocation = mockLocationRepository.save.mock.calls[0][0];
     expect(savedLocation.eligibilitySimulation).toEqual(
@@ -173,9 +166,7 @@ describe('SaveLocationUsecase', () => {
 
   it('should throw BadRequestException when eligibilitySimulationId is provided but simulation not found', async () => {
     mockDepartementRepository.findOneByInseeCode.mockResolvedValue(finistere);
-    mockEligibilitySimulationRepositoryWithFindById.findById.mockResolvedValue(
-      null,
-    );
+    mockEligibilitySimulationRepository.findById.mockResolvedValue(null);
 
     const params = {
       name: 'Brest',
@@ -190,9 +181,9 @@ describe('SaveLocationUsecase', () => {
     };
 
     await expect(useCase.execute(params)).rejects.toThrow(BadRequestException);
-    expect(
-      mockEligibilitySimulationRepositoryWithFindById.findById,
-    ).toHaveBeenCalledWith('non-existent-id');
+    expect(mockEligibilitySimulationRepository.findById).toHaveBeenCalledWith(
+      'non-existent-id',
+    );
     expect(mockLocationRepository.save).not.toHaveBeenCalled();
   });
 });

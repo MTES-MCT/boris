@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EligibilitySimulationEntity } from './eligibility-simulation.entity';
 import { EligibilitySimulationRepository } from './eligibility-simulation.repository';
@@ -11,7 +11,7 @@ import { LocationModule } from '../location/location.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([EligibilitySimulationEntity]),
-    LocationModule,
+    forwardRef(() => LocationModule),
   ],
   controllers: [
     CreateEligibilitySimulationApiController,

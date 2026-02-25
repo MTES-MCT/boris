@@ -47,8 +47,8 @@ export interface EligibilitySimulationInterface {
   coBuyerBirthday?: Date;
   taxableIncome?: number;
   declarationType?: DeclarationType;
-  firstCoBuyerFormattedTaxableIncome?: number;
-  secondCoBuyerFormattedTaxableIncome?: number;
+  firstCoBuyerTaxableIncome?: number;
+  secondCoBuyerTaxableIncome?: number;
   eligibility?: EligibilityCategory;
   firstName?: string;
   lastName?: string;

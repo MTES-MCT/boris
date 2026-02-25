@@ -28,8 +28,8 @@ export const mockedEligibilitySimulation = Object.assign(
     coBuyerBirthday: new Date('1988-03-20'),
     taxableIncome: 35000,
     declarationType: 'COMMUN' as DeclarationType,
-    firstCoBuyerFormattedTaxableIncome: 35000,
-    secondCoBuyerFormattedTaxableIncome: 28000,
+    firstCoBuyerTaxableIncome: 35000,
+    secondCoBuyerTaxableIncome: 28000,
     eligibility: eligibilityCategory,
     firstName: 'Jean',
     lastName: 'Dupont',
@@ -58,4 +58,5 @@ export const mockedEligibilitySimulation = Object.assign(
 export const mockEligibilitySimulationRepository = {
   save: jest.fn(),
   findOne: jest.fn(),
+  findById: jest.fn(),
 };

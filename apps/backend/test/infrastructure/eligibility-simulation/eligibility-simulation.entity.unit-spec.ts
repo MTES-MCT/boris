@@ -26,12 +26,8 @@ describe('EligibilitySimulationEntity', () => {
     );
     expect(mockedEligibilitySimulation.taxableIncome).toBe(35000);
     expect(mockedEligibilitySimulation.declarationType).toBe('COMMUN');
-    expect(mockedEligibilitySimulation.firstCoBuyerFormattedTaxableIncome).toBe(
-      '35 000 €',
-    );
-    expect(
-      mockedEligibilitySimulation.secondCoBuyerFormattedTaxableIncome,
-    ).toBe('28 000 €');
+    expect(mockedEligibilitySimulation.firstCoBuyerTaxableIncome).toBe(35000);
+    expect(mockedEligibilitySimulation.secondCoBuyerTaxableIncome).toBe(28000);
     expect(mockedEligibilitySimulation.eligibility).toEqual({
       category: 1,
       eligibleZoneAandAbis: true,
@@ -91,9 +87,8 @@ describe('EligibilitySimulationEntity', () => {
     mockedEligibilitySimulation.taxableIncome = 42000;
     mockedEligibilitySimulation.declarationType =
       'SEUL_SOUHAIT_SEUL' as DeclarationType;
-    mockedEligibilitySimulation.firstCoBuyerFormattedTaxableIncome = '42 000 €';
-    mockedEligibilitySimulation.secondCoBuyerFormattedTaxableIncome =
-      '30 000 €';
+    mockedEligibilitySimulation.firstCoBuyerTaxableIncome = 42000;
+    mockedEligibilitySimulation.secondCoBuyerTaxableIncome = 30000;
     mockedEligibilitySimulation.eligibility = newEligibility;
     mockedEligibilitySimulation.firstName = 'Marie';
     mockedEligibilitySimulation.lastName = 'Martin';
@@ -131,12 +126,8 @@ describe('EligibilitySimulationEntity', () => {
     expect(mockedEligibilitySimulation.declarationType).toBe(
       'SEUL_SOUHAIT_SEUL',
     );
-    expect(mockedEligibilitySimulation.firstCoBuyerFormattedTaxableIncome).toBe(
-      '42 000 €',
-    );
-    expect(
-      mockedEligibilitySimulation.secondCoBuyerFormattedTaxableIncome,
-    ).toBe('30 000 €');
+    expect(mockedEligibilitySimulation.firstCoBuyerTaxableIncome).toBe(42000);
+    expect(mockedEligibilitySimulation.secondCoBuyerTaxableIncome).toBe(30000);
     expect(mockedEligibilitySimulation.eligibility).toEqual(newEligibility);
     expect(mockedEligibilitySimulation.firstName).toBe('Marie');
     expect(mockedEligibilitySimulation.lastName).toBe('Martin');

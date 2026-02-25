@@ -92,6 +92,11 @@ export class UpdateEligibilitySimulationEligibilityDTO {
 
 export class UpdateEligibilitySimulationLocationDTO {
   @ApiPropertyOptional()
+  @IsString()
+  @IsOptional()
+  public name: string;
+
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
   public latitude: number;
@@ -148,13 +153,13 @@ export class UpdateEligibilitySimulationDTO {
   @IsNumber()
   @IsOptional()
   @Min(0)
-  public firstCoBuyerFormattedTaxableIncome?: number;
+  public firstCoBuyerTaxableIncome?: number;
 
   @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
   @Min(0)
-  public secondCoBuyerFormattedTaxableIncome?: number;
+  public secondCoBuyerTaxableIncome?: number;
 
   @ApiPropertyOptional()
   @IsOptional()

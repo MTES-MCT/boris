@@ -39,10 +39,10 @@ export class EligibilitySimulationView {
   public declarationType?: DeclarationType;
 
   @ApiProperty({ example: 35000 })
-  public firstCoBuyerFormattedTaxableIncome?: number;
+  public firstCoBuyerTaxableIncome?: number;
 
   @ApiProperty({ example: 28000 })
-  public secondCoBuyerFormattedTaxableIncome?: number;
+  public secondCoBuyerTaxableIncome?: number;
 
   @ApiProperty({
     example: {
@@ -129,8 +129,8 @@ export class EligibilitySimulationView {
     coBuyerBirthday,
     taxableIncome,
     declarationType,
-    firstCoBuyerFormattedTaxableIncome,
-    secondCoBuyerFormattedTaxableIncome,
+    firstCoBuyerTaxableIncome,
+    secondCoBuyerTaxableIncome,
     eligibility,
     firstName,
     lastName,
@@ -163,8 +163,8 @@ export class EligibilitySimulationView {
     coBuyerBirthday?: Date;
     taxableIncome?: number;
     declarationType?: DeclarationType;
-    firstCoBuyerFormattedTaxableIncome?: number;
-    secondCoBuyerFormattedTaxableIncome?: number;
+    firstCoBuyerTaxableIncome?: number;
+    secondCoBuyerTaxableIncome?: number;
     eligibility?: EligibilityCategory;
     firstName?: string;
     lastName?: string;
@@ -197,10 +197,8 @@ export class EligibilitySimulationView {
     this.coBuyerBirthday = coBuyerBirthday;
     this.taxableIncome = taxableIncome;
     this.declarationType = declarationType;
-    this.firstCoBuyerFormattedTaxableIncome =
-      firstCoBuyerFormattedTaxableIncome;
-    this.secondCoBuyerFormattedTaxableIncome =
-      secondCoBuyerFormattedTaxableIncome;
+    this.firstCoBuyerTaxableIncome = firstCoBuyerTaxableIncome;
+    this.secondCoBuyerTaxableIncome = secondCoBuyerTaxableIncome;
     this.eligibility = eligibility;
     this.firstName = firstName;
     this.lastName = lastName;

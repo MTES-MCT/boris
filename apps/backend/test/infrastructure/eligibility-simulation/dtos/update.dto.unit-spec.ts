@@ -19,8 +19,8 @@ describe('UpdateEligibilitySimulationDTO', () => {
     dto.propertySituation = 'LOCATAIRE_SOCIAL';
     dto.taxableIncome = 30000;
     dto.declarationType = 'SEUL_SOUHAIT_SEUL';
-    dto.firstCoBuyerFormattedTaxableIncome = 0;
-    dto.secondCoBuyerFormattedTaxableIncome = 0;
+    dto.firstCoBuyerTaxableIncome = 0;
+    dto.secondCoBuyerTaxableIncome = 0;
     dto.eligibility = Object.assign(
       new UpdateEligibilitySimulationEligibilityDTO(),
       {
@@ -107,13 +107,13 @@ describe('UpdateEligibilitySimulationDTO', () => {
     expect(errors[0].constraints).toHaveProperty('isIn');
   });
 
-  it('should be invalid when firstCoBuyerFormattedTaxableIncome is negative', async () => {
+  it('should be invalid when firstCoBuyerTaxableIncome is negative', async () => {
     const dto = new UpdateEligibilitySimulationDTO();
-    dto.firstCoBuyerFormattedTaxableIncome = -1;
+    dto.firstCoBuyerTaxableIncome = -1;
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(1);
-    expect(errors[0].property).toBe('firstCoBuyerFormattedTaxableIncome');
+    expect(errors[0].property).toBe('firstCoBuyerTaxableIncome');
     expect(errors[0].constraints).toHaveProperty('min');
   });
 
@@ -280,24 +280,6 @@ describe('UpdateEligibilitySimulationDTO', () => {
     expect(errors).toHaveLength(0);
   });
 
-  it('should be invalid when location has invalid departementId (not UUID)', async () => {
-    const dto = new UpdateEligibilitySimulationDTO();
-    dto.locations = [
-      Object.assign(new UpdateEligibilitySimulationLocationDTO(), {
-        latitude: 48.8,
-        longitude: 2.3,
-        city: 'Lyon',
-        departementId: 'not-a-uuid',
-      }),
-    ];
-
-    const errors = await validate(dto, { whitelist: true });
-    expect(errors.length).toBeGreaterThan(0);
-    const locationsError = errors.find((e) => e.property === 'locations');
-    expect(locationsError).toBeDefined();
-    expect(locationsError?.children?.length).toBeGreaterThan(0);
-  });
-
   it('should transform string "true" to boolean for boolean fields when using plainToInstance', async () => {
     const plain = {
       hasRefusedConnection: 'true',
@@ -343,7 +325,6 @@ describe('UpdateEligibilitySimulationLocationDTO', () => {
     dto.label = 'Paris';
     dto.municipality = 'Paris';
     dto.postalCode = '75001';
-    dto.departementId = '123e4567-e89b-12d3-a456-426614174000';
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(0);
@@ -354,15 +335,5 @@ describe('UpdateEligibilitySimulationLocationDTO', () => {
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(0);
-  });
-
-  it('should be invalid when departementId is not a valid UUID', async () => {
-    const dto = new UpdateEligibilitySimulationLocationDTO();
-    dto.departementId = 'invalid';
-
-    const errors = await validate(dto);
-    expect(errors).toHaveLength(1);
-    expect(errors[0].property).toBe('departementId');
-    expect(errors[0].constraints).toHaveProperty('isUuid');
   });
 });

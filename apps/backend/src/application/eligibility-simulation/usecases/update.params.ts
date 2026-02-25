@@ -1,3 +1,4 @@
+import { SaveLocationParams } from 'src/application/location/usecases/save.params';
 import {
   ContractType,
   DeclarationType,
@@ -7,15 +8,14 @@ import {
   PositionType,
   PropertySituation,
 } from 'src/domain/eligibility-simulation/eligibility-simulation.interface';
-import { LocationEntity } from 'src/infrastructure/location/location.entity';
 
 export interface UpdateEligibilitySimulationParams {
   id: string;
   propertySituation?: PropertySituation;
   taxableIncome?: number;
   declarationType?: DeclarationType;
-  firstCoBuyerFormattedTaxableIncome?: number;
-  secondCoBuyerFormattedTaxableIncome?: number;
+  firstCoBuyerTaxableIncome?: number;
+  secondCoBuyerTaxableIncome?: number;
   eligibility?: EligibilityCategory;
   firstName?: string;
   lastName?: string;
@@ -35,8 +35,5 @@ export interface UpdateEligibilitySimulationParams {
   hasCompanyMoreThan50Employees?: boolean;
   allowFinancingAndOwnershipAdvices?: boolean;
   positionContractType?: ContractType;
-  locations?: Omit<
-    LocationEntity,
-    'departement' | 'eligibilitySimulation' | 'createdAt' | 'updatedAt' | 'id'
-  >[];
+  locations?: SaveLocationParams[];
 }

@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { LocationRepositoryInterface } from 'src/domain/location/location.repository.interface';
 import { EligibilitySimulationRepositoryInterface } from 'src/domain/eligibility-simulation/eligibility-simulation.repository.interface';
 import { SaveLocationParams } from './save.params';
@@ -8,6 +13,7 @@ import { DepartementRepositoryInterface } from 'src/domain/departement/departeme
 import { LocationView } from '../views/location.view';
 import { DepartementView } from 'src/application/departement/views/departement.view';
 
+@Injectable()
 export class SaveLocationUsecase {
   constructor(
     @Inject('LocationRepositoryInterface')
@@ -65,7 +71,11 @@ export class SaveLocationUsecase {
       savedLocation.label,
       savedLocation.municipality,
       savedLocation.postalCode,
-      new DepartementView(departement.id, departement.name, departement.code),
+      new DepartementView(
+        savedLocation.departement.id,
+        savedLocation.departement.name,
+        savedLocation.departement.code,
+      ),
     );
   }
 }
