@@ -1,6 +1,6 @@
 export interface CreateEligibilitySimulationParams {
   householdSize: number;
-  hasDisability: boolean;
+  hasDisability?: boolean;
   dependantsAmount?: number;
   birthday?: Date;
   coBuyerBirthday?: Date;

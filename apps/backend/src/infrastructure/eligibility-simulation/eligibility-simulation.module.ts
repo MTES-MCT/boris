@@ -3,9 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EligibilitySimulationEntity } from './eligibility-simulation.entity';
 import { EligibilitySimulationRepository } from './eligibility-simulation.repository';
 import { CreateEligibilitySimulationUsecase } from 'src/application/eligibility-simulation/usecases/create.usecase';
+import { CreateEligibilitySimulationApiController } from './controllers/api/create-eligibility-simulation.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([EligibilitySimulationEntity])],
+  controllers: [CreateEligibilitySimulationApiController],
   providers: [
     {
       provide: 'EligibilitySimulationRepositoryInterface',
