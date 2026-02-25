@@ -7,22 +7,15 @@ import {
   PositionType,
   PropertySituation,
 } from 'src/domain/eligibility-simulation/eligibility-simulation.interface';
-import { LocationInterface } from 'src/domain/location/location.interface';
+import { LocationEntity } from 'src/infrastructure/location/location.entity';
 
-export interface SaveEligibilitySimulationParams {
+export interface UpdateEligibilitySimulationParams {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  householdSize?: number;
-  hasDisability?: boolean;
   propertySituation?: PropertySituation;
-  dependantsAmount?: number;
-  birthday?: Date;
-  coBuyerBirthday?: Date;
   taxableIncome?: number;
   declarationType?: DeclarationType;
-  firstCoBuyerFormattedTaxableIncome?: string;
-  secondCoBuyerFormattedTaxableIncome?: string;
+  firstCoBuyerFormattedTaxableIncome?: number;
+  secondCoBuyerFormattedTaxableIncome?: number;
   eligibility?: EligibilityCategory;
   firstName?: string;
   lastName?: string;
@@ -42,5 +35,8 @@ export interface SaveEligibilitySimulationParams {
   hasCompanyMoreThan50Employees?: boolean;
   allowFinancingAndOwnershipAdvices?: boolean;
   positionContractType?: ContractType;
-  locations?: LocationInterface[];
+  locations?: Omit<
+    LocationEntity,
+    'departement' | 'eligibilitySimulation' | 'createdAt' | 'updatedAt' | 'id'
+  >[];
 }

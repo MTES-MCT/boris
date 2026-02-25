@@ -63,11 +63,11 @@ export class EligibilitySimulationEntity
   })
   public declarationType?: DeclarationType;
 
-  @Column({ type: 'varchar', nullable: true })
-  public firstCoBuyerFormattedTaxableIncome?: string;
+  @Column({ type: 'int', nullable: true })
+  public firstCoBuyerFormattedTaxableIncome?: number;
 
-  @Column({ type: 'varchar', nullable: true })
-  public secondCoBuyerFormattedTaxableIncome?: string;
+  @Column({ type: 'int', nullable: true })
+  public secondCoBuyerFormattedTaxableIncome?: number;
 
   @Column({ type: 'json', nullable: true })
   public eligibility?: EligibilityCategory;

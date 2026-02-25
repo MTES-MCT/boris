@@ -58,6 +58,7 @@ describe('EligibilitySimulationRepository', () => {
     );
     expect(mockEligibilitySimulationRepository.findOne).toHaveBeenCalledWith({
       where: { id: 'eligibility-sim-uuid' },
+      relations: ['locations', 'locations.departement'],
     });
   });
 
@@ -72,6 +73,7 @@ describe('EligibilitySimulationRepository', () => {
     );
     expect(mockEligibilitySimulationRepository.findOne).toHaveBeenCalledWith({
       where: { id: 'unknown-id' },
+      relations: ['locations', 'locations.departement'],
     });
   });
 });

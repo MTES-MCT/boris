@@ -24,6 +24,7 @@ export class EligibilitySimulationRepository
   ): Promise<EligibilitySimulationEntity | null> {
     return this.repository.findOne({
       where: { id },
+      relations: ['locations', 'locations.departement'],
     });
   }
 }

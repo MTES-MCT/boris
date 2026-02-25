@@ -4,10 +4,19 @@ import { EligibilitySimulationEntity } from './eligibility-simulation.entity';
 import { EligibilitySimulationRepository } from './eligibility-simulation.repository';
 import { CreateEligibilitySimulationUsecase } from 'src/application/eligibility-simulation/usecases/create.usecase';
 import { CreateEligibilitySimulationApiController } from './controllers/api/create-eligibility-simulation.controller';
+import { UpdateEligibilitySimulationApiController } from './controllers/api/update-eligibility-simulation.controller';
+import { UpdateEligibilitySimulationUsecase } from 'src/application/eligibility-simulation/usecases/update.usecase';
+import { LocationModule } from '../location/location.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([EligibilitySimulationEntity])],
-  controllers: [CreateEligibilitySimulationApiController],
+  imports: [
+    TypeOrmModule.forFeature([EligibilitySimulationEntity]),
+    LocationModule,
+  ],
+  controllers: [
+    CreateEligibilitySimulationApiController,
+    UpdateEligibilitySimulationApiController,
+  ],
   providers: [
     {
       provide: 'EligibilitySimulationRepositoryInterface',
@@ -15,11 +24,13 @@ import { CreateEligibilitySimulationApiController } from './controllers/api/crea
     },
     EligibilitySimulationRepository,
     CreateEligibilitySimulationUsecase,
+    UpdateEligibilitySimulationUsecase,
   ],
   exports: [
     'EligibilitySimulationRepositoryInterface',
     EligibilitySimulationRepository,
     CreateEligibilitySimulationUsecase,
+    UpdateEligibilitySimulationUsecase,
   ],
 })
 export class EligibilitySimulationModule {}

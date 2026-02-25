@@ -38,11 +38,11 @@ export class EligibilitySimulationView {
   @ApiProperty({ example: 'COMMUN' })
   public declarationType?: DeclarationType;
 
-  @ApiProperty({ example: '35 000 €' })
-  public firstCoBuyerFormattedTaxableIncome?: string;
+  @ApiProperty({ example: 35000 })
+  public firstCoBuyerFormattedTaxableIncome?: number;
 
-  @ApiProperty({ example: '28 000 €' })
-  public secondCoBuyerFormattedTaxableIncome?: string;
+  @ApiProperty({ example: 28000 })
+  public secondCoBuyerFormattedTaxableIncome?: number;
 
   @ApiProperty({
     example: {
@@ -163,8 +163,8 @@ export class EligibilitySimulationView {
     coBuyerBirthday?: Date;
     taxableIncome?: number;
     declarationType?: DeclarationType;
-    firstCoBuyerFormattedTaxableIncome?: string;
-    secondCoBuyerFormattedTaxableIncome?: string;
+    firstCoBuyerFormattedTaxableIncome?: number;
+    secondCoBuyerFormattedTaxableIncome?: number;
     eligibility?: EligibilityCategory;
     firstName?: string;
     lastName?: string;
