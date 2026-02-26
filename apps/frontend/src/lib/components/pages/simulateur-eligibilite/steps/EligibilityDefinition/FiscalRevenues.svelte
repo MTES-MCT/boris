@@ -26,9 +26,12 @@
     declarationType,
     firstCoBuyerFormattedTaxableIncome,
     secondCoBuyerFormattedTaxableIncome,
+    taxableIncome,
+    firstCoBuyerTaxableIncome,
+    secondCoBuyerTaxableIncome,
     currentPhase,
     nextPhase,
-    goToNextPhase,
+    updateEligibilitySimulation,
     previousPhase,
     goToPreviousPhase,
     loading,
@@ -91,7 +94,6 @@
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
-    // TODO: Define type here with DTOs (same as in step1 from acquisition simulator)
     const payload = {
       formattedTaxableIncome,
       declarationType,
@@ -103,7 +105,12 @@
       formData.parse(payload);
       errors = {};
 
-      goToNextPhase();
+      updateEligibilitySimulation({
+        taxableIncome,
+        declarationType,
+        firstCoBuyerTaxableIncome,
+        secondCoBuyerTaxableIncome,
+      });
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }

@@ -18,16 +18,20 @@ export class CreateEligibilitySimulationDTO {
 
   @ApiProperty()
   @Transform(({ value }) => {
-    return typeof value === 'boolean';
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') {
+      if (value.toLowerCase() === 'true') return true;
+      if (value.toLowerCase() === 'false') return false;
+    }
+    return undefined;
   })
   @IsBoolean()
   @IsOptional()
-  public hasDisablity?: boolean;
+  public hasDisability?: boolean;
 
   @ApiProperty()
   @IsNumber()
   @IsOptional()
-  @IsPositive()
   public dependantsAmount?: number;
 
   @ApiProperty()

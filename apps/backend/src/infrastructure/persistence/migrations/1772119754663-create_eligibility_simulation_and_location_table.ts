@@ -1,9 +1,9 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateEligibilitySimulationAndLocationTable1772112499005
+export class CreateEligibilitySimulationAndLocationTable1772119754663
   implements MigrationInterface
 {
-  name = 'CreateEligibilitySimulationAndLocationTable1772112499005';
+  name = 'CreateEligibilitySimulationAndLocationTable1772119754663';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(

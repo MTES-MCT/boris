@@ -19,6 +19,7 @@
   } from '$lib/utils/eligibility-simulator';
   import Select from '$components/common/Select.svelte';
   import Badge from '$components/common/Badge.svelte';
+  import type { UpdateEligibilitySimulationDto } from '$lib/utils/api-types';
 
   let autocompleteValue = $state('');
 
@@ -27,7 +28,7 @@
     housingType,
     currentPhase,
     nextPhase,
-    goToNextPhase,
+    updateEligibilitySimulation,
     previousStep,
     goToPreviousPhase,
     loading,
@@ -70,7 +71,16 @@
     try {
       FormData.parse(payload);
       errors = {};
-      goToNextPhase();
+
+      updateEligibilitySimulation({
+        locations: selectedLocations?.map((item) => ({
+          ...item,
+          latitude: item?.y,
+          longitude: item?.x,
+          postalCode: item?.postcode,
+        })),
+        housingType,
+      });
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }

@@ -22,4 +22,7 @@ export const mockedLocation = Object.assign(new LocationEntity(), {
 
 export const mockLocationRepository = {
   save: jest.fn(),
+  delete: jest.fn(),
+  findOne: jest.fn(),
+  findById: jest.fn(),
 };

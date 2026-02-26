@@ -5,12 +5,14 @@ import { EligibilitySimulationView } from '../views/eligibility-simulation.view'
 import { LocationEntity } from 'src/infrastructure/location/location.entity';
 import { LocationView } from 'src/application/location/views/location.view';
 import { SaveLocationUsecase } from 'src/application/location/usecases/save.usecase';
+import { DeleteLocationUsecase } from 'src/application/location/usecases/delete.usecase';
 
 export class UpdateEligibilitySimulationUsecase {
   constructor(
     @Inject('EligibilitySimulationRepositoryInterface')
     private readonly eligibilitySimulationRepository: EligibilitySimulationRepositoryInterface,
     private readonly saveLocationUsecase: SaveLocationUsecase,
+    private readonly deleteLocationUsecase: DeleteLocationUsecase,
   ) {}
 
   public async execute(
@@ -24,6 +26,12 @@ export class UpdateEligibilitySimulationUsecase {
     }
 
     if (params.locations) {
+      for (const location of eligibilitySimulation.locations) {
+        await this.deleteLocationUsecase.execute({
+          id: location.id,
+        });
+      }
+
       for (const location of params.locations) {
         const locationEntity = new LocationEntity();
         locationEntity.latitude = location.latitude;
@@ -48,6 +56,22 @@ export class UpdateEligibilitySimulationUsecase {
       }
     }
 
+    eligibilitySimulation.householdSize =
+      params.householdSize || eligibilitySimulation.householdSize;
+
+    eligibilitySimulation.hasDisability =
+      typeof params.hasDisability === 'boolean'
+        ? params.hasDisability
+        : eligibilitySimulation.hasDisability;
+
+    eligibilitySimulation.dependantsAmount =
+      typeof params.dependantsAmount === 'number'
+        ? params.dependantsAmount
+        : eligibilitySimulation.dependantsAmount;
+    eligibilitySimulation.birthday =
+      params.birthday || eligibilitySimulation.birthday;
+    eligibilitySimulation.coBuyerBirthday =
+      params.coBuyerBirthday || eligibilitySimulation.coBuyerBirthday;
     eligibilitySimulation.propertySituation =
       params.propertySituation || eligibilitySimulation.propertySituation;
     eligibilitySimulation.taxableIncome =
@@ -69,7 +93,9 @@ export class UpdateEligibilitySimulationUsecase {
     eligibilitySimulation.email = params.email || eligibilitySimulation.email;
     eligibilitySimulation.phone = params.phone || eligibilitySimulation.phone;
     eligibilitySimulation.hasRefusedConnection =
-      params.hasRefusedConnection || eligibilitySimulation.hasRefusedConnection;
+      typeof params.hasRefusedConnection === 'boolean'
+        ? params.hasRefusedConnection
+        : eligibilitySimulation.hasRefusedConnection;
     eligibilitySimulation.housingType =
       params.housingType || eligibilitySimulation.housingType;
     eligibilitySimulation.contribution =
@@ -77,27 +103,33 @@ export class UpdateEligibilitySimulationUsecase {
     eligibilitySimulation.resources =
       params.resources || eligibilitySimulation.resources;
     eligibilitySimulation.hadBrsKnowledge =
-      params.hadBrsKnowledge || eligibilitySimulation.hadBrsKnowledge;
+      typeof params.hadBrsKnowledge === 'boolean'
+        ? params.hadBrsKnowledge
+        : eligibilitySimulation.hadBrsKnowledge;
     eligibilitySimulation.employmentStatus =
       params.employmentStatus || eligibilitySimulation.employmentStatus;
     eligibilitySimulation.laposteEmployer =
       params.laposteEmployer || eligibilitySimulation.laposteEmployer;
     eligibilitySimulation.canSendInformationsToLaposte =
-      params.canSendInformationsToLaposte ||
-      eligibilitySimulation.canSendInformationsToLaposte;
+      typeof params.canSendInformationsToLaposte === 'boolean'
+        ? params.canSendInformationsToLaposte
+        : eligibilitySimulation.canSendInformationsToLaposte;
     eligibilitySimulation.positionType =
       params.positionType || eligibilitySimulation.positionType;
     eligibilitySimulation.positionStage =
       params.positionStage || eligibilitySimulation.positionStage;
     eligibilitySimulation.hasCompanyMoreThan10Employees =
-      params.hasCompanyMoreThan10Employees ||
-      eligibilitySimulation.hasCompanyMoreThan10Employees;
+      typeof params.hasCompanyMoreThan10Employees === 'boolean'
+        ? params.hasCompanyMoreThan10Employees
+        : eligibilitySimulation.hasCompanyMoreThan10Employees;
     eligibilitySimulation.hasCompanyMoreThan50Employees =
-      params.hasCompanyMoreThan50Employees ||
-      eligibilitySimulation.hasCompanyMoreThan50Employees;
+      typeof params.hasCompanyMoreThan50Employees === 'boolean'
+        ? params.hasCompanyMoreThan50Employees
+        : eligibilitySimulation.hasCompanyMoreThan50Employees;
     eligibilitySimulation.allowFinancingAndOwnershipAdvices =
-      params.allowFinancingAndOwnershipAdvices ||
-      eligibilitySimulation.allowFinancingAndOwnershipAdvices;
+      typeof params.allowFinancingAndOwnershipAdvices === 'boolean'
+        ? params.allowFinancingAndOwnershipAdvices
+        : eligibilitySimulation.allowFinancingAndOwnershipAdvices;
     eligibilitySimulation.positionContractType =
       params.positionContractType || eligibilitySimulation.positionContractType;
 

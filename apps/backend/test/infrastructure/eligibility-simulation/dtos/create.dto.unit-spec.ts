@@ -13,7 +13,7 @@ describe('CreateEligibilitySimulationDTO', () => {
   it('should be valid with optional fields', async () => {
     const dto = new CreateEligibilitySimulationDTO();
     dto.householdSize = 2;
-    dto.hasDisablity = true;
+    dto.hasDisability = true;
     dto.dependantsAmount = 1;
     dto.birthday = new Date('1990-05-15');
     dto.coBuyerBirthday = new Date('1988-03-20');
@@ -24,7 +24,7 @@ describe('CreateEligibilitySimulationDTO', () => {
 
   it('should be invalid when householdSize is missing', async () => {
     const dto = new CreateEligibilitySimulationDTO();
-    dto.hasDisablity = false;
+    dto.hasDisability = false;
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(1);
@@ -36,7 +36,7 @@ describe('CreateEligibilitySimulationDTO', () => {
     const dto = new CreateEligibilitySimulationDTO();
     // @ts-expect-error: testing non-number value
     dto.householdSize = 'not a number';
-    dto.hasDisablity = false;
+    dto.hasDisability = false;
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(1);
@@ -47,7 +47,7 @@ describe('CreateEligibilitySimulationDTO', () => {
   it('should be invalid when householdSize is zero', async () => {
     const dto = new CreateEligibilitySimulationDTO();
     dto.householdSize = 0;
-    dto.hasDisablity = false;
+    dto.hasDisability = false;
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(1);
@@ -58,7 +58,7 @@ describe('CreateEligibilitySimulationDTO', () => {
   it('should be invalid when householdSize is negative', async () => {
     const dto = new CreateEligibilitySimulationDTO();
     dto.householdSize = -1;
-    dto.hasDisablity = false;
+    dto.hasDisability = false;
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(1);
@@ -66,22 +66,10 @@ describe('CreateEligibilitySimulationDTO', () => {
     expect(errors[0].constraints).toHaveProperty('isPositive');
   });
 
-  it('should be invalid when dependantsAmount is negative', async () => {
-    const dto = new CreateEligibilitySimulationDTO();
-    dto.householdSize = 2;
-    dto.hasDisablity = false;
-    dto.dependantsAmount = -1;
-
-    const errors = await validate(dto);
-    expect(errors).toHaveLength(1);
-    expect(errors[0].property).toBe('dependantsAmount');
-    expect(errors[0].constraints).toHaveProperty('isPositive');
-  });
-
   it('should be invalid when dependantsAmount is not a number', async () => {
     const dto = new CreateEligibilitySimulationDTO();
     dto.householdSize = 2;
-    dto.hasDisablity = false;
+    dto.hasDisability = false;
     // @ts-expect-error: testing non-number value
     dto.dependantsAmount = 'two';
 
@@ -91,22 +79,22 @@ describe('CreateEligibilitySimulationDTO', () => {
     expect(errors[0].constraints).toHaveProperty('isNumber');
   });
 
-  it('should be invalid when hasDisablity is not a boolean', async () => {
+  it('should be invalid when hasDisability is not a boolean', async () => {
     const dto = new CreateEligibilitySimulationDTO();
     dto.householdSize = 2;
     // @ts-expect-error: testing non-boolean value
-    dto.hasDisablity = 'true';
+    dto.hasDisability = 'true';
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(1);
-    expect(errors[0].property).toBe('hasDisablity');
+    expect(errors[0].property).toBe('hasDisability');
     expect(errors[0].constraints).toHaveProperty('isBoolean');
   });
 
   it('should be invalid when birthday is not a Date', async () => {
     const dto = new CreateEligibilitySimulationDTO();
     dto.householdSize = 2;
-    dto.hasDisablity = false;
+    dto.hasDisability = false;
     // @ts-expect-error: testing non-Date value
     dto.birthday = '1990-05-15';
 
@@ -119,7 +107,7 @@ describe('CreateEligibilitySimulationDTO', () => {
   it('should be invalid when coBuyerBirthday is not a Date', async () => {
     const dto = new CreateEligibilitySimulationDTO();
     dto.householdSize = 2;
-    dto.hasDisablity = false;
+    dto.hasDisability = false;
     // @ts-expect-error: testing non-Date value
     dto.coBuyerBirthday = '1988-03-20';
 
@@ -132,7 +120,7 @@ describe('CreateEligibilitySimulationDTO', () => {
   it('should be valid when optional dates are undefined', async () => {
     const dto = new CreateEligibilitySimulationDTO();
     dto.householdSize = 1;
-    dto.hasDisablity = true;
+    dto.hasDisability = true;
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(0);

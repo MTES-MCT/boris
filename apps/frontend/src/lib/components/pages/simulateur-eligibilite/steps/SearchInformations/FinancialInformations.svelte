@@ -16,9 +16,11 @@
   const {
     formattedContribution,
     formattedResources,
+    contribution,
+    resources,
     currentPhase,
     nextPhase,
-    goToNextPhase,
+    updateEligibilitySimulation,
     previousPhase,
     goToPreviousPhase,
     loading,
@@ -50,7 +52,11 @@
     try {
       FormData.parse(payload);
       errors = {};
-      goToNextPhase();
+
+      updateEligibilitySimulation({
+        contribution,
+        resources,
+      });
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }

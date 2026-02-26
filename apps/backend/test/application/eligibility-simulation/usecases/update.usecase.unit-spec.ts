@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SaveLocationUsecase } from 'src/application/location/usecases/save.usecase';
+import { DeleteLocationUsecase } from 'src/application/location/usecases/delete.usecase';
 import { UpdateEligibilitySimulationUsecase } from 'src/application/eligibility-simulation/usecases/update.usecase';
 import { EligibilitySimulationView } from 'src/application/eligibility-simulation/views/eligibility-simulation.view';
 import type {
@@ -23,6 +24,10 @@ const mockSaveLocationUsecase = {
   execute: jest.fn(),
 };
 
+const mockDeleteLocationUsecase = {
+  execute: jest.fn(),
+};
+
 describe('UpdateEligibilitySimulationUsecase', () => {
   let useCase: UpdateEligibilitySimulationUsecase;
 
@@ -38,6 +43,10 @@ describe('UpdateEligibilitySimulationUsecase', () => {
           provide: SaveLocationUsecase,
           useValue: mockSaveLocationUsecase,
         },
+        {
+          provide: DeleteLocationUsecase,
+          useValue: mockDeleteLocationUsecase,
+        },
       ],
     }).compile();
 
@@ -48,6 +57,11 @@ describe('UpdateEligibilitySimulationUsecase', () => {
 
   it('should update an existing eligibility simulation and return its data', async () => {
     const updatedData = {
+      householdSize: 4,
+      hasDisability: true,
+      dependantsAmount: 2,
+      birthday: new Date('1985-01-10'),
+      coBuyerBirthday: new Date('1987-06-22'),
       propertySituation: 'PROPRIETAIRE' as PropertySituation,
       taxableIncome: 40000,
       declarationType: 'SEUL_SOUHAIT_SEUL' as DeclarationType,
@@ -94,6 +108,50 @@ describe('UpdateEligibilitySimulationUsecase', () => {
     expect(
       mockEligibilitySimulationRepositoryWithFindById.save,
     ).toHaveBeenCalledWith(updatedSimulation);
+  });
+
+  it('should update household composition and birthdate fields', async () => {
+    const updatedData = {
+      householdSize: 5,
+      hasDisability: true,
+      dependantsAmount: 3,
+      birthday: new Date('1980-12-01'),
+      coBuyerBirthday: new Date('1982-08-15'),
+    };
+
+    const updatedSimulation = {
+      ...mockedEligibilitySimulation,
+      ...updatedData,
+    };
+
+    mockEligibilitySimulationRepositoryWithFindById.findById.mockResolvedValue({
+      ...mockedEligibilitySimulation,
+    });
+    mockEligibilitySimulationRepositoryWithFindById.save.mockResolvedValue(
+      updatedSimulation,
+    );
+
+    const expectedResult = new EligibilitySimulationView({
+      ...updatedSimulation,
+      locations: [],
+    });
+
+    const result = await useCase.execute({
+      id: mockedEligibilitySimulation.id,
+      ...updatedData,
+    });
+
+    expect(result).toMatchObject(expectedResult);
+    expect(
+      mockEligibilitySimulationRepositoryWithFindById.save,
+    ).toHaveBeenCalledWith(updatedSimulation);
+    const saveCallArg =
+      mockEligibilitySimulationRepositoryWithFindById.save.mock.calls[0][0];
+    expect(saveCallArg.householdSize).toBe(5);
+    expect(saveCallArg.hasDisability).toBe(true);
+    expect(saveCallArg.dependantsAmount).toBe(3);
+    expect(saveCallArg.birthday).toEqual(new Date('1980-12-01'));
+    expect(saveCallArg.coBuyerBirthday).toEqual(new Date('1982-08-15'));
   });
 
   it('should update only provided fields and keep existing values for others', async () => {
@@ -204,6 +262,7 @@ describe('UpdateEligibilitySimulationUsecase', () => {
       .mockResolvedValueOnce({ ...mockedEligibilitySimulation })
       .mockResolvedValueOnce(simulationWithLocations);
     mockSaveLocationUsecase.execute.mockResolvedValue(undefined);
+    mockDeleteLocationUsecase.execute.mockResolvedValue(undefined);
     mockEligibilitySimulationRepositoryWithFindById.save.mockResolvedValue(
       simulationWithLocations,
     );
@@ -224,6 +283,58 @@ describe('UpdateEligibilitySimulationUsecase', () => {
     expect(
       mockEligibilitySimulationRepositoryWithFindById.save,
     ).toHaveBeenCalledTimes(1);
+  });
+
+  it('should delete existing locations then save new ones when locations are provided', async () => {
+    const existingLocation1 = { ...mockedLocation, id: 'loc-1' };
+    const existingLocation2 = { ...mockedLocation, id: 'loc-2' };
+    const simulationWithExistingLocations = {
+      ...mockedEligibilitySimulation,
+      locations: [existingLocation1, existingLocation2],
+    };
+
+    const locationParams = {
+      name: 'Lyon',
+      latitude: 45.764,
+      longitude: 4.8357,
+      city: 'Lyon',
+      citycode: '69123',
+      label: 'Lyon',
+      municipality: 'Lyon',
+      postalCode: '69001',
+    };
+
+    const simulationAfterUpdate = {
+      ...mockedEligibilitySimulation,
+      locations: [{ ...mockedLocation, ...locationParams }],
+    };
+
+    mockEligibilitySimulationRepositoryWithFindById.findById
+      .mockResolvedValueOnce(simulationWithExistingLocations)
+      .mockResolvedValueOnce(simulationAfterUpdate);
+    mockDeleteLocationUsecase.execute.mockResolvedValue(undefined);
+    mockSaveLocationUsecase.execute.mockResolvedValue(undefined);
+    mockEligibilitySimulationRepositoryWithFindById.save.mockResolvedValue(
+      simulationAfterUpdate,
+    );
+
+    await useCase.execute({
+      id: mockedEligibilitySimulation.id,
+      locations: [locationParams],
+    });
+
+    expect(mockDeleteLocationUsecase.execute).toHaveBeenCalledTimes(2);
+    expect(mockDeleteLocationUsecase.execute).toHaveBeenNthCalledWith(1, {
+      id: 'loc-1',
+    });
+    expect(mockDeleteLocationUsecase.execute).toHaveBeenNthCalledWith(2, {
+      id: 'loc-2',
+    });
+    expect(mockSaveLocationUsecase.execute).toHaveBeenCalledTimes(1);
+    expect(mockSaveLocationUsecase.execute).toHaveBeenCalledWith({
+      ...locationParams,
+      eligibilitySimulationId: mockedEligibilitySimulation.id,
+    });
   });
 
   it('should throw NotFoundException when eligibility simulation does not exist', async () => {

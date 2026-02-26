@@ -16,6 +16,11 @@ describe('UpdateEligibilitySimulationDTO', () => {
 
   it('should be valid with all fields', async () => {
     const dto = new UpdateEligibilitySimulationDTO();
+    dto.householdSize = 3;
+    dto.hasDisability = false;
+    dto.dependantsAmount = 1;
+    dto.birthday = new Date('1990-05-15');
+    dto.coBuyerBirthday = new Date('1988-03-20');
     dto.propertySituation = 'LOCATAIRE_SOCIAL';
     dto.taxableIncome = 30000;
     dto.declarationType = 'SEUL_SOUHAIT_SEUL';
@@ -73,6 +78,74 @@ describe('UpdateEligibilitySimulationDTO', () => {
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(0);
+  });
+
+  it('should be valid with household composition and birthdate fields only', async () => {
+    const dto = new UpdateEligibilitySimulationDTO();
+    dto.householdSize = 4;
+    dto.hasDisability = true;
+    dto.dependantsAmount = 2;
+    dto.birthday = new Date('1985-01-10');
+    dto.coBuyerBirthday = new Date('1987-06-22');
+
+    const errors = await validate(dto);
+    expect(errors).toHaveLength(0);
+  });
+
+  it('should be invalid when householdSize is zero', async () => {
+    const dto = new UpdateEligibilitySimulationDTO();
+    dto.householdSize = 0;
+
+    const errors = await validate(dto);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('householdSize');
+    expect(errors[0].constraints).toHaveProperty('isPositive');
+  });
+
+  it('should be invalid when householdSize is negative', async () => {
+    const dto = new UpdateEligibilitySimulationDTO();
+    dto.householdSize = -1;
+
+    const errors = await validate(dto);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('householdSize');
+    expect(errors[0].constraints).toHaveProperty('isPositive');
+  });
+
+  it('should be invalid when hasDisability is not a boolean', async () => {
+    const dto = new UpdateEligibilitySimulationDTO();
+    dto.householdSize = 1;
+    // @ts-expect-error: testing non-boolean value
+    dto.hasDisability = 'yes';
+
+    const errors = await validate(dto);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('hasDisability');
+    expect(errors[0].constraints).toHaveProperty('isBoolean');
+  });
+
+  it('should be invalid when birthday is not a valid Date', async () => {
+    const dto = new UpdateEligibilitySimulationDTO();
+    dto.householdSize = 1;
+    // @ts-expect-error: testing non-Date value
+    dto.birthday = '1990-01-01';
+
+    const errors = await validate(dto);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('birthday');
+    expect(errors[0].constraints).toHaveProperty('isDate');
+  });
+
+  it('should be invalid when coBuyerBirthday is not a valid Date', async () => {
+    const dto = new UpdateEligibilitySimulationDTO();
+    dto.householdSize = 1;
+    // @ts-expect-error: testing non-Date value
+    dto.coBuyerBirthday = '1988-03-20';
+
+    const errors = await validate(dto);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('coBuyerBirthday');
+    expect(errors[0].constraints).toHaveProperty('isDate');
   });
 
   it('should be invalid when propertySituation is not in allowed values', async () => {

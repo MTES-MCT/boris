@@ -11,6 +11,11 @@ import {
 
 export interface UpdateEligibilitySimulationParams {
   id: string;
+  householdSize?: number;
+  hasDisability?: boolean;
+  dependantsAmount?: number;
+  birthday?: Date;
+  coBuyerBirthday?: Date;
   propertySituation?: PropertySituation;
   taxableIncome?: number;
   declarationType?: DeclarationType;

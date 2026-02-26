@@ -14,4 +14,12 @@ export class LocationRepository implements LocationRepositoryInterface {
   public save(location: LocationEntity): Promise<LocationEntity> {
     return this.repository.save(location);
   }
+
+  public async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
+
+  public async findById(id: string): Promise<LocationEntity | null> {
+    return this.repository.findOne({ where: { id } });
+  }
 }

@@ -1,4 +1,9 @@
 import { browser } from '$app/environment';
+import type {
+  CreateEligibilitySimulationDto,
+  EligibilitySimulationView,
+  UpdateEligibilitySimulationDto,
+} from '$lib/utils/api-types';
 import type { GeocodedResponse } from '$lib/utils/definitions';
 
 import {
@@ -107,6 +112,24 @@ class EligibilitySimulator {
 
     return undefined;
   });
+  public firstCoBuyerTaxableIncome: number | undefined = $derived.by(() => {
+    if (this.firstCoBuyerFormattedTaxableIncome) {
+      return formattedThousandsToNumber(
+        this.firstCoBuyerFormattedTaxableIncome,
+      );
+    }
+
+    return undefined;
+  });
+  public secondCoBuyerTaxableIncome: number | undefined = $derived.by(() => {
+    if (this.secondCoBuyerFormattedTaxableIncome) {
+      return formattedThousandsToNumber(
+        this.secondCoBuyerFormattedTaxableIncome,
+      );
+    }
+
+    return undefined;
+  });
 
   // Eligibility
   public eligibility: EligibilityCategory | undefined = $derived.by(() => {
@@ -169,6 +192,8 @@ class EligibilitySimulator {
     $state(undefined);
   public positionContractType: ContractType | undefined = $state(undefined);
 
+  public eligibilitySimulation: EligibilitySimulationView | null = $state(null);
+
   public goToPreviousPhase = () => {
     if (this.hasRefusedConnection) {
       this.currentStep = this.steps[1];
@@ -206,6 +231,11 @@ class EligibilitySimulator {
     this.currentStep = this.steps[3];
     this.currentPhase = this.steps[3].phases[0];
     this.hasRefusedConnection = true;
+
+    this.updateEligibilitySimulation({
+      hasRefusedConnection: true,
+    });
+
     this.resetScroll();
   };
 
@@ -216,6 +246,54 @@ class EligibilitySimulator {
         block: 'start',
       });
     }
+  };
+
+  public createEligibilitySimulation = async () => {
+    this.loading = true;
+    const payload: CreateEligibilitySimulationDto = {
+      householdSize: this.householdSize as number,
+      hasDisability: this.hasDisability as boolean,
+      dependantsAmount: this.dependantsAmount as number,
+      birthday: this.birthday as string,
+      coBuyerBirthday: this.coBuyerBirthday as string,
+    };
+
+    const response = await fetch('/api/eligibility-simulations', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    if (!data.message) {
+      this.eligibilitySimulation = data;
+    }
+
+    this.loading = false;
+    this.goToNextPhase();
+  };
+
+  public updateEligibilitySimulation = async (
+    payload: UpdateEligibilitySimulationDto,
+  ) => {
+    this.loading = true;
+
+    const response = await fetch(
+      `/api/eligibility-simulations/${this.eligibilitySimulation?.id}`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+      },
+    );
+
+    const data = await response.json();
+
+    if (!data.message) {
+      this.eligibilitySimulation = data;
+    }
+
+    this.loading = false;
+    this.goToNextPhase();
   };
 }
 

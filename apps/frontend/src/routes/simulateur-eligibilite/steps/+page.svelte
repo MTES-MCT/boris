@@ -6,7 +6,11 @@
 
   import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
 
-  const { currentStep } = $derived(eligibilitySimulatorManager);
+  const { currentStep, eligibilitySimulation, eligibility } = $derived(
+    eligibilitySimulatorManager,
+  );
+
+  $inspect(eligibilitySimulation);
 </script>
 
 <svelte:head>

@@ -16,7 +16,7 @@
     phone,
     currentPhase,
     nextStep,
-    goToNextPhase,
+    updateEligibilitySimulation,
     previousPhase,
     goToPreviousPhase,
     loading,
@@ -58,7 +58,13 @@
     try {
       formData.parse(payload);
       eligibilitySimulatorManager.hasRefusedConnection = false;
-      goToNextPhase();
+
+      updateEligibilitySimulation({
+        firstName,
+        lastName,
+        email,
+        phone,
+      });
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }

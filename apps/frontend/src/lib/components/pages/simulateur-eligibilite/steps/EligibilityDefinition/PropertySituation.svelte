@@ -12,11 +12,12 @@
     type PropertySituation,
   } from '$lib/utils/eligibility-simulator';
 
-  const {
+  let {
+    eligibility,
     currentPhase,
     propertySituation,
     nextStep,
-    goToNextPhase,
+    updateEligibilitySimulation,
     previousPhase,
     goToPreviousPhase,
     loading,
@@ -50,7 +51,10 @@
       FormData.parse(payload);
       errors = {};
 
-      goToNextPhase();
+      updateEligibilitySimulation({
+        propertySituation,
+        eligibility,
+      });
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }

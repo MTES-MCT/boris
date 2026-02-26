@@ -28,7 +28,7 @@
     allowFinancingAndOwnershipAdvices,
     positionContractType,
     nextStep,
-    goToNextPhase,
+    updateEligibilitySimulation,
     previousPhase,
     goToPreviousPhase,
     loading,
@@ -146,7 +146,8 @@
     try {
       formData.parse(payload);
       errors = {};
-      goToNextPhase();
+
+      updateEligibilitySimulation(payload);
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }

@@ -15,7 +15,7 @@
   const {
     currentPhase,
     nextPhase,
-    goToNextPhase,
+    updateEligibilitySimulation,
     previousStep,
     goToPreviousPhase,
     loading,
@@ -24,7 +24,9 @@
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
-    goToNextPhase();
+    updateEligibilitySimulation({
+      hasRefusedConnection: false,
+    });
   };
 </script>
 

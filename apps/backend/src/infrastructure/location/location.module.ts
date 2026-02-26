@@ -5,6 +5,7 @@ import { LocationRepository } from './location.repository';
 import { SaveLocationUsecase } from 'src/application/location/usecases/save.usecase';
 import { DepartementModule } from '../departement/departement.module';
 import { EligibilitySimulationModule } from '../eligibility-simulation/eligibility-simulation.module';
+import { DeleteLocationUsecase } from 'src/application/location/usecases/delete.usecase';
 
 @Module({
   imports: [
@@ -19,11 +20,13 @@ import { EligibilitySimulationModule } from '../eligibility-simulation/eligibili
     },
     LocationRepository,
     SaveLocationUsecase,
+    DeleteLocationUsecase,
   ],
   exports: [
     'LocationRepositoryInterface',
     LocationRepository,
     SaveLocationUsecase,
+    DeleteLocationUsecase,
   ],
 })
 export class LocationModule {}

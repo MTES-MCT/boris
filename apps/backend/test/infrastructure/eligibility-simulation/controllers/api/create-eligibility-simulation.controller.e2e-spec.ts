@@ -28,7 +28,7 @@ describe('CreateEligibilitySimulationApiController', () => {
       .post('/api/eligibility-simulations')
       .send({
         householdSize: 2,
-        hasDisablity: false,
+        hasDisability: false,
       })
       .set('x-api-key', process.env.API_KEY as string);
 
@@ -44,7 +44,7 @@ describe('CreateEligibilitySimulationApiController', () => {
       .post('/api/eligibility-simulations')
       .send({
         householdSize: 2,
-        hasDisablity: true,
+        hasDisability: true,
         dependantsAmount: 1,
       })
       .set('x-api-key', process.env.API_KEY as string);
@@ -61,7 +61,7 @@ describe('CreateEligibilitySimulationApiController', () => {
     const { status } = await request(app.getHttpServer())
       .post('/api/eligibility-simulations')
       .send({
-        hasDisablity: false,
+        hasDisability: false,
       })
       .set('x-api-key', process.env.API_KEY as string);
 
@@ -73,7 +73,7 @@ describe('CreateEligibilitySimulationApiController', () => {
       .post('/api/eligibility-simulations')
       .send({
         householdSize: 'not a number',
-        hasDisablity: false,
+        hasDisability: false,
       })
       .set('x-api-key', process.env.API_KEY as string);
 
@@ -85,7 +85,7 @@ describe('CreateEligibilitySimulationApiController', () => {
       .post('/api/eligibility-simulations')
       .send({
         householdSize: 0,
-        hasDisablity: false,
+        hasDisability: false,
       })
       .set('x-api-key', process.env.API_KEY as string);
 
@@ -97,7 +97,7 @@ describe('CreateEligibilitySimulationApiController', () => {
       .post('/api/eligibility-simulations')
       .send({
         householdSize: -1,
-        hasDisablity: false,
+        hasDisability: false,
       })
       .set('x-api-key', process.env.API_KEY as string);
 
@@ -109,7 +109,7 @@ describe('CreateEligibilitySimulationApiController', () => {
       .post('/api/eligibility-simulations')
       .send({
         householdSize: 2,
-        hasDisablity: false,
+        hasDisability: false,
         dependantsAmount: -1,
       })
       .set('x-api-key', process.env.API_KEY as string);

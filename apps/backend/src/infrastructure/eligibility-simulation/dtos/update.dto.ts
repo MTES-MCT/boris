@@ -3,9 +3,11 @@ import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
+  IsDate,
   IsIn,
   IsNumber,
   IsOptional,
+  IsPositive,
   IsString,
   Min,
   ValidateNested,
@@ -60,31 +62,25 @@ export class UpdateEligibilitySimulationEligibilityDTO {
   public category: number;
 
   @ApiPropertyOptional()
-  @Transform(({ value }) =>
-    value === undefined || value === null
-      ? value
-      : value === true || value === 'true',
-  )
+  @Transform(({ obj }) => {
+    return obj.eligibleZoneAandAbis;
+  })
   @IsBoolean()
   @IsOptional()
   public eligibleZoneAandAbis: boolean;
 
   @ApiPropertyOptional()
-  @Transform(({ value }) =>
-    value === undefined || value === null
-      ? value
-      : value === true || value === 'true',
-  )
+  @Transform(({ obj }) => {
+    return obj.eligibleZoneB1;
+  })
   @IsBoolean()
   @IsOptional()
   public eligibleZoneB1: boolean;
 
   @ApiPropertyOptional()
-  @Transform(({ value }) =>
-    value === undefined || value === null
-      ? value
-      : value === true || value === 'true',
-  )
+  @Transform(({ obj }) => {
+    return obj.eligibleZoneB2andC;
+  })
   @IsBoolean()
   @IsOptional()
   public eligibleZoneB2andC: boolean;
@@ -133,6 +129,37 @@ export class UpdateEligibilitySimulationLocationDTO {
 }
 
 export class UpdateEligibilitySimulationDTO {
+  @ApiPropertyOptional()
+  @IsNumber()
+  @IsPositive()
+  @IsOptional()
+  public householdSize?: number;
+
+  @ApiPropertyOptional()
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    return Boolean(value);
+  })
+  @IsBoolean()
+  @IsOptional()
+  public hasDisability?: boolean;
+
+  @ApiPropertyOptional()
+  @IsNumber()
+  @IsOptional()
+  public dependantsAmount?: number;
+
+  @ApiPropertyOptional()
+  @IsDate()
+  @IsOptional()
+  public birthday?: Date;
+
+  @ApiPropertyOptional()
+  @IsDate()
+  @IsOptional()
+  public coBuyerBirthday?: Date;
+
   @ApiPropertyOptional({ enum: PROPERTY_SITUATIONS })
   @IsOptional()
   @IsIn(PROPERTY_SITUATIONS)
@@ -188,11 +215,11 @@ export class UpdateEligibilitySimulationDTO {
   public phone?: string;
 
   @ApiPropertyOptional()
-  @Transform(({ value }) =>
-    value === undefined || value === null
-      ? value
-      : value === true || value === 'true',
-  )
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    return Boolean(value);
+  })
   @IsBoolean()
   @IsOptional()
   public hasRefusedConnection?: boolean;
@@ -215,11 +242,11 @@ export class UpdateEligibilitySimulationDTO {
   public resources?: number;
 
   @ApiPropertyOptional()
-  @Transform(({ value }) =>
-    value === undefined || value === null
-      ? value
-      : value === true || value === 'true',
-  )
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    return Boolean(value);
+  })
   @IsBoolean()
   @IsOptional()
   public hadBrsKnowledge?: boolean;
@@ -235,11 +262,11 @@ export class UpdateEligibilitySimulationDTO {
   public laposteEmployer?: string;
 
   @ApiPropertyOptional()
-  @Transform(({ value }) =>
-    value === undefined || value === null
-      ? value
-      : value === true || value === 'true',
-  )
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    return Boolean(value);
+  })
   @IsBoolean()
   @IsOptional()
   public canSendInformationsToLaposte?: boolean;
@@ -250,41 +277,41 @@ export class UpdateEligibilitySimulationDTO {
   public positionType?: PositionType;
 
   @ApiPropertyOptional()
-  @Transform(({ value }) =>
-    value === undefined || value === null
-      ? value
-      : value === true || value === 'true',
-  )
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    return Boolean(value);
+  })
   @IsBoolean()
   @IsOptional()
   public positionStage?: boolean;
 
   @ApiPropertyOptional()
-  @Transform(({ value }) =>
-    value === undefined || value === null
-      ? value
-      : value === true || value === 'true',
-  )
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    return Boolean(value);
+  })
   @IsBoolean()
   @IsOptional()
   public hasCompanyMoreThan10Employees?: boolean;
 
   @ApiPropertyOptional()
-  @Transform(({ value }) =>
-    value === undefined || value === null
-      ? value
-      : value === true || value === 'true',
-  )
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    return Boolean(value);
+  })
   @IsBoolean()
   @IsOptional()
   public hasCompanyMoreThan50Employees?: boolean;
 
   @ApiPropertyOptional()
-  @Transform(({ value }) =>
-    value === undefined || value === null
-      ? value
-      : value === true || value === 'true',
-  )
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') return value.toLowerCase() === 'true';
+    return Boolean(value);
+  })
   @IsBoolean()
   @IsOptional()
   public allowFinancingAndOwnershipAdvices?: boolean;

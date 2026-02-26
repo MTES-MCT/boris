@@ -15,7 +15,7 @@ describe('UpdateEligibilitySimulationApiController', () => {
       .post('/api/eligibility-simulations')
       .send({
         householdSize: 2,
-        hasDisablity: false,
+        hasDisability: false,
       })
       .set('x-api-key', process.env.API_KEY as string);
 

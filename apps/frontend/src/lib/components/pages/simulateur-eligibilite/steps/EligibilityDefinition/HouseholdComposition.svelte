@@ -24,8 +24,10 @@
     dependantsAmount,
     birthday,
     coBuyerBirthday,
+    eligibilitySimulation,
+    createEligibilitySimulation,
+    updateEligibilitySimulation,
     nextPhase,
-    goToNextPhase,
     loading,
   } = $derived(eligibilitySimulatorManager);
 
@@ -102,7 +104,6 @@
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
-    // TODO: Define type here with DTOs (same as in step1 from acquisition simulator)
     const payload = {
       selectedHouseholdSize,
       inputHouseholdSize,
@@ -121,7 +122,17 @@
         inputHouseholdSize || 0,
       );
 
-      goToNextPhase();
+      if (eligibilitySimulation) {
+        updateEligibilitySimulation({
+          householdSize,
+          hasDisability,
+          dependantsAmount,
+          birthday,
+          coBuyerBirthday,
+        });
+      } else {
+        createEligibilitySimulation();
+      }
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }
