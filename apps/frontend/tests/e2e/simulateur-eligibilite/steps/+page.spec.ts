@@ -103,8 +103,13 @@ test.describe('Eligibility simulator', () => {
   let synthesisFiscalRevenues: Locator;
   let synthesisPropertySituation: Locator;
 
+  let globalPage: Page;
+  const pageTimeout = 250;
+
   test.beforeEach(async ({ page }) => {
     await page.goto('/simulateur-eligibilite/steps');
+
+    globalPage = page;
 
     simulatorWrapper = page.getByTestId('simulator-wrapper');
     stepTitle = simulatorWrapper.getByRole('heading', { level: 2 });
@@ -409,6 +414,7 @@ test.describe('Eligibility simulator', () => {
     }
 
     await submitButton.click();
+    await globalPage.waitForTimeout(pageTimeout);
   };
 
   const performFiscalRevenues = async (
@@ -438,6 +444,7 @@ test.describe('Eligibility simulator', () => {
     }
 
     await submitButton.click();
+    await globalPage.waitForTimeout(pageTimeout);
   };
 
   const performPropertySituation = async (
@@ -445,14 +452,17 @@ test.describe('Eligibility simulator', () => {
   ) => {
     await propertySituationSelect.selectOption(propertySituation);
     await submitButton.click();
+    await globalPage.waitForTimeout(pageTimeout);
   };
 
   const performResultDetails = async () => {
     await submitButton.click();
+    await globalPage.waitForTimeout(pageTimeout);
   };
 
   const performRefuseConnection = async () => {
     await refuseConnectionLink.click();
+    await globalPage.waitForTimeout(pageTimeout);
   };
 
   const performUserDetails = async (
@@ -478,6 +488,7 @@ test.describe('Eligibility simulator', () => {
     }
 
     await submitButton.click();
+    await globalPage.waitForTimeout(pageTimeout);
   };
 
   const performHousingInformations = async (
@@ -505,6 +516,7 @@ test.describe('Eligibility simulator', () => {
     }
 
     await submitButton.click();
+    await globalPage.waitForTimeout(pageTimeout);
   };
 
   const performFinancialInformations = async (
@@ -520,6 +532,7 @@ test.describe('Eligibility simulator', () => {
     }
 
     await submitButton.click();
+    await globalPage.waitForTimeout(pageTimeout);
   };
 
   const performAdditionalInformations = async (
@@ -605,6 +618,7 @@ test.describe('Eligibility simulator', () => {
     }
 
     await submitButton.click();
+    await globalPage.waitForTimeout(pageTimeout);
   };
 
   test.describe('Définir mon éligibilité', () => {
@@ -853,7 +867,9 @@ test.describe('Eligibility simulator', () => {
           await performFiscalRevenues('25000', 'COMMUN');
         });
 
-        test('4 personnes dans le foyer, soumettre avec le type de déclaration "Seul·e mais vous souhaitez acheter avec un·e partenaire"', async () => {
+        test('4 personnes dans le foyer, soumettre avec le type de déclaration "Seul·e mais vous souhaitez acheter avec un·e partenaire"', async ({
+          page,
+        }) => {
           await performHouseholdComposition(4, false, 2);
           validateStepAndPhaseTitles();
           await performFiscalRevenues(
