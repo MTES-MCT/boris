@@ -1,16 +1,16 @@
 <script lang="ts">
   import { createPDF } from '$lib/utils/helpers';
 
-  import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
-  import Description from '$components/pages/simulateur-acquisition/Description.svelte';
-  import Form from '$components/pages/simulateur-acquisition/Form.svelte';
-  import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
-  import Action from '$components/pages/simulateur-acquisition/Action.svelte';
+  import Wrapper from '$components/common/Simulator/Wrapper.svelte';
+  import Description from '$components/common/Simulator/Description.svelte';
+  import Form from '$components/common/Simulator/Form.svelte';
+  import Actions from '$components/common/Simulator/Actions.svelte';
+  import Action from '$components/common/Simulator/Action.svelte';
   import GlobalSynthesis from '$components/pages/simulateur-acquisition/GlobalSynthesis.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
-  let { previousStep, goToPreviousStep } = $derived(
+  let { currentStep, steps, previousStep, goToPreviousStep } = $derived(
     acquisitionSimulatorManager,
   );
 
@@ -24,7 +24,11 @@
 </script>
 
 <Wrapper>
-  <Description>
+  <Description
+    title="Simulateur d'acquisition"
+    stepTitle={`${currentStep.step}. ${currentStep.title}`}
+    currentStep={currentStep.step}
+    stepCount={steps.length}>
     <p>
       Voici le résumé de la simulation de votre projet d'acquisition en bail
       réel solidaire (BRS). Les montants et calculs présentés ci-dessous sont

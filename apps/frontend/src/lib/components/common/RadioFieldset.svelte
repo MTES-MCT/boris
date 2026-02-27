@@ -35,7 +35,7 @@
     class="fr-fieldset__legend--regular fr-fieldset__legend"
     id={`${id}-legend`}>
     <div class="flex gap-1">
-      <span><b>{legend}</b></span>
+      <span>{legend}</span>
       {#if legendTooltip}
         <Tooltip>
           {@html legendTooltip}

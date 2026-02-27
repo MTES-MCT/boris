@@ -1,13 +1,9 @@
 <script lang="ts">
-  import type { PageProps } from './$types';
-
   import GradientBackgroundWrapper from '$components/common/GradientBackgroundWrapper.svelte';
   import Hero from '$components/pages/simulateur-eligibilite/Hero.svelte';
-  import Chatbot from '$components/pages/simulateur-eligibilite/Chatbot.svelte';
-  import Simulator from '$components/pages/simulateur-eligibilite/Simulator.svelte';
+  import SimulationCta from '$components/pages/simulateur-eligibilite/SimulationCta.svelte';
+  import EligibilityTresholds from '$components/common/EligibilityTresholds.svelte';
   import PageCta from '$components/common/PageCta.svelte';
-
-  const { data }: PageProps = $props();
 </script>
 
 <svelte:head>
@@ -19,7 +15,7 @@
 
 <GradientBackgroundWrapper>
   <Hero />
-  <Chatbot landbotConfigUrl={data.landbotConfigUrl} />
-  <Simulator />
+  <SimulationCta />
+  <EligibilityTresholds />
   <PageCta />
 </GradientBackgroundWrapper>

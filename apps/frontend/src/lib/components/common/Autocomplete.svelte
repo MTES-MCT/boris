@@ -15,7 +15,11 @@
     value: string;
     label: string;
     placeholder: string;
+    hint?: string;
+    disabled?: boolean;
     error?: string;
+    dataTestId?: string;
+    errorDataTestId?: string;
     onSelect: (suggestion: GeocodedResponse['properties']) => void;
   };
 
@@ -23,8 +27,12 @@
     value = $bindable(),
     label,
     placeholder,
+    hint,
+    disabled = false,
     error,
     onSelect,
+    dataTestId,
+    errorDataTestId,
   }: Props = $props();
 
   let suggestions = $state<GeocodedResponse['properties'][] | null>(null);
@@ -146,6 +154,8 @@
     icon="map-pin-2-line"
     role="combobox"
     autocomplete="off"
+    {disabled}
+    {hint}
     {error}
     ariaAttributes={{
       'aria-autocomplete': 'list',
@@ -155,7 +165,9 @@
     }}
     forceNoMarginBottom
     onChange={handleChange}
-    onKeydown={handleKeydown} />
+    onKeydown={handleKeydown}
+    {dataTestId}
+    {errorDataTestId} />
 
   {#if isListExpanded}
     <div
@@ -204,7 +216,8 @@
     aria-selected={suggestion?.id === focusedSuggestionId}
     aria-setsize={suggestions?.length}
     aria-posinset={index}
-    onclick={() => handleSelect(suggestion?.id)}>
+    onclick={() => handleSelect(suggestion?.id)}
+    data-testid={`suggestion-${index}-data-test-id`}>
     {getGeocodedResponseLabel(suggestion)}
   </li>
 {/snippet}

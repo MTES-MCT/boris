@@ -11,9 +11,8 @@
   import Section from '$components/common/Section.svelte';
   import Accordion from '$components/common/Accordion.svelte';
   import VerticalStepper from '$components/common/Steppers/VerticalStepper.svelte';
-  import ShadowedBox from '$components/common/ShadowedBox.svelte';
-  import Data from '$components/pages/simulateur-eligibilite/Data.svelte';
   import ArticleCard from '$components/pages/blog/ArticleCard.svelte';
+  import EligibilityTresholds from '$components/common/EligibilityTresholds.svelte';
 
   const firstArticle = articles.find(
     (article) =>
@@ -309,46 +308,6 @@
   </Section>
 
   <Section>
-    <ShadowedBox hidePath>
-      <h2 id="plafonds-de-ressources">
-        Les plafonds de revenus en bail réel solidaire (BRS)
-      </h2>
-      <p>
-        Les plafonds en vigueur depuis janvier 2025 sont définis à partir de
-        votre catégorie de ménage et la zone de votre futur bien. Elle
-        correspond à la tension immobilière, du plus tendu où les prix sont les
-        plus haut, Abis, au moins tendu, C.
-      </p>
-      <p>
-        Le logement acheté en bail réel solidaire doit être utilisé en tant que
-        résidence principale.
-      </p>
-      <p class="fr-mb-0">
-        Les revenus fiscaux de référence* du ménage ne doivent pas dépasser les
-        plafonds de ressources ci-dessous :
-      </p>
-      <a
-        href="/revenu-fiscal-de-reference.png"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="fr-link fr-text--sm">
-        <i>
-          *Où se situe le revenus fiscal de référence sur votre avis
-          d'imposition
-        </i>
-      </a>
-
-      <Data />
-
-      <div class="fr-pt-4w">
-        <a
-          href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000437021/2025-02-12/"
-          class="fr-link"
-          target="_blank"
-          rel="noopener">
-          Textes de référence
-        </a>
-      </div>
-    </ShadowedBox>
+    <EligibilityTresholds hidePath />
   </Section>
 </GradientBackgroundWrapper>

@@ -1,17 +1,22 @@
 <script lang="ts">
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
 
-  import Wrapper from '$components/pages/simulateur-acquisition/Wrapper.svelte';
-  import Description from '$components/pages/simulateur-acquisition/Description.svelte';
-  import Form from '$components/pages/simulateur-acquisition/Form.svelte';
-  import Actions from '$components/pages/simulateur-acquisition/Actions.svelte';
-  import Action from '$components/pages/simulateur-acquisition/Action.svelte';
+  import Wrapper from '$components/common/Simulator/Wrapper.svelte';
+  import Description from '$components/common/Simulator/Description.svelte';
+  import Form from '$components/common/Simulator/Form.svelte';
+  import Actions from '$components/common/Simulator/Actions.svelte';
+  import Action from '$components/common/Simulator/Action.svelte';
   import LissageSynthesis from './LissageSynthesis.svelte';
   import Highlight from '$components/common/Highlight.svelte';
 
-  let { nextStep, previousStep, goToPreviousStep, goToNextStep } = $derived(
-    acquisitionSimulatorManager,
-  );
+  let {
+    currentStep,
+    steps,
+    nextStep,
+    previousStep,
+    goToPreviousStep,
+    goToNextStep,
+  } = $derived(acquisitionSimulatorManager);
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
@@ -21,7 +26,12 @@
 </script>
 
 <Wrapper>
-  <Description>
+  <Description
+    title="Simulateur d'acquisition"
+    stepTitle={`${currentStep.step}. ${currentStep.title}`}
+    nextStepTitle={nextStep?.title}
+    currentStep={currentStep.step}
+    stepCount={steps.length}>
     <p>
       Le lissage de prêt permet de structurer vos emprunts (prêt immobilier
       classique et/ou prêt à taux zéro) avec des mensualités constantes sur

@@ -8,7 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      LANDBOT_CONFIG_URL: ${{ secrets.LANDBOT_CONFIG_URL }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       API_URL: ${{ secrets.API_URL }}
       API_KEY: ${{ secrets.API_KEY }}
