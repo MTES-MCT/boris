@@ -7,6 +7,7 @@ import {
   IsNumber,
   IsOptional,
   IsPositive,
+  Min,
 } from 'class-validator';
 
 export class CreateEligibilitySimulationDTO {
@@ -32,6 +33,7 @@ export class CreateEligibilitySimulationDTO {
   @ApiProperty()
   @IsNumber()
   @IsOptional()
+  @Min(0)
   public dependantsAmount?: number;
 
   @ApiProperty()
