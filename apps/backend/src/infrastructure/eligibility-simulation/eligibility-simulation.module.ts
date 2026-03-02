@@ -7,11 +7,13 @@ import { CreateEligibilitySimulationApiController } from './controllers/api/crea
 import { UpdateEligibilitySimulationApiController } from './controllers/api/update-eligibility-simulation.controller';
 import { UpdateEligibilitySimulationUsecase } from 'src/application/eligibility-simulation/usecases/update.usecase';
 import { LocationModule } from '../location/location.module';
+import { MailerModule } from '../mailer/mailer.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([EligibilitySimulationEntity]),
     forwardRef(() => LocationModule),
+    MailerModule,
   ],
   controllers: [
     CreateEligibilitySimulationApiController,

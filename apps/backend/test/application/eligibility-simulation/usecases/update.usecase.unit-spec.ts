@@ -28,6 +28,10 @@ const mockDeleteLocationUsecase = {
   execute: jest.fn(),
 };
 
+const mockMailerService = {
+  sendEmail: jest.fn(),
+};
+
 describe('UpdateEligibilitySimulationUsecase', () => {
   let useCase: UpdateEligibilitySimulationUsecase;
 
@@ -46,6 +50,10 @@ describe('UpdateEligibilitySimulationUsecase', () => {
         {
           provide: DeleteLocationUsecase,
           useValue: mockDeleteLocationUsecase,
+        },
+        {
+          provide: 'MailerServiceInterface',
+          useValue: mockMailerService,
         },
       ],
     }).compile();
@@ -363,5 +371,100 @@ describe('UpdateEligibilitySimulationUsecase', () => {
     expect(
       mockEligibilitySimulationRepositoryWithFindById.save,
     ).not.toHaveBeenCalled();
+  });
+
+  it('should send email when email has changed', async () => {
+    const newEmail = 'nouveau.email@example.com';
+    const updatedData = {
+      email: newEmail,
+      firstName: 'Marie',
+      lastName: 'Martin',
+    };
+
+    const updatedSimulation = {
+      ...mockedEligibilitySimulation,
+      ...updatedData,
+    };
+
+    mockEligibilitySimulationRepositoryWithFindById.findById.mockResolvedValue({
+      ...mockedEligibilitySimulation,
+    });
+    mockEligibilitySimulationRepositoryWithFindById.save.mockResolvedValue(
+      updatedSimulation,
+    );
+    mockMailerService.sendEmail.mockResolvedValue(undefined);
+
+    await useCase.execute({
+      id: mockedEligibilitySimulation.id,
+      ...updatedData,
+    });
+
+    expect(mockMailerService.sendEmail).toHaveBeenCalledTimes(1);
+    expect(mockMailerService.sendEmail).toHaveBeenCalledWith(
+      [
+        {
+          email: newEmail,
+          name: 'Marie Martin',
+          params: {
+            firstName: 'Marie',
+          },
+        },
+      ],
+      'Votre projet en BRS : toutes les étapes clés',
+      6,
+    );
+  });
+
+  it('should not send email when email has not changed', async () => {
+    const updatedData = {
+      firstName: 'Jean',
+      lastName: 'Dupont',
+      email: mockedEligibilitySimulation.email,
+    };
+
+    const updatedSimulation = {
+      ...mockedEligibilitySimulation,
+      ...updatedData,
+    };
+
+    mockEligibilitySimulationRepositoryWithFindById.findById.mockResolvedValue({
+      ...mockedEligibilitySimulation,
+    });
+    mockEligibilitySimulationRepositoryWithFindById.save.mockResolvedValue(
+      updatedSimulation,
+    );
+
+    await useCase.execute({
+      id: mockedEligibilitySimulation.id,
+      ...updatedData,
+    });
+
+    expect(mockMailerService.sendEmail).not.toHaveBeenCalled();
+  });
+
+  it('should not send email when params.email is undefined', async () => {
+    const updatedData = {
+      firstName: 'Pierre',
+      taxableIncome: 40000,
+    };
+
+    const updatedSimulation = {
+      ...mockedEligibilitySimulation,
+      ...updatedData,
+    };
+
+    mockEligibilitySimulationRepositoryWithFindById.findById.mockResolvedValue({
+      ...mockedEligibilitySimulation,
+    });
+    mockEligibilitySimulationRepositoryWithFindById.save.mockResolvedValue(
+      updatedSimulation,
+    );
+
+    await useCase.execute({
+      id: mockedEligibilitySimulation.id,
+      ...updatedData,
+    });
+
+    expect(mockMailerService.sendEmail).not.toHaveBeenCalled();
   });
 });

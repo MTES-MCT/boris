@@ -6,6 +6,7 @@ import { LocationEntity } from 'src/infrastructure/location/location.entity';
 import { LocationView } from 'src/application/location/views/location.view';
 import { SaveLocationUsecase } from 'src/application/location/usecases/save.usecase';
 import { DeleteLocationUsecase } from 'src/application/location/usecases/delete.usecase';
+import { MailerService } from 'src/infrastructure/mailer/mailer.service';
 
 export class UpdateEligibilitySimulationUsecase {
   constructor(
@@ -13,6 +14,8 @@ export class UpdateEligibilitySimulationUsecase {
     private readonly eligibilitySimulationRepository: EligibilitySimulationRepositoryInterface,
     private readonly saveLocationUsecase: SaveLocationUsecase,
     private readonly deleteLocationUsecase: DeleteLocationUsecase,
+    @Inject('MailerServiceInterface')
+    private readonly mailerService: MailerService,
   ) {}
 
   public async execute(
@@ -55,6 +58,9 @@ export class UpdateEligibilitySimulationUsecase {
         throw new NotFoundException();
       }
     }
+
+    const hasEmailChanged =
+      params.email && params.email !== eligibilitySimulation.email;
 
     eligibilitySimulation.householdSize =
       params.householdSize || eligibilitySimulation.householdSize;
@@ -136,6 +142,22 @@ export class UpdateEligibilitySimulationUsecase {
     eligibilitySimulation = await this.eligibilitySimulationRepository.save(
       eligibilitySimulation,
     );
+
+    if (hasEmailChanged) {
+      await this.mailerService.sendEmail(
+        [
+          {
+            email: params.email as string,
+            name: `${params.firstName} ${params.lastName}`,
+            params: {
+              firstName: params.firstName,
+            },
+          },
+        ],
+        'Votre projet en BRS : toutes les étapes clés',
+        6,
+      );
+    }
 
     return new EligibilitySimulationView({
       ...eligibilitySimulation,

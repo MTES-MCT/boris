@@ -9,8 +9,6 @@
   const { currentStep, eligibilitySimulation, eligibility } = $derived(
     eligibilitySimulatorManager,
   );
-
-  $inspect(eligibilitySimulation);
 </script>
 
 <svelte:head>
