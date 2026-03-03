@@ -76,7 +76,6 @@
             message: stepsContent.laposteEmployer.errorMessage,
           })
           .refine((value) => {
-            console.log(value);
             return value.length > 0;
           }, stepsContent.laposteEmployer.errorMessage),
         canSendInformationsToLaposte: z.boolean({

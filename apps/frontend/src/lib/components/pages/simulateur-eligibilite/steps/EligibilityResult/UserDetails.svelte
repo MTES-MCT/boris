@@ -40,7 +40,6 @@
       })
       .refine((value) => {
         const phoneRegex = /^(0|(\+[0-9]{2}[. -]?))[1-9]([. -]?[0-9][0-9]){4}$/;
-        console.log(phoneRegex.test(value));
         return phoneRegex.test(value);
       }, stepsContent.phone.errorMessage),
   });

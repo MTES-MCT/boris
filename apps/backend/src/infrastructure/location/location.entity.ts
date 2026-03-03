@@ -15,25 +15,25 @@ export class LocationEntity implements LocationInterface {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @Column({ type: 'float' })
+  @Column({ type: 'float', nullable: true })
   public latitude: number;
 
-  @Column({ type: 'float' })
+  @Column({ type: 'float', nullable: true })
   public longitude: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   public city: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   public citycode: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   public label: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   public municipality: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   public postalCode: string;
 
   @ManyToOne(() => DepartementEntity, (departement) => departement.locations)

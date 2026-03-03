@@ -40,6 +40,10 @@ export class GoogleSheetsService implements GoogleSheetsServiceInterface {
     options: AppendRowOptions,
     values: unknown[][],
   ): Promise<{ updatedCells: number; updatedRows: number }> {
+    if (process.env.GOOGLE_SHEETS_INSERT === 'disabled') {
+      return { updatedCells: 0, updatedRows: 0 };
+    }
+
     const range = options.range.includes('!')
       ? options.range
       : `${options.range}!A:ZZ`;
