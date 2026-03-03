@@ -1,5 +1,6 @@
 <script lang="ts">
   import { default as MascotteWaving } from '$assets/icons/mascotte-waving.svg?raw';
+  import { formatYearMinusN } from '$lib/utils/formatters';
 </script>
 
 <section>
@@ -22,8 +23,11 @@
       <p>
         Pour savoir si vous êtes éligible au Bail Réel Solidaire, il vous suffit
         de remplir le simulateur d'éligibilité de BoRiS. Vous aurez besoin de
-        vos avis d'imposition des années (n-1 et n-2)/(n-2 et n-3)À CLARIFIER
-        ICI].
+        votre avis d'imposition de <span
+          class="fr-text--bold text-blue-primary">
+          l'année {formatYearMinusN(2)}
+        </span>
+        .
       </p>
       <a
         href="/simulateur-eligibilite/steps"

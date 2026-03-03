@@ -81,7 +81,7 @@
         id="contribution"
         step={1000}
         maxlength={7}
-        placeholder="Exemple: 25 000€"
+        placeholder="Exemple: 10 000€"
         onChange={(e) => {
           eligibilitySimulatorManager.formattedContribution = formatThousands(
             (e.target as HTMLInputElement).value,
@@ -104,7 +104,7 @@
         id="resources"
         step={1000}
         maxlength={7}
-        placeholder="Exemple: 25 000€"
+        placeholder="Exemple: 3 000€"
         onChange={(e) => {
           eligibilitySimulatorManager.formattedResources = formatThousands(
             (e.target as HTMLInputElement).value,

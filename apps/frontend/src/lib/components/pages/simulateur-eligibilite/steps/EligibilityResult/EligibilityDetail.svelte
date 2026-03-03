@@ -24,14 +24,17 @@
   {:else if eligibility?.eligibleZoneB2andC}
     {@render resultAlert(stepsContent.eligibility.zoneB2andC.title)}
     <p>{stepsContent.eligibility.zoneB2andC.content}</p>
+    <p>{@html stepsContent.eligibility.zoneInfo.content}</p>
     {@render connectionCta(hideConnectionCta)}
   {:else if eligibility?.eligibleZoneB1}
     {@render resultAlert(stepsContent.eligibility.zoneB1.title)}
     <p>{stepsContent.eligibility.zoneB1.content}</p>
+    <p>{@html stepsContent.eligibility.zoneInfo.content}</p>
     {@render connectionCta(hideConnectionCta)}
   {:else if eligibility?.eligibleZoneAandAbis}
     {@render resultAlert(stepsContent.eligibility.zoneAandAbis.title)}
     <p>{stepsContent.eligibility.zoneAandAbis.content}</p>
+    <p>{@html stepsContent.eligibility.zoneInfo.content}</p>
     {@render connectionCta(hideConnectionCta)}
   {:else}
     {@render resultAlert(stepsContent.eligibility.notEligible.title, 'error')}

@@ -428,6 +428,9 @@ export const stepsContent = {
       content:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     },
+    zoneInfo: {
+      content: `<a href="https://www.service-public.gouv.fr/simulateur/calcul/zonage-abc" class="fr-link" target="_blank" rel="noopener noreferrer" class="fr-link">Plus d'informations sur les zones.</a>.`,
+    },
   },
   firstName: {
     label: 'Prénom',
@@ -525,6 +528,10 @@ export const stepsContent = {
       {
         value: false,
         label: 'Non',
+      },
+      {
+        value: false,
+        label: 'Je ne suis pas sûr·e',
       },
     ],
     errorMessage: 'Veuillez sélectionner une option',

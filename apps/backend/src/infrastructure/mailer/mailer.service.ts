@@ -9,7 +9,7 @@ export class MailerService implements MailerServiceInterface {
   public baseUrl = 'https://api.brevo.com/v3/smtp/email';
   public defaultSender = {
     email: 'contact@boris.beta.gouv.fr',
-    name: 'Laure de BoRiS ',
+    name: 'BoRiS',
   };
 
   public async sendEmail(
