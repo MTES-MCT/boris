@@ -32,6 +32,10 @@ const mockMailerService = {
   sendEmail: jest.fn(),
 };
 
+const mockGoogleSheetsService = {
+  appendRows: jest.fn(),
+};
+
 describe('UpdateEligibilitySimulationUsecase', () => {
   let useCase: UpdateEligibilitySimulationUsecase;
 
@@ -54,6 +58,10 @@ describe('UpdateEligibilitySimulationUsecase', () => {
         {
           provide: 'MailerServiceInterface',
           useValue: mockMailerService,
+        },
+        {
+          provide: 'GoogleSheetsServiceInterface',
+          useValue: mockGoogleSheetsService,
         },
       ],
     }).compile();
