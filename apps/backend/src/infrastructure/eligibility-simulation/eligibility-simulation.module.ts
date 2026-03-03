@@ -8,12 +8,14 @@ import { UpdateEligibilitySimulationApiController } from './controllers/api/upda
 import { UpdateEligibilitySimulationUsecase } from 'src/application/eligibility-simulation/usecases/update.usecase';
 import { LocationModule } from '../location/location.module';
 import { MailerModule } from '../mailer/mailer.module';
+import { GoogleSheetsModule } from '../google-sheets/google-sheets.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([EligibilitySimulationEntity]),
     forwardRef(() => LocationModule),
     MailerModule,
+    GoogleSheetsModule,
   ],
   controllers: [
     CreateEligibilitySimulationApiController,

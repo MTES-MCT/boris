@@ -1,5 +1,6 @@
 import { Inject, NotFoundException } from '@nestjs/common';
 import { EligibilitySimulationRepositoryInterface } from 'src/domain/eligibility-simulation/eligibility-simulation.repository.interface';
+import type { GoogleSheetsServiceInterface } from 'src/domain/google-sheets/google-sheets.service.interface';
 import { UpdateEligibilitySimulationParams } from './update.params';
 import { EligibilitySimulationView } from '../views/eligibility-simulation.view';
 import { LocationEntity } from 'src/infrastructure/location/location.entity';
@@ -16,6 +17,8 @@ export class UpdateEligibilitySimulationUsecase {
     private readonly deleteLocationUsecase: DeleteLocationUsecase,
     @Inject('MailerServiceInterface')
     private readonly mailerService: MailerService,
+    @Inject('GoogleSheetsServiceInterface')
+    private readonly googleSheets: GoogleSheetsServiceInterface,
   ) {}
 
   public async execute(
@@ -61,6 +64,7 @@ export class UpdateEligibilitySimulationUsecase {
 
     const hasEmailChanged =
       params.email && params.email !== eligibilitySimulation.email;
+    const shouldInsertInGoogleSheet = params.contribution && params.resources;
 
     eligibilitySimulation.householdSize =
       params.householdSize || eligibilitySimulation.householdSize;
@@ -157,6 +161,34 @@ export class UpdateEligibilitySimulationUsecase {
         'Votre projet en BRS : toutes les étapes clés',
         6,
       );
+    }
+
+    if (shouldInsertInGoogleSheet) {
+      try {
+        await this.googleSheets.appendRows(
+          process.env.GOOGLE_SHEETS_SPREADSHEET_ID as string,
+          { range: 'Sheet1' },
+          eligibilitySimulation.locations.map((location) => [
+            `${eligibilitySimulation.firstName} ${eligibilitySimulation.lastName}`, // Nom (name)
+            '???', // Action OFS (actionofs)
+            '???', // Statut Ménage (statutmenage)
+            eligibilitySimulation.email, // Email (email)
+            eligibilitySimulation.phone, // Téléphone (numero_de_telephone)
+            location.departement.code, // Département (departement)
+            eligibilitySimulation.contribution, // Apport (apport)
+            eligibilitySimulation.householdSize, // Nombre de personnes dans le foyer (taillefoyer)
+            eligibilitySimulation.hasDisability, // Personne handicapée dans le foyer (handicap)
+            eligibilitySimulation.taxableIncome, // RFR 2024 (revenufiscal2024)
+            location.city, // Commune de recherche (ville_souhaitee)
+            eligibilitySimulation.propertySituation, // Statut résidentiel (statutmenage)
+            eligibilitySimulation.housingType, // Typologie du logement recherché (typologie)
+            eligibilitySimulation.resources, // Ressources mensuelles du foyer (ressources)
+            new Date().toISOString(), // Date de la simulation (date_simulation)
+          ]),
+        );
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     return new EligibilitySimulationView({

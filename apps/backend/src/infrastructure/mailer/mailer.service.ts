@@ -1,10 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import {
   MailerServiceInterface,
   type MailerTo,
 } from 'src/domain/mailer/mailer.service.interface';
-
-export const BREVO_API_KEY = 'BREVO_API_KEY';
 
 @Injectable()
 export class MailerService implements MailerServiceInterface {
@@ -13,8 +11,6 @@ export class MailerService implements MailerServiceInterface {
     email: 'contact@boris.beta.gouv.fr',
     name: 'Laure de BoRiS ',
   };
-
-  constructor(@Inject(BREVO_API_KEY) private readonly brevoApiKey: string) {}
 
   public async sendEmail(
     to: MailerTo[],
@@ -40,7 +36,7 @@ export class MailerService implements MailerServiceInterface {
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
-        'api-key': this.brevoApiKey,
+        'api-key': process.env.BREVO_API_KEY as string,
       },
       body: body,
     });

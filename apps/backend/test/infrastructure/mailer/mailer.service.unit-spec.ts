@@ -1,8 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-  MailerService,
-  BREVO_API_KEY,
-} from 'src/infrastructure/mailer/mailer.service';
+import { MailerService } from 'src/infrastructure/mailer/mailer.service';
 import type { MailerTo } from 'src/domain/mailer/mailer.service.interface';
 
 global.fetch = jest.fn();
@@ -14,21 +11,26 @@ describe('MailerService', () => {
   const brevoApiKey = 'test-brevo-api-key';
 
   beforeEach(async () => {
+    process.env.BREVO_API_KEY = brevoApiKey;
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        MailerService,
         {
-          provide: BREVO_API_KEY,
-          useValue: brevoApiKey,
+          provide: 'MailerServiceInterface',
+          useClass: MailerService,
         },
       ],
     }).compile();
 
-    mailerService = module.get<MailerService>(MailerService);
+    mailerService = module.get('MailerServiceInterface');
     mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
     jest.clearAllMocks();
 
     mockFetch.mockResolvedValue({ ok: true } as Response);
+  });
+
+  afterEach(() => {
+    delete process.env.BREVO_API_KEY;
   });
 
   describe('sendEmail', () => {
