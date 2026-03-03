@@ -84,7 +84,7 @@ describe('MailerService', () => {
 
       expect(body.sender).toEqual({
         email: 'contact@boris.beta.gouv.fr',
-        name: 'Laure de BoRiS ',
+        name: 'BoRiS',
       });
       expect(body.subject).toBe('Mon sujet');
       expect(body.templateId).toBe(10);
