@@ -11,6 +11,7 @@
     stepsContent,
     type PropertySituation,
   } from '$lib/utils/eligibility-simulator';
+  import cookieConsentManager from '$lib/managers/consent.svelte';
 
   let {
     eligibility,
@@ -50,6 +51,11 @@
     try {
       FormData.parse(payload);
       errors = {};
+
+      if (cookieConsentManager.hasUserConsented) {
+        // @ts-expect-error - gtag is not defined in the global scope
+        window.gtag('event', "Click 'Je veux connaître mon résultat'");
+      }
 
       updateEligibilitySimulation({
         propertySituation,

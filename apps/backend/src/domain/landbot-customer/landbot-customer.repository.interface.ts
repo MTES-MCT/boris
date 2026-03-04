@@ -5,6 +5,7 @@ import {
   LandbotRealEstateSituation,
 } from './landbot-customer.interface';
 import { RegionCode } from '../region/region.interface';
+import { PaginationProps } from '../common/paginationProps';
 
 export type GroupByRegionsResult = {
   regionName: string;
@@ -34,6 +35,9 @@ export type ConversionFunnelResult = {
 
 export interface LandbotCustomerRepositoryInterface {
   save(landbotCustomer: LandbotCustomerEntity): Promise<LandbotCustomerEntity>;
+  findAll(
+    paginationProps: PaginationProps,
+  ): Promise<[LandbotCustomerEntity[], number]>;
   findLast(): Promise<LandbotCustomerEntity | null>;
   groupByEligibility(): Promise<
     { eligibility: LandbotEligibility; count: string }[]

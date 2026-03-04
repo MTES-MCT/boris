@@ -522,15 +522,15 @@ export const stepsContent = {
         label: 'Veuillez sélectionner une option',
       },
       {
-        value: true,
+        value: 'OUI',
         label: 'Oui',
       },
       {
-        value: false,
+        value: 'NON',
         label: 'Non',
       },
       {
-        value: false,
+        value: 'AUTRE',
         label: 'Je ne suis pas sûr·e',
       },
     ],

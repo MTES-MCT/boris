@@ -7,9 +7,25 @@
   import EligibilityDetail from '$components/pages/simulateur-eligibilite/steps/EligibilityResult/EligibilityDetail.svelte';
 
   import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
+  import cookieConsentManager from '$lib/managers/consent.svelte';
 
   onMount(() => {
     eligibilitySimulatorManager.hasRefusedConnection = false;
+
+    if (cookieConsentManager.hasUserConsented) {
+      if (eligibilitySimulatorManager.eligibility?.eligibleZoneB2andC) {
+        // @ts-expect-error - gtag is not defined in the global scope
+        window.gtag('event', 'Éligible partout en France');
+      } else if (eligibilitySimulatorManager.eligibility?.eligibleZoneB1) {
+        // @ts-expect-error - gtag is not defined in the global scope
+        window.gtag('event', 'Éligible  zone A, Abis et B1');
+      } else if (
+        eligibilitySimulatorManager.eligibility?.eligibleZoneAandAbis
+      ) {
+        // @ts-expect-error - gtag is not defined in the global scope
+        window.gtag('event', 'Éligible A et Abis');
+      }
+    }
   });
 
   const {

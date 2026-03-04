@@ -4,4 +4,6 @@ export interface CreateEligibilitySimulationParams {
   dependantsAmount?: number;
   birthday?: Date;
   coBuyerBirthday?: Date;
+  isFromLandbot?: boolean;
+  landbotDate?: Date;
 }

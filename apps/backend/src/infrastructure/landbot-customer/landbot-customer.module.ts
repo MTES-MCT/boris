@@ -7,6 +7,7 @@ import { LandbotCustomerRepository } from './landbot-customer.repository';
 import { CreateLandbotCustomerUsecase } from 'src/application/landbot-customer/usecases/create.usecase';
 import { LandbotApiClientModule } from '../landbot-api-client/landbot-api-client.module';
 import { ImportLandbotCustomersCron } from './cron/import-landbot-customers';
+import { FindAllLandbotCustomersUsecase } from 'src/application/landbot-customer/usecases/findAll.usecase';
 import { FindLastLandbotCustomerUsecase } from 'src/application/landbot-customer/usecases/findLast.usecase';
 import { GroupByEligibilityUsecase } from 'src/application/landbot-customer/usecases/groupByEligibility.usecase';
 import { GroupByBrsKnowledgeUsecase } from 'src/application/landbot-customer/usecases/groupByBrsKnowledge.usecase';
@@ -46,6 +47,7 @@ import { CalculateConversionFunnelUsecase } from 'src/application/landbot-custom
     DepartementRepository,
     LandbotCustomerRepository,
     CreateLandbotCustomerUsecase,
+    FindAllLandbotCustomersUsecase,
     FindLastLandbotCustomerUsecase,
     GroupByEligibilityUsecase,
     GroupByBrsKnowledgeUsecase,
@@ -62,6 +64,7 @@ import { CalculateConversionFunnelUsecase } from 'src/application/landbot-custom
     DepartementRepository,
     LandbotCustomerRepository,
     CreateLandbotCustomerUsecase,
+    FindAllLandbotCustomersUsecase,
     FindLastLandbotCustomerUsecase,
     GroupByEligibilityUsecase,
     GroupByBrsKnowledgeUsecase,

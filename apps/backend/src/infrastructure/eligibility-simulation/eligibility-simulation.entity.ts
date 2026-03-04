@@ -149,6 +149,12 @@ export class EligibilitySimulationEntity
   @OneToMany(() => LocationEntity, (location) => location.eligibilitySimulation)
   public locations: LocationEntity[];
 
+  @Column({ type: 'boolean', default: false })
+  public isFromLandbot: boolean;
+
+  @Column({ type: 'timestamptz', nullable: true })
+  public landbotDate: Date;
+
   @CreateDateColumn()
   public createdAt: Date;
 

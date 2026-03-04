@@ -12,6 +12,7 @@
   import type { FormFieldError } from '$lib/utils/definitions';
   import z, { ZodError } from 'zod';
   import { formatFormErrors } from '$lib/utils/helpers';
+  import cookieConsentManager from '$lib/managers/consent.svelte';
 
   const {
     formattedContribution,
@@ -52,6 +53,11 @@
     try {
       FormData.parse(payload);
       errors = {};
+
+      if (cookieConsentManager.hasUserConsented) {
+        // @ts-expect-error - gtag is not defined in the global scope
+        window.gtag('event', 'Commune saisie');
+      }
 
       updateEligibilitySimulation({
         contribution,

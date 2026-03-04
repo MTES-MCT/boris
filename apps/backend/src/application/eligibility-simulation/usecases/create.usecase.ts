@@ -19,6 +19,8 @@ export class CreateEligibilitySimulationUsecase {
       dependantsAmount,
       birthday,
       coBuyerBirthday,
+      isFromLandbot = false,
+      landbotDate,
     } = params;
 
     const eligibilitySimulationEntity = new EligibilitySimulationEntity();
@@ -27,6 +29,11 @@ export class CreateEligibilitySimulationUsecase {
     eligibilitySimulationEntity.dependantsAmount = dependantsAmount;
     eligibilitySimulationEntity.birthday = birthday;
     eligibilitySimulationEntity.coBuyerBirthday = coBuyerBirthday;
+    eligibilitySimulationEntity.isFromLandbot = isFromLandbot;
+
+    if (landbotDate) {
+      eligibilitySimulationEntity.landbotDate = landbotDate;
+    }
 
     const eligibilitySimulation =
       await this.eligibilitySimulationRepository.save(

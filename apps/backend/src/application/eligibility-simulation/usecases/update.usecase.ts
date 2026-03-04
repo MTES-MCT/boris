@@ -169,21 +169,21 @@ export class UpdateEligibilitySimulationUsecase {
           process.env.GOOGLE_SHEETS_SPREADSHEET_ID as string,
           { range: 'Sheet1' },
           eligibilitySimulation.locations.map((location) => [
-            `${eligibilitySimulation.firstName} ${eligibilitySimulation.lastName}`, // Nom (name)
-            '???', // Action OFS (actionofs)
-            '???', // Statut Ménage (statutmenage)
-            eligibilitySimulation.email, // Email (email)
-            eligibilitySimulation.phone, // Téléphone (numero_de_telephone)
-            location.departement.code, // Département (departement)
-            eligibilitySimulation.contribution, // Apport (apport)
-            eligibilitySimulation.householdSize, // Nombre de personnes dans le foyer (taillefoyer)
-            eligibilitySimulation.hasDisability, // Personne handicapée dans le foyer (handicap)
-            eligibilitySimulation.taxableIncome, // RFR 2024 (revenufiscal2024)
-            location.city, // Commune de recherche (ville_souhaitee)
-            eligibilitySimulation.propertySituation, // Statut résidentiel (statutmenage)
-            eligibilitySimulation.housingType, // Typologie du logement recherché (typologie)
-            eligibilitySimulation.resources, // Ressources mensuelles du foyer (ressources)
-            new Date().toISOString(), // Date de la simulation (date_simulation)
+            '',
+            '',
+            new Date().toISOString(),
+            `${eligibilitySimulation.firstName} ${eligibilitySimulation.lastName}`,
+            eligibilitySimulation.email,
+            eligibilitySimulation.phone,
+            location.departement.code,
+            eligibilitySimulation.contribution,
+            eligibilitySimulation.householdSize,
+            eligibilitySimulation.hasDisability,
+            eligibilitySimulation.taxableIncome,
+            location.city,
+            eligibilitySimulation.propertySituation,
+            eligibilitySimulation.housingType,
+            eligibilitySimulation.resources,
           ]),
         );
       } catch (e) {
