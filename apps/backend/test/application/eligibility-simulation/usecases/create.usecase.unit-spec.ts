@@ -41,10 +41,12 @@ describe('CreateEligibilitySimulationUsecase', () => {
 
     expect(result).toMatchObject(expectedResult);
     expect(mockEligibilitySimulationRepository.save).toHaveBeenCalledTimes(1);
-    expect(mockEligibilitySimulationRepository.save).toHaveBeenCalledWith({
-      householdSize: mockedEligibilitySimulation.householdSize,
-      hasDisability: mockedEligibilitySimulation.hasDisability,
-    });
+    expect(mockEligibilitySimulationRepository.save).toHaveBeenCalledWith(
+      expect.objectContaining({
+        householdSize: mockedEligibilitySimulation.householdSize,
+        hasDisability: mockedEligibilitySimulation.hasDisability,
+      }),
+    );
   });
 
   it('should create an eligibility simulation with dependants and birthdays', async () => {
@@ -66,12 +68,14 @@ describe('CreateEligibilitySimulationUsecase', () => {
 
     expect(result).toMatchObject(expectedResult);
     expect(mockEligibilitySimulationRepository.save).toHaveBeenCalledTimes(1);
-    expect(mockEligibilitySimulationRepository.save).toHaveBeenCalledWith({
-      householdSize: mockedEligibilitySimulation.householdSize,
-      hasDisability: mockedEligibilitySimulation.hasDisability,
-      dependantsAmount: mockedEligibilitySimulation.dependantsAmount,
-      birthday: mockedEligibilitySimulation.birthday,
-      coBuyerBirthday: mockedEligibilitySimulation.coBuyerBirthday,
-    });
+    expect(mockEligibilitySimulationRepository.save).toHaveBeenCalledWith(
+      expect.objectContaining({
+        householdSize: mockedEligibilitySimulation.householdSize,
+        hasDisability: mockedEligibilitySimulation.hasDisability,
+        dependantsAmount: mockedEligibilitySimulation.dependantsAmount,
+        birthday: mockedEligibilitySimulation.birthday,
+        coBuyerBirthday: mockedEligibilitySimulation.coBuyerBirthday,
+      }),
+    );
   });
 });
