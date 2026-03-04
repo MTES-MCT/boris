@@ -34,7 +34,6 @@ node_modules
 apps/backend/coverage
 apps/backend/.nyc_output
 apps/backend/src/assets/styles/output.css
-# Google Cloud service account key files (ne jamais committer)
 apps/backend/*-*-*-*.json
 
 # Logs

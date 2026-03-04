@@ -13,13 +13,8 @@ export class GoogleSheetsService implements GoogleSheetsServiceInterface {
     if (this.sheets) return this.sheets;
 
     const raw = process.env.GOOGLE_APPLICATION_CREDENTIALS?.trim();
-    if (!raw) {
-      throw new Error(
-        'Google Sheets credentials missing: set GOOGLE_APPLICATION_CREDENTIALS in .env (JSON du compte de service, minifié sur une ligne)',
-      );
-    }
 
-    const credentials = JSON.parse(raw) as {
+    const credentials = JSON.parse(raw as string) as {
       client_email: string;
       private_key: string;
     };
