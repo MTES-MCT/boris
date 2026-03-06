@@ -7,7 +7,7 @@ type PageData = {
 
 export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
   const response = await fetch('api/ofss', { cache: 'no-store' });
-  const ofss = await response.json();
+  const ofss = response.ok ? await response.json() : { items: [], totalCount: 0 };
 
   return {
     ofss,

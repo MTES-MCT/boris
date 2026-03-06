@@ -22,7 +22,7 @@ export class GeocoderService implements GeocoderServiceInterface {
       const response = await fetch(url);
       const data: GeocodedSearchApiResponse = await response.json();
 
-      return data?.features;
+      return data?.features ?? [];
     } catch (e) {
       console.log(`An error occured while geocoding ${municipality}`);
       throw e;
