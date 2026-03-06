@@ -18,9 +18,8 @@ export const formatOfss = (ofss: OfsView[]): Region[] => {
   regionNames.forEach((regionName) => {
     let totalOfssInRegion = 0;
 
-    const regionnalOfss: OfsView[] = ofss.filter(
-      (ofs) =>
-        ofs.regions?.some((region) => region.name === regionName),
+    const regionnalOfss: OfsView[] = ofss.filter((ofs) =>
+      ofs.regions?.some((region) => region.name === regionName),
     );
 
     totalOfssInRegion = regionnalOfss.length;
