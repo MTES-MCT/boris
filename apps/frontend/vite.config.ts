@@ -5,7 +5,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   build: {
-    modulePreload: false,
+    modulePreload: { polyfill: true },
   },
   plugins: [
     sveltekit(),

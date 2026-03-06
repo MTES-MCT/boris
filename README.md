@@ -83,6 +83,35 @@ make migration-generate NAME=nom_de_la_migration
 make migration-migrate
 ```
 
+### Exécuter les seeds
+
+Les seeds doivent être exécutés dans l'ordre suivant (chaque seed dépend des précédents) :
+
+1. Démarrer la base de données
+   ```
+   make docker-start
+   ```
+
+2. Exécuter les migrations
+   ```
+   make migration-migrate
+   ```
+
+3. Seeds prérequis pour `seed:brs-diffusion-website` :
+   ```
+   npm run seed:regions-departements -w @boris/backend
+   ```
+
+4. Seed des sites de diffusion BRS
+   ```
+   npm run seed:brs-diffusion-website -w @boris/backend
+   ```
+
+Ou exécuter tous les seeds d'un coup :
+```
+make seed
+```
+
 ### Exécuter un seed sur une instance Scalingo
 
 ```

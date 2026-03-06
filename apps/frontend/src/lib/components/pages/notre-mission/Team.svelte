@@ -50,7 +50,9 @@
       <div class="w-[128px] h-full">
         <img
           src={image}
-          alt="" />
+          alt=""
+          loading="lazy"
+          decoding="async" />
       </div>
       <div class="flex flex-col justify-center px-3 xs:px-6 flex-1">
         <p class="fr-text--lead fr-text--bold fr-mb-0">{name}</p>

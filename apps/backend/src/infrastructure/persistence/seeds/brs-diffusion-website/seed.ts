@@ -10,24 +10,32 @@ export class BrsDiffusionWebsiteSeed {
 
   async seed() {
     let count = 0;
+    let skipped = 0;
 
     for (const brsDiffusionWebsite of brsDiffusionWebsites) {
-      await this.createBrsDiffusionWebsiteUsecase.execute({
-        source: brsDiffusionWebsite.source,
-        distributorName: brsDiffusionWebsite.commercialisateur,
-        ofsName: brsDiffusionWebsite.ofs,
-        city: brsDiffusionWebsite.commune,
-        inseeCode: brsDiffusionWebsite.codeInsee,
-      });
+      try {
+        await this.createBrsDiffusionWebsiteUsecase.execute({
+          source: brsDiffusionWebsite.source,
+          distributorName: brsDiffusionWebsite.commercialisateur,
+          ofsName: brsDiffusionWebsite.ofs,
+          city: brsDiffusionWebsite.commune,
+          inseeCode: brsDiffusionWebsite.codeInsee,
+        });
 
-      count++;
+        count++;
+        console.log(
+          `${count + skipped}/${brsDiffusionWebsites.length} - ${brsDiffusionWebsite.commune}`,
+        );
+      } catch (error) {
+        skipped++;
+        console.warn(
+          `Ignoré: ${brsDiffusionWebsite.commune} (${brsDiffusionWebsite.codeInsee}) - ${error instanceof Error ? error.message : error}`,
+        );
+      }
 
-      console.log(
-        `${count}/${brsDiffusionWebsites.length} - ${brsDiffusionWebsite.commune}`,
-      );
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
-    console.log(`${count} sites de diffusion BRS créés`);
+    console.log(`${count} sites de diffusion BRS créés, ${skipped} ignorés`);
   }
 }

@@ -45,6 +45,15 @@
     </p>
   </Section>
 
+  {#if data.loadError}
+    <Section titleElement="h2">
+      <p class="fr-alert fr-alert--warning">
+        Les données de l'annuaire n'ont pas pu être chargées. Vérifiez que le
+        serveur backend est démarré et réessayez.
+      </p>
+    </Section>
+  {/if}
+
   <Section
     title="Filtres"
     titleElement="h3">
