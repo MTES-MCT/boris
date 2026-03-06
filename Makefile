@@ -44,7 +44,6 @@ seed:
 	npm run seed:ofs -w @boris/backend
 	npm run seed:user -w @boris/backend
 	npm run seed:brs-diffusion-website -w @boris/backend
-	npm run seed:dev-municipalities -w @boris/backend
 
 seed-test-data:
 	npm run seed:test-data -w @boris/backend
