@@ -59,6 +59,7 @@ describe('FindOneMunicipalityByInseeCodeUsecase', () => {
     mockMunicipalityRepository.findOneByInseeCode
       .mockResolvedValueOnce(null)
       .mockResolvedValueOnce(parisMunicipality);
+    mockMunicipalityRepository.findOneByDepartementCode.mockResolvedValue(null);
 
     const expectedResult = new MunicipalityView(
       parisMunicipality.id,
@@ -84,12 +85,16 @@ describe('FindOneMunicipalityByInseeCodeUsecase', () => {
     expect(
       mockMunicipalityRepository.findOneByInseeCode,
     ).toHaveBeenNthCalledWith(2, '75056');
+    expect(
+      mockMunicipalityRepository.findOneByDepartementCode,
+    ).toHaveBeenCalledWith('75');
   });
 
   it('should find a municipality by insee code of Lyon', async () => {
     mockMunicipalityRepository.findOneByInseeCode
       .mockResolvedValueOnce(null)
       .mockResolvedValueOnce(parisMunicipality);
+    mockMunicipalityRepository.findOneByDepartementCode.mockResolvedValue(null);
 
     const expectedResult = new MunicipalityView(
       parisMunicipality.id,
@@ -115,12 +120,16 @@ describe('FindOneMunicipalityByInseeCodeUsecase', () => {
     expect(
       mockMunicipalityRepository.findOneByInseeCode,
     ).toHaveBeenNthCalledWith(2, '69123');
+    expect(
+      mockMunicipalityRepository.findOneByDepartementCode,
+    ).toHaveBeenCalledWith('69');
   });
 
   it('should find a municipality by insee code of Marseille', async () => {
     mockMunicipalityRepository.findOneByInseeCode
       .mockResolvedValueOnce(null)
       .mockResolvedValueOnce(parisMunicipality);
+    mockMunicipalityRepository.findOneByDepartementCode.mockResolvedValue(null);
 
     const expectedResult = new MunicipalityView(
       parisMunicipality.id,
@@ -146,10 +155,43 @@ describe('FindOneMunicipalityByInseeCodeUsecase', () => {
     expect(
       mockMunicipalityRepository.findOneByInseeCode,
     ).toHaveBeenNthCalledWith(2, '13055');
+    expect(
+      mockMunicipalityRepository.findOneByDepartementCode,
+    ).toHaveBeenCalledWith('13');
+  });
+
+  it('should find a municipality by department code when exact insee code not found', async () => {
+    mockMunicipalityRepository.findOneByInseeCode.mockResolvedValue(null);
+    mockMunicipalityRepository.findOneByDepartementCode.mockResolvedValue(
+      quimperMunicipality,
+    );
+
+    const expectedResult = new MunicipalityView(
+      quimperMunicipality.id,
+      quimperMunicipality.name,
+      quimperMunicipality.inseeCode,
+      quimperMunicipality.zone,
+      {
+        id: quimperMunicipality.departement.id,
+        name: quimperMunicipality.departement.name,
+        code: quimperMunicipality.departement.code,
+      },
+    );
+
+    const result = await useCase.execute({ inseeCode: '29233' });
+
+    expect(result).toEqual(expectedResult);
+    expect(mockMunicipalityRepository.findOneByInseeCode).toHaveBeenCalledWith(
+      '29233',
+    );
+    expect(
+      mockMunicipalityRepository.findOneByDepartementCode,
+    ).toHaveBeenCalledWith('29');
   });
 
   it('should throw NotFoundException when municipality does not exist', async () => {
     mockMunicipalityRepository.findOneByInseeCode.mockResolvedValue(null);
+    mockMunicipalityRepository.findOneByDepartementCode.mockResolvedValue(null);
 
     try {
       await useCase.execute({ inseeCode: '1234' });
@@ -161,6 +203,9 @@ describe('FindOneMunicipalityByInseeCodeUsecase', () => {
       expect(
         mockMunicipalityRepository.findOneByInseeCode,
       ).toHaveBeenCalledWith('1234');
+      expect(
+        mockMunicipalityRepository.findOneByDepartementCode,
+      ).toHaveBeenCalledWith('12');
     }
   });
 });
