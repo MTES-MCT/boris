@@ -12,33 +12,54 @@ type PageData = {
   ofssAmount: number;
 };
 
+export const prerender = false;
+
+const defaultPageData: PageData = {
+  investedAmount: 380000,
+  purchasePlanAmount: '100 à 150',
+  eligibility: [],
+  householdsData: formatHouseholdsData([], []),
+  ofssAmount: 0,
+};
+
 export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
-  const response = await fetch('api/ofss/partner', { cache: 'no-store' });
-  const partnerOfss = await response.json();
+  try {
+    const response = await fetch('api/ofss/partner', { cache: 'no-store' });
+    const partnerOfss = response.ok ? await response.json() : { totalCount: 0 };
 
-  const eligibilityRespone = await fetch('api/landbot-customers/eligibility', {
-    cache: 'no-store',
-  });
-  const eligibility = await eligibilityRespone.json();
+    const eligibilityResponse = await fetch(
+      'api/landbot-customers/eligibility',
+      { cache: 'no-store' },
+    );
+    const eligibility = eligibilityResponse.ok
+      ? await eligibilityResponse.json()
+      : { data: [] };
 
-  const brsKnowledgeResponse = await fetch(
-    'api/landbot-customers/brs-knowledge',
-  );
-  const brsKnowledge = await brsKnowledgeResponse.json();
+    const brsKnowledgeResponse = await fetch(
+      'api/landbot-customers/brs-knowledge',
+    );
+    const brsKnowledge = brsKnowledgeResponse.ok
+      ? await brsKnowledgeResponse.json()
+      : { data: [] };
 
-  const realEstateSituationResponse = await fetch(
-    'api/landbot-customers/real-estate-situation',
-  );
-  const realEstateSituation = await realEstateSituationResponse.json();
+    const realEstateSituationResponse = await fetch(
+      'api/landbot-customers/real-estate-situation',
+    );
+    const realEstateSituation = realEstateSituationResponse.ok
+      ? await realEstateSituationResponse.json()
+      : { data: [] };
 
-  return {
-    investedAmount: 380000,
-    purchasePlanAmount: '100 à 150',
-    eligibility: eligibility.data,
-    householdsData: formatHouseholdsData(
-      brsKnowledge.data,
-      realEstateSituation.data,
-    ),
-    ofssAmount: partnerOfss.totalCount,
-  };
+    return {
+      investedAmount: 380000,
+      purchasePlanAmount: '100 à 150',
+      eligibility: eligibility.data ?? [],
+      householdsData: formatHouseholdsData(
+        brsKnowledge.data ?? [],
+        realEstateSituation.data ?? [],
+      ),
+      ofssAmount: partnerOfss.totalCount ?? 0,
+    };
+  } catch {
+    return defaultPageData;
+  }
 };
