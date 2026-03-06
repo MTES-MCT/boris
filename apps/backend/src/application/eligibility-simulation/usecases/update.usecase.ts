@@ -165,26 +165,28 @@ export class UpdateEligibilitySimulationUsecase {
 
     if (shouldInsertInGoogleSheet) {
       try {
+        const cells = eligibilitySimulation.locations.map((location) => [
+          'N/A',
+          'N/A',
+          new Date().toISOString(),
+          `${eligibilitySimulation.firstName} ${eligibilitySimulation.lastName}`,
+          eligibilitySimulation.email,
+          eligibilitySimulation.phone,
+          location.departement.code,
+          eligibilitySimulation.contribution,
+          eligibilitySimulation.householdSize,
+          eligibilitySimulation.hasDisability,
+          eligibilitySimulation.taxableIncome,
+          location.city,
+          eligibilitySimulation.propertySituation,
+          eligibilitySimulation.housingType,
+          eligibilitySimulation.resources,
+        ]);
+
         await this.googleSheets.appendRows(
           process.env.GOOGLE_SHEETS_SPREADSHEET_ID as string,
           { range: 'Sheet1' },
-          eligibilitySimulation.locations.map((location) => [
-            '',
-            '',
-            new Date().toISOString(),
-            `${eligibilitySimulation.firstName} ${eligibilitySimulation.lastName}`,
-            eligibilitySimulation.email,
-            eligibilitySimulation.phone,
-            location.departement.code,
-            eligibilitySimulation.contribution,
-            eligibilitySimulation.householdSize,
-            eligibilitySimulation.hasDisability,
-            eligibilitySimulation.taxableIncome,
-            location.city,
-            eligibilitySimulation.propertySituation,
-            eligibilitySimulation.housingType,
-            eligibilitySimulation.resources,
-          ]),
+          cells,
         );
       } catch (e) {
         console.log(e);

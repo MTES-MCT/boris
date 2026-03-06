@@ -19,17 +19,16 @@
     currentStep={currentStep.step}
     stepCount={steps.length}>
     <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro, cumque,
-      quae, molestias numquam vero reiciendis nihil voluptates repellendus
-      itaque eos repellat sequi? Asperiores ea modi quis quia, quam beatae
-      architecto.
+      La troisième étape du simulateur BoRiS consiste à recueillir les
+      informations adaptées à votre situation personnelle, afin de vous orienter
+      vers des aides particulières et des professionnel·les du BRS qui pourront
+      vous recontacter.
     </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora nam
-      obcaecati est recusandae expedita in, officia vel fuga ab perferendis
-      accusamus explicabo temporibus. Alias molestiae, aliquid hic incidunt rem
-      voluptatibus!
-    </p>
+    <ol class="!mb-8">
+      <li class="fr-text--bold">{currentStep.phases[0]?.title}</li>
+      <li class="fr-text--bold">{currentStep.phases[1]?.title}</li>
+      <li class="fr-text--bold">{currentStep.phases[2]?.title}</li>
+    </ol>
   </Description>
 
   {#if currentPhase.phase === 1}

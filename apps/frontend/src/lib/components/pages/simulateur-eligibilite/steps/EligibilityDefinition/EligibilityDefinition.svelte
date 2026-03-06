@@ -38,6 +38,16 @@
       type="info"
       content={`Pensez à vous vous munir de votre avis d'imposition de l'année ${formatYearMinusN(1)}, concernant vos revenus de l'année ${formatYearMinusN(2)}, afin de renseigner vos revenus fiscaux.`}>
     </Notice>
+
+    <p class="!mt-4">
+      <a
+        href="/revenu-fiscal-de-reference.png"
+        class="fr-link fr-link--icon-right"
+        target="_blank"
+        rel="noopener">
+        Où trouver mon revenu fiscal de référence.
+      </a>
+    </p>
   </Description>
 
   {#if currentPhase.phase === 1}

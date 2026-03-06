@@ -1785,7 +1785,10 @@ test.describe('Eligibility simulator', () => {
           validateStepAndPhaseTitles();
           expect(resultText).toBeVisible();
           expect(resultText).toHaveText(
-            stepsContent.eligibility.isOwner.title.replace(/<[^>]*>/g, ''),
+            stepsContent.eligibility.zoneB2andC.titleOwner.replace(
+              /<[^>]*>/g,
+              '',
+            ),
           );
         });
       });

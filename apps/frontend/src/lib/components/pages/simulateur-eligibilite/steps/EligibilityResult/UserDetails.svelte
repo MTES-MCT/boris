@@ -74,6 +74,7 @@
   <fieldset class="fr-fieldset">
     <div class="fr-fieldset__element">
       <h3 class="fr-h4">{currentPhase?.title as string}</h3>
+      <p>{@html stepsContent.userDetailsDesc}</p>
     </div>
 
     <div class="fr-fieldset__element fr-mb-4w">

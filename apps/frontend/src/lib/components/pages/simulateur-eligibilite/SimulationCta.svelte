@@ -22,10 +22,14 @@
       </p>
       <p>
         Pour savoir si vous êtes éligible au Bail Réel Solidaire, il vous suffit
-        de remplir le simulateur d'éligibilité de BoRiS. Vous aurez besoin de
-        votre avis d'imposition de <span
+        de remplir le simulateur d'éligibilité de BoRiS. Pensez à vous vous
+        munir de votre avis d'imposition de l'année <span
           class="fr-text--bold text-blue-primary">
-          l'année {formatYearMinusN(2)}
+          {formatYearMinusN(1)}
+        </span>
+        , concernant vos revenus de l'année
+        <span class="fr-text--bold text-blue-primary">
+          {formatYearMinusN(2)}
         </span>
         .
       </p>

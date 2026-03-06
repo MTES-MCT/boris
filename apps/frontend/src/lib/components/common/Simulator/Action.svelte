@@ -7,6 +7,7 @@
     type?: HTMLButtonElement['type'];
     loading?: boolean;
     onClick?: () => void;
+    disabled?: boolean;
   };
 
   const {
@@ -15,6 +16,7 @@
     type = 'button',
     loading = false,
     onClick,
+    disabled = false,
   }: Props = $props();
 </script>
 
@@ -25,7 +27,7 @@
   class:fr-btn--secondary={direction === 'previous'}
   {type}
   onclick={onClick}
-  disabled={loading}>
+  disabled={loading || disabled}>
   <div class="flex gap-1 items-center">
     {#if direction === 'next'}
       <p>

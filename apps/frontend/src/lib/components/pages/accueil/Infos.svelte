@@ -49,7 +49,7 @@
     <HorizontalCard
       title="Vérifiez si vous êtes éligibles !"
       content="BoRiS vous accompagne notamment grâce à son simulateur. Découvrez maintenant si vous pouvez prétendre au dispositif !"
-      href="/simulateur-eligibilite"
+      href="/simulateur-eligibilite/steps"
       imgSrc={card2}
       photograph="Julian Bock"
       linkLabel="Vérifier mon éligibilité"

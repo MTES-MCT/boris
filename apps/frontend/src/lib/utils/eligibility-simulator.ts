@@ -166,7 +166,7 @@ export const steps: Step[] = [
     step: 3,
     phases: [
       {
-        title: 'Informations sur le logement',
+        title: 'Informations sur le type de logement souhaité',
         phase: 1,
       },
       {
@@ -402,36 +402,46 @@ export const stepsContent = {
     zoneAandAbis: {
       title:
         'Vous êtes éligible au dispositif du BRS <u>en zone A et Abis</u>.',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      titleOwner:
+        'Vous êtes éligible au dispositif du BRS <u>en zone A et Abis</u>, sous certaines conditions.',
+      content: `<p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources" />Plus d'informations sur les plafonds de ressources.</a></p>`,
     },
     zoneB1: {
       title:
         'Vous êtes éligible au dispositif du BRS <u>en zone tendue (A, Abis et B1)</u>.',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      titleOwner:
+        'Vous êtes éligible au dispositif du BRS <u>en zone tendue (A, Abis et B1)</u>, sous certaines conditions.',
+      content: `<p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources" />Plus d'informations sur les plafonds de ressources.</a></p>`,
     },
     zoneB2andC: {
       title:
-        'Vous êtes éligible au dispositif du BRS <u>dans toute la France</u>!',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'Vous êtes éligible au dispositif du BRS <u>dans toute la France</u> !',
+      titleOwner:
+        'Vous êtes éligible au dispositif du BRS <u>dans toute la France</u>, sous certaines conditions.',
+      content: `<p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources" />Plus d'informations sur les plafonds de ressources.</a></p>`,
     },
     notEligible: {
       title: "Vous n'êtes pas éligible au dispositif du BRS.",
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      content: `
+        <p>Malheureusement, vous ne remplissez pas les critères pour acheter en BRS. N'hésitez pas à consulter à nouveau ce site si votre situation venait à évoluer (notamment en cas de baisse de revenus ou de personne de plus dans le foyer).</p>
+        <p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources" />Plus d'informations sur les plafonds de ressources.</a></p>
+      `,
     },
     isOwner: {
-      title:
-        "En tant que propriétaire, vous n'êtes pas éligible au dispositif du BRS.",
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      content: `
+      <p class="!mb-0">Vous ne devez pas posséder :</p>
+        <ul>
+          <li>un logement adapté à vos besoins et capacités financières, que vous pouvez utiliser comme résidence principale.</li>
+          <li>un logement que vous proposez à la location, susceptible de vous procurer des revenus suffisants pour acquérir un bien immobilier du parc privé.</li>
+        </ul>
+      <p><a class="fr-link" href="blog/puis-je-acheter-un-logement-en-brs-si-je-suis-deja-proprietaire" />Vérifier qu'aucun de ces deux cas ne s'applique à votre situation.</a></p>`,
     },
     zoneInfo: {
-      content: `<a href="https://www.service-public.gouv.fr/simulateur/calcul/zonage-abc" class="fr-link" target="_blank" rel="noopener noreferrer" class="fr-link">Plus d'informations sur les zones.</a>.`,
+      content: `<a href="https://www.service-public.gouv.fr/simulateur/calcul/zonage-abc" class="fr-link" target="_blank" rel="noopener noreferrer" class="fr-link">Plus d'informations sur le zonage A, B et C.</a>.`,
     },
   },
+  userDetailsDesc:
+    "Vos coordonnées nous permettrons de vous envoyer votre résultat d'éligibilité, de vous recontacter ultérieurement et de transmettre les informations que vous avez renseignées à nos partenaires qui pourront vous proposer une offre de logement.",
   firstName: {
     label: 'Prénom',
     errorDataTestId: 'input-first-name-error-message',
@@ -456,7 +466,7 @@ export const stepsContent = {
   connection: {
     title: 'Mise en relation',
     connectionCtaText:
-      'Si vous le souhaitez, nous pouvons vous mettre en relation avec les professionnels du Bail Réel Solidaire. Pour cela, vous pouvez cliquer sur le bouton "Étape suivante" ci-dessous et renseigner vos informations personnelles.',
+      'Si vous le souhaitez, nous pouvons vous mettre en relation avec les professionnel·les du Bail Réel Solidaire. Pour cela, vous pouvez cliquer sur le bouton "Étape suivante" ci-dessous et renseigner vos informations personnelles. Vos coordonnées nous permettront également de vous envoyer votre résultat d\'éligibilité et d\'autres informations qui pourront vous être utiles.',
   },
   exitSimulatorText:
     'Si vous ne souhaitez pas continuer, vous pouvez quitter le simulateur en cliquant ',
@@ -522,15 +532,15 @@ export const stepsContent = {
         label: 'Veuillez sélectionner une option',
       },
       {
-        value: true,
+        value: 'true',
         label: 'Oui',
       },
       {
-        value: false,
+        value: 'false',
         label: 'Non',
       },
       {
-        value: false,
+        value: 'AUTRE',
         label: 'Je ne suis pas sûr·e',
       },
     ],

@@ -17,6 +17,7 @@
 
   const {
     currentPhase,
+    formattedHadBrsKnowledge,
     hadBrsKnowledge,
     employmentStatus,
     laposteEmployer,
@@ -34,11 +35,14 @@
     loading,
   } = $derived(eligibilitySimulatorManager);
 
+  $inspect(formattedHadBrsKnowledge);
+  $inspect(hadBrsKnowledge);
+
   let errors: FormFieldError = $state({});
 
   let formData = $derived.by(() => {
     let schema = z.object({
-      hadBrsKnowledge: z.boolean({
+      formattedHadBrsKnowledge: z.string({
         message: stepsContent.hadBrsKnowledge.errorMessage,
       }),
       employmentStatus: z.enum(
@@ -130,7 +134,7 @@
     e.preventDefault();
 
     const payload = {
-      hadBrsKnowledge,
+      formattedHadBrsKnowledge,
       employmentStatus,
       laposteEmployer,
       canSendInformationsToLaposte,
@@ -146,7 +150,7 @@
       formData.parse(payload);
       errors = {};
 
-      updateEligibilitySimulation(payload);
+      updateEligibilitySimulation({ ...payload, hadBrsKnowledge });
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }
@@ -165,19 +169,18 @@
         required
         options={stepsContent.hadBrsKnowledge.options.map((stepContent) => ({
           ...stepContent,
-          selected: hadBrsKnowledge === stepContent.value,
+          selected: formattedHadBrsKnowledge === stepContent.value,
         }))}
         onChange={(e) => {
           const { value } = e.target as HTMLSelectElement;
 
           if (value) {
-            delete errors.hadBrsKnowledge;
+            delete errors.formattedHadBrsKnowledge;
           }
 
-          eligibilitySimulatorManager.hadBrsKnowledge =
-            value === '' ? undefined : value === 'true' ? true : false;
+          eligibilitySimulatorManager.formattedHadBrsKnowledge = value;
         }}
-        error={errors.hadBrsKnowledge}
+        error={errors.formattedHadBrsKnowledge}
         errorDataTestId={stepsContent.hadBrsKnowledge.errorDataTestId} />
     </div>
 
@@ -423,6 +426,18 @@
       error={errors.allowFinancingAndOwnershipAdvices}
       errorDataTestId={stepsContent.allowFinancingAndOwnershipAdvices
         .errorDataTestId} />
+
+    {#if allowFinancingAndOwnershipAdvices}
+      <p>
+        <a
+          href="https://www.actionlogement.fr/demande-cfi"
+          class="fr-link"
+          target="_blank"
+          rel="noopener">
+          Prendre rendez-vous avec un.e conseiller.e.
+        </a>
+      </p>
+    {/if}
   </div>
 {/snippet}
 

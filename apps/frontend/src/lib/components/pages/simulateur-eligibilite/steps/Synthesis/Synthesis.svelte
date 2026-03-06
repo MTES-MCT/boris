@@ -17,15 +17,8 @@
     currentStep={currentStep.step}
     stepCount={steps.length}>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus ullam
-      corrupti dolores. Placeat autem obcaecati consectetur illum aperiam dicta
-      eaque. Et tempore atque totam culpa itaque omnis ullam sequi vel!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore obcaecati
-      corporis numquam sint quia enim reiciendis porro! Modi omnis fuga
-      similique totam harum! Voluptates eaque beatae consequatur nemo, libero
-      asperiores.
+      Retrouvez la synthèse des informations que vous avez renseignées dans le
+      simulateur.
     </p>
   </Description>
 

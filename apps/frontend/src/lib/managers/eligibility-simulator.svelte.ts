@@ -180,7 +180,11 @@ class EligibilitySimulator {
   });
 
   // Additional informations
-  public hadBrsKnowledge: boolean | undefined = $state(undefined);
+  public formattedHadBrsKnowledge: string | undefined = $state(undefined);
+  public hadBrsKnowledge: boolean | undefined = $derived.by(() => {
+    if (!this.formattedHadBrsKnowledge) return undefined;
+    return this.formattedHadBrsKnowledge === 'true' ? true : false;
+  });
   public employmentStatus: EmploymentStatus | undefined = $state(undefined);
   public laposteEmployer: string | undefined = $state(undefined);
   public canSendInformationsToLaposte: boolean | undefined = $state(undefined);

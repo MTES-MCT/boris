@@ -9,6 +9,12 @@
   import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
   import cookieConsentManager from '$lib/managers/consent.svelte';
 
+  let isIneligible = $derived(
+    eligibilitySimulatorManager.eligibility?.eligibleZoneB2andC === false &&
+      eligibilitySimulatorManager.eligibility?.eligibleZoneB1 === false &&
+      eligibilitySimulatorManager.eligibility?.eligibleZoneAandAbis === false,
+  );
+
   onMount(() => {
     eligibilitySimulatorManager.hasRefusedConnection = false;
 
@@ -63,6 +69,7 @@
       {loading} />
     <Action
       direction="next"
+      disabled={isIneligible}
       label={nextPhase?.title as string}
       type="submit"
       {loading} />
