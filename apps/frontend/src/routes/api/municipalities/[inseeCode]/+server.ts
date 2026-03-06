@@ -20,6 +20,10 @@ export const GET = async ({ params }) => {
       },
     });
 
+    if (!response.ok) {
+      return json({ message: 'Municipality not found' }, { status: 404 });
+    }
+
     municipality = await response.json();
     municipalities.push(municipality as MunicipalityView);
 
