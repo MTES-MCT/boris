@@ -25,7 +25,7 @@
       consiste à définir votre éligibilité au dispositif.
     </p>
     <p class="!mb-0">
-      Pour cela, nous allons vous demander de renseigner les informatins
+      Pour cela, nous allons vous demander de renseigner les informations
       suivantes :
     </p>
     <ol class="!mb-8">
