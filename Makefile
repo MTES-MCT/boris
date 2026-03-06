@@ -44,6 +44,17 @@ seed:
 	npm run seed:ofs -w @boris/backend
 	npm run seed:user -w @boris/backend
 	npm run seed:brs-diffusion-website -w @boris/backend
+	npm run seed:dev-municipalities -w @boris/backend
 
 seed-test-data:
 	npm run seed:test-data -w @boris/backend
+
+test:
+	npm run test -w @boris/backend
+	npm run test -w @boris/frontend
+
+test-e2e:
+	$(MAKE) migration-migrate
+	$(MAKE) seed-test-data
+	npm run test -w @boris/backend
+	npm run test -w @boris/frontend
