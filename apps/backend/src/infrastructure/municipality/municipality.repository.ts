@@ -23,4 +23,16 @@ export class MunicipalityRepository implements MunicipalityRepositoryInterface {
       relations: ['departement'],
     });
   }
+
+  public findOneByDepartementCode(
+    departementCode: string,
+  ): Promise<MunicipalityEntity | null> {
+    return this.repository
+      .createQueryBuilder('municipality')
+      .leftJoinAndSelect('municipality.departement', 'departement')
+      .where('municipality.inseeCode LIKE :prefix', {
+        prefix: `${departementCode}%`,
+      })
+      .getOne();
+  }
 }

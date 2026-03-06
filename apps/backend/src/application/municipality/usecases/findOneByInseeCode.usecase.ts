@@ -19,16 +19,24 @@ export class FindOneMunicipalityByInseeCodeUsecase {
       await this.municipalityRepository.findOneByInseeCode(inseeCode);
 
     if (!municipality) {
-      if (inseeCode.startsWith('75')) {
-        municipality =
-          await this.municipalityRepository.findOneByInseeCode('75056');
-      } else if (inseeCode.startsWith('69')) {
-        municipality =
-          await this.municipalityRepository.findOneByInseeCode('69123');
-      } else if (inseeCode.startsWith('13')) {
-        municipality =
-          await this.municipalityRepository.findOneByInseeCode('13055');
-      } else {
+      const departementCode = inseeCode.substring(0, 2);
+      municipality =
+        await this.municipalityRepository.findOneByDepartementCode(
+          departementCode,
+        );
+      if (!municipality) {
+        if (departementCode === '75') {
+          municipality =
+            await this.municipalityRepository.findOneByInseeCode('75056');
+        } else if (departementCode === '69') {
+          municipality =
+            await this.municipalityRepository.findOneByInseeCode('69123');
+        } else if (departementCode === '13') {
+          municipality =
+            await this.municipalityRepository.findOneByInseeCode('13055');
+        }
+      }
+      if (!municipality) {
         throw new NotFoundException();
       }
     }
