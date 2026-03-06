@@ -38,6 +38,7 @@
     "seed:municipality": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/municipality/run.ts",
     "seed:landbot-customer": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/landbot-customer/run.ts",
     "seed:regions-code": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/regions-code/run.ts",
+    "seed:eligibility-simulations": "ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/eligibility-simulations/run.ts",
     "seed:test-data": "NODE_ENV=test ts-node -r tsconfig-paths/register src/infrastructure/persistence/seeds/test-data/run.ts",
     "generate-address-datagouv-types": "openapi-typescript https://data.geopf.fr/geocodage/openapi.yaml --output src/infrastructure/common/types/generated-address-datagouv-types.ts"
   },
@@ -56,6 +57,7 @@
     "connect-flash": "^0.1.1",
     "connect-typeorm": "^2.0.0",
     "express-session": "^1.18.1",
+    "googleapis": "^144.0.0",
     "hbs": "^4.2.0",
     "method-override": "^3.0.0",
     "nestjs-pino": "^4.4.0",

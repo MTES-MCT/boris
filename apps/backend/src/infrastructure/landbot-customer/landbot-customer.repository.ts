@@ -14,6 +14,7 @@ import {
   LandbotEligibility,
   LandbotRealEstateSituation,
 } from 'src/domain/landbot-customer/landbot-customer.interface';
+import { PaginationProps } from 'src/domain/common/paginationProps';
 
 @Injectable()
 export class LandbotCustomerRepository
@@ -28,6 +29,21 @@ export class LandbotCustomerRepository
     landbotCustomer: LandbotCustomerEntity,
   ): Promise<LandbotCustomerEntity> {
     return this.repository.save(landbotCustomer);
+  }
+
+  public findAll(
+    paginationProps: PaginationProps,
+  ): Promise<[LandbotCustomerEntity[], number]> {
+    const { page, pageSize } = paginationProps;
+
+    const query = this.repository
+      .createQueryBuilder('landbot_customer')
+      .leftJoinAndSelect('landbot_customer.departement', 'departement')
+      .skip((page - 1) * pageSize)
+      .take(pageSize)
+      .orderBy('landbot_customer.date', 'DESC');
+
+    return query.getManyAndCount();
   }
 
   public findLast(): Promise<LandbotCustomerEntity | null> {
