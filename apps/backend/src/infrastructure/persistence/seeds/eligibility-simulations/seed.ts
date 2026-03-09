@@ -118,7 +118,7 @@ export class EligibilitySimulationsSeed {
       console.log(`${eligibilitySimulationsCount}/${totalCount}`);
       console.log(`${errorsCount} erreurs enregistrées`);
 
-      await new Promise((resolve) => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 300));
     }
 
     console.log('Création des eligibility simulations terminée.');
