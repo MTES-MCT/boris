@@ -27,7 +27,7 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:create": "npm run typeorm -- migration:create",
     "migration:generate": "npm run typeorm -- migration:generate -d src/infrastructure/persistence/typeorm-cli.config.ts",
-    "migration:migrate": "npx typeorm -- migration:run -d src/infrastructure/persistence/typeorm-cli.config.ts",
+    "migration:migrate": "npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm-cli.config.ts",
     "migration:migrate:test": "NODE_ENV=test  npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm-cli.config.ts",
     "migration:migrate:revert": "npm run typeorm -- migration:revert -d src/infrastructure/persistence/typeorm-cli.config.ts",
     "migration:migrate:revert:test": "NODE_ENV=test npm run typeorm -- migration:revert -d src/infrastructure/persistence/typeorm-cli.config.ts",

@@ -1,1 +1,1 @@
-web: npm run migration:migrate && npm run start:prod
+web: npm install typeorm && npm install @sentry/nestjs && npm run migration:migrate && npm run start:prod
