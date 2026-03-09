@@ -10,8 +10,18 @@ erDiagram
     DEPARTEMENT }|--|| REGION : "se situe"
     DISTRIBUTOR ||--o{ OFS_DISTRIBUTOR : "travaille pour"
     OFS ||--o{ OFS_DISTRIBUTOR : "travaille pour"
-    BRS_DIFFUSION_WEBSITE ||--|{ REGION : "se situe"
-    BRS_DIFFUSION_WEBSITE ||--|{ DEPARTEMENT : "se situe"
+    BRS_DIFFUSION_WEBSITE }|--|| REGION : "se situe"
+    BRS_DIFFUSION_WEBSITE }|--|| DEPARTEMENT : "se situe"
+    DEPARTEMENT ||--|{ MUNICIPALITY : "contient"
+    MUNICIPALITY }|--|| DEPARTEMENT : "se situe"
+    DEPARTEMENT ||--|{ LOCATION : "contient"
+    LOCATION }|--|| DEPARTEMENT : "se situe"
+    ELIGIBILITY_SIMULATION ||--|{ LOCATION : "contient"
+    LOCATION }|--|| ELIGIBILITY_SIMULATION : "appartient à"
+    DEPARTEMENT ||--o{ LANDBOT_CUSTOMER : "contient"
+    LANDBOT_CUSTOMER }o--|| DEPARTEMENT : "se situe"
+    
+
 
     %% -------------------
     %% |    ENTITIES     |
@@ -78,8 +88,98 @@ erDiagram
       string zipcode
       string address
       string inseeCode
-      string latitude
-      string longitude
+      float latitude
+      float longitude
       string regionId FK
       string departementId FK
+    }
+
+    MUNICIPALITY {
+      string id PK
+      string name
+      string inseeCode
+      string zone
+      string departementId FK
+    }
+
+    LOCATION {
+      string id PK
+      float latitude
+      float longitude
+      string city
+      string citycode
+      string label
+      string municipality
+      string postalCode
+      string departementId FK
+      string eligibilitySimulationId FK
+    }
+
+    ELIGIBILITY_SIMULATION {
+      string id PK
+      int householdSize
+      boolean hasDisability
+      string propertySituation
+      int dependantsAmount
+      date birthday
+      date coBuyerBirthday
+      int taxableIncome
+      string declarationType
+      string eligibility
+      string firstName
+      string lastName
+      string email
+      string phone
+      string housingType
+      int contribution
+      int resources
+      boolean hadBrsKnowledge
+      string employmentStatus
+      string positionType
+      boolean isFromLandbot
+      timestamptz landbotDate
+      timestamp createdAt
+      timestamp updatedAt
+    }
+
+    ACQUISITION_SIMULATION {
+      string id PK
+      int housingPrice
+      string brsZone
+      int surface
+      string housingType
+      int ownContribution
+      int notaryFees
+      float interestRate
+      int loanDuration
+      int fiscalIncome
+      string ptzType
+      float brsFees
+      int monthlyExpenses
+      timestamp createdAt
+      timestamp updatedAt
+    }
+
+    LANDBOT_CUSTOMER {
+      string id PK
+      timestamptz date
+      string desiredCity
+      string departementId FK
+      string eligibility
+      string brsKnowledge
+      string realEstateSituation
+      string disability
+      string declarationType
+      string connectionWish
+      int resources
+      boolean hasProvidedEmail
+      timestamp createdAt
+      timestamp updatedAt
+    }
+
+    SESSION {
+      string id PK
+      bigint expiredAt
+      text json
+      timestamp destroyedAt
     }
