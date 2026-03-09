@@ -113,5 +113,5 @@ npm run dev -w @boris/frontend
 ## Pistes d'améliorations globales
 
 - Création d'un workspace pour des composants partagées, en vue des différentes interfaces Svelte qui vont être développées
-- Basculer le déploiement Scalingo sur la CI/CD github, notament le build de l'app et les migrations de bases de données
+- Basculer le déploiement Scalingo sur la CI/CD github, notamment le build de l'app et les migrations de bases de données
 - Optimisation/mutualisation des tests e2e coté front, notament ceux du simulateur d'éligibilité
