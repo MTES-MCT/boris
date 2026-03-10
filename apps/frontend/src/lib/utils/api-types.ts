@@ -32,6 +32,9 @@ export type MunicipalityView = components['schemas']['MunicipalityView'];
 export type AcquisitionSimulationView =
   components['schemas']['AcquisitionSimulationView'];
 
+export type EligibilitySimulationView =
+  components['schemas']['EligibilitySimulationView'];
+
 export type CreateAcquisitionSimulationDto =
   components['schemas']['CreateAcquisitionSimulationDTO'];
 
@@ -43,3 +46,9 @@ export type GetLandbotCustomerByFieldsPathParams =
 
 export type LandbotCustomerGroupSimulationsByYearAndMonthView =
   components['schemas']['LandbotCustomerGroupSimulationsByYearAndMonthView'];
+
+export type CreateEligibilitySimulationDto =
+  components['schemas']['CreateEligibilitySimulationDTO'];
+
+export type UpdateEligibilitySimulationDto =
+  components['schemas']['UpdateEligibilitySimulationDTO'];

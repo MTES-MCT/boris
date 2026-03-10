@@ -5,10 +5,11 @@
 Le projet est un monorepo, utilisant le système de [workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces) de
 npm.
 
-- [Svelte](https://svelte.dev/docs/introduction): [version 5](https://svelte-5-preview.vercel.app/docs/introduction)
-- [SvelteKit](https://kit.svelte.dev/docs/introduction)
-- [NestJS](https://nestjs.com/)
-- [Commits conventionnel](https://www.conventionalcommits.org/en/v1.0.0/)
+- Frontend: [Svelte](https://svelte.dev/docs) et [SvelteKit](https://kit.svelte.dev/docs/introduction)
+- Backend: [NestJS](https://nestjs.com/)
+- Système de gestion de base de données: [PostgreSQL](https://www.postgresql.org/)
+- Déploiement: [Scalingo](https://doc.scalingo.com/)
+- Monitoring: [Sentry](https://docs.sentry.io/)
 
 ## Installation
 
@@ -62,6 +63,12 @@ make psql
 ```
 
 ## Backend
+
+### Exécuter les migration de la bases de données
+
+```
+make migration-migrate
+```
 
 ### Lancer le server de développement
 
@@ -137,3 +144,9 @@ npm run seed:seed-name
 npm run dev -w @boris/frontend
 
 ```
+
+## Pistes d'améliorations globales
+
+- Création d'un workspace pour des composants partagées, en vue des différentes interfaces Svelte qui vont être développées
+- Basculer le déploiement Scalingo sur la CI/CD github, notamment le build de l'app et les migrations de bases de données
+- Optimisation/mutualisation des tests e2e coté front, notament ceux du simulateur d'éligibilité

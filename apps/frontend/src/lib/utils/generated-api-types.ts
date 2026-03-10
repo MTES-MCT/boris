@@ -140,6 +140,40 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/eligibility-simulations': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Créer une simulation d'éligibilité */
+    post: operations['CreateEligibilitySimulationApiController_createEligibilitySimulation'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/eligibility-simulations/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    /** Mettre à jour une simulation d'éligibilité */
+    put: operations['UpdateEligibilitySimulationApiController_updateEligibilitySimulation'];
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/landbot-customers/conversion-funnel': {
     parameters: {
       query?: never;
@@ -371,12 +405,12 @@ export interface components {
       monthlyExpenses: number;
       /**
        * Format: date-time
-       * @example 2026-01-15T15:57:57.344Z
+       * @example 2026-02-26T13:51:14.122Z
        */
       createdAt: string;
       /**
        * Format: date-time
-       * @example 2026-01-15T15:57:57.344Z
+       * @example 2026-02-26T13:51:14.122Z
        */
       updatedAt: string;
     };
@@ -411,6 +445,197 @@ export interface components {
       totalLoanInformations: number;
       /** @example 32 */
       totalBrsHousingFees: number;
+    };
+    CreateEligibilitySimulationDTO: {
+      householdSize: number;
+      hasDisability: boolean;
+      dependantsAmount: number;
+      /** Format: date-time */
+      birthday: string;
+      /** Format: date-time */
+      coBuyerBirthday: string;
+    };
+    DepartementView: {
+      /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
+      id: string;
+      /** @example Finistère */
+      name: string;
+      /** @example 29 */
+      code: string;
+    };
+    LocationView: {
+      /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
+      id: string;
+      /** @example 48.3905 */
+      latitude: number;
+      /** @example -4.486 */
+      longitude: number;
+      /** @example Brest */
+      city: string;
+      /** @example 29019 */
+      citycode: string;
+      /** @example Brest */
+      label: string;
+      /** @example Brest */
+      municipality: string;
+      /** @example 29200 */
+      postalCode: string;
+      departement: components['schemas']['DepartementView'];
+    };
+    EligibilitySimulationView: {
+      /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
+      id: string;
+      /** @example 2 */
+      householdSize: number;
+      /** @example false */
+      hasDisability: boolean;
+      /** @example LOCATAIRE_PRIVE */
+      propertySituation: string;
+      /** @example 1 */
+      dependantsAmount: number;
+      /**
+       * Format: date-time
+       * @example 2026-02-26T13:51:14.181Z
+       */
+      birthday: string;
+      /**
+       * Format: date-time
+       * @example 2026-02-26T13:51:14.181Z
+       */
+      coBuyerBirthday: string;
+      /** @example 35000 */
+      taxableIncome: number;
+      /** @example COMMUN */
+      declarationType: string;
+      /** @example 35000 */
+      firstCoBuyerTaxableIncome: number;
+      /** @example 28000 */
+      secondCoBuyerTaxableIncome: number;
+      /** @example {
+       *       "category": 1,
+       *       "eligibleZoneAandAbis": true,
+       *       "eligibleZoneB1": false,
+       *       "eligibleZoneB2andC": false
+       *     } */
+      eligibility: Record<string, never>;
+      /** @example Jean */
+      firstName: string;
+      /** @example Dupont */
+      lastName: string;
+      /** @example jean.dupont@example.com */
+      email: string;
+      /** @example 0612345678 */
+      phone: string;
+      /** @example false */
+      hasRefusedConnection: boolean;
+      /** @example T3 */
+      housingType: string;
+      /** @example 10000 */
+      contribution: number;
+      /** @example 45000 */
+      resources: number;
+      /** @example true */
+      hadBrsKnowledge: boolean;
+      /** @example SALARIE_PRIVE_NON_AGRICOLE */
+      employmentStatus: string;
+      /** @example  */
+      laposteEmployer: string;
+      /** @example true */
+      canSendInformationsToLaposte: boolean;
+      /** @example CADRE */
+      positionType: string;
+      /** @example false */
+      positionStage: boolean;
+      /** @example true */
+      hasCompanyMoreThan10Employees: boolean;
+      /** @example false */
+      hasCompanyMoreThan50Employees: boolean;
+      /** @example true */
+      allowFinancingAndOwnershipAdvices: boolean;
+      /** @example CDI */
+      positionContractType: string;
+      locations: components['schemas']['LocationView'][];
+      /**
+       * Format: date-time
+       * @example 2026-02-26T13:51:14.181Z
+       */
+      createdAt: string;
+      /**
+       * Format: date-time
+       * @example 2026-02-26T13:51:14.181Z
+       */
+      updatedAt: string;
+    };
+    UpdateEligibilitySimulationEligibilityDTO: {
+      category?: number;
+      eligibleZoneAandAbis?: boolean;
+      eligibleZoneB1?: boolean;
+      eligibleZoneB2andC?: boolean;
+    };
+    UpdateEligibilitySimulationLocationDTO: {
+      name?: string;
+      latitude?: number;
+      longitude?: number;
+      city?: string;
+      citycode?: string;
+      label?: string;
+      municipality?: string;
+      postalCode?: string;
+    };
+    UpdateEligibilitySimulationDTO: {
+      householdSize?: number;
+      hasDisability?: boolean;
+      dependantsAmount?: number;
+      /** Format: date-time */
+      birthday?: string;
+      /** Format: date-time */
+      coBuyerBirthday?: string;
+      /** @enum {string} */
+      propertySituation?:
+        | 'LOCATAIRE_SOCIAL'
+        | 'LOCATAIRE_PRIVE'
+        | 'PROPRIETAIRE'
+        | 'HEBERGE'
+        | 'AUTRE';
+      taxableIncome?: number;
+      /** @enum {string} */
+      declarationType?:
+        | 'SEUL_SOUHAIT_SEUL'
+        | 'SEUL_SOUHAIT_PARTENAIRE'
+        | 'COMMUN';
+      firstCoBuyerTaxableIncome?: number;
+      secondCoBuyerTaxableIncome?: number;
+      eligibility?: components['schemas']['UpdateEligibilitySimulationEligibilityDTO'];
+      firstName?: string;
+      lastName?: string;
+      email?: string;
+      phone?: string;
+      hasRefusedConnection?: boolean;
+      /** @enum {string} */
+      housingType?: 'T1' | 'T2' | 'T3' | 'T4' | 'T5';
+      contribution?: number;
+      resources?: number;
+      hadBrsKnowledge?: boolean;
+      /** @enum {string} */
+      employmentStatus?:
+        | 'SALARIE_PRIVE_NON_AGRICOLE'
+        | 'SALARIE_AGRICOLE'
+        | 'SALARIE_PUBLIC_OU_FONCTIONNAIRE'
+        | 'INDEPENDANT'
+        | 'SALARIE_GROUPE_LA_POSTE'
+        | 'SANS_ACTIVITE_PROFESSIONNELLE'
+        | 'RETRAITE';
+      laposteEmployer?: string;
+      canSendInformationsToLaposte?: boolean;
+      /** @enum {string} */
+      positionType?: 'CADRE' | 'NON_CADRE' | 'NO_CATEGORIE_PROFESSIONNELLE';
+      positionStage?: boolean;
+      hasCompanyMoreThan10Employees?: boolean;
+      hasCompanyMoreThan50Employees?: boolean;
+      allowFinancingAndOwnershipAdvices?: boolean;
+      /** @enum {string} */
+      positionContractType?: 'CDI' | 'CDD';
+      locations?: components['schemas']['UpdateEligibilitySimulationLocationDTO'][];
     };
     LandbotCustomerCalculateFunnelConversionView: {
       /** @example 105 */
@@ -748,6 +973,54 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['AcquisitionSimulationCalculateFunnelConversionView'];
+        };
+      };
+    };
+  };
+  CreateEligibilitySimulationApiController_createEligibilitySimulation: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateEligibilitySimulationDTO'];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['EligibilitySimulationView'];
+        };
+      };
+    };
+  };
+  UpdateEligibilitySimulationApiController_updateEligibilitySimulation: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateEligibilitySimulationDTO'];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['EligibilitySimulationView'];
         };
       };
     };

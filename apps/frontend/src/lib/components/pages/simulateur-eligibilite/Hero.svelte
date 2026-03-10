@@ -2,9 +2,9 @@
   import Photograph from '$components/common/Photograph.svelte';
 </script>
 
-<section class="fr-container flex py-16 sm:py-30">
+<section class="fr-container flex py-16 md:py-30">
   <h1
-    class="text-center !mx-auto md:text-left md:!ml-0 !text-2xl !leading-[2rem] sm:!text-3xl !leading-[2.5rem] md:!text-4xl md:!leading-[3rem] lg:!text-5xl">
+    class="text-center !mx-auto md:text-left md:!ml-0 !text-3xl !leading-[2rem] !leading-[2.5rem] sm:!text-4xl md:!leading-[3rem] lg:!text-5xl">
     Avec BoRiS, <br />
     découvrez si vous êtes
     <br />

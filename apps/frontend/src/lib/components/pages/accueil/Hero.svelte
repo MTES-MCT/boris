@@ -30,7 +30,7 @@
         Et vous ?
       </p>
       <a
-        href="/simulateur-eligibilite"
+        href="/simulateur-eligibilite/steps"
         class="fr-btn fr-btn--lg">
         Vérifier mon éligibilité
       </a>

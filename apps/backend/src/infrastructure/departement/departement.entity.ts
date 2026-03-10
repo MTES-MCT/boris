@@ -14,6 +14,7 @@ import { OfsEntity } from '../ofs/ofs.entity';
 import { BrsDiffusionWebsiteEntity } from '../brs-diffusion-website/brs-diffusion-website.entity';
 import { MunicipalityEntity } from '../municipality/municipality.entity';
 import { LandbotCustomerEntity } from '../landbot-customer/landbot-customer.entity';
+import { LocationEntity } from '../location/location.entity';
 
 @Entity('departement')
 export class DepartementEntity implements DepartementInterface {
@@ -54,6 +55,9 @@ export class DepartementEntity implements DepartementInterface {
     { cascade: true },
   )
   public landbotCustomers: LandbotCustomerEntity[];
+
+  @OneToMany(() => LocationEntity, (location) => location.departement)
+  public locations: LocationEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

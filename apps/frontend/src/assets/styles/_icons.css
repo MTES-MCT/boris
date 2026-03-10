@@ -9,3 +9,9 @@
   -webkit-mask-image: url('$assets/icons/service.svg');
   mask-image: url('$assets/icons/service.svg');
 }
+
+.fr-icon-euro-line::before,
+.fr-icon-euro-line::after {
+  -webkit-mask-image: url('$assets/icons/euro.svg');
+  mask-image: url('$assets/icons/euro.svg');
+}
