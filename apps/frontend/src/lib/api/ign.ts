@@ -14,6 +14,7 @@ export const autocomplete = async (
   urlSearch.searchParams.set('limit', maximumResponses || '5');
   urlSearch.searchParams.set('returntruegeometry', 'false');
   urlSearch.searchParams.set('index', 'address');
+  urlSearch.searchParams.set('type', 'municipality');
 
   const searchResponse = await fetch(urlSearch);
   const searchData: GeocodedSearchApiResponse = await searchResponse.json();
@@ -22,7 +23,7 @@ export const autocomplete = async (
     return [];
   }
 
-  return searchData.features;
+  return searchData?.features ?? [];
 };
 
 export const reverse = async (latitude: string, longitude: string) => {

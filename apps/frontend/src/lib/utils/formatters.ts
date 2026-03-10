@@ -2,9 +2,14 @@ import type { Region } from '$lib/utils/definitions';
 import type { OfsView } from '$lib/utils/api-types';
 
 export const formatOfss = (ofss: OfsView[]): Region[] => {
+  if (!ofss?.length) return [];
+
   const regionNames = [
     ...new Set(
-      ofss.map((ofs) => ofs.regions.map((region) => region.name).flat()).flat(),
+      ofss
+        .filter((ofs) => ofs.regions?.length)
+        .map((ofs) => ofs.regions.map((region) => region.name).flat())
+        .flat(),
     ),
   ];
 
@@ -14,7 +19,7 @@ export const formatOfss = (ofss: OfsView[]): Region[] => {
     let totalOfssInRegion = 0;
 
     const regionnalOfss: OfsView[] = ofss.filter((ofs) =>
-      ofs.regions.some((region) => region.name === regionName),
+      ofs.regions?.some((region) => region.name === regionName),
     );
 
     totalOfssInRegion = regionnalOfss.length;

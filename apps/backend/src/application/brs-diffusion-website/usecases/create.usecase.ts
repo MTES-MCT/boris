@@ -29,7 +29,7 @@ export class CreateBrsDiffusionWebsiteUsecase {
     const geocodedMunicipalityResult =
       await this.geocoderService.geocodeByMunicipality(city, inseeCode);
 
-    const geocodedMunicipality = geocodedMunicipalityResult[0];
+    const geocodedMunicipality = geocodedMunicipalityResult?.[0];
 
     if (!geocodedMunicipality) {
       console.log(`No result for ${city}`);
@@ -40,7 +40,7 @@ export class CreateBrsDiffusionWebsiteUsecase {
 
     const hasDoublon =
       this.geocoderService.geocodedResultHasMunicipalityDoublon(
-        geocodedMunicipalityResult,
+        geocodedMunicipalityResult ?? [],
         city,
       );
 

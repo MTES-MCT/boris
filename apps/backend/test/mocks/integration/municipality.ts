@@ -18,4 +18,5 @@ export const mockMunicipalityRepository = {
   save: jest.fn(),
   findOne: jest.fn(),
   findOneByInseeCode: jest.fn(),
+  findOneByDepartementCode: jest.fn(),
 };

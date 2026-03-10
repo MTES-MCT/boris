@@ -108,7 +108,9 @@
       <img
         class="w-full"
         src={ofsMap}
-        alt="" />
+        alt=""
+        loading="lazy"
+        decoding="async" />
     </div>
   </div>
 </div>

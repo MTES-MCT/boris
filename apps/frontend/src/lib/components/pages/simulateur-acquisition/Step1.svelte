@@ -31,7 +31,6 @@
     currentStep,
     steps,
     housingPrice,
-    autocompleteValue,
     surface,
     housingType,
     brsZone,
@@ -66,14 +65,40 @@
   const onLocationSelect = async (
     suggestion: GeocodedResponse['properties'],
   ) => {
+    const citycode =
+      typeof suggestion?.citycode === 'string'
+        ? suggestion.citycode
+        : Array.isArray(suggestion?.citycode)
+          ? String(
+              suggestion.citycode.find((c) => String(c).length >= 5) ??
+                suggestion.citycode[0],
+            )
+          : suggestion?.citycode;
+
+    if (!citycode) return;
+
+    acquisitionSimulatorManager.selectedLocation = suggestion;
     acquisitionSimulatorManager.autocompleteValue =
       getGeocodedResponseLabel(suggestion);
 
-    const response = await fetch(`api/municipalities/${suggestion?.citycode}`);
-    const municipality: MunicipalityView = await response.json();
+    const response = await fetch(`api/municipalities/${citycode}`);
 
-    acquisitionSimulatorManager.brsZone = municipality.zone as Zone;
+    if (response.ok) {
+      const municipality: MunicipalityView = await response.json();
+      acquisitionSimulatorManager.brsZone = municipality.zone as Zone;
+    }
   };
+
+  $effect(() => {
+    const val = acquisitionSimulatorManager.autocompleteValue;
+    const label = acquisitionSimulatorManager.selectedLocation
+      ? getGeocodedResponseLabel(acquisitionSimulatorManager.selectedLocation)
+      : '';
+    if (val !== label) {
+      acquisitionSimulatorManager.selectedLocation = undefined;
+      acquisitionSimulatorManager.brsZone = undefined;
+    }
+  });
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -139,7 +164,7 @@
 
         <div class="fr-fieldset__element fr-mb-4w">
           <Autocomplete
-            bind:value={autocompleteValue}
+            bind:value={acquisitionSimulatorManager.autocompleteValue}
             label="Ville ou code postal du logement *"
             placeholder="Exemple: Quimper ou 23200"
             error={errors.brsZone}

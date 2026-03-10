@@ -59,7 +59,12 @@ export const getGeocodedResponseLabel = (
     return '';
   }
 
-  return `${geocodedResponse?.name}, ${geocodedResponse?.context}`;
+  const name = geocodedResponse?.name ?? geocodedResponse?.city ?? '';
+  const context =
+    geocodedResponse?.context ??
+    (geocodedResponse as { contexte?: string })?.contexte ??
+    '';
+  return context ? `${name}, ${context}` : name;
 };
 export const formatFormErrors = (
   issues: z.core.$ZodIssue[],

@@ -12,7 +12,7 @@
 
   const { data }: PageProps = $props();
 
-  const ofss = data.ofss.items;
+  const ofss = data.ofss?.items ?? [];
   const formattedOfss = formatOfss(ofss);
 </script>
 
