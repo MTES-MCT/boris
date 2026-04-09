@@ -19,6 +19,8 @@ export type EligibilityCategory = {
   eligibleZoneB2andC: boolean;
 };
 
+export type HighestEligibilityZone = 'A_AND_ABIS' | 'B1' | 'B2_AND_C' | 'NONE';
+
 export type HousingType = 'T1' | 'T2' | 'T3' | 'T4' | 'T5';
 
 export type ContractType = 'CDI' | 'CDD';
@@ -910,4 +912,22 @@ export const defineEligibleZone = (
     eligibleZoneB1: taxableIncome < zoneB1Treshold,
     eligibleZoneB2andC: taxableIncome < eligibilityCategory.zoneB2andC,
   };
+};
+
+export const defineHighestEligibilityZone = (
+  eligibility?: EligibilityCategory,
+): HighestEligibilityZone => {
+  if (eligibility?.eligibleZoneAandAbis) {
+    return 'A_AND_ABIS';
+  }
+
+  if (eligibility?.eligibleZoneB1) {
+    return 'B1';
+  }
+
+  if (eligibility?.eligibleZoneB2andC) {
+    return 'B2_AND_C';
+  }
+
+  return 'NONE';
 };

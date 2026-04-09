@@ -7,6 +7,7 @@ import type {
 import type { GeocodedResponse } from '$lib/utils/definitions';
 
 import {
+  defineHighestEligibilityZone,
   defineEligibleZone,
   steps,
   type ContractType,
@@ -148,6 +149,14 @@ class EligibilitySimulator {
     }
 
     return undefined;
+  });
+
+  public highestEligibilityZone = $derived.by(() => {
+    return defineHighestEligibilityZone(this.eligibility);
+  });
+
+  public eligibilityCategory = $derived.by(() => {
+    return this.eligibility?.category;
   });
 
   // User details

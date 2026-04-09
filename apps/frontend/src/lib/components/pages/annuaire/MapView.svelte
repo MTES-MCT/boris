@@ -195,10 +195,9 @@
 </script>
 
 <div
-  class="relative w-full max-w-[110rem] h-[calc(100vh-4rem)] md:h-[calc(100vh-12rem)] mx-auto flex pb-16 px-4">
+  class="relative w-full max-w-440 h-[calc(100vh-4rem)] md:h-[calc(100vh-12rem)] mx-auto flex pb-16 px-4">
   <div class="hidden lg:block h-[calc(100vh-16rem)] overflow-hidden relative">
-    <div
-      class="fr-mb-0 fr-text--sm bg-white h-[3rem] pl-4 flex items-center pt-2">
+    <div class="fr-mb-0 fr-text--sm bg-white h-12 pl-4 flex items-center pt-2">
       <b>
         {brsDiffusionWebsitesInBounds.length} résultat{brsDiffusionWebsitesInBounds.length >
         1
@@ -207,7 +206,7 @@
       </b>
     </div>
     <ul
-      class="w-[18rem] xl:w-[28rem] !list-none !m-0 !p-[1rem] !pt-0 h-[calc(100%-3rem)] overflow-y-auto bg-white">
+      class="w-[18rem] xl:w-md !list-none !m-0 !p-[1rem] !pt-0 h-[calc(100%-3rem)] overflow-y-auto bg-white">
       {#if brsDiffusionWebsitesInBounds.length > 0}
         {#each brsDiffusionWebsitesInBounds as item}
           <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
@@ -238,8 +237,7 @@
     class="h-full flex-1 relative"
     bind:this={annuaireManager.mapElementRef}>
     {#if selectedMarker}
-      <div
-        class="block lg:hidden absolute bottom-[0.5rem] left-[0.5rem] right-[0.5rem] z-[1000]">
+      <div class="block lg:hidden absolute bottom-2 left-2 right-2 z-1000">
         <Card
           {...selectedMarker}
           cardTitleElement="h3"

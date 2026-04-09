@@ -10,23 +10,21 @@
   import cookieConsentManager from '$lib/managers/consent.svelte';
 
   let isIneligible = $derived(
-    eligibilitySimulatorManager.eligibility?.eligibleZoneB2andC === false &&
-      eligibilitySimulatorManager.eligibility?.eligibleZoneB1 === false &&
-      eligibilitySimulatorManager.eligibility?.eligibleZoneAandAbis === false,
+    eligibilitySimulatorManager.highestEligibilityZone === 'NONE',
   );
 
   onMount(() => {
     eligibilitySimulatorManager.hasRefusedConnection = false;
 
     if (cookieConsentManager.hasUserConsented) {
-      if (eligibilitySimulatorManager.eligibility?.eligibleZoneB2andC) {
+      if (eligibilitySimulatorManager.highestEligibilityZone === 'B2_AND_C') {
         // @ts-expect-error - gtag is not defined in the global scope
         window.gtag('event', 'Éligible partout en France');
-      } else if (eligibilitySimulatorManager.eligibility?.eligibleZoneB1) {
+      } else if (eligibilitySimulatorManager.highestEligibilityZone === 'B1') {
         // @ts-expect-error - gtag is not defined in the global scope
         window.gtag('event', 'Éligible  zone A, Abis et B1');
       } else if (
-        eligibilitySimulatorManager.eligibility?.eligibleZoneAandAbis
+        eligibilitySimulatorManager.highestEligibilityZone === 'A_AND_ABIS'
       ) {
         // @ts-expect-error - gtag is not defined in the global scope
         window.gtag('event', 'Éligible A et Abis');

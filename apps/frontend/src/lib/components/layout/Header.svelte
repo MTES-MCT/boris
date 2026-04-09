@@ -188,7 +188,7 @@
             <a
               class="fr-nav__link"
               href="/blog"
-              aria-current={pathname === '/blog'}
+              aria-current={pathname.startsWith('/blog')}
               target="_self">
               Le blog
             </a>

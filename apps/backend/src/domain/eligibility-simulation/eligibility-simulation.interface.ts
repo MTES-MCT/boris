@@ -19,6 +19,33 @@ export type EligibilityCategory = {
   eligibleZoneB2andC: boolean;
 };
 
+export type HighestEligibilityZone = 'A_AND_ABIS' | 'B1' | 'B2_AND_C' | 'NONE';
+
+export const highestEligibilityZones: HighestEligibilityZone[] = [
+  'A_AND_ABIS',
+  'B1',
+  'B2_AND_C',
+  'NONE',
+];
+
+export const getHighestEligibilityZone = (
+  eligibility?: EligibilityCategory,
+): HighestEligibilityZone => {
+  if (eligibility?.eligibleZoneAandAbis) {
+    return 'A_AND_ABIS';
+  }
+
+  if (eligibility?.eligibleZoneB1) {
+    return 'B1';
+  }
+
+  if (eligibility?.eligibleZoneB2andC) {
+    return 'B2_AND_C';
+  }
+
+  return 'NONE';
+};
+
 export type HousingType = 'T1' | 'T2' | 'T3' | 'T4' | 'T5';
 
 export type EmploymentStatus =
@@ -50,6 +77,8 @@ export interface EligibilitySimulationInterface {
   firstCoBuyerTaxableIncome?: number;
   secondCoBuyerTaxableIncome?: number;
   eligibility?: EligibilityCategory;
+  eligibilityCategory?: number;
+  highestEligibilityZone: HighestEligibilityZone;
   firstName?: string;
   lastName?: string;
   email?: string;

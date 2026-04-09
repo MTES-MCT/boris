@@ -17,7 +17,6 @@ import { APP_FILTER } from '@nestjs/core';
 import { MunicipalityModule } from './infrastructure/municipality/municipality.module';
 import { AcquisitionSimulationModule } from './infrastructure/acquisition-simulation/acquisition-simulation.module';
 import { EligibilitySimulationModule } from './infrastructure/eligibility-simulation/eligibility-simulation.module';
-import { LandbotCustomerModule } from './infrastructure/landbot-customer/landbot-customer.module';
 import { LocationModule } from './infrastructure/location/location.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DatagouvModule } from './infrastructure/datagouv/datagouv.module';
@@ -66,7 +65,6 @@ import { DatagouvModule } from './infrastructure/datagouv/datagouv.module';
     MunicipalityModule,
     AcquisitionSimulationModule,
     EligibilitySimulationModule,
-    LandbotCustomerModule,
     LocationModule,
     DatagouvModule,
     AdminHomeModule,

@@ -34,10 +34,10 @@
 
     const mostRecentYear: string = years[years.length - 1];
 
-    if (result[mostRecentYear].length === 1) {
+    if (result[mostRecentYear]?.length === 1) {
       delete result[mostRecentYear];
     } else {
-      result[mostRecentYear].pop();
+      result[mostRecentYear]?.pop();
     }
 
     return result;

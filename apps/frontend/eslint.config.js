@@ -1,10 +1,10 @@
-import eslint from '@eslint/js';
+import { defineConfig } from '@eslint/js';
 import prettier from 'eslint-config-prettier';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
+export default defineConfig(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   ...svelte.configs['flat/recommended'],

@@ -3,6 +3,7 @@ import { EligibilitySimulationRepositoryInterface } from 'src/domain/eligibility
 import { EligibilitySimulationView } from '../views/eligibility-simulation.view';
 import { CreateEligibilitySimulationParams } from './create.params';
 import { EligibilitySimulationEntity } from 'src/infrastructure/eligibility-simulation/eligibility-simulation.entity';
+import { highestEligibilityZones } from 'src/domain/eligibility-simulation/eligibility-simulation.interface';
 
 export class CreateEligibilitySimulationUsecase {
   constructor(
@@ -30,6 +31,8 @@ export class CreateEligibilitySimulationUsecase {
     eligibilitySimulationEntity.birthday = birthday;
     eligibilitySimulationEntity.coBuyerBirthday = coBuyerBirthday;
     eligibilitySimulationEntity.isFromLandbot = isFromLandbot;
+    eligibilitySimulationEntity.highestEligibilityZone =
+      highestEligibilityZones[highestEligibilityZones.length - 1];
 
     if (landbotDate) {
       eligibilitySimulationEntity.landbotDate = landbotDate;

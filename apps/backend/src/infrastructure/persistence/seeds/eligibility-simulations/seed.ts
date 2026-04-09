@@ -59,17 +59,15 @@ export class EligibilitySimulationsSeed {
           const updatedEligibilitySimulation =
             await this.updateEligibilitySimulationUsecase.execute({
               id: eligibilitySimulation.id,
-              eligibility: {
-                category: 1,
-                eligibleZoneAandAbis:
-                  landbotCustomer.eligibility === 1 ||
-                  landbotCustomer.eligibility === 2 ||
-                  landbotCustomer.eligibility === 4,
-                eligibleZoneB1:
-                  landbotCustomer.eligibility === 1 ||
-                  landbotCustomer.eligibility === 2,
-                eligibleZoneB2andC: landbotCustomer.eligibility === 1,
-              },
+              eligibilityCategory: 1,
+              highestEligibilityZone:
+                landbotCustomer.eligibility === 1
+                  ? 'A_AND_ABIS'
+                  : landbotCustomer.eligibility === 2
+                    ? 'B1'
+                    : landbotCustomer.eligibility === 4
+                      ? 'B2_AND_C'
+                      : 'NONE',
               hadBrsKnowledge:
                 landbotCustomer.brsKnowledge === LandbotBrsKnowledge.OUI,
               propertySituation: this.getPropertySituation(
@@ -99,10 +97,7 @@ export class EligibilitySimulationsSeed {
             });
           }
           if (landbotCustomer.eligibility === 1) {
-            console.log(landbotCustomer.eligibility);
-            console.log(
-              JSON.stringify(updatedEligibilitySimulation.eligibility),
-            );
+            console.log(updatedEligibilitySimulation.highestEligibilityZone);
             console.log(' ');
             console.log(' ');
           }

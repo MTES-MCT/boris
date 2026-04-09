@@ -2,7 +2,6 @@ import { mockedEligibilitySimulation } from 'test/mocks/integration/eligibility-
 import type {
   PropertySituation,
   DeclarationType,
-  EligibilityCategory,
   HousingType,
   EmploymentStatus,
   PositionType,
@@ -28,12 +27,10 @@ describe('EligibilitySimulationEntity', () => {
     expect(mockedEligibilitySimulation.declarationType).toBe('COMMUN');
     expect(mockedEligibilitySimulation.firstCoBuyerTaxableIncome).toBe(35000);
     expect(mockedEligibilitySimulation.secondCoBuyerTaxableIncome).toBe(28000);
-    expect(mockedEligibilitySimulation.eligibility).toEqual({
-      category: 1,
-      eligibleZoneAandAbis: true,
-      eligibleZoneB1: false,
-      eligibleZoneB2andC: false,
-    });
+    expect(mockedEligibilitySimulation.eligibilityCategory).toBe(1);
+    expect(mockedEligibilitySimulation.highestEligibilityZone).toBe(
+      'A_AND_ABIS',
+    );
     expect(mockedEligibilitySimulation.firstName).toBe('Jean');
     expect(mockedEligibilitySimulation.lastName).toBe('Dupont');
     expect(mockedEligibilitySimulation.email).toBe('jean.dupont@example.com');
@@ -69,12 +66,6 @@ describe('EligibilitySimulationEntity', () => {
   });
 
   it('setters', () => {
-    const newEligibility: EligibilityCategory = {
-      category: 2,
-      eligibleZoneAandAbis: false,
-      eligibleZoneB1: true,
-      eligibleZoneB2andC: true,
-    };
     const newDate = new Date('2024-02-20');
 
     mockedEligibilitySimulation.householdSize = 3;
@@ -89,7 +80,8 @@ describe('EligibilitySimulationEntity', () => {
       'SEUL_SOUHAIT_SEUL' as DeclarationType;
     mockedEligibilitySimulation.firstCoBuyerTaxableIncome = 42000;
     mockedEligibilitySimulation.secondCoBuyerTaxableIncome = 30000;
-    mockedEligibilitySimulation.eligibility = newEligibility;
+    mockedEligibilitySimulation.eligibilityCategory = 2;
+    mockedEligibilitySimulation.highestEligibilityZone = 'B1';
     mockedEligibilitySimulation.firstName = 'Marie';
     mockedEligibilitySimulation.lastName = 'Martin';
     mockedEligibilitySimulation.email = 'marie.martin@example.com';
@@ -128,7 +120,8 @@ describe('EligibilitySimulationEntity', () => {
     );
     expect(mockedEligibilitySimulation.firstCoBuyerTaxableIncome).toBe(42000);
     expect(mockedEligibilitySimulation.secondCoBuyerTaxableIncome).toBe(30000);
-    expect(mockedEligibilitySimulation.eligibility).toEqual(newEligibility);
+    expect(mockedEligibilitySimulation.eligibilityCategory).toBe(2);
+    expect(mockedEligibilitySimulation.highestEligibilityZone).toBe('B1');
     expect(mockedEligibilitySimulation.firstName).toBe('Marie');
     expect(mockedEligibilitySimulation.lastName).toBe('Martin');
     expect(mockedEligibilitySimulation.email).toBe('marie.martin@example.com');

@@ -76,4 +76,78 @@ describe('EligibilitySimulationRepository', () => {
       relations: ['locations', 'locations.departement'],
     });
   });
+
+  it('should group eligibility simulations by eligibility stats buckets', async () => {
+    const queryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      groupBy: jest.fn().mockReturnThis(),
+      getRawMany: jest.fn().mockResolvedValue([
+        { eligibility: 'A_AND_ABIS', count: '12' },
+        { eligibility: 'B1', count: '8' },
+      ]),
+    };
+
+    mockEligibilitySimulationRepository.createQueryBuilder.mockReturnValue(
+      queryBuilder,
+    );
+
+    const result =
+      await eligibilitySimulationRepository.groupByEligibilityStats();
+
+    expect(result).toStrictEqual([
+      {
+        eligibility: 'A_AND_ABIS',
+        count: '12',
+      },
+      { eligibility: 'B1', count: '8' },
+      { eligibility: 'B2_AND_C', count: '0' },
+      { eligibility: 'NONE', count: '0' },
+    ]);
+    expect(
+      mockEligibilitySimulationRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('eligibility_simulation');
+    expect(queryBuilder.getRawMany).toHaveBeenCalledTimes(1);
+  });
+
+  it('should calculate eligibility simulation conversion funnel', async () => {
+    const queryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      leftJoin: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      getRawOne: jest.fn().mockResolvedValue({
+        totalSimulations: '100',
+        totalHouseholdProvided: '80',
+        totalEligible: '60',
+        totalConnectionWish: '40',
+        totalEmailProvided: '30',
+        totalDesiredCityProvided: '20',
+      }),
+    };
+
+    mockEligibilitySimulationRepository.createQueryBuilder.mockReturnValue(
+      queryBuilder,
+    );
+
+    const result =
+      await eligibilitySimulationRepository.calculateConversionFunnel();
+
+    expect(result).toStrictEqual({
+      totalSimulations: 100,
+      totalHouseholdProvided: 80,
+      totalEligible: 60,
+      totalConnectionWish: 40,
+      totalEmailProvided: 30,
+      totalDesiredCityProvided: 20,
+    });
+    expect(
+      mockEligibilitySimulationRepository.createQueryBuilder,
+    ).toHaveBeenCalledWith('eligibility_simulation');
+    expect(queryBuilder.leftJoin).toHaveBeenCalledWith(
+      'eligibility_simulation.locations',
+      'location',
+    );
+    expect(queryBuilder.getRawOne).toHaveBeenCalledTimes(1);
+  });
 });

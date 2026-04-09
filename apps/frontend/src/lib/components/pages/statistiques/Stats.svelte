@@ -2,15 +2,22 @@
   import Disclaimer from '$components/common/Disclaimer.svelte';
   import Tile from '$components/common/Tile.svelte';
   import { formatEuro, formatNumber } from '$lib/utils/formatters';
-  import type { PageData } from '../../../../routes/notre-mission/$types';
+  import type { EligibilityStatsItem } from '$lib/types/statistics';
 
   type Props = {
-    investedAmount: PageData['investedAmount'];
-    purchasePlanAmount: PageData['purchasePlanAmount'];
-    ofssAmount: PageData['ofssAmount'];
-    eligibility: PageData['eligibility'];
+    investedAmount: number;
+    purchasePlanAmount: string;
+    ofssAmount: number;
+    eligibility: EligibilityStatsItem[];
     hideDisclaimer?: boolean;
-    householdsData: PageData['householdsData'];
+    householdsData: {
+      total: number;
+      brsUnawarePercentage: number;
+      totalsRealEstateSituation: {
+        realEstateSituation: string;
+        count: string;
+      }[];
+    };
   };
 
   const {
@@ -23,18 +30,24 @@
   }: Props = $props();
 
   const eligibilityData = $derived.by(() => {
-    const total = eligibility.reduce(
-      (sum, item) => sum + Number(item.count),
-      0,
+    const countByBucket = eligibility.reduce<Record<string, number>>(
+      (accumulator, item) => {
+        accumulator[item.eligibility] = Number(item.count);
+
+        return accumulator;
+      },
+      {},
     );
 
-    const totalEligible = eligibility
-      .filter((item) => item.eligibility !== '3')
-      .reduce((sum, item) => sum + Number(item.count), 0);
+    const totalEligible =
+      (countByBucket.A_AND_ABIS ?? 0) +
+      (countByBucket.B1 ?? 0) +
+      (countByBucket.B2_AND_C ?? 0);
+    const total = totalEligible + (countByBucket.NONE ?? 0);
 
     return {
       total,
-      eligiblePercentage: (totalEligible / total) * 100,
+      eligiblePercentage: total === 0 ? 0 : (totalEligible / total) * 100,
     };
   });
 </script>

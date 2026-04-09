@@ -2,10 +2,12 @@
   import StatisticBox from './StatisticBox.svelte';
   import ChartProvider from '$components/common/Charts/ChartProvider.svelte';
   import PieChart from '$components/common/Charts/PieChart.svelte';
-  import type { PageData } from '../../../../routes/statistiques/$types';
+  import type { formatHouseholdsData } from '$lib/utils/helpers';
 
   type Props = {
-    housingTypesRepartition: PageData['realEstateSituation'];
+    housingTypesRepartition: ReturnType<
+      typeof formatHouseholdsData
+    >['totalsRealEstateSituation'];
   };
 
   const { housingTypesRepartition }: Props = $props();

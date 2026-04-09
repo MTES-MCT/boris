@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import { CountSimulationsUsecase } from 'src/application/landbot-customer/usecases/countSimulations.usecase';
-import { GroupByRegionsUsecase } from 'src/application/landbot-customer/usecases/groupByRegions.usecase';
+import { CountEligibilitySimulationsUsecase } from 'src/application/eligibility-simulation/usecases/count-simulations.usecase';
+import { GroupEligibilitySimulationsByRegionsUsecase } from 'src/application/eligibility-simulation/usecases/group-by-regions.usecase';
 import { CsvFileServiceInterface } from 'src/domain/csv-file/csv-file.service.interface';
 import { DatagouvRepositoryInterface } from 'src/domain/datagouv/datagouv.repository.interface';
 
@@ -57,8 +57,8 @@ export class UploadMonthlyStatisticsCron {
     private readonly datagouvRepository: DatagouvRepositoryInterface,
     @Inject('CsvFileServiceInterface')
     private readonly csvFileService: CsvFileServiceInterface,
-    private readonly countSimulationsUsecase: CountSimulationsUsecase,
-    private readonly groupByRegionsUsecase: GroupByRegionsUsecase,
+    private readonly countEligibilitySimulationsUsecase: CountEligibilitySimulationsUsecase,
+    private readonly groupEligibilitySimulationsByRegionsUsecase: GroupEligibilitySimulationsByRegionsUsecase,
   ) {}
 
   @Cron('0 3 2 * *', {
@@ -92,10 +92,11 @@ export class UploadMonthlyStatisticsCron {
   }
 
   private async getSimulationsCountRow(): Promise<MonthlyStatisticsRow> {
-    const simulationsCount = await this.countSimulationsUsecase.execute({
-      year: this.getLastMonth().year,
-      month: this.getLastMonth().month,
-    });
+    const simulationsCount =
+      await this.countEligibilitySimulationsUsecase.execute({
+        year: this.getLastMonth().year,
+        month: this.getLastMonth().month,
+      });
 
     return {
       ...this.initialRow,
@@ -108,10 +109,8 @@ export class UploadMonthlyStatisticsCron {
   }
 
   private async getRegionsCountRow(): Promise<MonthlyStatisticsRow[]> {
-    const regionsCountRows = await this.groupByRegionsUsecase.execute({
-      year: this.getLastMonth().year,
-      month: this.getLastMonth().month,
-    });
+    const regionsCountRows =
+      await this.groupEligibilitySimulationsByRegionsUsecase.execute();
 
     return regionsCountRows.data
       .map((regionRow) => ({
