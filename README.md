@@ -74,7 +74,7 @@ make migration-migrate
 
 ```
 
-npm run dev -w apps/backend
+npm run start -w apps/backend
 
 ```
 
