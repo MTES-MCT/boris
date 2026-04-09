@@ -97,7 +97,8 @@ export class UpdateEligibilitySimulationUsecase {
     eligibilitySimulation.eligibilityCategory =
       params.eligibilityCategory ?? eligibilitySimulation.eligibilityCategory;
     eligibilitySimulation.highestEligibilityZone =
-      params.highestEligibilityZone ?? eligibilitySimulation.highestEligibilityZone;
+      params.highestEligibilityZone ??
+      eligibilitySimulation.highestEligibilityZone;
     eligibilitySimulation.firstName =
       params.firstName || eligibilitySimulation.firstName;
     eligibilitySimulation.lastName =

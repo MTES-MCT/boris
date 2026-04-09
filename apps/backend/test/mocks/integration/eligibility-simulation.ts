@@ -53,5 +53,11 @@ export const mockEligibilitySimulationRepository = {
   findOne: jest.fn(),
   findById: jest.fn(),
   createQueryBuilder: jest.fn(),
+  groupByEligibilityStats: jest.fn(),
+  groupByBrsKnowledge: jest.fn(),
+  groupByRealEstateSituation: jest.fn(),
+  groupSimulationsByYearAndMonth: jest.fn(),
+  groupByRegions: jest.fn(),
+  groupByDepartements: jest.fn(),
   calculateConversionFunnel: jest.fn(),
 };
