@@ -15,7 +15,7 @@
 
 {#if cookieConsentManager.needsConsentDecision}
   <div class="fr-consent-banner fade-in">
-    <h2 class="fr-h6">À propos des cookies sur BoRiS.</h2>
+    <p class="fr-h6">À propos des cookies sur BoRiS.</p>
     <div class="fr-consent-banner__content">
       <p>
         Bienvenue ! Nous utilisons des cookies pour améliorer votre expérience

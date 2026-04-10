@@ -11,7 +11,7 @@
 
   const { highestEligibilityZone, propertySituation, refuseConnection } =
     $derived(eligibilitySimulatorManager);
-  console.log('highestEligibilityZone', highestEligibilityZone);
+
   let isOwner = $derived(propertySituation === 'PROPRIETAIRE');
 </script>
 
