@@ -1,6 +1,7 @@
 <script lang="ts">
   import Section from '$components/common/Section.svelte';
   import ContentPageSubtitle from '$components/common/ContentPageSubtitle.svelte';
+  import { contactEmail } from '$lib/utils/constants';
 </script>
 
 <svelte:head>
@@ -53,9 +54,9 @@
     ce que l’ensemble des informations que vous avez renseigné soit retirées de
     nos bases de données. La demande doit être formulée auprès de cette adresse
     : <a
-      href="mailto:nathan.gaudelet@beta.gouv.fr"
+      href="mailto:{contactEmail}"
       class="fr-link">
-      nathan.gaudelet@beta.gouv.fr
+      {contactEmail}
     </a>
   </p>
 
@@ -104,9 +105,9 @@
     Si vous avez des questions concernant cette Politique de Confidentialité,
     vous pouvez nous contacter à l'adresse courriel suivante
     <a
-      href="mailto:nathan.gaudelet@beta.gouv.fr"
+      href="mailto:{contactEmail}"
       class="fr-link">
-      nathan.gaudelet@beta.gouv.fr
+      {contactEmail}
     </a>
   </p>
 </Section>
