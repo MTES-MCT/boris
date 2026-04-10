@@ -12,7 +12,7 @@
 </script>
 
 <StatisticBox>
-  <h2 class="fr-h3 !mb-0">
+  <h2 class="fr-h3 mb-0!">
     Le funnel de conversion du simulateur d'éligibilité
   </h2>
   <p class="fr-text--bold">Sur les 30 derniers jours</p>

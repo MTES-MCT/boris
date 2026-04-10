@@ -15,6 +15,7 @@
 
   let {
     eligibility,
+    highestEligibilityZone,
     currentPhase,
     propertySituation,
     nextStep,
@@ -59,7 +60,8 @@
 
       updateEligibilitySimulation({
         propertySituation,
-        eligibility,
+        eligibilityCategory: eligibility?.category,
+        highestEligibilityZone,
       });
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);

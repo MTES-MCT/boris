@@ -94,8 +94,11 @@ export class UpdateEligibilitySimulationUsecase {
     eligibilitySimulation.secondCoBuyerTaxableIncome =
       params.secondCoBuyerTaxableIncome ||
       eligibilitySimulation.secondCoBuyerTaxableIncome;
-    eligibilitySimulation.eligibility =
-      params.eligibility || eligibilitySimulation.eligibility;
+    eligibilitySimulation.eligibilityCategory =
+      params.eligibilityCategory ?? eligibilitySimulation.eligibilityCategory;
+    eligibilitySimulation.highestEligibilityZone =
+      params.highestEligibilityZone ??
+      eligibilitySimulation.highestEligibilityZone;
     eligibilitySimulation.firstName =
       params.firstName || eligibilitySimulation.firstName;
     eligibilitySimulation.lastName =

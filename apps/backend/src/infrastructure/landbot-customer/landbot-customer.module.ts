@@ -8,32 +8,13 @@ import { CreateLandbotCustomerUsecase } from 'src/application/landbot-customer/u
 import { LandbotApiClientModule } from '../landbot-api-client/landbot-api-client.module';
 import { FindAllLandbotCustomersUsecase } from 'src/application/landbot-customer/usecases/findAll.usecase';
 import { FindLastLandbotCustomerUsecase } from 'src/application/landbot-customer/usecases/findLast.usecase';
-import { GroupByEligibilityUsecase } from 'src/application/landbot-customer/usecases/groupByEligibility.usecase';
-import { GroupByBrsKnowledgeUsecase } from 'src/application/landbot-customer/usecases/groupByBrsKnowledge.usecase';
-import { GroupByRealEstateSituationUsecase } from 'src/application/landbot-customer/usecases/groupByRealEstateSituation.usecase';
-import { GetLandbotCustomersByFieldApiController } from './controllers/api/get-landbot-customers-by-field.controller';
-import { CountSimulationsUsecase } from 'src/application/landbot-customer/usecases/countSimulations.usecase';
-import { GroupByRegionsUsecase } from 'src/application/landbot-customer/usecases/groupByRegions.usecase';
-import { GroupSimulationsByYearAndMonthUsecase } from 'src/application/landbot-customer/usecases/groupSimulationsByYearAndMonth.usecase';
-import { GetLandbotCustomersSimulationsMonthlySummaryApiController } from './controllers/api/get-landbot-customers-simulations-monthly-summary.controller';
-import { GroupByDepartementsUsecase } from 'src/application/landbot-customer/usecases/groupByDepartements.usecase';
-import { GetLandbotCustomersGroupedByDepartementsApiController } from './controllers/api/get-landbot-customers-grouped-by-departements.controller';
-import { GetLandbotCustomersGroupedByRegionsApiController } from './controllers/api/get-landbot-customers-grouped-by-regions.controller';
-import { GetLandbotCustomersConversionFunnelController } from './controllers/api/get-landbot-customers-conversion-funnel.controller';
-import { CalculateConversionFunnelUsecase } from 'src/application/landbot-customer/usecases/calculateConversionFunnel.usecase';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([DepartementEntity, LandbotCustomerEntity]),
     LandbotApiClientModule,
   ],
-  controllers: [
-    GetLandbotCustomersConversionFunnelController,
-    GetLandbotCustomersSimulationsMonthlySummaryApiController,
-    GetLandbotCustomersGroupedByDepartementsApiController,
-    GetLandbotCustomersGroupedByRegionsApiController,
-    GetLandbotCustomersByFieldApiController,
-  ],
+  controllers: [],
   providers: [
     {
       provide: 'DepartementRepositoryInterface',
@@ -48,14 +29,6 @@ import { CalculateConversionFunnelUsecase } from 'src/application/landbot-custom
     CreateLandbotCustomerUsecase,
     FindAllLandbotCustomersUsecase,
     FindLastLandbotCustomerUsecase,
-    GroupByEligibilityUsecase,
-    GroupByBrsKnowledgeUsecase,
-    GroupByRealEstateSituationUsecase,
-    CountSimulationsUsecase,
-    GroupByRegionsUsecase,
-    GroupSimulationsByYearAndMonthUsecase,
-    GroupByDepartementsUsecase,
-    CalculateConversionFunnelUsecase,
   ],
   exports: [
     'LandbotCustomerRepositoryInterface',
@@ -64,14 +37,6 @@ import { CalculateConversionFunnelUsecase } from 'src/application/landbot-custom
     CreateLandbotCustomerUsecase,
     FindAllLandbotCustomersUsecase,
     FindLastLandbotCustomerUsecase,
-    GroupByEligibilityUsecase,
-    GroupByBrsKnowledgeUsecase,
-    GroupByRealEstateSituationUsecase,
-    CountSimulationsUsecase,
-    GroupByRegionsUsecase,
-    GroupByDepartementsUsecase,
-    GroupSimulationsByYearAndMonthUsecase,
-    CalculateConversionFunnelUsecase,
   ],
 })
 export class LandbotCustomerModule {}

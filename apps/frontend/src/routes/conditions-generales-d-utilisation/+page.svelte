@@ -1,6 +1,7 @@
 <script lang="ts">
   import Section from '$components/common/Section.svelte';
   import ContentPageSubtitle from '$components/common/ContentPageSubtitle.svelte';
+  import { contactEmail } from '$lib/utils/constants';
 </script>
 
 <svelte:head>
@@ -58,7 +59,7 @@
     Toutefois, malgré toute notre attention, elles peuvent encore comporter des
     erreurs ou omissions. Si vous constatez une erreur ou omission parmi ces
     données, nous vous invitons à nous la signaler par courriel à l’adresse
-    nathan.gaudelet@beta.gouv.fr.
+    {contactEmail}.
   </p>
 
   <ContentPageSubtitle title="Propriété intellectuelle" />
@@ -71,11 +72,10 @@
   </p>
   <p>
     Si vous souhaitez reproduire ou réutiliser des contenus présents sur ce
-    site, veuillez nous contacter à l'adresse nathan.gaudelet@beta.gouv.fr afin
-    de connaître les conditions de réutilisation applicables. Les marques
-    détenues par le ministère, ainsi que ses logos présents sur le site, sont
-    des marques déposées auprès de l'Institut national de la propriété
-    industrielle (INPI).
+    site, veuillez nous contacter à l'adresse {contactEmail} afin de connaître les
+    conditions de réutilisation applicables. Les marques détenues par le ministère,
+    ainsi que ses logos présents sur le site, sont des marques déposées auprès de
+    l'Institut national de la propriété industrielle (INPI).
   </p>
   <p>
     Toute reproduction totale ou partielle, effectuée à partir des éléments du

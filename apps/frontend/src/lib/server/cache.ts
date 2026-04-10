@@ -5,17 +5,17 @@ export const namespaces = {
   partnerOfss: 'partner-ofss',
   brsDiffusionWebsites: 'brs-diffusion-websites',
   municipalities: 'municipalities',
-  landbotCustomersEligibility: 'landbot-customers-eligibility',
-  landbotCustomersBrsKnowledge: 'landbot-customers-brs-knowledge',
-  landbotCustomersRealEstateSituation:
-    'landbot-customers-real-estate-situation',
-  landbotCustomersSimulationsMonthlySummary:
-    'landbot-customers-simulations-monthly-summary',
-  landbotCustomersSimulationsByDepartements:
-    'landbot-customers-simulations-by-departements',
-  landbotCustomersSimulationsByRegions:
-    'landbot-customers-simulations-by-regions',
-  landbotCustomersConversionFunnel: 'landbot-customers-conversion-funnel',
+  eligibilitySimulationsEligibility: 'eligibility-simulations-eligibility',
+  eligibilitySimulationsBrsKnowledge: 'eligibility-simulations-brs-knowledge',
+  eligibilitySimulationsRealEstateSituation:
+    'eligibility-simulations-real-estate-situation',
+  eligibilitySimulationsMonthlySummary:
+    'eligibility-simulations-monthly-summary',
+  eligibilitySimulationsByDepartements:
+    'eligibility-simulations-by-departements',
+  eligibilitySimulationsByRegions: 'eligibility-simulations-by-regions',
+  eligibilitySimulationsConversionFunnel:
+    'eligibility-simulations-conversion-funnel',
   acquisitionSimulationsConversionFunnel:
     'acquisition-simulations-conversion-funnel',
 };

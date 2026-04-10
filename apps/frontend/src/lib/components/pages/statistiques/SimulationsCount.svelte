@@ -34,18 +34,38 @@
 
     const mostRecentYear: string = years[years.length - 1];
 
-    if (result[mostRecentYear].length === 1) {
+    if (result[mostRecentYear]?.length === 1) {
       delete result[mostRecentYear];
     } else {
-      result[mostRecentYear].pop();
+      result[mostRecentYear]?.pop();
     }
 
     return result;
   });
 
+  const chartYears = $derived.by(() => Object.keys(formattedData));
+
+  const chartLabels = $derived.by(() => {
+    const firstYear = chartYears[0];
+
+    if (!firstYear) {
+      return [];
+    }
+
+    return formattedData[firstYear].map((item) =>
+      new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(
+        new Date(2000, Number(item.month) - 1, 1),
+      ),
+    );
+  });
+
   const formattedStartDate = $derived.by(() => {
-    const year = Object.keys(formattedData)[0];
-    const month = formattedData[year][0].month;
+    const year = chartYears[0];
+    const month = year ? formattedData[year]?.[0]?.month : undefined;
+
+    if (!year || !month) {
+      return 'date inconnue';
+    }
 
     return new Intl.DateTimeFormat('fr-FR', {
       month: 'long',
@@ -64,19 +84,11 @@
   </p>
   <ChartProvider>
     <LineChart
-      x={[
-        [
-          ...formattedData['2024'].map((item) =>
-            new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(
-              new Date(2000, Number(item.month) - 1, 1),
-            ),
-          ),
-        ],
-      ]}
-      y={Object.keys(formattedData).map((year) => {
+      x={[chartLabels]}
+      y={chartYears.map((year) => {
         return formattedData[year].map((item) => Number(item.count));
       })}
-      name={Object.keys(formattedData)}
+      name={chartYears}
       selectedPalette="categorical"
       unitTooltip="Nombre de simulations">
     </LineChart>

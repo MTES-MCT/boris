@@ -511,13 +511,10 @@ export interface components {
       firstCoBuyerTaxableIncome: number;
       /** @example 28000 */
       secondCoBuyerTaxableIncome: number;
-      /** @example {
-       *       "category": 1,
-       *       "eligibleZoneAandAbis": true,
-       *       "eligibleZoneB1": false,
-       *       "eligibleZoneB2andC": false
-       *     } */
-      eligibility: Record<string, never>;
+      /** @example 1 */
+      eligibilityCategory: number;
+      /** @example A_AND_ABIS */
+      highestEligibilityZone: string;
       /** @example Jean */
       firstName: string;
       /** @example Dupont */
@@ -566,12 +563,6 @@ export interface components {
        */
       updatedAt: string;
     };
-    UpdateEligibilitySimulationEligibilityDTO: {
-      category?: number;
-      eligibleZoneAandAbis?: boolean;
-      eligibleZoneB1?: boolean;
-      eligibleZoneB2andC?: boolean;
-    };
     UpdateEligibilitySimulationLocationDTO: {
       name?: string;
       latitude?: number;
@@ -605,7 +596,8 @@ export interface components {
         | 'COMMUN';
       firstCoBuyerTaxableIncome?: number;
       secondCoBuyerTaxableIncome?: number;
-      eligibility?: components['schemas']['UpdateEligibilitySimulationEligibilityDTO'];
+      eligibilityCategory?: number;
+      highestEligibilityZone?: 'A_AND_ABIS' | 'B1' | 'B2_AND_C' | 'NONE';
       firstName?: string;
       lastName?: string;
       email?: string;

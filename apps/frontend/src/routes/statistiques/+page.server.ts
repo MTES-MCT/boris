@@ -3,8 +3,8 @@ import {
   defaultRegionsCodesRecord,
   regionCodesAcronymsMatching,
 } from '$lib/utils/constants';
+import type { EligibilityStatsItem } from '$lib/types/statistics';
 import type { components } from '$lib/utils/generated-api-types';
-import { formatHouseholdsData } from '$lib/utils/helpers';
 import type { PageServerLoad } from './$types';
 
 type PageData = {
@@ -17,12 +17,9 @@ type PageData = {
   };
   investedAmount: number;
   purchasePlanAmount: string;
-  eligibility: {
-    eligibility: string;
-    count: string;
-  }[];
+  eligibility: EligibilityStatsItem[];
   countSimulations: number;
-  householdsData: ReturnType<typeof formatHouseholdsData>;
+  householdsData: ReturnType<typeof formatHouseholdsStatsData>;
   ofssAmount: number;
   departementalConnectionCount: Record<string, number>;
   regionalConnectionCount: Record<string, number>;
@@ -32,38 +29,59 @@ type PageData = {
   >;
 };
 
+const getCountByEligibilityBucket = (
+  items: EligibilityStatsItem[],
+): Record<EligibilityStatsItem['eligibility'], number> => {
+  return items.reduce<Record<EligibilityStatsItem['eligibility'], number>>(
+    (accumulator, item) => {
+      accumulator[item.eligibility] = Number(item.count);
+
+      return accumulator;
+    },
+    {
+      A_AND_ABIS: 0,
+      B1: 0,
+      B2_AND_C: 0,
+      NONE: 0,
+    },
+  );
+};
+
 export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
   const partnerOfssResponse = await fetch('api/ofss/partner', {
     cache: 'no-store',
   });
   const partnerOfss = await partnerOfssResponse.json();
 
-  const eligibilityRespone = await fetch('api/landbot-customers/eligibility', {
-    cache: 'no-store',
-  });
+  const eligibilityRespone = await fetch(
+    'api/eligibility-simulations/eligibility',
+    {
+      cache: 'no-store',
+    },
+  );
   const eligibility = await eligibilityRespone.json();
 
   const simulationsMonthlySummaryResponse = await fetch(
-    'api/landbot-customers/simulations/monthly-summary',
+    'api/eligibility-simulations/simulations/monthly-summary',
     { cache: 'no-store' },
   );
   const simulationsMonthlySummary =
     await simulationsMonthlySummaryResponse.json();
 
   const brsKnowledgeResponse = await fetch(
-    'api/landbot-customers/brs-knowledge',
+    'api/eligibility-simulations/brs-knowledge',
     { cache: 'no-store' },
   );
   const brsKnowledge = await brsKnowledgeResponse.json();
 
   const realEstateSituationResponse = await fetch(
-    'api/landbot-customers/real-estate-situation',
+    'api/eligibility-simulations/real-estate-situation',
     { cache: 'no-store' },
   );
   const realEstateSituation = await realEstateSituationResponse.json();
 
   const simulationsByDepartementsResponse = await fetch(
-    'api/landbot-customers/simulations/by-departements',
+    'api/eligibility-simulations/simulations/by-departements',
     { cache: 'no-store' },
   );
 
@@ -71,14 +89,21 @@ export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
     await simulationsByDepartementsResponse.json();
 
   const simulationsByRegionsResponse = await fetch(
-    'api/landbot-customers/simulations/by-regions',
+    'api/eligibility-simulations/simulations/by-regions',
     { cache: 'no-store' },
   );
 
   const conversionFunnelResponse = await fetch(
-    'api/landbot-customers/conversion-funnel',
+    'api/eligibility-simulations/conversion-funnel',
     { cache: 'no-store' },
   );
+
+  if (!conversionFunnelResponse.ok) {
+    const message = await conversionFunnelResponse.text();
+
+    throw new Error(message || 'Unable to load eligibility conversion funnel');
+  }
+
   const conversionFunnel = await conversionFunnelResponse.json();
 
   const acquisitionSimulationsConversionFunnelResponse = await fetch(
@@ -89,18 +114,21 @@ export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
     await acquisitionSimulationsConversionFunnelResponse.json();
 
   const simulationsByRegions = await simulationsByRegionsResponse.json();
+  const eligibilityCountByBucket = getCountByEligibilityBucket(
+    eligibility.data,
+  );
 
   return {
     investedAmount: 380000,
     purchasePlanAmount: '100 à 150',
     eligibility: eligibility.data,
-    countSimulations: eligibility.data.reduce(
-      (sum: number, item: { eligibility: string; count: string }) =>
-        sum + Number(item.count),
-      0,
-    ),
+    countSimulations:
+      eligibilityCountByBucket.A_AND_ABIS +
+      eligibilityCountByBucket.B1 +
+      eligibilityCountByBucket.B2_AND_C +
+      eligibilityCountByBucket.NONE,
     simulationsMonthlySummary,
-    householdsData: formatHouseholdsData(
+    householdsData: formatHouseholdsStatsData(
       brsKnowledge.data,
       realEstateSituation.data,
     ),
@@ -118,6 +146,70 @@ export const load: PageServerLoad = async ({ fetch }): Promise<PageData> => {
       formatAcquisitionSimulationsConversionFunnel(
         acquisitionSimulationsConversionFunnel,
       ),
+  };
+};
+
+const formatHouseholdsStatsData = (
+  brsKnowledge: {
+    brsKnowledge: 'Oui' | 'Non' | 'Je ne suis pas sûr·e' | null;
+    count: string;
+  }[],
+  realEstateSituation: {
+    realEstateSituation:
+      | "propriétaire d'un logement"
+      | "locataire d'un logement social"
+      | "locataire d'un logement privé"
+      | 'hebergé·e'
+      | 'dans une autre situation immobilière'
+      | null;
+    count: string;
+  }[],
+): {
+  total: number;
+  brsUnawarePercentage: number;
+  totalsRealEstateSituation: {
+    realEstateSituation: string;
+    count: string;
+  }[];
+} => {
+  const totalsRealEstateSituation: {
+    realEstateSituation: string;
+    count: string;
+  }[] = [];
+
+  const total = brsKnowledge.reduce((sum, item) => sum + Number(item.count), 0);
+
+  const totalUnawareOfBrs = brsKnowledge
+    .filter((item) => item.brsKnowledge === 'Non')
+    .reduce((sum, item) => sum + Number(item.count), 0);
+
+  realEstateSituation.forEach((item) => {
+    if (
+      item.realEstateSituation !== null &&
+      item.realEstateSituation !== 'dans une autre situation immobilière'
+    ) {
+      totalsRealEstateSituation.push({
+        realEstateSituation: item.realEstateSituation,
+        count: Math.round((Number(item.count) / total) * 100).toString(),
+      });
+    }
+  });
+
+  totalsRealEstateSituation.push({
+    realEstateSituation: 'dans une autre situation immobilière',
+    count: (
+      100 -
+      totalsRealEstateSituation.reduce(
+        (sum, item) => sum + Number(item.count),
+        0,
+      )
+    ).toString(),
+  });
+
+  return {
+    total,
+    brsUnawarePercentage: total === 0 ? 0 : (totalUnawareOfBrs / total) * 100,
+    totalsRealEstateSituation,
   };
 };
 
@@ -146,9 +238,14 @@ const formatSimulationsByRegions = (
   return formattedItems;
 };
 
-const formatConversionFunnel = (
-  conversionFunnel: components['schemas']['LandbotCustomerCalculateFunnelConversionView'],
-): {
+const formatConversionFunnel = (conversionFunnel: {
+  totalSimulations: number;
+  totalHouseholdProvided: number;
+  totalEligible: number;
+  totalConnectionWish: number;
+  totalEmailProvided: number;
+  totalDesiredCityProvided: number;
+}): {
   title: string;
   value: number;
   conversionRate: number;
@@ -167,7 +264,7 @@ const formatConversionFunnel = (
     },
     {
       title: 'Donne son RFR et obtient son résultat de simulation',
-      value: conversionFunnel.totalEligble,
+      value: conversionFunnel.totalEligible,
     },
     {
       title: 'Souhaite être recontacté',

@@ -45,6 +45,7 @@ describe('CreateEligibilitySimulationUsecase', () => {
       expect.objectContaining({
         householdSize: mockedEligibilitySimulation.householdSize,
         hasDisability: mockedEligibilitySimulation.hasDisability,
+        highestEligibilityZone: 'NONE',
       }),
     );
   });
@@ -75,6 +76,7 @@ describe('CreateEligibilitySimulationUsecase', () => {
         dependantsAmount: mockedEligibilitySimulation.dependantsAmount,
         birthday: mockedEligibilitySimulation.birthday,
         coBuyerBirthday: mockedEligibilitySimulation.coBuyerBirthday,
+        highestEligibilityZone: 'NONE',
       }),
     );
   });

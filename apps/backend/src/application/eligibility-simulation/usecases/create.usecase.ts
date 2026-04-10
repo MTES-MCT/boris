@@ -30,6 +30,7 @@ export class CreateEligibilitySimulationUsecase {
     eligibilitySimulationEntity.birthday = birthday;
     eligibilitySimulationEntity.coBuyerBirthday = coBuyerBirthday;
     eligibilitySimulationEntity.isFromLandbot = isFromLandbot;
+    eligibilitySimulationEntity.highestEligibilityZone = 'NONE';
 
     if (landbotDate) {
       eligibilitySimulationEntity.landbotDate = landbotDate;

@@ -16,6 +16,7 @@ import {
   ContractType,
   DeclarationType,
   EmploymentStatus,
+  HighestEligibilityZone,
   HousingType,
   PositionType,
   PropertySituation,
@@ -55,36 +56,12 @@ const POSITION_TYPES: PositionType[] = [
 
 const CONTRACT_TYPES: ContractType[] = ['CDI', 'CDD'];
 
-export class UpdateEligibilitySimulationEligibilityDTO {
-  @ApiPropertyOptional()
-  @IsNumber()
-  @IsOptional()
-  public category: number;
-
-  @ApiPropertyOptional()
-  @Transform(({ obj }) => {
-    return obj.eligibleZoneAandAbis;
-  })
-  @IsBoolean()
-  @IsOptional()
-  public eligibleZoneAandAbis: boolean;
-
-  @ApiPropertyOptional()
-  @Transform(({ obj }) => {
-    return obj.eligibleZoneB1;
-  })
-  @IsBoolean()
-  @IsOptional()
-  public eligibleZoneB1: boolean;
-
-  @ApiPropertyOptional()
-  @Transform(({ obj }) => {
-    return obj.eligibleZoneB2andC;
-  })
-  @IsBoolean()
-  @IsOptional()
-  public eligibleZoneB2andC: boolean;
-}
+const HIGHEST_ELIGIBILITY_ZONES: HighestEligibilityZone[] = [
+  'A_AND_ABIS',
+  'B1',
+  'B2_AND_C',
+  'NONE',
+];
 
 export class UpdateEligibilitySimulationLocationDTO {
   @ApiPropertyOptional()
@@ -189,10 +166,14 @@ export class UpdateEligibilitySimulationDTO {
   public secondCoBuyerTaxableIncome?: number;
 
   @ApiPropertyOptional()
+  @IsNumber()
   @IsOptional()
-  @ValidateNested()
-  @Type(() => UpdateEligibilitySimulationEligibilityDTO)
-  public eligibility?: UpdateEligibilitySimulationEligibilityDTO;
+  public eligibilityCategory?: number;
+
+  @ApiPropertyOptional({ enum: HIGHEST_ELIGIBILITY_ZONES })
+  @IsOptional()
+  @IsIn(HIGHEST_ELIGIBILITY_ZONES)
+  public highestEligibilityZone?: HighestEligibilityZone;
 
   @ApiPropertyOptional()
   @IsString()

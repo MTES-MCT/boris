@@ -2,7 +2,6 @@ import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import {
   UpdateEligibilitySimulationDTO,
-  UpdateEligibilitySimulationEligibilityDTO,
   UpdateEligibilitySimulationLocationDTO,
 } from 'src/infrastructure/eligibility-simulation/dtos/update.dto';
 
@@ -26,15 +25,8 @@ describe('UpdateEligibilitySimulationDTO', () => {
     dto.declarationType = 'SEUL_SOUHAIT_SEUL';
     dto.firstCoBuyerTaxableIncome = 0;
     dto.secondCoBuyerTaxableIncome = 0;
-    dto.eligibility = Object.assign(
-      new UpdateEligibilitySimulationEligibilityDTO(),
-      {
-        category: 1,
-        eligibleZoneAandAbis: true,
-        eligibleZoneB1: false,
-        eligibleZoneB2andC: false,
-      },
-    );
+    dto.eligibilityCategory = 1;
+    dto.highestEligibilityZone = 'A_AND_ABIS';
     dto.firstName = 'Jean';
     dto.lastName = 'Dupont';
     dto.email = 'jean@example.com';
@@ -190,6 +182,16 @@ describe('UpdateEligibilitySimulationDTO', () => {
     expect(errors[0].constraints).toHaveProperty('min');
   });
 
+  it('should be invalid when secondCoBuyerTaxableIncome is negative', async () => {
+    const dto = new UpdateEligibilitySimulationDTO();
+    dto.secondCoBuyerTaxableIncome = -1;
+
+    const errors = await validate(dto);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('secondCoBuyerTaxableIncome');
+    expect(errors[0].constraints).toHaveProperty('min');
+  });
+
   it('should be invalid when housingType is not in allowed values', async () => {
     const dto = new UpdateEligibilitySimulationDTO();
     // @ts-expect-error: testing invalid enum value
@@ -251,6 +253,17 @@ describe('UpdateEligibilitySimulationDTO', () => {
     const errors = await validate(dto);
     expect(errors).toHaveLength(1);
     expect(errors[0].property).toBe('positionContractType');
+    expect(errors[0].constraints).toHaveProperty('isIn');
+  });
+
+  it('should be invalid when highestEligibilityZone is not allowed', async () => {
+    const dto = new UpdateEligibilitySimulationDTO();
+    // @ts-expect-error: testing invalid enum value
+    dto.highestEligibilityZone = 'INVALID';
+
+    const errors = await validate(dto);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('highestEligibilityZone');
     expect(errors[0].constraints).toHaveProperty('isIn');
   });
 
@@ -318,17 +331,22 @@ describe('UpdateEligibilitySimulationDTO', () => {
     }
   });
 
-  it('should be valid with nested eligibility', async () => {
+  it('should be valid with all allowed highestEligibilityZone values', async () => {
+    const allowed = ['A_AND_ABIS', 'B1', 'B2_AND_C', 'NONE'];
+
+    for (const value of allowed) {
+      const dto = new UpdateEligibilitySimulationDTO();
+      dto.highestEligibilityZone = value as any;
+
+      const errors = await validate(dto);
+      expect(errors).toHaveLength(0);
+    }
+  });
+
+  it('should accept A_AND_ABIS as the highest eligibility zone', async () => {
     const dto = new UpdateEligibilitySimulationDTO();
-    dto.eligibility = Object.assign(
-      new UpdateEligibilitySimulationEligibilityDTO(),
-      {
-        category: 2,
-        eligibleZoneAandAbis: false,
-        eligibleZoneB1: true,
-        eligibleZoneB2andC: false,
-      },
-    );
+    dto.eligibilityCategory = 3;
+    dto.highestEligibilityZone = 'A_AND_ABIS';
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(0);
@@ -362,26 +380,6 @@ describe('UpdateEligibilitySimulationDTO', () => {
 
     expect(dto.hasRefusedConnection).toBe(true);
     expect(dto.hadBrsKnowledge).toBe(false);
-
-    const errors = await validate(dto);
-    expect(errors).toHaveLength(0);
-  });
-});
-
-describe('UpdateEligibilitySimulationEligibilityDTO', () => {
-  it('should be valid with all optional fields', async () => {
-    const dto = new UpdateEligibilitySimulationEligibilityDTO();
-    dto.category = 1;
-    dto.eligibleZoneAandAbis = true;
-    dto.eligibleZoneB1 = false;
-    dto.eligibleZoneB2andC = true;
-
-    const errors = await validate(dto);
-    expect(errors).toHaveLength(0);
-  });
-
-  it('should be valid with no fields', async () => {
-    const dto = new UpdateEligibilitySimulationEligibilityDTO();
 
     const errors = await validate(dto);
     expect(errors).toHaveLength(0);

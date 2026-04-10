@@ -2,8 +2,8 @@ import { SaveLocationParams } from 'src/application/location/usecases/save.param
 import {
   ContractType,
   DeclarationType,
-  EligibilityCategory,
   EmploymentStatus,
+  HighestEligibilityZone,
   HousingType,
   PositionType,
   PropertySituation,
@@ -21,7 +21,8 @@ export interface UpdateEligibilitySimulationParams {
   declarationType?: DeclarationType;
   firstCoBuyerTaxableIncome?: number;
   secondCoBuyerTaxableIncome?: number;
-  eligibility?: EligibilityCategory;
+  eligibilityCategory?: number;
+  highestEligibilityZone?: HighestEligibilityZone;
   firstName?: string;
   lastName?: string;
   email?: string;

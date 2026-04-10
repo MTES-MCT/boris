@@ -1,6 +1,7 @@
 import {
   DeclarationType,
   EligibilityCategory,
+  HighestEligibilityZone,
   EligibilitySimulationInterface,
   PropertySituation,
   HousingType,
@@ -71,6 +72,17 @@ export class EligibilitySimulationEntity
 
   @Column({ type: 'json', nullable: true })
   public eligibility?: EligibilityCategory;
+
+  @Column({ type: 'int', nullable: true })
+  public eligibilityCategory?: number;
+
+  @Column({
+    type: 'enum',
+    enum: ['A_AND_ABIS', 'B1', 'B2_AND_C', 'NONE'],
+    default: 'NONE',
+    name: 'highestEligibilityZone',
+  })
+  public highestEligibilityZone: HighestEligibilityZone;
 
   @Column({ type: 'varchar', nullable: true })
   public firstName?: string;

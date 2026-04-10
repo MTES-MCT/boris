@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   defineCategory,
   defineEligibleZone,
+  defineHighestEligibilityZone,
 } from '$lib/utils/eligibility-simulator';
 
 describe('eligibility-simulator', () => {
@@ -434,6 +435,41 @@ describe('eligibility-simulator', () => {
           eligibleZoneB2andC: true,
         });
       });
+    });
+  });
+
+  describe('defineHighestEligibilityZone', () => {
+    it('should return B2_AND_C when all zones are eligible', () => {
+      expect(
+        defineHighestEligibilityZone({
+          category: 3,
+          eligibleZoneAandAbis: true,
+          eligibleZoneB1: true,
+          eligibleZoneB2andC: true,
+        }),
+      ).toBe('B2_AND_C');
+    });
+
+    it('should return B1 when A_AND_ABIS and B1 are eligible', () => {
+      expect(
+        defineHighestEligibilityZone({
+          category: 3,
+          eligibleZoneAandAbis: true,
+          eligibleZoneB1: true,
+          eligibleZoneB2andC: false,
+        }),
+      ).toBe('B1');
+    });
+
+    it('should return A_AND_ABIS when only A_AND_ABIS is eligible', () => {
+      expect(
+        defineHighestEligibilityZone({
+          category: 3,
+          eligibleZoneAandAbis: true,
+          eligibleZoneB1: false,
+          eligibleZoneB2andC: false,
+        }),
+      ).toBe('A_AND_ABIS');
     });
   });
 });

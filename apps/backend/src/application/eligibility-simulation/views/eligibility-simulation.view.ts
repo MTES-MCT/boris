@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   ContractType,
   DeclarationType,
-  EligibilityCategory,
+  HighestEligibilityZone,
   EmploymentStatus,
   HousingType,
   PositionType,
@@ -44,15 +44,11 @@ export class EligibilitySimulationView {
   @ApiProperty({ example: 28000 })
   public secondCoBuyerTaxableIncome?: number;
 
-  @ApiProperty({
-    example: {
-      category: 1,
-      eligibleZoneAandAbis: true,
-      eligibleZoneB1: false,
-      eligibleZoneB2andC: false,
-    },
-  })
-  public eligibility?: EligibilityCategory;
+  @ApiProperty({ example: 1 })
+  public eligibilityCategory?: number;
+
+  @ApiProperty({ example: 'A_AND_ABIS' })
+  public highestEligibilityZone: HighestEligibilityZone;
 
   @ApiProperty({ example: 'Jean' })
   public firstName?: string;
@@ -131,7 +127,8 @@ export class EligibilitySimulationView {
     declarationType,
     firstCoBuyerTaxableIncome,
     secondCoBuyerTaxableIncome,
-    eligibility,
+    eligibilityCategory,
+    highestEligibilityZone,
     firstName,
     lastName,
     email,
@@ -165,7 +162,8 @@ export class EligibilitySimulationView {
     declarationType?: DeclarationType;
     firstCoBuyerTaxableIncome?: number;
     secondCoBuyerTaxableIncome?: number;
-    eligibility?: EligibilityCategory;
+    eligibilityCategory?: number;
+    highestEligibilityZone: HighestEligibilityZone;
     firstName?: string;
     lastName?: string;
     email?: string;
@@ -199,7 +197,8 @@ export class EligibilitySimulationView {
     this.declarationType = declarationType;
     this.firstCoBuyerTaxableIncome = firstCoBuyerTaxableIncome;
     this.secondCoBuyerTaxableIncome = secondCoBuyerTaxableIncome;
-    this.eligibility = eligibility;
+    this.eligibilityCategory = eligibilityCategory;
+    this.highestEligibilityZone = highestEligibilityZone;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;

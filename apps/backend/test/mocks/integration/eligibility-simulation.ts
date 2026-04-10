@@ -2,19 +2,11 @@ import { EligibilitySimulationEntity } from 'src/infrastructure/eligibility-simu
 import type {
   PropertySituation,
   DeclarationType,
-  EligibilityCategory,
   HousingType,
   EmploymentStatus,
   PositionType,
   ContractType,
 } from 'src/domain/eligibility-simulation/eligibility-simulation.interface';
-
-const eligibilityCategory: EligibilityCategory = {
-  category: 1,
-  eligibleZoneAandAbis: true,
-  eligibleZoneB1: false,
-  eligibleZoneB2andC: false,
-};
 
 export const mockedEligibilitySimulation = Object.assign(
   new EligibilitySimulationEntity(),
@@ -30,7 +22,8 @@ export const mockedEligibilitySimulation = Object.assign(
     declarationType: 'COMMUN' as DeclarationType,
     firstCoBuyerTaxableIncome: 35000,
     secondCoBuyerTaxableIncome: 28000,
-    eligibility: eligibilityCategory,
+    eligibilityCategory: 1,
+    highestEligibilityZone: 'A_AND_ABIS',
     firstName: 'Jean',
     lastName: 'Dupont',
     email: 'jean.dupont@example.com',
@@ -59,4 +52,12 @@ export const mockEligibilitySimulationRepository = {
   save: jest.fn(),
   findOne: jest.fn(),
   findById: jest.fn(),
+  createQueryBuilder: jest.fn(),
+  groupByEligibilityStats: jest.fn(),
+  groupByBrsKnowledge: jest.fn(),
+  groupByRealEstateSituation: jest.fn(),
+  groupSimulationsByYearAndMonth: jest.fn(),
+  groupByRegions: jest.fn(),
+  groupByDepartements: jest.fn(),
+  calculateConversionFunnel: jest.fn(),
 };

@@ -4,34 +4,7 @@ import {
   LandbotEligibility,
   LandbotRealEstateSituation,
 } from './landbot-customer.interface';
-import { RegionCode } from '../region/region.interface';
 import { PaginationProps } from '../common/paginationProps';
-
-export type GroupByRegionsResult = {
-  regionName: string;
-  regionCode: RegionCode;
-  count: string;
-};
-
-export type GroupSimulationsByYearAndMonthResult = {
-  year: number;
-  month: number;
-  count: number;
-};
-
-export type GroupByDepartementsResult = {
-  departementCode: string;
-  count: string;
-};
-
-export type ConversionFunnelResult = {
-  totalSimulations: number;
-  totalHouseholdProvided: number;
-  totalEligble: number;
-  totalConnectionWish: number;
-  totalEmailProvided: number;
-  totalDesiredCityProvided: number;
-};
 
 export interface LandbotCustomerRepositoryInterface {
   save(landbotCustomer: LandbotCustomerEntity): Promise<LandbotCustomerEntity>;
@@ -48,14 +21,4 @@ export interface LandbotCustomerRepositoryInterface {
   groupByRealEstateSituation(): Promise<
     { realEstateSituation: LandbotRealEstateSituation; count: string }[]
   >;
-  countSimulations(year: number, month: number): Promise<number>;
-  groupByRegions(
-    year?: number,
-    month?: number,
-  ): Promise<[GroupByRegionsResult[], total: number]>;
-  groupByDepartements(): Promise<GroupByDepartementsResult[]>;
-  groupSimulationsByYearAndMonth(): Promise<
-    GroupSimulationsByYearAndMonthResult[]
-  >;
-  calculateConversionFunnel(): Promise<ConversionFunnelResult>;
 }
