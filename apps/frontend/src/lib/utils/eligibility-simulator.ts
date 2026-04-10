@@ -403,16 +403,16 @@ export const stepsContent = {
   eligibility: {
     zoneAandAbis: {
       title:
-        'Vous êtes éligible au dispositif du BRS <u>dans les zones A et Abis</u>.',
+        'Vous êtes éligible au dispositif du BRS <u>en zone A et Abis</u>.',
       titleOwner:
-        'Vous êtes éligible au dispositif du BRS <u>dans les zones A et Abis</u>, sous certaines conditions.',
+        'Vous êtes éligible au dispositif du BRS <u>en zone A et Abis</u>, sous certaines conditions.',
       content: `<p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources" />Plus d'informations sur les plafonds de ressources.</a></p>`,
     },
     zoneB1: {
       title:
-        'Vous êtes éligible au dispositif du BRS <u>dans les zones A, Abis et B1</u>.',
+        'Vous êtes éligible au dispositif du BRS <u>en zone tendue (A, Abis et B1)</u>.',
       titleOwner:
-        'Vous êtes éligible au dispositif du BRS <u>dans les zones A, Abis et B1</u>, sous certaines conditions.',
+        'Vous êtes éligible au dispositif du BRS <u>en zone tendue (A, Abis et B1)</u>, sous certaines conditions.',
       content: `<p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources" />Plus d'informations sur les plafonds de ressources.</a></p>`,
     },
     zoneB2andC: {
