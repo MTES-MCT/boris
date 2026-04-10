@@ -6,6 +6,7 @@ const step1 = {
   slug: 'revendre-mon-bien-en-brs',
   description:
     'Vous souhaitez revendre votre logement en Bail Réel Solidaire (BRS) ? BoRiS vous donne toutes les informations nécessaires au succès de votre projet de revente.',
+  showAdilSnippet: false,
 };
 
 export const steps: Step[] = [

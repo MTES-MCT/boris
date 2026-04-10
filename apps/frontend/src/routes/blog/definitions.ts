@@ -1,7 +1,7 @@
-import type { Article } from '$lib/utils/definitions';
+import type { ArticlePreview } from '$lib/utils/definitions';
 
 export type Data = {
-  articles: Article[];
+  articles: ArticlePreview[];
 };
 
 export type Props = {

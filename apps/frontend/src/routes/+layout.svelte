@@ -21,11 +21,14 @@
   import Footer from '$components/layout/Footer.svelte';
   import NoScrollOnNavigation from '$components/layout/NoScrollOnNavigation.svelte';
   import Consent from '$components/common/Consent.svelte';
+  import Seo from '$components/common/Seo.svelte';
   import { blockSearchEngineIndexing } from '$lib/utils/helpers';
+  import { getSeoMetadata } from '$lib/utils/seo';
   import { page } from '$app/state';
 
   type Props = { children: Snippet };
   const { children }: Props = $props();
+  const seo = $derived(getSeoMetadata(page.url.pathname));
 </script>
 
 <svelte:head>
@@ -35,6 +38,14 @@
       content="noindex, nofollow" />
   {/if}
 </svelte:head>
+
+<Seo
+  title={seo.title}
+  description={seo.description}
+  pathname={seo.pathname}
+  imagePath={seo.imagePath}
+  type={seo.type}
+  jsonLd={seo.jsonLd} />
 
 <Favicon />
 <Consent />
