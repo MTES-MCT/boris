@@ -21,26 +21,19 @@ export type EligibilityCategory = {
 
 export type HighestEligibilityZone = 'A_AND_ABIS' | 'B1' | 'B2_AND_C' | 'NONE';
 
-export const highestEligibilityZones: HighestEligibilityZone[] = [
-  'A_AND_ABIS',
-  'B1',
-  'B2_AND_C',
-  'NONE',
-];
-
 export const getHighestEligibilityZone = (
   eligibility?: EligibilityCategory,
 ): HighestEligibilityZone => {
-  if (eligibility?.eligibleZoneAandAbis) {
-    return 'A_AND_ABIS';
+  if (eligibility?.eligibleZoneB2andC) {
+    return 'B2_AND_C';
   }
 
   if (eligibility?.eligibleZoneB1) {
     return 'B1';
   }
 
-  if (eligibility?.eligibleZoneB2andC) {
-    return 'B2_AND_C';
+  if (eligibility?.eligibleZoneAandAbis) {
+    return 'A_AND_ABIS';
   }
 
   return 'NONE';

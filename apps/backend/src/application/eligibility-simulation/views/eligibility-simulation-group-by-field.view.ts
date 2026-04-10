@@ -9,9 +9,9 @@ export type GroupByEligibilitySimulationFieldPayload = Array<{
 export class EligibilitySimulationGroupByFieldView {
   @ApiProperty({
     example: [
-      { eligibility: 'A_AND_ABIS', count: '32' },
-      { eligibility: 'B1', count: '18' },
       { eligibility: 'B2_AND_C', count: '9' },
+      { eligibility: 'B1', count: '18' },
+      { eligibility: 'A_AND_ABIS', count: '32' },
       { eligibility: 'NONE', count: '2' },
     ],
   })

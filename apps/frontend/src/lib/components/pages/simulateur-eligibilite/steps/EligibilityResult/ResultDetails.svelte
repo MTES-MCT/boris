@@ -17,17 +17,17 @@
     eligibilitySimulatorManager.hasRefusedConnection = false;
 
     if (cookieConsentManager.hasUserConsented) {
-      if (eligibilitySimulatorManager.highestEligibilityZone === 'A_AND_ABIS') {
+      if (eligibilitySimulatorManager.highestEligibilityZone === 'B2_AND_C') {
         // @ts-expect-error - gtag is not defined in the global scope
         window.gtag('event', 'Éligible partout en France');
       } else if (eligibilitySimulatorManager.highestEligibilityZone === 'B1') {
         // @ts-expect-error - gtag is not defined in the global scope
-        window.gtag('event', 'Éligible zones B1, B2 et C');
+        window.gtag('event', 'Éligible zones A, Abis et B1');
       } else if (
-        eligibilitySimulatorManager.highestEligibilityZone === 'B2_AND_C'
+        eligibilitySimulatorManager.highestEligibilityZone === 'A_AND_ABIS'
       ) {
         // @ts-expect-error - gtag is not defined in the global scope
-        window.gtag('event', 'Éligible zones B2 et C');
+        window.gtag('event', 'Éligible zones A et Abis');
       }
     }
   });

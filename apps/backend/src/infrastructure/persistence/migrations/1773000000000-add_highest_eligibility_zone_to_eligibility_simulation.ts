@@ -23,9 +23,9 @@ export class AddHighestEligibilityZoneToEligibilitySimulation1773000000000
           ELSE ("eligibility"::jsonb ->> 'category')::integer
         END,
         "highestEligibilityZone" = CASE
-          WHEN COALESCE(("eligibility"::jsonb ->> 'eligibleZoneAandAbis')::boolean, false) = true THEN 'A_AND_ABIS'::"public"."eligibility_simulation_highesteligibilityzone_enum"
-          WHEN COALESCE(("eligibility"::jsonb ->> 'eligibleZoneB1')::boolean, false) = true THEN 'B1'::"public"."eligibility_simulation_highesteligibilityzone_enum"
           WHEN COALESCE(("eligibility"::jsonb ->> 'eligibleZoneB2andC')::boolean, false) = true THEN 'B2_AND_C'::"public"."eligibility_simulation_highesteligibilityzone_enum"
+          WHEN COALESCE(("eligibility"::jsonb ->> 'eligibleZoneB1')::boolean, false) = true THEN 'B1'::"public"."eligibility_simulation_highesteligibilityzone_enum"
+          WHEN COALESCE(("eligibility"::jsonb ->> 'eligibleZoneAandAbis')::boolean, false) = true THEN 'A_AND_ABIS'::"public"."eligibility_simulation_highesteligibilityzone_enum"
           ELSE 'NONE'::"public"."eligibility_simulation_highesteligibilityzone_enum"
         END
     `);

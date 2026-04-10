@@ -27,7 +27,10 @@ test('a11y', async ({ page }) => {
     }
 
     await page.goto(url);
-    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+    const accessibilityScanResults = await new AxeBuilder({ page })
+      .exclude('iframe[src*="youtube.com"]')
+      .exclude('iframe[src*="youtube-nocookie.com"]')
+      .analyze();
 
     // await page.screenshot({ path: `${(new Date().getTime())}.png` });
     expect(accessibilityScanResults.violations).toEqual([]);

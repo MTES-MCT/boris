@@ -97,11 +97,17 @@ describe('EligibilitySimulationRepository', () => {
 
     expect(result).toStrictEqual([
       {
+        eligibility: 'B2_AND_C',
+        count: '0',
+      },
+      {
+        eligibility: 'B1',
+        count: '8',
+      },
+      {
         eligibility: 'A_AND_ABIS',
         count: '12',
       },
-      { eligibility: 'B1', count: '8' },
-      { eligibility: 'B2_AND_C', count: '0' },
       { eligibility: 'NONE', count: '0' },
     ]);
     expect(

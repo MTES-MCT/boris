@@ -11,8 +11,9 @@ export type GroupByViewPayload<K extends PropertyKey, V> = Array<
 export class EligibilitySimulationGroupByFieldView<K extends PropertyKey, V> {
   @ApiProperty({
     example: [
-      { eligibility: 'A_AND_ABIS', count: '32' },
+      { eligibility: 'B2_AND_C', count: '9' },
       { eligibility: 'B1', count: '18' },
+      { eligibility: 'A_AND_ABIS', count: '32' },
       { eligibility: 'NONE', count: '2' },
     ],
   })

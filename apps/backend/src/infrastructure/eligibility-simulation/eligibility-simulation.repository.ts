@@ -59,17 +59,17 @@ export class EligibilitySimulationRepository
         return accumulator;
       },
       {
-        A_AND_ABIS: '0',
-        B1: '0',
         B2_AND_C: '0',
+        B1: '0',
+        A_AND_ABIS: '0',
         NONE: '0',
       },
     );
 
     return [
-      { eligibility: 'A_AND_ABIS', count: countByZone.A_AND_ABIS },
-      { eligibility: 'B1', count: countByZone.B1 },
       { eligibility: 'B2_AND_C', count: countByZone.B2_AND_C },
+      { eligibility: 'B1', count: countByZone.B1 },
+      { eligibility: 'A_AND_ABIS', count: countByZone.A_AND_ABIS },
       { eligibility: 'NONE', count: countByZone.NONE },
     ];
   }

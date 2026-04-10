@@ -11,23 +11,22 @@
 
   const { highestEligibilityZone, propertySituation, refuseConnection } =
     $derived(eligibilitySimulatorManager);
-
+  console.log('highestEligibilityZone', highestEligibilityZone);
   let isOwner = $derived(propertySituation === 'PROPRIETAIRE');
 </script>
 
 <div
   class="fr-fieldset__element"
   class:fr-mb-4w={!hideConnectionCta}>
-  {#if highestEligibilityZone === 'A_AND_ABIS'}
+  {#if highestEligibilityZone === 'B2_AND_C'}
     {@render resultAlert(
-      stepsContent.eligibility.zoneAandAbis[isOwner ? 'titleOwner' : 'title'],
+      stepsContent.eligibility.zoneB2andC[isOwner ? 'titleOwner' : 'title'],
       isOwner ? 'info' : 'success',
     )}
     {#if isOwner}
       <p>{@html stepsContent.eligibility.isOwner.content}</p>
     {/if}
-    <p>{@html stepsContent.eligibility.zoneAandAbis.content}</p>
-    <p>{@html stepsContent.eligibility.zoneInfo.content}</p>
+    <p>{@html stepsContent.eligibility.zoneB2andC.content}</p>
     {@render connectionCta(hideConnectionCta)}
   {:else if highestEligibilityZone === 'B1'}
     {@render resultAlert(
@@ -40,15 +39,16 @@
     <p>{@html stepsContent.eligibility.zoneB1.content}</p>
     <p>{@html stepsContent.eligibility.zoneInfo.content}</p>
     {@render connectionCta(hideConnectionCta)}
-  {:else if highestEligibilityZone === 'B2_AND_C'}
+  {:else if highestEligibilityZone === 'A_AND_ABIS'}
     {@render resultAlert(
-      stepsContent.eligibility.zoneB2andC[isOwner ? 'titleOwner' : 'title'],
+      stepsContent.eligibility.zoneAandAbis[isOwner ? 'titleOwner' : 'title'],
       isOwner ? 'info' : 'success',
     )}
     {#if isOwner}
       <p>{@html stepsContent.eligibility.isOwner.content}</p>
     {/if}
-    <p>{@html stepsContent.eligibility.zoneB2andC.content}</p>
+    <p>{@html stepsContent.eligibility.zoneAandAbis.content}</p>
+    <p>{@html stepsContent.eligibility.zoneInfo.content}</p>
     {@render connectionCta(hideConnectionCta)}
   {:else}
     {@render resultAlert(stepsContent.eligibility.notEligible.title, 'error')}

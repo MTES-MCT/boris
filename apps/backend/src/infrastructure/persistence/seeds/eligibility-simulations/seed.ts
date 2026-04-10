@@ -6,6 +6,7 @@ import { FindAllLandbotCustomersUsecase } from 'src/application/landbot-customer
 import { SaveLocationUsecase } from 'src/application/location/usecases/save.usecase';
 import {
   DeclarationType,
+  HighestEligibilityZone,
   PropertySituation,
 } from 'src/domain/eligibility-simulation/eligibility-simulation.interface';
 import {
@@ -13,6 +14,7 @@ import {
   LandbotConnectionWish,
   LandbotDeclarationType,
   LandbotDisability,
+  LandbotEligibility,
   LandbotRealEstateSituation,
 } from 'src/domain/landbot-customer/landbot-customer.interface';
 
@@ -60,14 +62,9 @@ export class EligibilitySimulationsSeed {
             await this.updateEligibilitySimulationUsecase.execute({
               id: eligibilitySimulation.id,
               eligibilityCategory: 1,
-              highestEligibilityZone:
-                landbotCustomer.eligibility === 1
-                  ? 'A_AND_ABIS'
-                  : landbotCustomer.eligibility === 2
-                    ? 'B1'
-                    : landbotCustomer.eligibility === 4
-                      ? 'B2_AND_C'
-                      : 'NONE',
+              highestEligibilityZone: this.getHighestEligibilityZone(
+                landbotCustomer.eligibility,
+              ),
               hadBrsKnowledge:
                 landbotCustomer.brsKnowledge === LandbotBrsKnowledge.OUI,
               propertySituation: this.getPropertySituation(
@@ -95,11 +92,6 @@ export class EligibilitySimulationsSeed {
               citycode: landbotCustomer.departement.code,
               eligibilitySimulationId: eligibilitySimulation.id,
             });
-          }
-          if (landbotCustomer.eligibility === 1) {
-            console.log(updatedEligibilitySimulation.highestEligibilityZone);
-            console.log(' ');
-            console.log(' ');
           }
           eligibilitySimulationsCount++;
         } catch (error) {
@@ -150,6 +142,21 @@ export class EligibilitySimulationsSeed {
         return 'COMMUN';
       default:
         return undefined;
+    }
+  }
+
+  private getHighestEligibilityZone(
+    eligibility?: LandbotEligibility,
+  ): HighestEligibilityZone {
+    switch (eligibility) {
+      case LandbotEligibility.TOUTE_LA_FRANCE:
+        return 'B2_AND_C';
+      case LandbotEligibility.ZONE_TENDUE:
+        return 'B1';
+      case LandbotEligibility.ZONE_TRES_TENDUE:
+        return 'A_AND_ABIS';
+      default:
+        return 'NONE';
     }
   }
 }
