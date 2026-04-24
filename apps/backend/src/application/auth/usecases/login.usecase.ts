@@ -1,8 +1,9 @@
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
 import { UserRepositoryInterface } from 'src/domain/user/user.repository.interface';
-import { UserView } from '../../user/views/user.view';
 import { LoginParams } from './login.params';
 import { PasswordHasherInterface } from 'src/domain/user/password/password-hasher.interface';
+import { UserEntity } from 'src/infrastructure/user/user.entity';
+import { normalizeEmail } from 'src/application/user/utils/normalize-email';
 
 @Injectable()
 export class LoginUsecase {
@@ -13,18 +14,20 @@ export class LoginUsecase {
     private readonly passwordHasher: PasswordHasherInterface,
   ) {}
 
-  public async execute({ email, password }: LoginParams): Promise<UserView> {
-    const user = await this.userRepository.findOneByEmail(email.toLowerCase());
+  public async execute({ email, password }: LoginParams): Promise<UserEntity> {
+    const user = await this.userRepository.findOneByEmail(
+      normalizeEmail(email),
+    );
 
     const isPasswordValid = await this.passwordHasher.compare(
       password,
       user?.password || '',
     );
 
-    if (!user || !isPasswordValid) {
+    if (!user || !user.isActive || !isPasswordValid) {
       throw new UnauthorizedException();
     }
 
-    return new UserView(user.email);
+    return user;
   }
 }

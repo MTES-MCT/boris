@@ -48,7 +48,8 @@ export class DeleteOfsAdminController {
 
       (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
-        translations.error.defaultContent,
+        (error as { message?: string }).message ||
+          translations.error.defaultContent,
       );
 
       await new Promise<void>((resolve) => {

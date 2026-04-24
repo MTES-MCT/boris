@@ -6,7 +6,6 @@ import {
   mockPasswordHasher,
 } from 'test/mocks/integration/user';
 import { UnauthorizedException } from '@nestjs/common';
-import { UserView } from 'src/application/user/views/user.view';
 
 describe('LoginUsecase', () => {
   let useCase: LoginUsecase;
@@ -33,7 +32,7 @@ describe('LoginUsecase', () => {
     mockUserRepository.findOneByEmail.mockResolvedValue(user1);
     mockPasswordHasher.compare.mockResolvedValue(true);
 
-    const expectedResult = new UserView(user1.email);
+    const expectedResult = user1;
 
     const result = await useCase.execute({
       email: user1.email,

@@ -2,6 +2,7 @@ import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { UserRepositoryInterface } from 'src/domain/user/user.repository.interface';
 import { FindOneByEmailParams } from './findOneByEmail.params';
 import { UserView } from '../views/user.view';
+import { normalizeEmail } from '../utils/normalize-email';
 
 @Injectable()
 export class FindOneByEmailUsecase {
@@ -13,12 +14,14 @@ export class FindOneByEmailUsecase {
   public async execute(params: FindOneByEmailParams): Promise<UserView> {
     const { email } = params;
 
-    const user = await this.userRepository.findOneByEmail(email);
+    const user = await this.userRepository.findOneByEmail(
+      normalizeEmail(email),
+    );
 
     if (!user) {
       throw new NotFoundException();
     }
 
-    return new UserView(user.email);
+    return new UserView(user.id, user.email, user.roles, user.isActive);
   }
 }

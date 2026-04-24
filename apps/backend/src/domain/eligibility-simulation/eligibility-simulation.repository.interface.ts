@@ -1,6 +1,7 @@
 import { EligibilitySimulationEntity } from 'src/infrastructure/eligibility-simulation/eligibility-simulation.entity';
 import { HighestEligibilityZone } from './eligibility-simulation.interface';
 import { RegionCode } from '../region/region.interface';
+import { PaginationProps } from '../common/paginationProps';
 
 export type GroupByEligibilityStatsResult = {
   eligibility: HighestEligibilityZone;
@@ -49,6 +50,24 @@ export type EligibilitySimulationConversionFunnelResult = {
   totalDesiredCityProvided: number;
 };
 
+export type PortalEligibilitySimulationContactResult = {
+  simulationId: string;
+  locationId: string;
+  submittedAt: Date;
+  fullName: string | null;
+  email: string | null;
+  phone: string | null;
+  departementCode: string | null;
+  city: string | null;
+  contribution: number | null;
+  householdSize: number | null;
+  hasDisability: boolean | null;
+  taxableIncome: number | null;
+  propertySituation: string | null;
+  housingType: string | null;
+  resources: number | null;
+};
+
 export interface EligibilitySimulationRepositoryInterface {
   save(
     eligibilitySimulation: EligibilitySimulationEntity,
@@ -63,4 +82,8 @@ export interface EligibilitySimulationRepositoryInterface {
   groupByRegions(): Promise<[GroupByRegionsResult[], total: number]>;
   groupByDepartements(): Promise<GroupByDepartementsResult[]>;
   calculateConversionFunnel(): Promise<EligibilitySimulationConversionFunnelResult>;
+  findPortalContactsByOfsScope(
+    pagination: PaginationProps,
+    filters: { departementIds: string[]; regionIds: string[] },
+  ): Promise<[PortalEligibilitySimulationContactResult[], total: number]>;
 }

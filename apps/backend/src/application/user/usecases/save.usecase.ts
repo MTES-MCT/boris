@@ -4,6 +4,8 @@ import { UserRepositoryInterface } from 'src/domain/user/user.repository.interfa
 import { UserEntity } from 'src/infrastructure/user/user.entity';
 import { PasswordHasherInterface } from 'src/domain/user/password/password-hasher.interface';
 import { UserView } from '../views/user.view';
+import { normalizeEmail } from '../utils/normalize-email';
+import { UserRole } from 'src/domain/user/user-role.enum';
 
 @Injectable()
 export class SaveUserUseCase {
@@ -15,7 +17,8 @@ export class SaveUserUseCase {
   ) {}
 
   public async execute(params: SaveUserParams): Promise<UserView> {
-    const { email, password } = params;
+    const email = normalizeEmail(params.email);
+    const { password } = params;
 
     const existingUser = await this.userRepository.findOneByEmail(email);
 
@@ -26,9 +29,9 @@ export class SaveUserUseCase {
     const hashedPassword = await this.passwordHasher.hash(password);
 
     const user = await this.userRepository.save(
-      new UserEntity(email, hashedPassword),
+      new UserEntity(email, hashedPassword, [UserRole.ADMIN]),
     );
 
-    return new UserView(user.email);
+    return new UserView(user.id, user.email, user.roles, user.isActive);
   }
 }

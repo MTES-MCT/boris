@@ -48,5 +48,28 @@ export function configureViewEngine(app: NestExpressApplication) {
     return a.map((entity) => entity.id);
   });
 
+  hbs.registerHelper('lt', (a, b) => {
+    return a < b;
+  });
+
+  hbs.registerHelper('subtract', (a, b) => {
+    return a - b;
+  });
+
+  hbs.registerHelper('encodeURIComponent', (value) => {
+    return encodeURIComponent(value);
+  });
+
+  hbs.registerHelper('formatDateTime', (value?: Date | string) => {
+    if (!value) {
+      return '-';
+    }
+
+    return new Intl.DateTimeFormat('fr-FR', {
+      dateStyle: 'long',
+      timeStyle: 'short',
+    }).format(new Date(value));
+  });
+
   app.setViewEngine('hbs');
 }

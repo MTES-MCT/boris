@@ -30,3 +30,6 @@ jobs:
 
       - name: Frontend unit tests
         run: npm run test:unit -w @boris/frontend
+
+      - name: OFS portal unit tests
+        run: npm run test:unit -w @boris/ofs-portal

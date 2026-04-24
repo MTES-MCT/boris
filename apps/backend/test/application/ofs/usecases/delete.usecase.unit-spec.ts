@@ -3,6 +3,7 @@ import { DeleteOfsUsecase } from 'src/application/ofs/usecases/delete.usecase';
 import { NotFoundException } from '@nestjs/common';
 import { ofs1, mockOfsRepository } from 'test/mocks/integration/ofs';
 import { OfsView } from 'src/application/ofs/views/ofs.view';
+import { mockUserRepository } from 'test/mocks/integration/user';
 
 describe('DeleteOfsUsecase', () => {
   let useCase: DeleteOfsUsecase;
@@ -15,6 +16,10 @@ describe('DeleteOfsUsecase', () => {
           provide: 'OfsRepositoryInterface',
           useValue: mockOfsRepository,
         },
+        {
+          provide: 'UserRepositoryInterface',
+          useValue: mockUserRepository,
+        },
       ],
     }).compile();
 
@@ -24,6 +29,7 @@ describe('DeleteOfsUsecase', () => {
   it('should delete an existing OFS', async () => {
     mockOfsRepository.findById.mockResolvedValue(ofs1);
     mockOfsRepository.delete.mockResolvedValue(undefined);
+    mockUserRepository.findAll.mockResolvedValue([[], 0]);
 
     const expectedResult = new OfsView(
       ofs1.id,
