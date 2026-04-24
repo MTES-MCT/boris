@@ -1,0 +1,154 @@
+{{> breadcrumb links=breadcrumbLinks }}
+
+{{> page_header title=title}}
+
+<div class="m-4 grid gap-4 xl:grid-cols-3">
+  <div class="xl:col-span-2 space-y-4">
+    {{#if generatedPassword}}
+    <section class="rounded-lg border border-green-200 bg-green-50 p-6 dark:border-green-900 dark:bg-green-950">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <p class="text-sm font-semibold text-green-900 dark:text-green-100">Mot de passe généré</p>
+          <p class="mt-2 break-all font-mono text-green-950 dark:text-green-50">{{generatedPassword}}</p>
+          <p class="mt-2 text-sm text-green-800 dark:text-green-200">Ce mot de passe est affiché une seule fois. Conservez-le avant de quitter cette page.</p>
+        </div>
+        <button type="button" data-password-copy="{{generatedPassword}}" class="inline-flex items-center rounded-lg bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800">Copier</button>
+      </div>
+      <p id="copy-feedback" class="mt-2 hidden text-sm text-green-800 dark:text-green-200">Mot de passe copié.</p>
+    </section>
+    {{/if}}
+
+    {{#if errors.global}}
+    <div>{{> alerts/error title="Erreur" content=errors.global}}</div>
+    {{/if}}
+
+    <section class="rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Informations de connexion</h2>
+      <form id="user-update-form" data-current-role="{{user.roles.[0]}}" method="POST" action="/users/{{user.id}}{{#if returnTo}}?returnTo={{encodeURIComponent returnTo}}{{/if}}&_method=PUT" class="mt-6">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Adresse email</label>
+            <input type="email" name="email" id="email" required value="{{form.email}}" {{#if blocks.emailChange}}disabled{{/if}}
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white {{#if blocks.emailChange}}cursor-not-allowed opacity-60{{/if}}" />
+            {{#if blocks.emailChange}}<p class="mt-2 text-xs text-gray-500 dark:text-gray-400">Modifier votre propre email est bloqué en v1.</p>{{/if}}
+          </div>
+          <div>
+            <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rôle</label>
+            <select name="role" id="role" required
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+              {{#each roles as |role|}}
+              <option value="{{role.value}}" {{#if (isEqual ../form.role role.value)}}selected{{/if}}>{{role.label}}</option>
+              {{/each}}
+            </select>
+            {{#if blocks.adminRoleRemoval}}<p class="mt-2 text-xs text-gray-500 dark:text-gray-400">La suppression de votre propre rôle admin est bloquée.</p>{{/if}}
+          </div>
+        </div>
+
+        <div id="ofs-section" class="mt-6 {{#if (isEqual form.role 'ofs')}}block{{else}}hidden{{/if}}">
+          <label for="ofsIds" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">OFS rattachés</label>
+          <select multiple name="ofsIds" id="ofsIds" size="10"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            {{#each ofss as |ofs|}}
+            <option value="{{ofs.id}}" {{#if (contains ofs.id ../form.ofsIds)}}selected{{/if}}>{{ofs.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="mt-6 flex items-center gap-3">
+          <button type="submit" class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Enregistrer</button>
+          <a href="{{backHref}}" class="text-sm font-medium text-gray-700 hover:underline dark:text-gray-200">Retour à la liste</a>
+        </div>
+      </form>
+    </section>
+
+    <section class="rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">OFS rattachés</h2>
+      {{#if user.ofss.length}}
+      <div class="mt-4 flex flex-wrap gap-2">
+        {{#each user.ofss as |ofs|}}
+        <a href="/ofs/{{ofs.id}}/update?returnTo={{encodeURIComponent ../backHref}}" class="inline-flex rounded-full bg-purple-50 px-3 py-1 text-xs font-medium text-purple-800 hover:underline dark:bg-purple-900 dark:text-purple-300">{{ofs.name}}</a>
+        {{/each}}
+      </div>
+      {{else}}
+      <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">Aucun OFS rattaché.</p>
+      {{/if}}
+    </section>
+  </div>
+
+  <div class="space-y-4">
+    <section class="rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Accès et rôle</h2>
+      <dl class="mt-4 space-y-3 text-sm text-gray-700 dark:text-gray-300">
+        <div><dt class="font-medium">Rôle actuel</dt><dd>{{roleLabel}}</dd></div>
+        <div><dt class="font-medium">Statut</dt><dd>{{statusLabel}}</dd></div>
+        <div><dt class="font-medium">Dernière connexion</dt><dd>{{#if user.lastLoginAt}}{{formatDateTime user.lastLoginAt}}{{else}}Jamais connecté{{/if}}</dd></div>
+        <div><dt class="font-medium">Créé le</dt><dd>{{formatDateTime user.createdAt}}</dd></div>
+        <div><dt class="font-medium">Mis à jour le</dt><dd>{{formatDateTime user.updatedAt}}</dd></div>
+      </dl>
+      {{#if isSelf}}<p class="mt-4 text-xs text-gray-500 dark:text-gray-400">Vous modifiez votre propre utilisateur. Certaines actions sont volontairement bloquées.</p>{{/if}}
+      {{#unless user.isActive}}<div class="mt-4">{{> alerts/error title="Utilisateur inactif" content="Cet utilisateur ne peut pas se connecter tant qu'il n'est pas réactivé."}}</div>{{/unless}}
+    </section>
+
+    <section class="rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Actions sensibles</h2>
+      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Les changements de rôle, la désactivation et la réinitialisation de mot de passe déconnectent immédiatement l'utilisateur.</p>
+      <div class="mt-6 space-y-3">
+        <form method="POST" action="/users/{{user.id}}/reset-password{{#if returnTo}}?returnTo={{encodeURIComponent returnTo}}{{/if}}" onsubmit="return window.confirm('Réinitialiser le mot de passe de cet utilisateur ? Toutes ses sessions seront terminées immédiatement.');">
+          <button type="submit" class="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700">Réinitialiser le mot de passe</button>
+        </form>
+        {{#if user.isActive}}
+        <form method="POST" action="/users/{{user.id}}/deactivate{{#if returnTo}}?returnTo={{encodeURIComponent returnTo}}{{/if}}" onsubmit="return window.confirm('Désactiver cet utilisateur ? Toutes ses sessions seront terminées immédiatement.');">
+          <button type="submit" class="w-full rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">Désactiver l'utilisateur</button>
+        </form>
+        {{else}}
+        <form method="POST" action="/users/{{user.id}}/reactivate{{#if returnTo}}?returnTo={{encodeURIComponent returnTo}}{{/if}}">
+          <button type="submit" class="w-full rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700">Réactiver l'utilisateur</button>
+        </form>
+        {{/if}}
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const roleField = document.getElementById('role');
+    const ofsSection = document.getElementById('ofs-section');
+    const ofsSelect = document.getElementById('ofsIds');
+    const copyButton = document.querySelector('[data-password-copy]');
+    const copyFeedback = document.getElementById('copy-feedback');
+    const updateForm = document.getElementById('user-update-form');
+
+    const sync = () => {
+      const show = roleField?.value === 'ofs';
+      ofsSection?.classList.toggle('hidden', !show);
+      ofsSection?.classList.toggle('block', show);
+      if (!show && ofsSelect instanceof HTMLSelectElement) {
+        Array.from(ofsSelect.options).forEach((option) => {
+          option.selected = false;
+        });
+      }
+    };
+
+    roleField?.addEventListener('change', sync);
+    sync();
+
+    updateForm?.addEventListener('submit', (event) => {
+      const currentRole = updateForm.getAttribute('data-current-role');
+      const nextRole = roleField?.value;
+      if (currentRole && nextRole && currentRole !== nextRole) {
+        const confirmed = window.confirm('Modifier le rôle de cet utilisateur ? Son accès changera immédiatement et toutes ses sessions seront terminées.');
+        if (!confirmed) {
+          event.preventDefault();
+        }
+      }
+    });
+
+    copyButton?.addEventListener('click', async () => {
+      const password = copyButton.getAttribute('data-password-copy');
+      if (!password) return;
+      await navigator.clipboard.writeText(password);
+      copyFeedback?.classList.remove('hidden');
+    });
+  })();
+</script>

@@ -11,6 +11,7 @@ import {
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 import { RegionEntity } from '../region/region.entity';
 import { DistributorEntity } from '../distributor/distributor.entity';
+import { UserEntity } from '../user/user.entity';
 
 @Entity('ofs')
 export class OfsEntity implements OfsInterface {
@@ -52,6 +53,9 @@ export class OfsEntity implements OfsInterface {
     name: 'ofs_distributor',
   })
   public distributors: DistributorEntity[];
+
+  @ManyToMany(() => UserEntity, (user) => user.ofss)
+  public users: UserEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

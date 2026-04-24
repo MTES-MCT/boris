@@ -38,7 +38,12 @@ describe('SaveUserUsecase', () => {
     mockUserRepository.save.mockResolvedValue(user1);
     mockPasswordHasher.hash.mockResolvedValue('password');
 
-    const expectedResult = new UserView(user1.email);
+    const expectedResult = new UserView(
+      user1.id,
+      user1.email,
+      user1.roles,
+      user1.isActive,
+    );
 
     const result = await useCase.execute({
       email: user1.email,
