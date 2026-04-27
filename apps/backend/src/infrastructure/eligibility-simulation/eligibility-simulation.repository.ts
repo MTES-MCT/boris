@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import {
   EligibilitySimulationConversionFunnelResult,
   EligibilitySimulationRepositoryInterface,
@@ -10,6 +10,7 @@ import {
   GroupByRealEstateSituationResult,
   GroupByRegionsResult,
   GroupSimulationsByYearAndMonthResult,
+  PortalEligibilitySimulationContactFilters,
   PortalEligibilitySimulationContactResult,
 } from 'src/domain/eligibility-simulation/eligibility-simulation.repository.interface';
 import { EligibilitySimulationEntity } from './eligibility-simulation.entity';
@@ -263,52 +264,11 @@ export class EligibilitySimulationRepository
 
   public async findPortalContactsByOfsScope(
     pagination: PaginationProps,
-    filters: { departementIds: string[]; regionIds: string[] },
+    filters: PortalEligibilitySimulationContactFilters,
   ): Promise<[PortalEligibilitySimulationContactResult[], number]> {
-    const query = this.repository
-      .createQueryBuilder('eligibility_simulation')
-      .innerJoin('eligibility_simulation.locations', 'location')
-      .innerJoin('location.departement', 'departement')
-      .innerJoin('departement.region', 'region')
-      .select('eligibility_simulation.id', 'simulationId')
-      .addSelect('location.id', 'locationId')
-      .addSelect(
-        'COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")',
-        'submittedAt',
-      )
-      .addSelect(
-        `NULLIF(TRIM(CONCAT(COALESCE(eligibility_simulation."firstName", ''), ' ', COALESCE(eligibility_simulation."lastName", ''))), '')`,
-        'fullName',
-      )
-      .addSelect('eligibility_simulation.email', 'email')
-      .addSelect('eligibility_simulation.phone', 'phone')
-      .addSelect('departement.code', 'departementCode')
-      .addSelect('location.city', 'city')
-      .addSelect('eligibility_simulation.contribution', 'contribution')
-      .addSelect('eligibility_simulation."householdSize"', 'householdSize')
-      .addSelect('eligibility_simulation."hasDisability"', 'hasDisability')
-      .addSelect('eligibility_simulation."taxableIncome"', 'taxableIncome')
-      .addSelect(
-        'eligibility_simulation."propertySituation"',
-        'propertySituation',
-      )
-      .addSelect('eligibility_simulation."housingType"', 'housingType')
-      .addSelect('eligibility_simulation.resources', 'resources')
-      .where('eligibility_simulation."hasRefusedConnection" = false')
-      .andWhere('eligibility_simulation.email IS NOT NULL')
-      .andWhere('eligibility_simulation.contribution IS NOT NULL')
-      .andWhere('eligibility_simulation.resources IS NOT NULL');
+    const query = this.createPortalContactsQuery(filters);
 
-    if (filters.departementIds.length > 0 && filters.regionIds.length > 0) {
-      query.andWhere(
-        '(departement.id IN (:...departementIds) OR region.id IN (:...regionIds))',
-        filters,
-      );
-    } else if (filters.departementIds.length > 0) {
-      query.andWhere('departement.id IN (:...departementIds)', filters);
-    } else if (filters.regionIds.length > 0) {
-      query.andWhere('region.id IN (:...regionIds)', filters);
-    } else {
+    if (!query) {
       return [[], 0];
     }
 
@@ -323,7 +283,36 @@ export class EligibilitySimulationRepository
     const items =
       await query.getRawMany<PortalEligibilitySimulationContactResult>();
 
-    const countQuery = this.repository
+    const countQuery = this.createPortalContactsQuery(filters, false);
+
+    const total = countQuery ? await countQuery.getCount() : 0;
+
+    return [items, total];
+  }
+
+  public async findAllPortalContactsByOfsScope(
+    filters: PortalEligibilitySimulationContactFilters,
+  ): Promise<PortalEligibilitySimulationContactResult[]> {
+    const query = this.createPortalContactsQuery(filters);
+
+    if (!query) {
+      return [];
+    }
+
+    query.orderBy(
+      'COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")',
+      'DESC',
+    );
+    query.addOrderBy('location.id', 'DESC');
+
+    return query.getRawMany<PortalEligibilitySimulationContactResult>();
+  }
+
+  private createPortalContactsQuery(
+    filters: PortalEligibilitySimulationContactFilters,
+    withSelects = true,
+  ) {
+    const query = this.repository
       .createQueryBuilder('eligibility_simulation')
       .innerJoin('eligibility_simulation.locations', 'location')
       .innerJoin('location.departement', 'departement')
@@ -333,19 +322,77 @@ export class EligibilitySimulationRepository
       .andWhere('eligibility_simulation.contribution IS NOT NULL')
       .andWhere('eligibility_simulation.resources IS NOT NULL');
 
+    if (withSelects) {
+      query
+        .select('eligibility_simulation.id', 'simulationId')
+        .addSelect('location.id', 'locationId')
+        .addSelect(
+          'COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")',
+          'submittedAt',
+        )
+        .addSelect(
+          `NULLIF(TRIM(CONCAT(COALESCE(eligibility_simulation."firstName", ''), ' ', COALESCE(eligibility_simulation."lastName", ''))), '')`,
+          'fullName',
+        )
+        .addSelect('eligibility_simulation.email', 'email')
+        .addSelect('eligibility_simulation.phone', 'phone')
+        .addSelect('departement.code', 'departementCode')
+        .addSelect('location.city', 'city')
+        .addSelect('eligibility_simulation.contribution', 'contribution')
+        .addSelect('eligibility_simulation."householdSize"', 'householdSize')
+        .addSelect('eligibility_simulation."hasDisability"', 'hasDisability')
+        .addSelect('eligibility_simulation."taxableIncome"', 'taxableIncome')
+        .addSelect(
+          'eligibility_simulation."propertySituation"',
+          'propertySituation',
+        )
+        .addSelect('eligibility_simulation."housingType"', 'housingType')
+        .addSelect('eligibility_simulation.resources', 'resources');
+    }
+
+    if (!this.applyPortalScopeFilters(query, filters)) {
+      return null;
+    }
+
+    if (filters.startDate) {
+      query.andWhere(
+        'DATE(COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")) >= :startDate',
+        { startDate: filters.startDate },
+      );
+    }
+
+    if (filters.endDate) {
+      query.andWhere(
+        'DATE(COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")) <= :endDate',
+        { endDate: filters.endDate },
+      );
+    }
+
+    return query;
+  }
+
+  private applyPortalScopeFilters(
+    query: SelectQueryBuilder<EligibilitySimulationEntity>,
+    filters: PortalEligibilitySimulationContactFilters,
+  ) {
     if (filters.departementIds.length > 0 && filters.regionIds.length > 0) {
-      countQuery.andWhere(
+      query.andWhere(
         '(departement.id IN (:...departementIds) OR region.id IN (:...regionIds))',
         filters,
       );
-    } else if (filters.departementIds.length > 0) {
-      countQuery.andWhere('departement.id IN (:...departementIds)', filters);
-    } else {
-      countQuery.andWhere('region.id IN (:...regionIds)', filters);
+      return true;
     }
 
-    const total = await countQuery.getCount();
+    if (filters.departementIds.length > 0) {
+      query.andWhere('departement.id IN (:...departementIds)', filters);
+      return true;
+    }
 
-    return [items, total];
+    if (filters.regionIds.length > 0) {
+      query.andWhere('region.id IN (:...regionIds)', filters);
+      return true;
+    }
+
+    return false;
   }
 }

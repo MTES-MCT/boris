@@ -1,5 +1,12 @@
 import { Transform } from 'class-transformer';
-import { IsArray, IsEmail, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+import { UserRole } from 'src/domain/user/user-role.enum';
 
 const normalizeOfsIds = ({ value }: { value?: string | string[] }) => {
   if (value === undefined || value === null || value === '') {
@@ -13,8 +20,8 @@ export class UpdateUserDTO {
   @IsEmail()
   public email: string;
 
-  @IsString()
-  public role: string;
+  @IsEnum(UserRole)
+  public role: UserRole;
 
   @Transform(normalizeOfsIds)
   @IsArray()
