@@ -68,6 +68,13 @@ export type PortalEligibilitySimulationContactResult = {
   resources: number | null;
 };
 
+export type PortalEligibilitySimulationContactFilters = {
+  departementIds: string[];
+  regionIds: string[];
+  startDate?: string;
+  endDate?: string;
+};
+
 export interface EligibilitySimulationRepositoryInterface {
   save(
     eligibilitySimulation: EligibilitySimulationEntity,
@@ -84,6 +91,9 @@ export interface EligibilitySimulationRepositoryInterface {
   calculateConversionFunnel(): Promise<EligibilitySimulationConversionFunnelResult>;
   findPortalContactsByOfsScope(
     pagination: PaginationProps,
-    filters: { departementIds: string[]; regionIds: string[] },
+    filters: PortalEligibilitySimulationContactFilters,
   ): Promise<[PortalEligibilitySimulationContactResult[], total: number]>;
+  findAllPortalContactsByOfsScope(
+    filters: PortalEligibilitySimulationContactFilters,
+  ): Promise<PortalEligibilitySimulationContactResult[]>;
 }

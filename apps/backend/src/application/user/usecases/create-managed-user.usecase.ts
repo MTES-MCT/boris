@@ -32,7 +32,7 @@ export class CreateManagedUserUsecase {
     generatedPassword: string;
   }> {
     const email = normalizeEmail(params.email);
-    const role = this.getRole(params.role);
+    const role = params.role;
     const ofsIds = this.normalizeIds(params.ofsIds);
 
     const existingUser = await this.userRepository.findOneByEmail(email);
@@ -50,14 +50,6 @@ export class CreateManagedUserUsecase {
     );
 
     return { user, generatedPassword };
-  }
-
-  private getRole(role: string): UserRole {
-    if (role === UserRole.ADMIN || role === UserRole.OFS) {
-      return role;
-    }
-
-    throw new BadRequestException();
   }
 
   private normalizeIds(ids?: string[]): string[] {

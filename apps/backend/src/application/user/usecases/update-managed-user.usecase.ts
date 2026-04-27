@@ -34,7 +34,7 @@ export class UpdateManagedUserUsecase {
     }
 
     const nextEmail = normalizeEmail(params.email);
-    const nextRole = this.getRole(params.role);
+    const nextRole = params.role;
     const ofsIds = this.normalizeIds(params.ofsIds);
 
     if (params.actorUserId === user.id && nextEmail !== user.email) {
@@ -85,14 +85,6 @@ export class UpdateManagedUserUsecase {
     if (!hadSameEmail || !hadSameRole || !hadSameOfss) {
       await this.userSessionService.destroyAllForUserId(user.id);
     }
-  }
-
-  private getRole(role: string): UserRole {
-    if (role === UserRole.ADMIN || role === UserRole.OFS) {
-      return role;
-    }
-
-    throw new BadRequestException();
   }
 
   private normalizeIds(ids?: string[]): string[] {

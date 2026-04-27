@@ -3,6 +3,11 @@
 
   const contacts = $derived(data.contacts);
 
+  let exportDialog: HTMLDialogElement | undefined;
+  let startDate = $state("");
+  let endDate = $state("");
+  let exportError = $state("");
+
   function pageHref(page: number) {
     const params = new URLSearchParams();
     if (page > 1) params.set("page", `${page}`);
@@ -23,16 +28,116 @@
       maximumFractionDigits: 0,
     }).format(value);
   }
+
+  function openExportDialog() {
+    exportError = "";
+    exportDialog?.showModal();
+  }
+
+  function closeExportDialog() {
+    exportError = "";
+    exportDialog?.close();
+  }
+
+  function handleExportSubmit(event: SubmitEvent) {
+    const form = event.currentTarget as HTMLFormElement;
+
+    if (!form.reportValidity()) {
+      event.preventDefault();
+      return;
+    }
+
+    if (startDate > endDate) {
+      event.preventDefault();
+      exportError =
+        "La date de début doit être antérieure ou égale à la date de fin.";
+      return;
+    }
+
+    exportError = "";
+    exportDialog?.close();
+  }
 </script>
 
 <svelte:head>
   <title>{data.ofs.name} - Simulations - Espace OFS - BoRiS</title>
 </svelte:head>
 
-<h1 class="fr-h3">Simulations</h1>
-<p class="fr-text--sm">
-  Contacts correspondant au périmètre géographique de cet OFS.
-</p>
+<div class="fr-grid-row">
+  <div class="fr-col">
+    <h1 class="fr-h3">Simulations</h1>
+    <p class="fr-text--sm">
+      Contacts correspondant au périmètre géographique de cet OFS.
+    </p>
+  </div>
+
+  <div class="fr-col-2 text-right">
+    <button
+      class="fr-btn fr-btn--secondary fr-mb-3w"
+      type="button"
+      onclick={openExportDialog}
+    >
+      Exporter en CSV
+    </button>
+  </div>
+</div>
+
+<dialog
+  bind:this={exportDialog}
+  class="export-dialog"
+  aria-labelledby="export-dialog-title"
+>
+  <form
+    method="GET"
+    action={`/ofs/${data.ofs.id}/simulations/export`}
+    onsubmit={handleExportSubmit}
+  >
+    <h2 class="fr-h5 fr-mb-2w" id="export-dialog-title">Exporter des lignes</h2>
+
+    <div class="fr-input-group fr-mb-2w">
+      <label class="fr-label" for="export-start-date">Date de début</label>
+      <input
+        id="export-start-date"
+        class="fr-input"
+        type="date"
+        name="startDate"
+        bind:value={startDate}
+        max={endDate || undefined}
+        required
+      />
+    </div>
+
+    <div class="fr-input-group fr-mb-2w">
+      <label class="fr-label" for="export-end-date">Date de fin</label>
+      <input
+        id="export-end-date"
+        class="fr-input"
+        type="date"
+        name="endDate"
+        bind:value={endDate}
+        min={startDate || undefined}
+        required
+      />
+    </div>
+
+    {#if exportError}
+      <div class="fr-alert fr-alert--error fr-mb-2w">
+        <p>{exportError}</p>
+      </div>
+    {/if}
+
+    <div class="export-dialog__actions">
+      <button class="fr-btn" type="submit">Télécharger le CSV</button>
+      <button
+        class="fr-btn fr-btn--secondary"
+        type="button"
+        onclick={closeExportDialog}
+      >
+        Annuler
+      </button>
+    </div>
+  </form>
+</dialog>
 
 {#if contacts.items.length > 0}
   {#if contacts.items.some((line) => line.isNew)}
@@ -157,3 +262,33 @@
     </p>
   </div>
 {/if}
+
+<style>
+  .export-dialog {
+    border: 0;
+    border-radius: 1rem;
+    max-width: 32rem;
+    padding: 0;
+    width: calc(100% - 2rem);
+  }
+
+  .export-dialog::backdrop {
+    background: rgb(0 0 0 / 45%);
+  }
+
+  .export-dialog form {
+    padding: 2rem;
+  }
+
+  .export-dialog__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 48rem) {
+    .export-dialog__actions {
+      flex-direction: column;
+    }
+  }
+</style>

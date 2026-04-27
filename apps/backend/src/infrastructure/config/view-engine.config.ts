@@ -56,9 +56,12 @@ export function configureViewEngine(app: NestExpressApplication) {
     return a - b;
   });
 
-  hbs.registerHelper('encodeURIComponent', (value) => {
-    return encodeURIComponent(value);
-  });
+  hbs.registerHelper(
+    'encodeURIComponent',
+    (value: string | number | boolean) => {
+      return encodeURIComponent(value);
+    },
+  );
 
   hbs.registerHelper('formatDateTime', (value?: Date | string) => {
     if (!value) {

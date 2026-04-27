@@ -1,49 +1,36 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Pagination } from 'src/application/common/pagination';
 import {
   EligibilitySimulationRepositoryInterface,
   PortalEligibilitySimulationContactFilters,
   PortalEligibilitySimulationContactResult,
 } from 'src/domain/eligibility-simulation/eligibility-simulation.repository.interface';
-import { PaginationProps } from 'src/domain/common/paginationProps';
 import { PortalContactLineView } from '../views/portal-contact-line.view';
 
 @Injectable()
-export class FindPortalContactLinesUsecase {
+export class ExportPortalContactLinesUsecase {
   constructor(
     @Inject('EligibilitySimulationRepositoryInterface')
     private readonly eligibilitySimulationRepository: EligibilitySimulationRepositoryInterface,
   ) {}
 
   public async execute(
-    pagination: PaginationProps,
-    filters: PortalEligibilitySimulationContactFilters & {
-      compareDate?: Date | null;
-    },
-  ): Promise<Pagination<PortalContactLineView>> {
-    const [items, total] =
-      await this.eligibilitySimulationRepository.findPortalContactsByOfsScope(
-        pagination,
+    filters: PortalEligibilitySimulationContactFilters,
+  ): Promise<PortalContactLineView[]> {
+    const items =
+      await this.eligibilitySimulationRepository.findAllPortalContactsByOfsScope(
         filters,
       );
 
-    return new Pagination(
-      items.map((item) => this.toView(item, filters.compareDate || null)),
-      total,
-      pagination,
-    );
+    return items.map((item) => this.toView(item));
   }
 
-  private toView(
-    item: PortalEligibilitySimulationContactResult,
-    compareDate: Date | null,
-  ) {
+  private toView(item: PortalEligibilitySimulationContactResult) {
     return new PortalContactLineView({
       ...item,
       submittedAt: new Date(item.submittedAt),
       propertySituation: this.propertySituationLabel(item.propertySituation),
       housingType: item.housingType,
-      isNew: compareDate ? new Date(item.submittedAt) > compareDate : false,
+      isNew: false,
     } as PortalContactLineView);
   }
 

@@ -40,9 +40,7 @@ export class LocalAuthGuard extends AuthGuard('local') {
       await super.logIn(request);
 
       const user = request.user as UserEntity;
-      const session = request.session as typeof request.session & {
-        previousLoginAt?: string | null;
-      };
+      const session = request.session;
 
       session.previousLoginAt = user.lastLoginAt?.toISOString() || null;
       user.lastLoginAt = new Date();
