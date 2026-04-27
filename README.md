@@ -24,6 +24,7 @@ npm.
    ```
    cp apps/frontend/.env.example apps/frontend/.env
    cp apps/backend/.env.example apps/backend/.env
+   cp apps/ofs-portal/.env.example apps/ofs-portal/.env
    ```
 
    Demander à une personne de l'équipe dev les valeurs des variables d'environnement à saisir dans le fichier `.env`
@@ -107,6 +108,15 @@ npm run seed:seed-name
 
 ```
 npm run dev -w @boris/frontend
+
+```
+
+## OFS Portal
+
+### Lancer le server de développement
+
+```
+npm run start:dev -w @boris/ofs-portal
 
 ```
 

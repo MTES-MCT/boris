@@ -23,6 +23,7 @@ import { DEFAULT_PAGINATION } from 'src/application/common/pagination';
 import { UpdateOfsDTO } from 'src/infrastructure/ofs/dtos/update.dto';
 import { UpdateOfsUsecase } from 'src/application/ofs/usecases/update.usecase';
 import { RequestWithFlash } from 'src/types/request-with-flash';
+import { FindAllUsersUsecase } from 'src/application/user/usecases/findAll.usecase';
 
 @ApiExcludeController()
 @Controller('/ofs')
@@ -33,6 +34,7 @@ export class UpdateOfsAdminController {
     private readonly findAllRegionsUsecase: FindAllRegionsUsecase,
     private readonly findAllDepartementsUsecase: FindAllDepartementsUsecase,
     private readonly findAllDistributorsUsecase: FindAllDistributorsUsecase,
+    private readonly findAllUsersUsecase: FindAllUsersUsecase,
   ) {}
 
   @UseGuards(LocalIsAuthenticatedGuard)
@@ -52,6 +54,11 @@ export class UpdateOfsAdminController {
     const distributors =
       await this.findAllDistributorsUsecase.execute(DEFAULT_PAGINATION);
 
+    const linkedUsers = await this.findAllUsersUsecase.execute(
+      { page: 1, pageSize: 150 },
+      { ofsId: params.id },
+    );
+
     return res.render('ofs/update', {
       layout: 'layouts/main',
       title: translations.contents.ofs.title,
@@ -68,6 +75,7 @@ export class UpdateOfsAdminController {
       regions,
       departements,
       distributors,
+      linkedUsers: linkedUsers.items,
     });
   }
 

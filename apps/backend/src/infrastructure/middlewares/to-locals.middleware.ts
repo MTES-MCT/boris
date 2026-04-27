@@ -8,8 +8,15 @@ export class ToLocalsMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     res.locals.user = req.user;
     res.locals.translations = translations;
+    res.locals.ofsPortalUrl = process.env.OFS_PORTAL_URL;
 
     const flashMessage = (req as RequestWithFlash).flash();
+
+    if (flashMessage.generatedPassword?.length) {
+      for (const password of flashMessage.generatedPassword) {
+        (req as RequestWithFlash).flash('generatedPassword', password);
+      }
+    }
 
     if (Object.keys(flashMessage).length > 0) {
       res.locals.flashMessage = {

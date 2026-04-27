@@ -24,6 +24,8 @@ import { GroupEligibilitySimulationsByDepartementsUsecase } from 'src/applicatio
 import { CountEligibilitySimulationsUsecase } from 'src/application/eligibility-simulation/usecases/count-simulations.usecase';
 import { GetEligibilitySimulationsBrsKnowledgeApiController } from './controllers/api/get-eligibility-simulations-brs-knowledge.controller';
 import { GetEligibilitySimulationsRealEstateSituationApiController } from './controllers/api/get-eligibility-simulations-real-estate-situation.controller';
+import { FindPortalContactLinesUsecase } from 'src/application/eligibility-simulation/usecases/find-portal-contact-lines.usecase';
+import { ExportPortalContactLinesUsecase } from 'src/application/eligibility-simulation/usecases/export-portal-contact-lines.usecase';
 
 @Module({
   imports: [
@@ -59,6 +61,8 @@ import { GetEligibilitySimulationsRealEstateSituationApiController } from './con
     GroupEligibilitySimulationsByDepartementsUsecase,
     CountEligibilitySimulationsUsecase,
     CalculateEligibilitySimulationConversionFunnelUsecase,
+    FindPortalContactLinesUsecase,
+    ExportPortalContactLinesUsecase,
   ],
   exports: [
     'EligibilitySimulationRepositoryInterface',
@@ -73,6 +77,8 @@ import { GetEligibilitySimulationsRealEstateSituationApiController } from './con
     GroupEligibilitySimulationsByDepartementsUsecase,
     CountEligibilitySimulationsUsecase,
     CalculateEligibilitySimulationConversionFunnelUsecase,
+    FindPortalContactLinesUsecase,
+    ExportPortalContactLinesUsecase,
   ],
 })
 export class EligibilitySimulationModule {}

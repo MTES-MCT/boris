@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PassportSerializer } from '@nestjs/passport';
-import { UserView } from 'src/application/user/views/user.view';
 import { UserRepositoryInterface } from 'src/domain/user/user.repository.interface';
+import { UserEntity } from 'src/infrastructure/user/user.entity';
 
 @Injectable()
 export class UserSerializer extends PassportSerializer {
@@ -12,16 +12,16 @@ export class UserSerializer extends PassportSerializer {
     super();
   }
 
-  serializeUser(user: UserView, done: Function) {
-    done(null, user.email);
+  serializeUser(user: UserEntity, done: Function) {
+    done(null, user.id);
   }
 
-  async deserializeUser(email: string, done: Function) {
-    const user = await this.userRepository.findOneByEmail(email);
+  async deserializeUser(userId: string, done: Function) {
+    const user = await this.userRepository.findById(userId);
 
     if (!user) {
       return done(
-        `Could not deserialize user: user with email ${email} could not be found`,
+        `Could not deserialize user: user with id ${userId} could not be found`,
         null,
       );
     }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import { Injectable } from '@nestjs/common';
 import { CreateEligibilitySimulationUsecase } from 'src/application/eligibility-simulation/usecases/create.usecase';
 import { UpdateEligibilitySimulationUsecase } from 'src/application/eligibility-simulation/usecases/update.usecase';
@@ -58,28 +57,27 @@ export class EligibilitySimulationsSeed {
               isFromLandbot: true,
               landbotDate: landbotCustomer.date,
             });
-          const updatedEligibilitySimulation =
-            await this.updateEligibilitySimulationUsecase.execute({
-              id: eligibilitySimulation.id,
-              eligibilityCategory: 1,
-              highestEligibilityZone: this.getHighestEligibilityZone(
-                landbotCustomer.eligibility,
-              ),
-              hadBrsKnowledge:
-                landbotCustomer.brsKnowledge === LandbotBrsKnowledge.OUI,
-              propertySituation: this.getPropertySituation(
-                landbotCustomer.realEstateSituation as LandbotRealEstateSituation,
-              ),
-              declarationType: this.getDeclarationType(
-                landbotCustomer.declarationType as LandbotDeclarationType,
-              ),
-              hasRefusedConnection:
-                landbotCustomer.connectionWish === LandbotConnectionWish.NON,
-              resources: landbotCustomer.resources,
-              email: landbotCustomer.hasProvidedEmail
-                ? 'landbot-customer@landbot.com'
-                : undefined,
-            });
+          await this.updateEligibilitySimulationUsecase.execute({
+            id: eligibilitySimulation.id,
+            eligibilityCategory: 1,
+            highestEligibilityZone: this.getHighestEligibilityZone(
+              landbotCustomer.eligibility,
+            ),
+            hadBrsKnowledge:
+              landbotCustomer.brsKnowledge === LandbotBrsKnowledge.OUI,
+            propertySituation: this.getPropertySituation(
+              landbotCustomer.realEstateSituation as LandbotRealEstateSituation,
+            ),
+            declarationType: this.getDeclarationType(
+              landbotCustomer.declarationType as LandbotDeclarationType,
+            ),
+            hasRefusedConnection:
+              landbotCustomer.connectionWish === LandbotConnectionWish.NON,
+            resources: landbotCustomer.resources,
+            email: landbotCustomer.hasProvidedEmail
+              ? 'landbot-customer@landbot.com'
+              : undefined,
+          });
           if (landbotCustomer.desiredCity && landbotCustomer.departement) {
             await this.saveLocationUsecase.execute({
               name: landbotCustomer.desiredCity,

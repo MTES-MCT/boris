@@ -15,6 +15,10 @@ import { UpdateOfsAdminController } from './controllers/admin/update-ofs.control
 import { FindOfsByIdUsecase } from 'src/application/ofs/usecases/findById.usecase';
 import { UpdateOfsUsecase } from 'src/application/ofs/usecases/update.usecase';
 import { CreateOfsUsecase } from 'src/application/ofs/usecases/create.usecase';
+import { UserModule } from '../user/user.module';
+import { PortalOfssController } from './controllers/api/portal-ofss.controller';
+import { PortalApiAuthenticatedGuard } from '../auth/guards/portal-api-authenticated.guard';
+import { EligibilitySimulationModule } from '../eligibility-simulation/eligibility-simulation.module';
 
 @Module({
   imports: [
@@ -22,9 +26,12 @@ import { CreateOfsUsecase } from 'src/application/ofs/usecases/create.usecase';
     RegionModule,
     DepartementModule,
     DistributorModule,
+    UserModule,
+    EligibilitySimulationModule,
   ],
   controllers: [
     GetOfssApiController,
+    PortalOfssController,
     GetOfssAdminController,
     CreateOfsAdminController,
     DeleteOfsAdminController,
@@ -37,6 +44,7 @@ import { CreateOfsUsecase } from 'src/application/ofs/usecases/create.usecase';
     DeleteOfsUsecase,
     FindOfsByIdUsecase,
     UpdateOfsUsecase,
+    PortalApiAuthenticatedGuard,
   ],
   exports: [
     'OfsRepositoryInterface',
