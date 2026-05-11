@@ -3,10 +3,63 @@
 
   const contacts = $derived(data.contacts);
 
+  type ContactLine = {
+    simulationId: string;
+    locationId: string;
+    submittedAt: string;
+    fullName: string | null;
+    email: string | null;
+    phone: string | null;
+    departementCode: string | null;
+    city: string | null;
+    contribution: number | null;
+    householdSize: number | null;
+    hasDisability: boolean | null;
+    taxableIncome: number | null;
+    propertySituation: string | null;
+    housingType: string | null;
+    resources: number | null;
+    action: string | null;
+    status: string | null;
+    isNew: boolean;
+  };
+
+  type SimulationMetadata = {
+    simulationId: string;
+    action: string | null;
+    status: string | null;
+  };
+
+  const actionOptions = [
+    { value: "RECONTACTED", label: "recontacté" },
+    { value: "NOT_RECONTACTED", label: "pas recontacté" },
+  ] as const;
+
+  const statusOptions = [
+    { value: "NOT_INTERESTED", label: "pas intéressé" },
+    { value: "NO_RESPONSE", label: "ne répond pas" },
+    { value: "EXCHANGE_IN_PROGRESS", label: "échange en cours" },
+    { value: "NOT_FINANCEABLE", label: "non solvable" },
+    { value: "WAITING_FOR_LOAN", label: "attente de prêt" },
+    { value: "HAS_SIGNED_BRS", label: "a signé un BRS" },
+  ] as const;
+
+  let items = $state<ContactLine[]>(
+    data.contacts.items.map((line: ContactLine) => ({ ...line })),
+  );
+  let savingBySimulationId = $state<Record<string, boolean>>({});
+  let errorBySimulationId = $state<Record<string, string>>({});
+
   let exportDialog: HTMLDialogElement | undefined;
   let startDate = $state("");
   let endDate = $state("");
   let exportError = $state("");
+
+  $effect(() => {
+    items = data.contacts.items.map((line: ContactLine) => ({ ...line }));
+    savingBySimulationId = {};
+    errorBySimulationId = {};
+  });
 
   function pageHref(page: number) {
     const params = new URLSearchParams();
@@ -37,6 +90,64 @@
   function closeExportDialog() {
     exportError = "";
     exportDialog?.close();
+  }
+
+  async function updateMetadata(
+    line: ContactLine,
+    updates: Partial<Pick<ContactLine, "action" | "status">>,
+  ) {
+    if (savingBySimulationId[line.simulationId]) {
+      return;
+    }
+
+    const previousAction = line.action;
+    const previousStatus = line.status;
+
+    if ("action" in updates) {
+      line.action = updates.action ?? null;
+    }
+
+    if ("status" in updates) {
+      line.status = updates.status ?? null;
+    }
+
+    savingBySimulationId[line.simulationId] = true;
+    errorBySimulationId[line.simulationId] = "";
+
+    try {
+      const response = await fetch(
+        `/ofs/${data.ofs.id}/simulations/${line.simulationId}/metadata`,
+        {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          action: line.action,
+          status: line.status,
+        }),
+        },
+      );
+
+      if (response.status === 401) {
+        window.location.href = `/connexion?returnTo=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error("La mise à jour a échoué.");
+      }
+
+      const saved = (await response.json()) as SimulationMetadata;
+
+      line.action = saved.action;
+      line.status = saved.status;
+    } catch {
+      line.action = previousAction;
+      line.status = previousStatus;
+      errorBySimulationId[line.simulationId] =
+        "La mise à jour a échoué.";
+    } finally {
+      savingBySimulationId[line.simulationId] = false;
+    }
   }
 
   function handleExportSubmit(event: SubmitEvent) {
@@ -154,6 +265,7 @@
       <caption>{contacts.totalCount} contact(s)</caption>
       <thead>
         <tr>
+          <th scope="col">Infos</th>
           <th scope="col">Date</th>
           <th scope="col">Contact</th>
           <th scope="col">Localisation</th>
@@ -163,8 +275,65 @@
         </tr>
       </thead>
       <tbody>
-        {#each contacts.items as line}
+        {#each items as line}
           <tr>
+            <td>
+              <div class="simulation-metadata-stack">
+                <div class="fr-select-group simulation-metadata-field">
+                  <label class="fr-label fr-mb-1v" for={`action-${line.locationId}`}
+                    >Action</label
+                  >
+                  <select
+                    id={`action-${line.locationId}`}
+                    class="fr-select"
+                    bind:value={line.action}
+                    disabled={savingBySimulationId[line.simulationId]}
+                    onchange={async (event) => {
+                      const target = event.currentTarget as HTMLSelectElement;
+                      await updateMetadata(line, {
+                        action: target.value || null,
+                      });
+                    }}
+                  >
+                    <option value="">-</option>
+                    {#each actionOptions as option}
+                      <option value={option.value}>{option.label}</option>
+                    {/each}
+                  </select>
+                </div>
+
+                <div class="fr-select-group simulation-metadata-field">
+                  <label class="fr-label fr-mb-1v" for={`status-${line.locationId}`}
+                    >Statut</label
+                  >
+                  <select
+                    id={`status-${line.locationId}`}
+                    class="fr-select"
+                    bind:value={line.status}
+                    disabled={savingBySimulationId[line.simulationId]}
+                    onchange={async (event) => {
+                      const target = event.currentTarget as HTMLSelectElement;
+                      await updateMetadata(line, {
+                        status: target.value || null,
+                      });
+                    }}
+                  >
+                    <option value="">-</option>
+                    {#each statusOptions as option}
+                      <option value={option.value}>{option.label}</option>
+                    {/each}
+                  </select>
+                </div>
+
+                {#if savingBySimulationId[line.simulationId]}
+                  <p class="fr-hint-text fr-mt-1v">Mise à jour...</p>
+                {:else if errorBySimulationId[line.simulationId]}
+                  <p class="fr-error-text fr-mt-1v">
+                    {errorBySimulationId[line.simulationId]}
+                  </p>
+                {/if}
+              </div>
+            </td>
             <td>
               <div>{formatDate(line.submittedAt)}</div>
               {#if line.isNew}
@@ -284,6 +453,17 @@
     display: flex;
     gap: 1rem;
     justify-content: flex-end;
+  }
+
+  .simulation-metadata-field {
+    margin-bottom: 0;
+    min-width: 12rem;
+  }
+
+  .simulation-metadata-stack {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 14rem;
   }
 
   @media (max-width: 48rem) {

@@ -13,6 +13,7 @@ import { LandbotCustomerEntity } from '../landbot-customer/landbot-customer.enti
 import { LocationEntity } from '../location/location.entity';
 import { EligibilitySimulationEntity } from '../eligibility-simulation/eligibility-simulation.entity';
 import { UserPasswordResetTokenEntity } from '../user/user-password-reset-token.entity';
+import { OfsEligibilitySimulationEntity } from '../ofs/ofs-eligibility-simulation.entity';
 dotenv.config();
 
 const test = process.env.NODE_ENV === 'test';
@@ -39,6 +40,7 @@ export const typeormConfig: DataSourceOptions = {
     LocationEntity,
     EligibilitySimulationEntity,
     UserPasswordResetTokenEntity,
+    OfsEligibilitySimulationEntity,
   ],
   migrations: ['dist/infrastructure/persistence/migrations/**/*{.ts,.js}'],
   synchronize: false,

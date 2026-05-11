@@ -308,6 +308,23 @@ export class EligibilitySimulationRepository
     return query.getRawMany<PortalEligibilitySimulationContactResult>();
   }
 
+  public async hasPortalContactInOfsScope(
+    simulationId: string,
+    filters: PortalEligibilitySimulationContactFilters,
+  ): Promise<boolean> {
+    const query = this.createPortalContactsQuery(filters, false);
+
+    if (!query) {
+      return false;
+    }
+
+    const total = await query
+      .andWhere('eligibility_simulation.id = :simulationId', { simulationId })
+      .getCount();
+
+    return total > 0;
+  }
+
   private createPortalContactsQuery(
     filters: PortalEligibilitySimulationContactFilters,
     withSelects = true,
@@ -317,6 +334,12 @@ export class EligibilitySimulationRepository
       .innerJoin('eligibility_simulation.locations', 'location')
       .innerJoin('location.departement', 'departement')
       .innerJoin('departement.region', 'region')
+      .leftJoin(
+        'ofs_eligibility_simulation',
+        'ofs_eligibility_simulation',
+        'ofs_eligibility_simulation."eligibilitySimulationId" = eligibility_simulation.id AND ofs_eligibility_simulation."ofsId" = :ofsId',
+        { ofsId: filters.ofsId },
+      )
       .where('eligibility_simulation."hasRefusedConnection" = false')
       .andWhere('eligibility_simulation.email IS NOT NULL')
       .andWhere('eligibility_simulation.contribution IS NOT NULL')
@@ -347,7 +370,15 @@ export class EligibilitySimulationRepository
           'propertySituation',
         )
         .addSelect('eligibility_simulation."housingType"', 'housingType')
-        .addSelect('eligibility_simulation.resources', 'resources');
+        .addSelect('eligibility_simulation.resources', 'resources')
+        .addSelect(
+          'ofs_eligibility_simulation.action',
+          'action',
+        )
+        .addSelect(
+          'ofs_eligibility_simulation.status',
+          'status',
+        );
     }
 
     if (!this.applyPortalScopeFilters(query, filters)) {

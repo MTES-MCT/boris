@@ -17,6 +17,8 @@ type ContactLine = {
   propertySituation: string | null;
   housingType: string | null;
   resources: number | null;
+  action: string | null;
+  status: string | null;
   isNew: boolean;
 };
 

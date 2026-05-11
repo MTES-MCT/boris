@@ -2,8 +2,8 @@ import { env } from "$env/dynamic/private";
 import { error, type RequestEvent } from "@sveltejs/kit";
 import { applyBackendSetCookie, clearSessionCookie } from "./session-cookie";
 
-const BACKEND_API_URL = env.BACKEND_API_URL || "http://localhost:3000";
-const OFS_PORTAL_URL = env.OFS_PORTAL_URL || "http://localhost:4173";
+const BACKEND_API_URL = env.BACKEND_API_URL || "http://localhost:3001";
+const OFS_PORTAL_URL = env.OFS_PORTAL_URL || "http://localhost:5173";
 
 export async function backendFetch(
   event: RequestEvent,

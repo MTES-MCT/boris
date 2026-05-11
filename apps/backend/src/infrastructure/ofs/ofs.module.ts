@@ -19,10 +19,11 @@ import { UserModule } from '../user/user.module';
 import { PortalOfssController } from './controllers/api/portal-ofss.controller';
 import { PortalApiAuthenticatedGuard } from '../auth/guards/portal-api-authenticated.guard';
 import { EligibilitySimulationModule } from '../eligibility-simulation/eligibility-simulation.module';
+import { OfsEligibilitySimulationEntity } from './ofs-eligibility-simulation.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([OfsEntity]),
+    TypeOrmModule.forFeature([OfsEntity, OfsEligibilitySimulationEntity]),
     RegionModule,
     DepartementModule,
     DistributorModule,

@@ -8,6 +8,11 @@ import { EligibilitySimulationEntity } from 'src/infrastructure/eligibility-simu
 import { LocationEntity } from 'src/infrastructure/location/location.entity';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
 import { SaveUserUseCase } from 'src/application/user/usecases/save.usecase';
+import {
+  OfsEligibilitySimulationAction,
+  OfsEligibilitySimulationEntity,
+  OfsEligibilitySimulationStatus,
+} from 'src/infrastructure/ofs/ofs-eligibility-simulation.entity';
 
 describe('PortalOfssController eligibility simulations', () => {
   let app: INestApplication<App>;
@@ -16,6 +21,7 @@ describe('PortalOfssController eligibility simulations', () => {
   let eligibilitySimulationRepository: Repository<EligibilitySimulationEntity>;
   let locationRepository: Repository<LocationEntity>;
   let departementRepository: Repository<DepartementEntity>;
+  let ofsEligibilitySimulationRepository: Repository<OfsEligibilitySimulationEntity>;
   let saveUserUsecase: SaveUserUseCase;
 
   beforeEach(async () => {
@@ -29,6 +35,9 @@ describe('PortalOfssController eligibility simulations', () => {
     );
     locationRepository = dataSource.getRepository(LocationEntity);
     departementRepository = dataSource.getRepository(DepartementEntity);
+    ofsEligibilitySimulationRepository = dataSource.getRepository(
+      OfsEligibilitySimulationEntity,
+    );
     saveUserUsecase = app.get(SaveUserUseCase);
   });
 
@@ -144,6 +153,8 @@ describe('PortalOfssController eligibility simulations', () => {
           email: 'alice@example.test',
           city: 'Ville cible',
           departementCode: matchingDepartement.code,
+          action: null,
+          status: null,
         }),
       ]),
     );
@@ -153,6 +164,90 @@ describe('PortalOfssController eligibility simulations', () => {
           simulationId: otherSimulation.id,
         }),
       ]),
+    );
+  });
+
+  it('updates metadata for an accessible simulation', async () => {
+    const ofs = await ofsRepository.findOne({
+      relations: ['departements', 'regions'],
+      where: {},
+      order: { createdAt: 'ASC' },
+    });
+
+    expect(ofs).toBeTruthy();
+
+    const matchingDepartement = ofs!.departements[0];
+
+    const simulation = await eligibilitySimulationRepository.save(
+      Object.assign(new EligibilitySimulationEntity(), {
+        householdSize: 2,
+        firstName: 'Claire',
+        lastName: 'Bernard',
+        email: 'claire@example.test',
+        phone: '0102030405',
+        contribution: 15000,
+        resources: 2800,
+        taxableIncome: 38000,
+        propertySituation: 'LOCATAIRE_PRIVE',
+        housingType: 'T3',
+        hasDisability: false,
+        hasRefusedConnection: false,
+      }),
+    );
+
+    await locationRepository.save(
+      Object.assign(new LocationEntity(), {
+        city: 'Ville cible',
+        citycode: '00001',
+        label: 'Ville cible',
+        postalCode: '75000',
+        departement: matchingDepartement,
+        eligibilitySimulation: simulation,
+      }),
+    );
+
+    const agent = request.agent(app.getHttpServer());
+    const adminEmail = `admin-${Date.now()}@example.test`;
+    const adminPassword = 'passwordpassword';
+
+    await saveUserUsecase.execute({
+      email: adminEmail,
+      password: adminPassword,
+    });
+
+    const loginResponse = await agent.post('/api/portal/auth/login').send({
+      email: adminEmail,
+      password: adminPassword,
+    });
+
+    expect(loginResponse.status).toBe(204);
+
+    const { status, body } = await agent
+      .put(`/api/portal/ofss/${ofs!.id}/eligibility-simulations/${simulation.id}/metadata`)
+      .send({
+        action: OfsEligibilitySimulationAction.RECONTACTED,
+        status: OfsEligibilitySimulationStatus.EXCHANGE_IN_PROGRESS,
+      });
+
+    expect(status).toBe(200);
+    expect(body).toEqual({
+      simulationId: simulation.id,
+      action: OfsEligibilitySimulationAction.RECONTACTED,
+      status: OfsEligibilitySimulationStatus.EXCHANGE_IN_PROGRESS,
+    });
+
+    await expect(
+      ofsEligibilitySimulationRepository.findOneBy({
+        ofsId: ofs!.id,
+        eligibilitySimulationId: simulation.id,
+      }),
+    ).resolves.toEqual(
+      expect.objectContaining({
+        ofsId: ofs!.id,
+        eligibilitySimulationId: simulation.id,
+        action: OfsEligibilitySimulationAction.RECONTACTED,
+        status: OfsEligibilitySimulationStatus.EXCHANGE_IN_PROGRESS,
+      }),
     );
   });
 

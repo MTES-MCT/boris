@@ -23,6 +23,11 @@ import { FindPortalContactLinesUsecase } from 'src/application/eligibility-simul
 import { ExportPortalContactLinesUsecase } from 'src/application/eligibility-simulation/usecases/export-portal-contact-lines.usecase';
 import { PortalUpdateOfsDto } from '../../dtos/portal-update.dto';
 import { OfsEntity } from '../../ofs.entity';
+import { EligibilitySimulationRepository } from 'src/infrastructure/eligibility-simulation/eligibility-simulation.repository';
+import {
+  OfsEligibilitySimulationEntity,
+} from '../../ofs-eligibility-simulation.entity';
+import { UpdatePortalSimulationMetadataDto } from '../../dtos/update-portal-simulation-metadata.dto';
 
 @ApiExcludeController()
 @Controller('/api/portal/ofss')
@@ -30,8 +35,11 @@ export class PortalOfssController {
   constructor(
     @InjectRepository(OfsEntity)
     private readonly ofsRepository: Repository<OfsEntity>,
+    @InjectRepository(OfsEligibilitySimulationEntity)
+    private readonly ofsEligibilitySimulationRepository: Repository<OfsEligibilitySimulationEntity>,
     private readonly findPortalContactLinesUsecase: FindPortalContactLinesUsecase,
     private readonly exportPortalContactLinesUsecase: ExportPortalContactLinesUsecase,
+    private readonly eligibilitySimulationRepository: EligibilitySimulationRepository,
   ) {}
 
   @UseGuards(PortalApiAuthenticatedGuard)
@@ -104,6 +112,7 @@ export class PortalOfssController {
         pageSize: pagination.pageSize || 20,
       },
       {
+        ofsId: ofs.id,
         departementIds: ofs.departements.map((departement) => departement.id),
         regionIds: ofs.regions.map((region) => region.id),
         compareDate: session.previousLoginAt
@@ -126,6 +135,7 @@ export class PortalOfssController {
     const ofs = await this.findAccessibleOfs(id, user);
     const validatedDates = this.validateExportDates(startDate, endDate);
     const lines = await this.exportPortalContactLinesUsecase.execute({
+      ofsId: ofs.id,
       departementIds: ofs.departements.map((departement) => departement.id),
       regionIds: ofs.regions.map((region) => region.id),
       ...validatedDates,
@@ -139,6 +149,58 @@ export class PortalOfssController {
     );
 
     return res.send(Buffer.from(csv, 'utf-8'));
+  }
+
+  @UseGuards(PortalApiAuthenticatedGuard)
+  @Put(':id/eligibility-simulations/:simulationId/metadata')
+  public async updateEligibilitySimulationMetadata(
+    @Param('id') id: string,
+    @Param('simulationId') simulationId: string,
+    @Body() body: UpdatePortalSimulationMetadataDto,
+    @Req() req: Request,
+  ) {
+    const user = req.user as UserEntity;
+    const ofs = await this.findAccessibleOfs(id, user);
+    const filters = {
+      ofsId: ofs.id,
+      departementIds: ofs.departements.map((departement) => departement.id),
+      regionIds: ofs.regions.map((region) => region.id),
+    };
+
+    const isAccessible =
+      await this.eligibilitySimulationRepository.hasPortalContactInOfsScope(
+        simulationId,
+        filters,
+      );
+
+    if (!isAccessible) {
+      throw new NotFoundException();
+    }
+
+    let metadata = await this.ofsEligibilitySimulationRepository.findOne({
+      where: {
+        ofsId: ofs.id,
+        eligibilitySimulationId: simulationId,
+      },
+    });
+
+    if (!metadata) {
+      metadata = this.ofsEligibilitySimulationRepository.create({
+        ofsId: ofs.id,
+        eligibilitySimulationId: simulationId,
+      });
+    }
+
+    metadata.action = body.action ?? null;
+    metadata.status = body.status ?? null;
+
+    const saved = await this.ofsEligibilitySimulationRepository.save(metadata);
+
+    return {
+      simulationId: saved.eligibilitySimulationId,
+      action: saved.action,
+      status: saved.status,
+    };
   }
 
   @UseGuards(PortalApiAuthenticatedGuard)

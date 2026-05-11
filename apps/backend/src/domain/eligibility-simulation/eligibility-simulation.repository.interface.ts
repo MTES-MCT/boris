@@ -66,9 +66,12 @@ export type PortalEligibilitySimulationContactResult = {
   propertySituation: string | null;
   housingType: string | null;
   resources: number | null;
+  action: string | null;
+  status: string | null;
 };
 
 export type PortalEligibilitySimulationContactFilters = {
+  ofsId: string;
   departementIds: string[];
   regionIds: string[];
   startDate?: string;
@@ -96,4 +99,8 @@ export interface EligibilitySimulationRepositoryInterface {
   findAllPortalContactsByOfsScope(
     filters: PortalEligibilitySimulationContactFilters,
   ): Promise<PortalEligibilitySimulationContactResult[]>;
+  hasPortalContactInOfsScope(
+    simulationId: string,
+    filters: PortalEligibilitySimulationContactFilters,
+  ): Promise<boolean>;
 }

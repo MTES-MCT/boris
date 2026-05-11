@@ -14,6 +14,8 @@ export class PortalContactLineView {
   public propertySituation: string | null;
   public housingType: string | null;
   public resources: number | null;
+  public action: string | null;
+  public status: string | null;
   public isNew: boolean;
 
   constructor(props: PortalContactLineView) {
@@ -32,6 +34,8 @@ export class PortalContactLineView {
     this.propertySituation = props.propertySituation;
     this.housingType = props.housingType;
     this.resources = props.resources;
+    this.action = props.action;
+    this.status = props.status;
     this.isNew = props.isNew;
   }
 }
