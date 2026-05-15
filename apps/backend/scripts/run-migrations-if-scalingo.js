@@ -1,6 +1,6 @@
 const { execSync } = require('node:child_process');
 
-if (!process.env.SCALINGO_APPLICATION_ID) {
+if (!process.env.APP) {
   console.log('Skipping migrations outside Scalingo build context.');
   process.exit(0);
 }
