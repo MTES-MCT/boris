@@ -6,16 +6,15 @@ import { SessionEntity } from './session.entity';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
 export function useSession(app: NestExpressApplication) {
-  const dataSource = app.get(DataSource);
   const ttl = 60 * 60 * 24; // 24h
+  const test = process.env.NODE_ENV === 'test';
 
-  const sessionRepository =
-    dataSource.getRepository<SessionEntity>(SessionEntity);
-
-  const sessionStore = new TypeormStore({
-    cleanupLimit: 2,
-    ttl,
-  }).connect(sessionRepository);
+  const sessionStore = test
+    ? undefined
+    : new TypeormStore({
+        cleanupLimit: 2,
+        ttl,
+      }).connect(app.get(DataSource).getRepository<SessionEntity>(SessionEntity));
 
   app.use(
     session({

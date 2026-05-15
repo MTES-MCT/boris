@@ -46,7 +46,5 @@ export const setupTestingApp = async (): Promise<INestApplication<App>> => {
   app.use(flash());
   app.use(methodOverride('_method'));
 
-  await app.init();
-
   return app;
 };
