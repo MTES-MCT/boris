@@ -7,7 +7,7 @@
     "npm": "10.8.2"
   },
   "scripts": {
-    "build": "npm run build:css && nest build",
+    "build": "npm run build:css && nest build && npm run migration:migrate:if-scalingo",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start -w",
     "start:dev": "concurrently \"nodemon\" \"npm run build:css:dev\"",
@@ -28,6 +28,7 @@
     "migration:create": "npm run typeorm -- migration:create",
     "migration:generate": "npm run typeorm -- migration:generate -d src/infrastructure/persistence/typeorm-cli.config.ts",
     "migration:migrate": "npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm-cli.config.ts",
+    "migration:migrate:if-scalingo": "node ./scripts/run-migrations-if-scalingo.js",
     "migration:migrate:test": "NODE_ENV=test  npm run typeorm -- migration:run -d src/infrastructure/persistence/typeorm-cli.config.ts",
     "migration:migrate:revert": "npm run typeorm -- migration:revert -d src/infrastructure/persistence/typeorm-cli.config.ts",
     "migration:migrate:revert:test": "NODE_ENV=test npm run typeorm -- migration:revert -d src/infrastructure/persistence/typeorm-cli.config.ts",
