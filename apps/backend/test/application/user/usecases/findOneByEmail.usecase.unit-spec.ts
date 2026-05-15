@@ -24,7 +24,12 @@ describe('FindOneByEmailUsecase', () => {
   it('should return user view if user is found', async () => {
     mockUserRepository.findOneByEmail.mockReturnValue(user1);
 
-    const expectedResult = new UserView(user1.email);
+    const expectedResult = new UserView(
+      user1.id,
+      user1.email,
+      user1.roles,
+      user1.isActive,
+    );
 
     const result = await useCase.execute({ email: user1.email });
 

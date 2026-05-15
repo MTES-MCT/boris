@@ -20,6 +20,7 @@ import { EligibilitySimulationModule } from './infrastructure/eligibility-simula
 import { LocationModule } from './infrastructure/location/location.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DatagouvModule } from './infrastructure/datagouv/datagouv.module';
+import { TrustedOriginMiddleware } from './infrastructure/middlewares/trusted-origin.middleware';
 
 @Module({
   imports: [
@@ -80,6 +81,6 @@ import { DatagouvModule } from './infrastructure/datagouv/datagouv.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ToLocalsMiddleware).forRoutes('*');
+    consumer.apply(TrustedOriginMiddleware, ToLocalsMiddleware).forRoutes('*');
   }
 }

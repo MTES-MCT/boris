@@ -5,3 +5,24 @@
 <div class="m-4 p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md">
   {{> forms/ofs/update actionLabel=translations.actions.update }}
 </div>
+
+<div class="m-4 p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+  <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Utilisateurs rattachés</h2>
+
+  {{#if linkedUsers.length}}
+  <div class="mt-4 space-y-3">
+    {{#each linkedUsers as |user|}}
+    <a href="/users/{{user.id}}/update?returnTo={{encodeURIComponent (concat '/ofs/' (concat ../ofs.id '/update'))}}"
+      class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-3 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700">
+      <span class="text-sm font-medium text-gray-900 dark:text-white">{{user.email}}</span>
+      <span
+        class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium {{#if user.isActive}}bg-green-50 text-green-800 dark:bg-green-900 dark:text-green-300{{else}}bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200{{/if}}">
+        {{#if user.isActive}}Actif{{else}}Inactif{{/if}}
+      </span>
+    </a>
+    {{/each}}
+  </div>
+  {{else}}
+  <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">Aucun utilisateur rattaché</p>
+  {{/if}}
+</div>

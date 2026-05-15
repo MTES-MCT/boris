@@ -1,0 +1,190 @@
+{{> breadcrumb links=breadcrumbLinks }}
+
+<div class="px-4 py-8 bg-gray-50 dark:bg-gray-900">
+  <div class="flex items-end justify-between gap-4">
+    <h5 class="text-gray-800 text-2xl dark:text-white font-semibold">{{title}}</h5>
+    <a href="/users/create"
+      class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+      Créer un utilisateur
+    </a>
+  </div>
+</div>
+
+<div class="m-4 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+  <form id="users-filters-form" action="/users" method="GET" class="grid gap-4 md:grid-cols-4">
+    <input type="hidden" name="page" value="{{filters.page}}" />
+    <input type="hidden" name="pageSize" value="{{filters.pageSize}}" />
+
+    <div>
+      <label for="search" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+      <input type="search" id="search" name="search" value="{{filters.search}}" placeholder="Rechercher par email"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+    </div>
+
+    <div>
+      <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rôle</label>
+      <select id="role" name="role"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <option value="">Tous les rôles</option>
+        <option value="admin" {{#if (isEqual filters.role 'admin')}}selected{{/if}}>Admin</option>
+        <option value="ofs" {{#if (isEqual filters.role 'ofs')}}selected{{/if}}>OFS</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="isActive" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Statut</label>
+      <select id="isActive" name="isActive"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <option value="">Tous les statuts</option>
+        <option value="true" {{#if (isEqual filters.isActive true)}}selected{{/if}}>Actif</option>
+        <option value="false" {{#if (isEqual filters.isActive false)}}selected{{/if}}>Inactif</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="ofsId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">OFS</label>
+      <select id="ofsId" name="ofsId"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <option value="">Tous les OFS</option>
+        {{#each ofss as |ofs|}}
+        <option value="{{ofs.id}}" {{#if (isEqual ../filters.ofsId ofs.id)}}selected{{/if}}>{{ofs.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </form>
+
+  {{#if structuredFilterChips.length}}
+  <div class="mt-4 flex flex-wrap items-center gap-2">
+    {{#each structuredFilterChips as |chip|}}
+    <a href="{{chip.removeHref}}"
+      class="inline-flex items-center gap-2 rounded-full bg-primary-50 px-3 py-1 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
+      {{chip.label}} <span aria-hidden="true">×</span>
+    </a>
+    {{/each}}
+    <a href="/users" class="text-sm font-medium text-primary-700 hover:underline">Réinitialiser les filtres</a>
+  </div>
+  {{/if}}
+</div>
+
+<div class="m-4 bg-white dark:bg-gray-900 relative shadow-md overflow-hidden">
+  {{#if users.totalCount}}
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-4 py-3">Email</th>
+          <th scope="col" class="px-4 py-3">Rôle</th>
+          <th scope="col" class="px-4 py-3">Statut</th>
+          <th scope="col" class="px-4 py-3">OFS</th>
+          <th scope="col" class="px-4 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each users.items as |user|}}
+        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
+          <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
+            <a href="/users/{{user.id}}/update?returnTo={{encodeURIComponent ../returnTo}}" class="text-primary-700 hover:underline">{{user.email}}</a>
+          </td>
+          <td class="px-4 py-3">
+            <span class="inline-flex rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300">
+              {{#each user.roles as |role|}}{{#if @first}}{{#if (isEqual role 'admin')}}Admin{{else}}OFS{{/if}}{{/if}}{{/each}}
+            </span>
+          </td>
+          <td class="px-4 py-3">
+            <span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium {{#if user.isActive}}bg-green-50 text-green-800 dark:bg-green-900 dark:text-green-300{{else}}bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200{{/if}}">
+              {{#if user.isActive}}Actif{{else}}Inactif{{/if}}
+            </span>
+          </td>
+          <td class="px-4 py-3">
+            {{#if user.ofss.length}}
+            <div class="flex flex-wrap gap-1">
+              {{#each user.ofss as |ofs|}}
+                {{#if (lt @index 3)}}
+                <a href="/ofs/{{ofs.id}}/update?returnTo={{encodeURIComponent ../../returnTo}}"
+                  class="inline-flex rounded-full bg-purple-50 px-2.5 py-0.5 text-xs font-medium text-purple-800 hover:underline dark:bg-purple-900 dark:text-purple-300">{{ofs.name}}</a>
+                {{/if}}
+                {{#if (isEqual @index 3)}}
+                <span class="inline-flex rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-200">+{{subtract ../user.ofss.length 3}}</span>
+                {{/if}}
+              {{/each}}
+            </div>
+            {{else}}
+            <span class="text-gray-500 dark:text-gray-400">-</span>
+            {{/if}}
+          </td>
+          <td class="px-4 py-3 text-right">
+            <a href="/users/{{user.id}}/update?returnTo={{encodeURIComponent ../returnTo}}" class="font-medium text-primary-700 hover:underline">Voir / Modifier</a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  <nav class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 p-4" aria-label="Navigation utilisateurs">
+    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+      Affichage
+      <span class="font-semibold text-gray-900 dark:text-white">{{lowOffset}}-{{highOffset}}</span>
+      de
+      <span class="font-semibold text-gray-900 dark:text-white">{{users.totalCount}}</span>
+    </span>
+    {{#if paginationLinks.length}}
+    <ul class="inline-flex items-stretch -space-x-px">
+      {{#each paginationLinks as |page|}}
+      <li>
+        {{#if page.isEllipsis}}
+        <span class="flex items-center justify-center h-full py-1.5 px-3 text-gray-400 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-500">...</span>
+        {{else if page.disabled}}
+        <span class="flex items-center justify-center h-full py-1.5 px-3 text-gray-400 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-500">{{page.label}}</span>
+        {{else}}
+        <a href="{{page.href}}" class="flex items-center justify-center h-full py-1.5 px-3 {{#if page.isCurrent}}text-primary-600 bg-primary-50 border border-primary-300 dark:bg-gray-700 dark:text-white{{else}}text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white{{/if}}">{{page.label}}</a>
+        {{/if}}
+      </li>
+      {{/each}}
+    </ul>
+    {{/if}}
+  </nav>
+  {{else}}
+  <div class="p-8">
+    <p class="text-sm text-gray-500 dark:text-gray-400">Aucun utilisateur ne correspond aux filtres sélectionnés.</p>
+    <a href="/users" class="mt-3 inline-flex text-sm font-medium text-primary-700 hover:underline">Réinitialiser les filtres</a>
+  </div>
+  {{/if}}
+</div>
+
+<script>
+  (() => {
+    const form = document.getElementById('users-filters-form');
+    if (!form) return;
+    const searchInput = document.getElementById('search');
+    const pageInput = form.querySelector('input[name="page"]');
+
+    const buildUrl = () => {
+      const data = new FormData(form);
+      data.set('page', '1');
+      const params = new URLSearchParams();
+      for (const [key, value] of data.entries()) {
+        if (typeof value !== 'string' || value === '') continue;
+        if (key === 'page' && value === '1') continue;
+        params.set(key, value);
+      }
+      return params.toString() ? `/users?${params.toString()}` : '/users';
+    };
+
+    ['role', 'isActive', 'ofsId'].forEach((fieldName) => {
+      const field = form.querySelector(`[name="${fieldName}"]`);
+      field?.addEventListener('change', () => {
+        if (pageInput) pageInput.value = '1';
+        window.location.assign(buildUrl());
+      });
+    });
+
+    let timeout;
+    searchInput?.addEventListener('input', () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        if (pageInput) pageInput.value = '1';
+        window.location.replace(buildUrl());
+      }, 400);
+    });
+  })();
+</script>
