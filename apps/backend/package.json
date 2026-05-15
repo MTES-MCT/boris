@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "npm run build:css && nest build",
-    "scalingo-postbuild": "npm run migration:migrate",
+    "scalingo-postbuild": "npm run build && npm run migration:migrate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start -w",
     "start:dev": "concurrently \"nodemon\" \"npm run build:css:dev\"",
