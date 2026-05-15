@@ -14,7 +14,7 @@
     "start:dev": "concurrently \"nodemon\" \"npm run build:css:dev\"",
     "start:test": "NODE_ENV=test nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/main.js",
     "build:css": "tailwindcss -i ./src/assets/styles/main.css -o ./src/assets/styles/output.css",
     "build:css:dev": "tailwindcss -i ./src/assets/styles/main.css -o ./src/assets/styles/output.css --watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
