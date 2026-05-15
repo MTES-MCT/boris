@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "20.19.0",
-    "npm": "10.8.2"
+    "node": "26.1.0",
+    "npm": "11.13.0"
   },
   "scripts": {
     "build": "npm run build:css && nest build && npm run migration:migrate:if-scalingo",
@@ -52,7 +52,7 @@
     "@nestjs/schedule": "^6.0.1",
     "@nestjs/swagger": "^11.2.0",
     "@nestjs/typeorm": "^11.0.0",
-    "@sentry/nestjs": "^10.10.0",
+    "@sentry/nestjs": "10.53.1",
     "@types/bcrypt": "^5.0.2",
     "bcrypt": "^6.0.0",
     "connect-flash": "^0.1.1",
