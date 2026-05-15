@@ -4,10 +4,11 @@
   "private": true,
   "engines": {
     "node": "^26.0.0",
-    "npm": "11.13.0"
+    "npm": "11.14.1"
   },
   "scripts": {
-    "build": "npm run build:css && nest build && npm run migration:migrate:if-scalingo",
+    "build": "npm run build:css && nest build",
+    "scalingo-postbuild": "npm run migration:migrate && npm ls",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start -w",
     "start:dev": "concurrently \"nodemon\" \"npm run build:css:dev\"",
