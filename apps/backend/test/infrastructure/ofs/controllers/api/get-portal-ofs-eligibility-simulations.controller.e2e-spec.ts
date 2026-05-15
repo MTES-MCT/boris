@@ -24,7 +24,7 @@ describe('PortalOfssController eligibility simulations', () => {
   let ofsEligibilitySimulationRepository: Repository<OfsEligibilitySimulationEntity>;
   let saveUserUsecase: SaveUserUseCase;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     app = await setupTestingApp();
     await app.init();
 
@@ -41,7 +41,8 @@ describe('PortalOfssController eligibility simulations', () => {
     saveUserUsecase = app.get(SaveUserUseCase);
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
+    await new Promise((resolve) => setImmediate(resolve));
     await app.close();
   });
 
@@ -125,7 +126,6 @@ describe('PortalOfssController eligibility simulations', () => {
       }),
     );
 
-    const agent = request.agent(app.getHttpServer());
     const adminEmail = `admin-${Date.now()}@example.test`;
     const adminPassword = 'passwordpassword';
 
@@ -134,16 +134,19 @@ describe('PortalOfssController eligibility simulations', () => {
       password: adminPassword,
     });
 
-    const loginResponse = await agent.post('/api/portal/auth/login').send({
-      email: adminEmail,
-      password: adminPassword,
-    });
+    const loginResponse = await request(app.getHttpServer())
+      .post('/api/portal/auth/login')
+      .send({
+        email: adminEmail,
+        password: adminPassword,
+      });
 
     expect(loginResponse.status).toBe(204);
+    const cookies = loginResponse.headers['set-cookie'];
 
-    const { status, body } = await agent.get(
-      `/api/portal/ofss/${ofs!.id}/eligibility-simulations?page=1&pageSize=20`,
-    );
+    const { status, body } = await request(app.getHttpServer())
+      .get(`/api/portal/ofss/${ofs!.id}/eligibility-simulations?page=1&pageSize=20`)
+      .set('Cookie', cookies);
 
     expect(status).toBe(200);
     expect(body.items).toEqual(
@@ -165,6 +168,12 @@ describe('PortalOfssController eligibility simulations', () => {
         }),
       ]),
     );
+
+    await expect(
+      request(app.getHttpServer())
+        .post('/api/portal/auth/logout')
+        .set('Cookie', cookies),
+    ).resolves.toMatchObject({ status: 204 });
   });
 
   it('updates metadata for an accessible simulation', async () => {
@@ -206,7 +215,6 @@ describe('PortalOfssController eligibility simulations', () => {
       }),
     );
 
-    const agent = request.agent(app.getHttpServer());
     const adminEmail = `admin-${Date.now()}@example.test`;
     const adminPassword = 'passwordpassword';
 
@@ -215,15 +223,19 @@ describe('PortalOfssController eligibility simulations', () => {
       password: adminPassword,
     });
 
-    const loginResponse = await agent.post('/api/portal/auth/login').send({
-      email: adminEmail,
-      password: adminPassword,
-    });
+    const loginResponse = await request(app.getHttpServer())
+      .post('/api/portal/auth/login')
+      .send({
+        email: adminEmail,
+        password: adminPassword,
+      });
 
     expect(loginResponse.status).toBe(204);
+    const cookies = loginResponse.headers['set-cookie'];
 
-    const { status, body } = await agent
+    const { status, body } = await request(app.getHttpServer())
       .put(`/api/portal/ofss/${ofs!.id}/eligibility-simulations/${simulation.id}/metadata`)
+      .set('Cookie', cookies)
       .send({
         action: OfsEligibilitySimulationAction.RECONTACTED,
         status: OfsEligibilitySimulationStatus.EXCHANGE_IN_PROGRESS,
@@ -249,6 +261,12 @@ describe('PortalOfssController eligibility simulations', () => {
         status: OfsEligibilitySimulationStatus.EXCHANGE_IN_PROGRESS,
       }),
     );
+
+    await expect(
+      request(app.getHttpServer())
+        .post('/api/portal/auth/logout')
+        .set('Cookie', cookies),
+    ).resolves.toMatchObject({ status: 204 });
   });
 
 });

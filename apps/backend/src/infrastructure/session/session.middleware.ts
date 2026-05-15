@@ -14,7 +14,9 @@ export function useSession(app: NestExpressApplication) {
     : new TypeormStore({
         cleanupLimit: 2,
         ttl,
-      }).connect(app.get(DataSource).getRepository<SessionEntity>(SessionEntity));
+      }).connect(
+        app.get(DataSource).getRepository<SessionEntity>(SessionEntity),
+      );
 
   app.use(
     session({
