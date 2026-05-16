@@ -9,7 +9,7 @@
   "scripts": {
     "start:dev": "vite dev",
     "build": "svelte-kit sync && vite build",
-    "start": "node build",
+    "start": "npm ls && node build",
     "preview": "vite preview",
     "test": "npm run test:integration && npm run test:unit",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
