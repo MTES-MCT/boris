@@ -34,6 +34,11 @@ const staticMetadataByPath: Record<string, Omit<SeoMetadata, 'pathname'>> = {
     description:
       "Service de conseil gratuit d'Action Logement pour vous accompagner dans votre projet d'achat en BRS et construire un plan de financement adapté.",
   },
+  '/groupe-csf': {
+    title: 'Groupe CSF | Boris',
+    description:
+      "Service de conseil gratuit du Groupe CSF pour accompagner les fonctionnaires et salariés du secteur public dans leur projet d'achat en BRS.",
+  },
   '/blog': {
     title: 'Blog sur le Bail Réel Solidaire - BRS - BoRiS',
     description:

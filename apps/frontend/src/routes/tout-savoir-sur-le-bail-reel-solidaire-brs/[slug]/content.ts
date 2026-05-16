@@ -331,6 +331,24 @@ export const steps: Step[] = [
             href="/action-logement">
             En savoir plus
           </a>
+
+          <h2 class="fr-h5 heading fr-mt-6w">Fonctionnaires ou salarié·es du secteur public ? Profitez du conseil en financement et en accession du Groupe CSF</h2>
+          <p>
+            Vous souhaitez devenir propriétaire grâce au Bail Réel Solidaire (BRS)
+            ? Le groupe CSF via sa filiale CRESERFI met à votre disposition un
+            service de conseil gratuit et personnalisé pour vous accompagner dans
+            votre projet.
+          </p>
+          <p>
+            Les conseillers CRESERFI vous aident à évaluer la faisabilité de votre
+            achat en BRS et à construire votre plan de financement adapté à votre
+            situation en y intégrant les prêts aidés auxquels vous avez droit.
+          </p>
+          <a
+            class="fr-btn fr-btn--lg"
+            href="/groupe-csf">
+            En savoir plus
+          </a>
         `,
       },
       {
