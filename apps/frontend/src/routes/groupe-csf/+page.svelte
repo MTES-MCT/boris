@@ -41,7 +41,7 @@
     par l'association CSF, pour faciliter votre projet immobilier.
   </p>
 
-  <h3 class="fr-mt-6w">À qui s’adresse ce service ?</h3>
+  <h2 class="fr-mt-6w">À qui s’adresse ce service ?</h2>
   <p>
     Ce service est destiné aux fonctionnaires titulaires mais également à tous
     les salariés du secteur public et des entreprises publiques quel que soit
@@ -60,7 +60,7 @@
     .
   </p>
 
-  <h3 class="fr-mt-6w">Pourquoi choisir l’accompagnement du Groupe CSF</h3>
+  <h2 class="fr-mt-6w">Pourquoi choisir l’accompagnement du Groupe CSF</h2>
   <ol>
     <li>Service gratuit et sur mesure</li>
     <li>
