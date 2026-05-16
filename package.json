@@ -6,6 +6,9 @@
     "node": "^26.0.0",
     "npm": "11.14.1"
   },
+  "scripts": {
+    "scalingo-postbuild": "bash scalingo.sh"
+  },
   "workspaces": [
     "apps/frontend",
     "apps/backend",
