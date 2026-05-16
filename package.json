@@ -7,7 +7,7 @@
     "npm": "11.14.1"
   },
   "scripts": {
-    "scalingo-postbuild": "bash scalingo.sh"
+    "scalingo-postbuild": "bash scalingo/build.sh"
   },
   "workspaces": [
     "apps/frontend",

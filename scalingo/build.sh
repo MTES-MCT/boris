@@ -2,8 +2,6 @@
 
 set -e
 
-ROOT_DIR=$(cd -- "$(dirname -- "$0")" && pwd)
-
 echo "Building app for $APP"
 
 if echo "$APP" | grep -o 'backend'; then
