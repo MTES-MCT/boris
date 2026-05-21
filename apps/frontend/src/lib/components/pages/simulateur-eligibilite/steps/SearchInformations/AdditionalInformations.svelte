@@ -88,7 +88,12 @@
         ...publicSectorSchema,
       });
     } else if (employmentStatus === 'SALARIE_PUBLIC_OU_FONCTIONNAIRE') {
-      schema = schema.extend(publicSectorSchema);
+      schema = schema.extend({
+        allowFinancingAndOwnershipAdvices: z.boolean({
+          message: stepsContent.allowFinancingAndOwnershipAdvices.errorMessage,
+        }),
+        ...publicSectorSchema,
+      });
     } else if (employmentStatus === 'SALARIE_PRIVE_NON_AGRICOLE') {
       schema = schema.extend({
         hasCompanyMoreThan10Employees: z.boolean({
@@ -280,51 +285,6 @@
   {@render publicSector()}
 {/snippet}
 
-{#snippet publicSector()}
-  <div class="fr-fieldset__element fr-mb-4w">
-    <Select
-      label={stepsContent.positionType.label}
-      required
-      options={stepsContent.positionType.options.map((stepContent) => ({
-        ...stepContent,
-        selected: positionType === stepContent.value,
-      }))}
-      onChange={(e) => {
-        const { value } = e.target as HTMLSelectElement;
-
-        if (value) {
-          delete errors.positionType;
-        }
-
-        eligibilitySimulatorManager.positionType = value as PositionType;
-      }}
-      error={errors.positionType}
-      errorDataTestId={stepsContent.positionType.errorDataTestId} />
-  </div>
-
-  <div class="fr-fieldset__element fr-mb-4w">
-    <Select
-      label={stepsContent.positionStage.label}
-      required
-      options={stepsContent.positionStage.options.map((stepContent) => ({
-        ...stepContent,
-        selected: positionStage === stepContent.value,
-      }))}
-      onChange={(e) => {
-        const { value } = e.target as HTMLSelectElement;
-
-        if (value) {
-          delete errors.positionStage;
-        }
-
-        eligibilitySimulatorManager.positionStage =
-          value === '' ? undefined : value === 'true' ? true : false;
-      }}
-      error={errors.positionStage}
-      errorDataTestId={stepsContent.positionStage.errorDataTestId} />
-  </div>
-{/snippet}
-
 {#snippet privateSector()}
   <div class="fr-fieldset__element fr-mb-4w">
     <Select
@@ -438,6 +398,103 @@
         </a>
       </p>
     {/if}
+  </div>
+{/snippet}
+
+{#snippet csfFinancingAndOwnershipAdvices()}
+  <div class="fr-fieldset__element fr-mb-4w">
+    <p class="fr-mb-2w">
+      Etant donné votre situation professionnelle, vous êtes également éligible
+      au service de <a
+        href="https://www.csf.fr/immobilier"
+        class="fr-link"
+        target="_blank"
+        rel="noopener">
+        conseil en financement et en accession
+      </a>
+      de notre partenaire le Groupe CSF.
+    </p>
+    <Select
+      label={stepsContent.allowFinancingAndOwnershipAdvices.label}
+      required
+      options={stepsContent.allowFinancingAndOwnershipAdvices.options.map(
+        (stepContent) => ({
+          ...stepContent,
+          selected: allowFinancingAndOwnershipAdvices === stepContent.value,
+        }),
+      )}
+      onChange={(e) => {
+        const { value } = e.target as HTMLSelectElement;
+
+        if (value) {
+          delete errors.allowFinancingAndOwnershipAdvices;
+        }
+
+        eligibilitySimulatorManager.allowFinancingAndOwnershipAdvices =
+          value === '' ? undefined : value === 'true' ? true : false;
+      }}
+      error={errors.allowFinancingAndOwnershipAdvices}
+      errorDataTestId={stepsContent.allowFinancingAndOwnershipAdvices
+        .errorDataTestId} />
+
+    {#if allowFinancingAndOwnershipAdvices}
+      <p>
+        <a
+          href="https://www.csf.fr/immobilier/prendre-un-rendez-vous?idCampagne=701Tn00000WtU9WIAV"
+          class="fr-link"
+          target="_blank"
+          rel="noopener">
+          Prendre rendez-vous avec un.e conseiller.e.
+        </a>
+      </p>
+    {/if}
+  </div>
+{/snippet}
+
+{#snippet publicSector()}
+  {@render csfFinancingAndOwnershipAdvices()}
+
+  <div class="fr-fieldset__element fr-mb-4w">
+    <Select
+      label={stepsContent.positionType.label}
+      required
+      options={stepsContent.positionType.options.map((stepContent) => ({
+        ...stepContent,
+        selected: positionType === stepContent.value,
+      }))}
+      onChange={(e) => {
+        const { value } = e.target as HTMLSelectElement;
+
+        if (value) {
+          delete errors.positionType;
+        }
+
+        eligibilitySimulatorManager.positionType = value as PositionType;
+      }}
+      error={errors.positionType}
+      errorDataTestId={stepsContent.positionType.errorDataTestId} />
+  </div>
+
+  <div class="fr-fieldset__element fr-mb-4w">
+    <Select
+      label={stepsContent.positionStage.label}
+      required
+      options={stepsContent.positionStage.options.map((stepContent) => ({
+        ...stepContent,
+        selected: positionStage === stepContent.value,
+      }))}
+      onChange={(e) => {
+        const { value } = e.target as HTMLSelectElement;
+
+        if (value) {
+          delete errors.positionStage;
+        }
+
+        eligibilitySimulatorManager.positionStage =
+          value === '' ? undefined : value === 'true' ? true : false;
+      }}
+      error={errors.positionStage}
+      errorDataTestId={stepsContent.positionStage.errorDataTestId} />
   </div>
 {/snippet}
 

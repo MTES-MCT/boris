@@ -575,6 +575,12 @@ test.describe('Eligibility simulator', () => {
           await positionStageSelect.selectOption(positionStage.toString());
         }
       } else if (employmentStatus === 'SALARIE_PUBLIC_OU_FONCTIONNAIRE') {
+        if (typeof allowFinancingAndOwnershipAdvices === 'boolean') {
+          await allowFinancingAndOwnershipAdvicesSelect.selectOption(
+            allowFinancingAndOwnershipAdvices.toString(),
+          );
+        }
+
         if (typeof positionType === 'string') {
           await positionTypeSelect.selectOption(positionType);
         }
@@ -2079,6 +2085,10 @@ test.describe('Eligibility simulator', () => {
             true,
             'SALARIE_PUBLIC_OU_FONCTIONNAIRE',
           );
+          expect(allowFinancingAndOwnershipAdvicesErrorMessage).toBeVisible();
+          expect(allowFinancingAndOwnershipAdvicesErrorMessage).toHaveText(
+            stepsContent.allowFinancingAndOwnershipAdvices.errorMessage,
+          );
           expect(positionTypeErrorMessage).toBeVisible();
           expect(positionTypeErrorMessage).toHaveText(
             stepsContent.positionType.errorMessage,
@@ -2214,6 +2224,8 @@ test.describe('Eligibility simulator', () => {
             undefined,
             undefined,
             'CADRE',
+            true,
+            undefined,
             true,
           );
         });
