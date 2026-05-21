@@ -23,13 +23,13 @@
     la propriété pour des personnes qui auraient des difficultés à acheter leur
     résidence principale dans le marché libre. Dans la plupart des situations,
     les ménages concernés sont actuellement locataires (logement social ou
-    logement du parc privé) ou hébergés, mais il peut arriver que certains
-    propriétaires souhaitent acheter un logement en Bail Réel Solidaire, car
+    logement du parc privé) ou hébergés, mais <b>il peut arriver que certains
+    propriétaires souhaitent acheter un logement en Bail Réel Solidaire</b>, car
     leur logement actuel ne répond pas ou plus à leurs besoins.
   </p>
   <p>
-    Dans ce dernier cas, et depuis le 1er janvier 2025, s'applique une nouvelle
-    condition d'éligibilité pour les personnes qui souhaitent acheter en BRS.
+    <b>Dans ce dernier cas, et depuis le 1er janvier 2025, s'applique une nouvelle
+    condition d'éligibilité pour les personnes qui souhaitent acheter en BRS.</b>
     Cette nouvelle condition vise à préserver l’objectif social et solidaire de
     ce mode d'accession à la propriété. Ainsi si vous êtes déjà propriétaire,
     êtes-vous éligible au Bail Réel Solidaire ? Nous vous proposons de répondre
@@ -40,9 +40,16 @@
 
   <p>
     Tout d’abord regardons ensemble ce que dit le décret du 16 juillet 2024 sur
-    le sujet. Les dispositions de l’article R.255-1-1 du Code de la Construction
-    et de l’Habitation indiquent qu’un ménage acquéreur d’un logement en Bail
-    Réel Solidaire (BRS) ne doit pas posséder au moment de l’achat :
+    le sujet. Les dispositions de l’<a
+      href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000050005621"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="fr-link">
+      article R.255-1-1 du Code de la Construction et de l’Habitation
+    </a>
+    indiquent qu’<b>un ménage acquéreur d’un
+    logement en Bail Réel Solidaire (BRS) ne doit pas posséder au moment de
+    l’achat</b> :
   </p>
   <ol>
     <li>
@@ -67,8 +74,8 @@
   </p>
   <ul>
     <li>
-      Le logement dont vous êtes propriétaire est-il votre résidence principale
-      ? Et si oui pourquoi souhaitez-vous devenir acquéreur en BRS ?
+      <b>Le logement dont vous êtes propriétaire est-il votre résidence principale
+      ? Et si oui pourquoi souhaitez-vous devenir acquéreur en BRS ?</b>
     </li>
   </ul>
   <p>
@@ -93,9 +100,9 @@
   </p>
   <ul>
     <li>
-      Le logement dont vous êtes propriétaire, mis en location, permet-il
+      <b>Le logement dont vous êtes propriétaire, mis en location, permet-il
       d’avoir des revenus complémentaires suffisants pour acheter dans le marché
-      libre ?
+      libre ?</b>
     </li>
   </ul>
   <p>
@@ -124,17 +131,17 @@
   <p>
     Ainsi, si en tant que propriétaire vous êtes éligible au dispositif, et que
     vous poursuivez votre projet d’achat en BRS, vous devrez, au moment de la
-    signature de l’acte de vente, signer une attestation sur l’honneur indiquant
-    que vous n’êtes pas dans l’une des deux configurations citées ci-dessus. Un
+    signature de l’acte de vente, <b>signer une attestation sur l’honneur indiquant
+    que vous n’êtes pas dans l’une des deux configurations citées ci-dessus</b>. Un
     modèle d’attestation vous sera fourni par le ou la professionnel.le de
     l’immobilier avec qui vous serez en contact lors de votre achat.
   </p>
   <p>
-    Vous êtes éligible ? Contactez dès à présent <a
-      href="/organismes-de-foncier-solidaire"
+    Vous êtes éligible ? Recherchez dès à présent les <a
+      href="/logements-brs-disponibles"
       class="fr-link">
-      les organismes de foncier solidaire (OFS) ou leurs commercialisateurs
+      logements disponibles en bail réel solidaire près de chez vous
     </a>
-    dans votre région de recherche pour voir les biens disponibles .
+    !
   </p>
 </ArticlePage>

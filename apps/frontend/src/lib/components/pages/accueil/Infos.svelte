@@ -27,7 +27,7 @@
       `}>
     <HorizontalCard
       title="Accédez à une information qualifiée."
-      content="Le Bail Réel Solidaire (BRS) est un dispositif permettant à des ménages ne pouvant plus acheter dans le marché libre de devenir propriétaire. Il dispose de nombreux avantages mais aussi beaucoup de particularités à connaître. BoRiS vous propose des renseignements officiels et travaillés de sorte à rendre la propriété accessibles pour tous·tes."
+      content="Le Bail Réel Solidaire (BRS) est un dispositif permettant à des ménages ne pouvant plus acheter dans le marché libre de devenir propriétaire. Il dispose de nombreux avantages mais aussi beaucoup de particularités à connaître. <strong>BoRiS vous propose des renseignements officiels</strong> et travaillés de sorte à rendre la propriété accessibles pour tous·tes."
       href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
       imgSrc={card1}
       photograph="David Hellmann"
@@ -48,7 +48,7 @@
     </div>
     <HorizontalCard
       title="Vérifiez si vous êtes éligibles !"
-      content="BoRiS vous accompagne notamment grâce à son simulateur. Découvrez maintenant si vous pouvez prétendre au dispositif !"
+      content="BoRiS vous accompagne notamment grâce à son <strong>simulateur</strong>. Découvrez maintenant si vous pouvez prétendre au dispositif !"
       href="/simulateur-eligibilite/steps"
       imgSrc={card2}
       photograph="Julian Bock"
@@ -65,8 +65,8 @@
       class="absolute top-[-4px] left-[-4px] w-[calc(50%+6px)] h-[calc(6rem+4px)] border-t-4 border-l-4 border-blue-primary rounded-tl-2xl">
     </div>
     <HorizontalCard
-      title="BoRiS vous met en relation avec des organismes dans votre zone de recherche."
-      content="BoRiS est en lien avec les organismes de foncier solidaires (OFS) agréés par l'Etat qui font construire des logements en BRS et présentent actuellement des programmes en cours de commercialisation."
+      title="BoRiS vous indique les logements disponibles à l’achat en BRS près de chez vous !"
+      content="BoRiS vous propose une carte de France des logements disponibles pour acheter en BRS et vous renvoie vers les organismes de foncier solidaires (OFS) agréés par l'Etat qui proposent ces logements à la vente."
       href="/logements-brs-disponibles"
       imgSrc={card3}
       photograph="Hannah Busing"

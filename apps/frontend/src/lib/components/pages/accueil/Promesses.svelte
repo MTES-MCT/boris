@@ -15,30 +15,30 @@
     {
       icon: 'community-line',
       content:
-        "Vous achetez uniquement le logement tandis qu'un organisme de foncier solidaire (OFS) agréé par l'Etat garde la propriété du terrain.",
+        'Achetez votre logement 30 à 50% moins cher, profitez des avantages du bail réel solidaire et comprenez les contreparties !',
       href: '/tout-savoir-sur-le-bail-reel-solidaire-brs',
-      linkLabel: 'En savoir plus',
+      linkLabel: 'Comprendre le bail réel solidaire',
     },
     {
       icon: 'france-line',
       content:
-        "Une offre de logements abordables proposée par les Organismes Fonciers Solidaires qui se déploie sur l'ensemble du territoire",
+        "Trouvez une offre de logements abordables proposée par les Organismes Fonciers Solidaires qui se déploie sur l'ensemble du territoire.",
       href: '/logements-brs-disponibles',
       linkLabel: 'Trouver un logement en BRS',
     },
     {
       icon: 'sofa-line',
       content:
-        "Vous profitez pleinement de votre logement en résidence principale et à condition d'être éligible au dispositif.",
-      href: '/tout-savoir-sur-le-bail-reel-solidaire-brs',
-      linkLabel: 'En savoir plus',
+        "Profitez pleinement de votre logement en résidence principale et à condition d'être éligible au bail réel solidaire.",
+      href: '/simulateur-eligibilite/steps',
+      linkLabel: 'Tester mon éligibilité',
     },
     {
       icon: 'service-line',
       content:
-        "Vous devez vous acquitter mensuellement d'une redevance contenue auprès de l'organisme de foncier solidaire (OFS) avec qui vous partagez la propriété.",
-      href: '/organismes-de-foncier-solidaire',
-      linkLabel: 'En savoir plus',
+        "Acquittez vous mensuellement d'une redevance contenue auprès de l'organisme de foncier solidaire (OFS) avec qui vous partagez la propriété.",
+      href: '/simulateur-acquisition',
+      linkLabel: 'Calculer le coût total de mon achat en BRS',
     },
   ];
 </script>

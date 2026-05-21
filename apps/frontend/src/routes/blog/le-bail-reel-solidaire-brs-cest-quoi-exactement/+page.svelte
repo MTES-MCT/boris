@@ -18,7 +18,7 @@
 
 <ArticlePage {article}>
   <p>
-    <b>Le Bail Réel Solidaire (BRS) c'est quoi?</b>
+    <b>Le Bail Réel Solidaire (BRS), c'est quoi exactement?</b>
     Le bail réel solidaire (BRS) est un dispositif innovant qui vise à faciliter
     l'accession à la propriété pour les ménages aux revenus modestes et moyens. Créé
     par la loi n° 2015-990 du 6 août 2015 pour répondre à la forte hausse des prix
@@ -173,8 +173,12 @@
 
   <p>
     Lors de l’accession d’un logement en bail réel solidaire (BRS), des
-    conditions s’appliquent. Ces conditions, souvent appelées “inconvénients du
-    bail réel solidaire” sont en réalité des contreparties. En effet, un
+    conditions s’appliquent. Ces conditions, souvent appelées “<a
+      href="/blog/les-inconvenients-ou-contreparties-du-bail-reel-solidaire-brs"
+      class="fr-link">
+      inconvénients du bail réel solidaire
+    </a>
+    ” sont en réalité des contreparties. En effet, un
     inconvénient est un terme renvoyant vers une idée négative ou un obstacle.
     Une contrepartie traduit une relation équilibrée : un avantage accordé en
     échange d’un engagement.
@@ -191,7 +195,12 @@
         <li>Prix encadré pour éviter la spéculation immobilière</li>
         <li>
           Obligation de <b>revente à un ménage éligible</b>
-          à l’achat en Bail Réel Solidaire (ménage sous les plafond de ressources).
+          à l’achat en Bail Réel Solidaire (ménage sous les <a
+            href="/simulateur-eligibilite#plafonds-de-ressources"
+            class="fr-link">
+            plafond de ressources
+          </a>
+          ).
           Consultez l’article dédié à la
           <a
             href="/revendre-mon-bien-en-brs"

@@ -47,6 +47,8 @@
       logement au prix du marché <b>
         d'accéder à la propriété de leur résidence principale.
       </b>
+      Cette page est le sommaire de votre parcours. Suivez les 5 étapes ci-dessous,
+      de la découverte du dispositif jusqu'à votre emménagement.
     </p>
     <a
       href="/simulateur-eligibilite"
@@ -61,15 +63,15 @@
     <div class="fr-col-12 fr-col-lg-4 flex lg:flex-col gap-4">
       <KeyPoint>
         <p>
-          <b>
-            Les logements mis en vente en bail réel solidaire (BRS) sont 30 à
-            50% moins chers que ceux mis en vente dans le marché traditionnel.
+          Les logements mis en vente en bail réel solidaire (BRS) sont <b>
+            30 à 50% moins chers que ceux mis en vente dans le marché
+            traditionnel.
           </b>
         </p>
         <p>
-          Les prix sont encadrés et contrôlés par l'État. Cela est rendu
-          possible notamment parce que les propriétaires d'un logement en bail
-          réel solidaire (BRS) achètent leur logement à 100%, mais pas le
+          <b>Les prix sont encadrés et contrôlés par l'État.</b>
+           Cela est rendu possible notamment parce que les propriétaires d'un logement
+          en bail réel solidaire (BRS) achètent leur logement à 100%, mais pas le
           terrain sur lequel celui-ci est construit.
         </p>
         <p>
@@ -83,8 +85,18 @@
         <p>
           <b>
             En tant que propriétaire d'un logement en bail réel solidaire (BRS),
-            vous pouvez notamment revendre votre logement (avec une plus-value
-            toutefois encadrée) ou le transmettre à vos proches.
+            vous pouvez notamment <a
+              href="/revendre-mon-bien-en-brs"
+              class="fr-link">
+              revendre votre logement
+            </a>
+            <b>(avec une plus-value toutefois encadrée)</b> ou
+            <a
+              href="/blog/la-succession-en-bail-reel-solidaire-brs"
+              class="fr-link">
+              le transmettre à vos proches
+            </a>
+            .
           </b>
         </p>
         <p>
@@ -98,12 +110,23 @@
       <KeyPoint>
         <p>
           Les premiers logements en bail réel solidaire (BRS) ont vu le jour en
-          2019. Depuis, le dispositif se déploie sur l'ensemble du territoire
-          national.
+          2019. Depuis, <b>le bail réel solidaire se déploie</b>
+          sur
+          <a
+            href="/logements-brs-disponibles"
+            class="fr-link">
+            l'ensemble du territoire national
+          </a>
+          .
         </p>
         <p>
           Les acquéreurs sont accompagnés tout au long de leur procédure d'achat
-          par un organisme dédié.
+          par un organisme dédié appelé <a
+            href="/organismes-de-foncier-solidaire"
+            class="fr-link">
+            Organisme de Foncier Solidaire (OFS)
+          </a>
+          .
         </p>
       </KeyPoint>
     </div>

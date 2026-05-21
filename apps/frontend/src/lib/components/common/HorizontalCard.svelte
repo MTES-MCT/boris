@@ -44,10 +44,10 @@
         <a
           {href}
           class="after:!hidden">
-          {title}
+          {@html title}
         </a>
       </h3>
-      <p class="fr-card__desc">{content}</p>
+      <p class="fr-card__desc">{@html content}</p>
     </div>
     <span
       class="text-blue-primary text-sm md:text-base fr-mb-4w underline underline-offset-6">

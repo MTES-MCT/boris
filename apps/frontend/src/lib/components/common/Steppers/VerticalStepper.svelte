@@ -101,8 +101,8 @@
       </div>
 
       <div class={`${isOdd ? 'lg:text-left' : 'lg:text-right'}`}>
-        <svelte:element this={stepTitleElement}>{title}</svelte:element>
-        <p>{description}</p>
+        <svelte:element this={stepTitleElement}>{@html title}</svelte:element>
+        <p>{@html description}</p>
       </div>
 
       {#if hrefLabel && href}
@@ -110,7 +110,7 @@
           <a
             class="fr-link fr-icon-arrow-right-line fr-link--icon-right fr-text--bold"
             {href}>
-            {hrefLabel}
+            {@html hrefLabel}
           </a>
         </div>
       {/if}
