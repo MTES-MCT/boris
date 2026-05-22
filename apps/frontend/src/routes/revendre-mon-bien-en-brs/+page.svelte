@@ -34,7 +34,7 @@
   <Page
     title="Les étapes de la revente de mon bien en BRS"
     titleElement="h3"
-    sections={[]}>
+    {sections}>
     <ContentPageHero title="Revendre mon bien en BRS">
       <p>
         Vous souhaitez revendre votre bien en BRS ? BoRiS est là pour vous
@@ -100,41 +100,52 @@
       </div>
     </CalloutPanel>
 
-    <FindMyOfs />
+    {#snippet footerSections()}
+      <article
+        id="trouver-mon-ofs"
+        class="!pb-8 border-b border-gray-light">
+        <h2 class="fr-h5 pt-12">Trouver mon OFS</h2>
+        <FindMyOfs />
+      </article>
 
-    <section class="fr-container rounded-lg bg-white mt-8 p-4">
-      <h2>Les 7 étapes de la revente en bail réel solidaire</h2>
-      <div class="max-w-[48rem]">
-        <Stepper
-          title={activeStep.title}
-          {nextStepTitle}
-          currentStep={activeStepIndex + 1}
-          stepCount={resaleSteps.length}
-          titleElement="h3" />
+      <article
+        id="revente-en-7-etapes"
+        class="!pb-8 border-b border-gray-light">
+        <h2 class="fr-h5 pt-12">
+          Les 7 étapes de la revente en bail réel solidaire
+        </h2>
+        <div class="max-w-[48rem]">
+          <Stepper
+            title={activeStep.title}
+            {nextStepTitle}
+            currentStep={activeStepIndex + 1}
+            stepCount={resaleSteps.length}
+            titleElement="h3" />
 
-        <p class="fr-text--lead mt-6">
-          {activeStep.description}
-        </p>
+          <p class="fr-text--lead mt-6">
+            {activeStep.description}
+          </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 mt-8">
-          <button
-            class="fr-btn fr-btn--secondary"
-            type="button"
-            onclick={goToPreviousStep}
-            disabled={activeStepIndex === 0}>
-            Étape précédente
-          </button>
-          <button
-            class="fr-btn"
-            type="button"
-            onclick={goToNextStep}
-            disabled={activeStepIndex === resaleSteps.length - 1}>
-            Étape suivante
-          </button>
+          <div class="flex flex-col sm:flex-row gap-4 mt-8">
+            <button
+              class="fr-btn fr-btn--secondary"
+              type="button"
+              onclick={goToPreviousStep}
+              disabled={activeStepIndex === 0}>
+              Étape précédente
+            </button>
+            <button
+              class="fr-btn"
+              type="button"
+              onclick={goToNextStep}
+              disabled={activeStepIndex === resaleSteps.length - 1}>
+              Étape suivante
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+      </article>
 
-    <ResaleFaq />
+      <ResaleFaq />
+    {/snippet}
   </Page>
 {/key}
