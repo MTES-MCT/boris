@@ -1,5 +1,44 @@
 import type { Step } from '$lib/utils/definitions';
 
+export const resaleSteps = [
+  {
+    title:
+      'Notifier l’OFS et préciser le plafond applicable au prix de revente',
+    description:
+      'Vous prévenez votre OFS de votre intention de vendre ; il calcule le prix plafond de votre logement selon votre bail.',
+  },
+  {
+    title: 'Préparer le logement',
+    description:
+      'Vous faites réaliser les diagnostics obligatoires et, si nécessaire, quelques travaux pour rendre le logement attrayant.',
+  },
+  {
+    title: 'Trouver un acheteur éligible au bail réel solidaire',
+    description:
+      'Vous diffusez l’annonce, en direct ou via une agence connaissant le BRS, et vérifiez l’éligibilité du candidat avec le simulateur.',
+  },
+  {
+    title: 'Remettre l’offre préalable de cession',
+    description:
+      'Vous adressez à l’acheteur un document formel précisant les conditions de la vente en BRS.',
+  },
+  {
+    title: 'Obtenir l’agrément de l’OFS',
+    description:
+      'L’OFS vérifie l’éligibilité de l’acheteur, son financement et la conformité de l’offre. Il a deux mois pour répondre.',
+  },
+  {
+    title: 'Signer chez le notaire',
+    description:
+      'Promesse de vente puis acte authentique : vous transférez les droits réels, vous recevez les fonds.',
+  },
+  {
+    title: 'En cas de blocage',
+    description:
+      'Pas d’acheteur ou refus d’agrément ? Plusieurs solutions, dont la résiliation conventionnelle du bail.',
+  },
+];
+
 const step1 = {
   title: 'Revendre mon bien en BRS',
   headTitle: 'Revendre un logement en Bail Réel Solidaire - BRS - BoRiS',

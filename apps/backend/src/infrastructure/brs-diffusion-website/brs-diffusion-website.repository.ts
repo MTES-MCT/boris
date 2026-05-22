@@ -94,6 +94,51 @@ export class BrsDiffusionWebsiteRepository
     return [result, count];
   }
 
+  public async findNearestOfssByLocation(
+    latitude: number,
+    longitude: number,
+    radius: number,
+  ): Promise<BrsDiffusionWebsiteEntityWithDistance[]> {
+    const distanceExpression =
+      'earth_distance(ll_to_earth(:latitude, :longitude), ll_to_earth(brs_diffusion_website.latitude, brs_diffusion_website.longitude))';
+
+    const query = this.repository
+      .createQueryBuilder('brs_diffusion_website')
+      .innerJoinAndSelect('brs_diffusion_website.ofs', 'ofs')
+      .leftJoinAndSelect('ofs.departements', 'ofsDepartements')
+      .leftJoinAndSelect('ofs.regions', 'ofsRegions')
+      .leftJoinAndSelect('ofs.distributors', 'ofsDistributors')
+      .leftJoinAndSelect('brs_diffusion_website.region', 'region')
+      .leftJoinAndSelect('brs_diffusion_website.departement', 'departement')
+      .addSelect(distanceExpression, 'distance')
+      .where(
+        'earth_box(ll_to_earth(:latitude, :longitude), :radius) @> ll_to_earth(brs_diffusion_website.latitude, brs_diffusion_website.longitude)',
+      )
+      .andWhere(`${distanceExpression} < :radius`)
+      .setParameters({
+        latitude,
+        longitude,
+        radius: radius * 1000,
+      })
+      .orderBy('distance', 'ASC');
+
+    const rawAndEntities = await query.getRawAndEntities();
+    const nearestByOfs = new Map<string, BrsDiffusionWebsiteEntityWithDistance>();
+
+    rawAndEntities.entities.forEach((item, index) => {
+      if (!item.ofs || nearestByOfs.has(item.ofs.id)) {
+        return;
+      }
+
+      nearestByOfs.set(item.ofs.id, {
+        ...item,
+        distance: rawAndEntities.raw[index].distance,
+      });
+    });
+
+    return Array.from(nearestByOfs.values());
+  }
+
   public findAllByRegion(
     paginationProps: PaginationProps,
     regionId: string,

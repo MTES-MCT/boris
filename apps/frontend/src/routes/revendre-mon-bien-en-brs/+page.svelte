@@ -1,11 +1,26 @@
 <script lang="ts">
   import Page from '$components/common/SideNavPage/Page.svelte';
   import ContentPageHero from '$components/common/Heros/ContentPageHero.svelte';
-  import { steps } from './content';
+  import { resaleSteps, steps } from './content';
   import CalloutPanel from '$components/common/Panels/CalloutPanel.svelte';
   import KeyPoint from '$components/common/KeyPoint.svelte';
+  import FindMyOfs from '$components/pages/revendre-mon-bien-en-brs/FindMyOfs.svelte';
+  import ResaleFaq from '$components/pages/revendre-mon-bien-en-brs/ResaleFaq.svelte';
+  import Stepper from '$components/common/Stepper.svelte';
 
   const { title, description, sections, headTitle } = steps[0];
+
+  let activeStepIndex = $state(0);
+  const activeStep = $derived(resaleSteps[activeStepIndex]);
+  const nextStepTitle = $derived(resaleSteps[activeStepIndex + 1]?.title);
+
+  const goToPreviousStep = () => {
+    activeStepIndex = Math.max(activeStepIndex - 1, 0);
+  };
+
+  const goToNextStep = () => {
+    activeStepIndex = Math.min(activeStepIndex + 1, resaleSteps.length - 1);
+  };
 </script>
 
 <svelte:head>
@@ -19,7 +34,7 @@
   <Page
     title="Les étapes de la revente de mon bien en BRS"
     titleElement="h3"
-    {sections}>
+    sections={[]}>
     <ContentPageHero title="Revendre mon bien en BRS">
       <p>
         Vous souhaitez revendre votre bien en BRS ? BoRiS est là pour vous
@@ -35,34 +50,32 @@
     </ContentPageHero>
 
     <CalloutPanel
-      title="La revente en 3 points clés"
+      title="Trois points à retenir sur la revente en BRS"
       mascotte="MascotteWaving">
       <div class="fr-col-12 fr-col-lg-4 flex lg:flex-col gap-4">
         <KeyPoint>
           <p>
-            <b>Vous êtes libre de vendre votre bien à tout moment.</b>
+            <b>Vous êtes libre de revendre votre logement quand vous voulez.</b>
           </p>
           <p>
-            Que ce soit pour changer de ville ou trouver un nouveau logement
-            plus approprié à vos besoins, c'est vous qui décidez quand vous
-            partez !
+            Que ce soit pour changer de ville, agrandir la famille ou tout autre
+            motif, c’est vous qui décidez du moment du départ.
           </p>
         </KeyPoint>
       </div>
       <div class="fr-col-12 fr-col-lg-4 flex lg:flex-col gap-4">
         <KeyPoint>
           <p>
-            <b>La revente d'un bien en BRS est encadrée :</b>
+            <b>La revente est encadrée mais accessible.</b>
           </p>
           <p>
-            Vous ne pouvez pas le vendre à n'importe qui : le ménage acheteur
-            doit respecter les conditions d'éligibilité au BRS (c'est le cas de
-            87% des foyers !)
-          </p>
-          <p>
-            Le prix de revente est encadré : vous pouvez faire une plus value à
-            hauteur de l'inflation depuis votre achat. Le BRS est un dispositif
-            non spéculatif.
+            L’acheteur doit respecter les <a
+              href="https://www.boris.beta.gouv.fr/simulateur-eligibilite"
+              class="fr-link">
+              conditions d’éligibilité au BRS
+            </a>
+            , ce qui couvre environ 87 % des foyers français. Le prix de vente est
+            plafonné par votre bail : le BRS reste un dispositif non spéculatif.
           </p>
         </KeyPoint>
       </div>
@@ -70,23 +83,58 @@
         <KeyPoint>
           <p>
             <b>
-              Il faut impliquer <a
+              Votre <a
                 href="/organismes-de-foncier-solidaire"
                 class="fr-link">
-                l'organisme de foncier solidaire (OFS)
+                OFS
               </a>
-              dans le processus.
+              est votre interlocuteur clé.
             </b>
           </p>
           <p>
-            D'abord parce qu'il a un droit de préemption (il peut racheter le
-            bien avant qu'il soit proposé à d'autres personnes) ; ensuite parce
-            qu'il doit donner son agrément ; parce qu'il doit être impliqué dans
-            la rédaction du contrat de vente ; enfin parce qu'il peut vous aider
-            à trouver un acheteur !
+            Il fixe le prix maximum de revente de votre logement, donne son
+            agrément à l’acheteur, peut préempter ou vous aider à trouver un
+            acquéreur. Prévenez-le dès que vous décidez de vendre.
           </p>
         </KeyPoint>
       </div>
     </CalloutPanel>
+
+    <FindMyOfs />
+
+    <section class="fr-container rounded-lg bg-white mt-8 p-4">
+      <h2>Les 7 étapes de la revente en bail réel solidaire</h2>
+      <div class="max-w-[48rem]">
+        <Stepper
+          title={activeStep.title}
+          {nextStepTitle}
+          currentStep={activeStepIndex + 1}
+          stepCount={resaleSteps.length}
+          titleElement="h3" />
+
+        <p class="fr-text--lead mt-6">
+          {activeStep.description}
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 mt-8">
+          <button
+            class="fr-btn fr-btn--secondary"
+            type="button"
+            onclick={goToPreviousStep}
+            disabled={activeStepIndex === 0}>
+            Étape précédente
+          </button>
+          <button
+            class="fr-btn"
+            type="button"
+            onclick={goToNextStep}
+            disabled={activeStepIndex === resaleSteps.length - 1}>
+            Étape suivante
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <ResaleFaq />
   </Page>
 {/key}

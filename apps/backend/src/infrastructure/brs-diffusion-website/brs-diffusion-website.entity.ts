@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { RegionEntity } from '../region/region.entity';
 import { DepartementEntity } from '../departement/departement.entity';
+import { OfsEntity } from '../ofs/ofs.entity';
 
 @Entity('brs_diffusion_website')
 export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
@@ -24,6 +25,9 @@ export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
   @Column({ type: 'varchar', nullable: false })
   public ofsName: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  public programName: string | null;
+
   @Column({ type: 'varchar', nullable: false })
   public city: string;
 
@@ -35,6 +39,9 @@ export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
 
   @Column({ type: 'varchar', nullable: false })
   public inseeCode: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  public deliveryMonth: string | null;
 
   @Column({ type: 'float', nullable: false })
   public latitude: number;
@@ -50,6 +57,9 @@ export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
     (departement) => departement.brsDiffusionWebsites,
   )
   public departement: DepartementEntity;
+
+  @ManyToOne(() => OfsEntity, { nullable: true })
+  public ofs: OfsEntity | null;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -69,18 +79,24 @@ export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
     longitude: number,
     region: RegionEntity,
     departement: DepartementEntity,
+    ofs: OfsEntity | null = null,
+    programName: string | null = null,
+    deliveryMonth: string | null = null,
   ) {
     this.source = source;
     this.distributorName = distributorName;
     this.ofsName = ofsName;
+    this.programName = programName;
     this.city = city;
     this.zipcode = zipcode;
     this.address = address;
     this.inseeCode = inseeCode;
+    this.deliveryMonth = deliveryMonth;
     this.latitude = latitude;
     this.longitude = longitude;
     this.region = region;
     this.departement = departement;
+    this.ofs = ofs;
   }
 }
 
