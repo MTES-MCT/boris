@@ -221,7 +221,7 @@
     labelElement="h4">
     <p class="fr-mt-1w">
       Tout ménage qui respecte les conditions d’éligibilité au BRS : <a
-        href="/tout-savoir-sur-le-bail-reel-solidaire-brs#:~:text=Les%20plafonds%20de%20ressources%20d%27%C3%A9ligibilit%C3%A9%20au%20Bail%20R%C3%A9el%20Solidaire."
+        href="/simulateur-eligibilite#plafonds-de-ressources"
         class="fr-link">
         plafonds de ressources
       </a>
