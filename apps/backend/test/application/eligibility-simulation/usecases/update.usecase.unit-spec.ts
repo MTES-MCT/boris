@@ -423,6 +423,41 @@ describe('UpdateEligibilitySimulationUsecase', () => {
     );
   });
 
+  it('should still return updated data when email sending fails', async () => {
+    const newEmail = 'nouveau.email@example.com';
+    const updatedData = {
+      email: newEmail,
+      firstName: 'Marie',
+      lastName: 'Martin',
+    };
+
+    const updatedSimulation = {
+      ...mockedEligibilitySimulation,
+      ...updatedData,
+    };
+
+    mockEligibilitySimulationRepositoryWithFindById.findById.mockResolvedValue({
+      ...mockedEligibilitySimulation,
+    });
+    mockEligibilitySimulationRepositoryWithFindById.save.mockResolvedValue(
+      updatedSimulation,
+    );
+    mockMailerService.sendEmail.mockRejectedValue(new Error('Brevo failed'));
+    jest.spyOn(console, 'log').mockImplementation();
+
+    const result = await useCase.execute({
+      id: mockedEligibilitySimulation.id,
+      ...updatedData,
+    });
+
+    expect(result).toEqual(
+      new EligibilitySimulationView({
+        ...updatedSimulation,
+        locations: [],
+      }),
+    );
+  });
+
   it('should not send email when email has not changed', async () => {
     const updatedData = {
       firstName: 'Jean',

@@ -10,9 +10,7 @@
     revente
   </h2>
 
-  <Accordion
-    label="Quand dois-je prévenir mon OFS ?"
-    labelElement="h4">
+  <Accordion label="Quand dois-je prévenir mon OFS ?">
     <p class="fr-mt-1w">
       Dès que vous décidez de vendre, avant même de diffuser une annonce. Cette
       notification est obligatoire : l’OFS dispose d’un droit de préemption
@@ -23,8 +21,7 @@
   </Accordion>
 
   <Accordion
-    label="Comment est calculé le prix de vente maximum de mon bien en BRS ?"
-    labelElement="h4">
+    label="Comment est calculé le prix de vente maximum de mon bien en BRS ?">
     <p class="fr-mt-1w">
       Le prix est plafonné par la formule inscrite dans <b>votre bail</b>
       signé chez le notaire au moment de l’achat. Il s’appuie sur votre prix d’achat
@@ -34,9 +31,7 @@
     </p>
   </Accordion>
 
-  <Accordion
-    label="Puis-je faire une plus-value ? Vendre à perte ?"
-    labelElement="h4">
+  <Accordion label="Puis-je faire une plus-value ? Vendre à perte ?">
     <p class="fr-mt-1w">
       Une plus-value est possible mais encadrée par votre bail : elle est
       généralement indexée sur l’inflation depuis votre achat. Vous pouvez aussi
@@ -45,9 +40,7 @@
     </p>
   </Accordion>
 
-  <Accordion
-    label="Mon OFS peut-il racheter le bien lui-même ?"
-    labelElement="h4">
+  <Accordion label="Mon OFS peut-il racheter le bien lui-même ?">
     <p class="fr-mt-1w">
       Oui. L’OFS dispose d’un <b>droit de préemption</b>
       (Art. L255-15 CCH). Il a deux mois après réception de l’offre préalable de
@@ -63,9 +56,7 @@
   class="!pb-8 border-b border-gray-light">
   <h2 class="fr-h5 pt-12">FAQ · Étape 2 · Préparer le logement</h2>
 
-  <Accordion
-    label="Quels diagnostics sont obligatoires ?"
-    labelElement="h4">
+  <Accordion label="Quels diagnostics sont obligatoires ?">
     <p class="fr-mt-1w">
       Les mêmes que pour toute vente immobilière, selon les caractéristiques du
       logement :
@@ -196,9 +187,7 @@
     </p>
   </Accordion>
 
-  <Accordion
-    label="Faut-il faire des travaux avant de vendre ?"
-    labelElement="h4">
+  <Accordion label="Faut-il faire des travaux avant de vendre ?">
     <p class="fr-mt-1w">
       Selon les résultats des diagnostics, certains travaux peuvent être
       nécessaires pour mettre le logement aux normes. Au-delà de l’obligatoire,
@@ -216,9 +205,7 @@
     FAQ · Étape 3 · Trouver un acheteur éligible au bail réel solidaire
   </h2>
 
-  <Accordion
-    label="Qui peut acheter mon logement ?"
-    labelElement="h4">
+  <Accordion label="Qui peut acheter mon logement ?">
     <p class="fr-mt-1w">
       Tout ménage qui respecte les conditions d’éligibilité au BRS : <a
         href="/simulateur-eligibilite#plafonds-de-ressources"
@@ -237,9 +224,7 @@
     </p>
   </Accordion>
 
-  <Accordion
-    label="Vente entre particuliers ou via une agence ?"
-    labelElement="h4">
+  <Accordion label="Vente entre particuliers ou via une agence ?">
     <p class="fr-mt-1w">Les deux options sont possibles :</p>
     <ul>
       <li>
@@ -263,9 +248,7 @@
     </p>
   </Accordion>
 
-  <Accordion
-    label="Mon OFS peut-il m’aider à trouver un acheteur ?"
-    labelElement="h4">
+  <Accordion label="Mon OFS peut-il m’aider à trouver un acheteur ?">
     <p class="fr-mt-1w">Oui, c’est l’une de ses missions. Demandez-lui :</p>
     <ul>
       <li>
@@ -280,8 +263,7 @@
   </Accordion>
 
   <Accordion
-    label="Mon acheteur peut-il bénéficier du PTZ ? Quels seront ses frais de notaire ?"
-    labelElement="h4">
+    label="Mon acheteur peut-il bénéficier du PTZ ? Quels seront ses frais de notaire ?">
     <ul class="fr-mt-1w">
       <li>
         <b>Prêt à taux zéro</b>
@@ -307,9 +289,7 @@
     FAQ · Étape 4 · Remettre l’offre préalable de cession
   </h2>
 
-  <Accordion
-    label="Qu’est-ce que l’offre préalable de cession ?"
-    labelElement="h4">
+  <Accordion label="Qu’est-ce que l’offre préalable de cession ?">
     <p class="fr-mt-1w">
       C’est un document obligatoire (Art. L255-10 CCH) que vous remettez à
       l’acheteur <b>avant</b>
@@ -333,9 +313,7 @@
     </p>
   </Accordion>
 
-  <Accordion
-    label="Quels délais respecter ?"
-    labelElement="h4">
+  <Accordion label="Quels délais respecter ?">
     <p class="fr-mt-1w">Trois délais à connaître (Art. L255-10 CCH) :</p>
     <ul>
       <li>
@@ -360,9 +338,7 @@
   class="!pb-8 border-b border-gray-light">
   <h2 class="fr-h5 pt-12">FAQ · Étape 5 · Obtenir l’agrément de l’OFS</h2>
 
-  <Accordion
-    label="Combien de temps l’OFS a-t-il pour donner son agrément ?"
-    labelElement="h4">
+  <Accordion label="Combien de temps l’OFS a-t-il pour donner son agrément ?">
     <p class="fr-mt-1w">
       <b>Deux mois</b>
       à compter de la transmission de l’offre préalable de cession (Art. L255-11
@@ -370,9 +346,7 @@
     </p>
   </Accordion>
 
-  <Accordion
-    label="Sur quoi porte l’agrément ?"
-    labelElement="h4">
+  <Accordion label="Sur quoi porte l’agrément ?">
     <p class="fr-mt-1w">L’OFS vérifie trois points (Art. L255-11 CCH) :</p>
     <ol>
       <li>
@@ -392,9 +366,7 @@
     </ol>
   </Accordion>
 
-  <Accordion
-    label="Mon OFS a refusé l’acheteur. Pourquoi et que faire ?"
-    labelElement="h4">
+  <Accordion label="Mon OFS a refusé l’acheteur. Pourquoi et que faire ?">
     <p class="fr-mt-1w">
       Le refus porte nécessairement sur l’un des trois critères ci-dessus.
       Demandez à l’OFS la motivation précise par écrit, puis vous avez trois
@@ -418,9 +390,7 @@
     </ol>
   </Accordion>
 
-  <Accordion
-    label="Le bail repart-il à zéro pour mon acheteur ?"
-    labelElement="h4">
+  <Accordion label="Le bail repart-il à zéro pour mon acheteur ?">
     <p class="fr-mt-1w">
       Oui. Si l’OFS donne son agrément, la durée du bail est <b>
         prorogée de plein droit
@@ -437,9 +407,7 @@
   class="!pb-8 border-b border-gray-light">
   <h2 class="fr-h5 pt-12">FAQ · Étape 6 · Signer chez le notaire</h2>
 
-  <Accordion
-    label="Comment se passe la signature ?"
-    labelElement="h4">
+  <Accordion label="Comment se passe la signature ?">
     <p class="fr-mt-1w">Deux étapes successives :</p>
     <ol>
       <li>
@@ -459,9 +427,7 @@
     </p>
   </Accordion>
 
-  <Accordion
-    label="Quels frais sont à ma charge ?"
-    labelElement="h4">
+  <Accordion label="Quels frais sont à ma charge ?">
     <ul class="fr-mt-1w">
       <li>
         les <b>diagnostics obligatoires</b>
@@ -482,9 +448,7 @@
     </p>
   </Accordion>
 
-  <Accordion
-    label="Quelle fiscalité sur la vente ?"
-    labelElement="h4">
+  <Accordion label="Quelle fiscalité sur la vente ?">
     <p class="fr-mt-1w">
       La vente d’un bien en BRS suit le régime fiscal général : exonération de
       plus-value immobilière dans la plupart des cas pour une résidence
@@ -499,8 +463,7 @@
   <h2 class="fr-h5 pt-12">FAQ · Étape 7 · En cas de blocage</h2>
 
   <Accordion
-    label="Je n’arrive pas à trouver d’acheteur depuis plusieurs mois. Que faire ?"
-    labelElement="h4">
+    label="Je n’arrive pas à trouver d’acheteur depuis plusieurs mois. Que faire ?">
     <p class="fr-mt-1w">Dans l’ordre :</p>
     <ol>
       <li>
@@ -525,9 +488,7 @@
     </ol>
   </Accordion>
 
-  <Accordion
-    label="Qu’est-ce que la résiliation conventionnelle du bail ?"
-    labelElement="h4">
+  <Accordion label="Qu’est-ce que la résiliation conventionnelle du bail ?">
     <p class="fr-mt-1w">
       C’est un mécanisme prévu par la loi (Art. L255-13 CCH) pour les situations
       bloquées : si après refus d’agrément ou demande explicite, l’OFS n’a pas
@@ -539,9 +500,7 @@
     </p>
   </Accordion>
 
-  <Accordion
-    label="Combien vais-je toucher ?"
-    labelElement="h4">
+  <Accordion label="Combien vais-je toucher ?">
     <p class="fr-mt-1w">
       L’indemnisation correspond à la valeur de vos droits réels immobiliers
       calculée selon <b>les modalités prévues dans votre bail</b>
@@ -559,9 +518,7 @@
     </blockquote>
   </Accordion>
 
-  <Accordion
-    label="Comment lance-t-on la procédure ?"
-    labelElement="h4">
+  <Accordion label="Comment lance-t-on la procédure ?">
     <ol class="fr-mt-1w">
       <li>
         Demande écrite à l’OFS (lettre recommandée avec accusé de réception
@@ -579,8 +536,7 @@
   </Accordion>
 
   <Accordion
-    label="Mon OFS est aussi un bailleur social. Cela change-t-il quelque chose ?"
-    labelElement="h4">
+    label="Mon OFS est aussi un bailleur social. Cela change-t-il quelque chose ?">
     <p class="fr-mt-1w">
       Pas dans la procédure légale. Elle reste celle décrite par les articles
       L255-10 à L255-15 CCH, identique pour tous les OFS. <b>
@@ -598,9 +554,7 @@
   class="!pb-8 border-b border-gray-light">
   <h2 class="fr-h5 pt-12">FAQ · Cas particuliers</h2>
 
-  <Accordion
-    label="Que se passe-t-il en cas de décès ?"
-    labelElement="h4">
+  <Accordion label="Que se passe-t-il en cas de décès ?">
     <p class="fr-mt-1w">
       Les droits réels sont transmis à l’ayant droit, qui bénéficie d’un bail
       prorogé à durée identique, s’il est éligible au BRS (Art. L255-14 CCH). Le
@@ -616,9 +570,7 @@
     </p>
   </Accordion>
 
-  <Accordion
-    label="Et en cas de divorce ou séparation ?"
-    labelElement="h4">
+  <Accordion label="Et en cas de divorce ou séparation ?">
     <p class="fr-mt-1w">
       Le BRS reste un bien immobilier comme un autre dans la liquidation : soit
       l’un des conjoints rachète la part de l’autre (avec accord de l’OFS sur le
