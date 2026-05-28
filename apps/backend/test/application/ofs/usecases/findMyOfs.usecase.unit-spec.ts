@@ -37,12 +37,24 @@ describe('FindMyOfsUsecase', () => {
       ofs,
       distance: 1234,
     });
+    const secondProgram = Object.assign(
+      Object.create(Object.getPrototypeOf(mockedBrsDiffusionWebsite)),
+      mockedBrsDiffusionWebsite,
+      {
+        ofs,
+        distance: 4567,
+        address: '2 rue du Port',
+        city: 'Vannes',
+        zipcode: '56000',
+        programName: 'Second programme',
+      },
+    );
 
     mockedGeocoderService.geocodeByAddress.mockResolvedValue([
       mockedGeocodedResponse,
     ]);
     mockedBrsDiffusionWebsiteRepository.findNearestOfssByLocation.mockResolvedValue(
-      [program],
+      [program, secondProgram],
     );
 
     const result = await findMyOfsUsecase.execute({
@@ -58,5 +70,7 @@ describe('FindMyOfsUsecase', () => {
     expect(result).toHaveLength(1);
     expect(result[0].ofs.name).toBe(ofs.name);
     expect(result[0].distance).toBe(1234);
+    expect(result[0].programs).toHaveLength(2);
+    expect(result[0].nearestProgram.address).toBe(program.address);
   });
 });

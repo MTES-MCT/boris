@@ -4,6 +4,7 @@
   import Form from '$components/common/Simulator/Form.svelte';
   import Actions from '$components/common/Simulator/Actions.svelte';
   import Action from '$components/common/Simulator/Action.svelte';
+  import NextSteps from '$components/common/Simulator/NextSteps.svelte';
   import EligibilityDetail from '$components/pages/simulateur-eligibilite/steps/EligibilityResult/EligibilityDetail.svelte';
 
   import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
@@ -58,6 +59,8 @@
 
     <EligibilityDetail />
   </fieldset>
+
+  <NextSteps isEligible={!isIneligible} />
 
   <Actions>
     <Action

@@ -42,11 +42,6 @@
         même vous accompagner gratuitement dans ce projet. Cela vous intéresse ?
         Sur cette page, vous découvrirez chaque étape jusqu'à la vente.
       </p>
-      <a
-        href="/nous-contacter"
-        class="fr-btn fr-btn--lg fr-mt-2w">
-        Nous contacter
-      </a>
     </ContentPageHero>
 
     <CalloutPanel
@@ -104,7 +99,7 @@
       <article
         id="trouver-mon-ofs"
         class="!pb-8 border-b border-gray-light">
-        <h2 class="fr-h5 pt-12">Trouver mon OFS</h2>
+        <h2 class="fr-h5 pt-12">Qui est mon OFS ?</h2>
         <FindMyOfs />
       </article>
 

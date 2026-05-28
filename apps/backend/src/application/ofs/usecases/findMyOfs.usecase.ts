@@ -38,41 +38,57 @@ export class FindMyOfsUsecase {
         radius,
       );
 
-    return nearestPrograms.map((program) => {
-      const ofs = program.ofs!;
+    const resultsByOfs = new Map<string, FindMyOfsResultView>();
 
-      return new FindMyOfsResultView(
-        new OfsView(
-          ofs.id,
-          ofs.name,
-          ofs.websiteUrl,
-          ofs.phone,
-          ofs.email,
-          ofs.producesBrs,
-          ofs.isPartner,
-          ofs.departements.map((departement) => ({
-            id: departement.id,
-            name: departement.name,
-            code: departement.code,
-          })),
-          ofs.regions.map((region) => ({
-            id: region.id,
-            name: region.name,
-          })),
-          ofs.distributors.map((distributor) => ({
-            id: distributor.id,
-            name: distributor.name,
-          })),
-        ),
-        Number(program.distance),
-        new FindMyOfsProgramView(
-          program.programName || program.ofsName,
-          program.address,
-          program.city,
-          program.zipcode,
-          program.deliveryMonth,
+    nearestPrograms.forEach((program) => {
+      const ofs = program.ofs!;
+      const programView = new FindMyOfsProgramView(
+        program.programName || program.ofsName,
+        program.address,
+        program.city,
+        program.zipcode,
+        program.deliveryMonth,
+      );
+
+      const existingResult = resultsByOfs.get(ofs.id);
+
+      if (existingResult) {
+        existingResult.programs.push(programView);
+        return;
+      }
+
+      resultsByOfs.set(
+        ofs.id,
+        new FindMyOfsResultView(
+          new OfsView(
+            ofs.id,
+            ofs.name,
+            ofs.websiteUrl,
+            ofs.phone,
+            ofs.email,
+            ofs.producesBrs,
+            ofs.isPartner,
+            ofs.departements.map((departement) => ({
+              id: departement.id,
+              name: departement.name,
+              code: departement.code,
+            })),
+            ofs.regions.map((region) => ({
+              id: region.id,
+              name: region.name,
+            })),
+            ofs.distributors.map((distributor) => ({
+              id: distributor.id,
+              name: distributor.name,
+            })),
+          ),
+          Number(program.distance),
+          programView,
+          [programView],
         ),
       );
     });
+
+    return Array.from(resultsByOfs.values());
   }
 }

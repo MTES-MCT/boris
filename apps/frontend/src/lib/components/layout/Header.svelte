@@ -72,6 +72,9 @@
       </div>
     </div>
   </div>
+</header>
+
+<div class="fr-header main-menu">
   <div
     class="fr-header__menu fr-modal"
     id="menu-mobile"
@@ -136,7 +139,7 @@
                 '/tout-savoir-sur-le-bail-reel-solidaire-brs',
               ) || pathname.includes('organismes-de-foncier-solidaire')}
               class="fr-nav__btn">
-              Qu'est ce que le BRS ?
+              Comprendre le BRS
             </button>
             <div
               class="fr-collapse fr-menu"
@@ -206,4 +209,12 @@
       </nav>
     </div>
   </div>
-</header>
+</div>
+
+<style>
+  .main-menu {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+</style>

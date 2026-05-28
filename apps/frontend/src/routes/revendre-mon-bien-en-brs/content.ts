@@ -54,7 +54,7 @@ export const steps: Step[] = [
     sections: [
       {
         id: 'trouver-mon-ofs',
-        title: 'Trouver mon OFS',
+        title: 'Qui est mon OFS ?',
         content: '',
       },
       {

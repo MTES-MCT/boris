@@ -6,6 +6,7 @@
   import Form from '$components/common/Simulator/Form.svelte';
   import Actions from '$components/common/Simulator/Actions.svelte';
   import Action from '$components/common/Simulator/Action.svelte';
+  import NextSteps from '$components/common/Simulator/NextSteps.svelte';
   import GlobalSynthesis from '$components/pages/simulateur-acquisition/GlobalSynthesis.svelte';
 
   import acquisitionSimulatorManager from '$lib/managers/acquisition-simulator.svelte';
@@ -59,5 +60,7 @@
         label="Télécharger le récapitulatif"
         type="submit" />
     </Actions>
+
+    <NextSteps isEligible />
   </Form>
 </Wrapper>

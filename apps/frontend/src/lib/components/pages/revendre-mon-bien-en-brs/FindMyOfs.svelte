@@ -1,4 +1,14 @@
 <script lang="ts">
+  import Accordion from '$components/common/Accordion.svelte';
+
+  type FindMyOfsProgram = {
+    name: string;
+    address: string;
+    city: string;
+    zipcode: string;
+    deliveryMonth: string | null;
+  };
+
   type FindMyOfsResult = {
     ofs: {
       id: string;
@@ -8,6 +18,8 @@
       email: string | null;
     };
     distance: number;
+    nearestProgram: FindMyOfsProgram;
+    programs: FindMyOfsProgram[];
   };
 
   let address = $state('');
@@ -22,6 +34,14 @@
     }
 
     return `${(distance / 1000).toFixed(1).replace('.', ',')} km`;
+  };
+
+  const formatProgramCount = (count: number): string => {
+    return `${count} programme${count > 1 ? 's' : ''}`;
+  };
+
+  const formatProgramLocation = (program: FindMyOfsProgram): string => {
+    return `${program.address}, ${program.zipcode} ${program.city}`;
   };
 
   const findMyOfs = async () => {
@@ -62,9 +82,6 @@
   <div class="py-4 px-1 md:px-4">
     <div class="find-my-ofs-grid">
       <div>
-        <p class="fr-badge fr-badge--sm fr-badge--blue-cumulus fr-mb-2w">
-          Qui est mon OFS ?
-        </p>
         <p class="fr-text--lg fr-mb-0">
           Votre OFS est inscrit sur le bail signé chez le notaire au moment de
           votre achat. Vous pouvez aussi le retrouver sur votre avis de
@@ -117,6 +134,20 @@
                 <p class="fr-text--sm fr-mb-0">
                   Programme le plus proche à {formatDistance(result.distance)}
                 </p>
+                <div class="find-my-ofs-programs fr-mt-2v">
+                  <Accordion
+                    label={`Voir les ${formatProgramCount(result.programs.length)}`}>
+                    <ul class="find-my-ofs-program-list">
+                      {#each result.programs as program}
+                        <li class="find-my-ofs-program-item">
+                          <p class="fr-text--sm fr-mb-0">
+                            {formatProgramLocation(program)}
+                          </p>
+                        </li>
+                      {/each}
+                    </ul>
+                  </Accordion>
+                </div>
               </div>
 
               <div class="find-my-ofs-actions">
@@ -186,6 +217,28 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+  }
+
+  .find-my-ofs-programs {
+    max-width: 36rem;
+  }
+
+  .find-my-ofs-program-list {
+    display: grid;
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .find-my-ofs-program-item {
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-default-grey);
+  }
+
+  .find-my-ofs-program-item:first-child {
+    padding-top: 0;
+    border-top: 0;
   }
 
   @media (min-width: 48em) {

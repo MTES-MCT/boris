@@ -123,20 +123,14 @@ export class BrsDiffusionWebsiteRepository
       .orderBy('distance', 'ASC');
 
     const rawAndEntities = await query.getRawAndEntities();
-    const nearestByOfs = new Map<string, BrsDiffusionWebsiteEntityWithDistance>();
-
-    rawAndEntities.entities.forEach((item, index) => {
-      if (!item.ofs || nearestByOfs.has(item.ofs.id)) {
-        return;
-      }
-
-      nearestByOfs.set(item.ofs.id, {
-        ...item,
-        distance: rawAndEntities.raw[index].distance,
+    return rawAndEntities.entities
+      .filter((item) => item.ofs)
+      .map((item, index) => {
+        return {
+          ...item,
+          distance: rawAndEntities.raw[index].distance,
+        };
       });
-    });
-
-    return Array.from(nearestByOfs.values());
   }
 
   public findAllByRegion(

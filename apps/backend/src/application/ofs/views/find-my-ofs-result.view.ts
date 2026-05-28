@@ -42,13 +42,20 @@ export class FindMyOfsResultView {
   @ApiProperty({ type: /* istanbul ignore next */ () => FindMyOfsProgramView })
   public nearestProgram: FindMyOfsProgramView;
 
+  @ApiProperty({
+    type: /* istanbul ignore next */ () => [FindMyOfsProgramView],
+  })
+  public programs: FindMyOfsProgramView[];
+
   constructor(
     ofs: OfsView,
     distance: number,
     nearestProgram: FindMyOfsProgramView,
+    programs: FindMyOfsProgramView[],
   ) {
     this.ofs = ofs;
     this.distance = distance;
     this.nearestProgram = nearestProgram;
+    this.programs = programs;
   }
 }
