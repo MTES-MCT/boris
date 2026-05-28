@@ -24,7 +24,7 @@
     connaître les contreparties.
   </p>
   <p class="fr-text--bold !mb-0">
-    Pourquoi parle-t-on de contrepartie plutôt que d'inconvénients du bail réel
+    Pourquoi parle-t-on de contreparties plutôt que d'inconvénients du bail réel
     solidaire ?
   </p>
   <ul>

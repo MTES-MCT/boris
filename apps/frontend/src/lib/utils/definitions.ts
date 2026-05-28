@@ -56,6 +56,7 @@ export type ArticlePreview = {
   description: string;
   slug: string;
   firstPublishedAt: string;
+  updatedAt?: string;
 };
 
 export type GeocodedResponse = components['schemas']['Address'];

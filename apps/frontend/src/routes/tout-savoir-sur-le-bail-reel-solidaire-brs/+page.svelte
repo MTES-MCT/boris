@@ -70,7 +70,7 @@
         </p>
         <p>
           <b>Les prix sont encadrés et contrôlés par l'État.</b>
-           Cela est rendu possible notamment parce que les propriétaires d'un logement
+          Cela est rendu possible notamment parce que les propriétaires d'un logement
           en bail réel solidaire (BRS) achètent leur logement à 100%, mais pas le
           terrain sur lequel celui-ci est construit.
         </p>
@@ -90,7 +90,8 @@
               class="fr-link">
               revendre votre logement
             </a>
-            <b>(avec une plus-value toutefois encadrée)</b> ou
+            <b>(avec une plus-value toutefois encadrée)</b>
+            ou
             <a
               href="/blog/la-succession-en-bail-reel-solidaire-brs"
               class="fr-link">

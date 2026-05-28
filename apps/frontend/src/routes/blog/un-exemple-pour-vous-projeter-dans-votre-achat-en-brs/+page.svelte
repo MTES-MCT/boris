@@ -19,7 +19,7 @@
 <ArticlePage {article}>
   <p>
     Imaginons que vous avez repéré un appartement NEUF de 70 m² en BRS à 210.000
-    euros à Lyon.
+    euros à Lyon. Vous achetez donc à 3000 euros/m² à Lyon.
   </p>
   <p>
     Voici un calcul pour savoir si cela est plus intéressant que de rester
@@ -31,13 +31,20 @@
   <p>
     Imaginons que vous avez un apport de 20.000 €, soit un peu moins de 10% du
     prix du bien. Une partie de cet apport devra être affectée directement aux
-    coûts annexes que sont les frais de notaires (4 830 €), les frais de
-    cautionnement pour votre futur emprunt (environ 2 100 €) et de potentiels
-    frais de dossier (environ 1 000 €). Il vous reste ainsi environ 12 000 €
-    d'apport pour l'achat de votre appartement, à compléter par des emprunts et
-    des aides.
+    coûts annexes :
   </p>
-  <p><b>Emprunts</b></p>
+  <ul>
+    <li>les frais de notaires (4 830 €),</li>
+    <li>
+      les frais de cautionnement pour votre futur emprunt (environ 2 100 €)
+    </li>
+    <li>les potentiels frais de dossier (environ 1 000 €).</li>
+  </ul>
+  <p>
+    Il vous reste ainsi environ 12 000 € d'apport pour l'achat de votre
+    appartement, à compléter par des emprunts et des aides.
+  </p>
+  <h2><b>Emprunts</b></h2>
   <p>
     Il vous reste ainsi 198 000 € à emprunter. L'appartement étant neuf et
     puisqu'il s'agit pour vous d'une primo-accession, vous êtes éligible au Prêt
@@ -54,7 +61,25 @@
     </a>
     ou des prêts conventionnés par certaines banques mais celles-ci existent.
   </p>
+  <p>
+    Référez-vous à la section <a
+      href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-cherche-des-financements"
+      class="fr-link">
+      Je cherche des financements
+    </a>
+    pour étudier les aides disponibles.
+  </p>
+  <p>
+    Utilisez le <a
+      href="/simulateur-acquisition"
+      class="fr-link">
+      simulateur d'acquisition en BRS
+    </a>
+    pour mieux comprendre votre besoin total d'emprunt, et le lissage des prêts (PTZ
+    et prêt usuel).
+  </p>
   <h2><b>Coût mensuel</b></h2>
+  <h3>La mensualité du prêt</h3>
   <p>
     En fonction de la durée de remboursement de vos deux prêts combinés, vos
     mensualités seront plus ou moins élevées. Par exemple, pour <b>
@@ -63,14 +88,15 @@
     </b>
     Dans ces deux cas, les mensualités à rembourser sont bien inférieures à 35% de
     vos ressources mensuelles, qui est le plafond réglementaire au-dessus duquel
-    une banque ne peut pas vous faire de prêt.
+    une banque ne peut pas vous faire de prêt. Utilisez le
     <a
-      href="https://www.calcul-ptz.fr/lissage.html"
-      class="fr-link"
-      target="_blank">
-      Un site existe pour faire votre propre simulation.
+      href="/simulateur-acquisition"
+      class="fr-link">
+      simulateur d'acquisition en BRS
     </a>
+    pour faire le test du lissage des prêts et des mensualités dues.
   </p>
+  <h3>La redevance</h3>
   <p>
     Au-delà de ces mensualités, vous devrez chaque mois payer une redevance
     auprès de l'Organisme Foncier Solidaire (OFS) avec qui vous partagez la
@@ -80,6 +106,7 @@
     monter jusque 210€/mois et le paiement de cette redevance ne s'arrête que si
     vous revendez votre logement ou le transmettez à vos proches.
   </p>
+  <h3>Les charges</h3>
   <p>
     De plus, en tant que propriétaire, vous aurez probablement à payer des
     charges de copropriétés ainsi que la taxe foncière et vous serez dans
@@ -113,6 +140,18 @@
     revendre pour utiliser votre capital pour acheter un nouveau bien ou le
     transmettre à vos proches.
   </p>
+  <p>
+    Pour vous aider à mieux évaluer le coût mensuel et annuel total d'un achat
+    en BRS, nous avons créé un simulateur d'acquisition en BRS. Il vous permet
+    de faire varier les paramètres (montant de l'achat, de l'apport, de la
+    redevance, etc.) et ainsi d'avoir une estimation personnalisée des coûts
+    engendrés.
+  </p>
+  <a
+    href="/simulateur-acquisition"
+    class="fr-btn fr-btn--lg fr-mb-6w">
+    Lancer ma simulation personnalisée de coût d'acquisition en BRS
+  </a>
   <h2><b>Projection sur plusieurs années</b></h2>
   <p>
     Par exemple, vous vivez 8 ans dans ce logement et que votre situation change

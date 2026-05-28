@@ -57,7 +57,7 @@ export const steps = [
     photograph: 'Lisa from Pexels',
     title: 'Je suis chez moi !',
     description:
-      "Profitez de votre logement et <strong>assurez-vous de bien connaître les spécificités liées au BRS</strong> : l'assurance logement BRS, réalisation des travaux, la vie en copropriété et la <a href=\"/revendre-mon-bien-en-brs\">revente du logement</a>.",
+      'Profitez de votre logement et <strong>assurez-vous de bien connaître les spécificités liées au BRS</strong> : l\'assurance logement BRS, réalisation des travaux, la vie en copropriété et la <a href="/revendre-mon-bien-en-brs">revente du logement</a>.',
     hrefLabel: "Découvrez les spécificités pour l'après achat",
     href: `/tout-savoir-sur-le-bail-reel-solidaire-brs/${step5.slug}`,
   },
