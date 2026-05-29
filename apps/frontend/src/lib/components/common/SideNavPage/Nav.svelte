@@ -17,7 +17,7 @@
 
 <nav
   id="navigation"
-  class="border-b border-b-gray-light md:!sticky md:top-12 md:!mt-0 md:pr-6 md:border-b-0 md:border-r md:border-r-gray-light lg:pr-12">
+  class="border-b border-b-gray-light md:!sticky md:top-22 md:!mt-0 md:pr-6 md:border-b-0 md:border-r md:border-r-gray-light lg:pr-12">
   <ul class="!list-none !m-0 !pt-0 !px-0 !pb-4">
     {#each sections as section}
       {@const isActive = activeSectionId === section.id}

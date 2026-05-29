@@ -22,10 +22,6 @@ jobs:
       POSTGRES_PASSWORD: boris
       POSTGRES_DB: boris
 
-    strategy:
-      matrix:
-        node-version: [26.0.0]
-
     services:
       postgres:
         image: postgres:16
@@ -47,7 +43,7 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 26.0.0
 
       - name: Setup database
         uses: ./.github/actions/setup-database
@@ -61,7 +57,7 @@ jobs:
       - name: Install playwright
         uses: ./.github/actions/install-playwright
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 26.0.0
 
       - name: Frontend e2e tests
         run: npm run test:e2e -w @boris/frontend

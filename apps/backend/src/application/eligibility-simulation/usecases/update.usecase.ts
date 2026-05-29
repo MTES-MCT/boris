@@ -151,19 +151,23 @@ export class UpdateEligibilitySimulationUsecase {
     );
 
     if (hasEmailChanged) {
-      await this.mailerService.sendEmail(
-        [
-          {
-            email: params.email as string,
-            name: `${params.firstName} ${params.lastName}`,
-            params: {
-              firstName: params.firstName,
+      try {
+        await this.mailerService.sendEmail(
+          [
+            {
+              email: params.email as string,
+              name: `${params.firstName} ${params.lastName}`,
+              params: {
+                firstName: params.firstName,
+              },
             },
-          },
-        ],
-        'Votre projet en BRS : toutes les étapes clés',
-        6,
-      );
+          ],
+          'Votre projet en BRS : toutes les étapes clés',
+          6,
+        );
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     if (shouldInsertInGoogleSheet) {

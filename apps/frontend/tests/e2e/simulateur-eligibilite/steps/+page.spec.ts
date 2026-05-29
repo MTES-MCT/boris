@@ -113,7 +113,7 @@ test.describe('Eligibility simulator', () => {
 
     simulatorWrapper = page.getByTestId('simulator-wrapper');
     stepTitle = simulatorWrapper.getByRole('heading', { level: 2 });
-    phaseTitle = simulatorWrapper.getByRole('heading', { level: 3 });
+    phaseTitle = simulatorWrapper.locator('fieldset h3.fr-h4');
     submitButton = simulatorWrapper.getByRole('button', {
       name: /Étape suivante/i,
     });

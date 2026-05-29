@@ -22,6 +22,7 @@
       slug: string;
     };
     showAdilSnippet?: boolean;
+    footerSections?: Snippet;
   };
 
   type ObservableSection = {
@@ -37,6 +38,7 @@
     nextStep,
     showAdilSnippet = false,
     children = undefined,
+    footerSections = undefined,
   }: Props = $props();
 
   let observableSections = $state<ObservableSection[]>(
@@ -109,8 +111,14 @@
           </svelte:element>
 
           {#each sections as section}
-            <Step {...section} />
+            {#if section.content}
+              <Step {...section} />
+            {/if}
           {/each}
+
+          {#if footerSections}
+            {@render footerSections()}
+          {/if}
 
           <nav
             class="step-links flex flex-col md:flex-row gap-6 pt-10 p-2 md:justify-between"

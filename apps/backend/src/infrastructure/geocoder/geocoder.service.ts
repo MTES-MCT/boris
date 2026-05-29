@@ -8,6 +8,20 @@ export class GeocoderService implements GeocoderServiceInterface {
 
   constructor() {}
 
+  public async geocodeByAddress(address: string): Promise<GeocodedResponse[]> {
+    try {
+      const url = `${this.baseUrl}/search?q=${encodeURIComponent(address)}&autocomplete=0&index=address&limit=1&returntruegeometry=false`;
+
+      const response = await fetch(url);
+      const data: GeocodedSearchApiResponse = await response.json();
+
+      return data?.features || [];
+    } catch (e) {
+      console.log(`An error occured while geocoding ${address}`);
+      throw e;
+    }
+  }
+
   public async geocodeByMunicipality(
     municipality: string,
     inseeCode?: string,

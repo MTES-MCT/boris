@@ -44,7 +44,7 @@
       }, stepsContent.phone.errorMessage),
   });
 
-  const handleSubmit = (e: SubmitEvent) => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
 
     const payload = {
@@ -56,17 +56,19 @@
 
     try {
       formData.parse(payload);
-      eligibilitySimulatorManager.hasRefusedConnection = false;
-
-      updateEligibilitySimulation({
-        firstName,
-        lastName,
-        email,
-        phone,
-      });
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
+      return;
     }
+
+    eligibilitySimulatorManager.hasRefusedConnection = false;
+
+    await updateEligibilitySimulation({
+      firstName,
+      lastName,
+      email,
+      phone,
+    });
   };
 </script>
 

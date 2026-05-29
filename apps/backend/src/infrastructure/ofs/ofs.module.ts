@@ -20,6 +20,10 @@ import { PortalOfssController } from './controllers/api/portal-ofss.controller';
 import { PortalApiAuthenticatedGuard } from '../auth/guards/portal-api-authenticated.guard';
 import { EligibilitySimulationModule } from '../eligibility-simulation/eligibility-simulation.module';
 import { OfsEligibilitySimulationEntity } from './ofs-eligibility-simulation.entity';
+import { FindMyOfsApiController } from './controllers/api/find-my-ofs.controller';
+import { FindMyOfsUsecase } from 'src/application/ofs/usecases/findMyOfs.usecase';
+import { BrsDiffusionWebsiteModule } from '../brs-diffusion-website/brs-diffusion-website.module';
+import { GeocoderModule } from '../geocoder/geocoder.module';
 
 @Module({
   imports: [
@@ -29,9 +33,12 @@ import { OfsEligibilitySimulationEntity } from './ofs-eligibility-simulation.ent
     DistributorModule,
     UserModule,
     EligibilitySimulationModule,
+    BrsDiffusionWebsiteModule,
+    GeocoderModule,
   ],
   controllers: [
     GetOfssApiController,
+    FindMyOfsApiController,
     PortalOfssController,
     GetOfssAdminController,
     CreateOfsAdminController,
@@ -45,6 +52,7 @@ import { OfsEligibilitySimulationEntity } from './ofs-eligibility-simulation.ent
     DeleteOfsUsecase,
     FindOfsByIdUsecase,
     UpdateOfsUsecase,
+    FindMyOfsUsecase,
     PortalApiAuthenticatedGuard,
   ],
   exports: [

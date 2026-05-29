@@ -19,6 +19,11 @@ export interface BrsDiffusionWebsiteRepositoryInterface {
     longitude: number,
     radius: number,
   ): Promise<[BrsDiffusionWebsiteEntityWithDistance[], number]>;
+  findNearestOfssByLocation(
+    latitude: number,
+    longitude: number,
+    radius: number,
+  ): Promise<BrsDiffusionWebsiteEntityWithDistance[]>;
   findAllByRegion(
     paginationProps: PaginationProps,
     regionId: string,
