@@ -59,6 +59,15 @@ export const formatPublishedAt = (date: string) => {
   return `Publié le ${formattedDate}`;
 };
 
+export const formatUpdatedAt = (date: string) => {
+  const formattedDate = new Intl.DateTimeFormat('fr-FR', {
+    dateStyle: 'long',
+    timeZone: 'Europe/Paris',
+  }).format(new Date(date));
+
+  return `mis à jour le ${formattedDate}`;
+};
+
 export const formatNumber = (
   number: number,
   maximumFractionDigits: number = 0,

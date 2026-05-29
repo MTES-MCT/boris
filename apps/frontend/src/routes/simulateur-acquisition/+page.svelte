@@ -20,6 +20,15 @@
     content="Simulez les frais liés à l'acquisition d'un logement en Bail Réel Solidaire (BRS), du financement aux différentes charges liées à la propriété en BRS." />
 </svelte:head>
 
+<section class="fr-container fr-pt-6w fr-px-2w md:fr-px-4w">
+  <p class="fr-text--lg fr-mb-0">
+    Ce simulateur estime le coût global de votre achat en bail réel solidaire
+    (BRS) à partir du prix du logement. Avant de commencer, munissez-vous du
+    prix du logement (affiché par l'opérateur ou le promoteur), de sa surface,
+    de sa localisation et du montant de votre apport personnel.
+  </p>
+</section>
+
 {#if currentStep.step === 1}
   <Step1 />
 {:else if currentStep.step === 2}

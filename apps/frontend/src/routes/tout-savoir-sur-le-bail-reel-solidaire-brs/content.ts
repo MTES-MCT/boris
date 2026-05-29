@@ -17,7 +17,7 @@ export const steps = [
     photograph: 'Surprising_Media',
     title: 'Je me renseigne sur le dispositif du bail réel solidaire (BRS).',
     description:
-      "Découvrez les informations relatives au bail réel solidaire : les avantages du bail réel solidaire (BRS), les inconvénients du bail réel solidaire (où plutôt les contreparties), les critères d'éligibilité et les parties prenantes d'un projet en BRS.",
+      "Découvrez les informations relatives au bail réel solidaire : les avantages et les inconvénients du bail réel solidaire (ou plutôt les contreparties), les critères d'éligibilité et les parties prenantes d'un projet en BRS.",
     hrefLabel: 'Tout savoir sur le bail réel solidaire',
     href: `/tout-savoir-sur-le-bail-reel-solidaire-brs/${step1.slug}`,
   },
@@ -37,7 +37,7 @@ export const steps = [
     photograph: 'Mikhail Nilov ',
     title: 'Je cherche des financements.',
     description:
-      'Assurez-vous de pouvoir financer votre achat, payer les frais en tant que propriétaire en BRS grâce à vos fonds propres, un emprunt bancaire et des aides éventuelles et projetez-vous à plus long terme.',
+      'Assurez-vous de pouvoir <strong>financer votre achat</strong>, payer les frais en tant que propriétaire en BRS grâce à vos fonds propres, un emprunt bancaire et des <strong>aides éventuelles</strong> et projetez-vous à plus long terme.',
     hrefLabel: 'Définir son projet financier',
     href: `/tout-savoir-sur-le-bail-reel-solidaire-brs/${step3.slug}`,
   },
@@ -47,7 +47,7 @@ export const steps = [
     photograph: 'Mikhail Nilov ',
     title: 'Je passe chez le notaire.',
     description:
-      "Vérifiez toutes les étapes après avoir trouvé un logement, les documents à fournir ainsi que comment choisir son ou sa notaire pour signer l'acte de vente.",
+      "Vérifiez toutes <strong>les étapes après avoir trouvé un logement</strong>, les <strong>documents à fournir</strong> ainsi que comment <strong>choisir son ou sa notaire</strong> pour signer l'acte de vente.",
     hrefLabel: "S'assurer du bon déroulement de l'achat",
     href: `/tout-savoir-sur-le-bail-reel-solidaire-brs/${step4.slug}`,
   },
@@ -57,7 +57,7 @@ export const steps = [
     photograph: 'Lisa from Pexels',
     title: 'Je suis chez moi !',
     description:
-      "Profitez de votre logement et assurez-vous de bien connaître les spécificités liées au BRS : l'assurance logement BRS, réalisation des travaux, la vie en copropriété et la revente du logement.",
+      'Profitez de votre logement et <strong>assurez-vous de bien connaître les spécificités liées au BRS</strong> : l\'assurance logement BRS, réalisation des travaux, la vie en copropriété et la <a href="/revendre-mon-bien-en-brs">revente du logement</a>.',
     hrefLabel: "Découvrez les spécificités pour l'après achat",
     href: `/tout-savoir-sur-le-bail-reel-solidaire-brs/${step5.slug}`,
   },

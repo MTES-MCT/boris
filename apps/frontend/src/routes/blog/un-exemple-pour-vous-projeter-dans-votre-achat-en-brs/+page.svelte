@@ -18,8 +18,10 @@
 
 <ArticlePage {article}>
   <p>
-    Imaginons que vous avez repéré un appartement NEUF de 70 m² en BRS à 210.000
-    euros à Lyon.
+    Imaginons que vous avez repéré un <b>
+      appartement NEUF de 70 m² en BRS à 210.000 euros à Lyon
+    </b>
+    . Vous achetez donc à 3000 euros/m² à Lyon.
   </p>
   <p>
     Voici un calcul pour savoir si cela est plus intéressant que de rester
@@ -31,21 +33,38 @@
   <p>
     Imaginons que vous avez un apport de 20.000 €, soit un peu moins de 10% du
     prix du bien. Une partie de cet apport devra être affectée directement aux
-    coûts annexes que sont les frais de notaires (4 830 €), les frais de
-    cautionnement pour votre futur emprunt (environ 2 100 €) et de potentiels
-    frais de dossier (environ 1 000 €). Il vous reste ainsi environ 12 000 €
-    d'apport pour l'achat de votre appartement, à compléter par des emprunts et
-    des aides.
+    coûts annexes :
   </p>
-  <p><b>Emprunts</b></p>
+  <ul>
+    <li>
+      <b>les frais de notaires</b>
+      (4 830 €),
+    </li>
+    <li>
+      <b>les frais de cautionnement</b>
+      pour votre futur emprunt (environ 2 100 €)
+    </li>
+    <li>
+      <b>les potentiels frais de dossier</b>
+      (environ 1 000 €).
+    </li>
+  </ul>
   <p>
-    Il vous reste ainsi 198 000 € à emprunter. L'appartement étant neuf et
-    puisqu'il s'agit pour vous d'une primo-accession, vous êtes éligible au Prêt
-    à Taux Zéro (PTZ). Ce dernier peut vous apporter 84 000 €, qu'il faudra
-    compléter par un prêt usuel d'une banque pour chercher les 126 000 €
-    restants. Les taux en vigueur pour ce type de prêt sont à l'heure où nous
-    écrivons ces lignes à hauteur de 3,5%. Nous ne prenons pas d'autres aides
-    dans notre cas d'étude, comme
+    Il vous reste ainsi environ 12 000 € d'apport pour l'achat de votre
+    appartement, à compléter par des emprunts et des aides.
+  </p>
+  <h2><b>Emprunts</b></h2>
+  <p>
+    Il vous reste ainsi 198 000 € à emprunter. <b>
+      L'appartement étant neuf et puisqu'il s'agit pour vous d'une
+      primo-accession
+    </b>
+    , vous êtes
+    <b>éligible au Prêt à Taux Zéro (PTZ)</b>
+    . Ce dernier peut vous apporter 84 000 €, qu'il faudra compléter par un prêt
+    usuel d'une banque pour chercher les 126 000 € restants. Les taux en vigueur
+    pour ce type de prêt sont à l'heure où nous écrivons ces lignes à hauteur de
+    3,5%. Nous ne prenons pas d'autres aides dans notre cas d'étude, comme
     <a
       href="https://www.actionlogement.fr/le-pret-accession"
       class="fr-link"
@@ -54,7 +73,26 @@
     </a>
     ou des prêts conventionnés par certaines banques mais celles-ci existent.
   </p>
+  <p>
+    Référez-vous à la section <a
+      href="/tout-savoir-sur-le-bail-reel-solidaire-brs/je-cherche-des-financements"
+      class="fr-link">
+      Je cherche des financements
+    </a>
+    pour étudier les aides disponibles.
+  </p>
+  <p>
+    Utilisez le <a
+      href="/simulateur-acquisition"
+      class="fr-link">
+      simulateur d'acquisition en BRS
+    </a>
+    pour
+    <b>mieux comprendre votre besoin total d'emprunt</b>
+    , et le lissage des prêts (PTZ et prêt usuel).
+  </p>
   <h2><b>Coût mensuel</b></h2>
+  <h3>La mensualité du prêt</h3>
   <p>
     En fonction de la durée de remboursement de vos deux prêts combinés, vos
     mensualités seront plus ou moins élevées. Par exemple, pour <b>
@@ -63,16 +101,17 @@
     </b>
     Dans ces deux cas, les mensualités à rembourser sont bien inférieures à 35% de
     vos ressources mensuelles, qui est le plafond réglementaire au-dessus duquel
-    une banque ne peut pas vous faire de prêt.
+    une banque ne peut pas vous faire de prêt. Utilisez le
     <a
-      href="https://www.calcul-ptz.fr/lissage.html"
-      class="fr-link"
-      target="_blank">
-      Un site existe pour faire votre propre simulation.
+      href="/simulateur-acquisition"
+      class="fr-link">
+      simulateur d'acquisition en BRS
     </a>
+    pour faire le test du lissage des prêts et des mensualités dues.
   </p>
+  <h3>La redevance</h3>
   <p>
-    Au-delà de ces mensualités, vous devrez chaque mois payer une redevance
+    Au-delà de ces mensualités, <b>vous devrez chaque mois payer une redevance</b>
     auprès de l'Organisme Foncier Solidaire (OFS) avec qui vous partagez la
     propriété de votre logement. Cette redevance mensuelle peut être très
     variable en fonction du marché immobilier dans lequel se trouve votre
@@ -80,10 +119,11 @@
     monter jusque 210€/mois et le paiement de cette redevance ne s'arrête que si
     vous revendez votre logement ou le transmettez à vos proches.
   </p>
+  <h3>Les charges</h3>
   <p>
     De plus, en tant que propriétaire, vous aurez probablement à payer des
-    charges de copropriétés ainsi que la taxe foncière et vous serez dans
-    l'obligation d'assurer votre logement. Ces montants sont variables en
+    <b>charges de copropriétés</b> ainsi que la taxe foncière et vous serez dans
+    l'obligation <b>d'assurer votre logement</b>. Ces montants sont variables en
     fonction des communes de résidence et des copropriétés mais peuvent
     atteindre quelques centaines d'euros. Ces charges peuvent être payées
     annuellement mais nous les lisserons sur 12 mois pour vous donner une idée
@@ -113,6 +153,18 @@
     revendre pour utiliser votre capital pour acheter un nouveau bien ou le
     transmettre à vos proches.
   </p>
+  <p>
+    Pour vous aider à mieux évaluer le coût mensuel et annuel total d'un achat
+    en BRS, nous avons créé un simulateur d'acquisition en BRS. Il vous permet
+    de faire varier les paramètres (montant de l'achat, de l'apport, de la
+    redevance, etc.) et ainsi d'avoir une estimation personnalisée des coûts
+    engendrés.
+  </p>
+  <a
+    href="/simulateur-acquisition"
+    class="fr-btn fr-btn--lg fr-mb-6w">
+    Lancer ma simulation personnalisée de coût d'acquisition en BRS
+  </a>
   <h2><b>Projection sur plusieurs années</b></h2>
   <p>
     Par exemple, vous vivez 8 ans dans ce logement et que votre situation change
@@ -120,9 +172,9 @@
     vos prêts et il vous restera 124 555,20 € à rembourser. Vous revendez votre
     logement à 210 000 € (soit au même montant que lors de votre achat). Si nous
     déduisons tout ce qu'il vous reste à rembourser, vous avez maintenant une
-    épargne de 85 000 €, soit 4 fois plus que lors de votre achat initial. Vous
+    épargne de 85 000 €, soit 4 fois plus que lors de votre achat initial. <b>Vous
     avez réussi à mettre de l'argent de côté pendant 8 ans tout en vivant dans
-    un logement confortable.
+    un logement confortable.</b>
   </p>
   <p>
     Vous pourrez maintenant utiliser cet argent comme apport pour acheter un

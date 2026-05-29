@@ -32,8 +32,9 @@
   <p>
     Le BRS cible <strong>les classes moyennes et modestes</strong>
     , souvent exclues de l'accession classique. Les plafonds sont proches de ceux
-    du prêt à taux zéro. 87% des ménages en France sont éligibles, c'est donc probablement
-    votre cas!
+    du prêt à taux zéro.
+    <b>87% des ménages en France sont éligibles</b>
+    , c'est donc probablement votre cas!
   </p>
   <p>
     <a
@@ -152,4 +153,48 @@
     </a>
     , plateforme officielle du gouvernement sur le Bail Réel Solidaire (BRS).
   </p>
+
+  <p>Voici quelques pages utiles:</p>
+  <ul>
+    <li>
+      Pour
+      <a
+        href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
+        class="fr-link">
+        s’informer sur le bail réel solidaire
+      </a>
+    </li>
+    <li>
+      Pour
+      <a
+        href="/simulateur-eligibilite"
+        class="fr-link">
+        tester votre éligibilité au bail réel solidaire
+      </a>
+    </li>
+    <li>
+      Pour
+      <a
+        href="/simulateur-acquisition"
+        class="fr-link">
+        comprendre l’ensemble des coûts liés à votre achat en BRS
+      </a>
+    </li>
+    <li>
+      Pour
+      <a
+        href="/logements-brs-disponibles"
+        class="fr-link">
+        trouver un logement proche de chez vous
+      </a>
+    </li>
+    <li>
+      Pour
+      <a
+        href="/revendre-mon-bien-en-brs"
+        class="fr-link">
+        revendre votre logement
+      </a>
+    </li>
+  </ul>
 </ArticlePage>

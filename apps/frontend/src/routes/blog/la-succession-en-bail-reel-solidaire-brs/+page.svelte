@@ -48,7 +48,7 @@
     <br />
     <b>La succession en bail réel solidaire est donc possible.</b>
     <br />
-    La succession d'un logement brs est également
+    La succession d'un logement en bail réel solidaire (BRS) est également
     <b>
       encadrée quant à la possibilité de conserver le bien en BRS ou
       l'obligation de revente
@@ -160,7 +160,7 @@
     connaître.
   </h2>
   <p>
-    ➡️ Si vous êtes héritier d'un logement en bail réel solidaire (BRS), il est
+    Si vous êtes héritier d'un logement en bail réel solidaire (BRS), il est
     recommandé de :
   </p>
   <ul>
@@ -212,10 +212,10 @@
       <a href="/revendre-mon-bien-en-brs" class="fr-link fr-text--sm">👉 Revente d'un logement en BRS.</a>`,
       ],
       [
-        `❌ NON Éligibles au BRS <br />
+        `<hr class="fr-my-4w" />❌ NON Éligibles au BRS <br />
       (Test d'éligibilité
       <a href="/simulateur-eligibilite" class="fr-link fr-text--sm">ICI</a>)`,
-        `✅ Vous héritez du logement en bail réel solidaire
+        `<hr class="fr-my-4w" />✅ Vous héritez du logement en bail réel solidaire
       <br />
       ❌ Il vous est IMPOSSIBLE de conserver le bien en bail réel
       solidaire → Obligation de revendre le bien
@@ -263,12 +263,16 @@
       class="fr-link">
       organisme de foncier solidaire (OFS)
     </a>
-    proche de chez vous ou
-    <a
-      href="/nous-contacter"
+    proche de chez vous.
+  </p>
+
+  <p>
+    Vous avez acheté en BRS et vous ne connaissez plus le nom de votre OFS ?
+    Retrouvez qui est votre OFS <a
+      href="/organismes-de-foncier-solidaire"
       class="fr-link">
-      contactez BoRiS
+      ici
     </a>
-    , notre équipe du Ministère du logement vous répondra.
+    !
   </p>
 </ArticlePage>

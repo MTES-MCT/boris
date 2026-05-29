@@ -20,6 +20,12 @@
           c'est possible !
         </span>
       </h2>
+      <p class="fr-mt-2w fr-mb-0 md:!text-lg lg:!text-xl">
+        Le bail réel solidaire (BRS) est un dispositif de l'Etat qui permet de
+        devenir propriétaire de sa résidence principale à un prix réduit : vous
+        achetez le logement, un organisme de foncier solidaire (OFS) reste
+        propriétaire du terrain, en échange d'une redevance mensuelle contenue.
+      </p>
     </div>
 
     <div class="bg-white p-4 md:p-8 text-center mt-18 rounded-lg">

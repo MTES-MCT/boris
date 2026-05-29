@@ -56,23 +56,23 @@ export const steps: Step[] = [
         title: 'Les avantages du BRS',
         content: `
           <p>
-            Le Bail Réel Solidaire permet aux ménages éligibles d’acheter un logement à
-            un prix abordable, particulièrement en zone tendue.
+            Le Bail Réel Solidaire <strong>permet aux ménages éligibles d’acheter un logement à
+            un prix abordable</strong>, particulièrement en zone tendue.
           </p>
           <p>
             Il s’adresse donc aux individus et familles qui ont des difficultés à
             accéder à la propriété dans le marché classique, parce que leurs revenus
             et/ou leur capital ne leur permettent pas d’avancer ou d’emprunter la somme
             suffisante. En achetant uniquement les murs et non le terrain, les ménages
-            propriétaires d’un logement en BRS font en moyenne 30 à 50% d’économie par
-            rapport à un achat d’un logement sur le marché libre. Les prix étant plus
+            propriétaires d’un logement en BRS font en moyenne <strong>30 à 50% d’économie</strong> par
+            rapport à un achat d’un logement sur le marché libre. <strong>Les prix étant plus
             bas, l’emprunt à la banque l’est aussi, ce qui augmente les chances de
-            l’obtenir et réduit la pression financière du remboursement de l’emprunt.
+            l’obtenir et réduit la pression financière</strong> du remboursement de l’emprunt.
           </p>
           <p class="fr-mb-0">
-            Le Bail Réel Solidaire vous permet ainsi de construire un patrimoine
-            immobilier pour sortir du marché locatif, disposer de votre logement comme
-            vous le souhaitez, ou bien transmettre ce patrimoine à vos proches par
+            Le Bail Réel Solidaire vous permet ainsi de <strong>construire un patrimoine
+            immobilier</strong> pour sortir du marché locatif, <strong>disposer de votre logement comme
+            vous le souhaitez, ou bien transmettre ce patrimoine à vos proches</strong> par
             exemple.
           </p>
         `,
@@ -86,17 +86,17 @@ export const steps: Step[] = [
           </p>
           <ol class="!mb-6">
             <li>
-              Vous devez faire de ce logement votre résidence principale et y vivre
-              vous-même. Vous ne pouvez donc pas utiliser votre logement pour de la
+              <strong>Vous devez faire de ce logement votre résidence principale et y vivre
+              vous-même.</strong> Vous ne pouvez donc pas utiliser votre logement pour de la
               location longue durée et en faire un investissement locatif.
             </li>
             <li>
-              Vous partagez la propriété de votre logement avec un <a href="/organismes-de-foncier-solidaire" class="fr-link">organisme de foncier solidaire (OFS)</a> et vous vous engagez à lui verser une redevance foncière
-              mensuelle. Cette redevance peut varier en fonction de l’emplacement du
+              Vous partagez la propriété de votre logement avec un <a href="/organismes-de-foncier-solidaire" class="fr-link">organisme de foncier solidaire (OFS)</a> et vous <strong>vous engagez à lui verser une redevance foncière
+              mensuelle.</strong> Cette redevance peut varier en fonction de l’emplacement du
               logement, mais reste contenue.
             </li>
             <li>
-              En cas de revente, la plus-value que vous pourrez faire est encadrée et ne
+              <strong>En cas de revente, la plus-value que vous pourrez faire est encadrée</strong> et ne
               pourra pas dépasser les limites fixées par la loi.
             </li>
           </ol>
@@ -111,11 +111,12 @@ export const steps: Step[] = [
         content: `
           <p>
             Le Bail Réel Solidaire s’adresse à des ménages dont les ressources ne
-            dépassent pas un certain plafond : environ 87% des personnes résidant en
-            France sont éligibles.
+            dépassent pas un certain plafond : environ <b>87% des personnes résidant en
+            France sont éligibles</b>.
           </p>
           <p>
-            Vous souhaitez savoir si vous y avez droit ? Utilisez notre simulateur :
+            Vous souhaitez savoir si vous y avez droit ? Consultez les <a href="/simulateur-eligibilite#plafonds-de-ressources" class="fr-link">plafonds de ressources BRS 2026</a>,
+            ou faites le test sur notre simulateur :
           </p>
           <a class="fr-btn fr-btn--lg" href="/simulateur-eligibilite">Suis-je éligible ?</a>
         `,
@@ -128,15 +129,19 @@ export const steps: Step[] = [
             Un certain nombre d’acteurs sont là pour vous accompagner dans vos
             démarches. La plupart d’entre eux sont les mêmes que pour un achat classique
             : <br />
-            Le premier contact est le ou la professionnel.le de l'immobilier chargé·e de
-            la vente du logement. Comme pour une vente classique, son rôle est de vous accompagner
-            dans la recherche d’un bien puis dans votre achat.
+            Le premier contact est <b>le ou la professionnel.le de l'immobilier chargé·e de
+            la vente du logement.</b> Comme pour une vente classique, son rôle est de vous <b>accompagner
+            dans la recherche d’un bien puis dans votre achat.</b>
+          </p>
+          <p>
+            Vous pouvez également consulter <a href="/logements-brs-disponibles" class="fr-link">ici les villes où des appartements en BRS et maisons en BRS sont à vendre</a>.
           </p>
           <p>
             Dans la majorité des cas, les ménages souhaitant devenir propriétaire
             doivent obtenir un prêt auprès d’une banque. Si vous êtes dans ce cas, votre
             banquier·ère s’assure de votre solvabilité et vous aide dans votre plan de
-            financement.
+            financement. Utilisez notre <a href="/simulateur-acquisition" class="fr-link">simulateur de coût d’acquisition en BRS</a>
+            pour avoir une estimation du coût total mensuel et annuel pour votre logement.
           </p>
           <p>
             Puisqu’il s’agit d’un achat de logement, le Bail Réel Solidaire doit être
@@ -172,26 +177,27 @@ export const steps: Step[] = [
           besoins.
         </p>
         <ul>
-          <li>Quel est le quartier dans lequel vous souhaitez habiter ?</li>
+          <li>Quel est le <b>quartier</b> dans lequel vous souhaitez habiter ?</li>
           <li>
-            Quels sont vos critères d’accès aux moyens de transport, aux espaces
+            Quels sont <b>vos critères d’accès</b> aux moyens de transport, aux espaces
             naturels, aux écoles et crèches, aux commerces… ?
           </li>
           <li>
-            De combien de pièces avez-vous besoin ? Souhaitez-vous un espace extérieur
+            De <b>combien de pièces</b> avez-vous besoin ? Souhaitez-vous un espace extérieur
             ?
           </li>
-          <li>Quelle est la surface minimum que vous souhaitez avoir ?</li>
+          <li>Quelle est la <b>surface minimum</b> que vous souhaitez avoir ?</li>
           <li>
-            Savez-vous combien de temps vous prévoyez de vivre dans ce logement ?
+            Savez-vous <b>combien de temps</b> vous prévoyez de vivre dans ce logement ?
           </li>
-          <li>Quel est votre budget ?</li>
+          <li>Quel est votre <b>budget</b> ? <a href="/simulateur-acquisition">Pour vous aider à estimer l’ensemble des coûts liés à un achat en BRS utilisez ce simulateur.</a></li>
         </ul>
         <p class="fr-mb-0">
           L’ensemble des réponses à ces questions permettent de trouver les bons
-          interlocuteurs et d’estimer le coût du logement. C’est notamment de ces
-          sujets que vous discuterez avec le ou la professionnel.le de l'immobilier
-          qui vous accompagnera.
+          interlocuteurs et d’estimer le coût du logement. Pour vous aider à estimer
+          l’ensemble des coûts liés à un achat en BRS, utilisez <a href="/simulateur-acquisition" class="fr-link">ce simulateur</a>.
+          C’est notamment de ces sujets que vous discuterez avec le ou la professionnel.le
+          de l'immobilier qui vous accompagnera.
         </p>
       `,
       },
@@ -201,14 +207,17 @@ export const steps: Step[] = [
         content: `
           <p>
             La première étape est de trouver un logement en vente. Pour cela, vous
-            pouvez rechercher directement sur les sites des professionel.les vendant des
-            logements en BRS. Vous pouvez aussi faire des recherches sur les sites
+            pouvez rechercher directement sur <a href="/logements-brs-disponibles" class="fr-link">notre cartographie du BRS</a> !
+            Vous pourrez voir les villes qui présentent des logements à vendre en BRS.
+            Vous serez redirigé alors vers le(s) site(s) qui propose(nt) le(s)
+            logement(s) à vendre. Vous pouvez aussi faire des recherches sur les sites
             d’annonces classiques (Seloger, Bienici, Leboncoin). Par ailleurs, nous
             sommes en lien direct avec des professionnel.lles spécialisé.es dans le Bail
-            Réel Solidaire.
+            Réel Solidaire. Pour être mis en relation avec eux, <a href="/simulateur-eligibilite" class="fr-link">réalisez une simulation
+            d’éligibilité et renseignez vos coordonnées</a>, ils vous rappeleront.
           </p>
           <a class="fr-btn fr-btn--lg" href="/logements-brs-disponibles">
-            Prendre contact pour trouver un logement en BRS
+            Trouver un logement en BRS !
           </a>
         `,
       },
@@ -218,22 +227,22 @@ export const steps: Step[] = [
         content: `
           <p class="fr-mb-0">
             Pour votre premier échange avec le ou la professionnel.le de l'immobilier
-            chargé·e de la vente du logement qui vous intéresse, vous aurez besoin de
-            prouver votre éligibilité. Vous devez ainsi préparer les pièces suivantes :
+            chargé·e de la vente du logement qui vous intéresse, <strong>vous aurez besoin de
+            prouver votre éligibilité.</strong> Vous devez ainsi préparer les pièces suivantes :
           </p>
           <ul>
-            <li>votre avis d’imposition pour 2022 (année n-2) seul.e/à deux</li>
-            <li>la copie d’une pièce d’identité</li>
-            <li>le cas échéant, la copie de votre livret de famille</li>
-            <li>un justificatif de domicile</li>
+            <li><strong>votre avis d’imposition année n-2</strong>, seul.e/à deux</li>
+            <li>la <strong>copie d’une pièce d’identité</strong></li>
+            <li>le cas échéant, <strong>la copie de votre livret de famille</strong></li>
+            <li>un <strong>justificatif de domicile</strong></li>
           </ul>
           <p class="fr-mb-0">
             Par ailleurs, d’autres pièces sont nécessaires pour vous assurer un
             accompagnement de qualité :
           </p>
           <ul>
-            <li>Une simulation bancaire</li>
-            <li>Le cas échéant, le justificatif de votre apport personnel</li>
+            <li>Une <strong>simulation bancaire</strong></li>
+            <li><strong>Le cas échéant, le justificatif de votre apport personnel</strong></li>
           </ul>
           <p class="fr-mb-0">
             Chaque professionnel pouvant avoir des pratiques différentes, d’autres
@@ -266,6 +275,11 @@ export const steps: Step[] = [
             mensuellement suite à l’achat du logement et de vérifier que la somme à
             débourser chaque mois et bien compatible avec votre situation.
           </p>
+          <p>
+            Pour estimer le coût total du logement (prêt à rembourser, charges
+            mensuelles individuelles, taxe foncière...), utilisez notre <a href="/simulateur-acquisition" class="fr-link">simulateur de coût d’acquisition en BRS</a>.
+            Vous pourrez ainsi avoir toutes les lignes de coûts liées à votre achat.
+          </p>
           <p class="fr-mb-4w">
             Enfin, l’accession à la propriété nécessite une projection sur plusieurs
             années. Prévoyez-vous de rester dans votre logement 5 ans ? 10 ans ? 25 ans
@@ -273,8 +287,11 @@ export const steps: Step[] = [
             une épargne ? Le transmettre à vos proches ? Les réponses à ces questions
             permettront d’ajuster votre projet au mieux !
           </p>
+          <a class="fr-btn fr-btn--lg fr-mb-6w" href="/simulateur-acquisition">
+            Faire une simulation de coût d’acquisition en BRS
+          </a>
 
-          <h2 class="fr-h5 heading">Salarié·es du privé ? Profitez du conseil en financement et en accession d'Action Logement !</h2>
+           <h2 class="fr-h5 heading"><strong>Salarié·es du privé ? Profitez du conseil en financement et en accession d'Action Logement !</strong></h2>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300px" height="69px" viewBox="0 0 300 69" version="1.1">
             <g id="surface1">
               <path style=" stroke:none;fill-rule:nonzero;fill:rgb(89.803922%,3.529412%,30.19608%);fill-opacity:1;" d="M 285.390625 0.28125 C 285.78125 0.496094 286.160156 0.71875 286.539062 0.953125 C 286.683594 1.035156 286.824219 1.121094 286.964844 1.207031 C 287.257812 1.378906 287.550781 1.554688 287.839844 1.726562 C 288.464844 2.105469 289.097656 2.472656 289.730469 2.839844 C 289.847656 2.910156 289.96875 2.980469 290.09375 3.054688 C 291.042969 3.613281 292 4.160156 292.957031 4.707031 C 294.421875 5.542969 295.878906 6.386719 297.332031 7.242188 C 297.632812 7.421875 297.933594 7.597656 298.234375 7.769531 C 298.402344 7.871094 298.574219 7.96875 298.742188 8.066406 C 298.882812 8.148438 299.023438 8.230469 299.167969 8.316406 C 299.582031 8.597656 299.8125 8.824219 299.953125 9.308594 C 300.027344 9.949219 300.019531 10.359375 299.628906 10.902344 C 299.15625 11.320312 298.804688 11.453125 298.171875 11.4375 C 297.652344 11.359375 297.234375 11.089844 296.789062 10.824219 C 296.628906 10.734375 296.628906 10.734375 296.464844 10.640625 C 296.117188 10.441406 295.773438 10.238281 295.429688 10.035156 C 295.191406 9.898438 294.957031 9.761719 294.722656 9.621094 C 294.226562 9.335938 293.730469 9.042969 293.238281 8.753906 C 292.449219 8.292969 291.660156 7.835938 290.871094 7.378906 C 290.738281 7.300781 290.609375 7.226562 290.472656 7.148438 C 290.203125 6.992188 289.933594 6.835938 289.664062 6.679688 C 289.097656 6.355469 288.535156 6.027344 287.96875 5.699219 C 287.695312 5.539062 287.417969 5.382812 287.140625 5.226562 C 286.582031 4.90625 286.035156 4.589844 285.511719 4.210938 C 285.125 3.933594 284.777344 3.710938 284.308594 3.59375 C 283.730469 3.761719 283.292969 4.066406 282.8125 4.417969 C 282.410156 4.703125 281.976562 4.925781 281.542969 5.15625 C 280.539062 5.710938 279.546875 6.289062 278.558594 6.871094 C 277.480469 7.503906 276.402344 8.128906 275.320312 8.75 C 274.71875 9.101562 274.113281 9.449219 273.515625 9.808594 C 273.417969 9.867188 273.320312 9.925781 273.21875 9.984375 C 273.039062 10.09375 272.859375 10.199219 272.679688 10.308594 C 272.101562 10.652344 272.101562 10.652344 271.828125 10.652344 C 271.828125 15.476562 271.828125 20.300781 271.828125 25.269531 C 272.03125 25.351562 272.238281 25.433594 272.445312 25.519531 C 272.59375 25.59375 272.742188 25.671875 272.890625 25.753906 C 273.011719 25.820312 273.011719 25.820312 273.140625 25.894531 C 273.273438 25.96875 273.273438 25.96875 273.410156 26.046875 C 273.554688 26.125 273.554688 26.125 273.703125 26.207031 C 274.761719 26.804688 275.808594 27.417969 276.851562 28.03125 C 278.042969 28.730469 279.234375 29.417969 280.429688 30.109375 C 280.871094 30.363281 281.316406 30.621094 281.757812 30.875 C 281.980469 31.003906 282.203125 31.132812 282.425781 31.261719 C 282.636719 31.386719 282.847656 31.507812 283.058594 31.632812 C 283.1875 31.703125 283.316406 31.777344 283.445312 31.855469 C 283.558594 31.921875 283.671875 31.984375 283.789062 32.054688 C 283.960938 32.152344 284.132812 32.242188 284.308594 32.332031 C 284.59375 32.203125 284.59375 32.203125 284.914062 32.007812 C 285.039062 31.933594 285.164062 31.859375 285.296875 31.78125 C 285.433594 31.699219 285.570312 31.621094 285.714844 31.535156 C 285.859375 31.449219 286.003906 31.363281 286.148438 31.28125 C 286.375 31.148438 286.601562 31.015625 286.828125 30.882812 C 287.5625 30.449219 288.304688 30.023438 289.050781 29.597656 C 290.210938 28.9375 291.363281 28.269531 292.515625 27.59375 C 293.480469 27.027344 294.445312 26.464844 295.414062 25.90625 C 295.523438 25.839844 295.632812 25.777344 295.746094 25.710938 C 295.898438 25.625 295.898438 25.625 296.054688 25.535156 C 296.1875 25.457031 296.1875 25.457031 296.320312 25.378906 C 296.539062 25.269531 296.539062 25.269531 296.789062 25.269531 C 296.789062 25.066406 296.789062 24.863281 296.789062 24.652344 C 296.644531 24.652344 296.644531 24.652344 296.5 24.652344 C 295.609375 24.660156 294.71875 24.667969 293.828125 24.671875 C 293.371094 24.671875 292.914062 24.675781 292.457031 24.679688 C 292.011719 24.683594 291.570312 24.6875 291.128906 24.6875 C 290.960938 24.6875 290.792969 24.6875 290.625 24.691406 C 290.386719 24.695312 290.152344 24.695312 289.914062 24.695312 C 289.78125 24.695312 289.644531 24.695312 289.507812 24.695312 C 288.957031 24.632812 288.535156 24.445312 288.160156 24.03125 C 287.933594 23.652344 287.875 23.335938 287.875 22.902344 C 287.875 22.800781 287.871094 22.695312 287.871094 22.589844 C 287.871094 22.417969 287.871094 22.417969 287.871094 22.246094 C 287.871094 22.125 287.871094 22.007812 287.871094 21.882812 C 287.867188 21.484375 287.867188 21.089844 287.867188 20.691406 C 287.867188 20.417969 287.863281 20.140625 287.863281 19.867188 C 287.863281 19.289062 287.863281 18.710938 287.863281 18.132812 C 287.859375 17.394531 287.859375 16.652344 287.855469 15.914062 C 287.851562 15.34375 287.851562 14.773438 287.851562 14.207031 C 287.851562 13.933594 287.851562 13.660156 287.847656 13.386719 C 287.847656 13.003906 287.847656 12.621094 287.847656 12.242188 C 287.847656 12.128906 287.84375 12.015625 287.84375 11.898438 C 287.847656 11.164062 287.949219 10.617188 288.46875 10.058594 C 289.085938 9.742188 289.574219 9.734375 290.214844 9.933594 C 290.738281 10.230469 290.917969 10.460938 291.105469 11.023438 C 291.113281 11.359375 291.121094 11.6875 291.117188 12.023438 C 291.117188 12.125 291.117188 12.226562 291.117188 12.332031 C 291.117188 12.667969 291.117188 13 291.117188 13.335938 C 291.117188 13.570312 291.117188 13.804688 291.117188 14.035156 C 291.113281 14.648438 291.113281 15.261719 291.113281 15.875 C 291.109375 16.5 291.109375 17.125 291.109375 17.75 C 291.109375 18.976562 291.105469 20.203125 291.105469 21.429688 C 291.199219 21.429688 291.296875 21.429688 291.394531 21.425781 C 292.300781 21.417969 293.203125 21.410156 294.109375 21.40625 C 294.574219 21.402344 295.039062 21.398438 295.507812 21.394531 C 295.957031 21.386719 296.40625 21.386719 296.855469 21.382812 C 297.027344 21.382812 297.195312 21.382812 297.367188 21.378906 C 298.875 21.355469 298.875 21.355469 299.347656 21.636719 C 299.921875 22.226562 300.046875 22.742188 300.050781 23.554688 C 300.050781 23.679688 300.050781 23.679688 300.050781 23.804688 C 300.050781 23.980469 300.050781 24.152344 300.046875 24.324219 C 300.046875 24.589844 300.046875 24.851562 300.050781 25.117188 C 300.050781 25.285156 300.050781 25.453125 300.050781 25.625 C 300.046875 25.777344 300.046875 25.929688 300.046875 26.085938 C 299.984375 26.652344 299.832031 27.070312 299.40625 27.457031 C 299.320312 27.507812 299.234375 27.558594 299.148438 27.613281 C 299.050781 27.675781 298.953125 27.738281 298.851562 27.800781 C 298.738281 27.863281 298.628906 27.929688 298.515625 27.996094 C 298.339844 28.101562 298.339844 28.101562 298.160156 28.207031 C 297.753906 28.445312 297.34375 28.679688 296.933594 28.910156 C 296.78125 28.996094 296.628906 29.082031 296.476562 29.171875 C 296.160156 29.351562 295.847656 29.53125 295.53125 29.710938 C 294.785156 30.132812 294.039062 30.558594 293.296875 30.984375 C 293.1875 31.046875 293.1875 31.046875 293.078125 31.109375 C 292.089844 31.675781 291.101562 32.25 290.117188 32.828125 C 289.074219 33.4375 288.035156 34.042969 286.988281 34.644531 C 286.835938 34.734375 286.683594 34.820312 286.527344 34.910156 C 286.3125 35.035156 286.101562 35.15625 285.886719 35.28125 C 285.703125 35.386719 285.703125 35.386719 285.511719 35.496094 C 284.945312 35.796875 284.519531 36 283.863281 35.890625 C 283.179688 35.683594 282.574219 35.277344 281.960938 34.910156 C 281.804688 34.820312 281.652344 34.730469 281.496094 34.640625 C 281.183594 34.457031 280.871094 34.269531 280.558594 34.085938 C 280.027344 33.773438 279.5 33.460938 278.96875 33.152344 C 278.605469 32.941406 278.242188 32.730469 277.882812 32.515625 C 277.101562 32.058594 276.320312 31.609375 275.535156 31.15625 C 274.117188 30.335938 272.699219 29.511719 271.289062 28.683594 C 270.988281 28.503906 270.683594 28.328125 270.378906 28.152344 C 270.210938 28.054688 270.042969 27.957031 269.875 27.855469 C 269.734375 27.773438 269.59375 27.691406 269.449219 27.609375 C 268.988281 27.292969 268.792969 27.035156 268.617188 26.511719 C 268.605469 26.277344 268.597656 26.046875 268.597656 25.816406 C 268.597656 25.671875 268.597656 25.527344 268.597656 25.378906 C 268.597656 25.21875 268.597656 25.058594 268.597656 24.898438 C 268.59375 24.726562 268.59375 24.558594 268.59375 24.390625 C 268.59375 23.933594 268.59375 23.472656 268.589844 23.015625 C 268.589844 22.730469 268.589844 22.441406 268.589844 22.15625 C 268.589844 21.261719 268.585938 20.363281 268.585938 19.46875 C 268.585938 18.433594 268.582031 17.398438 268.582031 16.363281 C 268.578125 15.566406 268.578125 14.765625 268.578125 13.964844 C 268.574219 13.488281 268.574219 13.011719 268.574219 12.535156 C 268.570312 12.085938 268.570312 11.636719 268.570312 11.1875 C 268.570312 10.941406 268.570312 10.699219 268.570312 10.457031 C 268.570312 10.3125 268.570312 10.167969 268.570312 10.015625 C 268.570312 9.890625 268.570312 9.765625 268.570312 9.636719 C 268.636719 9.136719 268.832031 8.800781 269.214844 8.480469 C 269.300781 8.425781 269.386719 8.371094 269.472656 8.316406 C 269.574219 8.253906 269.671875 8.191406 269.773438 8.125 C 270.367188 7.765625 270.96875 7.414062 271.574219 7.070312 C 271.789062 6.945312 272 6.824219 272.214844 6.699219 C 272.433594 6.574219 272.65625 6.445312 272.875 6.320312 C 273.558594 5.929688 274.238281 5.535156 274.917969 5.140625 C 275.183594 4.984375 275.453125 4.832031 275.71875 4.675781 C 275.851562 4.601562 275.984375 4.523438 276.121094 4.445312 C 276.527344 4.210938 276.929688 3.976562 277.335938 3.742188 C 277.605469 3.585938 277.875 3.429688 278.144531 3.273438 C 278.277344 3.199219 278.410156 3.121094 278.542969 3.042969 C 279.214844 2.65625 279.886719 2.265625 280.554688 1.875 C 280.753906 1.757812 280.753906 1.757812 280.957031 1.636719 C 281.203125 1.492188 281.453125 1.34375 281.703125 1.195312 C 282.035156 1 282.367188 0.808594 282.703125 0.621094 C 282.808594 0.554688 282.914062 0.492188 283.023438 0.429688 C 283.890625 -0.0585938 284.476562 -0.144531 285.390625 0.28125 Z M 285.390625 0.28125 "/>
@@ -323,7 +340,7 @@ export const steps: Step[] = [
           <p></p>
           <p>
             Si vous faites partie d'une entreprise de plus de 10 salarié·es (ou plus de
-            50 salarié·es dans le secteur agricole) vous pouvez bénéficier gratuitement
+            50 salarié·es dans le secteur agricole) vous pouvez bénéficier <strong>gratuitement</strong>
             d'un accompagnement dans votre projet d’achat.
           </p>
           <a
@@ -355,29 +372,33 @@ export const steps: Step[] = [
         id: 'les-emprunts-et-aides-disponibles',
         title: 'Les emprunts et aides disponibles',
         content: `
+          <h2 class="fr-h5 heading">Emprunts</h2>
           <p>Votre capacité d'emprunt dépend de plusieurs éléments.</p>
           <p>
-            Généralement, les banques fondent leur calcul à partir de vos revenus
-            mensuels : vos remboursements (intérêts et assurance compris) ne doivent pas
+            <b>Généralement, les banques fondent leur calcul à partir de vos revenus
+            mensuels</b> : vos remboursements (intérêts et assurance compris) ne doivent pas
             dépasser un tiers de vos revenus, afin de rester en capacité de rembourser
             l'emprunt tout en conservant votre niveau de vie.
           </p>
           <p>
-            Par ailleurs, votre capacité d’emprunt dépend aussi des taux en vigueur.
+            Par ailleurs, <b>votre capacité d’emprunt dépend aussi des taux en vigueur</b>.
             Sachez qu’il n’existe pas à ce stade de prêts bancaires spécifiques pour du
             Bail Réel Solidaire.
           </p>
           <p>
-            Lorsque vous estimez vos futurs remboursements mensuels, n'oubliez pas de
-            prendre en compte les autres charges pouvant s'ajouter à votre emprunt,
+            Lorsque vous estimez vos futurs remboursements mensuels, <b>n'oubliez pas de
+            prendre en compte les autres charges pouvant s'ajouter à votre emprunt</b>,
             notamment la redevance foncière, la taxe foncière ou bien les charges de
             copropriété.
           </p>
+          <h2 class="fr-h5 heading">Aides</h2>
           <p>
-            Vous pouvez être éligible au Prêt à Taux Zéro, si c'est votre première
+            Vous pouvez être éligible au <b>Prêt à Taux Zéro</b>, si c'est votre première
             accession à la propriété et sous l'une de ces différentes hypothèses :
             logement construit dans le neuf, logement ancien avec travaux importants à
-            mener, achat d'un logement sous la forme d'une vente HLM.
+            mener, achat d'un logement sous la forme d'une vente HLM. <a href="/simulateur-acquisition" class="fr-link">Notre simulateur
+            vous indiquera si vous êtes éligible au Prêt à Taux Zéro dans le cadre d’un
+            achat en BRS. Faites le test !</a>
           </p>
           <p>
             Si vous êtes salarié.e d'une entreprise du secteur privé non agricole (10 salariés et plus) ou agricole (50 salariés et plus), vous pouvez vous renseigner sur les solutions d'achat immobilier d' <a
@@ -390,7 +411,7 @@ export const steps: Step[] = [
           <a
             class="fr-btn fr-btn--lg"
             href="/simulateur-acquisition">
-              Notre simulateur d'acquisition
+              Notre simulateur de coût d'acquisition en BRS
           </a>
         `,
       },
@@ -399,28 +420,28 @@ export const steps: Step[] = [
         title: 'Les frais à payer en tant que propriétaire en BRS',
         content: `
           <p class="fr-mb-0">
-            Lors de votre achat, plusieurs dépenses sont à prévoir en addition du prix
-            du logement, il faut notamment penser :
+            Lors de votre achat, <b>plusieurs dépenses sont à prévoir en addition du prix
+            du logement</b>, il faut notamment penser :
           </p>
           <ul>
             <li>
-              aux frais de notaires, qui représentent 2,3% du prix du logement pour un
+              aux <b>frais de notaires</b>, qui représentent 2,3% du prix du logement pour un
               logement dans le neuf et 8,7% pour un logement dans l’ancien
             </li>
             <li>
-              aux frais de cautionnement de prêt, qui représentent généralement 1% du
+              aux <b>frais de cautionnement de prêt</b>, qui représentent généralement 1% du
               prix du logement
             </li>
           </ul>
           <p>
-            L’ensemble de ces coûts représentent plusieurs milliers d’euros, et doivent
-            être financés par votre apport personnel car les banques refusent
+            L’ensemble de ces coûts <b>représentent plusieurs milliers d’euros, et doivent
+            être financés par votre apport personnel</b> car les banques refusent
             généralement de prêter de l’argent pour les amortir.
           </p>
           <p class="fr-mb-0">
-            Enfin, en tant que propriétaire d’un logement en BRS, voici les différentes
+            Enfin, en tant que propriétaire d’un logement en BRS, <b>voici les différentes
             charges et dépenses pour lesquelles vous devez vous acquitter mensuellement
-            ou annuellement suite à votre achat :
+            ou annuellement</b> suite à votre achat :
           </p>
           <ul class="fr-mb-0">
             <li>mensualités de remboursement de prêt bancaire</li>
@@ -432,6 +453,10 @@ export const steps: Step[] = [
             <li>la taxe foncière</li>
             <li>une assurance habitation</li>
           </ul>
+          <p class="fr-mt-4w fr-mb-0">
+            Nous vous invitons à utiliser notre <a href="/simulateur-acquisition" class="fr-link">simulateur de coût d’acquisition en BRS</a>
+            qui vous indiquera tous les coûts liés à votre achat.
+          </p>
         `,
       },
       {
@@ -439,8 +464,8 @@ export const steps: Step[] = [
         title: 'L’achat d’un logement, une projection à plus long terme',
         content: `
           <p>
-            Lors de l’établissement de votre plan de financement, il convient de vous
-            projeter dans le temps. Combien de temps souhaitez-vous vivre dans votre
+            Lors de l’établissement de votre <strong>plan de financement</strong>, il convient de <strong>vous
+            projeter dans le temps.</strong> Combien de temps souhaitez-vous vivre dans votre
             logement ? Est-ce plus avantageux qu’une location ? A la revente, quelle est
             l’épargne que je pourrais me constituer ?
           </p>
@@ -472,8 +497,8 @@ export const steps: Step[] = [
             de notaire. Il est temps d’aller voir celui-ci.
           </p>
           <p>
-            Tout commence par la signature du compromis de vente, d’une promesse de
-            vente ou d'un contrat de réservation entre l'acheteur·se et le·la
+            <strong>Tout commence par la signature du compromis de vente, d’une promesse de
+            vente ou d'un contrat de réservation</strong> entre l'acheteur·se et le·la
             vendeur·se. La promesse de vente engage uniquement le·la vendeur·se, qui
             réserve le bien à l'acheteur·se ; en contrepartie, celui-ci ou celle-ci
             verse une avance pour immobiliser le bien (remboursée en cas d'annulation de
@@ -483,22 +508,22 @@ export const steps: Step[] = [
             annuler la vente sans frais (par exemple, la non-obtention du prêt
             immobilier).
             <br />
-            Suite à cela, vous allez faire les démarches pour obtenir votre prêt immobilier.
+            <strong>Suite à cela, vous allez faire les démarches pour obtenir votre prêt immobilier.</strong>
           </p>
           <p>
-            Ensuite, avant la signature de l'acte de vente chez le notaire, les parties
-            rassemblent les documents nécessaires. Le montant correspondant au prix du
-            bien et aux frais de notaire doit être versé au notaire quelques jours avant
+            Ensuite, avant la signature de l'acte de vente chez le notaire, les <strong>parties
+            rassemblent les documents nécessaires</strong>. Le montant correspondant au prix du
+            bien et aux frais de notaire doit être <strong>versé au notaire quelques jours avant</strong>
             la vente.
           </p>
           <p class="fr-mb-0">
-            Enfin, les parties fixent un rendez-vous chez le notaire pour la signature
-            de l'acte de vente. Lors de cette rencontre, le notaire explique en détail
+            Enfin, les <strong>parties fixent un rendez-vous chez le notaire pour la signature
+            de l'acte de vente.</strong> Lors de cette rencontre, le notaire explique en détail
             le contenu de l'acte, vérifie l'identité du vendeur et de l’acheteur (ou des
             acheteurs si vous achetez en couple), s'assure de la régularité de la
-            transaction, et recueille les signatures. Enfin, le notaire procède à
+            transaction, et recueille les signatures. Enfin, <strong>le notaire procède à
             l'enregistrement de l'acte au service de la publicité foncière pour
-            officialiser la vente.
+            officialiser la vente.</strong>
           </p>  
         `,
       },
@@ -513,9 +538,9 @@ export const steps: Step[] = [
           </p>
           <p>
             Les <a href="/organismes-de-foncier-solidaire" class="fr-link">organismes de foncier solidaire (OFS)</a> et les professionnel.les de la vente
-            travaillent généralement avec des notaires spécialisés. À moins que vous
-            teniez à travailler avec un notaire en particulier, nous vous conseillons de
-            choisir le notaire qui vous sera proposé.
+            travaillent généralement avec des <strong>notaires spécialisés</strong>. À moins que vous
+            teniez à travailler avec un notaire en particulier, <strong>nous vous conseillons de
+            choisir le notaire qui vous sera proposé.</strong>
           </p>
         `,
       },
@@ -528,18 +553,18 @@ export const steps: Step[] = [
             suivants :
           </p>
           <ul class="fr-mb-0">
-            <li>Un justificatif d’identité</li>
+            <li>Un <strong>justificatif d’identité</strong></li>
             <li>
-              Un justificatif de situation familiale (copie du livret de famille,
+              Un <strong>justificatif de situation familiale</strong> (copie du livret de famille,
               contrat de mariage, attestation de PACS, etc)
             </li>
-            <li>Un justificatif de domicile</li>
+            <li>Un <strong>justificatif de domicile</strong></li>
             <li>
-              Si vous avez souscrit à un prêt immobilier, un document indiquant le nom
+              Si vous avez souscrit à un <strong>prêt immobilier</strong>, un document indiquant le nom
               et l’adresse de la banque, ainsi que le montant et le taux du prêt.
             </li>
-            <li>L’agrément donné par <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a></li>
-            <li>Le compromis de vente</li>
+            <li><strong>L’agrément donné par </strong><a href="/organismes-de-foncier-solidaire" class="fr-link"><strong>l'organisme de foncier solidaire (OFS)</strong></a></li>
+            <li>Le <strong>compromis de vente</strong></li>
           </ul>
         `,
       },
@@ -556,12 +581,12 @@ export const steps: Step[] = [
         content: `
           <p>
             Les propriétaires occupants leur logement en copropriété sont dans
-            l’obligation de l’assurer, au moins pour la responsabilité civile. Une
-            assurance habitation multirisques peut par ailleurs être souscrite.
+            l’<strong>obligation de l’assurer, au moins pour la responsabilité civile</strong>. Une
+            <strong>assurance habitation multirisques</strong> peut par ailleurs être souscrite.
           </p>
           <p class="fr-mb-0">
-            Si vous entrez dans un logement en Bail Réel Solidaire neuf ou qu’il a été
-            remis à neuf après des travaux, vous bénéficiez de différentes garanties, à
+            Si vous entrez <strong>dans un logement en Bail Réel Solidaire neuf ou qu’il a été
+            remis à neuf après des travaux, vous bénéficiez de différentes garanties</strong>, à
             la charge des entreprises en charge des travaux :
           </p>
           <ul class="fr-mb-0">
@@ -593,8 +618,8 @@ export const steps: Step[] = [
             réparations potentiellement nécessaires en ce qui le concerne.
           </p>
           <p class="fr-mb-0">
-            Les conditions de réalisation de travaux sont en général précisées dans le
-            bail réel solidaire (BRS) et contractualisées entre <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> et les ménages acheteurs.
+            Les <strong>conditions de réalisation de travaux sont en général précisées dans le
+            bail réel solidaire (BRS)</strong> et contractualisées entre <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> et les ménages acheteurs.
           </p>
         `,
       },
@@ -604,7 +629,7 @@ export const steps: Step[] = [
         content: `
           <p>
             Le fonctionnement d’une copropriété avec des logements en Bail Réel
-            Solidaire est identique à l’organisation classique d’une copropriété. Vous
+            Solidaire est <strong>identique à l’organisation classique d’une copropriété</strong>. Vous
             devez ainsi vous acquitter de charges de copropriété.
           </p>
           <p>
@@ -613,7 +638,7 @@ export const steps: Step[] = [
             siéger en Assemblée générale des copropriétaires.
           </p>
           <p class="fr-mb-0">
-            Le ménage dispose du droit de vote pour toutes les décisions exceptées :
+            Le ménage dispose du <strong>droit de vote</strong> pour toutes les décisions exceptées :
           </p>
           <ul class="fr-mb-0">
             <li>les décisions portant sur les actes d’acquisitions immobilières</li>
@@ -635,22 +660,22 @@ export const steps: Step[] = [
         title: 'Revendre mon logement',
         content: `
           <p>
-            Une fois propriétaire de votre logement en BRS, vous pouvez revendre ce
-            dernier à n’importe quel moment. Dans ce cas, vous devez notifier
+            Une fois propriétaire de votre logement en BRS, <strong>vous pouvez revendre ce
+            dernier à n’importe quel moment.</strong> Dans ce cas, vous devez notifier
             <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> de votre souhait et celui-ci peut décider
             de racheter lui-même votre logement.
           </p>
           <p>
-            Si <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> ne souhaite pas racheter votre logement,
-            vous pouvez le revendre à un autre ménage. Cependant, puisque le Bail Réel
+            <strong>Si <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> ne souhaite pas racheter votre logement,
+            vous pouvez le revendre à un autre ménage</strong>. Cependant, puisque le Bail Réel
             Solidaire est un dispositif d’accession abordable à la propriété, vous devez
-            le vendre à un ménage sous conditions de ressources. Ce ménage doit par
+            le vendre à un <strong>ménage sous conditions de ressources.</strong> Ce ménage doit par
             ailleurs être agréé par <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a> pour ensuite vivre
             dans le logement en BRS à titre de résidence principale.
           </p>
           <p>
-            Dans ces deux cas, le prix de vente de votre logement est fixé par
-            <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a>. Ce prix est calculé à partir du prix lors
+            Dans ces deux cas, <strong>le prix de vente de votre logement est fixé par
+            <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a>.</strong> Ce prix est calculé à partir du prix lors
             de votre achat, et la plus-value est encadrée, afin de permettre à d’autres
             ménages d’accéder facilement à la propriété. Ce prix est modulé en fonction
             des conditions du marché immobilier et les travaux effectués sont pris en
@@ -659,8 +684,8 @@ export const steps: Step[] = [
             preneur et être inscrite dans le Bail Réel Solidaire.
           </p>
           <p>
-            La plus-value que vous faites en cas de revente est donc encadrée et
-            contenue. Cela dit, la revente d’un logement en BRS au bout de quelques
+            <strong>La plus-value que vous pourriez faire en cas de revente est donc encadrée et
+            contenue.</strong> Cela dit, la revente d’un logement en BRS au bout de quelques
             années vous assure la formation d’un premier capital financier qui peut vous
             permettre d’accéder à la propriété dans le marché libre.
           </p>
@@ -671,13 +696,13 @@ export const steps: Step[] = [
           </p>
           <p class="fr-mb-0">
             Enfin, si vous ne trouvez pas de preneur, <a href="/organismes-de-foncier-solidaire" class="fr-link">l'organisme de foncier solidaire (OFS)</a>
-            peut racheter votre logement suivant une clause de rachat qui existe dans
-            votre acte notarié. Une de ces modalités peut être le rachat du logement à
+            peut racheter votre logement suivant une <strong>clause de rachat qui existe dans
+            votre acte notarié.</strong> Une de ces modalités peut être le rachat du logement à
             un certain pourcentage du prix de vente initial. N’oubliez pas de demander
             quelles sont les conditions de rachat dans votre cas.
           </p>
-          <a class="fr-btn fr-mt-4w" href="/revendre-mon-bien-en-brs">
-            Toutes les informations sur la revente en Bail Réel Solidaire (BRS)
+          <a class="fr-btn fr-mt-4w md:ml-auto block w-fit" href="/revendre-mon-bien-en-brs">
+            Toutes les informations sur la revente en bail réel solidaire
           </a>
         `,
       },

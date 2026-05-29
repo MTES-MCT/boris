@@ -25,23 +25,26 @@
     <p>
       Nous répertorions les sites internet de nos partenaires qui proposent des
       logements en bail réel solidaire (BRS) à la vente. Notre annuaire vous
-      permet d'identifier facilement les villes où des programmes sont en cours
-      de commercialisation, et de pouvoir ensuite visiter les sites d'annonces
-      pour trouver les programmes spécifiques. Il n'y a plus qu'à faire sa
-      recherche !
+      permet d'identifier facilement les villes où des logements sont
+      disponibles à l'achat en bail réel solidaire, et vous propose de visiter
+      ensuite les sites d'annonces pour voir les offres de logements à vendre.
+      Il n'y a plus qu'à faire sa recherche !
     </p>
     <p>
-      Attention cependant, notre annuaire n'indique pas précisément
-      l'emplacement des programmes en vente. Chaque lien vous redirige vers la
-      page programme de <a
+      Attention cependant, <b>
+        notre annuaire n'indique pas précisément l'emplacement des programmes en
+        vente
+      </b>
+      . Chaque lien vous redirige vers le site web de
+      <a
         href="/organismes-de-foncier-solidaire"
         class="fr-link">
         l'organisme de foncier solidaire (OFS)
       </a>
       ou de son commercialisateur qui présente au moins un programme dans votre ville
-      de recherche. Vous pourrez y consulter les logements en bail réel solidaire
-      (BRS) disponibles à l'achat ou prendre contact pour trouver un logement en
-      bail réel solidaire.
+      de recherche. Rendez-vous sur le(s) lien(s) qui s'affiche(nt) pour consulter
+      le détail des logements en bail réel solidaire (BRS) disponibles à l'achat
+      et prendre contact avec l'Organisme de Foncier Solidaire.
     </p>
   </Section>
 

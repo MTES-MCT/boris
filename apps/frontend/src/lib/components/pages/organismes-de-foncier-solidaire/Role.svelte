@@ -59,7 +59,7 @@
           ménages.
         </p>
         <p class="fr-mb-0">
-          Pour réaliser cette mission, l'organisme de fonctier solidaire (OFS) <span
+          Pour réaliser cette mission, l'organisme de foncier solidaire (OFS) <span
             class="fr-text--bold">
             achète et conserve des terrains
           </span>
@@ -77,7 +77,13 @@
           (de 18 à 99 ans). Ce dispositif permet ainsi à l'organisme de foncier solidaire
           (OFS) et au ménage de partager la propriété du logement, ce qui se traduit
           par un prix réduit à l'achat. Attention ! Le dispositif du bail réel solidaire
-          (BRS) n'est pas exempt de contrepartie.
+          (BRS) n'est pas exempt de
+          <a
+            href="/blog/les-inconvenients-ou-contreparties-du-bail-reel-solidaire-brs"
+            class="fr-link">
+            contreparties
+          </a>
+          .
         </p>
       </div>
 

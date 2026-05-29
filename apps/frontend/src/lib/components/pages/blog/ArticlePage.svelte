@@ -1,7 +1,7 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/utility/icons/icons-business/icons-business.min.css';
   import Section from '$components/common/Section.svelte';
-  import { formatPublishedAt } from '$lib/utils/formatters';
+  import { formatPublishedAt, formatUpdatedAt } from '$lib/utils/formatters';
   import type { Snippet } from 'svelte';
   import type { ArticlePreview } from '$lib/utils/definitions';
 
@@ -26,6 +26,9 @@
   <p
     class="fr-card__detail fr-icon-calendar-2-line flex gap-2 !items-center !mb-6 fr-text--sm fr-text--bold fr-icon--sm">
     {formatPublishedAt(article?.firstPublishedAt as string)}
+    {#if article?.updatedAt}
+      {formatUpdatedAt(article.updatedAt)}
+    {/if}
   </p>
   {@render children()}
 </Section>
