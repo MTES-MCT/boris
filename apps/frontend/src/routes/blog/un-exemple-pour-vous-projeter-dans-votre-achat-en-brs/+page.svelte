@@ -18,8 +18,10 @@
 
 <ArticlePage {article}>
   <p>
-    Imaginons que vous avez repéré un appartement NEUF de 70 m² en BRS à 210.000
-    euros à Lyon. Vous achetez donc à 3000 euros/m² à Lyon.
+    Imaginons que vous avez repéré un <b>
+      appartement NEUF de 70 m² en BRS à 210.000 euros à Lyon
+    </b>
+    . Vous achetez donc à 3000 euros/m² à Lyon.
   </p>
   <p>
     Voici un calcul pour savoir si cela est plus intéressant que de rester
@@ -34,11 +36,18 @@
     coûts annexes :
   </p>
   <ul>
-    <li>les frais de notaires (4 830 €),</li>
     <li>
-      les frais de cautionnement pour votre futur emprunt (environ 2 100 €)
+      <b>les frais de notaires</b>
+      (4 830 €),
     </li>
-    <li>les potentiels frais de dossier (environ 1 000 €).</li>
+    <li>
+      <b>les frais de cautionnement</b>
+      pour votre futur emprunt (environ 2 100 €)
+    </li>
+    <li>
+      <b>les potentiels frais de dossier</b>
+      (environ 1 000 €).
+    </li>
   </ul>
   <p>
     Il vous reste ainsi environ 12 000 € d'apport pour l'achat de votre
@@ -46,13 +55,16 @@
   </p>
   <h2><b>Emprunts</b></h2>
   <p>
-    Il vous reste ainsi 198 000 € à emprunter. L'appartement étant neuf et
-    puisqu'il s'agit pour vous d'une primo-accession, vous êtes éligible au Prêt
-    à Taux Zéro (PTZ). Ce dernier peut vous apporter 84 000 €, qu'il faudra
-    compléter par un prêt usuel d'une banque pour chercher les 126 000 €
-    restants. Les taux en vigueur pour ce type de prêt sont à l'heure où nous
-    écrivons ces lignes à hauteur de 3,5%. Nous ne prenons pas d'autres aides
-    dans notre cas d'étude, comme
+    Il vous reste ainsi 198 000 € à emprunter. <b>
+      L'appartement étant neuf et puisqu'il s'agit pour vous d'une
+      primo-accession
+    </b>
+    , vous êtes
+    <b>éligible au Prêt à Taux Zéro (PTZ)</b>
+    . Ce dernier peut vous apporter 84 000 €, qu'il faudra compléter par un prêt
+    usuel d'une banque pour chercher les 126 000 € restants. Les taux en vigueur
+    pour ce type de prêt sont à l'heure où nous écrivons ces lignes à hauteur de
+    3,5%. Nous ne prenons pas d'autres aides dans notre cas d'étude, comme
     <a
       href="https://www.actionlogement.fr/le-pret-accession"
       class="fr-link"
@@ -75,8 +87,9 @@
       class="fr-link">
       simulateur d'acquisition en BRS
     </a>
-    pour mieux comprendre votre besoin total d'emprunt, et le lissage des prêts (PTZ
-    et prêt usuel).
+    pour
+    <b>mieux comprendre votre besoin total d'emprunt</b>
+    , et le lissage des prêts (PTZ et prêt usuel).
   </p>
   <h2><b>Coût mensuel</b></h2>
   <h3>La mensualité du prêt</h3>
@@ -98,7 +111,7 @@
   </p>
   <h3>La redevance</h3>
   <p>
-    Au-delà de ces mensualités, vous devrez chaque mois payer une redevance
+    Au-delà de ces mensualités, <b>vous devrez chaque mois payer une redevance</b>
     auprès de l'Organisme Foncier Solidaire (OFS) avec qui vous partagez la
     propriété de votre logement. Cette redevance mensuelle peut être très
     variable en fonction du marché immobilier dans lequel se trouve votre
@@ -109,8 +122,8 @@
   <h3>Les charges</h3>
   <p>
     De plus, en tant que propriétaire, vous aurez probablement à payer des
-    charges de copropriétés ainsi que la taxe foncière et vous serez dans
-    l'obligation d'assurer votre logement. Ces montants sont variables en
+    <b>charges de copropriétés</b> ainsi que la taxe foncière et vous serez dans
+    l'obligation <b>d'assurer votre logement</b>. Ces montants sont variables en
     fonction des communes de résidence et des copropriétés mais peuvent
     atteindre quelques centaines d'euros. Ces charges peuvent être payées
     annuellement mais nous les lisserons sur 12 mois pour vous donner une idée
@@ -159,9 +172,9 @@
     vos prêts et il vous restera 124 555,20 € à rembourser. Vous revendez votre
     logement à 210 000 € (soit au même montant que lors de votre achat). Si nous
     déduisons tout ce qu'il vous reste à rembourser, vous avez maintenant une
-    épargne de 85 000 €, soit 4 fois plus que lors de votre achat initial. Vous
+    épargne de 85 000 €, soit 4 fois plus que lors de votre achat initial. <b>Vous
     avez réussi à mettre de l'argent de côté pendant 8 ans tout en vivant dans
-    un logement confortable.
+    un logement confortable.</b>
   </p>
   <p>
     Vous pourrez maintenant utiliser cet argent comme apport pour acheter un

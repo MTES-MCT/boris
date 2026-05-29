@@ -61,16 +61,16 @@
   <ul>
     <li>Vous achetez votre logement (appartement ou maison).</li>
     <li>
-      Le terrain reste la propriété d'un <a
+      Vous partagez la propriété du terrain avec un <a
         href="/organismes-de-foncier-solidaire"
         class="fr-link">
         organisme de foncier solidaire (OFS)
       </a>
-      , qui vous le loue pour une
-      <b>redevance modique</b>
-      (entre 10 cts et 3.5€/m² par mois). Résultat ? Le prix d'achat de votre logement
+      , à qui vous versez une
+      <b>redevance modérée</b>
+      (entre 1 à 3.5€/m² par mois). Résultat ? Le prix d'achat de votre logement
       diminue, parfois jusqu'à
-      <b>40%</b>
+      <b>50%</b>
       par rapport aux prix du marché !
     </li>
   </ul>
@@ -81,7 +81,13 @@
     ne dépassent pas certains
     <b>plafonds</b>
     fixés par la réglementation (en fonction de la composition de votre foyer et
-    de la zone géographique). C'est un dispositif pensé pour favoriser l'
+    de la zone géographique). Vous pouvez consulter
+    <a
+      href="/simulateur-eligibilite"
+      class="fr-link">
+      ici les plafonds de revenus de l’année en cours
+    </a>
+    . C'est un dispositif pensé pour favoriser l'
     <b>accession sociale à la propriété</b>
     , en particulier dans les zones où les prix de l'immobilier sont très tendus.
   </p>
@@ -155,17 +161,62 @@
       d'avoir la même mensualité pendant toute la durée des deux prêts.
     </li>
   </ul>
-  <h3><b>Pour qui ?</b></h3>
   <p>
-    Le PTZ est réservé aux ménages dont les revenus sont inférieurs aux <b>
+    Pour comprendre le lissage du PTZ avec votre prêt immobilier dans le cadre
+    du BRS,
+    <a
+      href="/simulateur-acquisition"
+      class="fr-link">
+      rendez-vous ici
+    </a>
+    .
+  </p>
+  <h3><b>Pour qui ?</b></h3>
+
+  <p>
+    Le PTZ est réservé aux ménages dont les revenus sont inférieurs aux <b>
       plafonds réglementaires
     </b>
     , avec des variations selon la taille du foyer et la localisation du bien. Il
     est particulièrement avantageux dans le neuf, mais peut aussi financer certains
     logements anciens, à condition de réaliser des
     <b>travaux importants</b>
+     .
+  </p>
+  <p><b>Les avantages concrets :</b></p>
+
+  <ul>
+    <li>
+      <b>Un prêt sans intérêt</b>
+      : vous remboursez uniquement le montant emprunté, sans frais supplémentaires.
+    </li>
+    <li>
+      <b>Un différé de remboursement</b>
+      : vous pouvez commencer à rembourser plus tard, lorsque votre situation financière
+      sera plus stable.
+    </li>
+    <li>
+      <b>Cumulable avec d'autres dispositifs</b>
+      : le PTZ peut être associé au
+      <b>BRS</b>
+      ou au
+      <b>PSLA</b>
+       , pour encore plus d'économies.
+    </li>
+  </ul>
+
+  <p>
+    En bref, le PTZ, c'est un véritable coup de pouce pour devenir propriétaire
+    sans alourdir votre budget dès le départ. <a
+      href="/simulateur-acquisition"
+      class="fr-link">
+      Pour tester votre éligibilité au PTZ dans le cadre d’un achat en bail réel
+      solidaire, faites le test sur notre simulateur de coût d’acquisition en
+      BRS
+    </a>
     .
   </p>
+
   <h3><b>Les avantages concrets :</b></h3>
   <ul>
     <li>
@@ -224,9 +275,13 @@
   </p>
   <h3><b>Pour qui ?</b></h3>
   <p>
-    Le PSLA est réservé aux ménages dont les revenus respectent des plafonds,
-    les mêmes que ceux du BRS et du PTZ. Il s'adresse particulièrement à ceux
-    qui veulent accéder à la propriété <b>progressivement</b>
+    Le PSLA est réservé aux ménages dont <a
+      href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
+      class="fr-link">
+      les revenus respectent des plafonds , les mêmes que ceux du BRS et du PTZ
+    </a>
+    . Il s'adresse particulièrement à ceux qui veulent accéder à la propriété
+    <b>progressivement</b>
     , tout en sécurisant leur projet.
   </p>
   <h3><b>Les avantages concrets :</b></h3>
@@ -315,5 +370,14 @@
     en
     <b>Bail Réel Solidaire</b>
     près de chez vous ?
+  </p>
+  <p>
+    Vous pourriez également <a
+      href="/simulateur-acquisition"
+      class="fr-link">
+      simuler le coût d’acquisition d’un achat en bail réel solidaire
+    </a>
+     pour évaluer le budget total, tester votre éligibilité au PTZ dans le cadre
+    d’un achat en BRS et comprendre le lissage des prêts !
   </p>
 </ArticlePage>

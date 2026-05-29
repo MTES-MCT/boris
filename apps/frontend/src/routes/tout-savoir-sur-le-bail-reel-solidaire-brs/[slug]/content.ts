@@ -111,8 +111,8 @@ export const steps: Step[] = [
         content: `
           <p>
             Le Bail Réel Solidaire s’adresse à des ménages dont les ressources ne
-            dépassent pas un certain plafond : environ 87% des personnes résidant en
-            France sont éligibles.
+            dépassent pas un certain plafond : environ <b>87% des personnes résidant en
+            France sont éligibles</b>.
           </p>
           <p>
             Vous souhaitez savoir si vous y avez droit ? Consultez les <a href="/simulateur-eligibilite#plafonds-de-ressources" class="fr-link">plafonds de ressources BRS 2026</a>,
@@ -129,9 +129,9 @@ export const steps: Step[] = [
             Un certain nombre d’acteurs sont là pour vous accompagner dans vos
             démarches. La plupart d’entre eux sont les mêmes que pour un achat classique
             : <br />
-            Le premier contact est le ou la professionnel.le de l'immobilier chargé·e de
-            la vente du logement. Comme pour une vente classique, son rôle est de vous accompagner
-            dans la recherche d’un bien puis dans votre achat.
+            Le premier contact est <b>le ou la professionnel.le de l'immobilier chargé·e de
+            la vente du logement.</b> Comme pour une vente classique, son rôle est de vous <b>accompagner
+            dans la recherche d’un bien puis dans votre achat.</b>
           </p>
           <p>
             Vous pouvez également consulter <a href="/logements-brs-disponibles" class="fr-link">ici les villes où des appartements en BRS et maisons en BRS sont à vendre</a>.
@@ -177,20 +177,20 @@ export const steps: Step[] = [
           besoins.
         </p>
         <ul>
-          <li>Quel est le quartier dans lequel vous souhaitez habiter ?</li>
+          <li>Quel est le <b>quartier</b> dans lequel vous souhaitez habiter ?</li>
           <li>
-            Quels sont vos critères d’accès aux moyens de transport, aux espaces
+            Quels sont <b>vos critères d’accès</b> aux moyens de transport, aux espaces
             naturels, aux écoles et crèches, aux commerces… ?
           </li>
           <li>
-            De combien de pièces avez-vous besoin ? Souhaitez-vous un espace extérieur
+            De <b>combien de pièces</b> avez-vous besoin ? Souhaitez-vous un espace extérieur
             ?
           </li>
-          <li>Quelle est la surface minimum que vous souhaitez avoir ?</li>
+          <li>Quelle est la <b>surface minimum</b> que vous souhaitez avoir ?</li>
           <li>
-            Savez-vous combien de temps vous prévoyez de vivre dans ce logement ?
+            Savez-vous <b>combien de temps</b> vous prévoyez de vivre dans ce logement ?
           </li>
-          <li>Quel est votre budget ?</li>
+          <li>Quel est votre <b>budget</b> ? <a href="/simulateur-acquisition">Pour vous aider à estimer l’ensemble des coûts liés à un achat en BRS utilisez ce simulateur.</a></li>
         </ul>
         <p class="fr-mb-0">
           L’ensemble des réponses à ces questions permettent de trouver les bons
@@ -213,8 +213,8 @@ export const steps: Step[] = [
             logement(s) à vendre. Vous pouvez aussi faire des recherches sur les sites
             d’annonces classiques (Seloger, Bienici, Leboncoin). Par ailleurs, nous
             sommes en lien direct avec des professionnel.lles spécialisé.es dans le Bail
-            Réel Solidaire. Pour être mis en relation avec eux, réalisez une simulation
-            d’éligibilité et renseignez vos coordonnées, ils vous rappeleront.
+            Réel Solidaire. Pour être mis en relation avec eux, <a href="/simulateur-eligibilite" class="fr-link">réalisez une simulation
+            d’éligibilité et renseignez vos coordonnées</a>, ils vous rappeleront.
           </p>
           <a class="fr-btn fr-btn--lg" href="/logements-brs-disponibles">
             Trouver un logement en BRS !
@@ -375,19 +375,19 @@ export const steps: Step[] = [
           <h2 class="fr-h5 heading">Emprunts</h2>
           <p>Votre capacité d'emprunt dépend de plusieurs éléments.</p>
           <p>
-            Généralement, les banques fondent leur calcul à partir de vos revenus
-            mensuels : vos remboursements (intérêts et assurance compris) ne doivent pas
+            <b>Généralement, les banques fondent leur calcul à partir de vos revenus
+            mensuels</b> : vos remboursements (intérêts et assurance compris) ne doivent pas
             dépasser un tiers de vos revenus, afin de rester en capacité de rembourser
             l'emprunt tout en conservant votre niveau de vie.
           </p>
           <p>
-            Par ailleurs, votre capacité d’emprunt dépend aussi des taux en vigueur.
+            Par ailleurs, <b>votre capacité d’emprunt dépend aussi des taux en vigueur</b>.
             Sachez qu’il n’existe pas à ce stade de prêts bancaires spécifiques pour du
             Bail Réel Solidaire.
           </p>
           <p>
-            Lorsque vous estimez vos futurs remboursements mensuels, n'oubliez pas de
-            prendre en compte les autres charges pouvant s'ajouter à votre emprunt,
+            Lorsque vous estimez vos futurs remboursements mensuels, <b>n'oubliez pas de
+            prendre en compte les autres charges pouvant s'ajouter à votre emprunt</b>,
             notamment la redevance foncière, la taxe foncière ou bien les charges de
             copropriété.
           </p>
@@ -396,9 +396,9 @@ export const steps: Step[] = [
             Vous pouvez être éligible au <b>Prêt à Taux Zéro</b>, si c'est votre première
             accession à la propriété et sous l'une de ces différentes hypothèses :
             logement construit dans le neuf, logement ancien avec travaux importants à
-            mener, achat d'un logement sous la forme d'une vente HLM. Notre simulateur
+            mener, achat d'un logement sous la forme d'une vente HLM. <a href="/simulateur-acquisition" class="fr-link">Notre simulateur
             vous indiquera si vous êtes éligible au Prêt à Taux Zéro dans le cadre d’un
-            achat en BRS. Faites le test !
+            achat en BRS. Faites le test !</a>
           </p>
           <p>
             Si vous êtes salarié.e d'une entreprise du secteur privé non agricole (10 salariés et plus) ou agricole (50 salariés et plus), vous pouvez vous renseigner sur les solutions d'achat immobilier d' <a
@@ -420,28 +420,28 @@ export const steps: Step[] = [
         title: 'Les frais à payer en tant que propriétaire en BRS',
         content: `
           <p class="fr-mb-0">
-            Lors de votre achat, plusieurs dépenses sont à prévoir en addition du prix
-            du logement, il faut notamment penser :
+            Lors de votre achat, <b>plusieurs dépenses sont à prévoir en addition du prix
+            du logement</b>, il faut notamment penser :
           </p>
           <ul>
             <li>
-              aux frais de notaires, qui représentent 2,3% du prix du logement pour un
+              aux <b>frais de notaires</b>, qui représentent 2,3% du prix du logement pour un
               logement dans le neuf et 8,7% pour un logement dans l’ancien
             </li>
             <li>
-              aux frais de cautionnement de prêt, qui représentent généralement 1% du
+              aux <b>frais de cautionnement de prêt</b>, qui représentent généralement 1% du
               prix du logement
             </li>
           </ul>
           <p>
-            L’ensemble de ces coûts représentent plusieurs milliers d’euros, et doivent
-            être financés par votre apport personnel car les banques refusent
+            L’ensemble de ces coûts <b>représentent plusieurs milliers d’euros, et doivent
+            être financés par votre apport personnel</b> car les banques refusent
             généralement de prêter de l’argent pour les amortir.
           </p>
           <p class="fr-mb-0">
-            Enfin, en tant que propriétaire d’un logement en BRS, voici les différentes
+            Enfin, en tant que propriétaire d’un logement en BRS, <b>voici les différentes
             charges et dépenses pour lesquelles vous devez vous acquitter mensuellement
-            ou annuellement suite à votre achat :
+            ou annuellement</b> suite à votre achat :
           </p>
           <ul class="fr-mb-0">
             <li>mensualités de remboursement de prêt bancaire</li>

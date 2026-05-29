@@ -31,9 +31,12 @@
       Il n'y a plus qu'à faire sa recherche !
     </p>
     <p>
-      Attention cependant, notre annuaire n'indique pas précisément
-      l'emplacement des programmes en vente. Chaque lien vous redirige vers le
-      site web de <a
+      Attention cependant, <b>
+        notre annuaire n'indique pas précisément l'emplacement des programmes en
+        vente
+      </b>
+      . Chaque lien vous redirige vers le site web de
+      <a
         href="/organismes-de-foncier-solidaire"
         class="fr-link">
         l'organisme de foncier solidaire (OFS)
