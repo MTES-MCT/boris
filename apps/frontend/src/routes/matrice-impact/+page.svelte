@@ -327,7 +327,7 @@
     <header
       class="mb-6 flex flex-wrap items-baseline gap-4 border-b-2 border-b-[#009099] pb-3">
       <span
-        class="rounded-[2px] bg-[#009099] px-2.5 py-1 text-xs font-bold uppercase text-white">
+        class="rounded-[2px] bg-[#006a6f] px-2.5 py-1 text-xs font-bold uppercase text-white">
         Utilisable
       </span>
       <h2 class="fr-h3 !m-0">1. Utilisable</h2>
@@ -425,7 +425,7 @@
     <header
       class="mb-6 flex flex-wrap items-baseline gap-4 border-b-2 border-b-[#6a6af4] pb-3">
       <span
-        class="rounded-[2px] bg-[#6a6af4] px-2.5 py-1 text-xs font-bold uppercase text-white">
+        class="rounded-[2px] bg-[#5555d8] px-2.5 py-1 text-xs font-bold uppercase text-white">
         Utilisé
       </span>
       <h2 class="fr-h3 !m-0">2. Utilisé</h2>
@@ -594,7 +594,7 @@
     <header
       class="mb-6 flex flex-wrap items-baseline gap-4 border-b-2 border-b-[#c08c65] pb-3">
       <span
-        class="rounded-[2px] bg-[#c08c65] px-2.5 py-1 text-xs font-bold uppercase text-white">
+        class="rounded-[2px] bg-[#7b5a3e] px-2.5 py-1 text-xs font-bold uppercase text-white">
         Utile
       </span>
       <h2 class="fr-h3 !m-0">3. Utile</h2>
@@ -685,7 +685,7 @@
     <header
       class="mb-6 flex flex-wrap items-baseline gap-4 border-b-2 border-b-[#00a95f] pb-3">
       <span
-        class="rounded-[2px] bg-[#00a95f] px-2.5 py-1 text-xs font-bold uppercase text-white">
+        class="rounded-[2px] bg-[#18753c] px-2.5 py-1 text-xs font-bold uppercase text-white">
         Impactant
       </span>
       <h2 class="fr-h3 !m-0">4. Impactant</h2>
@@ -816,7 +816,7 @@
     <header
       class="mb-6 flex flex-wrap items-baseline gap-4 border-b-2 border-b-[#ff9940] pb-3">
       <span
-        class="rounded-[2px] bg-[#ff9940] px-2.5 py-1 text-xs font-bold uppercase text-white">
+        class="rounded-[2px] bg-[#8d5330] px-2.5 py-1 text-xs font-bold uppercase text-white">
         Efficient
       </span>
       <h2 class="fr-h3 !m-0">5. Efficient</h2>
