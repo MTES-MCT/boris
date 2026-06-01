@@ -65,7 +65,7 @@
           </p>
           <p>
             L’acheteur doit respecter les <a
-              href="https://www.boris.beta.gouv.fr/simulateur-eligibilite"
+              href="https://boris.beta.gouv.fr/simulateur-eligibilite"
               class="fr-link">
               conditions d’éligibilité au BRS
             </a>
