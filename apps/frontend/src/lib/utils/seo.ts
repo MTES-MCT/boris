@@ -64,6 +64,11 @@ const staticMetadataByPath: Record<string, Omit<SeoMetadata, 'pathname'>> = {
     description:
       "Consultez les mentions légales du site Boris, régissant l'utilisation de la plateforme dédiée au Bail Réel Solidaire, et les informations légales concernant son exploitation.",
   },
+  '/matrice-impact': {
+    title: "Matrice d'impact - BoRiS",
+    description:
+      "Consultez la matrice d'impact de BoRiS : usage, utilité, impact et efficience du service public numérique dédié au Bail Réel Solidaire.",
+  },
   '/notre-mission': {
     title: 'Notre mission - Boris',
     description:

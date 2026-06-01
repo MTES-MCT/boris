@@ -51,6 +51,13 @@
             <li>
               <a
                 class="fr-footer__top-link"
+                href="/matrice-impact">
+                Matrice d'impact
+              </a>
+            </li>
+            <li>
+              <a
+                class="fr-footer__top-link"
                 href="/espace-presse">
                 Espace presse
               </a>
