@@ -2,7 +2,7 @@ import { articles } from '$routes/blog/articles';
 import { steps as revendreSteps } from '$routes/revendre-mon-bien-en-brs/content';
 import { steps as brsSteps } from '$routes/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]/content';
 
-export const SITE_URL = 'https://www.boris.beta.gouv.fr';
+export const SITE_URL = 'https://boris.beta.gouv.fr';
 export const DEFAULT_SHARE_IMAGE = '/boris-logo.svg';
 
 type JsonLd = Record<string, unknown>;

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
 
-  const SITE_URL = 'https://www.boris.beta.gouv.fr';
+  const SITE_URL = 'https://boris.beta.gouv.fr';
   const DEFAULT_SHARE_IMAGE = '/og-image.svg';
 
   type JsonLd = Record<string, unknown>;
