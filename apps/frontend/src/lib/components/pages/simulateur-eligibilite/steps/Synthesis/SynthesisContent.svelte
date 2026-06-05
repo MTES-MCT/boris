@@ -58,30 +58,30 @@
 
     <EligibilityDetail hideConnectionCta />
 
-    <p class="px-2 !mb-0">Pour aller plus loin dans votre projet :</p>
-    <ul>
+    <p class="px-2">Pour continuer votre parcours d'achat en BRS :</p>
+    <ul class="fr-btns-group fr-btns-group--inline-md">
       <li>
         <a
           href="/simulateur-acquisition"
-          class="fr-link fr-link--icon-right"
+          class="fr-btn"
           rel="noopener">
-          Simuler le coût total d'un achat en BRS.
+          Simuler mon budget
         </a>
       </li>
       <li>
         <a
           href="/logements-brs-disponibles"
-          class="fr-link fr-link--icon-right"
+          class="fr-btn"
           rel="noopener">
-          Trouver les logements BRS disponibles à l'achat.
+          Trouver un logement
         </a>
       </li>
       <li>
         <a
           href="/tout-savoir-sur-le-bail-reel-solidaire-brs"
-          class="fr-link fr-link--icon-right"
+          class="fr-btn"
           rel="noopener">
-          En savoir plus sur le dispositif BRS.
+          Mieux comprendre le BRS
         </a>
       </li>
     </ul>

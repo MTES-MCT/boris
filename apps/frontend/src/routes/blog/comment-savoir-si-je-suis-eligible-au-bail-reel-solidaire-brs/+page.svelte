@@ -56,14 +56,14 @@
     <li>
       <p class="fr-mb-1w">
         Respecter des <strong>plafonds de revenus</strong>
-        (ex : Zone A - 1 pers : 38 508 €, Zone B1 - 2 pers : 57 555 €...)
+        (ex : Zone A - 1 pers : 38 844 €, Zone B1 - 2 pers : 58 057 €...)
       </p>
       <p>
         Vous pouvez
         <a
-          href="/simulateur-eligibilite#plafonds-de-ressources"
+          href="/blog/plafonds-de-revenus-brs-2026-tableau-complet-par-zone-et-composition-de-menage"
           class="fr-link">
-          consulter les plafonds de ressources en bail réel solidaire ici
+          consulter les plafonds de ressources en bail réel solidaire 2026 ici
         </a>
         .
       </p>

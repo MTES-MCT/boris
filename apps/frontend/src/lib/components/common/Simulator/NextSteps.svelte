@@ -54,12 +54,12 @@
     Et maintenant ?
   </h3>
 
-  <ul class="fr-btns-group fr-btns-group--inline-md">
+  <ul class="fr-mt-2w">
     {#each links as link}
       <li>
         <a
-          class="fr-btn"
-          class:fr-btn--icon-right={link.external}
+          class="fr-link"
+          class:fr-link--icon-right={link.external}
           class:fr-icon-external-link-line={link.external}
           href={link.href}
           target={link.external ? '_blank' : undefined}
