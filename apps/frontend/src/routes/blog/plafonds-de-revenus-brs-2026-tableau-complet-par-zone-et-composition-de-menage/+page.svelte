@@ -2,6 +2,7 @@
   import ArticlePage from '$components/pages/blog/ArticlePage.svelte';
   import type { ArticlePreview } from '$lib/utils/definitions';
   import { articles } from '$routes/blog/articles';
+  import avisImposition from '$assets/images/brs-6.png';
 
   const article = articles.find(
     (article) =>
@@ -54,6 +55,10 @@
     Sur votre avis d'imposition, référez-vous en bas du document à la ligne
     "revenu fiscal de référence".
   </p>
+  <img
+    src={avisImposition}
+    alt="Exemple d'avis d'imposition avec indication du Revenu Fiscal de Référence (RFR)"
+    class="fr-mt-4w fr-mb-0 rounded-lg border" />
 
   <h2 class="fr-mt-8w">Les zones géographiques du BRS : A/Abis, B1, B2 et C</h2>
   <p>
