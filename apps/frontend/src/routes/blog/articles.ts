@@ -3,6 +3,14 @@ import type { ArticlePreview } from '$lib/utils/definitions';
 export const articles: ArticlePreview[] = [
   {
     title:
+      'Plafonds de revenus BRS 2026 : tableau complet par zone et composition de ménage',
+    description:
+      'Découvrez les plafonds de revenus BRS 2026 par zone et composition de ménage, la comparaison avec 2025 et les étapes pour vérifier votre éligibilité.',
+    firstPublishedAt: '2026-06-05T10:43:00+02:00',
+    slug: 'plafonds-de-revenus-brs-2026-tableau-complet-par-zone-et-composition-de-menage',
+  },
+  {
+    title:
       'Inconvénients en bail réel solidaire : des règles, des limites à respecter. Renseignez-vous sur la plateforme du gouvernement.',
     pageTitle:
       "Les inconvénients du bail réel solidaire - Ou plus exactement ses contreparties. Ce qu'il faut savoir avant de se lancer.",

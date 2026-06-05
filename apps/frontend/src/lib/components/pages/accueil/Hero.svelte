@@ -26,7 +26,7 @@
       </p>
     </div>
 
-    <div class="bg-white p-4 md:p-8 text-center mt-18 rounded-lg">
+    <div class="bg-white p-4 md:p-8 text-center mt-6 rounded-lg">
       <p class="md:!text-lg lg:!text-xl">
         <strong>87% des ménages</strong>
         sont éligibles.
