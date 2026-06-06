@@ -24,7 +24,9 @@
     jsonLd,
   }: Props = $props();
 
-  const normalizedPathname = $derived(normalizePathname(pathname ?? page.url.pathname));
+  const normalizedPathname = $derived(
+    normalizePathname(pathname ?? page.url.pathname),
+  );
   const canonicalUrl = $derived(toAbsoluteUrl(normalizedPathname));
   const imageUrl = $derived(toAbsoluteUrl(imagePath));
   const schemas = $derived(
@@ -52,7 +54,9 @@
 
     const normalizedPath = normalizePathname(path);
 
-    return normalizedPath === '/' ? `${SITE_URL}/` : `${SITE_URL}${normalizedPath}`;
+    return normalizedPath === '/'
+      ? `${SITE_URL}/`
+      : `${SITE_URL}${normalizedPath}`;
   }
 </script>
 
@@ -80,6 +84,8 @@
     content="fr_FR" />
 
   {#each schemas as schema}
-    <script type="application/ld+json">{JSON.stringify(schema)}</script>
+    <script type="application/ld+json">
+      {@html JSON.stringify(schema).replace(/</g, '\\u003c')}
+    </script>
   {/each}
 </svelte:head>
