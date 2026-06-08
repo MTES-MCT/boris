@@ -58,6 +58,15 @@
       ? `${SITE_URL}/`
       : `${SITE_URL}${normalizedPath}`;
   }
+
+  function serializeJsonLd(schema: JsonLd): string {
+    // Prevent closing the script tag if user content contains '<'.
+    return JSON.stringify(schema).replace(/</g, '\\u003c');
+  }
+
+  function toJsonLdScriptTag(schema: JsonLd): string {
+    return `<script type="application/ld+json">${serializeJsonLd(schema)}<\/script>`;
+  }
 </script>
 
 <svelte:head>
@@ -84,8 +93,6 @@
     content="fr_FR" />
 
   {#each schemas as schema}
-    <script type="application/ld+json">
-      {@html JSON.stringify(schema).replace(/</g, '\\u003c')}
-    </script>
+    {@html toJsonLdScriptTag(schema)}
   {/each}
 </svelte:head>
