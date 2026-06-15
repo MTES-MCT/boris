@@ -62,7 +62,7 @@ export class PortalAuthController {
 
       if (
         !user.roles.some((role) =>
-          [UserRole.ADMIN, UserRole.OFS].includes(role),
+          [UserRole.ADMIN, UserRole.OFS, UserRole.DISTRIBUTOR].includes(role),
         )
       ) {
         throw new UnauthorizedException();
@@ -113,11 +113,19 @@ export class PortalAuthController {
       throw new UnauthorizedException();
     }
 
+    if (user.roles.includes(UserRole.DISTRIBUTOR) && !user.distributor) {
+      await this.userSessionService.destroyAllForUserId(user.id);
+      throw new UnauthorizedException();
+    }
+
     return {
       id: user.id,
       email: user.email,
       roles: user.roles,
       canAccessAllOfss: user.roles.includes(UserRole.ADMIN),
+      distributor: user.distributor
+        ? { id: user.distributor.id, name: user.distributor.name }
+        : null,
       ofss: user.roles.includes(UserRole.ADMIN)
         ? []
         : user.ofss

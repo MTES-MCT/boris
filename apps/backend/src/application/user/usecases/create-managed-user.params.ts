@@ -4,4 +4,5 @@ export interface CreateManagedUserParams {
   email: string;
   role: UserRole;
   ofsIds?: string[];
+  distributorId?: string;
 }

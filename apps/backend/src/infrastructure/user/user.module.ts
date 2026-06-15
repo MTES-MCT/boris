@@ -8,6 +8,7 @@ import { SaveUserUseCase } from 'src/application/user/usecases/save.usecase';
 import { SessionModule } from '../session/session.module';
 import { OfsEntity } from '../ofs/ofs.entity';
 import { UserPasswordResetTokenEntity } from './user-password-reset-token.entity';
+import { DistributorEntity } from '../distributor/distributor.entity';
 import { FindAllUsersUsecase } from 'src/application/user/usecases/findAll.usecase';
 import { FindUserByIdUsecase } from 'src/application/user/usecases/findById.usecase';
 import { CreateManagedUserUsecase } from 'src/application/user/usecases/create-managed-user.usecase';
@@ -26,6 +27,7 @@ import { ResetPasswordWithTokenUsecase } from 'src/application/user/usecases/res
     TypeOrmModule.forFeature([
       UserEntity,
       OfsEntity,
+      DistributorEntity,
       UserPasswordResetTokenEntity,
     ]),
     SessionModule,

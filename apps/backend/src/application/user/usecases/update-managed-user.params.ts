@@ -6,4 +6,5 @@ export interface UpdateManagedUserParams {
   email: string;
   role: UserRole;
   ofsIds?: string[];
+  distributorId?: string;
 }

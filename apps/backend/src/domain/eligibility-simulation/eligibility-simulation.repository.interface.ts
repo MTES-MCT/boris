@@ -68,12 +68,25 @@ export type PortalEligibilitySimulationContactResult = {
   resources: number | null;
   action: string | null;
   status: string | null;
+  transmittedDistributors?: { id: string; name: string }[];
+  ofsId?: string;
+  ofsName?: string;
+  ofsEmail?: string | null;
+  ofsPhone?: string | null;
+  ofsWebsiteUrl?: string | null;
 };
 
 export type PortalEligibilitySimulationContactFilters = {
   ofsId: string;
   departementIds: string[];
   regionIds: string[];
+  startDate?: string;
+  endDate?: string;
+};
+
+export type DistributorPortalContactFilters = {
+  distributorId: string;
+  ofsId?: string;
   startDate?: string;
   endDate?: string;
 };
@@ -102,5 +115,16 @@ export interface EligibilitySimulationRepositoryInterface {
   hasPortalContactInOfsScope(
     simulationId: string,
     filters: PortalEligibilitySimulationContactFilters,
+  ): Promise<boolean>;
+  findPortalContactsByDistributorScope(
+    pagination: PaginationProps,
+    filters: DistributorPortalContactFilters,
+  ): Promise<[PortalEligibilitySimulationContactResult[], total: number]>;
+  findAllPortalContactsByDistributorScope(
+    filters: DistributorPortalContactFilters,
+  ): Promise<PortalEligibilitySimulationContactResult[]>;
+  hasPortalContactInDistributorScope(
+    simulationId: string,
+    filters: DistributorPortalContactFilters,
   ): Promise<boolean>;
 }

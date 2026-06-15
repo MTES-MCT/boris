@@ -22,6 +22,7 @@
     action: string | null;
     status: string | null;
     isNew: boolean;
+    transmittedDistributors: { id: string; name: string }[];
   };
 
   type SimulationMetadata = {
@@ -272,6 +273,7 @@
           <th scope="col">Foyer</th>
           <th scope="col">Projet</th>
           <th scope="col">Ressources</th>
+          <th scope="col">Transmis à</th>
         </tr>
       </thead>
       <tbody>
@@ -375,6 +377,17 @@
               Ressources: {line.resources
                 ? formatCurrency(line.resources)
                 : "-"}
+            </td>
+            <td>
+              {#if line.transmittedDistributors.length}
+                <ul class="fr-tags-group">
+                  {#each line.transmittedDistributors as distributor}
+                    <li><p class="fr-tag">{distributor.name}</p></li>
+                  {/each}
+                </ul>
+              {:else}
+                -
+              {/if}
             </td>
           </tr>
         {/each}

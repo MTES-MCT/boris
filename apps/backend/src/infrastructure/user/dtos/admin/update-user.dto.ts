@@ -28,4 +28,8 @@ export class UpdateUserDTO {
   @IsString({ each: true })
   @IsOptional()
   public ofsIds?: string[];
+
+  @IsString()
+  @IsOptional()
+  public distributorId?: string;
 }

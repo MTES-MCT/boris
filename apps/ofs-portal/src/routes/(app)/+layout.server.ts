@@ -9,7 +9,10 @@ export const load: ServerLoad = async (event) => {
 
   let selectableOfss: App.PageData["selectableOfss"] = [];
 
-  if (authenticatedUser.canAccessAllOfss || authenticatedUser.ofss.length > 1) {
+  if (
+    !authenticatedUser.roles.includes("commercialisateur") &&
+    (authenticatedUser.canAccessAllOfss || authenticatedUser.ofss.length > 1)
+  ) {
     const response = await backendFetch(event, "/api/portal/ofss");
     selectableOfss = response.ok ? await readJson(response) : [];
   }

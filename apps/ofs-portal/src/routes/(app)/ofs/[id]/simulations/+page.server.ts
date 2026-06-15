@@ -20,6 +20,7 @@ type ContactLine = {
   action: string | null;
   status: string | null;
   isNew: boolean;
+  transmittedDistributors: { id: string; name: string }[];
 };
 
 type ContactPagination = {

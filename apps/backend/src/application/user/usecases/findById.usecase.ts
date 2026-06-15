@@ -24,6 +24,9 @@ export class FindUserByIdUsecase {
       user.ofss
         .map((ofs) => ({ id: ofs.id, name: ofs.name }))
         .sort((left, right) => left.name.localeCompare(right.name, 'fr')),
+      user.distributor
+        ? { id: user.distributor.id, name: user.distributor.name }
+        : null,
       user.lastLoginAt || null,
       user.createdAt,
       user.updatedAt,

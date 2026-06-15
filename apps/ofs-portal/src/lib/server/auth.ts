@@ -7,6 +7,7 @@ export type PortalUser = {
   roles: string[];
   canAccessAllOfss: boolean;
   ofss: { id: string; name: string }[];
+  distributor?: { id: string; name: string } | null;
 };
 
 export function isSafePortalReturnTo(
@@ -16,6 +17,10 @@ export function isSafePortalReturnTo(
 }
 
 export function resolvePortalEntry(user: PortalUser): string {
+  if (user.roles.includes("commercialisateur")) {
+    return "/commercialisateur";
+  }
+
   if (user.canAccessAllOfss) {
     return "/selection-ofs";
   }

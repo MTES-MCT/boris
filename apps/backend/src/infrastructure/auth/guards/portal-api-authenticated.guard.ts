@@ -15,7 +15,7 @@ export class PortalApiAuthenticatedGuard implements CanActivate {
       !request.isAuthenticated() ||
       request.user?.isActive !== true ||
       !request.user?.roles?.some((role: UserRole) =>
-        [UserRole.ADMIN, UserRole.OFS].includes(role),
+        [UserRole.ADMIN, UserRole.OFS, UserRole.DISTRIBUTOR].includes(role),
       )
     ) {
       throw new UnauthorizedException();

@@ -12,6 +12,7 @@ import {
   GroupSimulationsByYearAndMonthResult,
   PortalEligibilitySimulationContactFilters,
   PortalEligibilitySimulationContactResult,
+  DistributorPortalContactFilters,
 } from 'src/domain/eligibility-simulation/eligibility-simulation.repository.interface';
 import { EligibilitySimulationEntity } from './eligibility-simulation.entity';
 import { PaginationProps } from 'src/domain/common/paginationProps';
@@ -325,6 +326,58 @@ export class EligibilitySimulationRepository
     return total > 0;
   }
 
+  public async findPortalContactsByDistributorScope(
+    pagination: PaginationProps,
+    filters: DistributorPortalContactFilters,
+  ): Promise<[PortalEligibilitySimulationContactResult[], number]> {
+    const query = this.createDistributorPortalContactsQuery(filters);
+
+    query.orderBy(
+      'COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")',
+      'DESC',
+    );
+    query.addOrderBy('location.id', 'DESC');
+    query.offset((pagination.page - 1) * pagination.pageSize);
+    query.limit(pagination.pageSize);
+
+    const items =
+      await query.getRawMany<PortalEligibilitySimulationContactResult>();
+    const total = await this.createDistributorPortalContactsQuery(
+      filters,
+      false,
+    ).getCount();
+
+    return [items, total];
+  }
+
+  public async findAllPortalContactsByDistributorScope(
+    filters: DistributorPortalContactFilters,
+  ): Promise<PortalEligibilitySimulationContactResult[]> {
+    const query = this.createDistributorPortalContactsQuery(filters);
+
+    query.orderBy(
+      'COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")',
+      'DESC',
+    );
+    query.addOrderBy('location.id', 'DESC');
+
+    return query.getRawMany<PortalEligibilitySimulationContactResult>();
+  }
+
+  public async hasPortalContactInDistributorScope(
+    simulationId: string,
+    filters: DistributorPortalContactFilters,
+  ): Promise<boolean> {
+    const total = await this.createDistributorPortalContactsQuery(
+      filters,
+      false,
+    )
+      .andWhere('eligibility_simulation.id = :simulationId', { simulationId })
+      .getCount();
+
+    return total > 0;
+  }
+
   private createPortalContactsQuery(
     filters: PortalEligibilitySimulationContactFilters,
     withSelects = true,
@@ -371,13 +424,20 @@ export class EligibilitySimulationRepository
         )
         .addSelect('eligibility_simulation."housingType"', 'housingType')
         .addSelect('eligibility_simulation.resources', 'resources')
+        .addSelect('ofs_eligibility_simulation.action', 'action')
+        .addSelect('ofs_eligibility_simulation.status', 'status')
         .addSelect(
-          'ofs_eligibility_simulation.action',
-          'action',
-        )
-        .addSelect(
-          'ofs_eligibility_simulation.status',
-          'status',
+          `(SELECT COALESCE(json_agg(json_build_object('id', distributor.id, 'name', distributor.name) ORDER BY distributor.name), '[]'::json)
+            FROM commercial_transmission transmission
+            INNER JOIN distributor distributor ON distributor.id = transmission."distributorId"
+            WHERE transmission."ofsId" = :ofsId
+            AND transmission."isActive" = true
+            AND (
+              transmission."scopeType" = 'ALL'
+              OR location.citycode = ANY(transmission."inseeCodes")
+              OR departement.code = ANY(transmission."departementCodes")
+            ))`,
+          'transmittedDistributors',
         );
     }
 
@@ -425,5 +485,105 @@ export class EligibilitySimulationRepository
     }
 
     return false;
+  }
+
+  private createDistributorPortalContactsQuery(
+    filters: DistributorPortalContactFilters,
+    withSelects = true,
+  ) {
+    const query = this.repository
+      .createQueryBuilder('eligibility_simulation')
+      .innerJoin('eligibility_simulation.locations', 'location')
+      .innerJoin('location.departement', 'departement')
+      .innerJoin('departement.region', 'region')
+      .innerJoin(
+        'commercial_transmission',
+        'commercial_transmission',
+        `commercial_transmission."distributorId" = :distributorId
+        AND commercial_transmission."isActive" = true
+        AND (
+          commercial_transmission."scopeType" = 'ALL'
+          OR location.citycode = ANY(commercial_transmission."inseeCodes")
+          OR departement.code = ANY(commercial_transmission."departementCodes")
+        )`,
+        { distributorId: filters.distributorId },
+      )
+      .innerJoin('ofs', 'ofs', 'ofs.id = commercial_transmission."ofsId"')
+      .leftJoin(
+        'distributor_eligibility_simulation',
+        'distributor_eligibility_simulation',
+        'distributor_eligibility_simulation."eligibilitySimulationId" = eligibility_simulation.id AND distributor_eligibility_simulation."distributorId" = :distributorId',
+        { distributorId: filters.distributorId },
+      )
+      .where('eligibility_simulation."hasRefusedConnection" = false')
+      .andWhere('eligibility_simulation.email IS NOT NULL')
+      .andWhere('eligibility_simulation.contribution IS NOT NULL')
+      .andWhere('eligibility_simulation.resources IS NOT NULL')
+      .andWhere(
+        `(EXISTS (
+          SELECT 1 FROM ofs_departement
+          WHERE ofs_departement."ofsId" = ofs.id
+          AND ofs_departement."departementId" = departement.id
+        ) OR EXISTS (
+          SELECT 1 FROM ofs_region
+          WHERE ofs_region."ofsId" = ofs.id
+          AND ofs_region."regionId" = region.id
+        ))`,
+      );
+
+    if (filters.ofsId) {
+      query.andWhere('ofs.id = :ofsId', { ofsId: filters.ofsId });
+    }
+
+    if (filters.startDate) {
+      query.andWhere(
+        'DATE(COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")) >= :startDate',
+        { startDate: filters.startDate },
+      );
+    }
+
+    if (filters.endDate) {
+      query.andWhere(
+        'DATE(COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")) <= :endDate',
+        { endDate: filters.endDate },
+      );
+    }
+
+    if (withSelects) {
+      query
+        .select('eligibility_simulation.id', 'simulationId')
+        .addSelect('location.id', 'locationId')
+        .addSelect(
+          'COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")',
+          'submittedAt',
+        )
+        .addSelect(
+          `NULLIF(TRIM(CONCAT(COALESCE(eligibility_simulation."firstName", ''), ' ', COALESCE(eligibility_simulation."lastName", ''))), '')`,
+          'fullName',
+        )
+        .addSelect('eligibility_simulation.email', 'email')
+        .addSelect('eligibility_simulation.phone', 'phone')
+        .addSelect('departement.code', 'departementCode')
+        .addSelect('location.city', 'city')
+        .addSelect('eligibility_simulation.contribution', 'contribution')
+        .addSelect('eligibility_simulation."householdSize"', 'householdSize')
+        .addSelect('eligibility_simulation."hasDisability"', 'hasDisability')
+        .addSelect('eligibility_simulation."taxableIncome"', 'taxableIncome')
+        .addSelect(
+          'eligibility_simulation."propertySituation"',
+          'propertySituation',
+        )
+        .addSelect('eligibility_simulation."housingType"', 'housingType')
+        .addSelect('eligibility_simulation.resources', 'resources')
+        .addSelect('distributor_eligibility_simulation.action', 'action')
+        .addSelect('distributor_eligibility_simulation.status', 'status')
+        .addSelect('ofs.id', 'ofsId')
+        .addSelect('ofs.name', 'ofsName')
+        .addSelect('ofs.email', 'ofsEmail')
+        .addSelect('ofs.phone', 'ofsPhone')
+        .addSelect('ofs."websiteUrl"', 'ofsWebsiteUrl');
+    }
+
+    return query;
   }
 }

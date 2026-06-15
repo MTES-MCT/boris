@@ -21,6 +21,7 @@ import { RequestWithFlash } from 'src/types/request-with-flash';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
+import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 
 @ApiExcludeController()
 @Controller('/users')
@@ -29,6 +30,8 @@ export class CreateUserAdminController {
     private readonly createManagedUserUsecase: CreateManagedUserUsecase,
     @InjectRepository(OfsEntity)
     private readonly ofsRepository: Repository<OfsEntity>,
+    @InjectRepository(DistributorEntity)
+    private readonly distributorRepository: Repository<DistributorEntity>,
   ) {}
 
   @UseGuards(LocalIsAuthenticatedGuard)
@@ -37,6 +40,9 @@ export class CreateUserAdminController {
   @Render('users/create')
   public async createPage(@Query('returnTo') returnTo?: string) {
     const ofss = await this.ofsRepository.find({ order: { name: 'ASC' } });
+    const distributors = await this.distributorRepository.find({
+      order: { name: 'ASC' },
+    });
 
     return {
       layout: 'layouts/main',
@@ -45,10 +51,11 @@ export class CreateUserAdminController {
         { label: 'Utilisateurs', href: '/users' },
         { label: 'Créer un utilisateur' },
       ],
-      form: { email: '', role: '', ofsIds: [] },
+      form: { email: '', role: '', ofsIds: [], distributorId: '' },
       errors: {},
       returnTo,
       ofss,
+      distributors,
       ...UsersPageBuilder.buildSharedFormView(),
     };
   }
@@ -75,6 +82,9 @@ export class CreateUserAdminController {
       });
     } catch (error) {
       const ofss = await this.ofsRepository.find({ order: { name: 'ASC' } });
+      const distributors = await this.distributorRepository.find({
+        order: { name: 'ASC' },
+      });
 
       return res.status(400).render('users/create', {
         layout: 'layouts/main',
@@ -87,9 +97,11 @@ export class CreateUserAdminController {
           email: body.email,
           role: body.role,
           ofsIds: body.ofsIds || [],
+          distributorId: body.distributorId || '',
         },
         errors: UsersPageBuilder.buildCreateErrors(error),
         ofss,
+        distributors,
         ...UsersPageBuilder.buildSharedFormView(),
       });
     }

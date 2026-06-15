@@ -13,6 +13,7 @@ import { UpdateManagedUserParams } from './update-managed-user.params';
 import { normalizeEmail } from '../utils/normalize-email';
 import { UserRole } from 'src/domain/user/user-role.enum';
 import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
+import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 import { UserSessionService } from 'src/infrastructure/session/user-session.service';
 import { In } from 'typeorm';
 
@@ -23,6 +24,8 @@ export class UpdateManagedUserUsecase {
     private readonly userRepository: UserRepositoryInterface,
     @InjectRepository(OfsEntity)
     private readonly ofsRepository: Repository<OfsEntity>,
+    @InjectRepository(DistributorEntity)
+    private readonly distributorRepository: Repository<DistributorEntity>,
     private readonly userSessionService: UserSessionService,
   ) {}
 
@@ -68,6 +71,10 @@ export class UpdateManagedUserUsecase {
     }
 
     const nextOfss = await this.resolveOfss(nextRole, ofsIds);
+    const nextDistributor = await this.resolveDistributor(
+      nextRole,
+      params.distributorId,
+    );
     const nextRoles = [nextRole];
     const hadSameEmail = user.email === nextEmail;
     const hadSameRole = user.roles.length === 1 && user.roles[0] === nextRole;
@@ -75,20 +82,45 @@ export class UpdateManagedUserUsecase {
       user.ofss.map((ofs) => ofs.id),
       nextOfss.map((ofs) => ofs.id),
     );
+    const hadSameDistributor = user.distributor?.id === nextDistributor?.id;
 
     user.email = nextEmail;
     user.roles = nextRoles;
     user.ofss = nextOfss;
+    user.distributor = nextDistributor;
 
     await this.userRepository.save(user);
 
-    if (!hadSameEmail || !hadSameRole || !hadSameOfss) {
+    if (!hadSameEmail || !hadSameRole || !hadSameOfss || !hadSameDistributor) {
       await this.userSessionService.destroyAllForUserId(user.id);
     }
   }
 
   private normalizeIds(ids?: string[]): string[] {
     return Array.from(new Set((ids || []).filter(Boolean)));
+  }
+
+  private async resolveDistributor(
+    role: UserRole,
+    distributorId?: string,
+  ): Promise<DistributorEntity | null> {
+    if (role !== UserRole.DISTRIBUTOR) {
+      return null;
+    }
+
+    if (!distributorId) {
+      throw new BadRequestException();
+    }
+
+    const distributor = await this.distributorRepository.findOneBy({
+      id: distributorId,
+    });
+
+    if (!distributor) {
+      throw new BadRequestException();
+    }
+
+    return distributor;
   }
 
   private async resolveOfss(

@@ -17,6 +17,7 @@ declare global {
         roles: string[];
         canAccessAllOfss: boolean;
         ofss: { id: string; name: string }[];
+        distributor?: { id: string; name: string } | null;
       } | null;
       selectableOfss?: {
         id: string;

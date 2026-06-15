@@ -8,11 +8,15 @@
   let search = $state("");
   let switcherOpen = $state(false);
 
+  const isDistributor = $derived(user.roles.includes("commercialisateur"));
   const currentOfsLabel = $derived(
-    page.data.currentOfs?.name || "Sélectionner un OFS",
+    isDistributor
+      ? user.distributor?.name || "Commercialisateur"
+      : page.data.currentOfs?.name || "Sélectionner un OFS",
   );
   const canSwitch = $derived(
-    (data.selectableOfss?.length || 0) > 1 || user.canAccessAllOfss,
+    !isDistributor &&
+      ((data.selectableOfss?.length || 0) > 1 || user.canAccessAllOfss),
   );
   const showSearch = $derived((data.selectableOfss?.length || 0) > 5);
   const filteredOfss = $derived(
@@ -76,7 +80,9 @@
             <a href="/" title="Accueil - Boris - Ministère chargé du logement">
               <p class="fr-header__service-title">BoRiS</p>
             </a>
-            <p class="fr-header__service-tagline">Espace OFS</p>
+            <p class="fr-header__service-tagline">
+              {isDistributor ? "Espace commercialisateur" : "Espace OFS"}
+            </p>
           </div>
         </div>
         <div class="fr-header__tools">
@@ -88,6 +94,11 @@
                   <span
                     class="fr-badge fr-badge--sm fr-badge--blue-cumulus fr-ml-1w"
                     >Admin</span
+                  >
+                {:else if isDistributor}
+                  <span
+                    class="fr-badge fr-badge--sm fr-badge--green-emeraude fr-ml-1w"
+                    >Commercialisateur</span
                   >
                 {/if}
               </li>
@@ -167,7 +178,28 @@
       </div>
     </div>
   </div>
-  {#if page.data.currentOfs}
+  {#if isDistributor}
+    <div class="fr-header__menu fr-modal" id="menu-modal">
+      <div class="fr-container">
+        <nav class="fr-nav" aria-label="Navigation principale commercialisateur">
+          <ul class="fr-nav__list">
+            <li class="fr-nav__item">
+              <a
+                class="fr-nav__link"
+                aria-current={page.url.pathname === "/commercialisateur"
+                  ? "page"
+                  : undefined}
+                href="/commercialisateur"
+                target="_self"
+              >
+                Transmissions
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  {:else if page.data.currentOfs}
     <div class="fr-header__menu fr-modal" id="menu-modal">
       <div class="fr-container">
         <nav class="fr-nav" aria-label="Navigation principale OFS">
@@ -184,6 +216,19 @@
                 target="_self"
               >
                 Simulations
+              </a>
+            </li>
+            <li class="fr-nav__item">
+              <a
+                class="fr-nav__link"
+                aria-current={page.url.pathname ===
+                `/ofs/${page.data.currentOfs.id}/transmissions`
+                  ? "page"
+                  : undefined}
+                href={`/ofs/${page.data.currentOfs.id}/transmissions`}
+                target="_self"
+              >
+                Transmissions
               </a>
             </li>
             <li class="fr-nav__item">

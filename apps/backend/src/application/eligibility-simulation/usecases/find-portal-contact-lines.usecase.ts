@@ -44,6 +44,16 @@ export class FindPortalContactLinesUsecase {
       propertySituation: this.propertySituationLabel(item.propertySituation),
       housingType: item.housingType,
       isNew: compareDate ? new Date(item.submittedAt) > compareDate : false,
+      transmittedDistributors: item.transmittedDistributors || [],
+      ofs: item.ofsId
+        ? {
+            id: item.ofsId,
+            name: item.ofsName || '',
+            email: item.ofsEmail || null,
+            phone: item.ofsPhone || null,
+            websiteUrl: item.ofsWebsiteUrl || null,
+          }
+        : null,
     } as PortalContactLineView);
   }
 
