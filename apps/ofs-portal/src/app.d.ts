@@ -26,6 +26,11 @@ declare global {
         regions?: string[];
         departements?: string[];
       }[];
+      distributorSelectableOfss?: {
+        id: string;
+        name: string;
+      }[];
+      selectedDistributorOfsId?: string;
       currentOfs?: { id: string; name: string } | null;
       isAuthenticatedApp?: boolean;
     }

@@ -10,8 +10,17 @@ type ContactLine = {
   phone: string | null;
   departementCode: string | null;
   city: string | null;
+  contribution: number | null;
+  householdSize: number | null;
+  hasDisability: boolean | null;
+  taxableIncome: number | null;
+  propertySituation: string | null;
+  housingType: string | null;
+  resources: number | null;
   action: string | null;
   status: string | null;
+  isNew: boolean;
+  transmittedDistributors: { id: string; name: string }[];
   ofs: {
     id: string;
     name: string;
@@ -23,7 +32,8 @@ type ContactLine = {
 
 export const load: ServerLoad = async (event) => {
   const { parent, url } = event;
-  const { user } = await parent();
+  const parentData = await parent();
+  const { user } = parentData;
 
   if (!user?.roles.includes("commercialisateur")) {
     throw redirect(303, "/");
@@ -37,30 +47,18 @@ export const load: ServerLoad = async (event) => {
     query.set("ofsId", ofsId);
   }
 
-  const [ofssResponse, contactsResponse] = await Promise.all([
-    backendFetch(event, "/api/portal/ofss/commercialisateur/ofss"),
-    backendFetch(
-      event,
-      `/api/portal/ofss/commercialisateur/eligibility-simulations?${query.toString()}`,
-    ),
-  ]);
+  const contactsResponse = await backendFetch(
+    event,
+    `/api/portal/ofss/commercialisateur/eligibility-simulations?${query.toString()}`,
+  );
 
   return {
     distributor: user.distributor,
-    relationships: ofssResponse.ok
-      ? await readJson<
-          {
-            transmissionId: string;
-            ofs: {
-              id: string;
-              name: string;
-              email: string | null;
-              phone: string | null;
-              websiteUrl: string | null;
-            };
-          }[]
-        >(ofssResponse)
-      : [],
+    relationships: (parentData.distributorSelectableOfss || []).map(
+      (ofs: { id: string; name: string }) => ({
+        ofs,
+      }),
+    ),
     contacts: contactsResponse.ok
       ? await readJson<{
           items: ContactLine[];
