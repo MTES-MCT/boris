@@ -7,7 +7,11 @@ import { UsersFiltersView } from './users.types';
 
 export class UsersPageBuilder {
   public static toRole(value?: string): UserRole | undefined {
-    if (value === UserRole.ADMIN || value === UserRole.OFS) {
+    if (
+      value === UserRole.ADMIN ||
+      value === UserRole.OFS ||
+      value === UserRole.DISTRIBUTOR
+    ) {
       return value;
     }
 
@@ -15,7 +19,11 @@ export class UsersPageBuilder {
   }
 
   public static roleLabel(role: UserRole): string {
-    return role === UserRole.ADMIN ? 'Admin' : 'OFS';
+    if (role === UserRole.ADMIN) {
+      return 'Admin';
+    }
+
+    return role === UserRole.DISTRIBUTOR ? 'Commercialisateur' : 'OFS';
   }
 
   public static activeLabel(isActive: boolean): string {
@@ -27,6 +35,7 @@ export class UsersPageBuilder {
       roles: [
         { value: Role.ADMIN, label: 'Admin' },
         { value: Role.OFS, label: 'OFS' },
+        { value: Role.DISTRIBUTOR, label: 'Commercialisateur' },
       ],
       notes: {
         generatedPassword:
@@ -120,6 +129,7 @@ export class UsersPageBuilder {
       email: message,
       role: message,
       ofsIds: message,
+      distributorId: message,
     };
   }
 

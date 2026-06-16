@@ -23,14 +23,14 @@ export class UserRepository implements UserRepositoryInterface {
   public async findOneByEmail(email: string): Promise<UserEntity | null> {
     return this.repository.findOne({
       where: { email },
-      relations: ['ofss'],
+      relations: ['ofss', 'distributor'],
     });
   }
 
   public async findById(id: string): Promise<UserEntity | null> {
     return this.repository.findOne({
       where: { id },
-      relations: ['ofss'],
+      relations: ['ofss', 'distributor'],
     });
   }
 
@@ -42,7 +42,8 @@ export class UserRepository implements UserRepositoryInterface {
 
     const query = this.repository
       .createQueryBuilder('user')
-      .leftJoinAndSelect('user.ofss', 'ofss');
+      .leftJoinAndSelect('user.ofss', 'ofss')
+      .leftJoinAndSelect('user.distributor', 'distributor');
 
     if (filters?.role) {
       query.andWhere(':role = ANY(user.roles)', { role: filters.role });

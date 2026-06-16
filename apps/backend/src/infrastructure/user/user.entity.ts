@@ -5,11 +5,13 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { UserRole } from 'src/domain/user/user-role.enum';
 import { OfsEntity } from '../ofs/ofs.entity';
+import { DistributorEntity } from '../distributor/distributor.entity';
 
 @Entity('user')
 export class UserEntity implements UserInterface {
@@ -34,6 +36,9 @@ export class UserEntity implements UserInterface {
   })
   public ofss: OfsEntity[];
 
+  @ManyToOne(() => DistributorEntity, { nullable: true, onDelete: 'SET NULL' })
+  public distributor: DistributorEntity | null;
+
   @Column({ type: 'timestamp', nullable: true })
   public lastLoginAt: Date | null;
 
@@ -49,6 +54,7 @@ export class UserEntity implements UserInterface {
     roles: UserRole[] = [UserRole.ADMIN],
     isActive = true,
     ofss?: OfsEntity[],
+    distributor?: DistributorEntity | null,
   ) {
     this.email = email;
     this.password = password;
@@ -59,6 +65,7 @@ export class UserEntity implements UserInterface {
       this.ofss = ofss;
     }
 
+    this.distributor = distributor || null;
     this.lastLoginAt = null;
   }
 }

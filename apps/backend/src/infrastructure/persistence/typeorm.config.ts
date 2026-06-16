@@ -14,6 +14,8 @@ import { LocationEntity } from '../location/location.entity';
 import { EligibilitySimulationEntity } from '../eligibility-simulation/eligibility-simulation.entity';
 import { UserPasswordResetTokenEntity } from '../user/user-password-reset-token.entity';
 import { OfsEligibilitySimulationEntity } from '../ofs/ofs-eligibility-simulation.entity';
+import { CommercialTransmissionEntity } from '../ofs/commercial-transmission.entity';
+import { DistributorEligibilitySimulationEntity } from '../ofs/distributor-eligibility-simulation.entity';
 dotenv.config();
 
 const test = process.env.NODE_ENV === 'test';
@@ -41,6 +43,8 @@ export const typeormConfig: DataSourceOptions = {
     EligibilitySimulationEntity,
     UserPasswordResetTokenEntity,
     OfsEligibilitySimulationEntity,
+    CommercialTransmissionEntity,
+    DistributorEligibilitySimulationEntity,
   ],
   migrations: ['dist/infrastructure/persistence/migrations/**/*{.ts,.js}'],
   synchronize: false,

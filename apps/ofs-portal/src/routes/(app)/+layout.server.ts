@@ -8,8 +8,29 @@ export const load: ServerLoad = async (event) => {
   const authenticatedUser = user!;
 
   let selectableOfss: App.PageData["selectableOfss"] = [];
+  let distributorSelectableOfss: App.PageData["distributorSelectableOfss"] = [];
 
-  if (authenticatedUser.canAccessAllOfss || authenticatedUser.ofss.length > 1) {
+  if (authenticatedUser.roles.includes("commercialisateur")) {
+    const response = await backendFetch(
+      event,
+      "/api/portal/ofss/commercialisateur/ofss",
+    );
+    distributorSelectableOfss = response.ok
+      ? (
+          await readJson<
+            {
+              ofs: {
+                id: string;
+                name: string;
+              };
+            }[]
+          >(response)
+        ).map((relationship) => relationship.ofs)
+      : [];
+  } else if (
+    authenticatedUser.canAccessAllOfss ||
+    authenticatedUser.ofss.length > 1
+  ) {
     const response = await backendFetch(event, "/api/portal/ofss");
     selectableOfss = response.ok ? await readJson(response) : [];
   }
@@ -17,6 +38,8 @@ export const load: ServerLoad = async (event) => {
   return {
     user: authenticatedUser,
     selectableOfss,
+    distributorSelectableOfss,
+    selectedDistributorOfsId: event.url.searchParams.get("ofsId") || "",
     isAuthenticatedApp: true,
   };
 };

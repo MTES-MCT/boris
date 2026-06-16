@@ -28,6 +28,7 @@
         <option value="">Tous les rôles</option>
         <option value="admin" {{#if (isEqual filters.role 'admin')}}selected{{/if}}>Admin</option>
         <option value="ofs" {{#if (isEqual filters.role 'ofs')}}selected{{/if}}>OFS</option>
+        <option value="commercialisateur" {{#if (isEqual filters.role 'commercialisateur')}}selected{{/if}}>Commercialisateur</option>
       </select>
     </div>
 
@@ -87,7 +88,7 @@
           </td>
           <td class="px-4 py-3">
             <span class="inline-flex rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300">
-              {{#each user.roles as |role|}}{{#if @first}}{{#if (isEqual role 'admin')}}Admin{{else}}OFS{{/if}}{{/if}}{{/each}}
+              {{#each user.roles as |role|}}{{#if @first}}{{#if (isEqual role 'admin')}}Admin{{else if (isEqual role 'commercialisateur')}}Commercialisateur{{else}}OFS{{/if}}{{/if}}{{/each}}
             </span>
           </td>
           <td class="px-4 py-3">
@@ -109,7 +110,11 @@
               {{/each}}
             </div>
             {{else}}
+            {{#if user.distributor}}
+            <span class="inline-flex rounded-full bg-orange-50 px-2.5 py-0.5 text-xs font-medium text-orange-800 dark:bg-orange-900 dark:text-orange-300">{{user.distributor.name}}</span>
+            {{else}}
             <span class="text-gray-500 dark:text-gray-400">-</span>
+            {{/if}}
             {{/if}}
           </td>
           <td class="px-4 py-3 text-right">

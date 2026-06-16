@@ -17,6 +17,14 @@ export class PortalContactLineView {
   public action: string | null;
   public status: string | null;
   public isNew: boolean;
+  public transmittedDistributors: { id: string; name: string }[];
+  public ofs: {
+    id: string;
+    name: string;
+    email: string | null;
+    phone: string | null;
+    websiteUrl: string | null;
+  } | null;
 
   constructor(props: PortalContactLineView) {
     this.simulationId = props.simulationId;
@@ -37,5 +45,7 @@ export class PortalContactLineView {
     this.action = props.action;
     this.status = props.status;
     this.isNew = props.isNew;
+    this.transmittedDistributors = props.transmittedDistributors || [];
+    this.ofs = props.ofs || null;
   }
 }

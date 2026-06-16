@@ -26,6 +26,19 @@ describe("portal auth helpers", () => {
     ).toBe("/ofs/ofs-1");
   });
 
+  it("resolves commercialisateur users to their dashboard", () => {
+    expect(
+      resolvePortalEntry({
+        id: "1",
+        email: "commercialisateur@example.com",
+        roles: ["commercialisateur"],
+        canAccessAllOfss: false,
+        ofss: [],
+        distributor: { id: "distributor-1", name: "Commercialisateur 1" },
+      }),
+    ).toBe("/commercialisateur");
+  });
+
   it("accepts only safe relative portal return targets", () => {
     expect(isSafePortalReturnTo("/ofs/123")).toBe(true);
     expect(isSafePortalReturnTo("https://example.com")).toBe(false);

@@ -8,15 +8,44 @@
   let search = $state("");
   let switcherOpen = $state(false);
 
+  const isDistributor = $derived(user.roles.includes("commercialisateur"));
+  const distributorCurrentOfs = $derived(
+    data.distributorSelectableOfss?.find(
+      (ofs) => ofs.id === data.selectedDistributorOfsId,
+    ),
+  );
   const currentOfsLabel = $derived(
-    page.data.currentOfs?.name || "Sélectionner un OFS",
+    isDistributor
+      ? distributorCurrentOfs?.name || "Tous les OFS"
+      : page.data.currentOfs?.name || "Sélectionner un OFS",
   );
   const canSwitch = $derived(
-    (data.selectableOfss?.length || 0) > 1 || user.canAccessAllOfss,
+    !isDistributor &&
+      ((data.selectableOfss?.length || 0) > 1 || user.canAccessAllOfss),
+  );
+  const canSwitchDistributorOfs = $derived(
+    isDistributor && (data.distributorSelectableOfss?.length || 0) > 0,
   );
   const showSearch = $derived((data.selectableOfss?.length || 0) > 5);
+  const showDistributorSearch = $derived(
+    (data.distributorSelectableOfss?.length || 0) > 5,
+  );
   const filteredOfss = $derived(
     (data.selectableOfss || []).filter((ofs) =>
+      ofs.name
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .toLowerCase()
+        .includes(
+          search
+            .normalize("NFD")
+            .replace(/\p{Diacritic}/gu, "")
+            .toLowerCase(),
+        ),
+    ),
+  );
+  const filteredDistributorOfss = $derived(
+    (data.distributorSelectableOfss || []).filter((ofs) =>
       ofs.name
         .normalize("NFD")
         .replace(/\p{Diacritic}/gu, "")
@@ -76,7 +105,9 @@
             <a href="/" title="Accueil - Boris - Ministère chargé du logement">
               <p class="fr-header__service-title">BoRiS</p>
             </a>
-            <p class="fr-header__service-tagline">Espace OFS</p>
+            <p class="fr-header__service-tagline">
+              {isDistributor ? "Espace commercialisateur" : "Espace OFS"}
+            </p>
           </div>
         </div>
         <div class="fr-header__tools">
@@ -88,6 +119,11 @@
                   <span
                     class="fr-badge fr-badge--sm fr-badge--blue-cumulus fr-ml-1w"
                     >Admin</span
+                  >
+                {:else if isDistributor}
+                  <span
+                    class="fr-badge fr-badge--sm fr-badge--green-emeraude fr-ml-1w"
+                    >Commercialisateur</span
                   >
                 {/if}
               </li>
@@ -157,6 +193,79 @@
                   </div>
                 </div>
               </details>
+            {:else if canSwitchDistributorOfs}
+              <details
+                bind:open={switcherOpen}
+                class="fr-mr-2w"
+                style="position: relative;"
+              >
+                <summary
+                  class="fr-btn fr-btn--secondary fr-icon-arrow-down-s-line fr-btn--icon-right"
+                  aria-label="Filtrer par OFS partenaire"
+                  style="min-width: 18rem; justify-content: space-between;"
+                >
+                  {currentOfsLabel}
+                </summary>
+
+                <div
+                  class="fr-p-2w fr-shadow-6"
+                  style="position: absolute; right: 0; top: calc(100% + 0.5rem); width: 22rem; z-index: 1000; border-radius: 0.5rem; box-sizing: border-box;"
+                  style:background="white"
+                >
+                  {#if showDistributorSearch}
+                    <div class="fr-input-group fr-mb-2w">
+                      <label
+                        class="fr-sr-only"
+                        for="distributor-ofs-switcher-search"
+                        >Rechercher un OFS</label
+                      >
+                      <input
+                        id="distributor-ofs-switcher-search"
+                        class="fr-input"
+                        type="search"
+                        bind:value={search}
+                        placeholder="Rechercher un OFS"
+                      />
+                    </div>
+                  {/if}
+
+                  <div style="max-height: 18rem; overflow-y: auto;">
+                    <ul class="fr-menu__list">
+                      <li>
+                        <a
+                          class="fr-nav__link"
+                          aria-current={data.selectedDistributorOfsId
+                            ? undefined
+                            : "page"}
+                          href="/commercialisateur"
+                          onclick={closeSwitcher}>Tous les OFS</a
+                        >
+                      </li>
+                      {#if filteredDistributorOfss.length === 0}
+                        <li>
+                          <p class="fr-text--sm fr-mb-0 fr-px-2w">
+                            Aucun OFS ne correspond à votre recherche.
+                          </p>
+                        </li>
+                      {:else}
+                        {#each filteredDistributorOfss as ofs}
+                          <li>
+                            <a
+                              class="fr-nav__link"
+                              aria-current={data.selectedDistributorOfsId ===
+                              ofs.id
+                                ? "page"
+                                : undefined}
+                              href={`/commercialisateur?ofsId=${ofs.id}`}
+                              onclick={closeSwitcher}>{ofs.name}</a
+                            >
+                          </li>
+                        {/each}
+                      {/if}
+                    </ul>
+                  </div>
+                </div>
+              </details>
             {:else if page.data.currentOfs}
               <span class="fr-mr-2w fr-text--sm"
                 >{page.data.currentOfs.name}</span
@@ -167,7 +276,31 @@
       </div>
     </div>
   </div>
-  {#if page.data.currentOfs}
+  {#if isDistributor}
+    <div class="fr-header__menu fr-modal" id="menu-modal">
+      <div class="fr-container">
+        <nav
+          class="fr-nav"
+          aria-label="Navigation principale commercialisateur"
+        >
+          <ul class="fr-nav__list">
+            <li class="fr-nav__item">
+              <a
+                class="fr-nav__link"
+                aria-current={page.url.pathname === "/commercialisateur"
+                  ? "page"
+                  : undefined}
+                href="/commercialisateur"
+                target="_self"
+              >
+                Mes contacts
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  {:else if page.data.currentOfs}
     <div class="fr-header__menu fr-modal" id="menu-modal">
       <div class="fr-container">
         <nav class="fr-nav" aria-label="Navigation principale OFS">
@@ -184,6 +317,19 @@
                 target="_self"
               >
                 Simulations
+              </a>
+            </li>
+            <li class="fr-nav__item">
+              <a
+                class="fr-nav__link"
+                aria-current={page.url.pathname ===
+                `/ofs/${page.data.currentOfs.id}/transmissions`
+                  ? "page"
+                  : undefined}
+                href={`/ofs/${page.data.currentOfs.id}/transmissions`}
+                target="_self"
+              >
+                Transmissions
               </a>
             </li>
             <li class="fr-nav__item">

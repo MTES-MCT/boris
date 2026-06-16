@@ -6,6 +6,7 @@ export class AdminUserDetailView {
   public roles: UserRole[];
   public isActive: boolean;
   public ofss: { id: string; name: string }[];
+  public distributor: { id: string; name: string } | null;
   public lastLoginAt: Date | null;
   public createdAt: Date;
   public updatedAt: Date;
@@ -16,6 +17,7 @@ export class AdminUserDetailView {
     roles: UserRole[],
     isActive: boolean,
     ofss: { id: string; name: string }[],
+    distributor: { id: string; name: string } | null,
     lastLoginAt: Date | null,
     createdAt: Date,
     updatedAt: Date,
@@ -25,6 +27,7 @@ export class AdminUserDetailView {
     this.roles = roles;
     this.isActive = isActive;
     this.ofss = ofss;
+    this.distributor = distributor;
     this.lastLoginAt = lastLoginAt;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;

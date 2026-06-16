@@ -17,6 +17,7 @@ declare global {
         roles: string[];
         canAccessAllOfss: boolean;
         ofss: { id: string; name: string }[];
+        distributor?: { id: string; name: string } | null;
       } | null;
       selectableOfss?: {
         id: string;
@@ -25,6 +26,11 @@ declare global {
         regions?: string[];
         departements?: string[];
       }[];
+      distributorSelectableOfss?: {
+        id: string;
+        name: string;
+      }[];
+      selectedDistributorOfsId?: string;
       currentOfs?: { id: string; name: string } | null;
       isAuthenticatedApp?: boolean;
     }

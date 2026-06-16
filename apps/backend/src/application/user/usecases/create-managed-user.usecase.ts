@@ -13,6 +13,7 @@ import { CreateManagedUserParams } from './create-managed-user.params';
 import { normalizeEmail } from '../utils/normalize-email';
 import { UserRole } from 'src/domain/user/user-role.enum';
 import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
+import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 import { generateTemporaryPassword } from '../utils/generate-temporary-password';
 import { In } from 'typeorm';
 
@@ -25,6 +26,8 @@ export class CreateManagedUserUsecase {
     private readonly passwordHasher: PasswordHasherInterface,
     @InjectRepository(OfsEntity)
     private readonly ofsRepository: Repository<OfsEntity>,
+    @InjectRepository(DistributorEntity)
+    private readonly distributorRepository: Repository<DistributorEntity>,
   ) {}
 
   public async execute(params: CreateManagedUserParams): Promise<{
@@ -42,14 +45,41 @@ export class CreateManagedUserUsecase {
     }
 
     const ofss = await this.resolveOfss(role, ofsIds);
+    const distributor = await this.resolveDistributor(
+      role,
+      params.distributorId,
+    );
     const generatedPassword = generateTemporaryPassword();
     const hashedPassword = await this.passwordHasher.hash(generatedPassword);
 
     const user = await this.userRepository.save(
-      new UserEntity(email, hashedPassword, [role], true, ofss),
+      new UserEntity(email, hashedPassword, [role], true, ofss, distributor),
     );
 
     return { user, generatedPassword };
+  }
+
+  private async resolveDistributor(
+    role: UserRole,
+    distributorId?: string,
+  ): Promise<DistributorEntity | null> {
+    if (role !== UserRole.DISTRIBUTOR) {
+      return null;
+    }
+
+    if (!distributorId) {
+      throw new BadRequestException();
+    }
+
+    const distributor = await this.distributorRepository.findOneBy({
+      id: distributorId,
+    });
+
+    if (!distributor) {
+      throw new BadRequestException();
+    }
+
+    return distributor;
   }
 
   private normalizeIds(ids?: string[]): string[] {

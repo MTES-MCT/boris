@@ -6,6 +6,7 @@ export class AdminUserListItemView {
   public roles: UserRole[];
   public isActive: boolean;
   public ofss: { id: string; name: string }[];
+  public distributor: { id: string; name: string } | null;
   public lastLoginAt: Date | null;
 
   constructor(
@@ -14,6 +15,7 @@ export class AdminUserListItemView {
     roles: UserRole[],
     isActive: boolean,
     ofss: { id: string; name: string }[],
+    distributor: { id: string; name: string } | null,
     lastLoginAt: Date | null,
   ) {
     this.id = id;
@@ -21,6 +23,7 @@ export class AdminUserListItemView {
     this.roles = roles;
     this.isActive = isActive;
     this.ofss = ofss;
+    this.distributor = distributor;
     this.lastLoginAt = lastLoginAt;
   }
 }

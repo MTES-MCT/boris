@@ -27,6 +27,7 @@ import { UserEntity } from '../../user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
+import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 
 @ApiExcludeController()
 @Controller('/users')
@@ -38,6 +39,8 @@ export class UpdateUserAdminController {
     private readonly setUserActiveStatusUsecase: SetUserActiveStatusUsecase,
     @InjectRepository(OfsEntity)
     private readonly ofsRepository: Repository<OfsEntity>,
+    @InjectRepository(DistributorEntity)
+    private readonly distributorRepository: Repository<DistributorEntity>,
   ) {}
 
   @UseGuards(LocalIsAuthenticatedGuard)
@@ -52,6 +55,9 @@ export class UpdateUserAdminController {
     const user = await this.findUserByIdUsecase.execute(params.id);
     const currentUser = req.user as UserEntity;
     const ofss = await this.ofsRepository.find({ order: { name: 'ASC' } });
+    const distributors = await this.distributorRepository.find({
+      order: { name: 'ASC' },
+    });
 
     return res.render('users/update', {
       layout: 'layouts/main',
@@ -65,6 +71,7 @@ export class UpdateUserAdminController {
         email: user.email,
         role: user.roles[0],
         ofsIds: user.ofss.map((ofs) => ofs.id),
+        distributorId: user.distributor?.id || '',
       },
       errors: {},
       returnTo,
@@ -72,6 +79,7 @@ export class UpdateUserAdminController {
         'generatedPassword',
       )[0],
       ofss,
+      distributors,
       ...UsersPageBuilder.buildEditPageView(user, currentUser.id, returnTo),
     });
   }
@@ -95,6 +103,7 @@ export class UpdateUserAdminController {
         email: body.email,
         role: body.role,
         ofsIds: body.ofsIds,
+        distributorId: body.distributorId,
       });
 
       await new Promise<void>((resolve) => {
@@ -107,6 +116,9 @@ export class UpdateUserAdminController {
       const user = await this.findUserByIdUsecase.execute(params.id);
       const currentUser = req.user as UserEntity;
       const ofss = await this.ofsRepository.find({ order: { name: 'ASC' } });
+      const distributors = await this.distributorRepository.find({
+        order: { name: 'ASC' },
+      });
 
       return res.status(400).render('users/update', {
         layout: 'layouts/main',
@@ -120,11 +132,13 @@ export class UpdateUserAdminController {
           email: body.email,
           role: body.role,
           ofsIds: body.ofsIds || [],
+          distributorId: body.distributorId || '',
         },
         errors: UsersPageBuilder.buildUpdateErrors(error),
         returnTo,
         generatedPassword: undefined,
         ofss,
+        distributors,
         ...UsersPageBuilder.buildEditPageView(user, currentUser.id, returnTo),
       });
     }

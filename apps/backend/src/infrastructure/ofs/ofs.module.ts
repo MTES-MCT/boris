@@ -20,6 +20,9 @@ import { PortalOfssController } from './controllers/api/portal-ofss.controller';
 import { PortalApiAuthenticatedGuard } from '../auth/guards/portal-api-authenticated.guard';
 import { EligibilitySimulationModule } from '../eligibility-simulation/eligibility-simulation.module';
 import { OfsEligibilitySimulationEntity } from './ofs-eligibility-simulation.entity';
+import { CommercialTransmissionEntity } from './commercial-transmission.entity';
+import { DistributorEligibilitySimulationEntity } from './distributor-eligibility-simulation.entity';
+import { DistributorEntity } from '../distributor/distributor.entity';
 import { FindMyOfsApiController } from './controllers/api/find-my-ofs.controller';
 import { FindMyOfsUsecase } from 'src/application/ofs/usecases/findMyOfs.usecase';
 import { BrsDiffusionWebsiteModule } from '../brs-diffusion-website/brs-diffusion-website.module';
@@ -27,7 +30,13 @@ import { GeocoderModule } from '../geocoder/geocoder.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([OfsEntity, OfsEligibilitySimulationEntity]),
+    TypeOrmModule.forFeature([
+      OfsEntity,
+      OfsEligibilitySimulationEntity,
+      CommercialTransmissionEntity,
+      DistributorEligibilitySimulationEntity,
+      DistributorEntity,
+    ]),
     RegionModule,
     DepartementModule,
     DistributorModule,
