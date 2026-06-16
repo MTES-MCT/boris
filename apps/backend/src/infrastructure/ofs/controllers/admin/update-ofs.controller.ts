@@ -8,6 +8,9 @@ import {
   Req,
   Put,
   Body,
+  Post,
+  BadRequestException,
+  NotFoundException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ApiExcludeController } from '@nestjs/swagger';
@@ -24,6 +27,9 @@ import { UpdateOfsDTO } from 'src/infrastructure/ofs/dtos/update.dto';
 import { UpdateOfsUsecase } from 'src/application/ofs/usecases/update.usecase';
 import { RequestWithFlash } from 'src/types/request-with-flash';
 import { FindAllUsersUsecase } from 'src/application/user/usecases/findAll.usecase';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { OfsEmbedOriginEntity } from '../../ofs-embed-origin.entity';
 
 @ApiExcludeController()
 @Controller('/ofs')
@@ -35,6 +41,8 @@ export class UpdateOfsAdminController {
     private readonly findAllDepartementsUsecase: FindAllDepartementsUsecase,
     private readonly findAllDistributorsUsecase: FindAllDistributorsUsecase,
     private readonly findAllUsersUsecase: FindAllUsersUsecase,
+    @InjectRepository(OfsEmbedOriginEntity)
+    private readonly ofsEmbedOriginRepository: Repository<OfsEmbedOriginEntity>,
   ) {}
 
   @UseGuards(LocalIsAuthenticatedGuard)
@@ -59,6 +67,11 @@ export class UpdateOfsAdminController {
       { ofsId: params.id },
     );
 
+    const embedOrigins = await this.ofsEmbedOriginRepository.find({
+      where: { ofsId: params.id },
+      order: { origin: 'ASC' },
+    });
+
     return res.render('ofs/update', {
       layout: 'layouts/main',
       title: translations.contents.ofs.title,
@@ -76,6 +89,7 @@ export class UpdateOfsAdminController {
       departements,
       distributors,
       linkedUsers: linkedUsers.items,
+      embedOrigins,
     });
   }
 
@@ -117,5 +131,102 @@ export class UpdateOfsAdminController {
         });
       });
     }
+  }
+
+  @UseGuards(LocalIsAuthenticatedGuard)
+  @UseFilters(LocalRequireAuthFilter)
+  @Post(':id/embed-origins')
+  public async createEmbedOrigin(
+    @Param() params: IdDTO,
+    @Body('origin') origin: string | undefined,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    try {
+      const normalizedOrigin = this.normalizeOrigin(origin);
+
+      await this.ofsEmbedOriginRepository.save(
+        this.ofsEmbedOriginRepository.create({
+          ofsId: params.id,
+          origin: normalizedOrigin,
+          enabled: true,
+        }),
+      );
+
+      (req as RequestWithFlash).flash(
+        translations.success.defaultLabel,
+        translations.success.defaultContent,
+      );
+    } catch (error) {
+      console.log(error);
+
+      (req as RequestWithFlash).flash(
+        translations.error.defaultLabel,
+        translations.error.defaultContent,
+      );
+    }
+
+    await new Promise<void>((resolve) => {
+      req.session.save(() => {
+        res.redirect(303, `/ofs/${params.id}/update`);
+        resolve();
+      });
+    });
+  }
+
+  @UseGuards(LocalIsAuthenticatedGuard)
+  @UseFilters(LocalRequireAuthFilter)
+  @Post(':id/embed-origins/:originId/toggle')
+  public async toggleEmbedOrigin(
+    @Param('id') ofsId: string,
+    @Param('originId') originId: string,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    try {
+      const embedOrigin = await this.ofsEmbedOriginRepository.findOne({
+        where: { id: originId, ofsId },
+      });
+
+      if (!embedOrigin) {
+        throw new NotFoundException();
+      }
+
+      embedOrigin.enabled = !embedOrigin.enabled;
+      await this.ofsEmbedOriginRepository.save(embedOrigin);
+
+      (req as RequestWithFlash).flash(
+        translations.success.defaultLabel,
+        translations.success.defaultContent,
+      );
+    } catch (error) {
+      console.log(error);
+
+      (req as RequestWithFlash).flash(
+        translations.error.defaultLabel,
+        translations.error.defaultContent,
+      );
+    }
+
+    await new Promise<void>((resolve) => {
+      req.session.save(() => {
+        res.redirect(303, `/ofs/${ofsId}/update`);
+        resolve();
+      });
+    });
+  }
+
+  private normalizeOrigin(origin?: string) {
+    if (!origin) {
+      throw new BadRequestException();
+    }
+
+    const url = new URL(origin);
+
+    if (url.protocol !== 'https:' && url.hostname !== 'localhost') {
+      throw new BadRequestException();
+    }
+
+    return url.origin;
   }
 }

@@ -21,6 +21,8 @@ export type EligibilityCategory = {
 
 export type HighestEligibilityZone = 'A_AND_ABIS' | 'B1' | 'B2_AND_C' | 'NONE';
 
+export type EligibilitySimulationSourceType = 'BORIS_PUBLIC' | 'OFS_EMBED';
+
 export const getHighestEligibilityZone = (
   eligibility?: EligibilityCategory,
 ): HighestEligibilityZone => {
@@ -91,6 +93,8 @@ export interface EligibilitySimulationInterface {
   hasCompanyMoreThan50Employees?: boolean;
   allowFinancingAndOwnershipAdvices?: boolean;
   positionContractType?: ContractType;
+  sourceType: EligibilitySimulationSourceType;
+  sourceOfsId?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }

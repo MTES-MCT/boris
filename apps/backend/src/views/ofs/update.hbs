@@ -26,3 +26,64 @@
   <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">Aucun utilisateur rattaché</p>
   {{/if}}
 </div>
+
+<div class="m-4 p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+  <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Origines autorisées d'intégration</h2>
+  <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+    Ces origines peuvent intégrer le simulateur embarqué et attribuent les lignes de contact à cet OFS.
+  </p>
+
+  <form method="POST" action="/ofs/{{ofs.id}}/embed-origins" class="mt-4 flex flex-col gap-3 sm:flex-row">
+    <div class="flex-1">
+      <label for="embed-origin" class="sr-only">Origine</label>
+      <input
+        type="url"
+        name="origin"
+        id="embed-origin"
+        required
+        placeholder="https://www.exemple-ofs.fr"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+    </div>
+    <button type="submit"
+      class="text-white inline-flex items-center justify-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+      Ajouter
+    </button>
+  </form>
+
+  {{#if embedOrigins.length}}
+  <div class="mt-4 overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-4 py-3">Origine</th>
+          <th scope="col" class="px-4 py-3">Statut</th>
+          <th scope="col" class="px-4 py-3 text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each embedOrigins as |embedOrigin|}}
+        <tr class="border-b dark:border-gray-700">
+          <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{embedOrigin.origin}}</td>
+          <td class="px-4 py-3">
+            {{#if embedOrigin.enabled}}
+            <span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-50 text-green-800 dark:bg-green-900 dark:text-green-300">Actif</span>
+            {{else}}
+            <span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200">Inactif</span>
+            {{/if}}
+          </td>
+          <td class="px-4 py-3 text-right">
+            <form method="POST" action="/ofs/{{../ofs.id}}/embed-origins/{{embedOrigin.id}}/toggle">
+              <button type="submit" class="font-medium text-primary-700 hover:underline dark:text-primary-500">
+                {{#if embedOrigin.enabled}}Désactiver{{else}}Réactiver{{/if}}
+              </button>
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  {{else}}
+  <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">Aucune origine autorisée.</p>
+  {{/if}}
+</div>

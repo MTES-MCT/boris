@@ -43,6 +43,7 @@ export class FindPortalContactLinesUsecase {
       submittedAt: new Date(item.submittedAt),
       propertySituation: this.propertySituationLabel(item.propertySituation),
       housingType: item.housingType,
+      sourceLabel: this.sourceLabel(item.sourceType),
       isNew: compareDate ? new Date(item.submittedAt) > compareDate : false,
       transmittedDistributors: item.transmittedDistributors || [],
       ofs: item.ofsId
@@ -55,6 +56,16 @@ export class FindPortalContactLinesUsecase {
           }
         : null,
     } as PortalContactLineView);
+  }
+
+  private sourceLabel(value: 'BORIS_PUBLIC' | 'OFS_EMBED') {
+    switch (value) {
+      case 'OFS_EMBED':
+        return 'Site OFS';
+      case 'BORIS_PUBLIC':
+      default:
+        return 'Boris';
+    }
   }
 
   private propertySituationLabel(value: string | null) {

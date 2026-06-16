@@ -16,6 +16,8 @@ export class PortalContactLineView {
   public resources: number | null;
   public action: string | null;
   public status: string | null;
+  public sourceType: 'BORIS_PUBLIC' | 'OFS_EMBED';
+  public sourceLabel: string;
   public isNew: boolean;
   public transmittedDistributors: { id: string; name: string }[];
   public ofs: {
@@ -44,6 +46,8 @@ export class PortalContactLineView {
     this.resources = props.resources;
     this.action = props.action;
     this.status = props.status;
+    this.sourceType = props.sourceType;
+    this.sourceLabel = props.sourceLabel;
     this.isNew = props.isNew;
     this.transmittedDistributors = props.transmittedDistributors || [];
     this.ofs = props.ofs || null;

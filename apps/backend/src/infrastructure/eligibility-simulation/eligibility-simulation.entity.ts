@@ -8,16 +8,20 @@ import {
   EmploymentStatus,
   PositionType,
   ContractType,
+  EligibilitySimulationSourceType,
 } from 'src/domain/eligibility-simulation/eligibility-simulation.interface';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { LocationEntity } from '../location/location.entity';
+import { OfsEntity } from '../ofs/ofs.entity';
 
 @Entity('eligibility_simulation')
 export class EligibilitySimulationEntity
@@ -157,6 +161,20 @@ export class EligibilitySimulationEntity
 
   @Column({ type: 'enum', enum: ['CDI', 'CDD'], nullable: true })
   public positionContractType?: ContractType;
+
+  @Column({
+    type: 'enum',
+    enum: ['BORIS_PUBLIC', 'OFS_EMBED'],
+    default: 'BORIS_PUBLIC',
+  })
+  public sourceType: EligibilitySimulationSourceType;
+
+  @Column({ type: 'uuid', nullable: true })
+  public sourceOfsId?: string | null;
+
+  @ManyToOne(() => OfsEntity, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'sourceOfsId' })
+  public sourceOfs?: OfsEntity | null;
 
   @OneToMany(() => LocationEntity, (location) => location.eligibilitySimulation)
   public locations: LocationEntity[];

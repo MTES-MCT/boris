@@ -10,7 +10,8 @@ export const blockSearchEngineIndexing = (page: Page): boolean => {
 
   return (
     (PUBLIC_NODE_ENV !== 'production' && PUBLIC_NODE_ENV !== 'ci') ||
-    hiddenPaths.includes(page.route.id as string)
+    hiddenPaths.includes(page.route.id as string) ||
+    page.url.pathname.startsWith('/embed/')
   );
 };
 

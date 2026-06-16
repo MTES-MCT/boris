@@ -633,6 +633,7 @@ export class PortalOfssController {
     const rows = [
       [
         'date',
+        'origine',
         'contact',
         'email',
         'telephone',
@@ -648,6 +649,7 @@ export class PortalOfssController {
       ],
       ...lines.map((line) => [
         line.submittedAt.toISOString(),
+        line.sourceLabel,
         line.fullName || 'Contact sans nom',
         line.email || '',
         line.phone || '',

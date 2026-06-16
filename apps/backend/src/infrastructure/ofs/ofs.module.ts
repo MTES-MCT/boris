@@ -23,6 +23,7 @@ import { OfsEligibilitySimulationEntity } from './ofs-eligibility-simulation.ent
 import { CommercialTransmissionEntity } from './commercial-transmission.entity';
 import { DistributorEligibilitySimulationEntity } from './distributor-eligibility-simulation.entity';
 import { DistributorEntity } from '../distributor/distributor.entity';
+import { OfsEmbedOriginEntity } from './ofs-embed-origin.entity';
 import { FindMyOfsApiController } from './controllers/api/find-my-ofs.controller';
 import { FindMyOfsUsecase } from 'src/application/ofs/usecases/findMyOfs.usecase';
 import { BrsDiffusionWebsiteModule } from '../brs-diffusion-website/brs-diffusion-website.module';
@@ -36,6 +37,7 @@ import { GeocoderModule } from '../geocoder/geocoder.module';
       CommercialTransmissionEntity,
       DistributorEligibilitySimulationEntity,
       DistributorEntity,
+      OfsEmbedOriginEntity,
     ]),
     RegionModule,
     DepartementModule,

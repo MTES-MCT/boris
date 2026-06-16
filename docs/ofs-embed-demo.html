@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OFS Demo - Simulateur Boris embarqué</title>
+    <style>
+      :root {
+        color: #1f2937;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      body {
+        margin: 0;
+        background: #f6f7f9;
+      }
+
+      header {
+        background: #ffffff;
+        border-bottom: 1px solid #dde1e6;
+      }
+
+      .container {
+        margin: 0 auto;
+        max-width: 1100px;
+        padding: 0 24px;
+      }
+
+      .topbar {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        min-height: 72px;
+      }
+
+      .brand {
+        color: #0053b3;
+        font-size: 1.125rem;
+        font-weight: 700;
+      }
+
+      nav {
+        display: flex;
+        gap: 20px;
+      }
+
+      nav a {
+        color: #374151;
+        font-size: 0.95rem;
+        text-decoration: none;
+      }
+
+      .hero {
+        background: #ffffff;
+        padding: 56px 0 40px;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 3.75rem);
+        line-height: 1.05;
+        margin: 0 0 20px;
+        max-width: 780px;
+      }
+
+      .lead {
+        color: #4b5563;
+        font-size: 1.15rem;
+        line-height: 1.65;
+        max-width: 760px;
+      }
+
+      .content {
+        display: grid;
+        gap: 28px;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        padding: 40px 24px;
+      }
+
+      section,
+      aside {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 28px;
+      }
+
+      h2 {
+        margin-top: 0;
+      }
+
+      p {
+        line-height: 1.65;
+      }
+
+      .embed-section {
+        margin: 0 auto 56px;
+        max-width: 1100px;
+        padding: 0 24px;
+      }
+
+      .embed-wrapper {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 16px;
+      }
+
+      @media (max-width: 820px) {
+        .content {
+          grid-template-columns: 1fr;
+        }
+
+        nav {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container topbar">
+        <div class="brand">OFS Démo</div>
+        <nav aria-label="Navigation principale">
+          <a href="#mission">Notre mission</a>
+          <a href="#programmes">Programmes</a>
+          <a href="#simulateur">Simulateur</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div class="container">
+          <h1>Devenir propriétaire en bail réel solidaire</h1>
+          <p class="lead">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+            posuere, orci non facilisis cursus, justo sapien malesuada lorem,
+            vitae fermentum neque neque eu arcu.
+          </p>
+        </div>
+      </div>
+
+      <div class="container content">
+        <section id="mission">
+          <h2>Notre mission</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
+            ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
+            curae; Sed tincidunt, sapien vitae luctus gravida, lorem massa
+            convallis lectus, in posuere risus lectus et mi.
+          </p>
+          <p>
+            Suspendisse potenti. Integer egestas finibus felis, sed interdum
+            lectus porta in. Maecenas non risus sit amet libero viverra cursus.
+          </p>
+        </section>
+
+        <aside id="programmes">
+          <h2>Programmes</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            aliquet, est id consequat tempus, lorem nulla luctus turpis.
+          </p>
+        </aside>
+      </div>
+
+      <section class="embed-section" id="simulateur">
+        <h2>Tester votre éligibilité</h2>
+        <p>
+          Le simulateur ci-dessous est chargé avec le snippet recommandé. Pour
+          que la démonstration fonctionne réellement, l'origine qui sert cette
+          page doit être autorisée dans l'administration Boris.
+        </p>
+        <div class="embed-wrapper">
+          <div id="boris-simulateur-eligibilite"></div>
+          <script
+            src="https://boris.beta.gouv.fr/embed/simulateur-eligibilite.js"
+            data-container="boris-simulateur-eligibilite"
+            data-partner-name="OFS Démo"
+            data-primary-color="#0053b3"
+            data-selection-departments="75,92"
+            data-intro="compact"></script>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

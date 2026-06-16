@@ -20,6 +20,7 @@
     error?: string;
     dataTestId?: string;
     errorDataTestId?: string;
+    filterSuggestion?: (suggestion: GeocodedResponse['properties']) => boolean;
     onSelect: (suggestion: GeocodedResponse['properties']) => void;
   };
 
@@ -33,6 +34,7 @@
     onSelect,
     dataTestId,
     errorDataTestId,
+    filterSuggestion,
   }: Props = $props();
 
   let suggestions = $state<GeocodedResponse['properties'][] | null>(null);
@@ -56,6 +58,9 @@
           y: result?.geometry?.coordinates?.[1],
           id: `suggestion-${nanoid(15)}`,
         }))
+        ?.filter((suggestion) =>
+          filterSuggestion ? filterSuggestion(suggestion) : true,
+        )
         ?.slice(0, 5);
 
       isListExpanded = true;

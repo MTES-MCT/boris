@@ -19,6 +19,8 @@ type ContactLine = {
   resources: number | null;
   action: string | null;
   status: string | null;
+  sourceType: "BORIS_PUBLIC" | "OFS_EMBED";
+  sourceLabel: string;
   isNew: boolean;
   transmittedDistributors: { id: string; name: string }[];
 };
