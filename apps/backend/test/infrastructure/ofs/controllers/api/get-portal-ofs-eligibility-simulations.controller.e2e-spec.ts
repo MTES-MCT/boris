@@ -57,6 +57,17 @@ describe('PortalOfssController eligibility simulations', () => {
     expect(ofs?.departements.length || ofs?.regions.length).toBeGreaterThan(0);
 
     const matchingDepartement = ofs!.departements[0];
+    expect(ofs!.regions.length).toBeGreaterThan(0);
+
+    const sameRegionOtherDepartement = await departementRepository
+      .createQueryBuilder('departement')
+      .leftJoinAndSelect('departement.region', 'region')
+      .where('departement.id != :id', { id: matchingDepartement.id })
+      .andWhere('region.id = :regionId', { regionId: ofs!.regions[0].id })
+      .getOne();
+
+    expect(sameRegionOtherDepartement).toBeTruthy();
+
     const otherDepartement = await departementRepository
       .createQueryBuilder('departement')
       .leftJoinAndSelect('departement.region', 'region')
@@ -95,6 +106,35 @@ describe('PortalOfssController eligibility simulations', () => {
         postalCode: '75000',
         departement: matchingDepartement,
         eligibilitySimulation: matchingSimulation,
+      }),
+    );
+
+    const sameRegionOtherDepartementSimulation =
+      await eligibilitySimulationRepository.save(
+        Object.assign(new EligibilitySimulationEntity(), {
+          householdSize: 2,
+          firstName: 'Romain',
+          lastName: 'Legrand',
+          email: 'romain@example.test',
+          phone: '0102030406',
+          contribution: 18000,
+          resources: 2900,
+          taxableIncome: 39000,
+          propertySituation: 'LOCATAIRE_PRIVE',
+          housingType: 'T3',
+          hasDisability: false,
+          hasRefusedConnection: false,
+        }),
+      );
+
+    await locationRepository.save(
+      Object.assign(new LocationEntity(), {
+        city: 'Ville meme region',
+        citycode: '00002',
+        label: 'Ville meme region',
+        postalCode: '56000',
+        departement: sameRegionOtherDepartement!,
+        eligibilitySimulation: sameRegionOtherDepartementSimulation,
       }),
     );
 
@@ -165,6 +205,13 @@ describe('PortalOfssController eligibility simulations', () => {
       expect.not.arrayContaining([
         expect.objectContaining({
           simulationId: otherSimulation.id,
+        }),
+      ]),
+    );
+    expect(body.items).toEqual(
+      expect.not.arrayContaining([
+        expect.objectContaining({
+          simulationId: sameRegionOtherDepartementSimulation.id,
         }),
       ]),
     );
