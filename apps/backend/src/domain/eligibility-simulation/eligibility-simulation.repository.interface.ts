@@ -79,7 +79,6 @@ export type PortalEligibilitySimulationContactResult = {
 export type PortalEligibilitySimulationContactFilters = {
   ofsId: string;
   departementIds: string[];
-  regionIds: string[];
   startDate?: string;
   endDate?: string;
 };

@@ -343,7 +343,6 @@ export class PortalOfssController {
       {
         ofsId: ofs.id,
         departementIds: ofs.departements.map((departement) => departement.id),
-        regionIds: ofs.regions.map((region) => region.id),
         compareDate: session.previousLoginAt
           ? new Date(session.previousLoginAt)
           : null,
@@ -366,7 +365,6 @@ export class PortalOfssController {
     const lines = await this.exportPortalContactLinesUsecase.execute({
       ofsId: ofs.id,
       departementIds: ofs.departements.map((departement) => departement.id),
-      regionIds: ofs.regions.map((region) => region.id),
       ...validatedDates,
     });
     const csv = this.buildCsv(lines);
@@ -393,7 +391,6 @@ export class PortalOfssController {
     const filters = {
       ofsId: ofs.id,
       departementIds: ofs.departements.map((departement) => departement.id),
-      regionIds: ofs.regions.map((region) => region.id),
     };
 
     const isAccessible =

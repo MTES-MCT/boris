@@ -386,7 +386,6 @@ export class EligibilitySimulationRepository
       .createQueryBuilder('eligibility_simulation')
       .innerJoin('eligibility_simulation.locations', 'location')
       .innerJoin('location.departement', 'departement')
-      .innerJoin('departement.region', 'region')
       .leftJoin(
         'ofs_eligibility_simulation',
         'ofs_eligibility_simulation',
@@ -466,21 +465,8 @@ export class EligibilitySimulationRepository
     query: SelectQueryBuilder<EligibilitySimulationEntity>,
     filters: PortalEligibilitySimulationContactFilters,
   ) {
-    if (filters.departementIds.length > 0 && filters.regionIds.length > 0) {
-      query.andWhere(
-        '(departement.id IN (:...departementIds) OR region.id IN (:...regionIds))',
-        filters,
-      );
-      return true;
-    }
-
     if (filters.departementIds.length > 0) {
       query.andWhere('departement.id IN (:...departementIds)', filters);
-      return true;
-    }
-
-    if (filters.regionIds.length > 0) {
-      query.andWhere('region.id IN (:...regionIds)', filters);
       return true;
     }
 
@@ -495,7 +481,6 @@ export class EligibilitySimulationRepository
       .createQueryBuilder('eligibility_simulation')
       .innerJoin('eligibility_simulation.locations', 'location')
       .innerJoin('location.departement', 'departement')
-      .innerJoin('departement.region', 'region')
       .innerJoin(
         'commercial_transmission',
         'commercial_transmission',
@@ -520,15 +505,11 @@ export class EligibilitySimulationRepository
       .andWhere('eligibility_simulation.contribution IS NOT NULL')
       .andWhere('eligibility_simulation.resources IS NOT NULL')
       .andWhere(
-        `(EXISTS (
+        `EXISTS (
           SELECT 1 FROM ofs_departement
           WHERE ofs_departement."ofsId" = ofs.id
           AND ofs_departement."departementId" = departement.id
-        ) OR EXISTS (
-          SELECT 1 FROM ofs_region
-          WHERE ofs_region."ofsId" = ofs.id
-          AND ofs_region."regionId" = region.id
-        ))`,
+        )`,
       );
 
     if (filters.ofsId) {

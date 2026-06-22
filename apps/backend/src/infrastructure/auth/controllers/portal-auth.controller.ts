@@ -26,6 +26,8 @@ import { PortalApiAuthenticatedGuard } from '../guards/portal-api-authenticated.
 import { AuthRateLimitService } from '../auth-rate-limit.service';
 import { normalizeEmail } from 'src/application/user/utils/normalize-email';
 import { UserRepositoryInterface } from 'src/domain/user/user.repository.interface';
+import { ChangePasswordUsecase } from 'src/application/user/usecases/change-password.usecase';
+import { ChangePasswordDto } from '../dtos/change-password.dto';
 
 @ApiExcludeController()
 @Controller('/api/portal/auth')
@@ -34,6 +36,7 @@ export class PortalAuthController {
     private readonly loginUsecase: LoginUsecase,
     private readonly requestPasswordResetUsecase: RequestPasswordResetUsecase,
     private readonly resetPasswordWithTokenUsecase: ResetPasswordWithTokenUsecase,
+    private readonly changePasswordUsecase: ChangePasswordUsecase,
     private readonly userSessionService: UserSessionService,
     private readonly authRateLimitService: AuthRateLimitService,
     @Inject('UserRepositoryInterface')
@@ -217,5 +220,21 @@ export class PortalAuthController {
     await this.resetPasswordWithTokenUsecase.execute(body.token, body.password);
 
     this.authRateLimitService.hit(`reset:${ip}:${tokenKey}`, 60 * 60 * 1000);
+  }
+
+  @UseGuards(PortalApiAuthenticatedGuard)
+  @Post('/change-password')
+  @HttpCode(204)
+  public async changePassword(
+    @Body() body: ChangePasswordDto,
+    @Req() req: Request,
+  ) {
+    const user = req.user as UserEntity;
+
+    await this.changePasswordUsecase.execute(
+      user.id,
+      body.currentPassword,
+      body.newPassword,
+    );
   }
 }

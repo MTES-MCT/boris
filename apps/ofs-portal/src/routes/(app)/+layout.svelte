@@ -114,7 +114,9 @@
           <div class="fr-header__tools-links">
             <ul class="fr-btns-group fr-btns-group--inline fr-btns-group--sm">
               <li>
-                <span class="fr-text--sm">{user.email}</span>
+                <a class="fr-link fr-text--sm" href="/mon-compte"
+                  >{user.email}</a
+                >
                 {#if user.roles.includes("admin")}
                   <span
                     class="fr-badge fr-badge--sm fr-badge--blue-cumulus fr-ml-1w"
