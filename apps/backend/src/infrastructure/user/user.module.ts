@@ -21,6 +21,7 @@ import { UpdateUserAdminController } from './controllers/admin/update-user.contr
 import { MailerModule } from '../mailer/mailer.module';
 import { RequestPasswordResetUsecase } from 'src/application/user/usecases/request-password-reset.usecase';
 import { ResetPasswordWithTokenUsecase } from 'src/application/user/usecases/reset-password-with-token.usecase';
+import { ChangePasswordUsecase } from 'src/application/user/usecases/change-password.usecase';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { ResetPasswordWithTokenUsecase } from 'src/application/user/usecases/res
     SetUserActiveStatusUsecase,
     RequestPasswordResetUsecase,
     ResetPasswordWithTokenUsecase,
+    ChangePasswordUsecase,
   ],
   exports: [
     'UserRepositoryInterface',
@@ -61,6 +63,7 @@ import { ResetPasswordWithTokenUsecase } from 'src/application/user/usecases/res
     FindUserByIdUsecase,
     RequestPasswordResetUsecase,
     ResetPasswordWithTokenUsecase,
+    ChangePasswordUsecase,
   ],
 })
 export class UserModule {}
