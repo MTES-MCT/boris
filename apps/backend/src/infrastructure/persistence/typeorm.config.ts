@@ -16,6 +16,7 @@ import { UserPasswordResetTokenEntity } from '../user/user-password-reset-token.
 import { OfsEligibilitySimulationEntity } from '../ofs/ofs-eligibility-simulation.entity';
 import { CommercialTransmissionEntity } from '../ofs/commercial-transmission.entity';
 import { DistributorEligibilitySimulationEntity } from '../ofs/distributor-eligibility-simulation.entity';
+import { OfsEmbedOriginEntity } from '../ofs/ofs-embed-origin.entity';
 dotenv.config();
 
 const test = process.env.NODE_ENV === 'test';
@@ -45,6 +46,7 @@ export const typeormConfig: DataSourceOptions = {
     OfsEligibilitySimulationEntity,
     CommercialTransmissionEntity,
     DistributorEligibilitySimulationEntity,
+    OfsEmbedOriginEntity,
   ],
   migrations: ['dist/infrastructure/persistence/migrations/**/*{.ts,.js}'],
   synchronize: false,

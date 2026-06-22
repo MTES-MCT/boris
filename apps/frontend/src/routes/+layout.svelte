@@ -29,6 +29,7 @@
   type Props = { children: Snippet };
   const { children }: Props = $props();
   const seo = $derived(getSeoMetadata(page.url.pathname));
+  const isEmbedRoute = $derived(page.url.pathname.startsWith('/embed/'));
 </script>
 
 <svelte:head>
@@ -48,14 +49,20 @@
   jsonLd={seo.jsonLd} />
 
 <Favicon />
-<Consent />
-<Analytics />
+{#if !isEmbedRoute}
+  <Consent />
+  <Analytics />
+{/if}
 <NoScrollOnNavigation />
-<SkipLinks />
-<Header />
+{#if !isEmbedRoute}
+  <SkipLinks />
+  <Header />
+{/if}
 
 <main id="main">
   {@render children()}
 </main>
 
-<Footer />
+{#if !isEmbedRoute}
+  <Footer />
+{/if}

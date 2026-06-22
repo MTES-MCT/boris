@@ -26,10 +26,15 @@ import { GetEligibilitySimulationsBrsKnowledgeApiController } from './controller
 import { GetEligibilitySimulationsRealEstateSituationApiController } from './controllers/api/get-eligibility-simulations-real-estate-situation.controller';
 import { FindPortalContactLinesUsecase } from 'src/application/eligibility-simulation/usecases/find-portal-contact-lines.usecase';
 import { ExportPortalContactLinesUsecase } from 'src/application/eligibility-simulation/usecases/export-portal-contact-lines.usecase';
+import { OfsEmbedOriginEntity } from '../ofs/ofs-embed-origin.entity';
+import { CreateEmbedEligibilitySimulationApiController } from './controllers/api/create-embed-eligibility-simulation.controller';
+import { UpdateEmbedEligibilitySimulationApiController } from './controllers/api/update-embed-eligibility-simulation.controller';
+import { ValidateEmbedOriginApiController } from './controllers/api/validate-embed-origin.controller';
+import { EmbedRateLimiterService } from './embed-rate-limiter.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([EligibilitySimulationEntity]),
+    TypeOrmModule.forFeature([EligibilitySimulationEntity, OfsEmbedOriginEntity]),
     forwardRef(() => LocationModule),
     MailerModule,
     GoogleSheetsModule,
@@ -37,6 +42,9 @@ import { ExportPortalContactLinesUsecase } from 'src/application/eligibility-sim
   controllers: [
     CreateEligibilitySimulationApiController,
     UpdateEligibilitySimulationApiController,
+    CreateEmbedEligibilitySimulationApiController,
+    UpdateEmbedEligibilitySimulationApiController,
+    ValidateEmbedOriginApiController,
     GetEligibilitySimulationsGroupedByEligibilityApiController,
     GetEligibilitySimulationsBrsKnowledgeApiController,
     GetEligibilitySimulationsRealEstateSituationApiController,
@@ -63,6 +71,7 @@ import { ExportPortalContactLinesUsecase } from 'src/application/eligibility-sim
     CalculateEligibilitySimulationConversionFunnelUsecase,
     FindPortalContactLinesUsecase,
     ExportPortalContactLinesUsecase,
+    EmbedRateLimiterService,
   ],
   exports: [
     'EligibilitySimulationRepositoryInterface',

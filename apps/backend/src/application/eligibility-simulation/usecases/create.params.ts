@@ -6,4 +6,6 @@ export interface CreateEligibilitySimulationParams {
   coBuyerBirthday?: Date;
   isFromLandbot?: boolean;
   landbotDate?: Date;
+  sourceType?: 'BORIS_PUBLIC' | 'OFS_EMBED';
+  sourceOfsId?: string | null;
 }

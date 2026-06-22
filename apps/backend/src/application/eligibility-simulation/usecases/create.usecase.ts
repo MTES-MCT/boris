@@ -21,6 +21,8 @@ export class CreateEligibilitySimulationUsecase {
       coBuyerBirthday,
       isFromLandbot = false,
       landbotDate,
+      sourceType = 'BORIS_PUBLIC',
+      sourceOfsId = null,
     } = params;
 
     const eligibilitySimulationEntity = new EligibilitySimulationEntity();
@@ -31,6 +33,8 @@ export class CreateEligibilitySimulationUsecase {
     eligibilitySimulationEntity.coBuyerBirthday = coBuyerBirthday;
     eligibilitySimulationEntity.isFromLandbot = isFromLandbot;
     eligibilitySimulationEntity.highestEligibilityZone = 'NONE';
+    eligibilitySimulationEntity.sourceType = sourceType;
+    eligibilitySimulationEntity.sourceOfsId = sourceOfsId;
 
     if (landbotDate) {
       eligibilitySimulationEntity.landbotDate = landbotDate;

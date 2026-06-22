@@ -206,6 +206,28 @@ class EligibilitySimulator {
   public positionContractType: ContractType | undefined = $state(undefined);
 
   public eligibilitySimulation: EligibilitySimulationView | null = $state(null);
+  public apiBasePath = $state('/api/eligibility-simulations');
+  public parentOrigin: string | undefined = $state(undefined);
+  public selectionDepartments: string[] = $state([]);
+  public selectionCitycodes: string[] = $state([]);
+
+  public configureEmbed = (config: {
+    parentOrigin: string;
+    selectionDepartments?: string[];
+    selectionCitycodes?: string[];
+  }) => {
+    this.apiBasePath = '/api/embed/eligibility-simulations';
+    this.parentOrigin = config.parentOrigin;
+    this.selectionDepartments = config.selectionDepartments || [];
+    this.selectionCitycodes = config.selectionCitycodes || [];
+  };
+
+  public configurePublic = () => {
+    this.apiBasePath = '/api/eligibility-simulations';
+    this.parentOrigin = undefined;
+    this.selectionDepartments = [];
+    this.selectionCitycodes = [];
+  };
 
   public goToPreviousPhase = () => {
     if (this.hasRefusedConnection) {
@@ -271,7 +293,7 @@ class EligibilitySimulator {
       coBuyerBirthday: this.coBuyerBirthday as string,
     };
 
-    const response = await fetch('/api/eligibility-simulations', {
+    const response = await fetch(this.apiUrl(), {
       method: 'POST',
       body: JSON.stringify(payload),
     });
@@ -292,10 +314,15 @@ class EligibilitySimulator {
     this.loading = true;
 
     const response = await fetch(
-      `/api/eligibility-simulations/${this.eligibilitySimulation?.id}`,
+      this.apiUrl(this.eligibilitySimulation?.id),
       {
         method: 'PUT',
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          ...payload,
+          parentOrigin: this.parentOrigin,
+          selectionDepartments: this.selectionDepartments.join(','),
+          selectionCitycodes: this.selectionCitycodes.join(','),
+        }),
       },
     );
 
@@ -307,6 +334,30 @@ class EligibilitySimulator {
 
     this.loading = false;
     this.goToNextPhase();
+  };
+
+  private apiUrl = (id?: string) => {
+    const url = new URL(
+      id ? `${this.apiBasePath}/${id}` : this.apiBasePath,
+      window.location.origin,
+    );
+
+    if (this.parentOrigin) {
+      url.searchParams.set('parentOrigin', this.parentOrigin);
+    }
+
+    if (this.selectionDepartments.length > 0) {
+      url.searchParams.set(
+        'selectionDepartments',
+        this.selectionDepartments.join(','),
+      );
+    }
+
+    if (this.selectionCitycodes.length > 0) {
+      url.searchParams.set('selectionCitycodes', this.selectionCitycodes.join(','));
+    }
+
+    return `${url.pathname}${url.search}`;
   };
 }
 

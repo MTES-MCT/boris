@@ -21,6 +21,8 @@
     resources: number | null;
     action: string | null;
     status: string | null;
+    sourceType: "BORIS_PUBLIC" | "OFS_EMBED";
+    sourceLabel: string;
     isNew: boolean;
     transmittedDistributors: { id: string; name: string }[];
   };
@@ -179,7 +181,8 @@
   <div class="fr-col">
     <h1 class="fr-h3">Simulations</h1>
     <p class="fr-text--sm">
-      Contacts correspondant au périmètre géographique de cet OFS.
+      Contacts correspondant au périmètre géographique de cet OFS ou provenant
+      de son simulateur intégré.
     </p>
   </div>
 
@@ -268,6 +271,7 @@
         <tr>
           <th scope="col">Infos</th>
           <th scope="col">Date</th>
+          <th scope="col">Origine</th>
           <th scope="col">Contact</th>
           <th scope="col">Localisation</th>
           <th scope="col">Foyer</th>
@@ -344,6 +348,7 @@
                 >
               {/if}
             </td>
+            <td>{line.sourceLabel}</td>
             <td>
               <strong>{line.fullName || "Contact sans nom"}</strong><br />
               {line.email || "-"}<br />

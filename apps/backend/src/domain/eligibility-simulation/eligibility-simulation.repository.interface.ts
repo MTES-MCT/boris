@@ -74,6 +74,7 @@ export type PortalEligibilitySimulationContactResult = {
   ofsEmail?: string | null;
   ofsPhone?: string | null;
   ofsWebsiteUrl?: string | null;
+  sourceType: 'BORIS_PUBLIC' | 'OFS_EMBED';
 };
 
 export type PortalEligibilitySimulationContactFilters = {

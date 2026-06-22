@@ -438,7 +438,8 @@ export class EligibilitySimulationRepository
               OR departement.code = ANY(transmission."departementCodes")
             ))`,
           'transmittedDistributors',
-        );
+        )
+        .addSelect('eligibility_simulation."sourceType"', 'sourceType');
     }
 
     if (!this.applyPortalScopeFilters(query, filters)) {
@@ -468,23 +469,30 @@ export class EligibilitySimulationRepository
   ) {
     if (filters.departementIds.length > 0 && filters.regionIds.length > 0) {
       query.andWhere(
-        '(departement.id IN (:...departementIds) OR region.id IN (:...regionIds))',
+        '(departement.id IN (:...departementIds) OR region.id IN (:...regionIds) OR eligibility_simulation."sourceOfsId" = :ofsId)',
         filters,
       );
       return true;
     }
 
     if (filters.departementIds.length > 0) {
-      query.andWhere('departement.id IN (:...departementIds)', filters);
+      query.andWhere(
+        '(departement.id IN (:...departementIds) OR eligibility_simulation."sourceOfsId" = :ofsId)',
+        filters,
+      );
       return true;
     }
 
     if (filters.regionIds.length > 0) {
-      query.andWhere('region.id IN (:...regionIds)', filters);
+      query.andWhere(
+        '(region.id IN (:...regionIds) OR eligibility_simulation."sourceOfsId" = :ofsId)',
+        filters,
+      );
       return true;
     }
 
-    return false;
+    query.andWhere('eligibility_simulation."sourceOfsId" = :ofsId', filters);
+    return true;
   }
 
   private createDistributorPortalContactsQuery(

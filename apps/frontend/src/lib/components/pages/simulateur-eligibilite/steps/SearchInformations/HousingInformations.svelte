@@ -32,6 +32,8 @@
     previousStep,
     goToPreviousPhase,
     loading,
+    selectionDepartments,
+    selectionCitycodes,
   } = $derived(eligibilitySimulatorManager);
 
   let errors = $state<FormFieldError>({});
@@ -58,6 +60,31 @@
     if (!existingLocation) {
       selectedLocations.push(suggestion);
     }
+  };
+
+  const departementCodeFromCitycode = (citycode: string) => {
+    return citycode.startsWith('97') || citycode.startsWith('98')
+      ? citycode.slice(0, 3)
+      : citycode.slice(0, 2);
+  };
+
+  const isInSelectionPerimeter = (
+    suggestion: GeocodedResponse['properties'] | undefined,
+  ) => {
+    if (selectionDepartments.length === 0 && selectionCitycodes.length === 0) {
+      return true;
+    }
+
+    if (!suggestion?.citycode) {
+      return false;
+    }
+
+    return (
+      selectionCitycodes.includes(suggestion.citycode) ||
+      selectionDepartments.includes(
+        departementCodeFromCitycode(suggestion.citycode),
+      )
+    );
   };
 
   const handleSubmit = (e: SubmitEvent) => {
@@ -103,6 +130,7 @@
         error={errors.selectedLocations}
         dataTestId={stepsContent.location.dataTestId}
         errorDataTestId={stepsContent.location.errorDataTestId}
+        filterSuggestion={isInSelectionPerimeter}
         onSelect={onLocationSelect} />
       <div class="flex gap-2 flex-wrap mt-2">
         {#each selectedLocations as location, i}

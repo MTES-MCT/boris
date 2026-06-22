@@ -30,8 +30,19 @@ export class ExportPortalContactLinesUsecase {
       submittedAt: new Date(item.submittedAt),
       propertySituation: this.propertySituationLabel(item.propertySituation),
       housingType: item.housingType,
+      sourceLabel: this.sourceLabel(item.sourceType),
       isNew: false,
     } as PortalContactLineView);
+  }
+
+  private sourceLabel(value: 'BORIS_PUBLIC' | 'OFS_EMBED') {
+    switch (value) {
+      case 'OFS_EMBED':
+        return 'Site OFS';
+      case 'BORIS_PUBLIC':
+      default:
+        return 'Boris';
+    }
   }
 
   private propertySituationLabel(value: string | null) {

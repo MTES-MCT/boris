@@ -5,10 +5,15 @@
   import Synthesis from '$components/pages/simulateur-eligibilite/steps/Synthesis/Synthesis.svelte';
 
   import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
+  import { onMount } from 'svelte';
 
   const { currentStep, eligibilitySimulation, eligibility } = $derived(
     eligibilitySimulatorManager,
   );
+
+  onMount(() => {
+    eligibilitySimulatorManager.configurePublic();
+  });
 </script>
 
 <svelte:head>
