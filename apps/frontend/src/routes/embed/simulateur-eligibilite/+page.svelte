@@ -63,7 +63,9 @@
 
 <div
   class="embed-shell"
-  style={validPrimaryColor ? `--embed-primary-color: ${validPrimaryColor};` : ''}>
+  style={validPrimaryColor
+    ? `--embed-primary-color: ${validPrimaryColor};`
+    : ''}>
   {#if !data.authorized}
     <div class="fr-alert fr-alert--error">
       <h1 class="fr-alert__title">Intégration non autorisée</h1>
@@ -84,11 +86,7 @@
           <p class="fr-text--sm fr-mb-1v">
             {data.partnerName || 'Votre OFS'}
           </p>
-          {#if data.intro === 'compact'}
-            <h1 class="fr-h4 fr-mb-0">
-              Vérifier votre éligibilité au bail réel solidaire
-            </h1>
-          {:else}
+          {#if data.intro !== 'compact'}
             <h1 class="fr-h3 fr-mb-1w">
               Simulateur d'éligibilité au bail réel solidaire
             </h1>
@@ -123,9 +121,18 @@
   }
 
   .embed-shell :global(.fr-btn) {
-    --hover-tint: var(--embed-primary-color, var(--background-action-high-blue-france-hover));
-    --active-tint: var(--embed-primary-color, var(--background-action-high-blue-france-active));
-    background-color: var(--embed-primary-color, var(--background-action-high-blue-france));
+    --hover-tint: var(
+      --embed-primary-color,
+      var(--background-action-high-blue-france-hover)
+    );
+    --active-tint: var(
+      --embed-primary-color,
+      var(--background-action-high-blue-france-active)
+    );
+    background-color: var(
+      --embed-primary-color,
+      var(--background-action-high-blue-france)
+    );
   }
 
   .embed-header {
