@@ -3,13 +3,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from 'src/app.module';
 import { App } from 'supertest/types';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { useSession } from 'src/infrastructure/session/session.middleware';
 import dataSource from 'src/infrastructure/persistence/typeorm.config';
 import { configureViewEngine } from 'src/infrastructure/config/view-engine.config';
 import { configureApiDocumentation } from 'src/infrastructure/config/api-documentation.config';
-import * as methodOverride from 'method-override';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-import flash = require('connect-flash');
 
 // add all jest-extended matchers
 import * as matchers from 'jest-extended';
@@ -38,13 +34,8 @@ export const setupTestingApp = async (): Promise<INestApplication<App>> => {
     }),
   );
 
-  useSession(app);
-
   configureViewEngine(app);
   configureApiDocumentation(app);
-
-  app.use(flash());
-  app.use(methodOverride('_method'));
 
   return app;
 };
