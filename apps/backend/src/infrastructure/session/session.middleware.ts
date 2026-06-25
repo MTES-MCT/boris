@@ -3,9 +3,9 @@ import * as session from 'express-session';
 import { TypeormStore } from 'connect-typeorm';
 import { DataSource } from 'typeorm';
 import { SessionEntity } from './session.entity';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import { RequestHandler } from 'express';
 
-export function useSession(app: NestExpressApplication) {
+export function sessionMiddlewares(dataSource: DataSource): RequestHandler[] {
   const ttl = 60 * 60 * 24; // 24h
   const test = process.env.NODE_ENV === 'test';
 
@@ -14,11 +14,9 @@ export function useSession(app: NestExpressApplication) {
     : new TypeormStore({
         cleanupLimit: 2,
         ttl,
-      }).connect(
-        app.get(DataSource).getRepository<SessionEntity>(SessionEntity),
-      );
+      }).connect(dataSource.getRepository<SessionEntity>(SessionEntity));
 
-  app.use(
+  return [
     session({
       name: process.env.SESSION_COOKIE_NAME || 'boris.sid',
       store: sessionStore,
@@ -35,9 +33,7 @@ export function useSession(app: NestExpressApplication) {
         secure: process.env.NODE_ENV === 'production',
       },
     }),
-  );
-
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.set('trust proxy', 1);
+    passport.initialize(),
+    passport.session(),
+  ];
 }

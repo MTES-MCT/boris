@@ -21,6 +21,11 @@ import { LocationModule } from './infrastructure/location/location.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DatagouvModule } from './infrastructure/datagouv/datagouv.module';
 import { TrustedOriginMiddleware } from './infrastructure/middlewares/trusted-origin.middleware';
+import { DataSource } from 'typeorm';
+import { sessionMiddlewares } from './infrastructure/session/session.middleware';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import flash = require('connect-flash');
+import * as methodOverride from 'method-override';
 
 @Module({
   imports: [
@@ -80,7 +85,17 @@ import { TrustedOriginMiddleware } from './infrastructure/middlewares/trusted-or
   ],
 })
 export class AppModule implements NestModule {
+  constructor(private readonly dataSource: DataSource) {}
+
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(TrustedOriginMiddleware, ToLocalsMiddleware).forRoutes('*');
+    consumer
+      .apply(
+        ...sessionMiddlewares(this.dataSource),
+        flash(),
+        methodOverride('_method'),
+        TrustedOriginMiddleware,
+        ToLocalsMiddleware,
+      )
+      .forRoutes('*');
   }
 }
