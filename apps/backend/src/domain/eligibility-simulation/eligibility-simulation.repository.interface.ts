@@ -111,6 +111,9 @@ export interface EligibilitySimulationRepositoryInterface {
   findAllPortalContactsByOfsScope(
     filters: PortalEligibilitySimulationContactFilters,
   ): Promise<PortalEligibilitySimulationContactResult[]>;
+  countPortalContactsByOfsScope(
+    filters: PortalEligibilitySimulationContactFilters,
+  ): Promise<number>;
   hasPortalContactInOfsScope(
     simulationId: string,
     filters: PortalEligibilitySimulationContactFilters,

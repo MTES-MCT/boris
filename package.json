@@ -7,6 +7,7 @@
     "npm": "11.14.1"
   },
   "scripts": {
+    "metabase:create-eligibility-dashboard": "node scripts/create-metabase-eligibility-dashboard.mjs",
     "scalingo-postbuild": "bash scalingo/build.sh"
   },
   "workspaces": [

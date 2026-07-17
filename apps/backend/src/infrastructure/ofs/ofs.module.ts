@@ -27,6 +27,10 @@ import { FindMyOfsApiController } from './controllers/api/find-my-ofs.controller
 import { FindMyOfsUsecase } from 'src/application/ofs/usecases/findMyOfs.usecase';
 import { BrsDiffusionWebsiteModule } from '../brs-diffusion-website/brs-diffusion-website.module';
 import { GeocoderModule } from '../geocoder/geocoder.module';
+import { PortalLeadNotificationPreferenceEntity } from './portal-lead-notification-preference.entity';
+import { PortalLeadNotificationsController } from './controllers/api/portal-lead-notifications.controller';
+import { SendPortalLeadNotificationsCron } from './cron/send-portal-lead-notifications';
+import { MailerModule } from '../mailer/mailer.module';
 
 @Module({
   imports: [
@@ -36,6 +40,7 @@ import { GeocoderModule } from '../geocoder/geocoder.module';
       CommercialTransmissionEntity,
       DistributorEligibilitySimulationEntity,
       DistributorEntity,
+      PortalLeadNotificationPreferenceEntity,
     ]),
     RegionModule,
     DepartementModule,
@@ -44,11 +49,13 @@ import { GeocoderModule } from '../geocoder/geocoder.module';
     EligibilitySimulationModule,
     BrsDiffusionWebsiteModule,
     GeocoderModule,
+    MailerModule,
   ],
   controllers: [
     GetOfssApiController,
     FindMyOfsApiController,
     PortalOfssController,
+    PortalLeadNotificationsController,
     GetOfssAdminController,
     CreateOfsAdminController,
     DeleteOfsAdminController,
@@ -62,6 +69,7 @@ import { GeocoderModule } from '../geocoder/geocoder.module';
     FindOfsByIdUsecase,
     UpdateOfsUsecase,
     FindMyOfsUsecase,
+    SendPortalLeadNotificationsCron,
     PortalApiAuthenticatedGuard,
   ],
   exports: [

@@ -309,6 +309,18 @@ export class EligibilitySimulationRepository
     return query.getRawMany<PortalEligibilitySimulationContactResult>();
   }
 
+  public async countPortalContactsByOfsScope(
+    filters: PortalEligibilitySimulationContactFilters,
+  ): Promise<number> {
+    const query = this.createPortalContactsQuery(filters, false);
+
+    if (!query) {
+      return 0;
+    }
+
+    return query.getCount();
+  }
+
   public async hasPortalContactInOfsScope(
     simulationId: string,
     filters: PortalEligibilitySimulationContactFilters,
