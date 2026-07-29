@@ -406,27 +406,27 @@ export const stepsContent = {
         'Vous êtes éligible au dispositif du BRS <u>en zone A et Abis</u>.',
       titleOwner:
         'Vous êtes éligible au dispositif du BRS <u>en zone A et Abis</u>, sous certaines conditions.',
-      content: `<p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources" />Plus d'informations sur les plafonds de ressources.</a></p>`,
+      content: `<p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources">Plus d'informations sur les plafonds de ressources.</a></p>`,
     },
     zoneB1: {
       title:
         'Vous êtes éligible au dispositif du BRS <u>en zone tendue (A, Abis et B1)</u>.',
       titleOwner:
         'Vous êtes éligible au dispositif du BRS <u>en zone tendue (A, Abis et B1)</u>, sous certaines conditions.',
-      content: `<p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources" />Plus d'informations sur les plafonds de ressources.</a></p>`,
+      content: `<p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources">Plus d'informations sur les plafonds de ressources.</a></p>`,
     },
     zoneB2andC: {
       title:
         'Vous êtes éligible au dispositif du BRS <u>dans toute la France</u> !',
       titleOwner:
         'Vous êtes éligible au dispositif du BRS <u>dans toute la France</u>, sous certaines conditions.',
-      content: `<p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources" />Plus d'informations sur les plafonds de ressources.</a></p>`,
+      content: `<p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources">Plus d'informations sur les plafonds de ressources.</a></p>`,
     },
     notEligible: {
       title: "Vous n'êtes pas éligible au dispositif du BRS.",
       content: `
         <p>Malheureusement, vous ne remplissez pas les critères pour acheter en BRS. N'hésitez pas à consulter à nouveau ce site si votre situation venait à évoluer (notamment en cas de baisse de revenus ou de personne de plus dans le foyer).</p>
-        <p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources" />Plus d'informations sur les plafonds de ressources.</a></p>
+        <p><a class="fr-link" href="/simulateur-eligibilite#plafonds-de-ressources">Plus d'informations sur les plafonds de ressources.</a></p>
       `,
     },
     isOwner: {
@@ -436,10 +436,10 @@ export const stepsContent = {
           <li>un logement adapté à vos besoins et capacités financières, que vous pouvez utiliser comme résidence principale.</li>
           <li>un logement que vous proposez à la location, susceptible de vous procurer des revenus suffisants pour acquérir un bien immobilier du parc privé.</li>
         </ul>
-      <p><a class="fr-link" href="blog/puis-je-acheter-un-logement-en-brs-si-je-suis-deja-proprietaire" />Vérifier qu'aucun de ces deux cas ne s'applique à votre situation.</a></p>`,
+      <p><a class="fr-link" href="/blog/puis-je-acheter-un-logement-en-brs-si-je-suis-deja-proprietaire">Vérifier qu'aucun de ces deux cas ne s'applique à votre situation.</a></p>`,
     },
     zoneInfo: {
-      content: `<a href="https://www.service-public.gouv.fr/simulateur/calcul/zonage-abc" class="fr-link" target="_blank" rel="noopener noreferrer" class="fr-link">Plus d'informations sur le zonage A, B et C.</a>.`,
+      content: `<a href="https://www.service-public.gouv.fr/simulateur/calcul/zonage-abc" class="fr-link" target="_blank" rel="noopener noreferrer">Plus d'informations sur le zonage A, B et C.</a>.`,
     },
   },
   userDetailsDesc:
