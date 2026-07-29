@@ -1,46 +1,66 @@
 #!/usr/bin/env node
 
+import { randomUUID } from "node:crypto";
+
 const METABASE_URL = trimTrailingSlash(
-  process.env.METABASE_URL ?? 'https://boris-metabase.osc-fr1.scalingo.io',
+  process.env.METABASE_URL ?? "https://boris-metabase.osc-fr1.scalingo.io",
 );
 const API_KEY = process.env.METABASE_API_KEY;
 const EMAIL = process.env.METABASE_EMAIL;
 const PASSWORD = process.env.METABASE_PASSWORD;
 const DATABASE_NAME = process.env.METABASE_DATABASE_NAME;
 const COLLECTION_NAME =
-  process.env.METABASE_COLLECTION_NAME ?? 'Boris analytics';
+  process.env.METABASE_COLLECTION_NAME ?? "Boris analytics";
 const DASHBOARD_NAME =
-  process.env.METABASE_DASHBOARD_NAME ?? 'Simulations d’éligibilité BRS';
+  process.env.METABASE_DASHBOARD_NAME ?? "Simulations d’éligibilité BRS";
 
 const sharedTags = {
   start_date: {
-    name: 'start_date',
-    'display-name': 'Date de début',
-    type: 'date',
+    name: "start_date",
+    "display-name": "Date de début",
+    type: "date",
     required: false,
   },
   end_date: {
-    name: 'end_date',
-    'display-name': 'Date de fin',
-    type: 'date',
+    name: "end_date",
+    "display-name": "Date de fin",
+    type: "date",
     required: false,
   },
   departement_code: {
-    name: 'departement_code',
-    'display-name': 'Département',
-    type: 'text',
+    name: "departement_code",
+    "display-name": "Département",
+    type: "text",
     required: false,
   },
   postal_code: {
-    name: 'postal_code',
-    'display-name': 'Code postal',
-    type: 'text',
+    name: "postal_code",
+    "display-name": "Code postal",
+    type: "text",
     required: false,
   },
-  eligibility_zone: {
-    name: 'eligibility_zone',
-    'display-name': 'Zone d’éligibilité',
-    type: 'text',
+  revenue_category: {
+    name: "revenue_category",
+    "display-name": "Catégorie de revenus",
+    type: "text",
+    required: false,
+  },
+  housing_type: {
+    name: "housing_type",
+    "display-name": "Typologie de logements",
+    type: "text",
+    required: false,
+  },
+  property_situation: {
+    name: "property_situation",
+    "display-name": "Situation actuelle du logement",
+    type: "text",
+    required: false,
+  },
+  household_size: {
+    name: "household_size",
+    "display-name": "Taille du ménage",
+    type: "text",
     required: false,
   },
 };
@@ -55,12 +75,33 @@ const baseFilters = `
 [[AND DATE(COALESCE(es."landbotDate", es."createdAt")) <= {{end_date}}]]
 [[AND d.code = {{departement_code}}]]
 [[AND l."postalCode" = {{postal_code}}]]
-[[AND es."highestEligibilityZone" = {{eligibility_zone}}]]`;
+[[AND (
+  CASE
+    WHEN es.resources IS NULL THEN 'Non renseigné'
+    WHEN es.resources < 20000 THEN '< 20k'
+    WHEN es.resources < 30000 THEN '20k-30k'
+    WHEN es.resources < 40000 THEN '30k-40k'
+    WHEN es.resources < 55000 THEN '40k-55k'
+    ELSE '55k+'
+  END
+) = {{revenue_category}}]]
+[[AND COALESCE(es."housingType"::text, 'Non renseigné') = {{housing_type}}]]
+[[AND (
+  CASE es."propertySituation"::text
+    WHEN 'PROPRIETAIRE' THEN 'Propriétaire'
+    WHEN 'LOCATAIRE_SOCIAL' THEN 'Locataire social'
+    WHEN 'LOCATAIRE_PRIVE' THEN 'Locataire privé'
+    WHEN 'HEBERGE' THEN 'Hébergé'
+    WHEN 'AUTRE' THEN 'Autre'
+    ELSE 'Non renseigné'
+  END
+) = {{property_situation}}]]
+[[AND COALESCE(es."householdSize"::text, 'Non renseigné') = {{household_size}}]]`;
 
 const cards = [
   {
-    name: 'Nombre total de simulations',
-    display: 'scalar',
+    name: "Nombre total de simulations",
+    display: "scalar",
     row: 0,
     col: 0,
     size_x: 6,
@@ -72,8 +113,8 @@ WHERE TRUE
 ${baseFilters};`,
   },
   {
-    name: 'Simulations éligibles',
-    display: 'scalar',
+    name: "Simulations éligibles",
+    display: "scalar",
     row: 0,
     col: 6,
     size_x: 6,
@@ -82,14 +123,11 @@ ${baseFilters};`,
 SELECT COUNT(DISTINCT es.id) AS eligible_simulations
 ${baseJoins}
 WHERE es."highestEligibilityZone" != 'NONE'
-[[AND DATE(COALESCE(es."landbotDate", es."createdAt")) >= {{start_date}}]]
-[[AND DATE(COALESCE(es."landbotDate", es."createdAt")) <= {{end_date}}]]
-[[AND d.code = {{departement_code}}]]
-[[AND l."postalCode" = {{postal_code}}]];`,
+${baseFilters};`,
   },
   {
-    name: 'Ménages intéressés contactables',
-    display: 'scalar',
+    name: "Ménages intéressés contactables",
+    display: "scalar",
     row: 0,
     col: 12,
     size_x: 6,
@@ -107,11 +145,11 @@ WHERE es."highestEligibilityZone" != 'NONE'
 ${baseFilters};`,
   },
   {
-    name: 'Simulations par mois',
-    display: 'line',
+    name: "Simulations par mois",
+    display: "line",
     row: 3,
     col: 0,
-    size_x: 12,
+    size_x: 24,
     size_y: 6,
     query: `
 SELECT
@@ -124,27 +162,18 @@ GROUP BY 1
 ORDER BY 1;`,
   },
   {
-    name: 'Tunnel de conversion',
-    display: 'bar',
-    row: 3,
-    col: 12,
-    size_x: 12,
-    size_y: 6,
-    query: funnelQuery(),
-  },
-  {
-    name: 'Simulations par région en France',
-    display: 'map',
+    name: "Simulations par région en France",
+    display: "map",
     row: 9,
     col: 0,
     size_x: 24,
     size_y: 9,
     visualizationSettings: {
-      'map.type': 'region',
-      'map.region': 'france_regions',
-      'map.dimension': 'region_code',
-      'map.metric': 'simulations',
-      'map.colors': ['#F2F6FF', '#C8DCF8', '#8EB9ED', '#4E91DB', '#1764B1'],
+      "map.type": "region",
+      "map.region": "france_regions",
+      "map.dimension": "region_code",
+      "map.metric": "simulations",
+      "map.colors": ["#F2F6FF", "#C8DCF8", "#8EB9ED", "#4E91DB", "#1764B1"],
     },
     query: `
 SELECT
@@ -161,8 +190,8 @@ GROUP BY r.code, r.name
 ORDER BY simulations DESC;`,
   },
   {
-    name: 'Simulations par région',
-    display: 'bar',
+    name: "Simulations par région",
+    display: "bar",
     row: 18,
     col: 0,
     size_x: 12,
@@ -182,12 +211,16 @@ GROUP BY r.code, r.name
 ORDER BY simulations DESC;`,
   },
   {
-    name: 'Départements les plus demandés',
-    display: 'bar',
+    name: "Départements les plus demandés",
+    display: "bar",
     row: 18,
     col: 12,
     size_x: 12,
     size_y: 7,
+    clickFilter: {
+      parameterId: "departement_code",
+      column: "departement_code",
+    },
     query: `
 SELECT
   d.code AS departement_code,
@@ -202,12 +235,16 @@ GROUP BY d.code, d.name
 ORDER BY simulations DESC;`,
   },
   {
-    name: 'Codes postaux les plus demandés',
-    display: 'table',
+    name: "Codes postaux les plus demandés",
+    display: "table",
     row: 25,
     col: 0,
     size_x: 8,
     size_y: 7,
+    clickFilter: {
+      parameterId: "postal_code",
+      column: "postal_code",
+    },
     query: `
 SELECT
   l."postalCode" AS postal_code,
@@ -223,12 +260,16 @@ GROUP BY l."postalCode", d.code
 ORDER BY simulations DESC;`,
   },
   {
-    name: 'Catégories de revenus',
-    display: 'bar',
+    name: "Catégories de revenus",
+    display: "bar",
     row: 25,
     col: 8,
     size_x: 8,
     size_y: 7,
+    clickFilter: {
+      parameterId: "revenue_category",
+      column: "revenue_category",
+    },
     query: `
 SELECT revenue_category, simulations
 FROM (
@@ -243,7 +284,7 @@ FROM (
     END AS revenue_category,
     COUNT(DISTINCT es.id) AS simulations
   ${baseJoins}
-  WHERE TRUE
+  WHERE es.resources IS NOT NULL
   ${baseFilters}
   GROUP BY revenue_category
 ) revenue_categories
@@ -258,46 +299,59 @@ ORDER BY
   END;`,
   },
   {
-    name: 'Typologie de logement recherchée',
-    display: 'bar',
+    name: "Typologie de logement recherchée",
+    display: "bar",
     row: 25,
     col: 16,
     size_x: 8,
     size_y: 7,
+    clickFilter: {
+      parameterId: "housing_type",
+      column: "housing_type",
+    },
     query: `
 SELECT
   COALESCE(es."housingType"::text, 'Non renseigné') AS housing_type,
   COUNT(DISTINCT es.id) AS simulations
 ${baseJoins}
-WHERE TRUE
+WHERE es."housingType" IS NOT NULL
 ${baseFilters}
 GROUP BY housing_type
 ORDER BY housing_type;`,
   },
   {
-    name: 'Taille du ménage',
-    display: 'bar',
+    name: "Taille du ménage",
+    display: "bar",
     row: 32,
     col: 0,
     size_x: 8,
     size_y: 7,
+    clickFilter: {
+      parameterId: "household_size",
+      column: "household_size",
+    },
     query: `
 SELECT
   COALESCE(es."householdSize"::text, 'Non renseigné') AS household_size,
   COUNT(DISTINCT es.id) AS simulations
 ${baseJoins}
-WHERE TRUE
+WHERE es."householdSize" IS NOT NULL
+  AND es."householdSize" > 0
 ${baseFilters}
 GROUP BY household_size
 ORDER BY household_size;`,
   },
   {
-    name: 'Situation actuelle de logement',
-    display: 'bar',
+    name: "Situation actuelle de logement",
+    display: "bar",
     row: 32,
     col: 8,
     size_x: 8,
     size_y: 7,
+    clickFilter: {
+      parameterId: "property_situation",
+      column: "property_situation",
+    },
     query: `
 SELECT
   CASE es."propertySituation"::text
@@ -310,14 +364,14 @@ SELECT
   END AS property_situation,
   COUNT(DISTINCT es.id) AS simulations
 ${baseJoins}
-WHERE TRUE
+WHERE es."propertySituation" IS NOT NULL
 ${baseFilters}
 GROUP BY property_situation
 ORDER BY simulations DESC;`,
   },
   {
-    name: 'Connaissance du BRS',
-    display: 'bar',
+    name: "Connaissance du BRS",
+    display: "bar",
     row: 32,
     col: 16,
     size_x: 8,
@@ -331,14 +385,14 @@ SELECT
   END AS brs_awareness,
   COUNT(DISTINCT es.id) AS simulations
 ${baseJoins}
-WHERE TRUE
+WHERE es."hadBrsKnowledge" IS NOT NULL
 ${baseFilters}
 GROUP BY brs_awareness
 ORDER BY simulations DESC;`,
   },
   {
-    name: 'Zone d’éligibilité',
-    display: 'bar',
+    name: "Zone d’éligibilité",
+    display: "bar",
     row: 39,
     col: 0,
     size_x: 8,
@@ -355,16 +409,13 @@ SELECT
   COUNT(DISTINCT es.id) AS simulations
 ${baseJoins}
 WHERE TRUE
-[[AND DATE(COALESCE(es."landbotDate", es."createdAt")) >= {{start_date}}]]
-[[AND DATE(COALESCE(es."landbotDate", es."createdAt")) <= {{end_date}}]]
-[[AND d.code = {{departement_code}}]]
-[[AND l."postalCode" = {{postal_code}}]]
+${baseFilters}
 GROUP BY eligibility_zone
 ORDER BY simulations DESC;`,
   },
   {
-    name: 'Situation professionnelle',
-    display: 'bar',
+    name: "Situation professionnelle",
+    display: "bar",
     row: 39,
     col: 8,
     size_x: 16,
@@ -383,7 +434,7 @@ SELECT
   END AS employment_status,
   COUNT(DISTINCT es.id) AS simulations
 ${baseJoins}
-WHERE TRUE
+WHERE es."employmentStatus" IS NOT NULL
 ${baseFilters}
 GROUP BY employment_status
 ORDER BY simulations DESC;`,
@@ -394,8 +445,8 @@ const visualizationSettings = {
   scalar: {},
   table: {},
   line: {
-    'graph.dimensions': ['month'],
-    'graph.metrics': ['simulations'],
+    "graph.dimensions": ["month"],
+    "graph.metrics": ["simulations"],
   },
   bar: {},
 };
@@ -408,7 +459,7 @@ main().catch((error) => {
 async function main() {
   if (!API_KEY && (!EMAIL || !PASSWORD)) {
     throw new Error(
-      'Set METABASE_API_KEY or METABASE_EMAIL and METABASE_PASSWORD.',
+      "Set METABASE_API_KEY or METABASE_EMAIL and METABASE_PASSWORD.",
     );
   }
 
@@ -439,34 +490,34 @@ async function main() {
 
 async function authenticate() {
   if (API_KEY) {
-    return { 'x-api-key': API_KEY };
+    return { "x-api-key": API_KEY };
   }
 
-  const session = await api('/api/session', {
-    method: 'POST',
+  const session = await api("/api/session", {
+    method: "POST",
     body: {
       username: EMAIL,
       password: PASSWORD,
     },
   });
 
-  return { 'x-metabase-session': session.id };
+  return { "x-metabase-session": session.id };
 }
 
 async function setupCustomGeoJson(headers) {
-  const current = await api('/api/setting/custom-geojson', { headers });
+  const current = await api("/api/setting/custom-geojson", { headers });
 
-  await api('/api/setting/custom-geojson', {
-    method: 'PUT',
+  await api("/api/setting/custom-geojson", {
+    method: "PUT",
     headers,
     body: {
       value: {
         ...current,
         france_regions: {
-          name: 'France regions',
-          url: 'https://cdn.jsdelivr.net/gh/gregoiredavid/france-geojson@master/regions.geojson',
-          region_key: 'code',
-          region_name: 'nom',
+          name: "France regions",
+          url: "https://cdn.jsdelivr.net/gh/gregoiredavid/france-geojson@master/regions.geojson",
+          region_key: "code",
+          region_name: "nom",
         },
       },
     },
@@ -474,7 +525,7 @@ async function setupCustomGeoJson(headers) {
 }
 
 async function findDatabase(headers) {
-  const result = await api('/api/database', { headers });
+  const result = await api("/api/database", { headers });
   const databases = result.data ?? result;
   const candidates = databases.filter((database) => !database.is_sample);
 
@@ -505,12 +556,12 @@ async function findDatabase(headers) {
   throw new Error(
     `Set METABASE_DATABASE_NAME. Available databases: ${candidates
       .map((database) => database.name)
-      .join(', ')}`,
+      .join(", ")}`,
   );
 }
 
 async function findOrCreateCollection(headers) {
-  const result = await api('/api/collection', { headers });
+  const result = await api("/api/collection", { headers });
   const collections = result.data ?? result;
   const existing = collections.find(
     (collection) => collection.name === COLLECTION_NAME,
@@ -520,39 +571,46 @@ async function findOrCreateCollection(headers) {
     return existing;
   }
 
-  return api('/api/collection', {
-    method: 'POST',
+  return api("/api/collection", {
+    method: "POST",
     headers,
     body: {
       name: COLLECTION_NAME,
-      color: '#509EE3',
+      color: "#509EE3",
     },
   });
 }
 
 async function createDashboard(headers, collectionId) {
-  return api('/api/dashboard', {
-    method: 'POST',
+  return api("/api/dashboard", {
+    method: "POST",
     headers,
     body: {
       name: DASHBOARD_NAME,
       description:
-        'Profil des ménages intéressés par le BRS, zones recherchées et types de logements souhaités.',
+        "Profil des ménages intéressés par le BRS, zones recherchées et types de logements souhaités.",
       collection_id: collectionId,
       parameters: [
-        parameter('start_date', 'Date de début', 'date/single'),
-        parameter('end_date', 'Date de fin', 'date/single'),
-        parameter('departement_code', 'Département', 'category'),
-        parameter('postal_code', 'Code postal', 'category'),
-        parameter('eligibility_zone', 'Zone d’éligibilité', 'category'),
+        parameter("start_date", "Date de début", "date/single"),
+        parameter("end_date", "Date de fin", "date/single"),
+        parameter("departement_code", "Département", "category"),
+        parameter("postal_code", "Code postal", "category"),
+        parameter("revenue_category", "Catégorie de revenus", "category"),
+        parameter("housing_type", "Typologie de logements", "category"),
+        parameter(
+          "property_situation",
+          "Situation actuelle du logement",
+          "category",
+        ),
+        parameter("household_size", "Taille du ménage", "category"),
       ],
     },
   });
 }
 
 async function createCard(headers, databaseId, collectionId, card) {
-  return api('/api/card', {
-    method: 'POST',
+  return api("/api/card", {
+    method: "POST",
     headers,
     body: {
       name: card.name,
@@ -560,10 +618,10 @@ async function createCard(headers, databaseId, collectionId, card) {
       visualization_settings: visualizationSettingsFor(card),
       dataset_query: {
         database: databaseId,
-        type: 'native',
+        type: "native",
         native: {
           query: normalizeSql(card.query),
-          'template-tags': templateTagsFor(card.query),
+          "template-tags": templateTagsFor(card.query),
         },
       },
       collection_id: collectionId,
@@ -577,7 +635,7 @@ async function addCardToDashboard(headers, dashboardId, card) {
   const temporaryDashcardId = -(existingCards.length + 1);
 
   await api(`/api/dashboard/${dashboardId}/cards`, {
-    method: 'PUT',
+    method: "PUT",
     headers,
     body: {
       cards: [
@@ -616,7 +674,10 @@ function templateTagsFor(query) {
 
   for (const [name, tag] of Object.entries(sharedTags)) {
     if (query.includes(`{{${name}}}`)) {
-      tags[name] = tag;
+      tags[name] = {
+        ...tag,
+        id: randomUUID(),
+      };
     }
   }
 
@@ -624,15 +685,45 @@ function templateTagsFor(query) {
 }
 
 function parameterMappings(card) {
-  return Object.keys(templateTagsFor(card.query)).map((name) => ({
-    parameter_id: name,
-    card_id: card.id,
-    target: ['variable', ['template-tag', name]],
-  }));
+  return Object.keys(sharedTags)
+    .filter((name) => card.query.includes(`{{${name}}}`))
+    .filter((name) => name !== card.clickFilter?.parameterId)
+    .map((name) => ({
+      parameter_id: name,
+      card_id: card.id,
+      target: ["variable", ["template-tag", name]],
+    }));
 }
 
 function visualizationSettingsFor(card) {
-  return card.visualizationSettings ?? visualizationSettings[card.display] ?? {};
+  const settings = {
+    ...(visualizationSettings[card.display] ?? {}),
+    ...(card.visualizationSettings ?? {}),
+  };
+
+  if (!card.clickFilter) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    click_behavior: {
+      type: "crossfilter",
+      parameterMapping: {
+        [card.clickFilter.column]: {
+          id: card.clickFilter.parameterId,
+          source: {
+            type: "column",
+            id: card.clickFilter.column,
+          },
+          target: {
+            type: "parameter",
+            id: card.clickFilter.parameterId,
+          },
+        },
+      },
+    },
+  };
 }
 
 function parameter(id, name, type) {
@@ -641,47 +732,15 @@ function parameter(id, name, type) {
     name,
     slug: id,
     type,
-    sectionId: 'sql',
+    sectionId: "sql",
   };
-}
-
-function funnelQuery() {
-  const filtered = (where) => `
-SELECT '${where.label}' AS step, COUNT(DISTINCT es.id) AS count
-${baseJoins}
-WHERE ${where.condition}
-${baseFilters}`;
-
-  return [
-    filtered({ label: '1. Simulation démarrée', condition: 'TRUE' }),
-    filtered({
-      label: '2. Composition du ménage renseignée',
-      condition:
-        '(es."householdSize" IS NOT NULL OR es."hasDisability" IS NOT NULL)',
-    }),
-    filtered({
-      label: '3. Éligible',
-      condition:
-        '(es."householdSize" IS NOT NULL OR es."hasDisability" IS NOT NULL) AND es."highestEligibilityZone" != \'NONE\'',
-    }),
-    filtered({
-      label: '4. Souhaite être recontacté',
-      condition:
-        '(es."householdSize" IS NOT NULL OR es."hasDisability" IS NOT NULL) AND es."highestEligibilityZone" != \'NONE\' AND es."hasRefusedConnection" = false',
-    }),
-    filtered({
-      label: '5. Email renseigné',
-      condition:
-        '(es."householdSize" IS NOT NULL OR es."hasDisability" IS NOT NULL) AND es."highestEligibilityZone" != \'NONE\' AND es."hasRefusedConnection" = false AND es.email IS NOT NULL',
-    }),
-  ].join('\nUNION ALL\n');
 }
 
 async function api(path, options = {}) {
   const response = await fetch(`${METABASE_URL}${path}`, {
-    method: options.method ?? 'GET',
+    method: options.method ?? "GET",
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
       ...(options.headers ?? {}),
     },
     body: options.body ? JSON.stringify(options.body) : undefined,
@@ -690,7 +749,7 @@ async function api(path, options = {}) {
   if (!response.ok) {
     const body = await response.text();
     throw new Error(
-      `${options.method ?? 'GET'} ${path} failed: ${response.status} ${body}`,
+      `${options.method ?? "GET"} ${path} failed: ${response.status} ${body}`,
     );
   }
 
@@ -702,9 +761,9 @@ async function api(path, options = {}) {
 }
 
 function normalizeSql(sql) {
-  return sql.trim().replace(/\n{3,}/g, '\n\n');
+  return sql.trim().replace(/\n{3,}/g, "\n\n");
 }
 
 function trimTrailingSlash(value) {
-  return value.replace(/\/$/, '');
+  return value.replace(/\/$/, "");
 }
