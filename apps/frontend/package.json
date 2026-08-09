@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
-    "@csstools/postcss-global-data": "^3.0.0",
+    "@csstools/postcss-global-data": "^4.0.0",
     "@gouvfr/dsfr": "^1.14.2",
     "@gouvfr/dsfr-chart": "^2.0.4",
     "@keyv/serialize": "^1.1.0",
