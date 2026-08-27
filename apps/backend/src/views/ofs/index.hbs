@@ -4,5 +4,53 @@
 {{> forms/ofs/create actionLabel=translations.contents.ofs.action.label}}
 {{/page_header}}
 
+<div class="mx-4 mb-4 rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
+  <form id="ofs-search-form" action="/ofs" method="GET" class="flex max-w-xl items-end gap-2">
+    <div class="grow">
+      <label for="ofs-search" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+        Rechercher un OFS
+      </label>
+      <input type="search" id="ofs-search" name="search" value="{{search}}"
+        placeholder="Saisir le nom d’un OFS…" autocomplete="off"
+        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400" />
+    </div>
+    <button type="submit"
+      class="rounded-lg bg-primary-700 px-4 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+      Rechercher
+    </button>
+    {{#if search}}
+    <a href="/ofs"
+      class="rounded-lg px-3 py-2.5 text-sm font-medium text-primary-700 hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-gray-700">
+      Effacer
+    </a>
+    {{/if}}
+  </form>
+</div>
+
+{{#if pagination.totalCount}}
 {{> table title=title columns=columns rows=rows entity="ofs" updateForm="forms/ofs/update"
-deleteForm="forms/ofs/delete"}}
+deleteForm="forms/ofs/delete" search=search}}
+{{else}}
+<div class="mx-4 rounded-lg bg-white p-8 shadow-md dark:bg-gray-900">
+  <p class="text-sm text-gray-500 dark:text-gray-400">
+    Aucun OFS ne correspond à « {{search}} ».
+  </p>
+  <a href="/ofs" class="mt-3 inline-flex text-sm font-medium text-primary-700 hover:underline dark:text-primary-400">
+    Afficher tous les OFS
+  </a>
+</div>
+{{/if}}
+
+<script>
+  (() => {
+    const form = document.getElementById('ofs-search-form');
+    const searchInput = document.getElementById('ofs-search');
+    if (!form || !searchInput) return;
+
+    let timeout;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => form.requestSubmit(), 400);
+    });
+  })();
+</script>

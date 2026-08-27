@@ -4,6 +4,7 @@ import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
 
 export type FindAllOfsFilters = {
   isPartner?: boolean;
+  search?: string;
 };
 
 export interface OfsRepositoryInterface {
