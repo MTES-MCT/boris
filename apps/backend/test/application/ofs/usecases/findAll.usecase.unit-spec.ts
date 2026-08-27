@@ -30,7 +30,11 @@ describe('FindAllOfssUsecase', () => {
 
   it('should return all OFS with the isPartner filter forwarded to repository', async () => {
     mockOfsRepository.findAll.mockResolvedValue([[ofs1, ofs2], 2]);
-    const params = { ...DEFAULT_PAGINATION, isPartner: true };
+    const params = {
+      ...DEFAULT_PAGINATION,
+      isPartner: true,
+      search: 'foncier',
+    };
 
     const expectedResult = new Pagination(
       [
@@ -88,7 +92,7 @@ describe('FindAllOfssUsecase', () => {
         page: DEFAULT_PAGINATION.page,
         pageSize: DEFAULT_PAGINATION.pageSize,
       },
-      { isPartner: true },
+      { isPartner: true, search: 'foncier' },
     );
   });
 });

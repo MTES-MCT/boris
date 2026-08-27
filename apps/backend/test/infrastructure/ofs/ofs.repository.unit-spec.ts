@@ -29,6 +29,7 @@ describe('OfsRepository', () => {
     const queryBuilder = {
       leftJoinAndSelect: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
@@ -38,13 +39,17 @@ describe('OfsRepository', () => {
 
     const result = await ofsRepository.findAll(
       { pageSize: 10, page: 1 },
-      { isPartner: true },
+      { isPartner: true, search: 'foncier' },
     );
 
     expect(result).toEqual([[ofs1], 1]);
     expect(queryBuilder.where).toHaveBeenCalledWith(
       'ofs.isPartner = :isPartner',
       { isPartner: true },
+    );
+    expect(queryBuilder.andWhere).toHaveBeenCalledWith(
+      'ofs.name ILIKE :search',
+      { search: '%foncier%' },
     );
     expect(queryBuilder.skip).toHaveBeenCalledWith(0);
     expect(queryBuilder.take).toHaveBeenCalledWith(10);

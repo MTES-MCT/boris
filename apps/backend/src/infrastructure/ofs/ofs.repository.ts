@@ -38,6 +38,12 @@ export class OfsRepository implements OfsRepositoryInterface {
       });
     }
 
+    if (filters?.search) {
+      query.andWhere('ofs.name ILIKE :search', {
+        search: `%${filters.search}%`,
+      });
+    }
+
     query.skip((page - 1) * pageSize);
     query.take(pageSize);
     query.orderBy('ofs.createdAt', 'DESC');

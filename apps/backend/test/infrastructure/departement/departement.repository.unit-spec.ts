@@ -7,6 +7,7 @@ import {
   mockDepartementRepository,
   paris,
 } from 'test/mocks/integration/departement';
+import { bretagne } from 'test/mocks/integration/region';
 import { In } from 'typeorm';
 
 describe('DepartementRepository', () => {
@@ -105,5 +106,42 @@ describe('DepartementRepository', () => {
       { inseeCode: '12345' },
     );
     expect(mockQueryBuilder.getOne).toHaveBeenCalledTimes(1);
+  });
+
+  it('should resolve a Metropole de Lyon municipality to department code 69M', async () => {
+    const metropoleDeLyon = new DepartementEntity(
+      'Métropole de Lyon',
+      '69M',
+      bretagne,
+    );
+    mockDepartementRepository.findOne.mockResolvedValue(metropoleDeLyon);
+
+    const result = await departementRepository.findOneByInseeCode('69123');
+
+    expect(result).toBe(metropoleDeLyon);
+    expect(mockDepartementRepository.findOne).toHaveBeenCalledWith({
+      where: { code: '69M' },
+      relations: ['region'],
+    });
+    expect(mockDepartementRepository.createQueryBuilder).not.toHaveBeenCalled();
+  });
+
+  it('should keep resolving non-metropolitan Rhone municipalities by prefix', async () => {
+    const mockQueryBuilder = {
+      leftJoinAndSelect: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      getOne: jest.fn().mockResolvedValue(finistere),
+    };
+    mockDepartementRepository.createQueryBuilder.mockReturnValue(
+      mockQueryBuilder,
+    );
+
+    await departementRepository.findOneByInseeCode('69124');
+
+    expect(mockQueryBuilder.where).toHaveBeenCalledWith(
+      ":inseeCode LIKE departement.code || '%'",
+      { inseeCode: '69124' },
+    );
+    expect(mockDepartementRepository.findOne).not.toHaveBeenCalled();
   });
 });

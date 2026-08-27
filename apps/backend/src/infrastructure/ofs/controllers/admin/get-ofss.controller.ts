@@ -16,11 +16,11 @@ import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.re
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
 import translations from 'src/views/utils/translations';
 import { TableFactory } from 'src/views/factories/table.factories';
-import { PaginationDTO } from 'src/infrastructure/common/dtos/pagination.dto';
 import { FindAllRegionsUsecase } from 'src/application/region/usecases/findAll.usecase';
 import { FindAllDepartementsUsecase } from 'src/application/departement/usecases/findAll.usecase';
 import { FindAllDistributorsUsecase } from 'src/application/distributor/usecases/findAll.usecase';
 import { ApiExcludeController } from '@nestjs/swagger';
+import { AdminOfssFiltersDTO } from '../../dtos/admin-ofss-filters.dto';
 
 @ApiExcludeController()
 @Controller('/ofs')
@@ -36,12 +36,15 @@ export class GetOfssAdminController {
   @UseFilters(LocalRequireAuthFilter)
   @Get()
   public async getOfss(
-    @Query() { page = 1, pageSize = MAX_PAGE_SIZE }: PaginationDTO,
+    @Query()
+    { page = 1, pageSize = MAX_PAGE_SIZE, search }: AdminOfssFiltersDTO,
     @Res() res: Response,
   ) {
+    const normalizedSearch = search?.trim() || '';
     const ofss = await this.findAllOfssUsecase.execute({
       page,
       pageSize,
+      search: normalizedSearch || undefined,
     });
 
     const regions =
@@ -75,6 +78,7 @@ export class GetOfssAdminController {
       regions,
       departements,
       distributors,
+      search: normalizedSearch,
     });
   }
 }
