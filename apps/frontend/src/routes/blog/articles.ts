@@ -3,6 +3,16 @@ import type { ArticlePreview } from '$lib/utils/definitions';
 export const articles: ArticlePreview[] = [
   {
     title:
+      'Achat d’un logement social (hors du cadre de la vente HLM) : Le Bail Réel Solidaire (BRS) pourrait vous permettre de devenir propriétaire !',
+    pageTitle:
+      'Achat d’un logement social (hors vente HLM) : comment devenir propriétaire grâce au Bail Réel Solidaire (BRS)',
+    description:
+      'Achat d’un logement social (hors du cadre de la vente HLM) : la solution du Bail Réel Solidaire (BRS). Découvrez comment devenir propriétaire d’un logement social à prix abordable.',
+    firstPublishedAt: '2026-08-31T09:00:00+02:00',
+    slug: 'achat-logement-social-bail-reel-solidaire-brs',
+  },
+  {
+    title:
       'Plafonds de revenus BRS 2026 : tableau complet par zone et composition de ménage',
     description:
       'Découvrez les plafonds de revenus BRS 2026 par zone et composition de ménage, la comparaison avec 2025 et les étapes pour vérifier votre éligibilité.',
