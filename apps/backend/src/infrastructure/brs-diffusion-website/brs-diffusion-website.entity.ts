@@ -1,4 +1,7 @@
-import { BrsDiffusionWebsiteInterface } from 'src/domain/brs-diffusion-website/brs-diffusion-website.interface';
+import {
+  BrsDiffusionWebsiteInterface,
+  BrsHousingType,
+} from 'src/domain/brs-diffusion-website/brs-diffusion-website.interface';
 import {
   Column,
   CreateDateColumn,
@@ -10,6 +13,7 @@ import {
 import { RegionEntity } from '../region/region.entity';
 import { DepartementEntity } from '../departement/departement.entity';
 import { OfsEntity } from '../ofs/ofs.entity';
+import { DistributorEntity } from '../distributor/distributor.entity';
 
 @Entity('brs_diffusion_website')
 export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
@@ -61,6 +65,17 @@ export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
   @ManyToOne(() => OfsEntity, { nullable: true })
   public ofs: OfsEntity | null;
 
+  @ManyToOne(() => DistributorEntity, { nullable: true })
+  public distributor: DistributorEntity | null;
+
+  @Column({
+    type: 'enum',
+    enum: ['new', 'old'],
+    nullable: false,
+    default: 'new',
+  })
+  public housingType: BrsHousingType;
+
   @CreateDateColumn()
   createdAt: Date;
 
@@ -82,6 +97,8 @@ export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
     ofs: OfsEntity | null = null,
     programName: string | null = null,
     deliveryMonth: string | null = null,
+    distributor: DistributorEntity | null = null,
+    housingType: BrsHousingType = 'new',
   ) {
     this.source = source;
     this.distributorName = distributorName;
@@ -97,6 +114,8 @@ export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
     this.region = region;
     this.departement = departement;
     this.ofs = ofs;
+    this.distributor = distributor;
+    this.housingType = housingType;
   }
 }
 

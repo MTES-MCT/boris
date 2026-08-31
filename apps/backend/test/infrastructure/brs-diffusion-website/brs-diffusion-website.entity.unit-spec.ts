@@ -1,6 +1,7 @@
 import { bretagne, ileDeFrance } from 'test/mocks/integration/region';
 import { mockedBrsDiffusionWebsite } from 'test/mocks/integration/brs-diffusion-website';
 import { finistere, paris } from 'test/mocks/integration/departement';
+import { distributor1, distributor2 } from 'test/mocks/integration/distributor';
 
 describe('BrsDiffusionWebsiteEntity', () => {
   it('getters', () => {
@@ -15,6 +16,8 @@ describe('BrsDiffusionWebsiteEntity', () => {
     expect(mockedBrsDiffusionWebsite.longitude).toBe(4.111111);
     expect(mockedBrsDiffusionWebsite.region).toBe(bretagne);
     expect(mockedBrsDiffusionWebsite.departement).toBe(finistere);
+    expect(mockedBrsDiffusionWebsite.distributor).toBeNull();
+    expect(mockedBrsDiffusionWebsite.housingType).toBe('new');
   });
 
   it('setters', () => {
@@ -29,6 +32,8 @@ describe('BrsDiffusionWebsiteEntity', () => {
     mockedBrsDiffusionWebsite.longitude = 4.111111;
     mockedBrsDiffusionWebsite.region = ileDeFrance;
     mockedBrsDiffusionWebsite.departement = paris;
+    mockedBrsDiffusionWebsite.distributor = distributor1;
+    mockedBrsDiffusionWebsite.housingType = 'old';
 
     expect(mockedBrsDiffusionWebsite.source).toBe('https://source.com');
     expect(mockedBrsDiffusionWebsite.distributorName).toBe(
@@ -43,5 +48,10 @@ describe('BrsDiffusionWebsiteEntity', () => {
     expect(mockedBrsDiffusionWebsite.longitude).toBe(4.111111);
     expect(mockedBrsDiffusionWebsite.region).toBe(ileDeFrance);
     expect(mockedBrsDiffusionWebsite.departement).toBe(paris);
+    expect(mockedBrsDiffusionWebsite.distributor).toBe(distributor1);
+    expect(mockedBrsDiffusionWebsite.housingType).toBe('old');
+
+    mockedBrsDiffusionWebsite.distributor = distributor2;
+    expect(mockedBrsDiffusionWebsite.distributor).toBe(distributor2);
   });
 });
