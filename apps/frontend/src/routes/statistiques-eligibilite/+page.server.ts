@@ -5,6 +5,8 @@ import type { PageServerLoad } from './$types';
 const DEPARTEMENT_PATTERN = /^(?:\d{2,3}|2[AB])$/;
 const POSTAL_CODE_PATTERN = /^[0-9A-Z]{2,5}$/;
 
+export const prerender = false;
+
 export const load: PageServerLoad = async ({ fetch, url }) => {
   const requestedDepartement = url.searchParams.get('departement') ?? '';
   const departement = DEPARTEMENT_PATTERN.test(requestedDepartement)
