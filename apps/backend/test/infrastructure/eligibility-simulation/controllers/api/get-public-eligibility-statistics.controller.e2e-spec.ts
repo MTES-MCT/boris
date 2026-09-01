@@ -33,23 +33,13 @@ describe('GetPublicEligibilityStatisticsApiController', () => {
     expect(status).toBe(400);
   });
 
-  it('returns the complete public statistics payload', async () => {
-    const { status, body } = await request(app.getHttpServer())
-      .get('/api/eligibility-simulations/public-statistics')
+  it('does not publish statistics for a guessed postal code with fewer than five simulations', async () => {
+    const { status } = await request(app.getHttpServer())
+      .get(
+        '/api/eligibility-simulations/public-statistics?departementCode=75&postalCode=75999',
+      )
       .set('x-api-key', process.env.API_KEY as string);
 
-    expect(status).toBe(200);
-    expect(body).toHaveProperty('totals.simulations');
-    expect(body).toHaveProperty('totals.eligible');
-    expect(body).toHaveProperty('totals.contactable');
-    expect(body).toHaveProperty('regions');
-    expect(body).toHaveProperty('zones');
-    expect(body).toHaveProperty('householdSizes');
-    expect(body).toHaveProperty('propertySituations');
-    expect(body).toHaveProperty('incomeRanges');
-    expect(body).toHaveProperty('employmentStatuses');
-    expect(body).toHaveProperty('housingTypes');
-    expect(body).toHaveProperty('brsKnowledge');
-    expect(body).toHaveProperty('filters.departements');
+    expect(status).toBe(404);
   });
 });

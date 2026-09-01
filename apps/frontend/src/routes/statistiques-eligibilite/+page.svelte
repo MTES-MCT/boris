@@ -8,10 +8,22 @@
   const selectedDepartement = $derived(data.selectedDepartement);
   const selectedPostalCode = $derived(data.selectedPostalCode);
 
-  const percentage = (value: number, total: number) =>
-    total === 0 ? 0 : Math.round((value / total) * 100);
-  const distributionTotal = (items: { count: number }[]) =>
-    items.reduce((sum, item) => sum + item.count, 0);
+  const percentage = (value: number | null, total: number) =>
+    value === null || total === 0 ? null : Math.round((value / total) * 100);
+  const formatProtectedCount = (value: number | null) =>
+    value === null ? '< 5' : formatNumber(value);
+  const formatProtectedPercentage = (value: number | null, total: number) => {
+    const result = percentage(value, total);
+
+    return result === null ? 'part masquée' : `${result} %`;
+  };
+  const formatDistributionDetail = (
+    total: number | null,
+    description = 'simulations renseignées',
+  ) =>
+    total === null
+      ? 'effectif partiellement masqué pour protéger les petits groupes'
+      : `sur ${formatNumber(total)} ${description}`;
   const selectedDepartementName = $derived(
     statistics.filters.departements.find(
       (item) => item.code === selectedDepartement,
@@ -34,7 +46,7 @@
         }).format(new Date(statistics.updatedAt))
       : 'date non disponible',
   );
-  const regionsTotal = $derived(distributionTotal(statistics.regions));
+  const regionsTotal = $derived(statistics.totals.geolocated);
   const regionsSummary = $derived.by(() => {
     const regionNames = statistics.regions
       .slice(0, 3)
@@ -48,7 +60,11 @@
       : 'dans les territoires renseignés';
   });
   const topHousingTypes = $derived(
-    statistics.housingTypes.toSorted((a, b) => b.count - a.count).slice(0, 2),
+    statistics.housingTypes.some((item) => item.count === null)
+      ? []
+      : statistics.housingTypes
+          .toSorted((first, second) => (second.count ?? 0) - (first.count ?? 0))
+          .slice(0, 2),
   );
   const zoneDisplay = (postalCode: string) =>
     postalCode.length <= 3 ? `${postalCode} · département` : postalCode;
@@ -64,13 +80,15 @@
     content="noindex, nofollow" />
 </svelte:head>
 
-<div class="stats-page">
+<div class="bg-[var(--background-alt-grey)]">
   <div class="fr-container">
-    <div class="page-heading fr-py-8w fr-py-md-12w">
-      <p class="fr-badge fr-badge--blue-ecume fr-mb-3w">
+    <div class="fr-py-8w fr-py-md-12w">
+      <p class="fr-badge fr-badge--blue-ecume fr-mb-3w md:float-right">
         Données du {updatedAt}
       </p>
-      <h1>Ce que les ménages cherchent en bail réel solidaire</h1>
+      <h1 class="max-w-[52rem]">
+        Ce que les ménages cherchent en bail réel solidaire
+      </h1>
       <p class="fr-text--lead fr-col-md-9 fr-mb-0">
         BoRiS permet à un ménage de vérifier son éligibilité au bail réel
         solidaire et de trouver les logements disponibles près de chez lui.
@@ -83,7 +101,8 @@
     </div>
   </div>
 
-  <div class="filter-band">
+  <div
+    class="border-y border-[var(--border-default-grey)] bg-[var(--background-default-grey)] md:sticky md:top-14 md:z-10">
     <div class="fr-container">
       <form
         method="GET"
@@ -143,7 +162,7 @@
           </div>
         </div>
 
-        <div class="fr-col-12 fr-col-md-2 filter-action">
+        <div class="fr-col-12 fr-col-md-2 flex md:items-end">
           <a
             class="fr-btn fr-btn--secondary"
             href="/statistiques-eligibilite">
@@ -152,33 +171,36 @@
         </div>
 
         <p
-          class="fr-col-12 fr-col-md-4 perimeter fr-mb-0"
+          class="fr-col-12 fr-col-md-4 fr-mb-0 self-end text-left text-sm text-[var(--text-mention-grey)] md:text-right"
           aria-live="polite">
           Périmètre : <strong>{perimeter}.</strong>
-          Les ventilations géographiques portent sur {formatNumber(
+          Les ventilations géographiques portent sur {formatProtectedCount(
             statistics.totals.geolocated,
-          )} simulations géolocalisées, soit {percentage(
+          )} simulations géolocalisées, soit {formatProtectedPercentage(
             statistics.totals.geolocated,
             statistics.totals.simulations,
-          )} % du total.
+          )} du total.
         </p>
       </form>
     </div>
   </div>
 
-  <div class="fr-container content fr-py-8w fr-py-md-12w">
-    <section class="stats-section">
-      <div class="section-intro">
-        <p class="eyebrow">01 — Vue d'ensemble</p>
+  <div class="fr-container fr-py-8w fr-py-md-12w max-w-[75rem]">
+    <section class="scroll-mt-48">
+      <div class="max-w-[52rem]">
+        <p
+          class="mb-3 text-sm font-bold uppercase tracking-[0.08em] text-[var(--text-action-high-blue-france)]">
+          01 — Vue d'ensemble
+        </p>
         <h2>De la curiosité au projet</h2>
         <p class="fr-text--lead">
           Sur {formatNumber(statistics.totals.simulations)} simulations réalisées
-          depuis l'ouverture du service, {formatNumber(
+          depuis l'ouverture du service, {formatProtectedCount(
             statistics.totals.eligible,
           )}
           portent sur un ménage éligible au bail réel solidaire. Parmi elles,
-          {formatNumber(statistics.totals.contactable)} ménages sont allés jusqu'à
-          laisser leurs coordonnées.
+          {formatProtectedCount(statistics.totals.contactable)} ménages sont allés
+          jusqu'à laisser leurs coordonnées.
         </p>
         <p>
           Ces trois nombres ne mesurent pas la même chose. Le premier dit
@@ -190,13 +212,15 @@
         </p>
       </div>
 
-      <div class="fr-grid-row fr-grid-row--gutters kpis fr-mt-5w">
+      <div class="fr-grid-row fr-grid-row--gutters fr-mt-5w">
         <div class="fr-col-12 fr-col-md-4">
-          <article class="fr-card fr-card--shadow kpi-card">
+          <article
+            class="fr-card fr-card--shadow h-full border-t-[0.375rem] border-t-[var(--border-action-high-blue-france)]">
             <div class="fr-card__body">
-              <div class="fr-card__content">
+              <div class="fr-card__content !p-6 md:!p-8">
                 <h3 class="fr-card__title">Simulations réalisées</h3>
-                <p class="kpi-value">
+                <p
+                  class="mt-6 mb-2 text-[clamp(2.5rem,5vw,4rem)] font-bold leading-none text-[var(--text-title-blue-france)]">
                   {formatNumber(statistics.totals.simulations)}
                 </p>
                 <p class="fr-card__detail">depuis l'ouverture du service</p>
@@ -208,20 +232,22 @@
           </article>
         </div>
         <div class="fr-col-12 fr-col-md-4">
-          <article class="fr-card fr-card--shadow kpi-card kpi-card--eligible">
+          <article
+            class="fr-card fr-card--shadow h-full border-t-[0.375rem] border-t-[var(--border-plain-green-emeraude)]">
             <div class="fr-card__body">
-              <div class="fr-card__content">
+              <div class="fr-card__content !p-6 md:!p-8">
                 <h3 class="fr-card__title">
                   Ménages éligibles dans au moins une zone
                 </h3>
-                <p class="kpi-value">
-                  {formatNumber(statistics.totals.eligible)}
+                <p
+                  class="mt-6 mb-2 text-[clamp(2.5rem,5vw,4rem)] font-bold leading-none text-[var(--text-title-blue-france)]">
+                  {formatProtectedCount(statistics.totals.eligible)}
                 </p>
                 <p class="fr-card__detail">
-                  {percentage(
+                  {formatProtectedPercentage(
                     statistics.totals.eligible,
                     statistics.totals.simulations,
-                  )} % des simulations
+                  )} des simulations
                 </p>
                 <p class="fr-card__desc">
                   Ressources sous le plafond BRS d'au moins un des trois groupes
@@ -232,20 +258,22 @@
           </article>
         </div>
         <div class="fr-col-12 fr-col-md-4">
-          <article class="fr-card fr-card--shadow kpi-card kpi-card--contact">
+          <article
+            class="fr-card fr-card--shadow h-full border-t-[0.375rem] border-t-[var(--border-plain-purple-glycine)]">
             <div class="fr-card__body">
-              <div class="fr-card__content">
+              <div class="fr-card__content !p-6 md:!p-8">
                 <h3 class="fr-card__title">
                   Ménages ayant laissé leurs coordonnées
                 </h3>
-                <p class="kpi-value">
-                  {formatNumber(statistics.totals.contactable)}
+                <p
+                  class="mt-6 mb-2 text-[clamp(2.5rem,5vw,4rem)] font-bold leading-none text-[var(--text-title-blue-france)]">
+                  {formatProtectedCount(statistics.totals.contactable)}
                 </p>
                 <p class="fr-card__detail">
-                  {percentage(
+                  {formatProtectedPercentage(
                     statistics.totals.contactable,
                     statistics.totals.simulations,
-                  )} % des simulations
+                  )} des simulations
                 </p>
                 <p class="fr-card__desc">
                   Démarche volontaire, en fin de simulation. La demande
@@ -270,9 +298,13 @@
       </div>
     </section>
 
-    <section class="stats-section">
-      <div class="section-intro">
-        <p class="eyebrow">02 — Territoires</p>
+    <section
+      class="mt-16 scroll-mt-48 border-t border-[var(--border-default-grey)] pt-16 md:mt-24 md:pt-24">
+      <div class="max-w-[52rem]">
+        <p
+          class="mb-3 text-sm font-bold uppercase tracking-[0.08em] text-[var(--text-action-high-blue-france)]">
+          02 — Territoires
+        </p>
         <h2>Où la demande se manifeste</h2>
         <p class="fr-text--lead">
           La demande se concentre {regionsSummary}. Le rapprochement le plus
@@ -292,17 +324,20 @@
             title="Régions les plus recherchées"
             items={statistics.regions}
             total={regionsTotal}
-            detail={`sur ${formatNumber(statistics.totals.geolocated)} simulations géolocalisées`} />
+            detail={formatDistributionDetail(
+              statistics.totals.geolocated,
+              'simulations géolocalisées',
+            )} />
         </div>
         <div class="fr-col-12 fr-col-lg-6">
-          <article class="fr-card fr-card--shadow stats-card">
+          <article class="fr-card fr-card--shadow h-full">
             <div class="fr-card__body">
-              <div class="fr-card__content">
+              <div class="fr-card__content !p-6 md:!p-8">
                 <h3 class="fr-card__title">
                   Zones déclarées les plus demandées
                 </h3>
                 <p class="fr-card__detail">
-                  zones comptant au moins 10 simulations
+                  zones comptant au moins 5 simulations
                 </p>
                 <div class="fr-table fr-table--bordered fr-table--sm fr-mb-0">
                   <div class="fr-table__wrapper">
@@ -324,7 +359,7 @@
                               <tr>
                                 <td>{zoneDisplay(zone.postalCode)}</td>
                                 <td>{zone.departementCode}</td>
-                                <td>{formatNumber(zone.count)}</td>
+                                <td>{formatProtectedCount(zone.count)}</td>
                               </tr>
                             {/each}
                           </tbody>
@@ -352,9 +387,13 @@
       </div>
     </section>
 
-    <section class="stats-section">
-      <div class="section-intro">
-        <p class="eyebrow">03 — Profils</p>
+    <section
+      class="mt-16 scroll-mt-48 border-t border-[var(--border-default-grey)] pt-16 md:mt-24 md:pt-24">
+      <div class="max-w-[52rem]">
+        <p
+          class="mb-3 text-sm font-bold uppercase tracking-[0.08em] text-[var(--text-action-high-blue-france)]">
+          03 — Profils
+        </p>
         <h2>Qui sont ces ménages</h2>
         <p class="fr-text--lead">
           Composition du foyer, statut d'occupation actuel, ressources et
@@ -374,17 +413,20 @@
         <div class="fr-col-12 fr-col-lg-6">
           <DistributionCard
             title="Taille du ménage"
-            items={statistics.householdSizes} />
+            items={statistics.householdSizes}
+            total={statistics.breakdownTotals.householdSizes} />
         </div>
         <div class="fr-col-12 fr-col-lg-6">
           <DistributionCard
             title="Situation de logement actuelle"
-            items={statistics.propertySituations} />
+            items={statistics.propertySituations}
+            total={statistics.breakdownTotals.propertySituations} />
         </div>
         <div class="fr-col-12 fr-col-lg-6">
           <DistributionCard
             title="Catégories de revenus"
-            items={statistics.incomeRanges} />
+            items={statistics.incomeRanges}
+            total={statistics.breakdownTotals.incomeRanges} />
           <div class="fr-alert fr-alert--warning fr-alert--sm fr-mt-2w">
             <h3 class="fr-alert__title">
               Anomalie 1 · défaut d'unité, pas un résultat
@@ -401,14 +443,19 @@
         <div class="fr-col-12 fr-col-lg-6">
           <DistributionCard
             title="Situation professionnelle"
-            items={statistics.employmentStatuses} />
+            items={statistics.employmentStatuses}
+            total={statistics.breakdownTotals.employmentStatuses} />
         </div>
       </div>
     </section>
 
-    <section class="stats-section">
-      <div class="section-intro">
-        <p class="eyebrow">04 — Recherche</p>
+    <section
+      class="mt-16 scroll-mt-48 border-t border-[var(--border-default-grey)] pt-16 md:mt-24 md:pt-24">
+      <div class="max-w-[52rem]">
+        <p
+          class="mb-3 text-sm font-bold uppercase tracking-[0.08em] text-[var(--text-action-high-blue-france)]">
+          04 — Recherche
+        </p>
         <h2>Ce qu'ils cherchent</h2>
         <p class="fr-text--lead">
           {#if topHousingTypes.length >= 2}
@@ -430,14 +477,19 @@
         <div class="fr-col-12 fr-col-lg-8">
           <DistributionCard
             title="Typologie de logement recherchée"
-            items={statistics.housingTypes} />
+            items={statistics.housingTypes}
+            total={statistics.breakdownTotals.housingTypes} />
         </div>
       </div>
     </section>
 
-    <section class="stats-section">
-      <div class="section-intro">
-        <p class="eyebrow">05 — Notoriété</p>
+    <section
+      class="mt-16 scroll-mt-48 border-t border-[var(--border-default-grey)] pt-16 md:mt-24 md:pt-24">
+      <div class="max-w-[52rem]">
+        <p
+          class="mb-3 text-sm font-bold uppercase tracking-[0.08em] text-[var(--text-action-high-blue-france)]">
+          05 — Notoriété
+        </p>
         <h2>Ce que les ménages savent du dispositif</h2>
         <p class="fr-text--lead">
           Cette vue ne décrit pas la demande, elle décrit sa formation. Un
@@ -451,7 +503,8 @@
         <div class="fr-col-12 fr-col-lg-8">
           <DistributionCard
             title="Connaissance du BRS avant la simulation"
-            items={statistics.brsKnowledge} />
+            items={statistics.brsKnowledge}
+            total={statistics.breakdownTotals.brsKnowledge} />
           <div class="fr-alert fr-alert--warning fr-alert--sm fr-mt-2w">
             <h3 class="fr-alert__title">
               Anomalie 3 · « ne connaissait pas » veut peut-être dire « n'a pas
@@ -469,7 +522,8 @@
       </div>
     </section>
 
-    <section class="method fr-p-4w fr-p-md-6w">
+    <section
+      class="fr-p-4w fr-p-md-6w mt-16 border-l-4 border-l-[var(--border-action-high-blue-france)] bg-[var(--background-contrast-blue-france)] md:mt-24">
       <h2>Sur ces données</h2>
       <p>
         Chaque ligne correspond à une simulation réalisée sur
@@ -486,12 +540,12 @@
         <p>
           Le total du périmètre est de {formatNumber(
             statistics.totals.simulations,
-          )} simulations, mais la ventilation géographique en couvre {formatNumber(
+          )} simulations, mais la ventilation géographique en couvre {formatProtectedCount(
             statistics.totals.geolocated,
-          )}, les ressources {formatNumber(
-            distributionTotal(statistics.incomeRanges),
-          )}, et la typologie {formatNumber(
-            distributionTotal(statistics.housingTypes),
+          )}, les ressources {formatProtectedCount(
+            statistics.breakdownTotals.incomeRanges,
+          )}, et la typologie {formatProtectedCount(
+            statistics.breakdownTotals.housingTypes,
           )}. Chaque carte porte donc son propre effectif.
         </p>
       </div>
@@ -502,8 +556,8 @@
       </p>
       <p>
         <strong>Secret statistique.</strong>
-        Une zone où moins de dix ménages ont déclaré chercher un logement n'est pas
-        listée dans le filtre et ses chiffres ne sont pas publiés. Ces simulations
+        Une zone où moins de cinq ménages ont déclaré chercher un logement n'est
+        pas listée dans le filtre et ses chiffres ne sont pas publiés. Ces simulations
         restent comptées dans les totaux du département et du pays : elles ne sont
         pas retirées, seulement pas ventilées.
       </p>
@@ -520,105 +574,3 @@
     </section>
   </div>
 </div>
-
-<style>
-  .stats-page {
-    background: var(--background-alt-grey);
-  }
-  .page-heading h1 {
-    max-width: 52rem;
-  }
-  .page-heading .fr-badge {
-    float: right;
-  }
-  .filter-band {
-    background: var(--background-default-grey);
-    border-block: 1px solid var(--border-default-grey);
-    position: sticky;
-    top: 3.5rem;
-    z-index: 10;
-  }
-  .filter-action {
-    align-items: end;
-    display: flex;
-  }
-  .perimeter {
-    align-self: end;
-    color: var(--text-mention-grey);
-    font-size: 0.875rem;
-    text-align: right;
-  }
-  .content {
-    max-width: 75rem;
-  }
-  .stats-section {
-    scroll-margin-top: 12rem;
-  }
-  .stats-section + .stats-section {
-    border-top: 1px solid var(--border-default-grey);
-    margin-top: 6rem;
-    padding-top: 6rem;
-  }
-  .section-intro {
-    max-width: 52rem;
-  }
-  .eyebrow {
-    color: var(--text-action-high-blue-france);
-    font-size: 0.875rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
-  }
-  .kpi-card {
-    border-top: 0.375rem solid var(--border-action-high-blue-france);
-    height: 100%;
-  }
-  .kpi-card--eligible {
-    border-top-color: var(--border-plain-green-emeraude);
-  }
-  .kpi-card--contact {
-    border-top-color: var(--border-plain-purple-glycine);
-  }
-  .kpi-card .fr-card__content,
-  .stats-card .fr-card__content {
-    padding: 2rem;
-  }
-  .kpi-value {
-    color: var(--text-title-blue-france);
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
-    line-height: 1;
-    margin: 1.5rem 0 0.5rem;
-  }
-  .stats-card {
-    height: 100%;
-  }
-  .method {
-    background: var(--background-contrast-blue-france);
-    border-left: 0.25rem solid var(--border-action-high-blue-france);
-    margin-top: 6rem;
-  }
-  @media (max-width: 48rem) {
-    .page-heading .fr-badge {
-      float: none;
-    }
-    .filter-band {
-      position: static;
-    }
-    .filter-action {
-      align-items: initial;
-    }
-    .perimeter {
-      text-align: left;
-    }
-    .stats-section + .stats-section {
-      margin-top: 4rem;
-      padding-top: 4rem;
-    }
-    .kpi-card .fr-card__content,
-    .stats-card .fr-card__content {
-      padding: 1.5rem;
-    }
-  }
-</style>

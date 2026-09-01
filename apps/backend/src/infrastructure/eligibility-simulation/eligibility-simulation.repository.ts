@@ -18,6 +18,12 @@ import {
 } from 'src/domain/eligibility-simulation/eligibility-simulation.repository.interface';
 import { EligibilitySimulationEntity } from './eligibility-simulation.entity';
 import { PaginationProps } from 'src/domain/common/paginationProps';
+import {
+  PUBLIC_STATISTICS_MINIMUM_COHORT_SIZE,
+  suppressAndOmitSmallDistribution,
+  suppressBinaryCount,
+  suppressSmallDistribution,
+} from 'src/domain/eligibility-simulation/public-statistics-privacy';
 
 @Injectable()
 export class EligibilitySimulationRepository
@@ -267,7 +273,16 @@ export class EligibilitySimulationRepository
 
   public async getPublicStatistics(
     filters: PublicEligibilityStatisticsFilters,
-  ): Promise<PublicEligibilityStatisticsResult> {
+  ): Promise<PublicEligibilityStatisticsResult | null> {
+    const cohort = await this.createPublicStatisticsQuery(filters)
+      .select('COUNT(DISTINCT eligibility_simulation.id)', 'count')
+      .getRawOne<{ count: string }>();
+    const cohortSize = Number(cohort?.count ?? 0);
+
+    if (cohortSize < PUBLIC_STATISTICS_MINIMUM_COHORT_SIZE) {
+      return null;
+    }
+
     const distribution = async (
       expression: string,
       orderExpression: string,
@@ -310,7 +325,10 @@ export class EligibilitySimulationRepository
         'geolocated',
       )
       .addSelect(
-        'MAX(COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt"))',
+        `TO_CHAR(
+          MAX(COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")),
+          'YYYY-MM-DD'
+        )`,
         'updatedAt',
       )
       .getRawOne<{
@@ -318,7 +336,7 @@ export class EligibilitySimulationRepository
         eligible: string;
         contactable: string;
         geolocated: string;
-        updatedAt: Date | null;
+        updatedAt: string | null;
       }>();
 
     const regionsPromise = this.createPublicStatisticsQuery(filters)
@@ -330,7 +348,6 @@ export class EligibilitySimulationRepository
       .groupBy('stats_region.code')
       .addGroupBy('stats_region.name')
       .orderBy('COUNT(DISTINCT eligibility_simulation.id)', 'DESC')
-      .limit(10)
       .getRawMany<{ code: string; label: string; count: string }>();
 
     const zonesPromise = this.createPublicStatisticsQuery(filters)
@@ -341,9 +358,7 @@ export class EligibilitySimulationRepository
       .andWhere(`TRIM(stats_location."postalCode") != ''`)
       .groupBy('stats_location."postalCode"')
       .addGroupBy('stats_departement.code')
-      .having('COUNT(DISTINCT eligibility_simulation.id) >= 10')
       .orderBy('COUNT(DISTINCT eligibility_simulation.id)', 'DESC')
-      .limit(12)
       .getRawMany<{
         postalCode: string;
         departementCode: string;
@@ -374,7 +389,9 @@ export class EligibilitySimulationRepository
           .andWhere('location."postalCode" IS NOT NULL')
           .andWhere(`TRIM(location."postalCode") != ''`)
           .groupBy('location."postalCode"')
-          .having('COUNT(DISTINCT location."eligibilitySimulationId") >= 10')
+          .having(
+            `COUNT(DISTINCT location."eligibilitySimulationId") >= ${PUBLIC_STATISTICS_MINIMUM_COHORT_SIZE}`,
+          )
           .orderBy('location."postalCode"', 'ASC')
           .getRawMany<{ postalCode: string }>()
       : Promise.resolve([]);
@@ -456,22 +473,73 @@ export class EligibilitySimulationRepository
       postalCodesPromise,
     ]);
 
+    const protectedRegions = suppressSmallDistribution(
+      regions.map((row) => ({ ...row, count: Number(row.count) })),
+    );
+    const numericZones = zones.map((row) => ({
+      ...row,
+      count: Number(row.count),
+    }));
+    const protectedZones =
+      suppressAndOmitSmallDistribution(numericZones).slice(0, 12);
+    const protectedHouseholdSizes = suppressSmallDistribution(householdSizes);
+    const protectedPropertySituations = suppressSmallDistribution(
+      propertySituations.sort((first, second) => second.count - first.count),
+    );
+    const protectedIncomeRanges = suppressSmallDistribution(incomeRanges);
+    const protectedEmploymentStatuses = suppressSmallDistribution(
+      employmentStatuses.sort((first, second) => second.count - first.count),
+    );
+    const protectedHousingTypes = suppressSmallDistribution(housingTypes);
+    const protectedBrsKnowledge = suppressSmallDistribution(
+      brsKnowledge.sort((first, second) => second.count - first.count),
+    );
+    const simulations = Number(summary?.simulations ?? cohortSize);
+    const eligible = suppressBinaryCount(
+      Number(summary?.eligible ?? 0),
+      simulations,
+    );
+    let contactable = suppressBinaryCount(
+      Number(summary?.contactable ?? 0),
+      simulations,
+    );
+
+    if (
+      eligible !== null &&
+      contactable !== null &&
+      eligible - contactable > 0 &&
+      eligible - contactable < PUBLIC_STATISTICS_MINIMUM_COHORT_SIZE
+    ) {
+      contactable = null;
+    }
+
     return {
       updatedAt: summary?.updatedAt ?? null,
       totals: {
-        simulations: Number(summary?.simulations ?? 0),
-        eligible: Number(summary?.eligible ?? 0),
-        contactable: Number(summary?.contactable ?? 0),
-        geolocated: Number(summary?.geolocated ?? 0),
+        simulations,
+        eligible,
+        contactable,
+        geolocated: suppressBinaryCount(
+          Number(summary?.geolocated ?? 0),
+          simulations,
+        ),
       },
-      regions: regions.map((row) => ({ ...row, count: Number(row.count) })),
-      zones: zones.map((row) => ({ ...row, count: Number(row.count) })),
-      householdSizes,
-      propertySituations: propertySituations.sort((a, b) => b.count - a.count),
-      incomeRanges,
-      employmentStatuses: employmentStatuses.sort((a, b) => b.count - a.count),
-      housingTypes,
-      brsKnowledge: brsKnowledge.sort((a, b) => b.count - a.count),
+      regions: protectedRegions.items.slice(0, 10),
+      zones: protectedZones,
+      householdSizes: protectedHouseholdSizes.items,
+      propertySituations: protectedPropertySituations.items,
+      incomeRanges: protectedIncomeRanges.items,
+      employmentStatuses: protectedEmploymentStatuses.items,
+      housingTypes: protectedHousingTypes.items,
+      brsKnowledge: protectedBrsKnowledge.items,
+      breakdownTotals: {
+        householdSizes: protectedHouseholdSizes.total,
+        propertySituations: protectedPropertySituations.total,
+        incomeRanges: protectedIncomeRanges.total,
+        employmentStatuses: protectedEmploymentStatuses.total,
+        housingTypes: protectedHousingTypes.total,
+        brsKnowledge: protectedBrsKnowledge.total,
+      },
       filters: {
         departements,
         postalCodes: postalCodes.map((row) => row.postalCode),

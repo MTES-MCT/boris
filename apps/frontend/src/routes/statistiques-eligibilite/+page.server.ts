@@ -26,6 +26,13 @@ export const load: PageServerLoad = async ({ fetch, url }) => {
   );
 
   if (!response.ok) {
+    if (response.status === 404) {
+      throw error(
+        404,
+        'Les statistiques ne sont pas publiées pour les périmètres de moins de 5 simulations',
+      );
+    }
+
     throw error(502, 'Impossible de charger les statistiques');
   }
 

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import {
   EligibilitySimulationRepositoryInterface,
   PublicEligibilityStatisticsFilters,
@@ -15,6 +15,21 @@ export class GetPublicEligibilityStatisticsUsecase {
   public execute(
     filters: PublicEligibilityStatisticsFilters,
   ): Promise<PublicEligibilityStatisticsResult> {
-    return this.eligibilitySimulationRepository.getPublicStatistics(filters);
+    return this.getStatistics(filters);
+  }
+
+  private async getStatistics(
+    filters: PublicEligibilityStatisticsFilters,
+  ): Promise<PublicEligibilityStatisticsResult> {
+    const statistics =
+      await this.eligibilitySimulationRepository.getPublicStatistics(filters);
+
+    if (!statistics) {
+      throw new NotFoundException(
+        'Les statistiques ne sont pas publiées pour les périmètres de moins de 5 simulations',
+      );
+    }
+
+    return statistics;
   }
 }

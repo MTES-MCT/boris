@@ -22,8 +22,13 @@ describe('GetPublicEligibilityStatisticsUsecase', () => {
 
   it('returns the repository result for the requested perimeter', async () => {
     const result = {
-      updatedAt: new Date('2026-08-27'),
-      totals: { simulations: 12, eligible: 9, contactable: 3, geolocated: 10 },
+      updatedAt: '2026-08-27',
+      totals: {
+        simulations: 12,
+        eligible: 9,
+        contactable: null,
+        geolocated: 12,
+      },
       regions: [],
       zones: [],
       householdSizes: [],
@@ -32,6 +37,14 @@ describe('GetPublicEligibilityStatisticsUsecase', () => {
       employmentStatuses: [],
       housingTypes: [],
       brsKnowledge: [],
+      breakdownTotals: {
+        householdSizes: 0,
+        propertySituations: 0,
+        incomeRanges: 0,
+        employmentStatuses: 0,
+        housingTypes: 0,
+        brsKnowledge: 0,
+      },
       filters: { departements: [], postalCodes: [] },
     };
     mockEligibilitySimulationRepository.getPublicStatistics.mockResolvedValue(
@@ -44,5 +57,17 @@ describe('GetPublicEligibilityStatisticsUsecase', () => {
     expect(
       mockEligibilitySimulationRepository.getPublicStatistics,
     ).toHaveBeenCalledWith({ departementCode: '75', postalCode: '75001' });
+  });
+
+  it('rejects a perimeter containing fewer than five simulations', async () => {
+    mockEligibilitySimulationRepository.getPublicStatistics.mockResolvedValue(
+      null,
+    );
+
+    await expect(
+      usecase.execute({ departementCode: '75', postalCode: '75002' }),
+    ).rejects.toThrow(
+      'Les statistiques ne sont pas publiées pour les périmètres de moins de 5 simulations',
+    );
   });
 });

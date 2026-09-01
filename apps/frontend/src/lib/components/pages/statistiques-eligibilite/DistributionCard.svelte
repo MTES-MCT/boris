@@ -6,7 +6,7 @@
   type Props = {
     title: string;
     items: PublicEligibilityStatisticsDistribution[];
-    total?: number;
+    total?: number | null;
     detail?: string;
     class?: string;
   };
@@ -14,29 +14,42 @@
   const {
     title,
     items,
-    total = items.reduce((sum, item) => sum + item.count, 0),
-    detail = `sur ${formatNumber(total)} simulations renseignées`,
+    total = items.some((item) => item.count === null)
+      ? null
+      : items.reduce((sum, item) => sum + (item.count ?? 0), 0),
+    detail = total === null
+      ? 'effectif partiellement masqué pour protéger les petits groupes'
+      : `sur ${formatNumber(total)} simulations renseignées`,
     class: className = '',
   }: Props = $props();
 
   const percentage = (count: number) =>
-    total === 0 ? 0 : Math.round((count / total) * 100);
+    total === null || total === 0 ? null : Math.round((count / total) * 100);
+  const publishedItems = $derived(
+    items.filter(
+      (
+        item,
+      ): item is PublicEligibilityStatisticsDistribution & {
+        count: number;
+      } => item.count !== null,
+    ),
+  );
 </script>
 
-<article class={`fr-card fr-card--shadow stats-card ${className}`}>
+<article class={`fr-card fr-card--shadow h-full ${className}`}>
   <div class="fr-card__body">
-    <div class="fr-card__content">
+    <div class="fr-card__content !p-6 md:!p-8">
       <h3 class="fr-card__title">{title}</h3>
-      <p class="fr-card__detail">{detail}</p>
+      <p class="fr-card__detail !mb-4">{detail}</p>
 
       {#if items.length > 0}
         <div
-          class="chart"
+          class="min-h-72"
           aria-hidden="true">
           <ChartProvider>
             <bar-chart
-              x={JSON.stringify([items.map((item) => item.label)])}
-              y={JSON.stringify([items.map((item) => item.count)])}
+              x={JSON.stringify([publishedItems.map((item) => item.label)])}
+              y={JSON.stringify([publishedItems.map((item) => item.count)])}
               name={JSON.stringify(['Simulations'])}
               selected-palette="sequentialDescending"
               horizontal="true">
@@ -45,13 +58,19 @@
         </div>
 
         <ul
-          class="values fr-raw-list"
+          class="fr-raw-list mt-4 border-t border-[var(--border-default-grey)] pt-3"
           aria-label={`Valeurs — ${title}`}>
           {#each items as item}
-            <li>
+            <li class="flex items-baseline justify-between gap-4 py-[0.35rem]">
               <span>{item.label}</span>
-              <strong>
-                {formatNumber(item.count)} · {percentage(item.count)} %
+              <strong class="shrink-0 text-sm">
+                {#if item.count === null}
+                  &lt; 5 · donnée masquée
+                {:else if percentage(item.count) !== null}
+                  {formatNumber(item.count)} · {percentage(item.count)} %
+                {:else}
+                  {formatNumber(item.count)}
+                {/if}
               </strong>
             </li>
           {/each}
@@ -62,46 +81,3 @@
     </div>
   </div>
 </article>
-
-<style>
-  .stats-card {
-    height: 100%;
-  }
-
-  .fr-card__content {
-    padding: 2rem;
-  }
-
-  .fr-card__detail {
-    margin-bottom: 1rem;
-  }
-
-  .chart {
-    min-height: 18rem;
-  }
-
-  .values {
-    border-top: 1px solid var(--border-default-grey);
-    margin-top: 1rem;
-    padding-top: 0.75rem;
-  }
-
-  .values li {
-    align-items: baseline;
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-    padding: 0.35rem 0;
-  }
-
-  .values strong {
-    flex: none;
-    font-size: 0.875rem;
-  }
-
-  @media (max-width: 48rem) {
-    .fr-card__content {
-      padding: 1.5rem;
-    }
-  }
-</style>
