@@ -16,6 +16,8 @@ export const namespaces = {
   eligibilitySimulationsByRegions: 'eligibility-simulations-by-regions',
   eligibilitySimulationsConversionFunnel:
     'eligibility-simulations-conversion-funnel',
+  eligibilitySimulationsPublicStatistics:
+    'eligibility-simulations-public-statistics',
   acquisitionSimulationsConversionFunnel:
     'acquisition-simulations-conversion-funnel',
 };

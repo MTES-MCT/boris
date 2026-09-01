@@ -50,6 +50,42 @@ export type EligibilitySimulationConversionFunnelResult = {
   totalDesiredCityProvided: number;
 };
 
+export type PublicEligibilityStatisticsFilters = {
+  departementCode?: string;
+  postalCode?: string;
+};
+
+export type PublicEligibilityStatisticsDistribution = {
+  label: string;
+  count: number;
+};
+
+export type PublicEligibilityStatisticsResult = {
+  updatedAt: Date | null;
+  totals: {
+    simulations: number;
+    eligible: number;
+    contactable: number;
+    geolocated: number;
+  };
+  regions: (PublicEligibilityStatisticsDistribution & { code: string })[];
+  zones: {
+    postalCode: string;
+    departementCode: string;
+    count: number;
+  }[];
+  householdSizes: PublicEligibilityStatisticsDistribution[];
+  propertySituations: PublicEligibilityStatisticsDistribution[];
+  incomeRanges: PublicEligibilityStatisticsDistribution[];
+  employmentStatuses: PublicEligibilityStatisticsDistribution[];
+  housingTypes: PublicEligibilityStatisticsDistribution[];
+  brsKnowledge: PublicEligibilityStatisticsDistribution[];
+  filters: {
+    departements: { code: string; name: string }[];
+    postalCodes: string[];
+  };
+};
+
 export type PortalEligibilitySimulationContactResult = {
   simulationId: string;
   locationId: string;
@@ -104,6 +140,9 @@ export interface EligibilitySimulationRepositoryInterface {
   groupByRegions(): Promise<[GroupByRegionsResult[], total: number]>;
   groupByDepartements(): Promise<GroupByDepartementsResult[]>;
   calculateConversionFunnel(): Promise<EligibilitySimulationConversionFunnelResult>;
+  getPublicStatistics(
+    filters: PublicEligibilityStatisticsFilters,
+  ): Promise<PublicEligibilityStatisticsResult>;
   findPortalContactsByOfsScope(
     pagination: PaginationProps,
     filters: PortalEligibilitySimulationContactFilters,

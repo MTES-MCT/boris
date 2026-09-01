@@ -26,6 +26,8 @@ import { GetEligibilitySimulationsBrsKnowledgeApiController } from './controller
 import { GetEligibilitySimulationsRealEstateSituationApiController } from './controllers/api/get-eligibility-simulations-real-estate-situation.controller';
 import { FindPortalContactLinesUsecase } from 'src/application/eligibility-simulation/usecases/find-portal-contact-lines.usecase';
 import { ExportPortalContactLinesUsecase } from 'src/application/eligibility-simulation/usecases/export-portal-contact-lines.usecase';
+import { GetPublicEligibilityStatisticsUsecase } from 'src/application/eligibility-simulation/usecases/get-public-statistics.usecase';
+import { GetPublicEligibilityStatisticsApiController } from './controllers/api/get-public-eligibility-statistics.controller';
 
 @Module({
   imports: [
@@ -44,6 +46,7 @@ import { ExportPortalContactLinesUsecase } from 'src/application/eligibility-sim
     GetEligibilitySimulationsGroupedByRegionsApiController,
     GetEligibilitySimulationsGroupedByDepartementsApiController,
     GetEligibilitySimulationsConversionFunnelApiController,
+    GetPublicEligibilityStatisticsApiController,
   ],
   providers: [
     {
@@ -63,6 +66,7 @@ import { ExportPortalContactLinesUsecase } from 'src/application/eligibility-sim
     CalculateEligibilitySimulationConversionFunnelUsecase,
     FindPortalContactLinesUsecase,
     ExportPortalContactLinesUsecase,
+    GetPublicEligibilityStatisticsUsecase,
   ],
   exports: [
     'EligibilitySimulationRepositoryInterface',
@@ -79,6 +83,7 @@ import { ExportPortalContactLinesUsecase } from 'src/application/eligibility-sim
     CalculateEligibilitySimulationConversionFunnelUsecase,
     FindPortalContactLinesUsecase,
     ExportPortalContactLinesUsecase,
+    GetPublicEligibilityStatisticsUsecase,
   ],
 })
 export class EligibilitySimulationModule {}
