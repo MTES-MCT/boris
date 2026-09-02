@@ -13,9 +13,17 @@ import {
   PortalEligibilitySimulationContactFilters,
   PortalEligibilitySimulationContactResult,
   DistributorPortalContactFilters,
+  PublicEligibilityStatisticsFilters,
+  PublicEligibilityStatisticsResult,
 } from 'src/domain/eligibility-simulation/eligibility-simulation.repository.interface';
 import { EligibilitySimulationEntity } from './eligibility-simulation.entity';
 import { PaginationProps } from 'src/domain/common/paginationProps';
+import {
+  PUBLIC_STATISTICS_MINIMUM_COHORT_SIZE,
+  suppressAndOmitSmallDistribution,
+  suppressBinaryCount,
+  suppressSmallDistribution,
+} from 'src/domain/eligibility-simulation/public-statistics-privacy';
 
 @Injectable()
 export class EligibilitySimulationRepository
@@ -261,6 +269,305 @@ export class EligibilitySimulationRepository
       totalEmailProvided: Number(result?.totalEmailProvided ?? 0),
       totalDesiredCityProvided: Number(result?.totalDesiredCityProvided ?? 0),
     };
+  }
+
+  public async getPublicStatistics(
+    filters: PublicEligibilityStatisticsFilters,
+  ): Promise<PublicEligibilityStatisticsResult | null> {
+    const cohort = await this.createPublicStatisticsQuery(filters)
+      .select('COUNT(DISTINCT eligibility_simulation.id)', 'count')
+      .getRawOne<{ count: string }>();
+    const cohortSize = Number(cohort?.count ?? 0);
+
+    if (cohortSize < PUBLIC_STATISTICS_MINIMUM_COHORT_SIZE) {
+      return null;
+    }
+
+    const distribution = async (
+      expression: string,
+      orderExpression: string,
+      fieldIsNotNull: string,
+    ) => {
+      const rows = await this.createPublicStatisticsQuery(filters)
+        .select(expression, 'label')
+        .addSelect('COUNT(DISTINCT eligibility_simulation.id)', 'count')
+        .andWhere(fieldIsNotNull)
+        .groupBy(expression)
+        .orderBy(orderExpression, 'ASC')
+        .getRawMany<{ label: string; count: string }>();
+
+      return rows.map((row) => ({
+        label: row.label,
+        count: Number(row.count),
+      }));
+    };
+
+    const summaryPromise = this.createPublicStatisticsQuery(filters)
+      .select('COUNT(DISTINCT eligibility_simulation.id)', 'simulations')
+      .addSelect(
+        `COUNT(DISTINCT eligibility_simulation.id) FILTER (
+          WHERE eligibility_simulation."highestEligibilityZone" != 'NONE'
+        )`,
+        'eligible',
+      )
+      .addSelect(
+        `COUNT(DISTINCT eligibility_simulation.id) FILTER (
+          WHERE eligibility_simulation."highestEligibilityZone" != 'NONE'
+            AND eligibility_simulation."hasRefusedConnection" = false
+            AND eligibility_simulation.email IS NOT NULL
+            AND eligibility_simulation.contribution IS NOT NULL
+            AND eligibility_simulation.resources IS NOT NULL
+        )`,
+        'contactable',
+      )
+      .addSelect(
+        'COUNT(DISTINCT eligibility_simulation.id) FILTER (WHERE stats_location.id IS NOT NULL)',
+        'geolocated',
+      )
+      .addSelect(
+        `TO_CHAR(
+          MAX(COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")),
+          'YYYY-MM-DD'
+        )`,
+        'updatedAt',
+      )
+      .getRawOne<{
+        simulations: string;
+        eligible: string;
+        contactable: string;
+        geolocated: string;
+        updatedAt: string | null;
+      }>();
+
+    const regionsPromise = this.createPublicStatisticsQuery(filters)
+      .select('stats_region.code', 'code')
+      .addSelect('stats_region.name', 'label')
+      .addSelect('COUNT(DISTINCT eligibility_simulation.id)', 'count')
+      .innerJoin('stats_departement.region', 'stats_region')
+      .andWhere('stats_location.id IS NOT NULL')
+      .groupBy('stats_region.code')
+      .addGroupBy('stats_region.name')
+      .orderBy('COUNT(DISTINCT eligibility_simulation.id)', 'DESC')
+      .getRawMany<{ code: string; label: string; count: string }>();
+
+    const zonesPromise = this.createPublicStatisticsQuery(filters)
+      .select('stats_location."postalCode"', 'postalCode')
+      .addSelect('stats_departement.code', 'departementCode')
+      .addSelect('COUNT(DISTINCT eligibility_simulation.id)', 'count')
+      .andWhere('stats_location."postalCode" IS NOT NULL')
+      .andWhere(`TRIM(stats_location."postalCode") != ''`)
+      .groupBy('stats_location."postalCode"')
+      .addGroupBy('stats_departement.code')
+      .orderBy('COUNT(DISTINCT eligibility_simulation.id)', 'DESC')
+      .getRawMany<{
+        postalCode: string;
+        departementCode: string;
+        count: string;
+      }>();
+
+    const departementsPromise = this.repository.manager
+      .createQueryBuilder()
+      .select('departement.code', 'code')
+      .addSelect('departement.name', 'name')
+      .from('departement', 'departement')
+      .orderBy('departement.code', 'ASC')
+      .getRawMany<{ code: string; name: string }>();
+
+    const postalCodesPromise = filters.departementCode
+      ? this.repository.manager
+          .createQueryBuilder()
+          .select('location."postalCode"', 'postalCode')
+          .from('location', 'location')
+          .innerJoin(
+            'departement',
+            'departement',
+            'departement.id = location."departementId"',
+          )
+          .where('departement.code = :departementCode', {
+            departementCode: filters.departementCode,
+          })
+          .andWhere('location."postalCode" IS NOT NULL')
+          .andWhere(`TRIM(location."postalCode") != ''`)
+          .groupBy('location."postalCode"')
+          .having(
+            `COUNT(DISTINCT location."eligibilitySimulationId") >= ${PUBLIC_STATISTICS_MINIMUM_COHORT_SIZE}`,
+          )
+          .orderBy('location."postalCode"', 'ASC')
+          .getRawMany<{ postalCode: string }>()
+      : Promise.resolve([]);
+
+    const [
+      summary,
+      regions,
+      zones,
+      householdSizes,
+      propertySituations,
+      incomeRanges,
+      employmentStatuses,
+      housingTypes,
+      brsKnowledge,
+      departements,
+      postalCodes,
+    ] = await Promise.all([
+      summaryPromise,
+      regionsPromise,
+      zonesPromise,
+      distribution(
+        `CASE
+          WHEN eligibility_simulation."householdSize" >= 6 THEN '6 personnes et plus'
+          WHEN eligibility_simulation."householdSize" = 1 THEN '1 personne'
+          ELSE eligibility_simulation."householdSize"::text || ' personnes'
+        END`,
+        'MIN(eligibility_simulation."householdSize")',
+        'eligibility_simulation."householdSize" IS NOT NULL',
+      ),
+      distribution(
+        `CASE eligibility_simulation."propertySituation"
+          WHEN 'LOCATAIRE_PRIVE' THEN 'Locataire privé'
+          WHEN 'LOCATAIRE_SOCIAL' THEN 'Locataire social'
+          WHEN 'HEBERGE' THEN 'Hébergé'
+          WHEN 'PROPRIETAIRE' THEN 'Propriétaire'
+          ELSE 'Autre'
+        END`,
+        'COUNT(DISTINCT eligibility_simulation.id)',
+        'eligibility_simulation."propertySituation" IS NOT NULL',
+      ),
+      distribution(
+        `CASE
+          WHEN eligibility_simulation.resources < 20000 THEN '< 20k'
+          WHEN eligibility_simulation.resources < 30000 THEN '20k-30k'
+          WHEN eligibility_simulation.resources < 40000 THEN '30k-40k'
+          WHEN eligibility_simulation.resources < 55000 THEN '40k-55k'
+          ELSE '55k+'
+        END`,
+        'MIN(eligibility_simulation.resources)',
+        'eligibility_simulation.resources IS NOT NULL',
+      ),
+      distribution(
+        `CASE eligibility_simulation."employmentStatus"
+          WHEN 'SALARIE_PRIVE_NON_AGRICOLE' THEN 'Salarié privé non agricole'
+          WHEN 'SALARIE_PUBLIC_OU_FONCTIONNAIRE' THEN 'Salarié public / fonctionnaire'
+          WHEN 'SANS_ACTIVITE_PROFESSIONNELLE' THEN 'Sans activité professionnelle'
+          WHEN 'INDEPENDANT' THEN 'Indépendant'
+          WHEN 'RETRAITE' THEN 'Retraité'
+          WHEN 'SALARIE_AGRICOLE' THEN 'Salarié agricole'
+          WHEN 'SALARIE_GROUPE_LA_POSTE' THEN 'Salarié groupe La Poste'
+        END`,
+        'COUNT(DISTINCT eligibility_simulation.id)',
+        'eligibility_simulation."employmentStatus" IS NOT NULL',
+      ),
+      distribution(
+        'eligibility_simulation."housingType"',
+        'eligibility_simulation."housingType"',
+        'eligibility_simulation."housingType" IS NOT NULL',
+      ),
+      distribution(
+        `CASE eligibility_simulation."hadBrsKnowledge"
+          WHEN false THEN 'Ne connaissait pas le BRS'
+          WHEN true THEN 'Connaissait le BRS'
+        END`,
+        'eligibility_simulation."hadBrsKnowledge"',
+        'eligibility_simulation."hadBrsKnowledge" IS NOT NULL',
+      ),
+      departementsPromise,
+      postalCodesPromise,
+    ]);
+
+    const protectedRegions = suppressSmallDistribution(
+      regions.map((row) => ({ ...row, count: Number(row.count) })),
+    );
+    const numericZones = zones.map((row) => ({
+      ...row,
+      count: Number(row.count),
+    }));
+    const protectedZones =
+      suppressAndOmitSmallDistribution(numericZones).slice(0, 12);
+    const protectedHouseholdSizes = suppressSmallDistribution(householdSizes);
+    const protectedPropertySituations = suppressSmallDistribution(
+      propertySituations.sort((first, second) => second.count - first.count),
+    );
+    const protectedIncomeRanges = suppressSmallDistribution(incomeRanges);
+    const protectedEmploymentStatuses = suppressSmallDistribution(
+      employmentStatuses.sort((first, second) => second.count - first.count),
+    );
+    const protectedHousingTypes = suppressSmallDistribution(housingTypes);
+    const protectedBrsKnowledge = suppressSmallDistribution(
+      brsKnowledge.sort((first, second) => second.count - first.count),
+    );
+    const simulations = Number(summary?.simulations ?? cohortSize);
+    const eligible = suppressBinaryCount(
+      Number(summary?.eligible ?? 0),
+      simulations,
+    );
+    let contactable = suppressBinaryCount(
+      Number(summary?.contactable ?? 0),
+      simulations,
+    );
+
+    if (
+      eligible !== null &&
+      contactable !== null &&
+      eligible - contactable > 0 &&
+      eligible - contactable < PUBLIC_STATISTICS_MINIMUM_COHORT_SIZE
+    ) {
+      contactable = null;
+    }
+
+    return {
+      updatedAt: summary?.updatedAt ?? null,
+      totals: {
+        simulations,
+        eligible,
+        contactable,
+        geolocated: suppressBinaryCount(
+          Number(summary?.geolocated ?? 0),
+          simulations,
+        ),
+      },
+      regions: protectedRegions.items.slice(0, 10),
+      zones: protectedZones,
+      householdSizes: protectedHouseholdSizes.items,
+      propertySituations: protectedPropertySituations.items,
+      incomeRanges: protectedIncomeRanges.items,
+      employmentStatuses: protectedEmploymentStatuses.items,
+      housingTypes: protectedHousingTypes.items,
+      brsKnowledge: protectedBrsKnowledge.items,
+      breakdownTotals: {
+        householdSizes: protectedHouseholdSizes.total,
+        propertySituations: protectedPropertySituations.total,
+        incomeRanges: protectedIncomeRanges.total,
+        employmentStatuses: protectedEmploymentStatuses.total,
+        housingTypes: protectedHousingTypes.total,
+        brsKnowledge: protectedBrsKnowledge.total,
+      },
+      filters: {
+        departements,
+        postalCodes: postalCodes.map((row) => row.postalCode),
+      },
+    };
+  }
+
+  private createPublicStatisticsQuery(
+    filters: PublicEligibilityStatisticsFilters,
+  ) {
+    const query = this.repository
+      .createQueryBuilder('eligibility_simulation')
+      .leftJoin('eligibility_simulation.locations', 'stats_location')
+      .leftJoin('stats_location.departement', 'stats_departement');
+
+    if (filters.departementCode) {
+      query.andWhere('stats_departement.code = :departementCode', {
+        departementCode: filters.departementCode,
+      });
+    }
+
+    if (filters.postalCode) {
+      query.andWhere('stats_location."postalCode" = :postalCode', {
+        postalCode: filters.postalCode,
+      });
+    }
+
+    return query;
   }
 
   public async findPortalContactsByOfsScope(

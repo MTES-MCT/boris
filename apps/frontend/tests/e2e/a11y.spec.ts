@@ -5,6 +5,23 @@ import { expect, test } from '@playwright/test';
 
 import AxeBuilder from '@axe-core/playwright';
 
+test('error page a11y', async ({ page }) => {
+  const response = await page.goto(
+    'http://localhost:4173/page-inexistante-pour-test-accessibilite',
+  );
+
+  expect(response?.status()).toBe(404);
+
+  const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+  const violationIds = accessibilityScanResults.violations.map(
+    (violation) => violation.id,
+  );
+
+  expect(violationIds).not.toContain('document-title');
+  expect(violationIds).not.toContain('nested-interactive');
+  expect(violationIds).not.toContain('page-has-heading-one');
+});
+
 test('a11y', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('boris-cookies-consent', 'false');

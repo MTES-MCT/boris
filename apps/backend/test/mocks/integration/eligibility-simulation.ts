@@ -60,4 +60,5 @@ export const mockEligibilitySimulationRepository = {
   groupByRegions: jest.fn(),
   groupByDepartements: jest.fn(),
   calculateConversionFunnel: jest.fn(),
+  getPublicStatistics: jest.fn(),
 };

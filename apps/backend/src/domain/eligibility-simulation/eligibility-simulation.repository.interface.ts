@@ -50,6 +50,50 @@ export type EligibilitySimulationConversionFunnelResult = {
   totalDesiredCityProvided: number;
 };
 
+export type PublicEligibilityStatisticsFilters = {
+  departementCode?: string;
+  postalCode?: string;
+};
+
+export type PublicEligibilityStatisticsDistribution = {
+  label: string;
+  count: number | null;
+};
+
+export type PublicEligibilityStatisticsResult = {
+  updatedAt: string | null;
+  totals: {
+    simulations: number;
+    eligible: number | null;
+    contactable: number | null;
+    geolocated: number | null;
+  };
+  regions: (PublicEligibilityStatisticsDistribution & { code: string })[];
+  zones: {
+    postalCode: string;
+    departementCode: string;
+    count: number | null;
+  }[];
+  householdSizes: PublicEligibilityStatisticsDistribution[];
+  propertySituations: PublicEligibilityStatisticsDistribution[];
+  incomeRanges: PublicEligibilityStatisticsDistribution[];
+  employmentStatuses: PublicEligibilityStatisticsDistribution[];
+  housingTypes: PublicEligibilityStatisticsDistribution[];
+  brsKnowledge: PublicEligibilityStatisticsDistribution[];
+  breakdownTotals: {
+    householdSizes: number | null;
+    propertySituations: number | null;
+    incomeRanges: number | null;
+    employmentStatuses: number | null;
+    housingTypes: number | null;
+    brsKnowledge: number | null;
+  };
+  filters: {
+    departements: { code: string; name: string }[];
+    postalCodes: string[];
+  };
+};
+
 export type PortalEligibilitySimulationContactResult = {
   simulationId: string;
   locationId: string;
@@ -104,6 +148,9 @@ export interface EligibilitySimulationRepositoryInterface {
   groupByRegions(): Promise<[GroupByRegionsResult[], total: number]>;
   groupByDepartements(): Promise<GroupByDepartementsResult[]>;
   calculateConversionFunnel(): Promise<EligibilitySimulationConversionFunnelResult>;
+  getPublicStatistics(
+    filters: PublicEligibilityStatisticsFilters,
+  ): Promise<PublicEligibilityStatisticsResult | null>;
   findPortalContactsByOfsScope(
     pagination: PaginationProps,
     filters: PortalEligibilitySimulationContactFilters,
