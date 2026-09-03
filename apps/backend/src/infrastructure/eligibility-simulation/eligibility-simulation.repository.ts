@@ -418,7 +418,7 @@ export class EligibilitySimulationRepository
           ELSE eligibility_simulation."householdSize"::text || ' personnes'
         END`,
         'MIN(eligibility_simulation."householdSize")',
-        'eligibility_simulation."householdSize" IS NOT NULL',
+        'eligibility_simulation."householdSize" > 0',
       ),
       distribution(
         `CASE eligibility_simulation."propertySituation"

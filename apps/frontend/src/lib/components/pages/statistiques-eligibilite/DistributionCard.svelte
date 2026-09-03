@@ -39,8 +39,10 @@
 <article class={`fr-card fr-card--shadow h-full ${className}`}>
   <div class="fr-card__body">
     <div class="fr-card__content !p-6 md:!p-8">
-      <h3 class="fr-card__title">{title}</h3>
-      <p class="fr-card__detail !mb-4">{detail}</p>
+      <h3 class="fr-h4 fr-mb-1w">{title}</h3>
+      <p class="fr-text--sm fr-mb-4w text-[var(--text-mention-grey)]">
+        {detail}
+      </p>
 
       {#if items.length > 0}
         <div

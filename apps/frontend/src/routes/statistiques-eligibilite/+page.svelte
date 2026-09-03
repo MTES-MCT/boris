@@ -318,8 +318,8 @@
           <article class="fr-card fr-card--shadow h-full">
             <div class="fr-card__body">
               <div class="fr-card__content !p-6 md:!p-8">
-                <h3 class="fr-card__title">Départements les plus recherchés</h3>
-                <p class="fr-card__detail">
+                <h3 class="fr-h4 fr-mb-1w">Départements les plus recherchés</h3>
+                <p class="fr-text--sm fr-mb-4w text-[var(--text-mention-grey)]">
                   départements comptant au moins 5 simulations
                 </p>
                 <div class="fr-table fr-table--bordered fr-table--sm fr-mb-0">

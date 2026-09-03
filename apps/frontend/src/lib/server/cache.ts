@@ -17,7 +17,7 @@ export const namespaces = {
   eligibilitySimulationsConversionFunnel:
     'eligibility-simulations-conversion-funnel',
   eligibilitySimulationsPublicStatistics:
-    'eligibility-simulations-public-statistics-v3',
+    'eligibility-simulations-public-statistics-v4',
   acquisitionSimulationsConversionFunnel:
     'acquisition-simulations-conversion-funnel',
 };
