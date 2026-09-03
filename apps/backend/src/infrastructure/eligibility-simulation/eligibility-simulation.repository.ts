@@ -466,7 +466,10 @@ export class EligibilitySimulationRepository
           WHEN false THEN 'Ne connaissait pas le BRS'
           WHEN true THEN 'Connaissait le BRS'
         END`,
-        'eligibility_simulation."hadBrsKnowledge"',
+        `MIN(CASE eligibility_simulation."hadBrsKnowledge"
+          WHEN false THEN 0
+          WHEN true THEN 1
+        END)`,
         'eligibility_simulation."hadBrsKnowledge" IS NOT NULL',
       ),
       departementsPromise,
@@ -480,8 +483,10 @@ export class EligibilitySimulationRepository
       ...row,
       count: Number(row.count),
     }));
-    const protectedZones =
-      suppressAndOmitSmallDistribution(numericZones).slice(0, 12);
+    const protectedZones = suppressAndOmitSmallDistribution(numericZones).slice(
+      0,
+      12,
+    );
     const protectedHouseholdSizes = suppressSmallDistribution(householdSizes);
     const protectedPropertySituations = suppressSmallDistribution(
       propertySituations.sort((first, second) => second.count - first.count),
