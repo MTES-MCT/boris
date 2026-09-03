@@ -36,16 +36,6 @@
         ? `${selectedDepartementName} (${selectedDepartement})`
         : 'France entière',
   );
-  const updatedAt = $derived(
-    statistics.updatedAt
-      ? new Intl.DateTimeFormat('fr-FR', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-          timeZone: 'Europe/Paris',
-        }).format(new Date(statistics.updatedAt))
-      : 'date non disponible',
-  );
   const regionsTotal = $derived(statistics.totals.geolocated);
   const regionsSummary = $derived.by(() => {
     const regionNames = statistics.regions
@@ -66,8 +56,6 @@
           .toSorted((first, second) => (second.count ?? 0) - (first.count ?? 0))
           .slice(0, 2),
   );
-  const zoneDisplay = (postalCode: string) =>
-    postalCode.length <= 3 ? `${postalCode} · département` : postalCode;
 </script>
 
 <svelte:head>
@@ -83,9 +71,6 @@
 <div class="bg-[var(--background-alt-grey)]">
   <div class="fr-container">
     <div class="fr-py-8w fr-py-md-12w">
-      <p class="fr-badge fr-badge--blue-ecume fr-mb-3w md:float-right">
-        Données du {updatedAt}
-      </p>
       <h1 class="max-w-[52rem]">
         Ce que les ménages cherchent en bail réel solidaire
       </h1>
@@ -102,7 +87,7 @@
   </div>
 
   <div
-    class="border-y border-[var(--border-default-grey)] bg-[var(--background-default-grey)] md:sticky md:top-14 md:z-10">
+    class="z-[1000] border-y border-[var(--border-default-grey)] bg-[var(--background-default-grey)] md:sticky md:top-14">
     <div class="fr-container">
       <form
         method="GET"
@@ -313,8 +298,8 @@
           effectivement proposés.
         </p>
         <p>
-          Les deux vues qui suivent vont du plus large au plus fin. La seconde,
-          par code postal, sert à situer une demande à l'échelle d'un projet.
+          Les deux vues qui suivent vont du plus large au plus fin, de la région
+          au département.
         </p>
       </div>
 
@@ -333,11 +318,9 @@
           <article class="fr-card fr-card--shadow h-full">
             <div class="fr-card__body">
               <div class="fr-card__content !p-6 md:!p-8">
-                <h3 class="fr-card__title">
-                  Zones déclarées les plus demandées
-                </h3>
+                <h3 class="fr-card__title">Départements les plus recherchés</h3>
                 <p class="fr-card__detail">
-                  zones comptant au moins 5 simulations
+                  départements comptant au moins 5 simulations
                 </p>
                 <div class="fr-table fr-table--bordered fr-table--sm fr-mb-0">
                   <div class="fr-table__wrapper">
@@ -345,21 +328,23 @@
                       <div class="fr-table__content">
                         <table>
                           <caption class="fr-sr-only">
-                            Zones déclarées les plus demandées
+                            Départements les plus recherchés
                           </caption>
                           <thead>
                             <tr>
-                              <th scope="col">Zone</th>
                               <th scope="col">Département</th>
+                              <th scope="col">Code</th>
                               <th scope="col">Simulations</th>
                             </tr>
                           </thead>
                           <tbody>
-                            {#each statistics.zones as zone}
+                            {#each statistics.topDepartements as departement}
                               <tr>
-                                <td>{zoneDisplay(zone.postalCode)}</td>
-                                <td>{zone.departementCode}</td>
-                                <td>{formatProtectedCount(zone.count)}</td>
+                                <td>{departement.label}</td>
+                                <td>{departement.code}</td>
+                                <td>
+                                  {formatProtectedCount(departement.count)}
+                                </td>
                               </tr>
                             {/each}
                           </tbody>
@@ -367,18 +352,6 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="fr-alert fr-alert--warning fr-alert--sm fr-mt-3w">
-                  <h4 class="fr-alert__title">
-                    Anomalie 2 · deux granularités dans le même champ
-                  </h4>
-                  <p>
-                    Des codes postaux complets et des codes de département
-                    peuvent cohabiter dans la colonne. Les valeurs sur les
-                    premiers arrondissements de Paris ou Lyon peuvent
-                    correspondre à une valeur par défaut retenue quand le ménage
-                    saisit la ville sans préciser.
-                  </p>
                 </div>
               </div>
             </div>
@@ -424,21 +397,9 @@
         </div>
         <div class="fr-col-12 fr-col-lg-6">
           <DistributionCard
-            title="Catégories de revenus"
+            title="Revenu fiscal de référence annuel"
             items={statistics.incomeRanges}
             total={statistics.breakdownTotals.incomeRanges} />
-          <div class="fr-alert fr-alert--warning fr-alert--sm fr-mt-2w">
-            <h3 class="fr-alert__title">
-              Anomalie 1 · défaut d'unité, pas un résultat
-            </h3>
-            <p>
-              La requête écarte déjà les valeurs nulles, donc la première
-              tranche n'est pas gonflée par des champs vides. Le champ semble
-              stocker un revenu mensuel comparé à des seuils annuels. Telle
-              quelle, cette carte ne doit pas servir à qualifier la solvabilité
-              de la demande.
-            </p>
-          </div>
         </div>
         <div class="fr-col-12 fr-col-lg-6">
           <DistributionCard
@@ -505,19 +466,6 @@
             title="Connaissance du BRS avant la simulation"
             items={statistics.brsKnowledge}
             total={statistics.breakdownTotals.brsKnowledge} />
-          <div class="fr-alert fr-alert--warning fr-alert--sm fr-mt-2w">
-            <h3 class="fr-alert__title">
-              Anomalie 3 · « ne connaissait pas » veut peut-être dire « n'a pas
-              coché »
-            </h3>
-            <p>
-              La requête écarte les valeurs nulles, donc ces réponses négatives
-              ont bien été écrites par le parcours. Reste à savoir par quel
-              geste : une question à deux réponses, ou une case à cocher dont
-              l'absence de coche vaut « non ». Dans le second cas ce n'est pas
-              un taux de notoriété.
-            </p>
-          </div>
         </div>
       </div>
     </section>
@@ -533,22 +481,6 @@
         recherchées sont déclarées par le ménage et ne préjugent pas d'un projet
         abouti.
       </p>
-      <div class="fr-alert fr-alert--info fr-alert--sm fr-my-3w">
-        <h3 class="fr-alert__title">
-          Anomalie 4 · les cartes ne partagent pas le même dénominateur
-        </h3>
-        <p>
-          Le total du périmètre est de {formatNumber(
-            statistics.totals.simulations,
-          )} simulations, mais la ventilation géographique en couvre {formatProtectedCount(
-            statistics.totals.geolocated,
-          )}, les ressources {formatProtectedCount(
-            statistics.breakdownTotals.incomeRanges,
-          )}, et la typologie {formatProtectedCount(
-            statistics.breakdownTotals.housingTypes,
-          )}. Chaque carte porte donc son propre effectif.
-        </p>
-      </div>
       <p>
         <strong>Les territoires ne s'additionnent pas.</strong>
         Un même ménage peut déclarer plusieurs zones de recherche, dans plusieurs
@@ -562,10 +494,14 @@
         pas retirées, seulement pas ventilées.
       </p>
       <p>
-        <strong>Fraîcheur.</strong>
+        <strong>Actualisation.</strong>
         Les données sont calculées depuis la base BoRiS puis conservées en cache
-        pendant douze heures. La date affichée en haut correspond à la simulation
-        la plus récente du périmètre sélectionné.
+        pendant douze heures.
+      </p>
+      <p>
+        Toutes les questions ne sont pas posées à tous les ménages et certaines
+        réponses sont facultatives. C'est pourquoi chaque graphique indique son
+        propre nombre de simulations renseignées.
       </p>
       <p class="fr-mb-0">
         <strong>Source des chiffres :</strong>

@@ -30,7 +30,7 @@ describe('GetPublicEligibilityStatisticsUsecase', () => {
         geolocated: 12,
       },
       regions: [],
-      zones: [],
+      topDepartements: [],
       householdSizes: [],
       propertySituations: [],
       incomeRanges: [],

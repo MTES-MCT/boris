@@ -350,18 +350,17 @@ export class EligibilitySimulationRepository
       .orderBy('COUNT(DISTINCT eligibility_simulation.id)', 'DESC')
       .getRawMany<{ code: string; label: string; count: string }>();
 
-    const zonesPromise = this.createPublicStatisticsQuery(filters)
-      .select('stats_location."postalCode"', 'postalCode')
-      .addSelect('stats_departement.code', 'departementCode')
+    const topDepartementsPromise = this.createPublicStatisticsQuery(filters)
+      .select('stats_departement.code', 'code')
+      .addSelect('stats_departement.name', 'label')
       .addSelect('COUNT(DISTINCT eligibility_simulation.id)', 'count')
-      .andWhere('stats_location."postalCode" IS NOT NULL')
-      .andWhere(`TRIM(stats_location."postalCode") != ''`)
-      .groupBy('stats_location."postalCode"')
-      .addGroupBy('stats_departement.code')
+      .andWhere('stats_departement.id IS NOT NULL')
+      .groupBy('stats_departement.code')
+      .addGroupBy('stats_departement.name')
       .orderBy('COUNT(DISTINCT eligibility_simulation.id)', 'DESC')
       .getRawMany<{
-        postalCode: string;
-        departementCode: string;
+        code: string;
+        label: string;
         count: string;
       }>();
 
@@ -399,7 +398,7 @@ export class EligibilitySimulationRepository
     const [
       summary,
       regions,
-      zones,
+      topDepartements,
       householdSizes,
       propertySituations,
       incomeRanges,
@@ -411,7 +410,7 @@ export class EligibilitySimulationRepository
     ] = await Promise.all([
       summaryPromise,
       regionsPromise,
-      zonesPromise,
+      topDepartementsPromise,
       distribution(
         `CASE
           WHEN eligibility_simulation."householdSize" >= 6 THEN '6 personnes et plus'
@@ -434,14 +433,14 @@ export class EligibilitySimulationRepository
       ),
       distribution(
         `CASE
-          WHEN eligibility_simulation.resources < 20000 THEN '< 20k'
-          WHEN eligibility_simulation.resources < 30000 THEN '20k-30k'
-          WHEN eligibility_simulation.resources < 40000 THEN '30k-40k'
-          WHEN eligibility_simulation.resources < 55000 THEN '40k-55k'
+          WHEN eligibility_simulation."taxableIncome" < 20000 THEN '< 20k'
+          WHEN eligibility_simulation."taxableIncome" < 30000 THEN '20k-30k'
+          WHEN eligibility_simulation."taxableIncome" < 40000 THEN '30k-40k'
+          WHEN eligibility_simulation."taxableIncome" < 55000 THEN '40k-55k'
           ELSE '55k+'
         END`,
-        'MIN(eligibility_simulation.resources)',
-        'eligibility_simulation.resources IS NOT NULL',
+        'MIN(eligibility_simulation."taxableIncome")',
+        'eligibility_simulation."taxableIncome" IS NOT NULL',
       ),
       distribution(
         `CASE eligibility_simulation."employmentStatus"
@@ -479,14 +478,13 @@ export class EligibilitySimulationRepository
     const protectedRegions = suppressSmallDistribution(
       regions.map((row) => ({ ...row, count: Number(row.count) })),
     );
-    const numericZones = zones.map((row) => ({
+    const numericTopDepartements = topDepartements.map((row) => ({
       ...row,
       count: Number(row.count),
     }));
-    const protectedZones = suppressAndOmitSmallDistribution(numericZones).slice(
-      0,
-      12,
-    );
+    const protectedTopDepartements = suppressAndOmitSmallDistribution(
+      numericTopDepartements,
+    ).slice(0, 12);
     const protectedHouseholdSizes = suppressSmallDistribution(householdSizes);
     const protectedPropertySituations = suppressSmallDistribution(
       propertySituations.sort((first, second) => second.count - first.count),
@@ -530,7 +528,7 @@ export class EligibilitySimulationRepository
         ),
       },
       regions: protectedRegions.items.slice(0, 10),
-      zones: protectedZones,
+      topDepartements: protectedTopDepartements,
       householdSizes: protectedHouseholdSizes.items,
       propertySituations: protectedPropertySituations.items,
       incomeRanges: protectedIncomeRanges.items,

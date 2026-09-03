@@ -69,9 +69,9 @@ export type PublicEligibilityStatisticsResult = {
     geolocated: number | null;
   };
   regions: (PublicEligibilityStatisticsDistribution & { code: string })[];
-  zones: {
-    postalCode: string;
-    departementCode: string;
+  topDepartements: {
+    code: string;
+    label: string;
     count: number | null;
   }[];
   householdSizes: PublicEligibilityStatisticsDistribution[];
