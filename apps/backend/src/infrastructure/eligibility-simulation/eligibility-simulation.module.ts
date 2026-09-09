@@ -28,9 +28,11 @@ import { FindPortalContactLinesUsecase } from 'src/application/eligibility-simul
 import { ExportPortalContactLinesUsecase } from 'src/application/eligibility-simulation/usecases/export-portal-contact-lines.usecase';
 import { GetPublicEligibilityStatisticsUsecase } from 'src/application/eligibility-simulation/usecases/get-public-statistics.usecase';
 import { GetPublicEligibilityStatisticsApiController } from './controllers/api/get-public-eligibility-statistics.controller';
+import { RateLimitModule } from '../auth/rate-limit.module';
 
 @Module({
   imports: [
+    RateLimitModule,
     TypeOrmModule.forFeature([EligibilitySimulationEntity]),
     forwardRef(() => LocationModule),
     MailerModule,

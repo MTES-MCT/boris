@@ -14,9 +14,11 @@ import { UpdateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-
 import { FindBrsDiffusionWebsiteByIdUsecase } from 'src/application/brs-diffusion-website/usecases/findById.usecase';
 import { UpdateBrsDiffusionWebsiteAdminController } from './controllers/admin/update-brs-diffusion-website.controller';
 import { GetBrsDiffusionWebsitesApiController } from './controllers/api/get-brs-diffusion-websites.controller';
+import { RateLimitModule } from '../auth/rate-limit.module';
 
 @Module({
   imports: [
+    RateLimitModule,
     TypeOrmModule.forFeature([BrsDiffusionWebsiteEntity]),
     DepartementModule,
     GeocoderModule,

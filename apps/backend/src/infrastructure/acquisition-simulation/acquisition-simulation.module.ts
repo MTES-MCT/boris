@@ -9,9 +9,13 @@ import { UpdateAcquisitionSimulationUsecase } from 'src/application/acquisition-
 import { CountAcquisitionSimulationsUsecase } from 'src/application/acquisition-simulation/usecases/count.usecase';
 import { CalculateAcquisitionSimulationConversionFunnelUsecase } from 'src/application/acquisition-simulation/usecases/calculateConversionFunnel.usecase';
 import { GetAcquisitionSimulationConversionFunnelController } from './controllers/api/get-acquisition-simulation-conversion-funnel.controller';
+import { RateLimitModule } from '../auth/rate-limit.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AcquisitionSimulationEntity])],
+  imports: [
+    RateLimitModule,
+    TypeOrmModule.forFeature([AcquisitionSimulationEntity]),
+  ],
   controllers: [
     CreateAcquisitionSimulationApiController,
     UpdateAcquisitionSimulationApiController,
