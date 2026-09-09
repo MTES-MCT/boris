@@ -39,13 +39,21 @@ describe('ApiKeyGuard', () => {
     ).rejects.toBeInstanceOf(UnauthorizedException);
   });
 
-  it('rate limits writes using a fingerprint of the API key', async () => {
+  it('rejects a longer key that starts with the configured API key', async () => {
+    await expect(
+      new ApiKeyGuard(rateLimitService as any).canActivate(
+        contextWithKey('shared-secret-attacker'),
+      ),
+    ).rejects.toBeInstanceOf(UnauthorizedException);
+  });
+
+  it('rate limits writes without putting the API key in the quota key', async () => {
     const context = contextWithKey('shared-secret', 'POST');
 
     await new ApiKeyGuard(rateLimitService as any).canActivate(context);
 
     expect(rateLimitService.consume).toHaveBeenCalledWith(
-      expect.stringMatching(/^api-write:[a-f0-9]{64}$/),
+      'api-write',
       120,
       60_000,
     );

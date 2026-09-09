@@ -4,7 +4,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { createHash, timingSafeEqual } from 'crypto';
+import { timingSafeEqual } from 'crypto';
 import { AuthRateLimitService } from '../auth-rate-limit.service';
 import { Request } from 'express';
 
@@ -32,25 +32,24 @@ export class ApiKeyGuard implements CanActivate {
         'API_WRITE_RATE_LIMIT_WINDOW_MS',
         60_000,
       );
-      const keyFingerprint = createHash('sha256')
-        .update(expectedApiKey)
-        .digest('hex');
-
-      await this.authRateLimitService.consume(
-        `api-write:${keyFingerprint}`,
-        limit,
-        windowMs,
-      );
+      await this.authRateLimitService.consume('api-write', limit, windowMs);
     }
 
     return true;
   }
 
   private keysMatch(provided: string, expected: string): boolean {
-    const providedDigest = createHash('sha256').update(provided).digest();
-    const expectedDigest = createHash('sha256').update(expected).digest();
+    const providedBuffer = Buffer.from(provided);
+    const expectedBuffer = Buffer.from(expected);
+    const normalizedProvidedBuffer = Buffer.alloc(expectedBuffer.length);
 
-    return timingSafeEqual(providedDigest, expectedDigest);
+    providedBuffer.copy(normalizedProvidedBuffer, 0, 0, expectedBuffer.length);
+    const valuesMatch = timingSafeEqual(
+      normalizedProvidedBuffer,
+      expectedBuffer,
+    );
+
+    return valuesMatch && providedBuffer.length === expectedBuffer.length;
   }
 
   private positiveIntegerFromEnv(name: string, fallback: number): number {
