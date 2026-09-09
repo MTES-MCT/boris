@@ -8,6 +8,11 @@ import { RequestHandler } from 'express';
 export function sessionMiddlewares(dataSource: DataSource): RequestHandler[] {
   const ttl = 60 * 60 * 24; // 24h
   const test = process.env.NODE_ENV === 'test';
+  const sessionSecret = process.env.SESSION_SECRET;
+
+  if (!sessionSecret && !test) {
+    throw new Error('SESSION_SECRET must be set');
+  }
 
   const sessionStore = test
     ? undefined
@@ -20,7 +25,7 @@ export function sessionMiddlewares(dataSource: DataSource): RequestHandler[] {
     session({
       name: process.env.SESSION_COOKIE_NAME || 'boris.sid',
       store: sessionStore,
-      secret: process.env.SESSION_SECRET || 'secret',
+      secret: sessionSecret || 'test-secret-not-for-prod',
       resave: false,
       saveUninitialized: false,
       rolling: true,

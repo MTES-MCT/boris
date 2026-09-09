@@ -33,6 +33,10 @@ import {
 } from '../../commercial-transmission.entity';
 import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 import { DistributorEligibilitySimulationEntity } from '../../distributor-eligibility-simulation.entity';
+import {
+  CreateCommercialTransmissionDto,
+  UpdateCommercialTransmissionDto,
+} from '../../dtos/commercial-transmission.dto';
 
 @ApiExcludeController()
 @Controller('/api/portal/ofss')
@@ -100,13 +104,7 @@ export class PortalOfssController {
   public async createCommercialTransmission(
     @Param('id') id: string,
     @Body()
-    body: {
-      distributorId?: string;
-      scopeType?: CommercialTransmissionScopeType;
-      inseeCodes?: string[];
-      departementCodes?: string[];
-      isActive?: boolean;
-    },
+    body: CreateCommercialTransmissionDto,
     @Req() req: Request,
   ) {
     const ofs = await this.findAccessibleOfs(id, req.user as UserEntity);
@@ -151,12 +149,7 @@ export class PortalOfssController {
     @Param('id') id: string,
     @Param('transmissionId') transmissionId: string,
     @Body()
-    body: {
-      scopeType?: CommercialTransmissionScopeType;
-      inseeCodes?: string[];
-      departementCodes?: string[];
-      isActive?: boolean;
-    },
+    body: UpdateCommercialTransmissionDto,
     @Req() req: Request,
   ) {
     const ofs = await this.findAccessibleOfs(id, req.user as UserEntity);

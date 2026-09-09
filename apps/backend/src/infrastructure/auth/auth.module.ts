@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { AdminLoginController } from './controllers/login.controller';
 import { UserModule } from 'src/infrastructure/user/user.module';
 import { PassportModule } from '@nestjs/passport';
@@ -10,7 +10,9 @@ import { SessionModule } from '../session/session.module';
 import { PortalAuthController } from './controllers/portal-auth.controller';
 import { PortalApiAuthenticatedGuard } from './guards/portal-api-authenticated.guard';
 import { AuthRateLimitService } from './auth-rate-limit.service';
+import { ApiKeyGuard } from './guards/api-key.guard';
 
+@Global()
 @Module({
   imports: [
     PassportModule.register({ session: true }),
@@ -28,7 +30,8 @@ import { AuthRateLimitService } from './auth-rate-limit.service';
     UserSerializer,
     AuthRateLimitService,
     PortalApiAuthenticatedGuard,
+    ApiKeyGuard,
   ],
-  exports: [],
+  exports: [AuthRateLimitService, ApiKeyGuard],
 })
 export class AuthModule {}

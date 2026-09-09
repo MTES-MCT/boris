@@ -1,4 +1,4 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from 'src/app.module';
 import { App } from 'supertest/types';
@@ -6,6 +6,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import dataSource from 'src/infrastructure/persistence/typeorm.config';
 import { configureViewEngine } from 'src/infrastructure/config/view-engine.config';
 import { configureApiDocumentation } from 'src/infrastructure/config/api-documentation.config';
+import { createValidationPipe } from 'src/infrastructure/config/validation-pipe.config';
 
 // add all jest-extended matchers
 import * as matchers from 'jest-extended';
@@ -27,12 +28,7 @@ export const setupTestingApp = async (): Promise<INestApplication<App>> => {
 
   const app = moduleFixture.createNestApplication<NestExpressApplication>();
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      transformOptions: { enableImplicitConversion: true },
-    }),
-  );
+  app.useGlobalPipes(createValidationPipe());
 
   configureViewEngine(app);
   configureApiDocumentation(app);

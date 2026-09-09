@@ -28,6 +28,7 @@ import { normalizeEmail } from 'src/application/user/utils/normalize-email';
 import { UserRepositoryInterface } from 'src/domain/user/user.repository.interface';
 import { ChangePasswordUsecase } from 'src/application/user/usecases/change-password.usecase';
 import { ChangePasswordDto } from '../dtos/change-password.dto';
+import { regenerateSession } from 'src/infrastructure/session/regenerate-session';
 
 @ApiExcludeController()
 @Controller('/api/portal/auth')
@@ -49,61 +50,63 @@ export class PortalAuthController {
     const email = normalizeEmail(body.email);
     const ip = req.ip || 'unknown';
 
-    this.authRateLimitService.assertNotLimited(
+    await this.authRateLimitService.consume(
       `login:email:${email}`,
       5,
       15 * 60 * 1000,
     );
-    this.authRateLimitService.assertNotLimited(
+    await this.authRateLimitService.consume(
       `login:ip:${ip}`,
       5,
       15 * 60 * 1000,
     );
 
-    try {
-      const user = await this.loginUsecase.execute(body);
+    const user = await this.loginUsecase.execute(body);
 
-      if (
-        !user.roles.some((role) =>
-          [UserRole.ADMIN, UserRole.OFS, UserRole.DISTRIBUTOR].includes(role),
-        )
-      ) {
-        throw new UnauthorizedException();
-      }
+    if (
+      !user.roles.some((role) =>
+        [UserRole.ADMIN, UserRole.OFS, UserRole.DISTRIBUTOR].includes(role),
+      )
+    ) {
+      throw new UnauthorizedException();
+    }
 
-      const session = req.session as typeof req.session & {
-        previousLoginAt?: string | null;
-      };
+    await regenerateSession(req);
 
-      session.previousLoginAt = user.lastLoginAt?.toISOString() || null;
-      user.lastLoginAt = new Date();
-      await this.userRepository.save(user);
+    const session = req.session as typeof req.session & {
+      previousLoginAt?: string | null;
+    };
 
-      await new Promise<void>((resolve, reject) => {
-        req.logIn(user, (error) => {
-          if (error) {
-            reject(error);
+    session.previousLoginAt = user.lastLoginAt?.toISOString() || null;
+    user.lastLoginAt = new Date();
+    await this.userRepository.save(user);
+
+    await new Promise<void>((resolve, reject) => {
+      req.logIn(user, (error) => {
+        if (error) {
+          reject(
+            error instanceof Error ? error : new Error('Failed to log in'),
+          );
+          return;
+        }
+
+        req.session.save((saveError) => {
+          if (saveError) {
+            reject(
+              saveError instanceof Error
+                ? saveError
+                : new Error('Failed to save session'),
+            );
             return;
           }
 
-          req.session.save((saveError) => {
-            if (saveError) {
-              reject(saveError);
-              return;
-            }
-
-            resolve();
-          });
+          resolve();
         });
       });
+    });
 
-      this.authRateLimitService.clear(`login:email:${email}`);
-      this.authRateLimitService.clear(`login:ip:${ip}`);
-    } catch (error) {
-      this.authRateLimitService.hit(`login:email:${email}`, 15 * 60 * 1000);
-      this.authRateLimitService.hit(`login:ip:${ip}`, 15 * 60 * 1000);
-      throw error;
-    }
+    await this.authRateLimitService.clear(`login:email:${email}`);
+    await this.authRateLimitService.clear(`login:ip:${ip}`);
   }
 
   @UseGuards(PortalApiAuthenticatedGuard)
@@ -182,24 +185,18 @@ export class PortalAuthController {
     const normalizedEmail = normalizeEmail(body.email);
     const ip = req.ip || 'unknown';
 
-    this.authRateLimitService.assertNotLimited(
+    await this.authRateLimitService.consume(
       `forgot:email:${normalizedEmail}`,
       3,
       60 * 60 * 1000,
     );
-    this.authRateLimitService.assertNotLimited(
+    await this.authRateLimitService.consume(
       `forgot:ip:${ip}`,
       10,
       60 * 60 * 1000,
     );
 
     await this.requestPasswordResetUsecase.execute(body.email);
-
-    this.authRateLimitService.hit(
-      `forgot:email:${normalizedEmail}`,
-      60 * 60 * 1000,
-    );
-    this.authRateLimitService.hit(`forgot:ip:${ip}`, 60 * 60 * 1000);
   }
 
   @Post('/reset-password')
@@ -211,15 +208,13 @@ export class PortalAuthController {
     const ip = req.ip || 'unknown';
     const tokenKey = body.token.slice(0, 16);
 
-    this.authRateLimitService.assertNotLimited(
+    await this.authRateLimitService.consume(
       `reset:${ip}:${tokenKey}`,
       5,
       60 * 60 * 1000,
     );
 
     await this.resetPasswordWithTokenUsecase.execute(body.token, body.password);
-
-    this.authRateLimitService.hit(`reset:${ip}:${tokenKey}`, 60 * 60 * 1000);
   }
 
   @UseGuards(PortalApiAuthenticatedGuard)
