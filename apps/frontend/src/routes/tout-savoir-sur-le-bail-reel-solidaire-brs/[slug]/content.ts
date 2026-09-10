@@ -363,7 +363,19 @@ export const steps: Step[] = [
           </p>
           <a
             class="fr-btn fr-btn--lg"
-            href="/groupe-csf">
+            href="https://www.csf.fr/ministere-du-logement" target="_blank" rel="noopener noreferrer">
+            En savoir plus
+          </a>
+
+          <h2 class="fr-h5 heading fr-mt-6w">Postiers salariés ou fonctionnaires de la maison mère et éligibles au BRS ? Le Prêt Bonifié Employeur La Poste peut compléter votre financement</h2>
+          <p>
+            Pour un achat en BRS en Île-de-France ou dans les DROM, vous pouvez
+            bénéficier d’une bonification de taux pour réduire le coût de votre
+            projet immobilier.
+          </p>
+          <a
+            class="fr-btn fr-btn--lg"
+            href="/groupe-la-poste">
             En savoir plus
           </a>
         `,

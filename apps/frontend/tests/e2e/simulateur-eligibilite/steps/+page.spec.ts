@@ -556,6 +556,11 @@ test.describe('Eligibility simulator', () => {
 
       if (employmentStatus === 'SALARIE_GROUPE_LA_POSTE') {
         expect(laposteEmployerInput).toBeVisible();
+        await expect(
+          simulatorWrapper.getByRole('link', {
+            name: 'En savoir plus sur la surbonification du Prêt Employeur La Poste',
+          }),
+        ).toHaveAttribute('href', '/groupe-la-poste');
 
         if (typeof laposteEmployer === 'string') {
           await laposteEmployerInput.fill(laposteEmployer);

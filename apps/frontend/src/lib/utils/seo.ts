@@ -39,6 +39,11 @@ const staticMetadataByPath: Record<string, Omit<SeoMetadata, 'pathname'>> = {
     description:
       "Service de conseil gratuit du Groupe CSF pour accompagner les fonctionnaires et salariés du secteur public dans leur projet d'achat en BRS.",
   },
+  '/groupe-la-poste': {
+    title: 'Prêt Employeur La Poste pour un achat en BRS | Boris',
+    description:
+      'Découvrez la surbonification du Prêt Employeur La Poste pour les postiers de la maison mère qui achètent en BRS en Île-de-France ou dans les DROM.',
+  },
   '/blog': {
     title: 'Blog sur le Bail Réel Solidaire - BRS - BoRiS',
     description:

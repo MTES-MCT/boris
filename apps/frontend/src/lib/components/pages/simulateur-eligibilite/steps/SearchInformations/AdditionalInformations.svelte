@@ -238,6 +238,19 @@
 
 {#snippet laPoste()}
   <div class="fr-fieldset__element fr-mb-4w">
+    <p>
+      Vous êtes Postiers maison mère ? Vous êtes potentiellement éligible à la
+      surbonification du Prêt Employeur La Poste.
+      <a
+        href="/groupe-la-poste"
+        class="fr-link"
+        aria-label="En savoir plus sur la surbonification du Prêt Employeur La Poste">
+        En savoir plus
+      </a>
+    </p>
+  </div>
+
+  <div class="fr-fieldset__element fr-mb-4w">
     <Input
       value={laposteEmployer}
       label={stepsContent.laposteEmployer.label}
@@ -406,7 +419,7 @@
     <p class="fr-mb-2w">
       Etant donné votre situation professionnelle, vous êtes également éligible
       au service de <a
-        href="https://www.csf.fr/immobilier"
+        href="https://www.csf.fr/ministere-du-logement"
         class="fr-link"
         target="_blank"
         rel="noopener">
