@@ -7,6 +7,7 @@ import { AuthRateLimitService } from '../auth-rate-limit.service';
 import { normalizeEmail } from 'src/application/user/utils/normalize-email';
 import { UserRepositoryInterface } from 'src/domain/user/user.repository.interface';
 import { UserEntity } from 'src/infrastructure/user/user.entity';
+import { regenerateSession } from 'src/infrastructure/session/regenerate-session';
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {
@@ -24,38 +25,38 @@ export class LocalAuthGuard extends AuthGuard('local') {
     const ip = req.ip || 'unknown';
 
     try {
-      this.authRateLimitService.assertNotLimited(
+      await this.authRateLimitService.consume(
         `login:email:${email}`,
         5,
         15 * 60 * 1000,
       );
-      this.authRateLimitService.assertNotLimited(
+      await this.authRateLimitService.consume(
         `login:ip:${ip}`,
         5,
         15 * 60 * 1000,
       );
 
       await super.canActivate(context);
-      const request = context.switchToHttp().getRequest();
+      const request = context.switchToHttp().getRequest<Request>();
+      await regenerateSession(request);
       await super.logIn(request);
 
       const user = request.user as UserEntity;
-      const session = request.session;
+      const session = request.session as typeof request.session & {
+        previousLoginAt?: string | null;
+      };
 
       session.previousLoginAt = user.lastLoginAt?.toISOString() || null;
       user.lastLoginAt = new Date();
       await this.userRepository.save(user);
 
-      this.authRateLimitService.clear(`login:email:${email}`);
-      this.authRateLimitService.clear(`login:ip:${ip}`);
+      await this.authRateLimitService.clear(`login:email:${email}`);
+      await this.authRateLimitService.clear(`login:ip:${ip}`);
 
       return true;
     } catch (e) {
       console.log(e);
       const res: Response = context.switchToHttp().getResponse();
-
-      this.authRateLimitService.hit(`login:email:${email}`, 15 * 60 * 1000);
-      this.authRateLimitService.hit(`login:ip:${ip}`, 15 * 60 * 1000);
 
       (req as RequestWithFlash).flash(
         translations.error.defaultLabel,

@@ -18,10 +18,10 @@ import {
   PortalLeadNotificationFrequency,
   PortalLeadNotificationPreferenceEntity,
 } from '../../portal-lead-notification-preference.entity';
-
-type LeadNotificationFrequencyFormValue =
-  | PortalLeadNotificationFrequency
-  | 'none';
+import {
+  LeadNotificationFrequencyFormValue,
+  UpdatePortalLeadNotificationsDto,
+} from '../../dtos/update-portal-lead-notifications.dto';
 
 @ApiExcludeController()
 @Controller('/api/portal/lead-notifications')
@@ -63,12 +63,7 @@ export class PortalLeadNotificationsController {
   @Put()
   public async update(
     @Body()
-    body: {
-      notifications?: {
-        ofsId?: string;
-        frequency?: LeadNotificationFrequencyFormValue;
-      }[];
-    },
+    body: UpdatePortalLeadNotificationsDto,
     @Req() req: Request,
   ) {
     const user = req.user as UserEntity;

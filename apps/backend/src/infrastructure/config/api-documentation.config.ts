@@ -2,6 +2,10 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export function configureApiDocumentation(app: NestExpressApplication) {
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
+
   const options = new DocumentBuilder()
     .setTitle('Boris API')
     .setDescription('Documentation API de Boris')

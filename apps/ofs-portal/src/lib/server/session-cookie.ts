@@ -13,31 +13,23 @@ function parseSetCookie(header: string) {
   };
 }
 
-function normalizeCookieDomain(domain?: string) {
-  if (!domain) {
-    return undefined;
-  }
+function isLocalHttpRequest(url: URL) {
+  const hostname = url.hostname.toLowerCase();
 
-  const normalized = domain.trim().toLowerCase();
-
-  if (normalized === "localhost" || normalized === "127.0.0.1") {
-    return undefined;
-  }
-
-  return domain;
+  return (
+    url.protocol === "http:" &&
+    (hostname === "localhost" ||
+      hostname.endsWith(".localhost") ||
+      hostname === "127.0.0.1" ||
+      hostname === "[::1]")
+  );
 }
 
-function isLocalhostCookie(domain?: string) {
-  if (!domain) {
-    return true;
-  }
-
-  const normalized = domain.trim().toLowerCase();
-
-  return normalized === "localhost" || normalized === "127.0.0.1";
-}
-
-export function applyBackendSetCookie(cookies: Cookies, headers: string[]) {
+export function applyBackendSetCookie(
+  cookies: Cookies,
+  headers: string[],
+  requestUrl: URL,
+) {
   for (const header of headers) {
     const { name, value, attributes } = parseSetCookie(header);
     const options: {
@@ -55,7 +47,7 @@ export function applyBackendSetCookie(cookies: Cookies, headers: string[]) {
       const [rawKey, rawValue] = attribute.split("=");
       const key = rawKey.toLowerCase();
 
-      if (key === "domain") options.domain = normalizeCookieDomain(rawValue);
+      if (key === "domain") options.domain = rawValue;
       if (key === "path") options.path = rawValue;
       if (key === "max-age") options.maxAge = Number(rawValue);
       if (key === "secure") options.secure = true;
@@ -64,12 +56,10 @@ export function applyBackendSetCookie(cookies: Cookies, headers: string[]) {
         options.sameSite = rawValue.toLowerCase() as "strict" | "lax" | "none";
     }
 
-    const localCookie = isLocalhostCookie(options.domain);
-
     // Backend cookies are authored for the final shared-parent-domain setup.
     // In local dev, browsers commonly reject `Domain=localhost`, `Secure`, or
     // overly strict same-site settings, so rewrite them into a host-only cookie.
-    if (localCookie) {
+    if (isLocalHttpRequest(requestUrl)) {
       options.domain = undefined;
       options.secure = false;
       options.sameSite = "lax";

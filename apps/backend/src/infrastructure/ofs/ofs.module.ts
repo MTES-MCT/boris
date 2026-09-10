@@ -31,9 +31,11 @@ import { PortalLeadNotificationPreferenceEntity } from './portal-lead-notificati
 import { PortalLeadNotificationsController } from './controllers/api/portal-lead-notifications.controller';
 import { SendPortalLeadNotificationsCron } from './cron/send-portal-lead-notifications';
 import { MailerModule } from '../mailer/mailer.module';
+import { RateLimitModule } from '../auth/rate-limit.module';
 
 @Module({
   imports: [
+    RateLimitModule,
     TypeOrmModule.forFeature([
       OfsEntity,
       OfsEligibilitySimulationEntity,

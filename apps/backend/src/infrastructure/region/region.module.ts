@@ -9,9 +9,11 @@ import { GetBrsDiffusionWebsitesByRegionApiController } from './controllers/api/
 import { FindAllBrsDiffusionWebsitesByRegionUsecase } from 'src/application/brs-diffusion-website/usecases/findAllByRegion.usecase';
 import { BrsDiffusionWebsiteModule } from '../brs-diffusion-website/brs-diffusion-website.module';
 import { UpdateRegionUsecase } from 'src/application/region/usecases/update.usecase';
+import { RateLimitModule } from '../auth/rate-limit.module';
 
 @Module({
   imports: [
+    RateLimitModule,
     TypeOrmModule.forFeature([RegionEntity]),
     BrsDiffusionWebsiteModule,
   ],

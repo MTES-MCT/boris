@@ -34,13 +34,26 @@ export class TrustedOriginMiddleware implements NestMiddleware {
       .filter(Boolean)
       .map((origin) => origin as string);
 
-    if (
-      !originHeader ||
-      !allowedOrigins.some((origin) => originHeader.startsWith(origin))
-    ) {
+    if (!originHeader || !this.isAllowedOrigin(originHeader, allowedOrigins)) {
       throw new ForbiddenException();
     }
 
     next();
+  }
+
+  private isAllowedOrigin(value: string, allowedOrigins: string[]): boolean {
+    try {
+      const requestOrigin = new URL(value).origin;
+
+      return allowedOrigins.some((allowedOrigin) => {
+        try {
+          return new URL(allowedOrigin).origin === requestOrigin;
+        } catch {
+          return false;
+        }
+      });
+    } catch {
+      return false;
+    }
   }
 }

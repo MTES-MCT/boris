@@ -1,16 +1,34 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-
-type Entry = { count: number; resetAt: number };
+import { createHash } from 'crypto';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class AuthRateLimitService {
-  private readonly entries = new Map<string, Entry>();
+  constructor(private readonly dataSource: DataSource) {}
 
-  public assertNotLimited(key: string, limit: number, windowMs: number) {
-    this.prune(key, windowMs);
-    const entry = this.entries.get(key);
+  public async consume(key: string, limit: number, windowMs: number) {
+    const resetAt = new Date(Date.now() + windowMs);
+    const keyFingerprint = this.fingerprint(key);
+    const rows: { count: number }[] = await this.dataSource.query(
+      `WITH expired AS (
+         DELETE FROM "rate_limit" WHERE "resetAt" <= NOW()
+       )
+       INSERT INTO "rate_limit" AS rate_limit ("key", "count", "resetAt")
+       VALUES ($1, 1, $2)
+       ON CONFLICT ("key") DO UPDATE SET
+         "count" = CASE
+           WHEN rate_limit."resetAt" <= NOW() THEN 1
+           ELSE rate_limit."count" + 1
+         END,
+         "resetAt" = CASE
+           WHEN rate_limit."resetAt" <= NOW() THEN EXCLUDED."resetAt"
+           ELSE rate_limit."resetAt"
+         END
+       RETURNING "count"`,
+      [keyFingerprint, resetAt],
+    );
 
-    if (entry && entry.count >= limit) {
+    if (Number(rows[0]?.count) > limit) {
       throw new HttpException(
         'Too many requests',
         HttpStatus.TOO_MANY_REQUESTS,
@@ -18,36 +36,13 @@ export class AuthRateLimitService {
     }
   }
 
-  public hit(key: string, windowMs: number) {
-    this.prune(key, windowMs);
-    const entry = this.entries.get(key);
-
-    if (!entry) {
-      this.entries.set(key, { count: 1, resetAt: Date.now() + windowMs });
-      return;
-    }
-
-    entry.count += 1;
+  public async clear(key: string) {
+    await this.dataSource.query(`DELETE FROM "rate_limit" WHERE "key" = $1`, [
+      this.fingerprint(key),
+    ]);
   }
 
-  public clear(key: string) {
-    this.entries.delete(key);
-  }
-
-  private prune(key: string, windowMs: number) {
-    const entry = this.entries.get(key);
-
-    if (!entry) {
-      return;
-    }
-
-    if (entry.resetAt <= Date.now()) {
-      this.entries.delete(key);
-      return;
-    }
-
-    if (!entry.resetAt) {
-      entry.resetAt = Date.now() + windowMs;
-    }
+  private fingerprint(key: string): string {
+    return createHash('sha256').update(key).digest('hex');
   }
 }

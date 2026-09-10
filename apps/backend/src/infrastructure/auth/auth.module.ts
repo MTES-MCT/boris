@@ -9,13 +9,14 @@ import { AdminLogoutController } from './controllers/logout.controller';
 import { SessionModule } from '../session/session.module';
 import { PortalAuthController } from './controllers/portal-auth.controller';
 import { PortalApiAuthenticatedGuard } from './guards/portal-api-authenticated.guard';
-import { AuthRateLimitService } from './auth-rate-limit.service';
+import { RateLimitModule } from './rate-limit.module';
 
 @Module({
   imports: [
     PassportModule.register({ session: true }),
     UserModule,
     SessionModule,
+    RateLimitModule,
   ],
   controllers: [
     AdminLoginController,
@@ -26,7 +27,6 @@ import { AuthRateLimitService } from './auth-rate-limit.service';
     LocalStrategy,
     LoginUsecase,
     UserSerializer,
-    AuthRateLimitService,
     PortalApiAuthenticatedGuard,
   ],
   exports: [],

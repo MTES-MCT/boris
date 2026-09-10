@@ -2,8 +2,9 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsInt, IsNumber, IsOptional, Max, Min } from 'class-validator';
 import { DEFAULT_RADIUS } from 'src/application/brs-diffusion-website/usecases/findAll.usecase';
+import { PaginationDTO } from 'src/infrastructure/common/dtos/pagination.dto';
 
-export class GetAllBrsDiffusionWebsitesDTO {
+export class GetAllBrsDiffusionWebsitesDTO extends PaginationDTO {
   @ApiPropertyOptional({
     description: 'La latitude du point de référence',
     example: 48.85341,

@@ -42,7 +42,7 @@ export class GoogleSheetsService implements GoogleSheetsServiceInterface {
     const range = options.range.includes('!')
       ? options.range
       : `${options.range}!A:ZZ`;
-    const valueInputOption = options.valueInputOption ?? 'USER_ENTERED';
+    const valueInputOption = options.valueInputOption ?? 'RAW';
 
     const sheets = await this.getSheetsClient();
     const res = await sheets.spreadsheets.values.append({

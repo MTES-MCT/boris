@@ -7,9 +7,13 @@ import { DepartementRepository } from '../departement/departement.repository';
 import { CreateMunicipalityUsecase } from 'src/application/municipality/usecases/create.usecase';
 import { FindOneMunicipalityByInseeCodeUsecase } from 'src/application/municipality/usecases/findOneByInseeCode.usecase';
 import { GetMunicipalityByInseeCodeApiController } from './controllers/api/get-municipality-by-insee-code';
+import { RateLimitModule } from '../auth/rate-limit.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([DepartementEntity, MunicipalityEntity])],
+  imports: [
+    RateLimitModule,
+    TypeOrmModule.forFeature([DepartementEntity, MunicipalityEntity]),
+  ],
   controllers: [GetMunicipalityByInseeCodeApiController],
   providers: [
     {

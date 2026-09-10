@@ -11,9 +11,11 @@ import { GetBrsDiffusionWebsitesByDepartementApiController } from './controllers
 import { FindAllBrsDiffusionWebsitesByDepartementUsecase } from 'src/application/brs-diffusion-website/usecases/findAllByDepartement.usecase';
 import { BrsDiffusionWebsiteEntity } from '../brs-diffusion-website/brs-diffusion-website.entity';
 import { BrsDiffusionWebsiteRepository } from '../brs-diffusion-website/brs-diffusion-website.repository';
+import { RateLimitModule } from '../auth/rate-limit.module';
 
 @Module({
   imports: [
+    RateLimitModule,
     TypeOrmModule.forFeature([
       DepartementEntity,
       RegionEntity,
