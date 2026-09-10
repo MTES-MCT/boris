@@ -70,7 +70,7 @@ export async function backendFetch(
         ? [response.headers.get("set-cookie") as string]
         : [];
 
-  applyBackendSetCookie(event.cookies, setCookieHeaders);
+  applyBackendSetCookie(event.cookies, setCookieHeaders, event.url);
 
   if (response.status === 401) {
     clearSessionCookie(event.cookies);

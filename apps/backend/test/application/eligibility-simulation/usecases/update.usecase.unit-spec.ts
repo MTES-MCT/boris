@@ -510,4 +510,36 @@ describe('UpdateEligibilitySimulationUsecase', () => {
 
     expect(mockMailerService.sendEmail).not.toHaveBeenCalled();
   });
+
+  it('appends eligibility data to Google Sheets as raw text', async () => {
+    const updatedSimulation = {
+      ...mockedEligibilitySimulation,
+      firstName: '=1+1',
+      locations: [mockedLocation],
+    };
+
+    mockEligibilitySimulationRepositoryWithFindById.findById.mockResolvedValue({
+      ...mockedEligibilitySimulation,
+    });
+    mockEligibilitySimulationRepositoryWithFindById.save.mockResolvedValue(
+      updatedSimulation,
+    );
+    mockGoogleSheetsService.appendRows.mockResolvedValue({
+      updatedCells: 15,
+      updatedRows: 1,
+    });
+
+    await useCase.execute({
+      id: mockedEligibilitySimulation.id,
+      firstName: '=1+1',
+      contribution: mockedEligibilitySimulation.contribution,
+      resources: mockedEligibilitySimulation.resources,
+    });
+
+    expect(mockGoogleSheetsService.appendRows).toHaveBeenCalledWith(
+      process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
+      { range: 'Sheet1', valueInputOption: 'RAW' },
+      expect.arrayContaining([expect.arrayContaining(['=1+1 Dupont'])]),
+    );
+  });
 });

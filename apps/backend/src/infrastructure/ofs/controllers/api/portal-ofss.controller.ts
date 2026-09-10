@@ -659,10 +659,14 @@ export class PortalOfssController {
   }
 
   private escapeCsvValue(value: string) {
-    if (/[",\n]/.test(value)) {
-      return `"${value.replace(/"/g, '""')}"`;
+    const spreadsheetSafeValue = /^[=+\-@\t\r]/.test(value)
+      ? `'${value}`
+      : value;
+
+    if (/[",\r\n]/.test(spreadsheetSafeValue)) {
+      return `"${spreadsheetSafeValue.replace(/"/g, '""')}"`;
     }
 
-    return value;
+    return spreadsheetSafeValue;
   }
 }

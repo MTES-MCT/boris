@@ -192,7 +192,7 @@ export class UpdateEligibilitySimulationUsecase {
 
         await this.googleSheets.appendRows(
           process.env.GOOGLE_SHEETS_SPREADSHEET_ID as string,
-          { range: 'Sheet1' },
+          { range: 'Sheet1', valueInputOption: 'RAW' },
           cells,
         );
       } catch (e) {
