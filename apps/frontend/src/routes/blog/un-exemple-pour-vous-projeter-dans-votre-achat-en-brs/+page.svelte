@@ -111,23 +111,26 @@
   </p>
   <h3>La redevance</h3>
   <p>
-    Au-delà de ces mensualités, <b>vous devrez chaque mois payer une redevance</b>
-    auprès de l'Organisme Foncier Solidaire (OFS) avec qui vous partagez la
-    propriété de votre logement. Cette redevance mensuelle peut être très
-    variable en fonction du marché immobilier dans lequel se trouve votre
-    logement. A Lyon, par exemple, pour un appartement de 70 m² celle-ci peut
-    monter jusque 210€/mois et le paiement de cette redevance ne s'arrête que si
-    vous revendez votre logement ou le transmettez à vos proches.
+    Au-delà de ces mensualités, <b>
+      vous devrez chaque mois payer une redevance
+    </b>
+    auprès de l'Organisme Foncier Solidaire (OFS) avec qui vous partagez la propriété
+    de votre logement. Cette redevance mensuelle peut être très variable en fonction
+    du marché immobilier dans lequel se trouve votre logement. A Lyon, par exemple,
+    pour un appartement de 70 m² celle-ci peut monter jusque 210€/mois et le paiement
+    de cette redevance ne s'arrête que si vous revendez votre logement ou le transmettez
+    à vos proches.
   </p>
   <h3>Les charges</h3>
   <p>
     De plus, en tant que propriétaire, vous aurez probablement à payer des
-    <b>charges de copropriétés</b> ainsi que la taxe foncière et vous serez dans
-    l'obligation <b>d'assurer votre logement</b>. Ces montants sont variables en
-    fonction des communes de résidence et des copropriétés mais peuvent
-    atteindre quelques centaines d'euros. Ces charges peuvent être payées
-    annuellement mais nous les lisserons sur 12 mois pour vous donner une idée
-    global d'un coût mensuel.
+    <b>charges de copropriétés</b>
+    ainsi que la taxe foncière et vous serez dans l'obligation
+    <b>d'assurer votre logement</b>
+    . Ces montants sont variables en fonction des communes de résidence et des
+    copropriétés mais peuvent atteindre quelques centaines d'euros. Ces charges
+    peuvent être payées annuellement mais nous les lisserons sur 12 mois pour
+    vous donner une idée global d'un coût mensuel.
   </p>
   <p>En résumé, voici le coût de votre logement, chaque mois :</p>
   <ul>
@@ -172,9 +175,10 @@
     vos prêts et il vous restera 124 555,20 € à rembourser. Vous revendez votre
     logement à 210 000 € (soit au même montant que lors de votre achat). Si nous
     déduisons tout ce qu'il vous reste à rembourser, vous avez maintenant une
-    épargne de 85 000 €, soit 4 fois plus que lors de votre achat initial. <b>Vous
-    avez réussi à mettre de l'argent de côté pendant 8 ans tout en vivant dans
-    un logement confortable.</b>
+    épargne de 85 000 €, soit 4 fois plus que lors de votre achat initial. <b>
+      Vous avez réussi à mettre de l'argent de côté pendant 8 ans tout en vivant
+      dans un logement confortable.
+    </b>
   </p>
   <p>
     Vous pourrez maintenant utiliser cet argent comme apport pour acheter un

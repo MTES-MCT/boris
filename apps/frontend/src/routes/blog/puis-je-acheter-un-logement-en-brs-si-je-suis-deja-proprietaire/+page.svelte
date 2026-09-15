@@ -58,7 +58,7 @@
       un ménage acquéreur d’un logement en Bail Réel Solidaire (BRS) ne doit pas
       posséder au moment de l’achat
     </b>
-     :
+    :
   </p>
   <ol>
     <li>
@@ -149,8 +149,8 @@
       signer une attestation sur l’honneur indiquant que vous n’êtes pas dans
       l’une des deux configurations citées ci-dessus
     </b>
-    . Un modèle d’attestation vous sera fourni par le ou la professionnel.le de
-    l’immobilier avec qui vous serez en contact lors de votre achat.
+    . Un modèle d’attestation vous sera fourni par le ou la professionnel.le de l’immobilier
+    avec qui vous serez en contact lors de votre achat.
   </p>
   <p>
     Vous êtes éligible ? Recherchez dès à présent les <a

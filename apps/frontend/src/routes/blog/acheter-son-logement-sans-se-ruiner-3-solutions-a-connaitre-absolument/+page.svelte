@@ -377,7 +377,7 @@
       class="fr-link">
       simuler le coût d’acquisition d’un achat en bail réel solidaire
     </a>
-     pour évaluer le budget total, tester votre éligibilité au PTZ dans le cadre
-    d’un achat en BRS et comprendre le lissage des prêts !
+    pour évaluer le budget total, tester votre éligibilité au PTZ dans le cadre d’un
+    achat en BRS et comprendre le lissage des prêts !
   </p>
 </ArticlePage>

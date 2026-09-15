@@ -112,11 +112,12 @@ const staticMetadataByPath: Record<string, Omit<SeoMetadata, 'pathname'>> = {
   '/simulateur-eligibilite/steps': {
     title: "Simulateur d'éligibilité au Bail Réel Solidaire - BoRiS",
     description:
-      "Simulez votre éligibilité au Bail Réel Solidaire (BRS) avec le simulateur de BoRiS.",
+      'Simulez votre éligibilité au Bail Réel Solidaire (BRS) avec le simulateur de BoRiS.',
   },
   '/statistiques': {
     title: 'Statistiques - BoRiS',
-    description: 'Voir les statistiques du Bail Réel Solidaire (BRS) sur BoRiS.',
+    description:
+      'Voir les statistiques du Bail Réel Solidaire (BRS) sur BoRiS.',
   },
   '/tout-savoir-sur-le-bail-reel-solidaire-brs': {
     title: 'Tout savoir sur le bail réel solidaire - BRS - BoRiS',
@@ -147,7 +148,7 @@ const staticMetadataByPath: Record<string, Omit<SeoMetadata, 'pathname'>> = {
           name: 'Quels sont les plafonds de revenus 2026 en bail réel solidaire (BRS) ?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Consultez le tableau des plafonds de revenus BRS 2026 disponible dans le simulateur d\'éligibilité.',
+            text: "Consultez le tableau des plafonds de revenus BRS 2026 disponible dans le simulateur d'éligibilité.",
           },
         },
         {
@@ -163,7 +164,7 @@ const staticMetadataByPath: Record<string, Omit<SeoMetadata, 'pathname'>> = {
           name: 'Quelle est la durée du BRS ?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Le Bail Réel Solidaire (BRS) est signé pour une durée de 18 à 99 ans. Lorsqu\'il y a une revente ou succession, cette durée repart à zéro.',
+            text: "Le Bail Réel Solidaire (BRS) est signé pour une durée de 18 à 99 ans. Lorsqu'il y a une revente ou succession, cette durée repart à zéro.",
           },
         },
         {
@@ -202,7 +203,9 @@ function normalizePathname(pathname: string): string {
     return '/';
   }
 
-  const normalizedPathname = pathname.startsWith('/') ? pathname : `/${pathname}`;
+  const normalizedPathname = pathname.startsWith('/')
+    ? pathname
+    : `/${pathname}`;
 
   return normalizedPathname.endsWith('/')
     ? normalizedPathname.slice(0, -1)
@@ -236,7 +239,10 @@ function createBreadcrumbSchema(pathname: string, title: string): JsonLd {
   };
 }
 
-function createArticleSchema(pathname: string, article: (typeof articles)[number]): JsonLd {
+function createArticleSchema(
+  pathname: string,
+  article: (typeof articles)[number],
+): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -267,7 +273,9 @@ export function getSeoMetadata(pathname: string): SeoMetadata {
     };
   }
 
-  const brsStep = brsSteps.find((step) => normalizedPathname.endsWith(`/${step.slug}`));
+  const brsStep = brsSteps.find((step) =>
+    normalizedPathname.endsWith(`/${step.slug}`),
+  );
 
   if (brsStep) {
     return {
@@ -278,7 +286,9 @@ export function getSeoMetadata(pathname: string): SeoMetadata {
     };
   }
 
-  const article = articles.find((entry) => normalizedPathname === `/blog/${entry.slug}`);
+  const article = articles.find(
+    (entry) => normalizedPathname === `/blog/${entry.slug}`,
+  );
 
   if (article) {
     return {

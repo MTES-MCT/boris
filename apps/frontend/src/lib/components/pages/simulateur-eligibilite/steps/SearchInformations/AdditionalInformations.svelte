@@ -239,7 +239,7 @@
 {#snippet laPoste()}
   <div class="fr-fieldset__element fr-mb-4w">
     <p>
-      Vous êtes Postiers maison mère ? Vous êtes potentiellement éligible à la
+      Vous êtes postier maison mère ? Vous êtes potentiellement éligible à la
       surbonification du Prêt Employeur La Poste.
       <a
         href="/groupe-la-poste"
