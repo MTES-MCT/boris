@@ -240,11 +240,11 @@
   <div class="fr-fieldset__element fr-mb-4w">
     <p>
       Vous êtes postier maison mère ? Vous êtes potentiellement éligible à la
-      surbonification du Prêt Employeur La Poste.
+      bonification du Prêt Employeur La Poste.
       <a
         href="/groupe-la-poste"
         class="fr-link"
-        aria-label="En savoir plus sur la surbonification du Prêt Employeur La Poste">
+        aria-label="En savoir plus sur la bonification du Prêt Employeur La Poste">
         En savoir plus
       </a>
     </p>

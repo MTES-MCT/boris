@@ -19,10 +19,10 @@
     </b>
   </p>
   <p>
-    Si vous êtes postier·e et éligible au BRS, vous pouvez bénéficier de jusqu’à
-    50 000 € de financement complémentaire avec une bonification de taux de 2,5
-    % par rapport au taux du marché. Cette aide renforce les avantages déjà
-    offerts par le BRS pour concrétiser votre projet immobilier.
+    Si vous êtes postier·e et éligible au BRS, vous pouvez bénéficier de 50 000
+    € de financement complémentaire avec une bonification de taux de 2,5 % par
+    rapport au taux du marché. Cette aide renforce les avantages déjà offerts
+    par le BRS pour concrétiser votre projet immobilier.
   </p>
 
   <iframe
