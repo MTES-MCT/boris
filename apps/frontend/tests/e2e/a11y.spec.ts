@@ -47,6 +47,7 @@ test('a11y', async ({ page }) => {
     const accessibilityScanResults = await new AxeBuilder({ page })
       .exclude('iframe[src*="youtube.com"]')
       .exclude('iframe[src*="youtube-nocookie.com"]')
+      .exclude('iframe[src*="drive.google.com"]')
       .analyze();
 
     // await page.screenshot({ path: `${(new Date().getTime())}.png` });

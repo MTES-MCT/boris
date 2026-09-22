@@ -102,7 +102,6 @@ export class UpdateBrsDiffusionWebsiteUsecase {
       const geocodedMunicipality = geocodedMunicipalityResult[0];
 
       if (!geocodedMunicipality) {
-        console.log(`No result for ${city}`);
         throw new BadRequestException(
           `Pas de résultat pour cette adresse. (adresse : ${nextAddress}, ville : ${city}, code INSEE : ${inseeCode || 'non renseigné'})`,
         );

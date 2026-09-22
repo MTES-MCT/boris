@@ -56,7 +56,6 @@ export class CreateBrsDiffusionWebsiteUsecase {
     const geocodedAddress = geocodedAddressResult[0];
 
     if (!geocodedAddress) {
-      console.log(`No result for ${address}, ${city}`);
       throw new BadRequestException(
         `Pas de résultat pour cette adresse. (adresse : ${address}, ville : ${city}, code INSEE : ${inseeCode || 'non renseigné'})`,
       );
