@@ -70,6 +70,21 @@ export class FindAllBrsDiffusionWebsitesUsecase {
           ? (brsDiffusionWebsite as BrsDiffusionWebsiteEntityWithDistance)
               .distance
           : undefined,
+        brsDiffusionWebsite.programName,
+        brsDiffusionWebsite.deliveryMonth,
+        brsDiffusionWebsite.ofs
+          ? {
+              id: brsDiffusionWebsite.ofs.id,
+              name: brsDiffusionWebsite.ofs.name,
+            }
+          : null,
+        brsDiffusionWebsite.distributor
+          ? {
+              id: brsDiffusionWebsite.distributor.id,
+              name: brsDiffusionWebsite.distributor.name,
+            }
+          : null,
+        brsDiffusionWebsite.housingType,
       );
     });
 

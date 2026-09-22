@@ -43,7 +43,7 @@ export class FindMyOfsUsecase {
     nearestPrograms.forEach((program) => {
       const ofs = program.ofs!;
       const programView = new FindMyOfsProgramView(
-        program.programName || program.ofsName,
+        program.programName || program.ofsName || ofs.name,
         program.address,
         program.city,
         program.zipcode,

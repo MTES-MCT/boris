@@ -53,5 +53,10 @@ describe('BrsDiffusionWebsiteEntity', () => {
 
     mockedBrsDiffusionWebsite.distributor = distributor2;
     expect(mockedBrsDiffusionWebsite.distributor).toBe(distributor2);
+
+    mockedBrsDiffusionWebsite.distributorName = null;
+    mockedBrsDiffusionWebsite.ofsName = null;
+    expect(mockedBrsDiffusionWebsite.distributorName).toBeNull();
+    expect(mockedBrsDiffusionWebsite.ofsName).toBeNull();
   });
 });

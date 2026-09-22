@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  Inject,
-  NotAcceptableException,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Inject, NotFoundException } from '@nestjs/common';
 import { BrsDiffusionWebsiteRepositoryInterface } from 'src/domain/brs-diffusion-website/brs-diffusion-website.repository.interface';
 import { GeocoderService } from 'src/infrastructure/geocoder/geocoder.service';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
@@ -11,6 +6,10 @@ import { BrsDiffusionWebsiteView } from '../views/brs-diffusion-website.view';
 import { UpdateBrsDiffusionWebsiteParams } from './update.params';
 import { GeocodedResponse } from 'src/infrastructure/geocoder/types';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
+import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 
 export class UpdateBrsDiffusionWebsiteUsecase {
   constructor(
@@ -20,12 +19,29 @@ export class UpdateBrsDiffusionWebsiteUsecase {
     private readonly geocoderService: GeocoderService,
     @Inject('DepartementRepositoryInterface')
     private readonly departementRepository: DepartementRepositoryInterface,
+    @InjectRepository(OfsEntity)
+    private readonly ofsRepository: Repository<OfsEntity>,
+    @InjectRepository(DistributorEntity)
+    private readonly distributorRepository: Repository<DistributorEntity>,
   ) {}
 
   public async execute(
     params: UpdateBrsDiffusionWebsiteParams,
   ): Promise<BrsDiffusionWebsiteView> {
-    const { id, source, distributorName, ofsName, city, inseeCode } = params;
+    const {
+      id,
+      source,
+      distributorName,
+      ofsName,
+      programName,
+      city,
+      address,
+      inseeCode,
+      deliveryMonth,
+      ofsId,
+      distributorId,
+      housingType,
+    } = params;
 
     const brsDiffusionWebsite =
       await this.brsDiffusionWebsiteRepository.findById(id);
@@ -34,39 +50,60 @@ export class UpdateBrsDiffusionWebsiteUsecase {
       throw new NotFoundException();
     }
 
+    const nextAddress = address ?? brsDiffusionWebsite.address;
+
     brsDiffusionWebsite.source = source;
-    brsDiffusionWebsite.distributorName = distributorName;
-    brsDiffusionWebsite.ofsName = ofsName;
+    brsDiffusionWebsite.distributorName = distributorName || null;
+    brsDiffusionWebsite.ofsName = ofsName || null;
+    brsDiffusionWebsite.programName = programName || null;
+    brsDiffusionWebsite.deliveryMonth = deliveryMonth || null;
+    brsDiffusionWebsite.housingType =
+      housingType ?? brsDiffusionWebsite.housingType;
+
+    const ofs = ofsId
+      ? await this.ofsRepository.findOneBy({ id: ofsId })
+      : ofsId === null
+        ? null
+        : brsDiffusionWebsite.ofs;
+    const distributor = distributorId
+      ? await this.distributorRepository.findOneBy({ id: distributorId })
+      : distributorId === null
+        ? null
+        : brsDiffusionWebsite.distributor;
+
+    if (ofsId && !ofs) {
+      throw new NotFoundException("L'OFS sélectionné n'existe pas.");
+    }
+
+    if (distributorId && !distributor) {
+      throw new NotFoundException(
+        "Le commercialisateur sélectionné n'existe pas.",
+      );
+    }
+
+    brsDiffusionWebsite.ofs = ofs;
+    brsDiffusionWebsite.distributor = distributor;
 
     let geocodedMunicipalityResult: GeocodedResponse[];
     let departement: DepartementEntity | null = brsDiffusionWebsite.departement;
 
     if (
       brsDiffusionWebsite.city !== city ||
+      brsDiffusionWebsite.address !== nextAddress ||
       (inseeCode && brsDiffusionWebsite.inseeCode !== inseeCode)
     ) {
-      geocodedMunicipalityResult =
-        await this.geocoderService.geocodeByMunicipality(city, inseeCode);
+      geocodedMunicipalityResult = address
+        ? await this.geocoderService.geocodeByAddress(
+            `${nextAddress}, ${city}`,
+            inseeCode,
+          )
+        : await this.geocoderService.geocodeByMunicipality(city, inseeCode);
 
       const geocodedMunicipality = geocodedMunicipalityResult[0];
 
       if (!geocodedMunicipality) {
-        console.log(`No result for ${city}`);
         throw new BadRequestException(
-          `Pas de résultat pour cette ville ou ce code INSEE. (ville: ${city}, code INSEE: ${inseeCode})`,
-        );
-      }
-
-      const hasDoublon =
-        this.geocoderService.geocodedResultHasMunicipalityDoublon(
-          geocodedMunicipalityResult,
-          city,
-        );
-
-      if (hasDoublon) {
-        console.log(`Multiple results for ${city}, please provide INSEE code.`);
-        throw new NotAcceptableException(
-          `Plusieurs résultats pour la ville ${city}, veuillez préciser le code INSEE.`,
+          `Pas de résultat pour cette adresse. (adresse : ${nextAddress}, ville : ${city}, code INSEE : ${inseeCode || 'non renseigné'})`,
         );
       }
 
@@ -82,8 +119,11 @@ export class UpdateBrsDiffusionWebsiteUsecase {
         ?.city as string;
       brsDiffusionWebsite.zipcode = geocodedMunicipality?.properties
         ?.postcode as string;
-      brsDiffusionWebsite.address = geocodedMunicipality?.properties
-        ?.context as string;
+      brsDiffusionWebsite.address = (
+        address
+          ? geocodedMunicipality.properties?.name || nextAddress
+          : geocodedMunicipality.properties?.context || nextAddress
+      ) as string;
       brsDiffusionWebsite.inseeCode = geocodedMunicipality?.properties
         ?.citycode as string;
       brsDiffusionWebsite.latitude = geocodedMunicipality?.geometry
@@ -116,6 +156,22 @@ export class UpdateBrsDiffusionWebsiteUsecase {
         name: brsDiffusionWebsite.departement.name,
         code: brsDiffusionWebsite.departement.code,
       },
+      undefined,
+      brsDiffusionWebsite.programName,
+      brsDiffusionWebsite.deliveryMonth,
+      brsDiffusionWebsite.ofs
+        ? {
+            id: brsDiffusionWebsite.ofs.id,
+            name: brsDiffusionWebsite.ofs.name,
+          }
+        : null,
+      brsDiffusionWebsite.distributor
+        ? {
+            id: brsDiffusionWebsite.distributor.id,
+            name: brsDiffusionWebsite.distributor.name,
+          }
+        : null,
+      brsDiffusionWebsite.housingType,
     );
   }
 }

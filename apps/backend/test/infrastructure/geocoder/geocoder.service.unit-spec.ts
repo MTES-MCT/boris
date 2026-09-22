@@ -68,6 +68,26 @@ describe('GeocoderService', () => {
     expect(result).toEqual([mockedGeocodedResponse]);
   });
 
+  it('should constrain address geocoding with the INSEE code', async () => {
+    const address = '10 rue Nationale, Vannes';
+    const inseeCode = '56260';
+    const url = `${geocoderService.baseUrl}/search?q=${encodeURIComponent(address)}&autocomplete=0&index=address&limit=1&returntruegeometry=false&citycode=${inseeCode}`;
+    const mockApiResponse: GeocodedSearchApiResponse = {
+      type: 'FeatureCollection',
+      features: [mockedGeocodedResponse],
+    };
+
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockApiResponse),
+    } as unknown as Response);
+
+    const result = await geocoderService.geocodeByAddress(address, inseeCode);
+
+    expect(mockFetch).toHaveBeenCalledWith(url);
+    expect(result).toEqual([mockedGeocodedResponse]);
+  });
+
   it('should return empty array when no features are found', async () => {
     const municipality = 'NonExistentCity';
     const emptyResponse: GeocodedSearchApiResponse = {

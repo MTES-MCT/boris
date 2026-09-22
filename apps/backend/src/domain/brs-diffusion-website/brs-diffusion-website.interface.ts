@@ -8,8 +8,8 @@ export type BrsHousingType = 'new' | 'old';
 export interface BrsDiffusionWebsiteInterface {
   id?: string;
   source: string;
-  distributorName: string;
-  ofsName: string;
+  distributorName: string | null;
+  ofsName: string | null;
   programName?: string | null;
   city: string;
   zipcode: string;

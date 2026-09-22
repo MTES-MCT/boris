@@ -292,9 +292,11 @@ export interface components {
       /** @example https://source.fr */
       source: string;
       /** @example Commercialisateur du Finistère */
-      distributorName: string;
+      distributorName?: string | null;
       /** @example Nom de l'OFS */
-      ofsName: string;
+      ofsName?: string | null;
+      /** @example Les Jardins de Boris */
+      programName?: string | null;
       /** @example Quimper */
       city: string;
       /** @example 29000 */
@@ -303,6 +305,8 @@ export interface components {
       address: string;
       /** @example 29000 */
       inseeCode: string;
+      /** @example 2027-03 */
+      deliveryMonth?: string | null;
       /** @example 48.111111 */
       latitude: number;
       /** @example 4.111111 */
@@ -314,6 +318,18 @@ export interface components {
       distance?: number;
       region: components['schemas']['RegionRelationnalView'];
       departement: components['schemas']['DepartementRelationnalView'];
+      ofs?: components['schemas']['BrsDiffusionWebsiteOrganisationView'] | null;
+      distributor?:
+        | components['schemas']['BrsDiffusionWebsiteOrganisationView']
+        | null;
+      /** @enum {string} */
+      housingType: 'new' | 'old';
+    };
+    BrsDiffusionWebsiteOrganisationView: {
+      /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */
+      id: string;
+      /** @example OFS de Bretagne */
+      name: string;
     };
     DistributorRelationnalView: {
       /** @example 5d33fedc-7a06-48a4-b53d-05bf2da446dc */

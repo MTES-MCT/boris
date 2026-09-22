@@ -4,18 +4,21 @@
 
   import Badge from '$components/common/Badge.svelte';
 
-  import type {
-    DepartementRelationnalView,
-    RegionRelationnalView,
-  } from '$lib/utils/api-types';
+  import type { DepartementRelationnalView } from '$lib/utils/api-types';
   import type { Heading } from '$lib/utils/definitions';
+  import { getBrsCardContent } from '$lib/utils/brs-diffusion-website';
 
   type Props = {
-    region: RegionRelationnalView;
     departement: DepartementRelationnalView;
     city: string;
-    ofsName: string;
-    distributorName: string;
+    address: string;
+    programName?: string | null;
+    ofsName?: string | null;
+    distributorName?: string | null;
+    ofs?: { name: string } | null;
+    distributor?: { name: string } | null;
+    deliveryMonth?: string | null;
+    housingType?: 'new' | 'old';
     source: string;
     cardTitleElement?: Heading;
     narrow?: boolean;
@@ -24,17 +27,33 @@
   };
 
   const {
-    region,
     departement,
     city,
+    address,
+    programName,
     ofsName,
     distributorName,
+    ofs,
+    distributor,
+    deliveryMonth,
+    housingType,
     source,
     cardTitleElement = 'h3',
     narrow = false,
     selected = false,
     handleClose,
   }: Props = $props();
+
+  const content = $derived(
+    getBrsCardContent({
+      programName,
+      distributorName: distributorName || distributor?.name,
+      ofsName: ofsName || ofs?.name,
+      address,
+      city,
+      deliveryMonth,
+    }),
+  );
 </script>
 
 <article
@@ -70,9 +89,27 @@
         <svelte:element
           this={cardTitleElement}
           class="fr-card__title">
-          {ofsName}
+          {content.title}
         </svelte:element>
-        <p class="fr-mb-0">{distributorName}</p>
+        {#if content.distributorName}
+          <p class="fr-text--sm fr-mb-1v">
+            Commercialisé par <strong>{content.distributorName}</strong>
+          </p>
+        {/if}
+        {#if content.ofsName}
+          <p class="fr-text--sm fr-mb-1v">
+            OFS : <strong>{content.ofsName}</strong>
+          </p>
+        {/if}
+        {#if content.address}
+          <p class="fr-text--sm fr-mb-0 text-[var(--text-mention-grey)]">
+            <span
+              class="fr-icon-map-pin-2-line fr-icon--sm mr-1"
+              aria-hidden="true">
+            </span>
+            {content.address}, {city}
+          </p>
+        {/if}
       </div>
     </div>
     <div
@@ -86,7 +123,7 @@
             class="fr-link fr-icon-arrow-right-line fr-link--icon-right"
             target="_blank"
             rel="noopener">
-            Lien
+            Voir le programme
           </a>
         </li>
       </ul>
@@ -99,11 +136,22 @@
     <Badge status="info">
       {city}
     </Badge>
-    <Badge status="new">
+    <Badge status="default">
       {departement.name}
     </Badge>
-    <Badge status="success">
-      {region.name}
-    </Badge>
+    {#if housingType}
+      <Badge
+        status={housingType === 'new' ? 'success' : 'info'}
+        normalCase>
+        {housingType === 'new' ? 'Neuf' : 'Ancien'}
+      </Badge>
+    {/if}
+    {#if content.deliveryMonth}
+      <Badge
+        status="default"
+        normalCase>
+        Livraison {content.deliveryMonth}
+      </Badge>
+    {/if}
   </div>
 {/snippet}

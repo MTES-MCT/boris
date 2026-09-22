@@ -15,12 +15,20 @@ import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.
 import { PaginationDTO } from 'src/infrastructure/common/dtos/pagination.dto';
 import translations from 'src/views/utils/translations';
 import { TableFactory } from 'src/views/factories/table.factories';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
+import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 
 @ApiExcludeController()
 @Controller('/brs-diffusion-websites')
 export class GetBrsDiffusionWebsitesAdminController {
   constructor(
     private readonly findAllBrsDiffusionWebsitesUsecase: FindAllBrsDiffusionWebsitesUsecase,
+    @InjectRepository(OfsEntity)
+    private readonly ofsRepository: Repository<OfsEntity>,
+    @InjectRepository(DistributorEntity)
+    private readonly distributorRepository: Repository<DistributorEntity>,
   ) {}
 
   @UseGuards(LocalIsAuthenticatedGuard)
@@ -30,11 +38,14 @@ export class GetBrsDiffusionWebsitesAdminController {
     @Query() { page = 1, pageSize = MAX_PAGE_SIZE }: PaginationDTO,
     @Res() res: Response,
   ) {
-    const brsDiffusionWebsites =
-      await this.findAllBrsDiffusionWebsitesUsecase.execute({
+    const [brsDiffusionWebsites, ofss, distributors] = await Promise.all([
+      this.findAllBrsDiffusionWebsitesUsecase.execute({
         page,
         pageSize,
-      });
+      }),
+      this.ofsRepository.find({ order: { name: 'ASC' } }),
+      this.distributorRepository.find({ order: { name: 'ASC' } }),
+    ]);
 
     const { columns, rows, pagination } = TableFactory.createTable(
       translations.contents.brsDiffusionWebsites.columns || [],
@@ -53,6 +64,8 @@ export class GetBrsDiffusionWebsitesAdminController {
       columns,
       rows,
       pagination,
+      ofss,
+      distributors,
     });
   }
 }
