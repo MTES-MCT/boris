@@ -20,6 +20,13 @@ import {
   mockedGeocodedResponse,
   mockedGeocoderService,
 } from 'test/mocks/integration/geocoder';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
+import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
+
+const mockedOrganisationRepository = {
+  findOneBy: jest.fn(),
+};
 
 describe('CreateBrsDiffusionWebsiteUsecase', () => {
   let useCase: CreateBrsDiffusionWebsiteUsecase;
@@ -39,6 +46,14 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
         {
           provide: 'GeocoderServiceInterface',
           useValue: mockedGeocoderService,
+        },
+        {
+          provide: getRepositoryToken(OfsEntity),
+          useValue: mockedOrganisationRepository,
+        },
+        {
+          provide: getRepositoryToken(DistributorEntity),
+          useValue: mockedOrganisationRepository,
         },
       ],
     }).compile();
@@ -210,6 +225,54 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
         finistere.region,
         finistere,
       ),
+    );
+  });
+
+  it('should create a fully described and precisely geocoded website', async () => {
+    const ofs = { id: 'a302e6a4-e62c-4eca-a7da-dc87aaac629f', name: 'OFS lié' };
+    const distributor = {
+      id: 'cdfd52b7-d3cc-45a7-a09e-c95059447f6e',
+      name: 'Commercialisateur lié',
+    };
+
+    mockedGeocoderService.geocodeByAddress.mockResolvedValue([
+      mockedGeocodedResponse,
+    ]);
+    mockDepartementRepository.findOneByInseeCode.mockResolvedValue(finistere);
+    mockedOrganisationRepository.findOneBy
+      .mockResolvedValueOnce(ofs)
+      .mockResolvedValueOnce(distributor);
+    mockedBrsDiffusionWebsiteRepository.save.mockImplementation(
+      async (website) => website,
+    );
+
+    await useCase.execute({
+      source: 'https://example.test/programme',
+      distributorName: distributor.name,
+      ofsName: ofs.name,
+      programName: 'Programme complet',
+      city: 'Vannes',
+      address: '10 rue Nationale',
+      inseeCode: '56260',
+      deliveryMonth: '2027-03',
+      ofsId: ofs.id,
+      distributorId: distributor.id,
+      housingType: 'old',
+    });
+
+    expect(mockedGeocoderService.geocodeByAddress).toHaveBeenCalledWith(
+      '10 rue Nationale, Vannes',
+      '56260',
+    );
+    expect(mockedBrsDiffusionWebsiteRepository.save).toHaveBeenCalledWith(
+      expect.objectContaining({
+        programName: 'Programme complet',
+        address: mockedGeocodedResponse.properties?.name,
+        deliveryMonth: '2027-03',
+        ofs,
+        distributor,
+        housingType: 'old',
+      }),
     );
   });
 

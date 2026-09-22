@@ -16,6 +16,13 @@ import {
   mockedGeocodedResponse,
   mockedGeocoderService,
 } from 'test/mocks/integration/geocoder';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
+import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
+
+const mockedOrganisationRepository = {
+  findOneBy: jest.fn(),
+};
 
 describe('UpdateBrsDiffusionWebsiteUsecase', () => {
   let useCase: UpdateBrsDiffusionWebsiteUsecase;
@@ -35,6 +42,14 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
         {
           provide: 'GeocoderServiceInterface',
           useValue: mockedGeocoderService,
+        },
+        {
+          provide: getRepositoryToken(OfsEntity),
+          useValue: mockedOrganisationRepository,
+        },
+        {
+          provide: getRepositoryToken(DistributorEntity),
+          useValue: mockedOrganisationRepository,
         },
       ],
     }).compile();

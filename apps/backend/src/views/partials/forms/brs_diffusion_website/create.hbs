@@ -1,48 +1,82 @@
 <form action="/brs-diffusion-websites" method="post">
   <div class="grid gap-4 mb-4 sm:grid-cols-2">
-    <div>
-      <label for="source"
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.websiteUrl}}</label>
-      <input type="text" name="source" id="source"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        placeholder="https://domaine.fr" pattern="https?://.+" title="{{translations.fields.websiteUrlInputHint}}"
-        required>
+    <div class="sm:col-span-2">
+      <h3 class="text-base font-semibold text-gray-900 dark:text-white">Programme</h3>
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Les informations présentées aux visiteurs sur la carte.</p>
     </div>
     <div>
-      <label for="distributorName"
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.distributorName}}</label>
-      <input type="text" name="distributorName" id="distributorName"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        placeholder="Commercialisateur du Finistère" required>
+      <label for="programName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom du programme</label>
+      <input type="text" name="programName" id="programName" placeholder="Les Jardins de Boris" class="form-input">
     </div>
-
     <div>
-      <label for="ofsName"
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.ofsName}}</label>
-      <input type="text" name="ofsName" id="ofsName"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        placeholder="OFS de Bretagne" required>
+      <label for="housingType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type de logement</label>
+      <select name="housingType" id="housingType" required class="form-input">
+        <option value="new" selected>Neuf</option>
+        <option value="old">Ancien</option>
+      </select>
     </div>
-
     <div>
-      <label for="city"
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.city}}</label>
-      <input type="text" name="city" id="city"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        placeholder="Quimper" required>
+      <label for="source" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.websiteUrl}}</label>
+      <input type="url" name="source" id="source" placeholder="https://domaine.fr/programme" title="{{translations.fields.websiteUrlInputHint}}" required class="form-input">
+    </div>
+    <div>
+      <label for="deliveryMonth" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mois de livraison</label>
+      <input type="month" name="deliveryMonth" id="deliveryMonth" class="form-input">
     </div>
 
+    <div class="form-section">
+      <h3 class="text-base font-semibold text-gray-900 dark:text-white">Localisation</h3>
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">L’adresse est géocodée à l’enregistrement pour positionner précisément le programme sur la carte.</p>
+    </div>
+    <div class="sm:col-span-2">
+      <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.address}}</label>
+      <input type="text" name="address" id="address" autocomplete="street-address" placeholder="12 rue de la Paix" required class="form-input">
+    </div>
     <div>
-      <label for="inseeCode"
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.inseeCode}}</label>
-      <input type="text" name="inseeCode" id="inseeCode"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        placeholder="29001">
+      <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.city}}</label>
+      <input type="text" name="city" id="city" autocomplete="address-level2" placeholder="Quimper" required class="form-input">
+    </div>
+    <div>
+      <label for="inseeCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.inseeCode}} <span class="font-normal text-gray-500">(optionnel)</span></label>
+      <input type="text" name="inseeCode" id="inseeCode" inputmode="numeric" placeholder="29001" class="form-input">
+    </div>
+
+    <div class="form-section">
+      <h3 class="text-base font-semibold text-gray-900 dark:text-white">Acteurs</h3>
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Le rattachement est optionnel. Le nom reste modifiable si l’acteur n’est pas encore référencé.</p>
+    </div>
+    <div>
+      <label for="ofsId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">OFS référencé</label>
+      <select name="ofsId" id="ofsId" data-name-target="ofsName" class="organisation-select form-input">
+        <option value="">Aucun rattachement</option>
+        {{#each ofss}}<option value="{{id}}" data-name="{{name}}">{{name}}</option>{{/each}}
+      </select>
+    </div>
+    <div>
+      <label for="ofsName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.ofsName}}</label>
+      <input type="text" name="ofsName" id="ofsName" placeholder="OFS de Bretagne" required class="form-input">
+    </div>
+    <div>
+      <label for="distributorId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Commercialisateur référencé</label>
+      <select name="distributorId" id="distributorId" data-name-target="distributorName" class="organisation-select form-input">
+        <option value="">Aucun rattachement</option>
+        {{#each distributors}}<option value="{{id}}" data-name="{{name}}">{{name}}</option>{{/each}}
+      </select>
+    </div>
+    <div>
+      <label for="distributorName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translations.fields.distributorName}}</label>
+      <input type="text" name="distributorName" id="distributorName" placeholder="Commercialisateur du Finistère" required class="form-input">
     </div>
   </div>
-
-  <button type="submit"
-    class="text-white mt-4 inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-    {{actionLabel}}
-  </button>
+  <button type="submit" class="text-white mt-4 inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{{actionLabel}}</button>
 </form>
+
+<script>
+  document.querySelectorAll('.organisation-select').forEach((select) => {
+    select.addEventListener('change', () => {
+      const target = document.getElementById(select.dataset.nameTarget);
+      const option = select.options[select.selectedIndex];
+      if (target && option.dataset.name) target.value = option.dataset.name;
+    });
+  });
+</script>

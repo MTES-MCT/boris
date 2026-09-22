@@ -32,6 +32,8 @@ export class BrsDiffusionWebsiteRepository
       .createQueryBuilder('brs_diffusion_website')
       .leftJoinAndSelect('brs_diffusion_website.region', 'region')
       .leftJoinAndSelect('brs_diffusion_website.departement', 'departement')
+      .leftJoinAndSelect('brs_diffusion_website.ofs', 'ofs')
+      .leftJoinAndSelect('brs_diffusion_website.distributor', 'distributor')
       .skip((page - 1) * pageSize)
       .take(pageSize)
       .orderBy('brs_diffusion_website.createdAt', 'DESC');
@@ -42,7 +44,7 @@ export class BrsDiffusionWebsiteRepository
   public async findById(id: string): Promise<BrsDiffusionWebsiteEntity | null> {
     return this.repository.findOne({
       where: { id },
-      relations: ['region', 'departement'],
+      relations: ['region', 'departement', 'ofs', 'distributor'],
     });
   }
 
@@ -62,6 +64,8 @@ export class BrsDiffusionWebsiteRepository
       .createQueryBuilder('brs_diffusion_website')
       .leftJoinAndSelect('brs_diffusion_website.region', 'region')
       .leftJoinAndSelect('brs_diffusion_website.departement', 'departement')
+      .leftJoinAndSelect('brs_diffusion_website.ofs', 'ofs')
+      .leftJoinAndSelect('brs_diffusion_website.distributor', 'distributor')
       .addSelect(
         'earth_distance(ll_to_earth(:latitude, :longitude), ll_to_earth(brs_diffusion_website.latitude, brs_diffusion_website.longitude))',
         'distance',
@@ -110,6 +114,7 @@ export class BrsDiffusionWebsiteRepository
       .leftJoinAndSelect('ofs.distributors', 'ofsDistributors')
       .leftJoinAndSelect('brs_diffusion_website.region', 'region')
       .leftJoinAndSelect('brs_diffusion_website.departement', 'departement')
+      .leftJoinAndSelect('brs_diffusion_website.distributor', 'distributor')
       .addSelect(distanceExpression, 'distance')
       .where(
         'earth_box(ll_to_earth(:latitude, :longitude), :radius) @> ll_to_earth(brs_diffusion_website.latitude, brs_diffusion_website.longitude)',
@@ -143,6 +148,8 @@ export class BrsDiffusionWebsiteRepository
       .createQueryBuilder('brs_diffusion_website')
       .leftJoinAndSelect('brs_diffusion_website.region', 'region')
       .leftJoinAndSelect('brs_diffusion_website.departement', 'departement')
+      .leftJoinAndSelect('brs_diffusion_website.ofs', 'ofs')
+      .leftJoinAndSelect('brs_diffusion_website.distributor', 'distributor')
       .where('region.id = :regionId', { regionId })
       .skip((page - 1) * pageSize)
       .take(pageSize)
@@ -161,6 +168,8 @@ export class BrsDiffusionWebsiteRepository
       .createQueryBuilder('brs_diffusion_website')
       .leftJoinAndSelect('brs_diffusion_website.region', 'region')
       .leftJoinAndSelect('brs_diffusion_website.departement', 'departement')
+      .leftJoinAndSelect('brs_diffusion_website.ofs', 'ofs')
+      .leftJoinAndSelect('brs_diffusion_website.distributor', 'distributor')
       .where('departement.id = :departementId', { departementId })
       .skip((page - 1) * pageSize)
       .take(pageSize)

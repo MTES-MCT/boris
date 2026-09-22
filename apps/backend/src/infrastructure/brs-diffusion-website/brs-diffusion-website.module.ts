@@ -15,11 +15,17 @@ import { FindBrsDiffusionWebsiteByIdUsecase } from 'src/application/brs-diffusio
 import { UpdateBrsDiffusionWebsiteAdminController } from './controllers/admin/update-brs-diffusion-website.controller';
 import { GetBrsDiffusionWebsitesApiController } from './controllers/api/get-brs-diffusion-websites.controller';
 import { RateLimitModule } from '../auth/rate-limit.module';
+import { OfsEntity } from '../ofs/ofs.entity';
+import { DistributorEntity } from '../distributor/distributor.entity';
 
 @Module({
   imports: [
     RateLimitModule,
-    TypeOrmModule.forFeature([BrsDiffusionWebsiteEntity]),
+    TypeOrmModule.forFeature([
+      BrsDiffusionWebsiteEntity,
+      OfsEntity,
+      DistributorEntity,
+    ]),
     DepartementModule,
     GeocoderModule,
   ],

@@ -19,6 +19,10 @@ import { UpdateBrsDiffusionWebsiteDTO } from '../../dtos/update.dto';
 import { IdDTO } from 'src/infrastructure/common/dtos/id.dto';
 import { FindBrsDiffusionWebsiteByIdUsecase } from 'src/application/brs-diffusion-website/usecases/findById.usecase';
 import { RequestWithFlash } from 'src/types/request-with-flash';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
+import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 
 @ApiExcludeController()
 @Controller('/brs-diffusion-websites')
@@ -26,6 +30,10 @@ export class UpdateBrsDiffusionWebsiteAdminController {
   constructor(
     private readonly findBrsDiffusionWebsiteByIdUsecase: FindBrsDiffusionWebsiteByIdUsecase,
     private readonly updateBrsDiffusionWebsiteUsecase: UpdateBrsDiffusionWebsiteUsecase,
+    @InjectRepository(OfsEntity)
+    private readonly ofsRepository: Repository<OfsEntity>,
+    @InjectRepository(DistributorEntity)
+    private readonly distributorRepository: Repository<DistributorEntity>,
   ) {}
 
   @UseGuards(LocalIsAuthenticatedGuard)
@@ -35,8 +43,11 @@ export class UpdateBrsDiffusionWebsiteAdminController {
     @Param() params: IdDTO,
     @Res() res: Response,
   ) {
-    const brsDiffusionWebsite =
-      await this.findBrsDiffusionWebsiteByIdUsecase.execute(params);
+    const [brsDiffusionWebsite, ofss, distributors] = await Promise.all([
+      this.findBrsDiffusionWebsiteByIdUsecase.execute(params),
+      this.ofsRepository.find({ order: { name: 'ASC' } }),
+      this.distributorRepository.find({ order: { name: 'ASC' } }),
+    ]);
 
     return res.render('brs-diffusion-website/update', {
       layout: 'layouts/main',
@@ -48,6 +59,8 @@ export class UpdateBrsDiffusionWebsiteAdminController {
         },
       ],
       brsDiffusionWebsite,
+      ofss,
+      distributors,
     });
   }
 

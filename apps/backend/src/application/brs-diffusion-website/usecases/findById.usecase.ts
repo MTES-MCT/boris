@@ -41,6 +41,22 @@ export class FindBrsDiffusionWebsiteByIdUsecase {
         name: brsDiffusionWebsite.departement.name,
         code: brsDiffusionWebsite.departement.code,
       },
+      undefined,
+      brsDiffusionWebsite.programName,
+      brsDiffusionWebsite.deliveryMonth,
+      brsDiffusionWebsite.ofs
+        ? {
+            id: brsDiffusionWebsite.ofs.id,
+            name: brsDiffusionWebsite.ofs.name,
+          }
+        : null,
+      brsDiffusionWebsite.distributor
+        ? {
+            id: brsDiffusionWebsite.distributor.id,
+            name: brsDiffusionWebsite.distributor.name,
+          }
+        : null,
+      brsDiffusionWebsite.housingType,
     );
   }
 }

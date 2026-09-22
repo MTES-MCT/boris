@@ -271,7 +271,7 @@ describe('BrsDiffusionWebsiteRepository', () => {
     );
     expect(mockedBrsDiffusionWebsiteRepository.findOne).toHaveBeenCalledWith({
       where: { id: '1234' },
-      relations: ['region', 'departement'],
+      relations: ['region', 'departement', 'ofs', 'distributor'],
     });
   });
 
