@@ -63,28 +63,24 @@ describe('CreateBrsDiffusionWebsiteDTO', () => {
     expect(errors[0].constraints).toHaveProperty('isString');
   });
 
-  it('should be invalid when distributorName is missing', async () => {
+  it('should be valid when distributorName is missing', async () => {
     const dto = createDto();
     dto.source = 'Test Source';
     dto.ofsName = 'Test OFS';
     dto.city = 'Test City';
 
     const errors = await validate(dto);
-    expect(errors).toHaveLength(1);
-    expect(errors[0].property).toBe('distributorName');
-    expect(errors[0].constraints).toHaveProperty('isString');
+    expect(errors).toHaveLength(0);
   });
 
-  it('should be invalid when ofsName is missing', async () => {
+  it('should be valid when ofsName is missing', async () => {
     const dto = createDto();
     dto.source = 'Test Source';
     dto.distributorName = 'Test Distributor';
     dto.city = 'Test City';
 
     const errors = await validate(dto);
-    expect(errors).toHaveLength(1);
-    expect(errors[0].property).toBe('ofsName');
-    expect(errors[0].constraints).toHaveProperty('isString');
+    expect(errors).toHaveLength(0);
   });
 
   it('should be invalid when city is missing', async () => {
@@ -168,7 +164,7 @@ describe('CreateBrsDiffusionWebsiteDTO', () => {
     expect(errors[0].constraints).toHaveProperty('isNotEmpty');
   });
 
-  it('should be invalid when distributorName is empty', async () => {
+  it('should be valid when distributorName is empty', async () => {
     const dto = createDto();
     dto.source = 'Test Source';
     dto.distributorName = '';
@@ -176,12 +172,10 @@ describe('CreateBrsDiffusionWebsiteDTO', () => {
     dto.city = 'Test City';
 
     const errors = await validate(dto);
-    expect(errors).toHaveLength(1);
-    expect(errors[0].property).toBe('distributorName');
-    expect(errors[0].constraints).toHaveProperty('isNotEmpty');
+    expect(errors).toHaveLength(0);
   });
 
-  it('should be invalid when ofsName is empty', async () => {
+  it('should be valid when ofsName is empty', async () => {
     const dto = createDto();
     dto.source = 'Test Source';
     dto.distributorName = 'Test Distributor';
@@ -189,9 +183,7 @@ describe('CreateBrsDiffusionWebsiteDTO', () => {
     dto.city = 'Test City';
 
     const errors = await validate(dto);
-    expect(errors).toHaveLength(1);
-    expect(errors[0].property).toBe('ofsName');
-    expect(errors[0].constraints).toHaveProperty('isNotEmpty');
+    expect(errors).toHaveLength(0);
   });
 
   it('should be invalid when city is empty', async () => {

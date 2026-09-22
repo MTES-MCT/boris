@@ -23,11 +23,11 @@ export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
   @Column({ type: 'varchar', nullable: false })
   public source: string;
 
-  @Column({ type: 'varchar', nullable: false })
-  public distributorName: string;
+  @Column({ type: 'varchar', nullable: true })
+  public distributorName: string | null;
 
-  @Column({ type: 'varchar', nullable: false })
-  public ofsName: string;
+  @Column({ type: 'varchar', nullable: true })
+  public ofsName: string | null;
 
   @Column({ type: 'varchar', nullable: true })
   public programName: string | null;
@@ -84,8 +84,8 @@ export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
 
   constructor(
     source: string,
-    distributorName: string,
-    ofsName: string,
+    distributorName: string | null,
+    ofsName: string | null,
     city: string,
     zipcode: string,
     address: string,

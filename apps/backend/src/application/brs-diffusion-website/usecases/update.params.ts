@@ -3,8 +3,8 @@ import { BrsHousingType } from 'src/domain/brs-diffusion-website/brs-diffusion-w
 export interface UpdateBrsDiffusionWebsiteParams {
   id: string;
   source: string;
-  distributorName: string;
-  ofsName: string;
+  distributorName?: string | null;
+  ofsName?: string | null;
   programName?: string;
   city: string;
   address?: string;

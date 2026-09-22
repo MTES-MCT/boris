@@ -23,11 +23,14 @@ export class BrsDiffusionWebsiteView {
   @ApiProperty({ example: 'https://source.fr' })
   public source: string;
 
-  @ApiProperty({ example: 'Commercialisateur du Finistère' })
-  public distributorName: string;
+  @ApiPropertyOptional({
+    example: 'Commercialisateur du Finistère',
+    nullable: true,
+  })
+  public distributorName: string | null;
 
-  @ApiProperty({ example: "Nom de l'OFS" })
-  public ofsName: string;
+  @ApiPropertyOptional({ example: "Nom de l'OFS", nullable: true })
+  public ofsName: string | null;
 
   @ApiPropertyOptional({ example: 'Les Jardins de Boris', nullable: true })
   public programName: string | null;
@@ -84,8 +87,8 @@ export class BrsDiffusionWebsiteView {
   constructor(
     id: string,
     source: string,
-    distributorName: string,
-    ofsName: string,
+    distributorName: string | null,
+    ofsName: string | null,
     city: string,
     zipcode: string,
     address: string,

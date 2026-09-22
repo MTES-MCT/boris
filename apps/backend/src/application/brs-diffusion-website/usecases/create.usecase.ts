@@ -102,8 +102,8 @@ export class CreateBrsDiffusionWebsiteUsecase {
     const brsDiffusionWebsite = await this.brsDiffusionWebsiteRepository.save(
       new BrsDiffusionWebsiteEntity(
         source,
-        distributorName,
-        ofsName,
+        distributorName || null,
+        ofsName || null,
         geocodedAddress.properties?.city as string,
         geocodedAddress.properties?.postcode as string,
         (address

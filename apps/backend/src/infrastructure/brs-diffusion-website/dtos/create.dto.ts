@@ -22,15 +22,17 @@ export class CreateBrsDiffusionWebsiteDTO {
   @IsNotEmpty()
   public source: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false, nullable: true })
+  @Transform(emptyStringToNull)
   @IsString()
-  @IsNotEmpty()
-  public distributorName: string;
+  @IsOptional()
+  public distributorName?: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ required: false, nullable: true })
+  @Transform(emptyStringToNull)
   @IsString()
-  @IsNotEmpty()
-  public ofsName: string;
+  @IsOptional()
+  public ofsName?: string | null;
 
   @ApiProperty({ required: false })
   @Transform(emptyStringToUndefined)

@@ -53,8 +53,8 @@ export class UpdateBrsDiffusionWebsiteUsecase {
     const nextAddress = address ?? brsDiffusionWebsite.address;
 
     brsDiffusionWebsite.source = source;
-    brsDiffusionWebsite.distributorName = distributorName;
-    brsDiffusionWebsite.ofsName = ofsName;
+    brsDiffusionWebsite.distributorName = distributorName || null;
+    brsDiffusionWebsite.ofsName = ofsName || null;
     brsDiffusionWebsite.programName = programName || null;
     brsDiffusionWebsite.deliveryMonth = deliveryMonth || null;
     brsDiffusionWebsite.housingType =
