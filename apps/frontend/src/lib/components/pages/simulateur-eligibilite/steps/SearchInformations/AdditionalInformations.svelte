@@ -155,7 +155,18 @@
       formData.parse(payload);
       errors = {};
 
-      updateEligibilitySimulation({ ...payload, hadBrsKnowledge });
+      updateEligibilitySimulation({
+        hadBrsKnowledge,
+        employmentStatus,
+        laposteEmployer,
+        canSendInformationsToLaposte,
+        positionType,
+        positionStage,
+        hasCompanyMoreThan10Employees,
+        hasCompanyMoreThan50Employees,
+        allowFinancingAndOwnershipAdvices,
+        positionContractType,
+      });
     } catch (e) {
       errors = formatFormErrors((e as ZodError).issues);
     }

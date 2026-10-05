@@ -8,7 +8,13 @@ import {
   type PositionType,
   type ContractType,
 } from '../../../../src/lib/utils/eligibility-simulator';
-import { test, expect, type Locator, type Page } from '@playwright/test';
+import {
+  test,
+  expect,
+  type Locator,
+  type Page,
+  type Response,
+} from '@playwright/test';
 
 test.describe('Eligibility simulator', () => {
   let simulatorWrapper: Locator;
@@ -1837,10 +1843,10 @@ test.describe('Eligibility simulator', () => {
         };
 
         test.afterEach(async () => {
-          expect(stepTitle).toHaveText(
+          await expect(stepTitle).toHaveText(
             `3. ${steps[2].title} Étape 3 sur ${steps.length}`,
           );
-          expect(phaseTitle).toHaveText(`${steps[2].phases[0].title}`);
+          await expect(phaseTitle).toHaveText(`${steps[2].phases[0].title}`);
         });
 
         test('Soumettre avec prénom, nom de famille, adresse email et numéro de téléphone', async () => {
@@ -2183,7 +2189,10 @@ test.describe('Eligibility simulator', () => {
           expect(phaseTitle).toHaveText(`${steps[2].phases[2].title}`);
         };
 
+        let additionalResponse: Response | undefined;
+
         test.beforeEach(async ({ page }) => {
+          additionalResponse = undefined;
           await performHouseholdComposition(1, false);
           await performFiscalRevenues('25000');
           await performPropertySituation('LOCATAIRE_PRIVE');
@@ -2202,13 +2211,29 @@ test.describe('Eligibility simulator', () => {
           );
           await performFinancialInformations('10000', '10000');
           validateStepAndPhaseTitles();
+          page.on('response', (response) => {
+            if (
+              response.request().method() === 'PUT' &&
+              response.url().includes('/api/eligibility-simulations/')
+            ) {
+              additionalResponse = response;
+            }
+          });
         });
 
         test.afterEach(async () => {
-          expect(stepTitle).toHaveText(
+          await expect(stepTitle).toHaveText(
             `4. ${steps[3].title} Étape 4 sur ${steps.length}`,
           );
-          expect(phaseTitle).toHaveText(`${steps[3].phases[0].title}`);
+          await expect(phaseTitle).toHaveText(`${steps[3].phases[0].title}`);
+          expect(additionalResponse).toBeDefined();
+          expect(additionalResponse!.status()).toBe(200);
+          const payload = additionalResponse!.request().postDataJSON();
+          expect(payload).not.toHaveProperty('formattedHadBrsKnowledge');
+          const saved = await additionalResponse!.json();
+          expect(saved.hadBrsKnowledge).toBe(true);
+          expect(saved.employmentStatus).toBe(payload.employmentStatus);
+          expect(saved.locations.length).toBeGreaterThan(0);
         });
 
         test('Soumettre avec connaissance du BRS et statut professionnel "Salarié du groupe La Poste", avec remplissage des informations supplémentaires', async () => {
