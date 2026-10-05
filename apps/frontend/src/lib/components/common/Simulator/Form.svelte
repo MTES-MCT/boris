@@ -2,6 +2,7 @@
   import '@gouvfr/dsfr/dist/component/form/form.min.css';
 
   import type { Snippet } from 'svelte';
+  import eligibilitySimulatorManager from '$lib/managers/eligibility-simulator.svelte';
 
   type Props = {
     onSubmit: (e: SubmitEvent) => void;
@@ -18,5 +19,12 @@
     autocomplete="off"
     onsubmit={onSubmit}>
     {@render children()}
+    {#if eligibilitySimulatorManager.saveError}
+      <p
+        class="fr-error-text"
+        role="alert">
+        {eligibilitySimulatorManager.saveError}
+      </p>
+    {/if}
   </form>
 </div>

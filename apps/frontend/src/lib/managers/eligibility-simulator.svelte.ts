@@ -62,6 +62,7 @@ class EligibilitySimulator {
   });
 
   public loading: boolean = $state(false);
+  public saveError: string | null = $state(null);
 
   // Household Composition
   public householdSize: number | undefined = $state(undefined);
@@ -290,23 +291,33 @@ class EligibilitySimulator {
     payload: UpdateEligibilitySimulationDto,
   ) => {
     this.loading = true;
+    this.saveError = null;
 
-    const response = await fetch(
-      `/api/eligibility-simulations/${this.eligibilitySimulation?.id}`,
-      {
-        method: 'PUT',
-        body: JSON.stringify(payload),
-      },
-    );
+    try {
+      const response = await fetch(
+        `/api/eligibility-simulations/${this.eligibilitySimulation?.id}`,
+        {
+          method: 'PUT',
+          body: JSON.stringify(payload),
+        },
+      );
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!data.message) {
+      if (!response.ok || data.message) {
+        this.saveError =
+          'L’enregistrement a échoué. Veuillez réessayer pour continuer.';
+        return;
+      }
+
       this.eligibilitySimulation = data;
+      this.goToNextPhase();
+    } catch {
+      this.saveError =
+        'L’enregistrement a échoué. Veuillez réessayer pour continuer.';
+    } finally {
+      this.loading = false;
     }
-
-    this.loading = false;
-    this.goToNextPhase();
   };
 }
 

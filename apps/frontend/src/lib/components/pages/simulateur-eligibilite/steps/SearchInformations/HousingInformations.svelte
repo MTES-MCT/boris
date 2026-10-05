@@ -19,7 +19,7 @@
   } from '$lib/utils/eligibility-simulator';
   import Select from '$components/common/Select.svelte';
   import Badge from '$components/common/Badge.svelte';
-  import type { UpdateEligibilitySimulationDto } from '$lib/utils/api-types';
+  import { toEligibilitySimulationLocation } from '$lib/utils/eligibility-simulation-location';
 
   let autocompleteValue = $state('');
 
@@ -73,12 +73,7 @@
       errors = {};
 
       updateEligibilitySimulation({
-        locations: selectedLocations?.map((item) => ({
-          ...item,
-          latitude: item?.y,
-          longitude: item?.x,
-          postalCode: item?.postcode,
-        })),
+        locations: selectedLocations.map(toEligibilitySimulationLocation),
         housingType,
       });
     } catch (e) {
