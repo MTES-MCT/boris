@@ -2,11 +2,14 @@ import { UserEntity } from 'src/infrastructure/user/user.entity';
 import { PaginationProps } from '../common/paginationProps';
 import { UserRole } from './user-role.enum';
 
+export type UsersSort = 'email' | 'lastLoginAtDesc' | 'lastLoginAtAsc';
+
 export type FindAllUsersFilters = {
   role?: UserRole;
   isActive?: boolean;
   ofsId?: string;
   search?: string;
+  sort?: UsersSort;
 };
 
 export interface UserRepositoryInterface {

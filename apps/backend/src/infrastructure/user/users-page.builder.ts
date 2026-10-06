@@ -209,6 +209,10 @@ export class UsersPageBuilder {
       params.set('search', next.search);
     }
 
+    if (next.sort) {
+      params.set('sort', next.sort);
+    }
+
     const query = params.toString();
 
     return query ? `/users?${query}` : '/users';
