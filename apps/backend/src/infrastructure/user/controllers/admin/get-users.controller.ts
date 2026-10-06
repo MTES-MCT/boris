@@ -44,6 +44,7 @@ export class GetUsersAdminController {
         isActive: filters.isActive,
         ofsId: filters.ofsId,
         search: filters.search?.trim() || undefined,
+        sort: filters.sort,
       },
     );
 
@@ -54,6 +55,7 @@ export class GetUsersAdminController {
       isActive: filters.isActive,
       ofsId: filters.ofsId,
       search: filters.search?.trim() || '',
+      sort: filters.sort,
     };
 
     const ofss = await this.ofsRepository.find({ order: { name: 'ASC' } });

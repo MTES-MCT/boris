@@ -68,7 +68,20 @@ export class UserRepository implements UserRepositoryInterface {
 
     query.skip((page - 1) * pageSize);
     query.take(pageSize);
-    query.orderBy('user.email', 'ASC');
+    if (
+      filters?.sort === 'lastLoginAtDesc' ||
+      filters?.sort === 'lastLoginAtAsc'
+    ) {
+      query.orderBy(
+        'user.lastLoginAt',
+        filters.sort === 'lastLoginAtAsc' ? 'ASC' : 'DESC',
+        'NULLS LAST',
+      );
+      query.addOrderBy('user.email', 'ASC');
+    } else {
+      query.orderBy('user.email', 'ASC');
+    }
+    query.addOrderBy('user.id', 'ASC');
 
     return query.getManyAndCount();
   }

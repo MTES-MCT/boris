@@ -1,5 +1,6 @@
 import { Transform, Type } from 'class-transformer';
-import { IsBoolean, IsOptional, IsString, Min } from 'class-validator';
+import { IsBoolean, IsIn, IsOptional, IsString, Min } from 'class-validator';
+import { UsersSort } from 'src/domain/user/user.repository.interface';
 import { MAX_PAGE_SIZE } from 'src/application/common/pagination';
 import { IsInt, Max } from 'class-validator';
 
@@ -37,4 +38,8 @@ export class UsersFiltersDTO {
   @IsString()
   @IsOptional()
   public search?: string;
+
+  @IsIn(['email', 'lastLoginAtDesc', 'lastLoginAtAsc'])
+  @IsOptional()
+  public sort?: UsersSort;
 }

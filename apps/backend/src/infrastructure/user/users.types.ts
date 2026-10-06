@@ -1,3 +1,5 @@
+import { UsersSort } from 'src/domain/user/user.repository.interface';
+
 export type UsersFiltersView = {
   page: number;
   pageSize: number;
@@ -5,4 +7,5 @@ export type UsersFiltersView = {
   isActive?: boolean;
   ofsId?: string;
   search: string;
+  sort?: UsersSort;
 };
