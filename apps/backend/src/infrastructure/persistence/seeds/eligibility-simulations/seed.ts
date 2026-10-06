@@ -59,6 +59,7 @@ export class EligibilitySimulationsSeed {
             });
           await this.updateEligibilitySimulationUsecase.execute({
             id: eligibilitySimulation.id,
+            suppressLeadNotifications: true,
             eligibilityCategory: 1,
             highestEligibilityZone: this.getHighestEligibilityZone(
               landbotCustomer.eligibility,
@@ -89,6 +90,7 @@ export class EligibilitySimulationsSeed {
               postalCode: landbotCustomer.departement.code,
               citycode: landbotCustomer.departement.code,
               eligibilitySimulationId: eligibilitySimulation.id,
+              suppressLeadNotifications: true,
             });
           }
           eligibilitySimulationsCount++;

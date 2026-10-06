@@ -6,6 +6,18 @@ import {
 } from 'src/infrastructure/eligibility-simulation/dtos/update.dto';
 
 describe('UpdateEligibilitySimulationDTO', () => {
+  it('accepts an explicit final lead submission and rejects non-boolean values', async () => {
+    const dto = new UpdateEligibilitySimulationDTO();
+    dto.submitLead = true;
+    expect(await validate(dto)).toHaveLength(0);
+    Object.assign(dto, { submitLead: 'true' });
+    expect(await validate(dto)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ property: 'submitLead' }),
+      ]),
+    );
+  });
+
   it('should be valid with no fields (all optional)', async () => {
     const dto = new UpdateEligibilitySimulationDTO();
 

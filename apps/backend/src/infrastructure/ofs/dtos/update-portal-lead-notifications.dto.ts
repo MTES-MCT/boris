@@ -10,6 +10,7 @@ import { PortalLeadNotificationFrequency } from '../portal-lead-notification-pre
 
 export const portalLeadNotificationFrequencies = [
   'none',
+  PortalLeadNotificationFrequency.INSTANT,
   PortalLeadNotificationFrequency.DAILY,
   PortalLeadNotificationFrequency.WEEKLY,
 ] as const;

@@ -1,3 +1,5 @@
+import { LeadNotificationEnqueuer } from '../ofs/notifications/lead-notification.enqueuer';
+import { LeadNotificationOptions } from 'src/domain/ofs/lead-notification-options';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, SelectQueryBuilder } from 'typeorm';
@@ -32,12 +34,27 @@ export class EligibilitySimulationRepository
   constructor(
     @InjectRepository(EligibilitySimulationEntity)
     private readonly repository: Repository<EligibilitySimulationEntity>,
+    private readonly leadNotifications: LeadNotificationEnqueuer,
   ) {}
 
   public save(
     eligibilitySimulation: EligibilitySimulationEntity,
+    options: LeadNotificationOptions = {},
   ): Promise<EligibilitySimulationEntity> {
-    return this.repository.save(eligibilitySimulation);
+    return this.repository.manager.transaction(async (manager) => {
+      if (eligibilitySimulation.id) {
+        await manager.query(
+          'SELECT id FROM eligibility_simulation WHERE id = $1 FOR NO KEY UPDATE',
+          [eligibilitySimulation.id],
+        );
+      }
+      const saved = await manager.save(
+        EligibilitySimulationEntity,
+        eligibilitySimulation,
+      );
+      await this.leadNotifications.enqueue(manager, saved.id, options);
+      return saved;
+    });
   }
 
   public async findById(

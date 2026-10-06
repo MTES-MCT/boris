@@ -1,3 +1,4 @@
+import { LeadNotificationEnqueuer } from 'src/infrastructure/ofs/notifications/lead-notification.enqueuer';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { EligibilitySimulationEntity } from 'src/infrastructure/eligibility-simulation/eligibility-simulation.entity';
@@ -8,15 +9,26 @@ import {
 } from 'test/mocks/integration/eligibility-simulation';
 
 describe('EligibilitySimulationRepository', () => {
+  const manager = { query: jest.fn(), save: jest.fn() };
+  const enqueuer = { enqueue: jest.fn() };
+
   let eligibilitySimulationRepository: EligibilitySimulationRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         EligibilitySimulationRepository,
+        { provide: LeadNotificationEnqueuer, useValue: enqueuer },
         {
           provide: getRepositoryToken(EligibilitySimulationEntity),
-          useValue: mockEligibilitySimulationRepository,
+          useValue: {
+            ...mockEligibilitySimulationRepository,
+            manager: {
+              transaction: (
+                work: (transaction: typeof manager) => Promise<unknown>,
+              ) => work(manager),
+            },
+          },
         },
       ],
     }).compile();
@@ -28,17 +40,16 @@ describe('EligibilitySimulationRepository', () => {
   });
 
   it('should save an eligibility simulation and return its data', async () => {
-    mockEligibilitySimulationRepository.save.mockResolvedValue(
-      mockedEligibilitySimulation,
-    );
+    manager.save.mockResolvedValue(mockedEligibilitySimulation);
 
     const result = await eligibilitySimulationRepository.save(
       mockedEligibilitySimulation,
     );
 
     expect(result).toMatchObject(mockedEligibilitySimulation);
-    expect(mockEligibilitySimulationRepository.save).toHaveBeenCalledTimes(1);
-    expect(mockEligibilitySimulationRepository.save).toHaveBeenCalledWith(
+    expect(manager.save).toHaveBeenCalledTimes(1);
+    expect(manager.save).toHaveBeenCalledWith(
+      EligibilitySimulationEntity,
       mockedEligibilitySimulation,
     );
   });

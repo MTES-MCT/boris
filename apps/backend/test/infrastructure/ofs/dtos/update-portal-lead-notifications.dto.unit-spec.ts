@@ -3,6 +3,15 @@ import { validate } from 'class-validator';
 import { UpdatePortalLeadNotificationsDto } from 'src/infrastructure/ofs/dtos/update-portal-lead-notifications.dto';
 
 describe('UpdatePortalLeadNotificationsDto', () => {
+  it('accepts instant alerts', async () => {
+    const dto = plainToInstance(UpdatePortalLeadNotificationsDto, {
+      notifications: [
+        { ofsId: '550e8400-e29b-41d4-a716-446655440000', frequency: 'instant' },
+      ],
+    });
+    expect(await validate(dto)).toHaveLength(0);
+  });
+
   it('validates every nested notification', async () => {
     const dto = plainToInstance(UpdatePortalLeadNotificationsDto, {
       notifications: [

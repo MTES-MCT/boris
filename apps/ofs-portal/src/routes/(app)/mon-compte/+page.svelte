@@ -35,8 +35,7 @@
       </div>
 
       <div class="fr-input-group">
-        <label class="fr-label" for="currentPassword"
-          >Mot de passe actuel</label
+        <label class="fr-label" for="currentPassword">Mot de passe actuel</label
         >
         <input
           class="fr-input"
@@ -89,9 +88,7 @@
         <form method="POST" action="?/notifications" class="fr-mt-3w">
           <div class="fr-table fr-table--bordered">
             <table>
-              <caption>
-                Préférences de notification par OFS
-              </caption>
+              <caption> Préférences de notification par OFS </caption>
               <thead>
                 <tr>
                   <th scope="col">OFS</th>
@@ -127,6 +124,22 @@
                               class="fr-label"
                               for={`notification-none-${notification.ofs.id}`}
                               >Aucune</label
+                            >
+                          </div>
+                        </div>
+                        <div class="fr-fieldset__element">
+                          <div class="fr-radio-group">
+                            <input
+                              id={`notification-instant-${notification.ofs.id}`}
+                              type="radio"
+                              name={`frequency-${notification.ofs.id}`}
+                              value="instant"
+                              checked={notification.frequency === "instant"}
+                            />
+                            <label
+                              class="fr-label"
+                              for={`notification-instant-${notification.ofs.id}`}
+                              >À chaque nouvelle piste</label
                             >
                           </div>
                         </div>

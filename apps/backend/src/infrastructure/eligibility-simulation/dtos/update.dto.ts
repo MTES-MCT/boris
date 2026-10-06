@@ -106,6 +106,13 @@ export class UpdateEligibilitySimulationLocationDTO {
 }
 
 export class UpdateEligibilitySimulationDTO {
+  @ApiPropertyOptional({
+    description: 'Soumettre la piste complète à la fin du parcours.',
+  })
+  @IsBoolean()
+  @IsOptional()
+  public submitLead?: boolean;
+
   @ApiPropertyOptional()
   @IsNumber()
   @IsPositive()

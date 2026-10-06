@@ -71,6 +71,27 @@ describe('UpdateEligibilitySimulationUsecase', () => {
     );
   });
 
+  it('passes the final submission intent to the transactional repository save', async () => {
+    mockEligibilitySimulationRepositoryWithFindById.findById.mockResolvedValue({
+      ...mockedEligibilitySimulation,
+    });
+    mockEligibilitySimulationRepositoryWithFindById.save.mockResolvedValue({
+      ...mockedEligibilitySimulation,
+      hadBrsKnowledge: true,
+    });
+    await useCase.execute({
+      id: mockedEligibilitySimulation.id,
+      hadBrsKnowledge: true,
+      submitLead: true,
+    });
+    expect(
+      mockEligibilitySimulationRepositoryWithFindById.save,
+    ).toHaveBeenCalledWith(
+      expect.objectContaining({ hadBrsKnowledge: true }),
+      expect.objectContaining({ submitLead: true }),
+    );
+  });
+
   it('should update an existing eligibility simulation and return its data', async () => {
     const updatedData = {
       householdSize: 4,

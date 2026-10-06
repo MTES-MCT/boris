@@ -1,3 +1,4 @@
+import { LeadNotificationOptions } from 'src/domain/ofs/lead-notification-options';
 import { SaveLocationParams } from 'src/application/location/usecases/save.params';
 import {
   ContractType,
@@ -9,7 +10,8 @@ import {
   PropertySituation,
 } from 'src/domain/eligibility-simulation/eligibility-simulation.interface';
 
-export interface UpdateEligibilitySimulationParams {
+export interface UpdateEligibilitySimulationParams
+  extends LeadNotificationOptions {
   id: string;
   householdSize?: number;
   hasDisability?: boolean;

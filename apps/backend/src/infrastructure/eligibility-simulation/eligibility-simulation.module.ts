@@ -1,3 +1,4 @@
+import { LeadNotificationQueueModule } from '../ofs/notifications/lead-notification-queue.module';
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EligibilitySimulationEntity } from './eligibility-simulation.entity';
@@ -32,6 +33,7 @@ import { RateLimitModule } from '../auth/rate-limit.module';
 
 @Module({
   imports: [
+    LeadNotificationQueueModule,
     RateLimitModule,
     TypeOrmModule.forFeature([EligibilitySimulationEntity]),
     forwardRef(() => LocationModule),

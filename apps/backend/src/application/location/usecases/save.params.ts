@@ -1,4 +1,5 @@
-export interface SaveLocationParams {
+import { LeadNotificationOptions } from 'src/domain/ofs/lead-notification-options';
+export interface SaveLocationParams extends LeadNotificationOptions {
   name: string;
   latitude: number;
   longitude: number;
