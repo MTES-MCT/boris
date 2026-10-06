@@ -613,7 +613,13 @@ export class EligibilitySimulationRepository
 
     const countQuery = this.createPortalContactsQuery(filters, false);
 
-    const total = countQuery ? await countQuery.getCount() : 0;
+    // A simulation can have several contact lines, one per searched location.
+    const count = countQuery
+      ? await countQuery
+          .select('COUNT(*)', 'count')
+          .getRawOne<{ count: string }>()
+      : null;
+    const total = Number(count?.count || 0);
 
     return [items, total];
   }
@@ -781,6 +787,24 @@ export class EligibilitySimulationRepository
 
     if (!this.applyPortalScopeFilters(query, filters)) {
       return null;
+    }
+
+    // Escape LIKE metacharacters so input is matched as literal text.
+    const pattern = (value: string) =>
+      `%${value.trim().replace(/[\\%_]/g, '\\$&')}%`;
+
+    if (filters.location?.trim()) {
+      query.andWhere(
+        '(location.city ILIKE :locationFilter OR departement.code ILIKE :locationFilter)',
+        { locationFilter: pattern(filters.location) },
+      );
+    }
+
+    if (filters.contact?.trim()) {
+      query.andWhere(
+        `(TRIM(CONCAT(COALESCE(eligibility_simulation."firstName", ''), ' ', COALESCE(eligibility_simulation."lastName", ''))) ILIKE :contactFilter OR eligibility_simulation.email ILIKE :contactFilter)`,
+        { contactFilter: pattern(filters.contact) },
+      );
     }
 
     if (filters.startDate) {

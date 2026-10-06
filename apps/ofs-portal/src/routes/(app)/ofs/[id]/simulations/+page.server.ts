@@ -42,6 +42,14 @@ export const load: ServerLoad = async (event) => {
   const { parent, params, url } = event;
   const { user } = await parent();
   const page = Number(url.searchParams.get("page") || "1");
+  const filters = {
+    location: url.searchParams.get("location")?.trim() || "",
+    contact: url.searchParams.get("contact")?.trim() || "",
+  };
+  const searchParams = new URLSearchParams({ page: `${page}`, pageSize: "20" });
+  for (const [key, value] of Object.entries(filters)) {
+    if (value) searchParams.set(key, value);
+  }
 
   const ofsResponse = await backendFetch(
     event,
@@ -68,7 +76,7 @@ export const load: ServerLoad = async (event) => {
   const ofs = await readJson<OfsSummary & Record<string, unknown>>(ofsResponse);
   const contactsResponse = await backendFetch(
     event,
-    `/api/portal/ofss/${params.id}/eligibility-simulations?page=${page}&pageSize=20`,
+    `/api/portal/ofss/${params.id}/eligibility-simulations?${searchParams}`,
   );
 
   const contacts = contactsResponse.ok
@@ -86,6 +94,7 @@ export const load: ServerLoad = async (event) => {
   return {
     ofs: { id: ofs.id, name: ofs.name },
     contacts,
+    filters,
     currentOfs: { id: ofs.id, name: ofs.name },
   };
 };
