@@ -20,6 +20,10 @@ import { UserRole } from 'src/domain/user/user-role.enum';
 import { PortalApiAuthenticatedGuard } from 'src/infrastructure/auth/guards/portal-api-authenticated.guard';
 import { UserEntity } from 'src/infrastructure/user/user.entity';
 import { PaginationDTO } from 'src/infrastructure/common/dtos/pagination.dto';
+import {
+  ExportPortalContactFiltersDto,
+  PortalContactFiltersDto,
+} from '../../dtos/portal-contact-filters.dto';
 import { FindPortalContactLinesUsecase } from 'src/application/eligibility-simulation/usecases/find-portal-contact-lines.usecase';
 import { ExportPortalContactLinesUsecase } from 'src/application/eligibility-simulation/usecases/export-portal-contact-lines.usecase';
 import { PortalUpdateOfsDto } from '../../dtos/portal-update.dto';
@@ -319,7 +323,7 @@ export class PortalOfssController {
   @Get(':id/eligibility-simulations')
   public async eligibilitySimulations(
     @Param('id') id: string,
-    @Query() pagination: PaginationDTO,
+    @Query() pagination: PortalContactFiltersDto,
     @Req() req: Request,
   ) {
     const user = req.user as UserEntity;
@@ -336,6 +340,8 @@ export class PortalOfssController {
       {
         ofsId: ofs.id,
         departementIds: ofs.departements.map((departement) => departement.id),
+        location: pagination.location,
+        contact: pagination.contact,
         compareDate: session.previousLoginAt
           ? new Date(session.previousLoginAt)
           : null,
@@ -351,6 +357,7 @@ export class PortalOfssController {
     @Query('endDate') endDate: string | undefined,
     @Req() req: Request,
     @Res() res: Response,
+    @Query() filters: ExportPortalContactFiltersDto = {},
   ) {
     const user = req.user as UserEntity;
     const ofs = await this.findAccessibleOfs(id, user);
@@ -358,6 +365,8 @@ export class PortalOfssController {
     const lines = await this.exportPortalContactLinesUsecase.execute({
       ofsId: ofs.id,
       departementIds: ofs.departements.map((departement) => departement.id),
+      location: filters.location,
+      contact: filters.contact,
       ...validatedDates,
     });
     const csv = this.buildCsv(lines);

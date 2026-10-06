@@ -185,7 +185,9 @@ describe('PortalOfssController eligibility simulations', () => {
     const cookies = loginResponse.headers['set-cookie'];
 
     const { status, body } = await request(app.getHttpServer())
-      .get(`/api/portal/ofss/${ofs!.id}/eligibility-simulations?page=1&pageSize=20`)
+      .get(
+        `/api/portal/ofss/${ofs!.id}/eligibility-simulations?page=1&pageSize=20`,
+      )
       .set('Cookie', cookies);
 
     expect(status).toBe(200);
@@ -215,6 +217,79 @@ describe('PortalOfssController eligibility simulations', () => {
         }),
       ]),
     );
+
+    // One simulation can produce multiple rows; count and paginate locations.
+    await locationRepository.save(
+      Object.assign(new LocationEntity(), {
+        city: 'Ville cible annexe',
+        citycode: '00003',
+        label: 'Ville cible annexe',
+        postalCode: '75000',
+        departement: matchingDepartement,
+        eligibilitySimulation: matchingSimulation,
+      }),
+    );
+
+    const contactPath = `/api/portal/ofss/${ofs!.id}/eligibility-simulations`;
+    for (const filters of [
+      { location: 'CIB', contact: 'MART' },
+      {
+        location: matchingDepartement.code.slice(0, 1),
+        contact: 'ALICE@EXAMPLE',
+      },
+      { location: ' cible ', contact: ' Alice Martin ' },
+    ]) {
+      const firstPage = await request(app.getHttpServer())
+        .get(contactPath)
+        .query({ ...filters, page: 1, pageSize: 1 })
+        .set('Cookie', cookies);
+      expect(firstPage.status).toBe(200);
+      expect(firstPage.body.totalCount).toBe(2);
+      expect(firstPage.body.pagesCount).toBe(2);
+      expect(firstPage.body.items).toHaveLength(1);
+      expect(firstPage.body.items[0].simulationId).toBe(matchingSimulation.id);
+
+      const secondPage = await request(app.getHttpServer())
+        .get(contactPath)
+        .query({ ...filters, page: 2, pageSize: 1 })
+        .set('Cookie', cookies);
+      expect(secondPage.status).toBe(200);
+      expect(secondPage.body.items).toHaveLength(1);
+      expect(secondPage.body.items[0].locationId).not.toBe(
+        firstPage.body.items[0].locationId,
+      );
+    }
+
+    for (const filters of [
+      { contact: '0102030405' }, // Phone numbers are excluded.
+      { contact: '%' }, // Wildcards are treated as literal text.
+      { contact: '_' },
+      { location: 'hors périmètre' }, // Scope restrictions still apply.
+      { location: 'cible', contact: 'bob' }, // Filters combine with AND.
+    ]) {
+      const filtered = await request(app.getHttpServer())
+        .get(contactPath)
+        .query(filters)
+        .set('Cookie', cookies);
+      expect(filtered.status).toBe(200);
+      expect(filtered.body.items).toEqual([]);
+      expect(filtered.body.totalCount).toBe(0);
+    }
+
+    const exported = await request(app.getHttpServer())
+      .get(`${contactPath}/export`)
+      .query({
+        location: 'CIB',
+        contact: 'MART',
+        startDate: '2000-01-01',
+        endDate: '2099-12-31',
+      })
+      .set('Cookie', cookies);
+    expect(exported.status).toBe(200);
+    expect(exported.text.trim().split('\n')).toHaveLength(3);
+    expect(exported.text).toContain('Ville cible annexe');
+    expect(exported.text).not.toContain('romain@example.test');
+    expect(exported.text).not.toContain('bob@example.test');
 
     await expect(
       request(app.getHttpServer())
@@ -281,7 +356,9 @@ describe('PortalOfssController eligibility simulations', () => {
     const cookies = loginResponse.headers['set-cookie'];
 
     const { status, body } = await request(app.getHttpServer())
-      .put(`/api/portal/ofss/${ofs!.id}/eligibility-simulations/${simulation.id}/metadata`)
+      .put(
+        `/api/portal/ofss/${ofs!.id}/eligibility-simulations/${simulation.id}/metadata`,
+      )
       .set('Cookie', cookies)
       .send({
         action: OfsEligibilitySimulationAction.RECONTACTED,
@@ -315,5 +392,4 @@ describe('PortalOfssController eligibility simulations', () => {
         .set('Cookie', cookies),
     ).resolves.toMatchObject({ status: 204 });
   });
-
 });

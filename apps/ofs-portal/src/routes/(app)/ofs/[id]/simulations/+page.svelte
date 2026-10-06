@@ -64,8 +64,10 @@
 
   function pageHref(page: number) {
     const params = new URLSearchParams();
+    if (data.filters.location) params.set("location", data.filters.location);
+    if (data.filters.contact) params.set("contact", data.filters.contact);
     if (page > 1) params.set("page", `${page}`);
-    return params.toString() ? `?${params.toString()}` : "";
+    return params.toString() ? `?${params.toString()}` : `?page=1`;
   }
 
   function formatDate(value: string) {
@@ -119,12 +121,12 @@
       const response = await fetch(
         `/ofs/${data.ofs.id}/simulations/${line.simulationId}/metadata`,
         {
-        method: "PUT",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          action: line.action,
-          status: line.status,
-        }),
+          method: "PUT",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            action: line.action,
+            status: line.status,
+          }),
         },
       );
 
@@ -144,8 +146,7 @@
     } catch {
       line.action = previousAction;
       line.status = previousStatus;
-      errorBySimulationId[line.simulationId] =
-        "La mise à jour a échoué.";
+      errorBySimulationId[line.simulationId] = "La mise à jour a échoué.";
     } finally {
       savingBySimulationId[line.simulationId] = false;
     }
@@ -204,6 +205,8 @@
     action={`/ofs/${data.ofs.id}/simulations/export`}
     onsubmit={handleExportSubmit}
   >
+    <input type="hidden" name="location" value={data.filters.location} />
+    <input type="hidden" name="contact" value={data.filters.contact} />
     <h2 class="fr-h5 fr-mb-2w" id="export-dialog-title">Exporter des lignes</h2>
 
     <div class="fr-input-group fr-mb-2w">
@@ -251,201 +254,250 @@
   </form>
 </dialog>
 
-{#if contacts.items.length > 0}
-  {#if contacts.items.some((line) => line.isNew)}
-    <div class="fr-alert fr-alert--info fr-mb-2w">
-      <p>
-        {contacts.items.filter((line) => line.isNew).length} nouvelle(s) ligne(s)
-        depuis votre précédente connexion.
-      </p>
-    </div>
+<form
+  id="contact-filters"
+  method="GET"
+  action={`/ofs/${data.ofs.id}/simulations`}
+  class="contact-filter-actions fr-mb-2w"
+>
+  <button class="fr-btn fr-btn--sm" type="submit">Filtrer</button>
+  {#if data.filters.location || data.filters.contact}
+    <a
+      class="fr-btn fr-btn--sm fr-btn--tertiary"
+      href={`/ofs/${data.ofs.id}/simulations`}
+    >
+      Effacer les filtres
+    </a>
   {/if}
+</form>
 
-  <div class="fr-table fr-table--bordered">
-    <table>
-      <caption>{contacts.totalCount} contact(s)</caption>
-      <thead>
-        <tr>
-          <th scope="col">Infos</th>
-          <th scope="col">Date</th>
-          <th scope="col">Contact</th>
-          <th scope="col">Localisation</th>
-          <th scope="col">Foyer</th>
-          <th scope="col">Projet</th>
-          <th scope="col">Ressources</th>
-          <th scope="col">Transmis à</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each items as line}
-          <tr>
-            <td>
-              <div class="simulation-metadata-stack">
-                <div class="fr-select-group simulation-metadata-field">
-                  <label class="fr-label fr-mb-1v" for={`action-${line.locationId}`}
-                    >Action</label
-                  >
-                  <select
-                    id={`action-${line.locationId}`}
-                    class="fr-select"
-                    bind:value={line.action}
-                    disabled={savingBySimulationId[line.simulationId]}
-                    onchange={async (event) => {
-                      const target = event.currentTarget as HTMLSelectElement;
-                      await updateMetadata(line, {
-                        action: target.value || null,
-                      });
-                    }}
-                  >
-                    <option value="">-</option>
-                    {#each actionOptions as option}
-                      <option value={option.value}>{option.label}</option>
-                    {/each}
-                  </select>
-                </div>
-
-                <div class="fr-select-group simulation-metadata-field">
-                  <label class="fr-label fr-mb-1v" for={`status-${line.locationId}`}
-                    >Statut</label
-                  >
-                  <select
-                    id={`status-${line.locationId}`}
-                    class="fr-select"
-                    bind:value={line.status}
-                    disabled={savingBySimulationId[line.simulationId]}
-                    onchange={async (event) => {
-                      const target = event.currentTarget as HTMLSelectElement;
-                      await updateMetadata(line, {
-                        status: target.value || null,
-                      });
-                    }}
-                  >
-                    <option value="">-</option>
-                    {#each statusOptions as option}
-                      <option value={option.value}>{option.label}</option>
-                    {/each}
-                  </select>
-                </div>
-
-                {#if savingBySimulationId[line.simulationId]}
-                  <p class="fr-hint-text fr-mt-1v">Mise à jour...</p>
-                {:else if errorBySimulationId[line.simulationId]}
-                  <p class="fr-error-text fr-mt-1v">
-                    {errorBySimulationId[line.simulationId]}
-                  </p>
-                {/if}
-              </div>
-            </td>
-            <td>
-              <div>{formatDate(line.submittedAt)}</div>
-              {#if line.isNew}
-                <span class="fr-badge fr-badge--green-menthe fr-badge--sm"
-                  >Nouveau</span
-                >
-              {/if}
-            </td>
-            <td>
-              <strong>{line.fullName || "Contact sans nom"}</strong><br />
-              {line.email || "-"}<br />
-              {line.phone || "-"}
-            </td>
-            <td>
-              {line.city || "-"}<br />
-              {line.departementCode
-                ? `Département ${line.departementCode}`
-                : "-"}
-            </td>
-            <td>
-              {line.householdSize ?? "-"} personne(s)<br />
-              Handicap: {line.hasDisability === null
-                ? "-"
-                : line.hasDisability
-                  ? "Oui"
-                  : "Non"}
-            </td>
-            <td>
-              {line.propertySituation || "-"}<br />
-              {line.housingType || "-"}<br />
-              Apport: {line.contribution
-                ? formatCurrency(line.contribution)
-                : "-"}
-            </td>
-            <td>
-              Revenus imposables: {line.taxableIncome
-                ? formatCurrency(line.taxableIncome)
-                : "-"}<br />
-              Ressources: {line.resources
-                ? formatCurrency(line.resources)
-                : "-"}
-            </td>
-            <td>
-              {#if line.transmittedDistributors.length}
-                <ul class="fr-tags-group">
-                  {#each line.transmittedDistributors as distributor}
-                    <li><p class="fr-tag">{distributor.name}</p></li>
-                  {/each}
-                </ul>
-              {:else}
-                -
-              {/if}
-            </td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </div>
-
-  {#if contacts.pagesCount > 1}
-    <nav class="fr-pagination" aria-label="Pagination des contacts">
-      <ul class="fr-pagination__list">
-        <li>
-          {#if contacts.hasPreviousPage}
-            <a
-              class="fr-pagination__link fr-pagination__link--prev"
-              href={pageHref(contacts.page - 1)}>Page précédente</a
-            >
-          {:else}
-            <span
-              class="fr-pagination__link fr-pagination__link--prev"
-              aria-disabled="true">Page précédente</span
-            >
-          {/if}
-        </li>
-        {#each Array.from({ length: contacts.pagesCount }, (_, index) => index + 1) as page}
-          <li>
-            <a
-              class="fr-pagination__link"
-              aria-current={page === contacts.page ? "page" : undefined}
-              href={pageHref(page)}>{page}</a
-            >
-          </li>
-        {/each}
-        <li>
-          {#if contacts.hasNextPage}
-            <a
-              class="fr-pagination__link fr-pagination__link--next"
-              href={pageHref(contacts.page + 1)}>Page suivante</a
-            >
-          {:else}
-            <span
-              class="fr-pagination__link fr-pagination__link--next"
-              aria-disabled="true">Page suivante</span
-            >
-          {/if}
-        </li>
-      </ul>
-    </nav>
-  {/if}
-{:else}
-  <div class="fr-alert fr-alert--info">
+{#if contacts.items.some((line) => line.isNew)}
+  <div class="fr-alert fr-alert--info fr-mb-2w">
     <p>
-      Aucun contact exploitable ne correspond actuellement au périmètre de cet
-      OFS.
+      {contacts.items.filter((line) => line.isNew).length} nouvelle(s) ligne(s) depuis
+      votre précédente connexion.
     </p>
   </div>
 {/if}
 
+<div class="fr-table fr-table--bordered">
+  <table>
+    <caption>{contacts.totalCount} contact(s)</caption>
+    <thead>
+      <tr>
+        <th scope="col">Infos</th>
+        <th scope="col">Date</th>
+        <th scope="col">
+          <label for="contact-filter">Contact</label>
+          <input
+            id="contact-filter"
+            class="fr-input contact-filter-input fr-mt-1w"
+            form="contact-filters"
+            type="search"
+            name="contact"
+            placeholder="Nom ou email"
+            value={data.filters.contact}
+          />
+        </th>
+        <th scope="col">
+          <label for="location-filter">Localisation</label>
+          <input
+            id="location-filter"
+            class="fr-input contact-filter-input fr-mt-1w"
+            form="contact-filters"
+            type="search"
+            name="location"
+            placeholder="Ville ou département"
+            value={data.filters.location}
+          />
+        </th>
+        <th scope="col">Foyer</th>
+        <th scope="col">Projet</th>
+        <th scope="col">Ressources</th>
+        <th scope="col">Transmis à</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each items as line}
+        <tr>
+          <td>
+            <div class="simulation-metadata-stack">
+              <div class="fr-select-group simulation-metadata-field">
+                <label
+                  class="fr-label fr-mb-1v"
+                  for={`action-${line.locationId}`}>Action</label
+                >
+                <select
+                  id={`action-${line.locationId}`}
+                  class="fr-select"
+                  bind:value={line.action}
+                  disabled={savingBySimulationId[line.simulationId]}
+                  onchange={async (event) => {
+                    const target = event.currentTarget as HTMLSelectElement;
+                    await updateMetadata(line, {
+                      action: target.value || null,
+                    });
+                  }}
+                >
+                  <option value="">-</option>
+                  {#each actionOptions as option}
+                    <option value={option.value}>{option.label}</option>
+                  {/each}
+                </select>
+              </div>
+
+              <div class="fr-select-group simulation-metadata-field">
+                <label
+                  class="fr-label fr-mb-1v"
+                  for={`status-${line.locationId}`}>Statut</label
+                >
+                <select
+                  id={`status-${line.locationId}`}
+                  class="fr-select"
+                  bind:value={line.status}
+                  disabled={savingBySimulationId[line.simulationId]}
+                  onchange={async (event) => {
+                    const target = event.currentTarget as HTMLSelectElement;
+                    await updateMetadata(line, {
+                      status: target.value || null,
+                    });
+                  }}
+                >
+                  <option value="">-</option>
+                  {#each statusOptions as option}
+                    <option value={option.value}>{option.label}</option>
+                  {/each}
+                </select>
+              </div>
+
+              {#if savingBySimulationId[line.simulationId]}
+                <p class="fr-hint-text fr-mt-1v">Mise à jour...</p>
+              {:else if errorBySimulationId[line.simulationId]}
+                <p class="fr-error-text fr-mt-1v">
+                  {errorBySimulationId[line.simulationId]}
+                </p>
+              {/if}
+            </div>
+          </td>
+          <td>
+            <div>{formatDate(line.submittedAt)}</div>
+            {#if line.isNew}
+              <span class="fr-badge fr-badge--green-menthe fr-badge--sm"
+                >Nouveau</span
+              >
+            {/if}
+          </td>
+          <td>
+            <strong>{line.fullName || "Contact sans nom"}</strong><br />
+            {line.email || "-"}<br />
+            {line.phone || "-"}
+          </td>
+          <td>
+            {line.city || "-"}<br />
+            {line.departementCode ? `Département ${line.departementCode}` : "-"}
+          </td>
+          <td>
+            {line.householdSize ?? "-"} personne(s)<br />
+            Handicap: {line.hasDisability === null
+              ? "-"
+              : line.hasDisability
+                ? "Oui"
+                : "Non"}
+          </td>
+          <td>
+            {line.propertySituation || "-"}<br />
+            {line.housingType || "-"}<br />
+            Apport: {line.contribution
+              ? formatCurrency(line.contribution)
+              : "-"}
+          </td>
+          <td>
+            Revenus imposables: {line.taxableIncome
+              ? formatCurrency(line.taxableIncome)
+              : "-"}<br />
+            Ressources: {line.resources ? formatCurrency(line.resources) : "-"}
+          </td>
+          <td>
+            {#if line.transmittedDistributors.length}
+              <ul class="fr-tags-group">
+                {#each line.transmittedDistributors as distributor}
+                  <li><p class="fr-tag">{distributor.name}</p></li>
+                {/each}
+              </ul>
+            {:else}
+              -
+            {/if}
+          </td>
+        </tr>
+      {:else}
+        <tr>
+          <td colspan="8">
+            {#if data.filters.location || data.filters.contact}
+              Aucun contact ne correspond aux filtres sélectionnés.
+            {:else}
+              Aucun contact exploitable ne correspond actuellement au périmètre
+              de cet OFS.
+            {/if}
+          </td>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+</div>
+
+{#if contacts.pagesCount > 1}
+  <nav class="fr-pagination" aria-label="Pagination des contacts">
+    <ul class="fr-pagination__list">
+      <li>
+        {#if contacts.hasPreviousPage}
+          <a
+            class="fr-pagination__link fr-pagination__link--prev"
+            href={pageHref(contacts.page - 1)}>Page précédente</a
+          >
+        {:else}
+          <span
+            class="fr-pagination__link fr-pagination__link--prev"
+            aria-disabled="true">Page précédente</span
+          >
+        {/if}
+      </li>
+      {#each Array.from({ length: contacts.pagesCount }, (_, index) => index + 1) as page}
+        <li>
+          <a
+            class="fr-pagination__link"
+            aria-current={page === contacts.page ? "page" : undefined}
+            href={pageHref(page)}>{page}</a
+          >
+        </li>
+      {/each}
+      <li>
+        {#if contacts.hasNextPage}
+          <a
+            class="fr-pagination__link fr-pagination__link--next"
+            href={pageHref(contacts.page + 1)}>Page suivante</a
+          >
+        {:else}
+          <span
+            class="fr-pagination__link fr-pagination__link--next"
+            aria-disabled="true">Page suivante</span
+          >
+        {/if}
+      </li>
+    </ul>
+  </nav>
+{/if}
+
 <style>
+  .contact-filter-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-filter-input {
+    min-width: 12rem;
+  }
+
   .export-dialog {
     border: 0;
     border-radius: 1rem;
