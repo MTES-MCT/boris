@@ -10,6 +10,7 @@ import { createValidationPipe } from './infrastructure/config/validation-pipe.co
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  app.enableShutdownHooks();
   app.useGlobalPipes(createValidationPipe());
 
   app.set('trust proxy', 1);

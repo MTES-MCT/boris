@@ -1,3 +1,4 @@
+import { LeadNotificationEnqueuer } from 'src/infrastructure/ofs/notifications/lead-notification.enqueuer';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { LocationEntity } from 'src/infrastructure/location/location.entity';
@@ -8,15 +9,26 @@ import {
 } from 'test/mocks/integration/location';
 
 describe('LocationRepository', () => {
+  const manager = { query: jest.fn(), save: jest.fn() };
+  const enqueuer = { enqueue: jest.fn() };
+
   let locationRepository: LocationRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         LocationRepository,
+        { provide: LeadNotificationEnqueuer, useValue: enqueuer },
         {
           provide: getRepositoryToken(LocationEntity),
-          useValue: mockLocationRepository,
+          useValue: {
+            ...mockLocationRepository,
+            manager: {
+              transaction: (
+                work: (transaction: typeof manager) => Promise<unknown>,
+              ) => work(manager),
+            },
+          },
         },
       ],
     }).compile();
@@ -25,13 +37,13 @@ describe('LocationRepository', () => {
   });
 
   it('should save a location and return its data', async () => {
-    mockLocationRepository.save.mockResolvedValue(mockedLocation);
+    manager.save.mockResolvedValue(mockedLocation);
 
     const result = await locationRepository.save(mockedLocation);
 
     expect(result).toMatchObject(mockedLocation);
-    expect(mockLocationRepository.save).toHaveBeenCalledTimes(1);
-    expect(mockLocationRepository.save).toHaveBeenCalledWith(mockedLocation);
+    expect(manager.save).toHaveBeenCalledTimes(1);
+    expect(manager.save).toHaveBeenCalledWith(LocationEntity, mockedLocation);
   });
 
   it('should delete a location by id', async () => {

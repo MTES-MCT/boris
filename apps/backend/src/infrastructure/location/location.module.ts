@@ -1,3 +1,4 @@
+import { LeadNotificationQueueModule } from '../ofs/notifications/lead-notification-queue.module';
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LocationEntity } from './location.entity';
@@ -9,6 +10,7 @@ import { DeleteLocationUsecase } from 'src/application/location/usecases/delete.
 
 @Module({
   imports: [
+    LeadNotificationQueueModule,
     TypeOrmModule.forFeature([LocationEntity]),
     DepartementModule,
     forwardRef(() => EligibilitySimulationModule),

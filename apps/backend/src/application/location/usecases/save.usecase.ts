@@ -60,7 +60,14 @@ export class SaveLocationUsecase {
       location.eligibilitySimulation = eligibilitySimulation;
     }
 
-    const savedLocation = await this.locationRepository.save(location);
+    const notificationOptions = {
+      suppressLeadNotifications: params.suppressLeadNotifications,
+      submitLead: params.submitLead,
+    };
+    const savedLocation =
+      params.suppressLeadNotifications || params.submitLead
+        ? await this.locationRepository.save(location, notificationOptions)
+        : await this.locationRepository.save(location);
 
     return new LocationView(
       savedLocation.id,

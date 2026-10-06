@@ -590,6 +590,8 @@ export interface components {
       postalCode?: string;
     };
     UpdateEligibilitySimulationDTO: {
+      /** @description Soumettre la piste complète à la fin du parcours. */
+      submitLead?: boolean;
       householdSize?: number;
       hasDisability?: boolean;
       dependantsAmount?: number;

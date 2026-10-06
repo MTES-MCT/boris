@@ -14,7 +14,7 @@ export const load: ServerLoad = async (event) => {
       ? await readJson<
           {
             ofs: { id: string; name: string };
-            frequency: "none" | "daily" | "weekly";
+            frequency: "none" | "instant" | "daily" | "weekly";
           }[]
         >(response)
       : [],
@@ -39,7 +39,8 @@ export const actions: Actions = {
 
     if (newPassword.length < 12) {
       return fail(400, {
-        message: "Le nouveau mot de passe doit contenir au moins 12 caractères.",
+        message:
+          "Le nouveau mot de passe doit contenir au moins 12 caractères.",
       });
     }
 

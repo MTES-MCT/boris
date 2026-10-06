@@ -94,6 +94,7 @@ export class PortalLeadNotificationsController {
         }
 
         if (
+          frequency !== PortalLeadNotificationFrequency.INSTANT &&
           frequency !== PortalLeadNotificationFrequency.DAILY &&
           frequency !== PortalLeadNotificationFrequency.WEEKLY
         ) {
@@ -137,6 +138,7 @@ export class PortalLeadNotificationsController {
   ): value is LeadNotificationFrequencyFormValue {
     return (
       value === 'none' ||
+      value === PortalLeadNotificationFrequency.INSTANT ||
       value === PortalLeadNotificationFrequency.DAILY ||
       value === PortalLeadNotificationFrequency.WEEKLY
     );

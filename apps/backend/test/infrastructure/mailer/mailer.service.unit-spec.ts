@@ -34,6 +34,28 @@ describe('MailerService', () => {
   });
 
   describe('sendEmail', () => {
+    it('rejects non-success responses so notifications can retry', async () => {
+      mockFetch.mockResolvedValue({ ok: false, status: 429 } as Response);
+      await expect(
+        mailerService.sendEmail(
+          [{ email: 'user@example.com', name: 'User', params: {} }],
+          'Subject',
+          1,
+        ),
+      ).rejects.toThrow('HTTP 429');
+    });
+
+    it('propagates network failures so notifications can retry', async () => {
+      mockFetch.mockRejectedValue(new Error('Network unavailable'));
+      await expect(
+        mailerService.sendEmail(
+          [{ email: 'user@example.com', name: 'User', params: {} }],
+          'Subject',
+          1,
+        ),
+      ).rejects.toThrow('Network unavailable');
+    });
+
     it('should call Brevo API with correct URL and method', async () => {
       const to: MailerTo[] = [
         { email: 'user@example.com', name: 'User', params: {} },

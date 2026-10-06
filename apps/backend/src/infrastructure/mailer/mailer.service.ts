@@ -31,8 +31,9 @@ export class MailerService implements MailerServiceInterface {
       }),
     });
 
-    await fetch(this.baseUrl, {
+    const response = await fetch(this.baseUrl, {
       method: 'POST',
+      signal: AbortSignal.timeout(30_000),
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
@@ -40,5 +41,11 @@ export class MailerService implements MailerServiceInterface {
       },
       body: body,
     });
+
+    if (!response.ok) {
+      throw new Error(
+        `Brevo rejected email delivery (HTTP ${response.status})`,
+      );
+    }
   }
 }

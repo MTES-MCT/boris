@@ -12,6 +12,7 @@ import { UserEntity } from '../user/user.entity';
 import { OfsEntity } from './ofs.entity';
 
 export enum PortalLeadNotificationFrequency {
+  INSTANT = 'instant',
   DAILY = 'daily',
   WEEKLY = 'weekly',
 }

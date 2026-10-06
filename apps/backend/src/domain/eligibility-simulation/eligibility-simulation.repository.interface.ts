@@ -1,3 +1,4 @@
+import { LeadNotificationOptions } from 'src/domain/ofs/lead-notification-options';
 import { EligibilitySimulationEntity } from 'src/infrastructure/eligibility-simulation/eligibility-simulation.entity';
 import { HighestEligibilityZone } from './eligibility-simulation.interface';
 import { RegionCode } from '../region/region.interface';
@@ -137,6 +138,7 @@ export type DistributorPortalContactFilters = {
 export interface EligibilitySimulationRepositoryInterface {
   save(
     eligibilitySimulation: EligibilitySimulationEntity,
+    options?: LeadNotificationOptions,
   ): Promise<EligibilitySimulationEntity>;
   findById(id: string): Promise<EligibilitySimulationEntity | null>;
   groupByEligibilityStats(): Promise<GroupByEligibilityStatsResult[]>;

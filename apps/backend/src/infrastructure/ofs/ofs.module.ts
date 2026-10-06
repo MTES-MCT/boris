@@ -31,6 +31,8 @@ import { PortalLeadNotificationPreferenceEntity } from './portal-lead-notificati
 import { PortalLeadNotificationsController } from './controllers/api/portal-lead-notifications.controller';
 import { SendPortalLeadNotificationsCron } from './cron/send-portal-lead-notifications';
 import { MailerModule } from '../mailer/mailer.module';
+import { InstantLeadNotificationStore } from './notifications/instant-lead-notification.store';
+import { InstantLeadNotificationWorker } from './notifications/instant-lead-notification.worker';
 import { RateLimitModule } from '../auth/rate-limit.module';
 
 @Module({
@@ -72,6 +74,8 @@ import { RateLimitModule } from '../auth/rate-limit.module';
     UpdateOfsUsecase,
     FindMyOfsUsecase,
     SendPortalLeadNotificationsCron,
+    InstantLeadNotificationStore,
+    InstantLeadNotificationWorker,
     PortalApiAuthenticatedGuard,
   ],
   exports: [

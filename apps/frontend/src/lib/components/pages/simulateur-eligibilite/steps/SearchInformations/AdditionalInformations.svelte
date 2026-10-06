@@ -156,6 +156,7 @@
       errors = {};
 
       updateEligibilitySimulation({
+        submitLead: true,
         hadBrsKnowledge,
         employmentStatus,
         laposteEmployer,

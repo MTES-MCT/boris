@@ -146,9 +146,19 @@ export class UpdateEligibilitySimulationUsecase {
     eligibilitySimulation.positionContractType =
       params.positionContractType || eligibilitySimulation.positionContractType;
 
-    eligibilitySimulation = await this.eligibilitySimulationRepository.save(
-      eligibilitySimulation,
-    );
+    const notificationOptions = {
+      suppressLeadNotifications: params.suppressLeadNotifications,
+      submitLead: params.submitLead,
+    };
+    eligibilitySimulation =
+      params.suppressLeadNotifications || params.submitLead
+        ? await this.eligibilitySimulationRepository.save(
+            eligibilitySimulation,
+            notificationOptions,
+          )
+        : await this.eligibilitySimulationRepository.save(
+            eligibilitySimulation,
+          );
 
     if (hasEmailChanged) {
       try {
