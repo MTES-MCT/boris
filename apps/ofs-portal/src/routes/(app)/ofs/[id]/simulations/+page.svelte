@@ -258,17 +258,41 @@
   id="contact-filters"
   method="GET"
   action={`/ofs/${data.ofs.id}/simulations`}
-  class="contact-filter-actions fr-mb-2w"
+  class="contact-filters fr-mb-2w"
 >
-  <button class="fr-btn fr-btn--sm" type="submit">Filtrer</button>
-  {#if data.filters.location || data.filters.contact}
-    <a
-      class="fr-btn fr-btn--sm fr-btn--tertiary"
-      href={`/ofs/${data.ofs.id}/simulations`}
-    >
-      Effacer les filtres
-    </a>
-  {/if}
+  <div class="fr-input-group contact-filter-field">
+    <label class="fr-label" for="contact-filter">Contact</label>
+    <input
+      id="contact-filter"
+      class="fr-input"
+      type="search"
+      name="contact"
+      placeholder="Nom ou email"
+      value={data.filters.contact}
+    />
+  </div>
+  <div class="fr-input-group contact-filter-field">
+    <label class="fr-label" for="location-filter">Localisation</label>
+    <input
+      id="location-filter"
+      class="fr-input"
+      type="search"
+      name="location"
+      placeholder="Ville ou département"
+      value={data.filters.location}
+    />
+  </div>
+  <div class="contact-filter-actions">
+    <button class="fr-btn fr-btn--sm" type="submit">Filtrer</button>
+    {#if data.filters.location || data.filters.contact}
+      <a
+        class="fr-btn fr-btn--sm fr-btn--tertiary"
+        href={`/ofs/${data.ofs.id}/simulations`}
+      >
+        Effacer les filtres
+      </a>
+    {/if}
+  </div>
 </form>
 
 {#if contacts.items.some((line) => line.isNew)}
@@ -287,30 +311,8 @@
       <tr>
         <th scope="col">Infos</th>
         <th scope="col">Date</th>
-        <th scope="col">
-          <label for="contact-filter">Contact</label>
-          <input
-            id="contact-filter"
-            class="fr-input contact-filter-input fr-mt-1w"
-            form="contact-filters"
-            type="search"
-            name="contact"
-            placeholder="Nom ou email"
-            value={data.filters.contact}
-          />
-        </th>
-        <th scope="col">
-          <label for="location-filter">Localisation</label>
-          <input
-            id="location-filter"
-            class="fr-input contact-filter-input fr-mt-1w"
-            form="contact-filters"
-            type="search"
-            name="location"
-            placeholder="Ville ou département"
-            value={data.filters.location}
-          />
-        </th>
+        <th scope="col">Contact</th>
+        <th scope="col">Localisation</th>
         <th scope="col">Foyer</th>
         <th scope="col">Projet</th>
         <th scope="col">Ressources</th>
@@ -488,14 +490,22 @@
 {/if}
 
 <style>
-  .contact-filter-actions {
+  .contact-filters {
     display: flex;
+    align-items: flex-end;
     gap: 1rem;
     flex-wrap: wrap;
   }
 
-  .contact-filter-input {
-    min-width: 12rem;
+  .contact-filter-field {
+    flex: 1 1 16rem;
+    margin-bottom: 0;
+  }
+
+  .contact-filter-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
 
   .export-dialog {
