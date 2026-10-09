@@ -52,18 +52,18 @@
     title="Les logements BRS disponibles"
     titleElement="h2">
     <p>
-      Vous recherchez un logement en BRS pour acheter votre résidence principale
-      ?
+      Vous recherchez un <strong>logement en BRS</strong>
+      pour acheter votre résidence principale ?
     </p>
     <p>
       Parcourez les programmes actuellement en cours de commercialisations pour
       découvrir les logements en BRS proposés à la vente.
     </p>
-    <h3>Recherchez un bien selon sa localisation</h3>
+    <p><strong>Recherchez un bien selon sa localisation</strong></p>
     <p>
-      Cliquez sur un programme pour être redirigé vers la page du programme et
-      consulter les appartements en BRS à vendre, les maisons en BRS à vendre
-      dans le cadre de ce programme
+      <strong>Cliquez sur un programme</strong>
+      pour être redirigé vers la page du programme et consulter les appartements
+      en BRS à vendre, les maisons en BRS à vendre dans le cadre de ce programme
     </p>
     <p>
       Les disponibilités, les prix et les conditions de commercialisation sont
