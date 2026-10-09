@@ -139,7 +139,7 @@
                             <label
                               class="fr-label"
                               for={`notification-instant-${notification.ofs.id}`}
-                              >À chaque nouvelle piste</label
+                              >À chaque nouveau prospect</label
                             >
                           </div>
                         </div>
