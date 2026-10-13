@@ -22,7 +22,7 @@ export const load: ServerLoad = async (event) => {
 };
 
 export const actions: Actions = {
-  default: async (event) => {
+  changePassword: async (event) => {
     const user = await getPortalUser(event);
     requirePortalUser(user, `${event.url.pathname}${event.url.search}`);
 

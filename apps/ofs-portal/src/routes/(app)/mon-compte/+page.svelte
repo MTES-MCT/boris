@@ -22,7 +22,7 @@
       </div>
     {/if}
 
-    <form method="POST" class="fr-mt-3w">
+    <form method="POST" action="?/changePassword" class="fr-mt-3w">
       <div class="fr-input-group">
         <label class="fr-label" for="email">Adresse e-mail</label>
         <input
