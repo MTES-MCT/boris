@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { afterNavigate } from "$app/navigation";
   import { page } from "$app/state";
   import { default as Logo } from "$assets/logo.svg?raw";
 
@@ -59,9 +60,8 @@
     ),
   );
 
-  function openSwitcher() {
-    switcherOpen = true;
-  }
+  // Reset the search after navigation so the clicked link keeps its destination.
+  afterNavigate(closeSwitcher);
 
   function closeSwitcher() {
     switcherOpen = false;
@@ -183,10 +183,8 @@
                       <ul class="fr-menu__list">
                         {#each filteredOfss as ofs}
                           <li>
-                            <a
-                              class="fr-nav__link"
-                              href={`/ofs/${ofs.id}`}
-                              onclick={closeSwitcher}>{ofs.name}</a
+                            <a class="fr-nav__link" href={`/ofs/${ofs.id}`}
+                              >{ofs.name}</a
                             >
                           </li>
                         {/each}
@@ -239,8 +237,7 @@
                           aria-current={data.selectedDistributorOfsId
                             ? undefined
                             : "page"}
-                          href="/commercialisateur"
-                          onclick={closeSwitcher}>Tous les OFS</a
+                          href="/commercialisateur">Tous les OFS</a
                         >
                       </li>
                       {#if filteredDistributorOfss.length === 0}
@@ -259,7 +256,7 @@
                                 ? "page"
                                 : undefined}
                               href={`/commercialisateur?ofsId=${ofs.id}`}
-                              onclick={closeSwitcher}>{ofs.name}</a
+                              >{ofs.name}</a
                             >
                           </li>
                         {/each}
