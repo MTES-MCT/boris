@@ -758,6 +758,7 @@ export class EligibilitySimulationRepository
         .addSelect('eligibility_simulation.phone', 'phone')
         .addSelect('departement.code', 'departementCode')
         .addSelect('location.city', 'city')
+        .addSelect('location.citycode', 'inseeCode')
         .addSelect('eligibility_simulation.contribution', 'contribution')
         .addSelect('eligibility_simulation."householdSize"', 'householdSize')
         .addSelect('eligibility_simulation."hasDisability"', 'hasDisability')
@@ -795,7 +796,7 @@ export class EligibilitySimulationRepository
 
     if (filters.location?.trim()) {
       query.andWhere(
-        '(location.city ILIKE :locationFilter OR departement.code ILIKE :locationFilter)',
+        '(location.city ILIKE :locationFilter OR location.citycode ILIKE :locationFilter OR departement.code ILIKE :locationFilter)',
         { locationFilter: pattern(filters.location) },
       );
     }
@@ -909,6 +910,7 @@ export class EligibilitySimulationRepository
         .addSelect('eligibility_simulation.phone', 'phone')
         .addSelect('departement.code', 'departementCode')
         .addSelect('location.city', 'city')
+        .addSelect('location.citycode', 'inseeCode')
         .addSelect('eligibility_simulation.contribution', 'contribution')
         .addSelect('eligibility_simulation."householdSize"', 'householdSize')
         .addSelect('eligibility_simulation."hasDisability"', 'hasDisability')

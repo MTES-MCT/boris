@@ -197,6 +197,7 @@ describe('PortalOfssController eligibility simulations', () => {
           simulationId: matchingSimulation.id,
           email: 'alice@example.test',
           city: 'Ville cible',
+          inseeCode: '00001',
           departementCode: matchingDepartement.code,
           action: null,
           status: null,
@@ -259,6 +260,17 @@ describe('PortalOfssController eligibility simulations', () => {
         firstPage.body.items[0].locationId,
       );
     }
+
+    const inseeFiltered = await request(app.getHttpServer())
+      .get(contactPath)
+      .query({ location: '00001' })
+      .set('Cookie', cookies);
+    expect(inseeFiltered.status).toBe(200);
+    expect(inseeFiltered.body.totalCount).toBe(1);
+    expect(inseeFiltered.body.items[0]).toMatchObject({
+      city: 'Ville cible',
+      inseeCode: '00001',
+    });
 
     for (const filters of [
       { contact: '0102030405' }, // Phone numbers are excluded.

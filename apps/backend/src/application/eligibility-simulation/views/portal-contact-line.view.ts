@@ -7,6 +7,7 @@ export class PortalContactLineView {
   public phone: string | null;
   public departementCode: string | null;
   public city: string | null;
+  public inseeCode: string | null;
   public contribution: number | null;
   public householdSize: number | null;
   public hasDisability: boolean | null;
@@ -35,6 +36,7 @@ export class PortalContactLineView {
     this.phone = props.phone;
     this.departementCode = props.departementCode;
     this.city = props.city;
+    this.inseeCode = props.inseeCode;
     this.contribution = props.contribution;
     this.householdSize = props.householdSize;
     this.hasDisability = props.hasDisability;

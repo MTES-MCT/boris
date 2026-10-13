@@ -12,6 +12,7 @@
     phone: string | null;
     departementCode: string | null;
     city: string | null;
+    inseeCode: string | null;
     contribution: number | null;
     householdSize: number | null;
     hasDisability: boolean | null;
@@ -267,7 +268,7 @@
       class="fr-input"
       type="search"
       name="contact"
-      placeholder="Nom ou email"
+      placeholder="Nom, prénom ou email"
       value={data.filters.contact}
     />
   </div>
@@ -278,7 +279,7 @@
       class="fr-input"
       type="search"
       name="location"
-      placeholder="Ville ou département"
+      placeholder="Ville, code INSEE ou département"
       value={data.filters.location}
     />
   </div>
@@ -396,6 +397,7 @@
           </td>
           <td>
             {line.city || "-"}<br />
+            Code INSEE : {line.inseeCode || "-"}<br />
             {line.departementCode ? `Département ${line.departementCode}` : "-"}
           </td>
           <td>

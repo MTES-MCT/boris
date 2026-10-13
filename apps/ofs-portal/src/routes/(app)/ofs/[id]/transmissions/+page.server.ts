@@ -74,7 +74,6 @@ function payloadFromForm(data: FormData) {
     data.get("scopeType") === "GEOGRAPHIC" ? "GEOGRAPHIC" : "ALL";
 
   return {
-    distributorId: String(data.get("distributorId") || ""),
     isActive: data.get("isActive") === "on",
     scopeType,
     inseeCodes:
@@ -95,7 +94,10 @@ export const actions: Actions = {
       {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(payloadFromForm(data)),
+        body: JSON.stringify({
+          distributorId: String(data.get("distributorId") || ""),
+          ...payloadFromForm(data),
+        }),
       },
     );
 

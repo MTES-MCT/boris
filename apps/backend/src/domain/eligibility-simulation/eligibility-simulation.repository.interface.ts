@@ -104,6 +104,7 @@ export type PortalEligibilitySimulationContactResult = {
   phone: string | null;
   departementCode: string | null;
   city: string | null;
+  inseeCode: string | null;
   contribution: number | null;
   householdSize: number | null;
   hasDisability: boolean | null;

@@ -34,7 +34,10 @@
   <div class="fr-col-12 fr-col-lg-7">
     <h1 class="fr-h3">Transmissions commerciales</h1>
     <p class="fr-text--sm">
-      Configurez les contacts transmis aux commercialisateurs pour cet OFS.
+      Le partage donne à tous les utilisateurs du commercialisateur accès aux
+      prospects du périmètre choisi dans leur espace Boris. Aucun envoi par
+      email n’est effectué ; vous n’avez donc pas d’adresses email à renseigner
+      ici.
     </p>
   </div>
 </div>
@@ -43,14 +46,22 @@
   <div class="fr-alert fr-alert--error fr-mb-3w"><p>{form.error}</p></div>
 {/if}
 
-<section class="fr-p-3w fr-mb-4w" style="background: white; border-radius: 0.5rem;">
+<section
+  class="fr-p-3w fr-mb-4w"
+  style="background: white; border-radius: 0.5rem;"
+>
   <h2 class="fr-h5">Nouvelle transmission</h2>
   {#if availableDistributors.length}
     <form method="POST" action="?/create">
       <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12 fr-col-md-6">
           <label class="fr-label" for="distributorId">Commercialisateur</label>
-          <select class="fr-select" id="distributorId" name="distributorId" required>
+          <select
+            class="fr-select"
+            id="distributorId"
+            name="distributorId"
+            required
+          >
             <option value="">Sélectionner</option>
             {#each availableDistributors as distributor}
               <option value={distributor.id}>{distributor.name}</option>
@@ -75,7 +86,9 @@
         <div class="transmission-scope fr-mt-2w">
           <div class="fr-grid-row fr-grid-row--gutters">
             <div class="fr-col-12 fr-col-md-6">
-              <label class="fr-label" for="inseeCodes">Codes communes INSEE</label>
+              <label class="fr-label" for="inseeCodes"
+                >Codes communes INSEE</label
+              >
               <input
                 class="fr-input"
                 id="inseeCodes"
@@ -84,7 +97,9 @@
               />
             </div>
             <div class="fr-col-12 fr-col-md-6">
-              <label class="fr-label" for="departementCodes">Codes départements</label>
+              <label class="fr-label" for="departementCodes"
+                >Codes départements</label
+              >
               <input
                 class="fr-input"
                 id="departementCodes"
@@ -112,7 +127,9 @@
 
 {#if data.transmissions.length}
   <div class="transmissions-list">
-    <h2 class="fr-h5">{data.transmissions.length} transmission(s) configurée(s)</h2>
+    <h2 class="fr-h5">
+      {data.transmissions.length} transmission(s) configurée(s)
+    </h2>
 
     {#each data.transmissions as transmission}
       <section class="transmission-panel">
@@ -188,7 +205,10 @@
                   />
                 </div>
                 <div class="fr-col-12 fr-col-md-6">
-                  <label class="fr-label" for={`departementCodes-${transmission.id}`}>
+                  <label
+                    class="fr-label"
+                    for={`departementCodes-${transmission.id}`}
+                  >
                     Codes départements transmis
                   </label>
                   <input
@@ -213,7 +233,9 @@
     {/each}
   </div>
 {:else}
-  <div class="fr-alert fr-alert--info"><p>Aucune transmission commerciale configurée.</p></div>
+  <div class="fr-alert fr-alert--info">
+    <p>Aucune transmission commerciale configurée.</p>
+  </div>
 {/if}
 
 <style>
