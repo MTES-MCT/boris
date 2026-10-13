@@ -14,6 +14,7 @@ import { UpdateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-
 import { FindBrsDiffusionWebsiteByIdUsecase } from 'src/application/brs-diffusion-website/usecases/findById.usecase';
 import { UpdateBrsDiffusionWebsiteAdminController } from './controllers/admin/update-brs-diffusion-website.controller';
 import { GetBrsDiffusionWebsitesApiController } from './controllers/api/get-brs-diffusion-websites.controller';
+import { PortalProgramsController } from './controllers/api/portal-programs.controller';
 import { RateLimitModule } from '../auth/rate-limit.module';
 import { OfsEntity } from '../ofs/ofs.entity';
 import { DistributorEntity } from '../distributor/distributor.entity';
@@ -35,6 +36,7 @@ import { DistributorEntity } from '../distributor/distributor.entity';
     DeleteBrsDiffusionWebsiteAdminController,
     UpdateBrsDiffusionWebsiteAdminController,
     GetBrsDiffusionWebsitesApiController,
+    PortalProgramsController,
   ],
   providers: [
     {

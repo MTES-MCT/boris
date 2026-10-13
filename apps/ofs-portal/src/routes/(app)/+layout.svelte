@@ -305,6 +305,7 @@
   {:else if page.data.currentOfs}
     <div class="fr-header__menu fr-modal" id="menu-modal">
       <div class="fr-container">
+        <div class="fr-header__menu-links"></div>
         <nav class="fr-nav" aria-label="Navigation principale OFS">
           <ul class="fr-nav__list">
             <li class="fr-nav__item">
@@ -334,6 +335,20 @@
                 Transmissions
               </a>
             </li>
+            {#if user.roles.includes("ofs")}
+              <li class="fr-nav__item">
+                <a
+                  class="fr-nav__link"
+                  aria-current={page.url.pathname.startsWith(
+                    `/ofs/${page.data.currentOfs.id}/programmes`,
+                  )
+                    ? "page"
+                    : undefined}
+                  href={`/ofs/${page.data.currentOfs.id}/programmes`}
+                  target="_self">Programmes</a
+                >
+              </li>
+            {/if}
             <li class="fr-nav__item">
               <a
                 class="fr-nav__link"

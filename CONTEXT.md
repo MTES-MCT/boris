@@ -85,3 +85,15 @@ _Avoid_: Suivi OFS, statut OFS
 
 - "commercialisateur" was used to mean both the selling organization and the portal user profile; resolved: the organization is **Commercialisateur**, while the portal user is **Compte commercialisateur**.
 - Existing code may use `Distributor` for **Commercialisateur**, but the portal role value should remain `commercialisateur`.
+
+## Programmes BRS
+
+- A **Programme BRS** is a map point (`BrsDiffusionWebsite`) attached to exactly one OFS when managed from the portal.
+- A **Compte OFS** can list, create, edit and delete all programmes attached to the OFS currently selected in the portal, including programmes created by admins.
+- A **Compte OFS** attached to several OFS must switch the selected OFS to manage another OFS's programmes.
+- The backend checks the OFS role, account attachment and programme ownership for every portal operation; the programme's OFS cannot be changed from its form.
+- **Comptes commercialisateur** cannot manage programmes in this version. Admin map management remains available in the administration.
+- Creating or editing a programme publishes its changes immediately on the public map. Drafts and OFS approval are deferred.
+- Portal programme forms require a name, HTTP(S) announcement URL, street address, city and housing type (new by default). Delivery month, INSEE commune code and commercialisateur are optional.
+- An OFS can select only a commercialisateur linked to that OFS.
+- Programme deletion sets `isDeleted` to true; deleted programmes are excluded from the portal, administration listings, public map and proximity searches. This version provides no restoration interface.

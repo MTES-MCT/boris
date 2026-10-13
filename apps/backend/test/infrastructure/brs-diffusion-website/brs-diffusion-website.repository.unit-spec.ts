@@ -43,8 +43,47 @@ describe('BrsDiffusionWebsiteRepository', () => {
     );
   });
 
+  it('does not resurrect a program deleted while an edit was in progress', async () => {
+    mockedBrsDiffusionWebsiteRepository.update.mockResolvedValue({
+      affected: 0,
+    });
+    await expect(
+      brsDiffusionWebsiteRepository.save({
+        ...mockedBrsDiffusionWebsite,
+        id: 'program-1',
+        isDeleted: false,
+      }),
+    ).rejects.toThrow();
+    expect(mockedBrsDiffusionWebsiteRepository.update).toHaveBeenCalledWith(
+      { id: 'program-1', isDeleted: false },
+      expect.not.objectContaining({ isDeleted: expect.anything() }),
+    );
+    expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
+  });
+
+  it('excludes deleted points from the nearest OFS search', async () => {
+    const query = {
+      innerJoinAndSelect: jest.fn().mockReturnThis(),
+      leftJoinAndSelect: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
+      setParameters: jest.fn().mockReturnThis(),
+      orderBy: jest.fn().mockReturnThis(),
+      getRawAndEntities: jest.fn().mockResolvedValue({ entities: [], raw: [] }),
+    };
+    mockedBrsDiffusionWebsiteRepository.createQueryBuilder.mockReturnValue(
+      query,
+    );
+    await brsDiffusionWebsiteRepository.findNearestOfssByLocation(48, 2, 50);
+    expect(query.andWhere).toHaveBeenCalledWith(
+      'brs_diffusion_website.isDeleted = false',
+    );
+  });
+
   it('should find all brs diffusion websites', async () => {
     const mockQueryBuilder = {
+      andWhere: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
@@ -74,6 +113,9 @@ describe('BrsDiffusionWebsiteRepository', () => {
       'brs_diffusion_website.departement',
       'departement',
     );
+    expect(mockQueryBuilder.andWhere).toHaveBeenCalledWith(
+      'brs_diffusion_website.isDeleted = false',
+    );
     expect(mockQueryBuilder.skip).toHaveBeenCalledWith(0);
     expect(mockQueryBuilder.take).toHaveBeenCalledWith(10);
     expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith(
@@ -85,13 +127,13 @@ describe('BrsDiffusionWebsiteRepository', () => {
 
   it('should find all brs diffusion websites by location', async () => {
     const mockQueryBuilder = {
+      andWhere: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
       leftJoinAndSelect: jest.fn().mockReturnThis(),
       addSelect: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
-      andWhere: jest.fn().mockReturnThis(),
       setParameters: jest.fn().mockReturnThis(),
       getCount: jest.fn().mockResolvedValue(1),
       getRawAndEntities: jest.fn().mockResolvedValue({
@@ -151,6 +193,9 @@ describe('BrsDiffusionWebsiteRepository', () => {
       longitude: 4.075149,
       radius: 150000,
     });
+    expect(mockQueryBuilder.andWhere).toHaveBeenCalledWith(
+      'brs_diffusion_website.isDeleted = false',
+    );
     expect(mockQueryBuilder.skip).toHaveBeenCalledWith(0);
     expect(mockQueryBuilder.take).toHaveBeenCalledWith(10);
     expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith('distance', 'ASC');
@@ -163,6 +208,7 @@ describe('BrsDiffusionWebsiteRepository', () => {
       createQueryBuilder: jest.fn().mockReturnThis(),
       leftJoinAndSelect: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
@@ -199,6 +245,9 @@ describe('BrsDiffusionWebsiteRepository', () => {
       'region.id = :regionId',
       { regionId: '1234' },
     );
+    expect(mockQueryBuilder.andWhere).toHaveBeenCalledWith(
+      'brs_diffusion_website.isDeleted = false',
+    );
     expect(mockQueryBuilder.skip).toHaveBeenCalledWith(0);
     expect(mockQueryBuilder.take).toHaveBeenCalledWith(10);
     expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith(
@@ -213,6 +262,7 @@ describe('BrsDiffusionWebsiteRepository', () => {
       createQueryBuilder: jest.fn().mockReturnThis(),
       leftJoinAndSelect: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
@@ -249,6 +299,9 @@ describe('BrsDiffusionWebsiteRepository', () => {
       'departement.id = :departementId',
       { departementId: '1234' },
     );
+    expect(mockQueryBuilder.andWhere).toHaveBeenCalledWith(
+      'brs_diffusion_website.isDeleted = false',
+    );
     expect(mockQueryBuilder.skip).toHaveBeenCalledWith(0);
     expect(mockQueryBuilder.take).toHaveBeenCalledWith(10);
     expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith(
@@ -270,21 +323,22 @@ describe('BrsDiffusionWebsiteRepository', () => {
       1,
     );
     expect(mockedBrsDiffusionWebsiteRepository.findOne).toHaveBeenCalledWith({
-      where: { id: '1234' },
+      where: { id: '1234', isDeleted: false },
       relations: ['region', 'departement', 'ofs', 'distributor'],
     });
   });
 
   it('should delete a brs diffusion website', async () => {
-    mockedBrsDiffusionWebsiteRepository.delete.mockResolvedValue({
+    mockedBrsDiffusionWebsiteRepository.update.mockResolvedValue({
       affected: 1,
     });
 
     await brsDiffusionWebsiteRepository.delete('1234');
 
-    expect(mockedBrsDiffusionWebsiteRepository.delete).toHaveBeenCalledTimes(1);
-    expect(mockedBrsDiffusionWebsiteRepository.delete).toHaveBeenCalledWith(
+    expect(mockedBrsDiffusionWebsiteRepository.update).toHaveBeenCalledTimes(1);
+    expect(mockedBrsDiffusionWebsiteRepository.update).toHaveBeenCalledWith(
       '1234',
+      { isDeleted: true },
     );
   });
 });
