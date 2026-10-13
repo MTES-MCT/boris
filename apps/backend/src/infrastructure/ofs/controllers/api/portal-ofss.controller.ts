@@ -19,8 +19,8 @@ import { Repository } from 'typeorm';
 import { UserRole } from 'src/domain/user/user-role.enum';
 import { PortalApiAuthenticatedGuard } from 'src/infrastructure/auth/guards/portal-api-authenticated.guard';
 import { UserEntity } from 'src/infrastructure/user/user.entity';
-import { PaginationDTO } from 'src/infrastructure/common/dtos/pagination.dto';
 import {
+  DistributorPortalContactFiltersDto,
   ExportPortalContactFiltersDto,
   PortalContactFiltersDto,
 } from '../../dtos/portal-contact-filters.dto';
@@ -206,18 +206,17 @@ export class PortalOfssController {
   @UseGuards(PortalApiAuthenticatedGuard)
   @Get('/commercialisateur/eligibility-simulations')
   public async distributorEligibilitySimulations(
-    @Query() pagination: PaginationDTO,
-    @Query('ofsId') ofsId: string | undefined,
+    @Query() filters: DistributorPortalContactFiltersDto,
     @Req() req: Request,
   ) {
     const distributorId = this.requireDistributor(req.user as UserEntity).id;
 
     return this.findDistributorPortalContactLines(
       {
-        page: pagination.page || 1,
-        pageSize: pagination.pageSize || 20,
+        page: filters.page || 1,
+        pageSize: filters.pageSize || 20,
       },
-      { distributorId, ofsId },
+      { distributorId, ofsId: filters.ofsId },
     );
   }
 

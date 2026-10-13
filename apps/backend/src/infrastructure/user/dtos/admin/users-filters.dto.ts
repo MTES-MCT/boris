@@ -22,10 +22,13 @@ export class UsersFiltersDTO {
   @IsOptional()
   public role?: string;
 
-  @Transform(({ value }) => {
+  @Transform(({ obj, key }) => {
+    // Read the submitted value before implicit Boolean conversion turns "false" into true.
+    const value: unknown = obj[key];
     if (value === 'true') return true;
     if (value === 'false') return false;
-    return undefined;
+    if (value === '') return undefined;
+    return value;
   })
   @IsBoolean()
   @IsOptional()

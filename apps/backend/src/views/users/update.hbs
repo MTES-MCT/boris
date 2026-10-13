@@ -24,11 +24,11 @@
 
     <section class="rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
       <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Informations de connexion</h2>
-      <form id="user-update-form" data-current-role="{{user.roles.[0]}}" method="POST" action="/users/{{user.id}}{{#if returnTo}}?returnTo={{encodeURIComponent returnTo}}{{/if}}&_method=PUT" class="mt-6">
+      <form id="user-update-form" data-current-role="{{user.roles.[0]}}" method="POST" action="/users/{{user.id}}?_method=PUT{{#if returnTo}}&returnTo={{encodeURIComponent returnTo}}{{/if}}" class="mt-6">
         <div class="grid gap-4 sm:grid-cols-2">
           <div>
             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Adresse email</label>
-            <input type="email" name="email" id="email" required value="{{form.email}}" {{#if blocks.emailChange}}disabled{{/if}}
+            <input type="email" name="email" id="email" required value="{{form.email}}" {{#if blocks.emailChange}}readonly{{/if}}
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white {{#if blocks.emailChange}}cursor-not-allowed opacity-60{{/if}}" />
             {{#if blocks.emailChange}}<p class="mt-2 text-xs text-gray-500 dark:text-gray-400">Modifier votre propre email est bloqué en v1.</p>{{/if}}
           </div>
