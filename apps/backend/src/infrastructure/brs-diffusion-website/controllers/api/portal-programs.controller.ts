@@ -108,8 +108,9 @@ export class PortalProgramsController {
 
   private async findOfs(id: string, user: UserEntity) {
     if (
-      !user.roles.includes(UserRole.OFS) ||
-      !user.ofss.some((ofs) => ofs.id === id)
+      !user.roles.includes(UserRole.ADMIN) &&
+      (!user.roles.includes(UserRole.OFS) ||
+        !user.ofss.some((ofs) => ofs.id === id))
     ) {
       throw new NotFoundException();
     }

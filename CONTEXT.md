@@ -91,7 +91,8 @@ _Avoid_: Suivi OFS, statut OFS
 - A **Programme BRS** is a map point (`BrsDiffusionWebsite`) attached to exactly one OFS when managed from the portal.
 - A **Compte OFS** can list, create, edit and delete all programmes attached to the OFS currently selected in the portal, including programmes created by admins.
 - A **Compte OFS** attached to several OFS must switch the selected OFS to manage another OFS's programmes.
-- The backend checks the OFS role, account attachment and programme ownership for every portal operation; the programme's OFS cannot be changed from its form.
+- An admin can list, create, edit and delete programmes for any selected OFS in the portal without an OFS attachment. The **Programmes** menu entry is visible to both admins and **Comptes OFS** after selecting an OFS.
+- The backend checks the admin role or the OFS role with account attachment, and programme ownership for every portal operation; the programme's OFS cannot be changed from its form.
 - **Comptes commercialisateur** cannot manage programmes in this version. Admin map management remains available in the administration.
 - Creating or editing a programme publishes its changes immediately on the public map. Drafts and OFS approval are deferred.
 - Portal programme forms require a name, HTTP(S) announcement URL, street address, city and housing type (new by default). Delivery month, INSEE commune code and commercialisateur are optional.

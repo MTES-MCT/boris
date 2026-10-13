@@ -105,7 +105,39 @@ describe('Portal programs HTTP access and validation', () => {
     );
   });
 
-  it.each([UserRole.DISTRIBUTOR, UserRole.ADMIN])(
+  it('allows admins to manage programmes for any selected OFS without an attachment', async () => {
+    roles = [UserRole.ADMIN];
+    attachedOfss = [];
+    await request(app.getHttpServer() as Server)
+      .get(url)
+      .expect(200);
+    await request(app.getHttpServer() as Server)
+      .get(`${url}/${programId}`)
+      .expect(200);
+    await request(app.getHttpServer() as Server)
+      .post(url)
+      .send(payload)
+      .expect(201);
+    await request(app.getHttpServer() as Server)
+      .put(`${url}/${programId}`)
+      .send(payload)
+      .expect(200);
+    await request(app.getHttpServer() as Server)
+      .delete(`${url}/${programId}`)
+      .expect(200);
+    expect(create.execute).toHaveBeenCalledWith(
+      expect.objectContaining({ ofsId }),
+    );
+    expect(update.execute).toHaveBeenCalledWith(
+      expect.objectContaining({ id: programId, ofsId }),
+    );
+    expect(programs.update).toHaveBeenCalledWith(
+      { id: programId, ofs: { id: ofsId }, isDeleted: false },
+      { isDeleted: true },
+    );
+  });
+
+  it.each([UserRole.DISTRIBUTOR])(
     'denies role %s for all operations',
     async (role) => {
       roles = [role];
@@ -240,26 +272,30 @@ describe('Portal programs HTTP access and validation', () => {
     );
   });
 
-  it('excludes deleted programs and programs belonging to another OFS from detail, edit and deletion', async () => {
-    programs.findOne.mockResolvedValue(null);
-    await request(app.getHttpServer() as Server)
-      .get(`${url}/${programId}`)
-      .expect(404);
-    await request(app.getHttpServer() as Server)
-      .put(`${url}/${programId}`)
-      .send(payload)
-      .expect(404);
-    await request(app.getHttpServer() as Server)
-      .delete(`${url}/${programId}`)
-      .expect(404);
-    expect(programs.findOne).toHaveBeenCalledWith(
-      expect.objectContaining({
-        where: { id: programId, ofs: { id: ofsId }, isDeleted: false },
-      }),
-    );
-    expect(update.execute).not.toHaveBeenCalled();
-    expect(programs.update).not.toHaveBeenCalled();
-  });
+  it.each([UserRole.OFS, UserRole.ADMIN])(
+    'excludes deleted programs and programs belonging to another OFS for role %s',
+    async (role) => {
+      roles = [role];
+      programs.findOne.mockResolvedValue(null);
+      await request(app.getHttpServer() as Server)
+        .get(`${url}/${programId}`)
+        .expect(404);
+      await request(app.getHttpServer() as Server)
+        .put(`${url}/${programId}`)
+        .send(payload)
+        .expect(404);
+      await request(app.getHttpServer() as Server)
+        .delete(`${url}/${programId}`)
+        .expect(404);
+      expect(programs.findOne).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { id: programId, ofs: { id: ofsId }, isDeleted: false },
+        }),
+      );
+      expect(update.execute).not.toHaveBeenCalled();
+      expect(programs.update).not.toHaveBeenCalled();
+    },
+  );
 
   it('soft deletes instead of removing the program', async () => {
     await request(app.getHttpServer() as Server)

@@ -335,7 +335,7 @@
                 Transmissions
               </a>
             </li>
-            {#if user.roles.includes("ofs")}
+            {#if user.roles.includes("ofs") || user.roles.includes("admin")}
               <li class="fr-nav__item">
                 <a
                   class="fr-nav__link"
