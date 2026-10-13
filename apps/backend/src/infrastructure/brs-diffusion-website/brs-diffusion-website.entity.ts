@@ -76,6 +76,9 @@ export class BrsDiffusionWebsiteEntity implements BrsDiffusionWebsiteInterface {
   })
   public housingType: BrsHousingType;
 
+  @Column({ type: 'boolean', default: false })
+  public isDeleted: boolean = false;
+
   @CreateDateColumn()
   createdAt: Date;
 
