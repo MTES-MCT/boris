@@ -1,6 +1,6 @@
-import { json } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import { API_KEY, API_URL } from '$env/static/private';
-import cache, { namespaces, TTL_MS } from '$lib/server/cache';
+import cache, { namespaces, PROGRAM_MAP_TTL_MS } from '$lib/server/cache';
 
 export const GET = async () => {
   let brsDiffusionWebsites = await cache.get(namespaces.brsDiffusionWebsites);
@@ -17,6 +17,10 @@ export const GET = async () => {
       },
     });
 
+    if (!response.ok) {
+      throw error(502, 'Impossible de charger les programmes.');
+    }
+
     brsDiffusionWebsites = await response.json();
 
     let currentPage = brsDiffusionWebsites.page;
@@ -32,6 +36,9 @@ export const GET = async () => {
             'x-api-key': API_KEY,
           },
         });
+        if (!pageResponse.ok) {
+          throw error(502, 'Impossible de charger les programmes.');
+        }
         const pageData = await pageResponse.json();
 
         brsDiffusionWebsites.items = [
@@ -41,17 +48,24 @@ export const GET = async () => {
       }
     }
 
-    cache.set(namespaces.brsDiffusionWebsites, brsDiffusionWebsites, TTL_MS);
+    await cache.set(
+      namespaces.brsDiffusionWebsites,
+      brsDiffusionWebsites,
+      PROGRAM_MAP_TTL_MS,
+    );
   }
 
-  return json({
-    ...brsDiffusionWebsites,
-    page: 1,
-    pagesCount: 1,
-    hasNextPage: false,
-    hasPreviousPage: false,
-    pageSize: brsDiffusionWebsites.totalCount,
-  });
+  return json(
+    {
+      ...brsDiffusionWebsites,
+      page: 1,
+      pagesCount: 1,
+      hasNextPage: false,
+      hasPreviousPage: false,
+      pageSize: brsDiffusionWebsites.totalCount,
+    },
+    { headers: { 'cache-control': 'no-store' } },
+  );
 };
 
-export const prerender = true;
+export const prerender = false;
