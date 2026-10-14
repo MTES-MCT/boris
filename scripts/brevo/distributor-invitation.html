@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Invitation commercialisateur — BoRiS</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f6f6f6;
+      color: #161616;
+      font-family: Arial, sans-serif;
+    "
+  >
+    <div style="display: none; max-height: 0; overflow: hidden; opacity: 0">
+      {{ params.ofsName }} vous invite à rejoindre BoRiS. Cette invitation est
+      valable {{ params.expiresInDays }} jours.
+    </div>
+    <table
+      role="presentation"
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      style="background-color: #f6f6f6"
+    >
+      <tr>
+        <td align="center" style="padding: 32px 16px">
+          <table
+            role="presentation"
+            width="600"
+            cellpadding="0"
+            cellspacing="0"
+            style="
+              width: 100%;
+              max-width: 600px;
+              background-color: #ffffff;
+              border-top: 4px solid #000091;
+            "
+          >
+            <tr>
+              <td
+                style="
+                  padding: 32px 32px 16px;
+                  font-size: 26px;
+                  font-weight: bold;
+                  color: #000091;
+                "
+              >
+                BoRiS
+              </td>
+            </tr>
+            <tr>
+              <td
+                style="padding: 0 32px 32px; font-size: 16px; line-height: 1.6"
+              >
+                <h1
+                  style="
+                    margin: 0 0 24px;
+                    font-size: 28px;
+                    line-height: 1.25;
+                    font-weight: bold;
+                  "
+                >
+                  Votre OFS vous invite sur BoRiS
+                </h1>
+                <p style="margin: 0 0 16px">Bonjour,</p>
+                <p style="margin: 0 0 16px">
+                  <strong>{{ params.ofsName }}</strong> vous invite à rejoindre
+                  BoRiS en tant que commercialisateur pour
+                  <strong>{{ params.distributorName }}</strong>.
+                </p>
+                <p style="margin: 0 0 24px">
+                  En acceptant cette invitation, vous pourrez créer votre compte
+                  commercialisateur et choisir votre mot de passe. Votre
+                  organisation sera automatiquement rattachée à cet OFS.
+                </p>
+                <table role="presentation" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td bgcolor="#000091" style="background-color: #000091">
+                      <a
+                        href="{{ params.invitationUrl }}"
+                        style="
+                          display: inline-block;
+                          padding: 14px 20px;
+                          color: #ffffff;
+                          font-size: 16px;
+                          font-weight: bold;
+                          text-decoration: none;
+                        "
+                        >Accepter l’invitation</a
+                      >
+                    </td>
+                  </tr>
+                </table>
+                <p style="margin: 24px 0 16px">
+                  <strong
+                    >Ce lien est valable {{ params.expiresInDays }}
+                    jours.</strong
+                  >
+                  Après ce délai, demandez à votre OFS de vous renvoyer
+                  l’invitation.
+                </p>
+                <h2
+                  style="margin: 24px 0 8px; font-size: 18px; line-height: 1.4"
+                >
+                  Votre organisation utilise déjà BoRiS ?
+                </h2>
+                <p style="margin: 0 0 16px">
+                  Lors de l’acceptation, nous vous proposerons les
+                  commercialisateurs existants dont le nom est similaire. Si
+                  votre organisation existe déjà, vous pourrez la rattacher à
+                  l’OFS sans créer de doublon ni de nouveau compte. Pour obtenir
+                  un accès à cette organisation, contactez l’administration
+                  BoRiS.
+                </p>
+                <p style="margin: 0 0 16px">
+                  Si cette adresse possède déjà un compte commercialisateur, son
+                  organisation sera rattachée à l’OFS sans modification de votre
+                  compte.
+                </p>
+                <p
+                  style="
+                    margin: 0 0 24px;
+                    padding: 16px;
+                    background-color: #f6f6f6;
+                    font-size: 14px;
+                  "
+                >
+                  Aucun contact ne sera partagé automatiquement. L’OFS devra
+                  configurer une transmission commerciale pour vous donner accès
+                  aux contacts concernés.
+                </p>
+                <p style="margin: 0 0 8px; font-size: 14px">
+                  Si le bouton ne fonctionne pas, copiez ce lien dans votre
+                  navigateur :
+                </p>
+                <p
+                  style="
+                    margin: 0 0 24px;
+                    font-size: 14px;
+                    word-break: break-all;
+                  "
+                >
+                  <a href="{{ params.invitationUrl }}" style="color: #000091"
+                    >{{ params.invitationUrl }}</a
+                  >
+                </p>
+                <p style="margin: 0; font-size: 14px">
+                  Si vous n’êtes pas concerné par cette invitation, vous pouvez
+                  ignorer ce message.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td
+                style="
+                  padding: 24px 32px;
+                  border-top: 1px solid #dddddd;
+                  font-size: 13px;
+                  line-height: 1.6;
+                  color: #666666;
+                "
+              >
+                Une question ?
+                <a
+                  href="mailto:contact@boris.beta.gouv.fr"
+                  style="color: #000091"
+                  >Contactez l’équipe BoRiS</a
+                >.<br /><a
+                  href="https://www.boris.beta.gouv.fr"
+                  style="color: #000091"
+                  >BoRiS — Bail réel solidaire</a
+                >
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

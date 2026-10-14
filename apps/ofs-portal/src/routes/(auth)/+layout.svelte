@@ -8,13 +8,25 @@
       <div class="fr-card fr-card--no-arrow">
         <div class="fr-card__body">
           <div class="fr-card__content">
-            <p class="fr-badge fr-badge--blue-ecume fr-badge--no-icon">Espace OFS</p>
-            <p class="fr-mt-2w fr-text--sm">Connexion réservée aux utilisateurs OFS.</p>
+            <p class="fr-badge fr-badge--blue-ecume fr-badge--no-icon">
+              Espace OFS
+            </p>
+            <p class="fr-mt-2w fr-text--sm">
+              Connexion réservée aux comptes OFS, commercialisateur et
+              administrateur.
+            </p>
             {@render children()}
             <div class="fr-mt-4w">
-              <a class="fr-link" href={data.publicSiteUrl}>Retour au site BoRiS</a>
+              <a class="fr-link" href={data.publicSiteUrl}
+                >Retour au site BoRiS</a
+              >
             </div>
-            <p class="fr-mt-2w fr-text--sm">En cas de difficulté d’accès, contactez <a class="fr-link" href={`mailto:${data.supportEmail}`}>{data.supportEmail}</a>.</p>
+            <p class="fr-mt-2w fr-text--sm">
+              En cas de difficulté d’accès, contactez <a
+                class="fr-link"
+                href={`mailto:${data.supportEmail}`}>{data.supportEmail}</a
+              >.
+            </p>
           </div>
         </div>
       </div>
