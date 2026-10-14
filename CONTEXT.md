@@ -94,7 +94,8 @@ _Avoid_: Suivi OFS, statut OFS
 - An admin can list, create, edit and delete programmes for any selected OFS in the portal without an OFS attachment. The **Programmes** menu entry is visible to both admins and **Comptes OFS** after selecting an OFS.
 - The backend checks the admin role or the OFS role with account attachment, and programme ownership for every portal operation; the programme's OFS cannot be changed from its form.
 - **Comptes commercialisateur** cannot manage programmes in this version. Admin map management remains available in the administration.
-- Creating or editing a programme publishes its changes immediately on the public map. Drafts and OFS approval are deferred.
+- Creating or editing a programme publishes its changes without an approval step. The public map uses a runtime cache of 30 seconds; updates and deletions appear on the next map load after that cache expires. Drafts and OFS approval are deferred.
+- The programme dashboard can be filtered by postal code, city and commercialisateur name. Filters combine, accept partial text and ignore case and accents.
 - Portal programme forms require a name, HTTP(S) announcement URL, street address, city and housing type (new by default). Delivery month, INSEE commune code and commercialisateur are optional.
 - An OFS can select only a commercialisateur linked to that OFS.
 - Programme deletion sets `isDeleted` to true; deleted programmes are excluded from the portal, administration listings, public map and proximity searches. This version provides no restoration interface.

@@ -25,6 +25,8 @@ export const namespaces = {
 const TTL_HOURS = 12;
 const TTL_MINS = 60;
 export const TTL_MS = TTL_HOURS * TTL_MINS * 60 * 1000;
+// Program edits should be reflected on the next map load within 30 seconds.
+export const PROGRAM_MAP_TTL_MS = 30 * 1000;
 
 const keyv = new Keyv({ ttl: TTL_MS });
 
