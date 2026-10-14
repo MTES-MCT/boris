@@ -50,6 +50,12 @@
   class="fr-p-3w fr-mb-4w"
   style="background: white; border-radius: 0.5rem;"
 >
+  <p class="fr-mb-3w">
+    <a class="fr-link" href={`/ofs/${data.ofs.id}/commercialisateurs`}
+      >Rattacher ou inviter un commercialisateur</a
+    > avant de configurer sa transmission.
+  </p>
+
   <h2 class="fr-h5">Nouvelle transmission</h2>
   {#if availableDistributors.length}
     <form method="POST" action="?/create">

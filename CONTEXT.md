@@ -71,9 +71,21 @@ _Avoid_: Suivi OFS, statut OFS
 - A **Transmission commerciale** is deactivated rather than hard-deleted
 - An inactive **Transmission commerciale** gives no contact-line visibility to the **Commercialisateur**
 - Contact-line visibility for a **Commercialisateur** is always computed from the current active **Transmission commerciale** scope
-- In the first version, admins create **Commercialisateurs** and **Comptes commercialisateur**
+- Admins can create **Commercialisateurs** and **Comptes commercialisateur** directly
 - Admin user management creates **Comptes commercialisateur** by assigning exactly one **Commercialisateur**
-- In the first version, **Comptes OFS** configure transmission rules but do not create **Commercialisateurs**, **Comptes commercialisateur**, or OFS-Commercialisateur links
+- A **Compte OFS** can immediately link an existing **Commercialisateur** to an OFS it can access, without requesting an email or creating an account
+- A **Compte OFS** can invite a new **Commercialisateur** by providing its name and the email of its first **Compte commercialisateur**
+- Names are matched approximately against existing **Commercialisateurs** to suggest reuse; matching never automatically merges organizations
+- An invitation stores the proposed name, invited email and inviting OFS; it creates neither a **Commercialisateur** nor a **Compte commercialisateur** until accepted
+- Invitations expire after seven days; the inviting OFS can list, resend or cancel them. Resending renews the expiry and invalidates the previous link
+- Invitation acceptance creates a **Commercialisateur**, a single-role **Compte commercialisateur**, and the OFS-Commercialisateur link atomically
+- If an invited email already belongs to an active **Compte commercialisateur**, its existing **Commercialisateur** is immediately linked to the OFS, with an explanation and no new invitation or account
+- Emails belonging to **Comptes OFS** or admins cannot receive commercialisateur invitations; the OFS must use a different email
+- Acceptance rechecks email ownership and similar organization names because other accounts or **Commercialisateurs** may have been created while the invitation was pending
+- If the invitee selects an existing **Commercialisateur** during acceptance, only the OFS link is created; the invitee must ask platform administration for organization membership
+- Creating a distinct organization despite suggested matches requires explicit confirmation
+- Linking or accepting an invitation does not create a **Transmission commerciale** or grant contact visibility
+- Admins can use the same linking and invitation flow for any OFS
 - Audit trail for **Transmission commerciale** changes is deferred from the first version
 
 ## Example dialogue

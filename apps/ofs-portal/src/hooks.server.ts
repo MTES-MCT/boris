@@ -19,7 +19,9 @@ function requestContext(event: RequestEvent) {
     routeId: event.route.id,
     method: event.request.method,
     path: event.url.pathname,
-    search: event.url.search,
+    search: event.url.searchParams.has("token")
+      ? "?token=[redacted]"
+      : event.url.search,
     userAgent: event.request.headers.get("user-agent"),
     host: event.request.headers.get("host"),
     forwardedHost: event.request.headers.get("x-forwarded-host"),

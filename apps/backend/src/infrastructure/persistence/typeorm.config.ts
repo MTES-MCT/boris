@@ -1,3 +1,4 @@
+import { DistributorInvitationEntity } from '../distributor-invitation/distributor-invitation.entity';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
 import { RegionEntity } from '../region/region.entity';
@@ -30,6 +31,7 @@ export const typeormConfig: DataSourceOptions = {
   password: process.env.POSTGRES_PASSWORD,
   database: !test ? process.env.POSTGRES_DB : `${process.env.POSTGRES_DB}-test`,
   entities: [
+    DistributorInvitationEntity,
     SessionEntity,
     UserEntity,
     OfsEntity,

@@ -1,3 +1,4 @@
+import { DistributorInvitationModule } from './infrastructure/distributor-invitation/distributor-invitation.module';
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -62,6 +63,7 @@ import * as methodOverride from 'method-override';
       },
     }),
     AuthModule,
+    DistributorInvitationModule,
     RegionModule,
     OfsModule,
     DepartementModule,
