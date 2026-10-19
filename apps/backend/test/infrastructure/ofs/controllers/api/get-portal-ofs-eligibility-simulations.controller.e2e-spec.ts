@@ -219,7 +219,7 @@ describe('PortalOfssController eligibility simulations', () => {
       ]),
     );
 
-    // One simulation can produce multiple rows; count and paginate locations.
+    // Keep every scoped location of a simulation on the same contact page.
     await locationRepository.save(
       Object.assign(new LocationEntity(), {
         city: 'Ville cible annexe',
@@ -245,9 +245,9 @@ describe('PortalOfssController eligibility simulations', () => {
         .query({ ...filters, page: 1, pageSize: 1 })
         .set('Cookie', cookies);
       expect(firstPage.status).toBe(200);
-      expect(firstPage.body.totalCount).toBe(2);
-      expect(firstPage.body.pagesCount).toBe(2);
-      expect(firstPage.body.items).toHaveLength(1);
+      expect(firstPage.body.totalCount).toBe(1);
+      expect(firstPage.body.pagesCount).toBe(1);
+      expect(firstPage.body.items).toHaveLength(2);
       expect(firstPage.body.items[0].simulationId).toBe(matchingSimulation.id);
 
       const secondPage = await request(app.getHttpServer())
@@ -255,10 +255,8 @@ describe('PortalOfssController eligibility simulations', () => {
         .query({ ...filters, page: 2, pageSize: 1 })
         .set('Cookie', cookies);
       expect(secondPage.status).toBe(200);
-      expect(secondPage.body.items).toHaveLength(1);
-      expect(secondPage.body.items[0].locationId).not.toBe(
-        firstPage.body.items[0].locationId,
-      );
+      expect(secondPage.body.items).toHaveLength(0);
+      expect(secondPage.body.totalCount).toBe(1);
     }
 
     const inseeFiltered = await request(app.getHttpServer())
@@ -267,10 +265,16 @@ describe('PortalOfssController eligibility simulations', () => {
       .set('Cookie', cookies);
     expect(inseeFiltered.status).toBe(200);
     expect(inseeFiltered.body.totalCount).toBe(1);
-    expect(inseeFiltered.body.items[0]).toMatchObject({
-      city: 'Ville cible',
-      inseeCode: '00001',
-    });
+    expect(inseeFiltered.body.items).toHaveLength(2);
+    expect(inseeFiltered.body.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ city: 'Ville cible', inseeCode: '00001' }),
+        expect.objectContaining({
+          city: 'Ville cible annexe',
+          inseeCode: '00003',
+        }),
+      ]),
+    );
 
     for (const filters of [
       { contact: '0102030405' }, // Phone numbers are excluded.

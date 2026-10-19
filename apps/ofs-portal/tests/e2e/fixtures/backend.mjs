@@ -14,7 +14,7 @@ http
     const path = new URL(req.url, "http://localhost").pathname;
     const url = new URL(req.url, "http://localhost");
     let body = {};
-    if (req.method === "POST") {
+    if (req.method === "POST" || req.method === "PUT") {
       let raw = "";
       for await (const chunk of req) raw += chunk;
       body = raw ? JSON.parse(raw) : {};
@@ -144,7 +144,66 @@ http
             },
           ],
         };
-    } else if (path.endsWith("/eligibility-simulations"))
+    } else if (/\/eligibility-simulations\/[^/]+\/metadata$/.test(path))
+      data = { simulationId: path.split("/").at(-2), ...body };
+    else if (path === "/api/portal/ofss/ofs-a/eligibility-simulations")
+      data = {
+        items: [
+          ...["Rennes", "Saint-Malo", "Vitré", "Fougères", "Redon"].map(
+            (city, index) => ({
+              simulationId: "simulation-a",
+              locationId: `location-${index}`,
+              submittedAt: "2026-10-19T10:00:00Z",
+              fullName: "Alice Martin",
+              email: "alice@example.test",
+              phone: "0102030405",
+              city,
+              inseeCode: ["35238", "35288", "35360", "35115", "35236"][index],
+              departementCode: "35",
+              householdSize: 2,
+              hasDisability: false,
+              taxableIncome: 42000,
+              resources: 3000,
+              contribution: 20000,
+              propertySituation: "Locataire",
+              housingType: "T3",
+              action: null,
+              status: null,
+              isNew: true,
+              transmittedDistributors: [
+                {
+                  id: `distributor-${index % 2}`,
+                  name: index % 2 ? "Habitat Côte" : "Habitat Rennes",
+                },
+              ],
+            }),
+          ),
+          {
+            simulationId: "simulation-b",
+            locationId: "location-b",
+            submittedAt: "2026-10-18T10:00:00Z",
+            fullName: "Alice Martin",
+            email: "alice@example.test",
+            phone: "0102030405",
+            city: null,
+            inseeCode: null,
+            departementCode: "35",
+            householdSize: 1,
+            hasDisability: null,
+            action: null,
+            status: null,
+            isNew: false,
+            transmittedDistributors: [],
+          },
+        ],
+        totalCount: 2,
+        page: 1,
+        pageSize: 20,
+        pagesCount: 1,
+        hasPreviousPage: false,
+        hasNextPage: false,
+      };
+    else if (path.endsWith("/eligibility-simulations"))
       data = {
         items: [],
         totalCount: 0,

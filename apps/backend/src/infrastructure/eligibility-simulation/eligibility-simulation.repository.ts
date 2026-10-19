@@ -594,31 +594,41 @@ export class EligibilitySimulationRepository
     pagination: PaginationProps,
     filters: PortalEligibilitySimulationContactFilters,
   ): Promise<[PortalEligibilitySimulationContactResult[], number]> {
-    const query = this.createPortalContactsQuery(filters);
+    const pageQuery = this.createPortalContactsQuery(filters, false);
 
-    if (!query) {
+    if (!pageQuery) {
       return [[], 0];
     }
 
-    query.orderBy(
-      'COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")',
-      'DESC',
-    );
-    query.addOrderBy('location.id', 'DESC');
-    query.offset((pagination.page - 1) * pagination.pageSize);
-    query.limit(pagination.pageSize);
+    const submittedAt =
+      'COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")';
+    // Page simulations, then retrieve every authorized location for those contacts.
+    // A location search selects contacts without hiding their other scoped locations.
+    pageQuery
+      .select('eligibility_simulation.id')
+      .groupBy('eligibility_simulation.id')
+      .orderBy(submittedAt, 'DESC')
+      .addOrderBy('eligibility_simulation.id', 'DESC')
+      .offset((pagination.page - 1) * pagination.pageSize)
+      .limit(pagination.pageSize);
+
+    const query = this.createPortalContactsQuery({
+      ...filters,
+      location: undefined,
+    })!;
+    query
+      .andWhere(`eligibility_simulation.id IN (${pageQuery.getQuery()})`)
+      .setParameters(pageQuery.getParameters())
+      .orderBy(submittedAt, 'DESC')
+      .addOrderBy('eligibility_simulation.id', 'DESC')
+      .addOrderBy('location.city', 'ASC')
+      .addOrderBy('location.id', 'ASC');
 
     const items =
       await query.getRawMany<PortalEligibilitySimulationContactResult>();
-
-    const countQuery = this.createPortalContactsQuery(filters, false);
-
-    // A simulation can have several contact lines, one per searched location.
-    const count = countQuery
-      ? await countQuery
-          .select('COUNT(*)', 'count')
-          .getRawOne<{ count: string }>()
-      : null;
+    const count = await this.createPortalContactsQuery(filters, false)!
+      .select('COUNT(DISTINCT eligibility_simulation.id)', 'count')
+      .getRawOne<{ count: string }>();
     const total = Number(count?.count || 0);
 
     return [items, total];
