@@ -343,14 +343,14 @@ export const stepsContent = {
     inputDataTestId: 'input-first-co-buyer-formatted-taxable-income',
     errorDataTestId:
       'input-first-co-buyer-formatted-taxable-income-error-message',
-    errorMessage: 'Veuillez saisir un chiffre supérieur à 0.',
+    errorMessage: 'Veuillez saisir un montant supérieur ou égal à 0.',
   },
   secondCoBuyerFormattedTaxableIncome: {
     label: `Quel est le revenu fiscal de référence <span class="fr-text--bold">votre co-acquéreur·euse</span> présent sur votre avis d'imposition de l'année ${formatYearMinusN(1)}, concernant vos revenus de l'année ${formatYearMinusN(2)} ?`,
     inputDataTestId: 'input-second-co-buyer-formatted-taxable-income',
     errorDataTestId:
       'input-second-co-buyer-formatted-taxable-income-error-message',
-    errorMessage: 'Veuillez saisir un chiffre supérieur à 0.',
+    errorMessage: 'Veuillez saisir un montant supérieur ou égal à 0.',
   },
   declarationType: {
     label: `En ${formatYearMinusN(1)}, comment avez vous déclaré vos revenus fiscaux ${formatYearMinusN(2)} ?`,

@@ -23,16 +23,14 @@ describe('saving an eligibility simulation', () => {
     const phase = manager.currentPhase;
     vi.stubGlobal(
       'fetch',
-      vi
-        .fn()
-        .mockResolvedValue(
-          new Response(
-            JSON.stringify({
-              message: ['locations.0.property id should not exist'],
-            }),
-            { status: 400 },
-          ),
+      vi.fn().mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            message: ['locations.0.property id should not exist'],
+          }),
+          { status: 400 },
         ),
+      ),
     );
     const next = vi.spyOn(manager, 'goToNextPhase');
 
@@ -67,4 +65,28 @@ describe('saving an eligibility simulation', () => {
     expect(manager.saveError).toBeNull();
     expect(manager.loading).toBe(false);
   });
+});
+
+describe('co-buyer taxable incomes', () => {
+  it.each([
+    ['25 000', '0', 25000],
+    ['0', '25 000', 25000],
+    ['0', '0', 0],
+  ])(
+    'keeps zero when calculating the household income (%s, %s)',
+    async (first, second, total) => {
+      // Derived runes are cached by the server runtime used in these tests.
+      vi.resetModules();
+      const { default: manager } = await import(
+        '$lib/managers/eligibility-simulator.svelte'
+      );
+      manager.firstCoBuyerFormattedTaxableIncome = first;
+      manager.secondCoBuyerFormattedTaxableIncome = second;
+      expect(manager.firstCoBuyerTaxableIncome).toBe(first === '0' ? 0 : 25000);
+      expect(manager.secondCoBuyerTaxableIncome).toBe(
+        second === '0' ? 0 : 25000,
+      );
+      expect(manager.taxableIncome).toBe(total);
+    },
+  );
 });
