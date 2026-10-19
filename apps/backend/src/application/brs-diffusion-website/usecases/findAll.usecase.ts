@@ -41,7 +41,10 @@ export class FindAllBrsDiffusionWebsitesUsecase {
       showDistance = true;
     } else {
       [brsDiffusionWebsites, totalCount] =
-        await this.brsDiffusionWebsiteRepository.findAll(paginationProps);
+        await this.brsDiffusionWebsiteRepository.findAll(
+          paginationProps,
+          params.search,
+        );
     }
 
     const items = brsDiffusionWebsites.map((brsDiffusionWebsite) => {

@@ -125,6 +125,43 @@ describe('BrsDiffusionWebsiteRepository', () => {
     expect(mockQueryBuilder.getManyAndCount).toHaveBeenCalledTimes(1);
   });
 
+  it.each([
+    ['  Lyon  ', '%Lyon%'],
+    ['750', '%750%'],
+    ['Habitat', '%Habitat%'],
+    ['100%_\\', '%100\\%\\_\\\\%'],
+  ])(
+    'searches city, postal code and both seller fields for %s',
+    async (search, pattern) => {
+      const query = {
+        andWhere: jest.fn().mockReturnThis(),
+        skip: jest.fn().mockReturnThis(),
+        take: jest.fn().mockReturnThis(),
+        orderBy: jest.fn().mockReturnThis(),
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        getManyAndCount: jest.fn().mockResolvedValue([[], 0]),
+      };
+      mockedBrsDiffusionWebsiteRepository.createQueryBuilder.mockReturnValue(
+        query,
+      );
+
+      await brsDiffusionWebsiteRepository.findAll(
+        { page: 2, pageSize: 10 },
+        search,
+      );
+
+      expect(query.andWhere).toHaveBeenCalledWith(
+        'brs_diffusion_website.isDeleted = false',
+      );
+      expect(query.andWhere).toHaveBeenCalledWith(
+        '(brs_diffusion_website.city ILIKE :search OR brs_diffusion_website.zipcode ILIKE :search OR brs_diffusion_website.distributorName ILIKE :search OR distributor.name ILIKE :search)',
+        { search: pattern },
+      );
+      expect(query.skip).toHaveBeenCalledWith(10);
+      expect(query.take).toHaveBeenCalledWith(10);
+    },
+  );
+
   it('should find all brs diffusion websites by location', async () => {
     const mockQueryBuilder = {
       andWhere: jest.fn().mockReturnThis(),

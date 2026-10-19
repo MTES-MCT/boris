@@ -55,6 +55,7 @@ export class BrsDiffusionWebsiteRepository
 
   public findAll(
     paginationProps: PaginationProps,
+    search?: string,
   ): Promise<[BrsDiffusionWebsiteEntity[], number]> {
     const { pageSize, page } = paginationProps;
 
@@ -68,6 +69,14 @@ export class BrsDiffusionWebsiteRepository
       .skip((page - 1) * pageSize)
       .take(pageSize)
       .orderBy('brs_diffusion_website.createdAt', 'DESC');
+
+    const normalizedSearch = search?.trim();
+    if (normalizedSearch) {
+      query.andWhere(
+        '(brs_diffusion_website.city ILIKE :search OR brs_diffusion_website.zipcode ILIKE :search OR brs_diffusion_website.distributorName ILIKE :search OR distributor.name ILIKE :search)',
+        { search: `%${normalizedSearch.replace(/[\\%_]/g, '\\$&')}%` },
+      );
+    }
 
     return query.getManyAndCount();
   }

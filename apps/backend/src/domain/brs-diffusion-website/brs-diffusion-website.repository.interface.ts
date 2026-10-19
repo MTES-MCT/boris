@@ -10,6 +10,7 @@ export interface BrsDiffusionWebsiteRepositoryInterface {
   ): Promise<BrsDiffusionWebsiteEntity>;
   findAll(
     paginationProps: PaginationProps,
+    search?: string,
   ): Promise<[BrsDiffusionWebsiteEntity[], number]>;
   findById(id: string): Promise<BrsDiffusionWebsiteEntity | null>;
   delete(id: string): Promise<void>;

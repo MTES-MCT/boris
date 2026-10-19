@@ -12,7 +12,7 @@ import { FindAllBrsDiffusionWebsitesUsecase } from 'src/application/brs-diffusio
 import { MAX_PAGE_SIZE } from 'src/application/common/pagination';
 import { LocalRequireAuthFilter } from 'src/infrastructure/auth/filters/local.requireAuth.filter';
 import { LocalIsAuthenticatedGuard } from 'src/infrastructure/auth/guards/local.isAuthenticated.guard';
-import { PaginationDTO } from 'src/infrastructure/common/dtos/pagination.dto';
+import { AdminProgramsFiltersDTO } from '../../dtos/admin-programs-filters.dto';
 import translations from 'src/views/utils/translations';
 import { TableFactory } from 'src/views/factories/table.factories';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -35,13 +35,16 @@ export class GetBrsDiffusionWebsitesAdminController {
   @UseFilters(LocalRequireAuthFilter)
   @Get()
   public async getBrsDiffusionWebsites(
-    @Query() { page = 1, pageSize = MAX_PAGE_SIZE }: PaginationDTO,
+    @Query()
+    { page = 1, pageSize = MAX_PAGE_SIZE, search }: AdminProgramsFiltersDTO,
     @Res() res: Response,
   ) {
+    const normalizedSearch = search?.trim() || '';
     const [brsDiffusionWebsites, ofss, distributors] = await Promise.all([
       this.findAllBrsDiffusionWebsitesUsecase.execute({
         page,
         pageSize,
+        search: normalizedSearch || undefined,
       }),
       this.ofsRepository.find({ order: { name: 'ASC' } }),
       this.distributorRepository.find({ order: { name: 'ASC' } }),
@@ -66,6 +69,7 @@ export class GetBrsDiffusionWebsitesAdminController {
       pagination,
       ofss,
       distributors,
+      search: normalizedSearch,
     });
   }
 }
