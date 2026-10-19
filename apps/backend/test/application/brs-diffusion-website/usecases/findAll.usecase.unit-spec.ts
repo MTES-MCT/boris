@@ -72,10 +72,27 @@ describe('FindAllBrsDiffusionWebsitesUsecase', () => {
     );
     expect(mockedBrsDiffusionWebsiteRepository.findAll).toHaveBeenCalledWith(
       DEFAULT_PAGINATION,
+      undefined,
     );
     expect(
       mockedBrsDiffusionWebsiteRepository.findAllByLocation,
     ).not.toHaveBeenCalled();
+  });
+
+  it('passes the admin search to the repository with pagination', async () => {
+    mockedBrsDiffusionWebsiteRepository.findAll.mockResolvedValue([[], 0]);
+
+    const result = await useCase.execute({
+      page: 2,
+      pageSize: 10,
+      search: 'Lyon',
+    });
+
+    expect(mockedBrsDiffusionWebsiteRepository.findAll).toHaveBeenCalledWith(
+      { page: 2, pageSize: 10 },
+      'Lyon',
+    );
+    expect(result.totalCount).toBe(0);
   });
 
   it('should return all brs diffusion websites by location', async () => {

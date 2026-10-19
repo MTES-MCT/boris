@@ -4,5 +4,46 @@
 {{> forms/brs_diffusion_website/create actionLabel=translations.contents.brsDiffusionWebsites.action.label}}
 {{/page_header}}
 
+<div class="mx-4 mb-4 rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
+  <form action="/brs-diffusion-websites" method="GET" class="flex max-w-xl flex-wrap items-end gap-2">
+    <input type="hidden" name="pageSize" value="{{pagination.pageSize}}" />
+    <div class="grow">
+      <label for="program-search" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+        Rechercher un programme
+      </label>
+      <input type="search" id="program-search" name="search" value="{{search}}"
+        placeholder="Ville, code postal ou commercialisateur…"
+        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400" />
+    </div>
+    <button type="submit"
+      class="rounded-lg bg-primary-700 px-4 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+      Rechercher
+    </button>
+    {{#if search}}
+    <a href="/brs-diffusion-websites"
+      class="rounded-lg px-3 py-2.5 text-sm font-medium text-primary-700 hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-gray-700">
+      Effacer
+    </a>
+    {{/if}}
+  </form>
+</div>
+
+{{#if pagination.totalCount}}
 {{> table title=title columns=columns rows=rows entity="brs-diffusion-websites"
-deleteForm='forms/brs_diffusion_website/delete'}}
+deleteForm='forms/brs_diffusion_website/delete' search=search}}
+{{else}}
+<div class="mx-4 rounded-lg bg-white p-8 shadow-md dark:bg-gray-900">
+  <p class="text-sm text-gray-500 dark:text-gray-400" role="status">
+    {{#if search}}
+    Aucun programme ne correspond à « {{search}} ».
+    {{else}}
+    Aucun programme à afficher.
+    {{/if}}
+  </p>
+  {{#if search}}
+  <a href="/brs-diffusion-websites" class="mt-3 inline-flex text-sm font-medium text-primary-700 hover:underline dark:text-primary-400">
+    Afficher tous les programmes
+  </a>
+  {{/if}}
+</div>
+{{/if}}
