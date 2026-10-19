@@ -3,6 +3,7 @@ import {
   invitationError,
   type DistributorInvitation,
   type DistributorSummary,
+  type DistributorWithEmails,
 } from "$lib/server/distributor-invitations";
 import { fail, type Actions, type ServerLoad } from "@sveltejs/kit";
 
@@ -18,7 +19,17 @@ export const load: ServerLoad = async (event) => {
       `/api/portal/ofss/${event.params.id}/distributors/invitations`,
     ),
   );
-  return { ofs, currentOfs: { id: ofs.id, name: ofs.name }, invitations };
+  const distributors = await readJson<DistributorWithEmails[]>(
+    await backendFetch(
+      event,
+      `/api/portal/ofss/${event.params.id}/distributors`,
+    ),
+  );
+  return {
+    ofs: { ...ofs, distributors },
+    currentOfs: { id: ofs.id, name: ofs.name },
+    invitations,
+  };
 };
 
 export const actions: Actions = Object.fromEntries(

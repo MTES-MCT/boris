@@ -29,6 +29,14 @@ http
       data = /habitat/i.test(url.searchParams.get("name") || "")
         ? [{ id: "existing", name: "Habitat Solidaire" }]
         : [];
+    } else if (path.endsWith("/distributors")) {
+      data = linked.map((item) => ({
+        ...item,
+        emails:
+          item.id === "existing"
+            ? ["alice@habitat.test", "bob@habitat.test"]
+            : [],
+      }));
     } else if (path.endsWith("/distributors/link")) {
       linked = [{ id: "existing", name: "Habitat Solidaire" }];
       data = {

@@ -24,6 +24,43 @@ test("existing reseller selection links without offering an email field", async 
   ).toBeVisible();
 });
 
+test("linked reseller names unfold to show only account emails", async ({
+  page,
+}) => {
+  await page.goto("/ofs/ofs-a/commercialisateurs");
+  await page.getByLabel("Nom du commercialisateur").fill("Habitat");
+  await page.getByRole("button", { name: "Rattacher", exact: true }).click();
+  const details = page
+    .locator("details")
+    .filter({ hasText: "Habitat Solidaire" });
+  await expect(details).toBeVisible();
+  await expect(
+    details.getByText("alice@habitat.test", { exact: true }),
+  ).toBeHidden();
+  await details.locator("summary").focus();
+  await page.keyboard.press("Enter");
+  await expect(details.locator("li")).toHaveText([
+    "alice@habitat.test",
+    "bob@habitat.test",
+  ]);
+  await expect(
+    details.getByText("alice@habitat.test", { exact: true }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: "/tmp/boris-commercialisateur-emails.png",
+    fullPage: true,
+  });
+  await details.locator("summary").click();
+  await expect(
+    details.getByText("alice@habitat.test", { exact: true }),
+  ).toBeHidden();
+  await page.reload();
+  await details.locator("summary").click();
+  await expect(
+    details.getByText("bob@habitat.test", { exact: true }),
+  ).toBeVisible();
+});
+
 test("invite, resend and cancel from the OFS portal", async ({ page }) => {
   await page.goto("/ofs/ofs-a/commercialisateurs");
   await page.getByLabel("Nom du commercialisateur").fill("Nouveau partenaire");
