@@ -193,6 +193,9 @@ export const steps: Step[] = [
   },
 ];
 
+const disabilityHint =
+  'Seule la carte mobilité inclusion (CMI) portant la mention « invalidité » est prise en compte (article 2 de l’arrêté du 29 juillet 1987). La reconnaissance de la qualité de travailleur handicapé (RQTH) ne suffit pas.';
+
 export const stepsContent = {
   selectedHouseholdSize: {
     label: 'Combien de personnes composent votre foyer ?',
@@ -234,6 +237,7 @@ export const stepsContent = {
   },
   singlePersonInHouseholdHasDisability: {
     label: 'Êtes-vous en situation de handicap ?',
+    hint: disabilityHint,
     errorDataTestId: 'select-has-disability-error-message',
     options: [
       {
@@ -297,6 +301,7 @@ export const stepsContent = {
   twoToSixPersonsInHouseholdHasDisability: {
     label:
       "Dans votre foyer (vous y compris), est-ce qu'une ou plusieurs personnes sont en situation de handicap ?",
+    hint: disabilityHint,
     errorDataTestId: 'select-has-disability-error-message',
     options: [
       {

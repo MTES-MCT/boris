@@ -7,6 +7,7 @@
   type Props = {
     id?: string;
     label?: string;
+    hint?: string;
     options: { value: unknown; label: string; selected: boolean }[];
     disabled?: boolean;
     error?: string;
@@ -18,6 +19,7 @@
   const {
     id = nanoid(10),
     label,
+    hint,
     options,
     disabled,
     onChange,
@@ -35,11 +37,20 @@
     for={id}>
     {label}
     {required ? '*' : ''}
+    {#if hint}
+      <span
+        class="fr-hint-text"
+        id={`${id}-hint`}>
+        {hint}
+      </span>
+    {/if}
   </label>
   <select
     class="fr-select !bg-[var(--input-background-color,var(--background-contrast-grey))]"
     {disabled}
-    aria-describedby={`${id}-messages`}
+    aria-describedby={[hint && `${id}-hint`, error && `${id}-messages`]
+      .filter(Boolean)
+      .join(' ') || undefined}
     {id}
     name={id}
     onchange={onChange}>
