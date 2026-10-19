@@ -439,8 +439,8 @@ export const steps: Step[] = [
           </p>
           <ul>
             <li>
-              aux <b>frais de notaires</b>, qui représentent 2,3% du prix du logement pour un
-              logement dans le neuf et 8,7% pour un logement dans l’ancien
+              aux <b>frais de notaires</b>, estimés à 2 à 3 % du prix du logement dans le neuf
+              et 7 à 9 % dans l’ancien
             </li>
             <li>
               aux <b>frais de cautionnement de prêt</b>, qui représentent généralement 1% du
