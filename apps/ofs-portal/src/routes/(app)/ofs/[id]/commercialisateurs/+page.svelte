@@ -172,9 +172,30 @@
 </section>
 
 <h2 class="fr-h4">Commercialisateurs rattachés</h2>
-{#if data.ofs.distributors.length}<ul>
-    {#each data.ofs.distributors as item}<li>{item.name}</li>{/each}
-  </ul>{:else}<p>Aucun commercialisateur rattaché pour le moment.</p>{/if}
+{#if data.ofs.distributors.length}
+  <p class="fr-text--sm">
+    Dépliez un commercialisateur pour voir les adresses e-mail des comptes ayant
+    accès.
+  </p>
+  <ul class="linked-partners fr-mb-3w">
+    {#each data.ofs.distributors as item (item.id)}
+      <li>
+        <details>
+          <summary>{item.name}</summary>
+          {#if item.emails.length}
+            <ul class="partner-emails">
+              {#each item.emails as email}<li>{email}</li>{/each}
+            </ul>
+          {:else}
+            <p class="fr-text--sm fr-mb-0">
+              Aucun compte actif pour ce commercialisateur.
+            </p>
+          {/if}
+        </details>
+      </li>
+    {/each}
+  </ul>
+{:else}<p>Aucun commercialisateur rattaché pour le moment.</p>{/if}
 <a
   class="fr-btn fr-btn--secondary fr-mb-4w"
   href={`/ofs/${data.ofs.id}/transmissions`}>Configurer les transmissions</a
@@ -242,6 +263,31 @@
 >
 
 <style>
+  .linked-partners {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--border-default-grey);
+  }
+  .linked-partners > li {
+    padding: 0;
+    border-bottom: 1px solid var(--border-default-grey);
+  }
+  .linked-partners details {
+    padding: 1rem;
+  }
+  .linked-partners summary {
+    cursor: pointer;
+    color: var(--text-action-high-blue-france);
+    font-weight: 700;
+  }
+  .linked-partners details[open] summary {
+    margin-bottom: 1rem;
+  }
+  .partner-emails {
+    list-style: none;
+    padding: 0;
+    overflow-wrap: anywhere;
+  }
   .partner-search {
     background: var(--background-alt-grey);
   }

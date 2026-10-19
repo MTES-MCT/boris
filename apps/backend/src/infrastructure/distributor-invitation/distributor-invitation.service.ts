@@ -83,6 +83,39 @@ export class DistributorInvitationService {
     }));
   }
 
+  async linkedDistributors(ofsId: string) {
+    const rows = await this.dataSource
+      .getRepository(DistributorEntity)
+      .createQueryBuilder('distributor')
+      .innerJoin('distributor.ofss', 'ofs', 'ofs.id = :ofsId', { ofsId })
+      .leftJoin(
+        UserEntity,
+        'account',
+        'account.distributor = distributor.id AND account.isActive = :active AND :role = ANY(account.roles)',
+        { active: true, role: UserRole.DISTRIBUTOR },
+      )
+      .select('distributor.id', 'id')
+      .addSelect('distributor.name', 'name')
+      .addSelect('account.email', 'email')
+      .orderBy('distributor.name', 'ASC')
+      .addOrderBy('account.email', 'ASC')
+      .getRawMany<{ id: string; name: string; email: string | null }>();
+
+    const distributors = new Map<
+      string,
+      { id: string; name: string; emails: string[] }
+    >();
+    for (const row of rows) {
+      let distributor = distributors.get(row.id);
+      if (!distributor) {
+        distributor = { id: row.id, name: row.name, emails: [] };
+        distributors.set(row.id, distributor);
+      }
+      if (row.email) distributor.emails.push(row.email);
+    }
+    return [...distributors.values()];
+  }
+
   async link(ofsId: string, distributorId: string) {
     const distributor = await this.dataSource
       .getRepository(DistributorEntity)

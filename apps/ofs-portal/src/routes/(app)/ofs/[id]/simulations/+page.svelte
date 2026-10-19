@@ -26,6 +26,43 @@
     transmittedDistributors: { id: string; name: string }[];
   };
 
+  type ContactGroup = ContactLine & { locations: ContactLine[] };
+
+  function groupContacts(lines: ContactLine[]): ContactGroup[] {
+    const groups = new Map<string, ContactGroup>();
+    for (const line of lines) {
+      const group = groups.get(line.simulationId);
+      if (group) {
+        group.locations.push(line);
+        for (const distributor of line.transmittedDistributors) {
+          if (
+            !group.transmittedDistributors.some(
+              (item) => item.id === distributor.id,
+            )
+          ) {
+            group.transmittedDistributors.push(distributor);
+          }
+        }
+      } else {
+        groups.set(line.simulationId, {
+          ...line,
+          transmittedDistributors: [...line.transmittedDistributors],
+          locations: [line],
+        });
+      }
+    }
+    return [...groups.values()];
+  }
+
+  function locationLabel(location: ContactLine) {
+    return (
+      location.city ||
+      (location.departementCode
+        ? `Département ${location.departementCode}`
+        : "Localisation non renseignée")
+    );
+  }
+
   type SimulationMetadata = {
     simulationId: string;
     action: string | null;
@@ -46,9 +83,7 @@
     { value: "HAS_SIGNED_BRS", label: "a signé un BRS" },
   ] as const;
 
-  let items = $state<ContactLine[]>(
-    data.contacts.items.map((line: ContactLine) => ({ ...line })),
-  );
+  let items = $state<ContactGroup[]>(groupContacts(data.contacts.items));
   let savingBySimulationId = $state<Record<string, boolean>>({});
   let errorBySimulationId = $state<Record<string, string>>({});
 
@@ -58,7 +93,7 @@
   let exportError = $state("");
 
   $effect(() => {
-    items = data.contacts.items.map((line: ContactLine) => ({ ...line }));
+    items = groupContacts(data.contacts.items);
     savingBySimulationId = {};
     errorBySimulationId = {};
   });
@@ -181,7 +216,9 @@
   <div class="fr-col">
     <h1 class="fr-h3">Simulations</h1>
     <p class="fr-text--sm">
-      Contacts correspondant au périmètre géographique de cet OFS.
+      Une ligne par simulation, avec toutes les localisations de votre
+      périmètre. Dépliez les localisations pour consulter leurs codes et leurs
+      destinataires.
     </p>
   </div>
 
@@ -296,11 +333,11 @@
   </div>
 </form>
 
-{#if contacts.items.some((line) => line.isNew)}
+{#if items.some((line) => line.isNew)}
   <div class="fr-alert fr-alert--info fr-mb-2w">
     <p>
-      {contacts.items.filter((line) => line.isNew).length} nouvelle(s) ligne(s) depuis
-      votre précédente connexion.
+      {items.filter((line) => line.isNew).length} nouveau(x) contact(s) sur cette
+      page depuis votre précédente connexion.
     </p>
   </div>
 {/if}
@@ -313,7 +350,7 @@
         <th scope="col">Infos</th>
         <th scope="col">Date</th>
         <th scope="col">Contact</th>
-        <th scope="col">Localisation</th>
+        <th scope="col">Localisations</th>
         <th scope="col">Foyer</th>
         <th scope="col">Projet</th>
         <th scope="col">Ressources</th>
@@ -321,19 +358,19 @@
       </tr>
     </thead>
     <tbody>
-      {#each items as line}
+      {#each items as line (line.simulationId)}
         <tr>
           <td>
             <div class="simulation-metadata-stack">
               <div class="fr-select-group simulation-metadata-field">
                 <label
                   class="fr-label fr-mb-1v"
-                  for={`action-${line.locationId}`}>Action</label
+                  for={`action-${line.simulationId}`}>Action</label
                 >
                 <select
-                  id={`action-${line.locationId}`}
+                  id={`action-${line.simulationId}`}
                   class="fr-select"
-                  bind:value={line.action}
+                  value={line.action ?? ""}
                   disabled={savingBySimulationId[line.simulationId]}
                   onchange={async (event) => {
                     const target = event.currentTarget as HTMLSelectElement;
@@ -352,12 +389,12 @@
               <div class="fr-select-group simulation-metadata-field">
                 <label
                   class="fr-label fr-mb-1v"
-                  for={`status-${line.locationId}`}>Statut</label
+                  for={`status-${line.simulationId}`}>Statut</label
                 >
                 <select
-                  id={`status-${line.locationId}`}
+                  id={`status-${line.simulationId}`}
                   class="fr-select"
-                  bind:value={line.status}
+                  value={line.status ?? ""}
                   disabled={savingBySimulationId[line.simulationId]}
                   onchange={async (event) => {
                     const target = event.currentTarget as HTMLSelectElement;
@@ -396,9 +433,35 @@
             {line.phone || "-"}
           </td>
           <td>
-            {line.city || "-"}<br />
-            Code INSEE : {line.inseeCode || "-"}<br />
-            {line.departementCode ? `Département ${line.departementCode}` : "-"}
+            <details class="contact-locations">
+              <summary>
+                <span class="contact-locations__cities">
+                  {line.locations
+                    .slice(0, 2)
+                    .map(locationLabel)
+                    .join(", ")}{#if line.locations.length > 2}
+                    <span class="fr-text--sm">
+                      {" "}et {line.locations.length - 2} autre(s)</span
+                    >
+                  {/if}
+                </span>
+                <span class="contact-locations__hint">
+                  {line.locations.length} localisation(s) · Voir les détails
+                </span>
+              </summary>
+              <ul class="contact-locations__list">
+                {#each line.locations as location (location.locationId)}
+                  <li>
+                    <strong>{locationLabel(location)}</strong><br />
+                    Code INSEE : {location.inseeCode || "-"}<br />
+                    Département : {location.departementCode || "-"}<br />
+                    Transmis à : {location.transmittedDistributors
+                      .map((distributor) => distributor.name)
+                      .join(", ") || "Aucun commercialisateur"}
+                  </li>
+                {/each}
+              </ul>
+            </details>
           </td>
           <td>
             {line.householdSize ?? "-"} personne(s)<br />
@@ -423,6 +486,9 @@
           </td>
           <td>
             {#if line.transmittedDistributors.length}
+              <p class="fr-hint-text">
+                Selon la localisation (voir les détails)
+              </p>
               <ul class="fr-tags-group">
                 {#each line.transmittedDistributors as distributor}
                   <li><p class="fr-tag">{distributor.name}</p></li>
@@ -492,6 +558,46 @@
 {/if}
 
 <style>
+  tbody td {
+    vertical-align: top;
+  }
+
+  .contact-locations {
+    min-width: 14rem;
+    max-width: 24rem;
+  }
+
+  .contact-locations summary {
+    cursor: pointer;
+    color: var(--text-action-high-blue-france);
+  }
+
+  .contact-locations summary:focus-visible {
+    outline: 2px solid var(--border-action-high-blue-france);
+    outline-offset: 4px;
+  }
+
+  .contact-locations__cities {
+    font-weight: 700;
+  }
+
+  .contact-locations__hint {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    text-decoration: underline;
+  }
+
+  .contact-locations__list {
+    margin: 0.75rem 0 0;
+    padding-left: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .contact-locations__list li + li {
+    margin-top: 0.75rem;
+  }
+
   .contact-filters {
     display: flex;
     align-items: flex-end;

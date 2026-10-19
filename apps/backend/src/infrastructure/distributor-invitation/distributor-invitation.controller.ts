@@ -32,6 +32,15 @@ export class PortalDistributorInvitationsController {
     private readonly rateLimit: AuthRateLimitService,
   ) {}
 
+  @Get()
+  async linkedDistributors(
+    @Param('ofsId', ParseUUIDPipe) ofsId: string,
+    @Req() req: Request,
+  ) {
+    await this.invitations.accessibleOfs(ofsId, req.user as UserEntity);
+    return this.invitations.linkedDistributors(ofsId);
+  }
+
   @Get('/search')
   async search(
     @Param('ofsId', ParseUUIDPipe) ofsId: string,

@@ -50,6 +50,7 @@ _Avoid_: Suivi OFS, statut OFS
 - A **Transmission commerciale** has exactly one **Périmètre de transmission**
 - A **Périmètre de transmission** is either all contact lines visible to the **OFS**, or contact lines matching selected INSEE commune codes or department codes
 - An INSEE-or-department **Périmètre de transmission** applies at the **Ligne de contact** level
+- The OFS simulation list groups **Lignes de contact** by simulation and paginates simulations. A location search selects simulations and displays all their locations within that OFS’s perimeter, with transmission recipients detailed per location. Separate simulations are never merged by email. CSV exports remain one row per matching **Ligne de contact**.
 - A **Ligne de contact** matches an INSEE-or-department **Périmètre de transmission** when its INSEE commune code or department code is selected
 - A **Transmission commerciale** can only include **Lignes de contact** already visible to its **OFS**
 - A **Compte commercialisateur** can view and export transmitted **Lignes de contact**

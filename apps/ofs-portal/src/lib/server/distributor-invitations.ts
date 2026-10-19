@@ -1,4 +1,5 @@
 export type DistributorSummary = { id: string; name: string };
+export type DistributorWithEmails = DistributorSummary & { emails: string[] };
 export type DistributorInvitation = {
   id: string;
   name: string;
