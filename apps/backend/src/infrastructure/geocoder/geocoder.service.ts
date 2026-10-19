@@ -34,16 +34,16 @@ export class GeocoderService implements GeocoderServiceInterface {
     inseeCode?: string,
   ): Promise<GeocodedResponse[]> {
     try {
-      let url = `${this.baseUrl}/search?q=${municipality}&autocomplete=1&index=address&limit=5&returntruegeometry=false&type=municipality`;
+      let url = `${this.baseUrl}/search?q=${encodeURIComponent(municipality)}&autocomplete=1&index=address&limit=5&returntruegeometry=false&type=municipality`;
 
       if (inseeCode) {
-        url = `${url}&citycode=${inseeCode}`;
+        url = `${url}&citycode=${encodeURIComponent(inseeCode)}`;
       }
 
       const response = await fetch(url);
       const data: GeocodedSearchApiResponse = await response.json();
 
-      return data?.features;
+      return data?.features || [];
     } catch (e) {
       console.log(`An error occured while geocoding ${municipality}`);
       throw e;
@@ -54,8 +54,14 @@ export class GeocoderService implements GeocoderServiceInterface {
     geocodedResult: GeocodedResponse[],
     city: string,
   ): boolean {
+    const normalize = (name: string) =>
+      name
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '');
     const matchingResults = geocodedResult.filter(
-      (geocodedResult) => geocodedResult.properties?.city === city,
+      (result) => normalize(result.properties?.city || '') === normalize(city),
     );
 
     return matchingResults.length > 1;

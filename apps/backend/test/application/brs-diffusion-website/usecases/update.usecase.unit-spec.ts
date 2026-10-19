@@ -1,4 +1,8 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UpdateBrsDiffusionWebsiteUsecase } from 'src/application/brs-diffusion-website/usecases/update.usecase';
 import { BrsDiffusionWebsiteView } from 'src/application/brs-diffusion-website/views/brs-diffusion-website.view';
@@ -57,6 +61,60 @@ describe('UpdateBrsDiffusionWebsiteUsecase', () => {
     useCase = module.get<UpdateBrsDiffusionWebsiteUsecase>(
       UpdateBrsDiffusionWebsiteUsecase,
     );
+  });
+
+  it('requires an INSEE code for a street address in a homonymous city', async () => {
+    mockedBrsDiffusionWebsiteRepository.findById.mockResolvedValue({
+      ...mockedBrsDiffusionWebsite,
+    });
+    mockedGeocoderService.geocodeByMunicipality.mockResolvedValue([
+      mockedGeocodedResponse,
+      mockedGeocodedResponse,
+    ]);
+    mockedGeocoderService.geocodedResultHasMunicipalityDoublon.mockReturnValue(
+      true,
+    );
+
+    await expect(
+      useCase.execute({
+        id: '1234',
+        source: 'https://example.test',
+        city: 'Saint-Denis',
+        address: '10 rue de la République',
+      }),
+    ).rejects.toBeInstanceOf(NotAcceptableException);
+    expect(mockedGeocoderService.geocodeByAddress).not.toHaveBeenCalled();
+    expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
+  });
+
+  it('rejects ambiguous Saint-Denis when updating without an INSEE code', async () => {
+    mockedBrsDiffusionWebsiteRepository.findById.mockResolvedValue({
+      ...mockedBrsDiffusionWebsite,
+      city: 'Vannes',
+    });
+    mockedGeocoderService.geocodeByMunicipality.mockResolvedValue([
+      {
+        ...mockedGeocodedResponse,
+        properties: { city: 'Saint-Denis', citycode: '97411' },
+      },
+      {
+        ...mockedGeocodedResponse,
+        properties: { city: 'Saint-Denis', citycode: '93066' },
+      },
+    ]);
+    mockedGeocoderService.geocodedResultHasMunicipalityDoublon.mockReturnValue(
+      true,
+    );
+    mockDepartementRepository.findOneByInseeCode.mockResolvedValue(finistere);
+
+    await expect(
+      useCase.execute({
+        id: '1234',
+        source: 'https://example.test',
+        city: 'Saint-Denis',
+      }),
+    ).rejects.toBeInstanceOf(NotAcceptableException);
+    expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
   });
 
   it('should update a brs diffusion website with geocoding', async () => {

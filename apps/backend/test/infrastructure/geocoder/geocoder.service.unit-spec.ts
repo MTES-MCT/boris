@@ -106,6 +106,24 @@ describe('GeocoderService', () => {
     expect(result).toHaveLength(0);
   });
 
+  it('detects homonymous cities despite casing, spacing and hyphens', () => {
+    expect(
+      geocoderService.geocodedResultHasMunicipalityDoublon(
+        [
+          {
+            ...mockedGeocodedResponse,
+            properties: { city: 'Saint-Denis', citycode: '97411' },
+          },
+          {
+            ...mockedGeocodedResponse,
+            properties: { city: 'SAINT DENIS', citycode: '93066' },
+          },
+        ],
+        ' saint-denis ',
+      ),
+    ).toBe(true);
+  });
+
   it('should find city doublon', () => {
     const hasDoublon = geocoderService.geocodedResultHasMunicipalityDoublon(
       [mockedGeocodedResponse, mockedGeocodedResponse],
