@@ -19,6 +19,10 @@
     type DeclarationType,
   } from '$lib/utils/eligibility-simulator';
   import Select from '$components/common/Select.svelte';
+  import {
+    coBuyerTaxableIncomeSchema,
+    formatCoBuyerTaxableIncome,
+  } from '$lib/utils/eligibility-taxable-income';
 
   const {
     formattedTaxableIncome,
@@ -70,20 +74,12 @@
         });
       } else {
         schema = schema.extend({
-          firstCoBuyerFormattedTaxableIncome: z
-            .string(
-              stepsContent.firstCoBuyerFormattedTaxableIncome.errorMessage,
-            )
-            .refine((value) => {
-              return formattedThousandsToNumber(value) > 0;
-            }, stepsContent.firstCoBuyerFormattedTaxableIncome.errorMessage),
-          secondCoBuyerFormattedTaxableIncome: z
-            .string(
-              stepsContent.secondCoBuyerFormattedTaxableIncome.errorMessage,
-            )
-            .refine((value) => {
-              return formattedThousandsToNumber(value) > 0;
-            }, stepsContent.secondCoBuyerFormattedTaxableIncome.errorMessage),
+          firstCoBuyerFormattedTaxableIncome: coBuyerTaxableIncomeSchema(
+            stepsContent.firstCoBuyerFormattedTaxableIncome.errorMessage,
+          ),
+          secondCoBuyerFormattedTaxableIncome: coBuyerTaxableIncomeSchema(
+            stepsContent.secondCoBuyerFormattedTaxableIncome.errorMessage,
+          ),
         });
       }
     }
@@ -168,7 +164,9 @@
               placeholder="Exemple: 25 000€"
               onChange={(e) => {
                 eligibilitySimulatorManager.firstCoBuyerFormattedTaxableIncome =
-                  formatThousands((e.target as HTMLInputElement).value);
+                  formatCoBuyerTaxableIncome(
+                    (e.target as HTMLInputElement).value,
+                  );
               }}
               dataTestId={stepsContent.firstCoBuyerFormattedTaxableIncome
                 .inputDataTestId}
@@ -192,7 +190,9 @@
               placeholder="Exemple: 26 000€"
               onChange={(e) => {
                 eligibilitySimulatorManager.secondCoBuyerFormattedTaxableIncome =
-                  formatThousands((e.target as HTMLInputElement).value);
+                  formatCoBuyerTaxableIncome(
+                    (e.target as HTMLInputElement).value,
+                  );
               }}
               dataTestId={stepsContent.secondCoBuyerFormattedTaxableIncome
                 .inputDataTestId}

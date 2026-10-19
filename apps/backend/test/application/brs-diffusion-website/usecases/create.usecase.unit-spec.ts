@@ -63,6 +63,29 @@ describe('CreateBrsDiffusionWebsiteUsecase', () => {
     );
   });
 
+  it('requires an INSEE code for a street address in a homonymous city', async () => {
+    mockedBrsDiffusionWebsiteRepository.findById.mockResolvedValue({
+      ...mockedBrsDiffusionWebsite,
+    });
+    mockedGeocoderService.geocodeByMunicipality.mockResolvedValue([
+      mockedGeocodedResponse,
+      mockedGeocodedResponse,
+    ]);
+    mockedGeocoderService.geocodedResultHasMunicipalityDoublon.mockReturnValue(
+      true,
+    );
+
+    await expect(
+      useCase.execute({
+        source: 'https://example.test',
+        city: 'Saint-Denis',
+        address: '10 rue de la République',
+      }),
+    ).rejects.toBeInstanceOf(NotAcceptableException);
+    expect(mockedGeocoderService.geocodeByAddress).not.toHaveBeenCalled();
+    expect(mockedBrsDiffusionWebsiteRepository.save).not.toHaveBeenCalled();
+  });
+
   it('should create a brs diffusion website', async () => {
     mockedGeocoderService.geocodeByMunicipality.mockResolvedValue([
       mockedGeocodedResponse,

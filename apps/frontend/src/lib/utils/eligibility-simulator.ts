@@ -193,6 +193,9 @@ export const steps: Step[] = [
   },
 ];
 
+const disabilityHint =
+  'Seule la carte mobilité inclusion (CMI) portant la mention « invalidité » est prise en compte (article 2 de l’arrêté du 29 juillet 1987). La reconnaissance de la qualité de travailleur handicapé (RQTH) ne suffit pas.';
+
 export const stepsContent = {
   selectedHouseholdSize: {
     label: 'Combien de personnes composent votre foyer ?',
@@ -234,6 +237,7 @@ export const stepsContent = {
   },
   singlePersonInHouseholdHasDisability: {
     label: 'Êtes-vous en situation de handicap ?',
+    hint: disabilityHint,
     errorDataTestId: 'select-has-disability-error-message',
     options: [
       {
@@ -297,6 +301,7 @@ export const stepsContent = {
   twoToSixPersonsInHouseholdHasDisability: {
     label:
       "Dans votre foyer (vous y compris), est-ce qu'une ou plusieurs personnes sont en situation de handicap ?",
+    hint: disabilityHint,
     errorDataTestId: 'select-has-disability-error-message',
     options: [
       {
@@ -338,14 +343,14 @@ export const stepsContent = {
     inputDataTestId: 'input-first-co-buyer-formatted-taxable-income',
     errorDataTestId:
       'input-first-co-buyer-formatted-taxable-income-error-message',
-    errorMessage: 'Veuillez saisir un chiffre supérieur à 0.',
+    errorMessage: 'Veuillez saisir un montant supérieur ou égal à 0.',
   },
   secondCoBuyerFormattedTaxableIncome: {
     label: `Quel est le revenu fiscal de référence <span class="fr-text--bold">votre co-acquéreur·euse</span> présent sur votre avis d'imposition de l'année ${formatYearMinusN(1)}, concernant vos revenus de l'année ${formatYearMinusN(2)} ?`,
     inputDataTestId: 'input-second-co-buyer-formatted-taxable-income',
     errorDataTestId:
       'input-second-co-buyer-formatted-taxable-income-error-message',
-    errorMessage: 'Veuillez saisir un chiffre supérieur à 0.',
+    errorMessage: 'Veuillez saisir un montant supérieur ou égal à 0.',
   },
   declarationType: {
     label: `En ${formatYearMinusN(1)}, comment avez vous déclaré vos revenus fiscaux ${formatYearMinusN(2)} ?`,

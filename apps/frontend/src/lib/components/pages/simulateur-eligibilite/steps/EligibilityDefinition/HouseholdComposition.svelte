@@ -174,6 +174,7 @@
       <div class="fr-fieldset__element fr-mb-4w">
         <Select
           label={stepsContent.singlePersonInHouseholdHasDisability.label}
+          hint={stepsContent.singlePersonInHouseholdHasDisability.hint}
           required
           options={stepsContent.singlePersonInHouseholdHasDisability.options.map(
             (stepContent) => ({
@@ -221,6 +222,7 @@
       <div class="fr-fieldset__element fr-mb-4w">
         <Select
           label={stepsContent.twoToSixPersonsInHouseholdHasDisability.label}
+          hint={stepsContent.twoToSixPersonsInHouseholdHasDisability.hint}
           required
           options={stepsContent.twoToSixPersonsInHouseholdHasDisability.options.map(
             (stepContent) => ({

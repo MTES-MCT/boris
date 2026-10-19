@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
 import { BrsDiffusionWebsiteRepositoryInterface } from 'src/domain/brs-diffusion-website/brs-diffusion-website.repository.interface';
 import { GeocoderService } from 'src/infrastructure/geocoder/geocoder.service';
 import { DepartementRepositoryInterface } from 'src/domain/departement/departement.repository.interface';
@@ -92,12 +97,40 @@ export class UpdateBrsDiffusionWebsiteUsecase {
       brsDiffusionWebsite.address !== nextAddress ||
       (inseeCode && brsDiffusionWebsite.inseeCode !== inseeCode)
     ) {
+      if (address && !inseeCode) {
+        const municipalities =
+          await this.geocoderService.geocodeByMunicipality(city);
+        if (
+          this.geocoderService.geocodedResultHasMunicipalityDoublon(
+            municipalities,
+            city,
+          )
+        ) {
+          throw new NotAcceptableException(
+            `Plusieurs résultats pour la ville ${city}, veuillez préciser le code INSEE.`,
+          );
+        }
+      }
+
       geocodedMunicipalityResult = address
         ? await this.geocoderService.geocodeByAddress(
             `${nextAddress}, ${city}`,
             inseeCode,
           )
         : await this.geocoderService.geocodeByMunicipality(city, inseeCode);
+
+      if (
+        !address &&
+        !inseeCode &&
+        this.geocoderService.geocodedResultHasMunicipalityDoublon(
+          geocodedMunicipalityResult,
+          city,
+        )
+      ) {
+        throw new NotAcceptableException(
+          `Plusieurs résultats pour la ville ${city}, veuillez préciser le code INSEE.`,
+        );
+      }
 
       const geocodedMunicipality = geocodedMunicipalityResult[0];
 
@@ -119,11 +152,9 @@ export class UpdateBrsDiffusionWebsiteUsecase {
         ?.city as string;
       brsDiffusionWebsite.zipcode = geocodedMunicipality?.properties
         ?.postcode as string;
-      brsDiffusionWebsite.address = (
-        address
-          ? geocodedMunicipality.properties?.name || nextAddress
-          : geocodedMunicipality.properties?.context || nextAddress
-      ) as string;
+      brsDiffusionWebsite.address = address
+        ? geocodedMunicipality.properties?.name || nextAddress
+        : geocodedMunicipality.properties?.context || nextAddress;
       brsDiffusionWebsite.inseeCode = geocodedMunicipality?.properties
         ?.citycode as string;
       brsDiffusionWebsite.latitude = geocodedMunicipality?.geometry

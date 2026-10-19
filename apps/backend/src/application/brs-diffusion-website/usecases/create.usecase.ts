@@ -46,6 +46,21 @@ export class CreateBrsDiffusionWebsiteUsecase {
       housingType,
     } = params;
 
+    if (address && !inseeCode) {
+      const municipalities =
+        await this.geocoderService.geocodeByMunicipality(city);
+      if (
+        this.geocoderService.geocodedResultHasMunicipalityDoublon(
+          municipalities,
+          city,
+        )
+      ) {
+        throw new NotAcceptableException(
+          `Plusieurs résultats pour la ville ${city}, veuillez préciser le code INSEE.`,
+        );
+      }
+    }
+
     const geocodedAddressResult = address
       ? await this.geocoderService.geocodeByAddress(
           `${address}, ${city}`,
@@ -105,9 +120,9 @@ export class CreateBrsDiffusionWebsiteUsecase {
         ofsName || null,
         geocodedAddress.properties?.city as string,
         geocodedAddress.properties?.postcode as string,
-        (address
+        address
           ? geocodedAddress.properties?.name || address
-          : geocodedAddress.properties?.context || city) as string,
+          : geocodedAddress.properties?.context || city,
         geocodedAddress.properties?.citycode as string,
         geocodedAddress.geometry?.coordinates?.[1] as number,
         geocodedAddress.geometry?.coordinates?.[0] as number,
