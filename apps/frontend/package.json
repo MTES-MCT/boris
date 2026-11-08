@@ -34,7 +34,7 @@
     "@gouvfr/dsfr-chart": "^2.0.4",
     "@keyv/serialize": "^1.1.0",
     "@lhci/cli": "^0.14.0",
-    "@playwright/test": "^1.28.1",
+    "@playwright/test": "1.61.1",
     "@sveltejs/adapter-node": "^5.2.9",
     "@sveltejs/kit": "^2.17.1",
     "@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",

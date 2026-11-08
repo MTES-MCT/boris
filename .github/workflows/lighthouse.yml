@@ -43,8 +43,6 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
-        with:
-          node-version: 26.0.0
 
       - name: Setup database
         uses: ./.github/actions/setup-database

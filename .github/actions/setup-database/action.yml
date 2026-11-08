@@ -1,12 +1,6 @@
 name: "Setup database"
 description: "Run database migrations, and seed data"
 
-inputs:
-  node-version:
-    description: "Node.js version to use"
-    required: false
-    default: "26.0.0"
-
 runs:
   using: "composite"
 

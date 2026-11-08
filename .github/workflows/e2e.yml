@@ -42,8 +42,6 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
-        with:
-          node-version: 26.0.0
 
       - name: Setup database
         uses: ./.github/actions/setup-database
@@ -56,8 +54,6 @@ jobs:
 
       - name: Install playwright
         uses: ./.github/actions/install-playwright
-        with:
-          node-version: 26.0.0
 
       - name: Frontend e2e tests
         run: npm run test:e2e -w @boris/frontend
