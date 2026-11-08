@@ -17,7 +17,13 @@ export const PUT: RequestHandler = async ({ request, params }) => {
   const data = await response.json();
 
   if (response.status !== 200) {
-    return error(response.status, data.message?.join(', '));
+    const message = Array.isArray(data.message)
+      ? data.message.join(', ')
+      : typeof data.message === 'string'
+        ? data.message
+        : 'Unexpected API error';
+
+    return error(response.status, message);
   }
 
   return json(data);

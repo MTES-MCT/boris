@@ -1,12 +1,6 @@
 name: "Backend tests"
 description: "Run backend unit and e2e tests"
 
-inputs:
-  node-version:
-    description: "Node.js version to use"
-    required: false
-    default: "26.0.0"
-
 runs:
   using: "composite"
 

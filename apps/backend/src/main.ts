@@ -6,9 +6,13 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { configureViewEngine } from './infrastructure/config/view-engine.config';
 import { configureApiDocumentation } from './infrastructure/config/api-documentation.config';
 import { createValidationPipe } from './infrastructure/config/validation-pipe.config';
+import { Logger } from 'nestjs-pino';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    bufferLogs: true,
+  });
+  app.useLogger(app.get(Logger));
 
   app.enableShutdownHooks();
   app.useGlobalPipes(createValidationPipe());

@@ -37,12 +37,15 @@ import * as methodOverride from 'method-override';
       pinoHttp: {
         enabled:
           process.env.NODE_ENV !== 'ci' && process.env.NODE_ENV !== 'test',
-        transport: {
-          target: 'pino-pretty',
-          options: {
-            singleLine: true,
-          },
-        },
+        transport:
+          process.env.NODE_ENV === 'production'
+            ? undefined
+            : {
+                target: 'pino-pretty',
+                options: {
+                  singleLine: true,
+                },
+              },
         customProps: (req) => {
           const apiKey = req.headers['x-api-key'];
 
