@@ -17,6 +17,7 @@
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
     "test:e2e": "npx playwright test",
+    "test:e2e:rgaa": "playwright test --config playwright.rgaa.config.ts",
     "test:e2e:ui": "playwright test --ui",
     "test:unit": "vitest",
     "lighthouse-mobile": "lhci autorun --config=./.lighthouse-mobile.json",

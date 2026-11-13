@@ -10,9 +10,6 @@ export const GET: RequestHandler = async ({ url }) => {
     paramValues: {
       '/tout-savoir-sur-le-bail-reel-solidaire-brs/[slug]': stepSlugs,
     },
-    excludeRoutePatterns: [
-      'simulateur-acquisition',
-      'statistiques-eligibilite',
-    ],
+    excludeRoutePatterns: ['statistiques-eligibilite'],
   });
 };

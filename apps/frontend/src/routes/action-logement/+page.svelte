@@ -26,7 +26,7 @@
     class="aspect-video"
     width="100%"
     src="https://www.youtube.com/embed/w3J98JlSa9o?si=I4T62YZJbEKhTE6X"
-    title="YouTube video player"
+    title="Vidéo : le conseil en financement et en accession d’Action Logement"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     referrerpolicy="strict-origin-when-cross-origin"

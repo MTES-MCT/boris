@@ -14,6 +14,7 @@
   import Card from '$components/pages/annuaire/Card.svelte';
   import NoResult from './NoResult.svelte';
   import { defaultCoords } from '$lib/utils/constants';
+  import { getBrsCardContent } from '$lib/utils/brs-diffusion-website';
 
   type Props = {
     brsDiffusionWebsites: PaginationType<BrsDiffusionWebsiteView>;
@@ -40,6 +41,7 @@
 
   onMount(() => {
     createMap();
+    return () => map?.remove();
   });
 
   $effect(() => {
@@ -107,6 +109,14 @@
 
       const markerLayer = L.marker([item.latitude, item.longitude], {
         icon: setIcon(isSelected, isHovered),
+        title: `${getBrsCardContent(item).title} — ${item.city}`,
+      });
+
+      markerLayer.on('keydown', (event: L.LeafletKeyboardEvent) => {
+        if (event.originalEvent.key === ' ') {
+          event.originalEvent.preventDefault();
+          markerLayer.fire('click');
+        }
       });
 
       markerLayer.on('click', () => {
@@ -193,6 +203,17 @@
     });
   };
 </script>
+
+<p
+  class="fr-sr-only"
+  role="status"
+  aria-atomic="true">
+  {brsDiffusionWebsitesInBounds.length} résultat{brsDiffusionWebsitesInBounds.length !==
+  1
+    ? 's'
+    : ''}
+  dans la zone affichée sur la carte.
+</p>
 
 <div
   class="relative w-full max-w-440 h-[calc(100vh-4rem)] md:h-[calc(100vh-12rem)] mx-auto flex pb-16 px-4">

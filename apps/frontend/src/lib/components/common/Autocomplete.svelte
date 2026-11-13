@@ -44,10 +44,18 @@
   const suggestionsId = nanoid(10);
   let focusedSuggestionId = $state<string | null>(null);
   let hasCorrectLength = $derived(value.length >= 3 && value.length <= 200);
+  let hasOptions = $derived(
+    isListExpanded && !isLoading && hasCorrectLength && !!suggestions?.length,
+  );
 
   const debouncedSearch = debounce(async () => {
     if (hasCorrectLength) {
-      const results = await autocomplete(value, '5');
+      const query = value;
+      const results = await autocomplete(query, '5');
+
+      if (value !== query || !isListExpanded) {
+        return;
+      }
 
       suggestions = results
         ?.map((result) => ({
@@ -60,9 +68,7 @@
 
       isListExpanded = true;
 
-      if (suggestions?.length > 0) {
-        focusedSuggestionId = suggestions[0]?.id as string;
-      }
+      focusedSuggestionId = suggestions?.[0]?.id || null;
 
       isLoading = false;
     } else {
@@ -72,6 +78,8 @@
 
   const handleChange = async (event: Event) => {
     value = (event.target as HTMLInputElement).value;
+    suggestions = null;
+    focusedSuggestionId = null;
     isListExpanded = value.length > 0;
     isLoading = true;
 
@@ -82,6 +90,8 @@
     const { key } = event;
 
     if (key === 'ArrowDown') {
+      event.preventDefault();
+      isListExpanded = true;
       let nextSuggestionIndex: number;
 
       const currentSuggestionIndex = suggestions?.findIndex(
@@ -115,8 +125,11 @@
       }
     } else if (key === 'Escape') {
       isListExpanded = false;
+    } else if (key === 'Tab') {
+      isListExpanded = false;
     } else if (key === 'Enter') {
-      if (hasCorrectLength) {
+      if (isListExpanded && hasCorrectLength && focusedSuggestionId) {
+        event.preventDefault();
         handleSelect();
       }
     }
@@ -159,9 +172,9 @@
     {error}
     ariaAttributes={{
       'aria-autocomplete': 'list',
-      'aria-expanded': isListExpanded,
-      'aria-controls': suggestionsId,
-      'aria-activedescendant': focusedSuggestionId,
+      'aria-expanded': hasOptions,
+      'aria-controls': hasOptions ? suggestionsId : undefined,
+      'aria-activedescendant': hasOptions ? focusedSuggestionId : undefined,
     }}
     forceNoMarginBottom
     onChange={handleChange}
@@ -170,13 +183,12 @@
     {errorDataTestId} />
 
   {#if isListExpanded}
-    <div
-      class="absolute z-1001 left-0 top-full w-full bg-white shadow-lg/20"
-      id={suggestionsId}>
+    <div class="absolute z-1001 left-0 top-full w-full bg-white shadow-lg/20">
       <ul
+        id={suggestionsId}
         class="!list-none fr-m-0 fr-p-0"
-        aria-labelledby={inputId}
-        role="listbox">
+        aria-labelledby={hasOptions ? inputId : undefined}
+        role={hasOptions ? 'listbox' : undefined}>
         {#if isTooShort}
           <li class="fr-py-1w fr-px-2w">
             <b>Veuillez saisir au moins 3 caractères.</b>
@@ -215,7 +227,7 @@
     role="option"
     aria-selected={suggestion?.id === focusedSuggestionId}
     aria-setsize={suggestions?.length}
-    aria-posinset={index}
+    aria-posinset={index + 1}
     onclick={() => handleSelect(suggestion?.id)}
     data-testid={`suggestion-${index}-data-test-id`}>
     {getGeocodedResponseLabel(suggestion)}

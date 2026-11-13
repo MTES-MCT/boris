@@ -18,6 +18,8 @@
   <p class="fr-text--bold">Sur les 30 derniers jours</p>
 
   <Table
+    caption="Conversion du simulateur d’éligibilité sur les 30 derniers jours"
+    firstColumnHeader
     theads={[
       'Étape',
       'Visiteurs',

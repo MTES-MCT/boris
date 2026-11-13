@@ -87,6 +87,7 @@
         required
         skipHTML5Required
         id="first-name"
+        autocomplete="given-name"
         maxlength={255}
         placeholder="Exemple: Arnaud"
         onChange={(e) => {
@@ -106,6 +107,7 @@
         required
         skipHTML5Required
         id="last-name"
+        autocomplete="family-name"
         maxlength={255}
         placeholder="Exemple: Dupont"
         onChange={(e) => {
@@ -121,7 +123,8 @@
       <Input
         value={email}
         label={stepsContent.email.label}
-        type="text"
+        type="email"
+        autocomplete="email"
         required
         skipHTML5Required
         id="email"
@@ -145,6 +148,7 @@
         required
         skipHTML5Required
         id="phone"
+        autocomplete="tel"
         maxlength={255}
         placeholder="Exemple: +33122334455"
         onChange={(e) => {
