@@ -200,6 +200,8 @@
     du bail réel solidaire (BRS)
   </h2>
   <Table
+    caption="Contreparties du bail réel solidaire et conséquences pour l’acquéreur"
+    firstColumnHeader
     multiline
     theads={['Inconvénients', 'Explication', "Conséquence pour l'acquéreur"]}
     tbodies={[

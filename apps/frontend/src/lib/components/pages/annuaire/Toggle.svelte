@@ -19,6 +19,8 @@
 
 {#snippet button(label: string, viewType: 'list' | 'map', icon: string)}
   <button
+    type="button"
+    aria-pressed={annuaireManager.viewType === viewType}
     class="fr-text--sm flex gap-1 justify-center items-center h-full flex-1"
     class:!bg-blue-primary={annuaireManager.viewType === viewType}
     class:!text-white={annuaireManager.viewType === viewType}

@@ -2,6 +2,7 @@
   import StatisticBox from './StatisticBox.svelte';
   import ChartProvider from '$components/common/Charts/ChartProvider.svelte';
   import PieChart from '$components/common/Charts/PieChart.svelte';
+  import AccessibleChart from '$components/common/Charts/AccessibleChart.svelte';
   import type { formatHouseholdsData } from '$lib/utils/helpers';
 
   type Props = {
@@ -19,12 +20,20 @@
     d'éligibilité
   </h2>
 
-  <ChartProvider>
-    <PieChart
-      x={[housingTypesRepartition.map((item) => item.realEstateSituation)]}
-      y={[housingTypesRepartition.map((item) => Number(item.count))]}
-      name={housingTypesRepartition.map((item) => item.realEstateSituation)}
-      selectedPalette="categorical"
-      unitTooltip="%" />
-  </ChartProvider>
+  <AccessibleChart
+    title="Répartition des types de logements des ménages recontactés après simulation d’éligibilité"
+    headings={['Situation immobilière', 'Part des ménages']}
+    rows={housingTypesRepartition.map((item) => [
+      item.realEstateSituation,
+      `${item.count} %`,
+    ])}>
+    <ChartProvider>
+      <PieChart
+        x={[housingTypesRepartition.map((item) => item.realEstateSituation)]}
+        y={[housingTypesRepartition.map((item) => Number(item.count))]}
+        name={housingTypesRepartition.map((item) => item.realEstateSituation)}
+        selectedPalette="categorical"
+        unitTooltip="%" />
+    </ChartProvider>
+  </AccessibleChart>
 </StatisticBox>

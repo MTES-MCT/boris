@@ -63,14 +63,19 @@
     </div>
   </div>
 
-  {#if annuaireManager.listBrsDiffusionWebsites && annuaireManager.viewType === 'list'}
-    <p class="fr-text--sm fr-mt-1w fr-mb-0">
+  <p
+    class="fr-text--sm fr-mt-1w fr-mb-0"
+    role="status"
+    aria-atomic="true">
+    {#if annuaireManager.viewType === 'list' && annuaireManager.isListLoading}
+      Recherche de logements en cours…
+    {:else if annuaireManager.listBrsDiffusionWebsites && annuaireManager.viewType === 'list'}
       <b>
-        {annuaireManager.listBrsDiffusionWebsites?.totalCount} résulat{annuaireManager
+        {annuaireManager.listBrsDiffusionWebsites?.totalCount} résultat{annuaireManager
           .listBrsDiffusionWebsites?.totalCount !== 1
           ? 's'
           : ''} pour votre recherche
       </b>
-    </p>
-  {/if}
+    {/if}
+  </p>
 </div>

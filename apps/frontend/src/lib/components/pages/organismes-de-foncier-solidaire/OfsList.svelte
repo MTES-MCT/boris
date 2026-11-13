@@ -85,6 +85,11 @@
                     : 'purple-glycine'}
                   icon={ofs.producesBrs ? 'community-line' : 'draft-line'}
                   normalCase>
+                  <span class="fr-sr-only">
+                    {ofs.producesBrs
+                      ? 'Propose des logements en BRS à vendre : '
+                      : 'Agréé, sans logement en BRS à vendre : '}
+                  </span>
                   {#if ofs.websiteUrl}
                     <a
                       href={ofs.websiteUrl}

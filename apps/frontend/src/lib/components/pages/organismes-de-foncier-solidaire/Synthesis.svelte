@@ -8,6 +8,7 @@
   mascotte="MascotteCelebrating">
   <div class="fr-col-12">
     <Table
+      caption="Rôles des organismes de foncier solidaire et leurs bénéfices"
       multiline
       theads={["Rôle de l'OFS", "Pourquoi c'est important"]}
       tbodies={[

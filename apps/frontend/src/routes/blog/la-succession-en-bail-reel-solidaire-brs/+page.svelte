@@ -193,6 +193,8 @@
 
   <h2 class="fr-mt-8w">📌 En résumé</h2>
   <Table
+    caption="Succession en BRS selon la situation des héritiers"
+    firstColumnHeader
     theads={['Situation des héritiers', 'Conséquence']}
     tbodies={[
       [

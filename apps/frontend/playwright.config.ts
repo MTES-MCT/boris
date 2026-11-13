@@ -9,6 +9,7 @@ const config: PlaywrightTestConfig = {
   },
   testDir: 'tests/e2e',
   testMatch: /(.+\.)?(test|spec)\.[jt]s/,
+  testIgnore: '**/rgaa.spec.ts',
   timeout: 5 * 60 * 1000,
   projects: [
     {

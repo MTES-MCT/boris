@@ -16,7 +16,7 @@
             <li>
               <a
                 class="fr-footer__top-link"
-                href="/sitemap.xml">
+                href="/plan-du-site">
                 Plan du site
               </a>
             </li>

@@ -60,7 +60,7 @@
     required = false,
     skipHTML5Required = false,
     icon = '',
-    role = '',
+    role,
     ariaAttributes,
     autocomplete,
     min,
@@ -117,11 +117,6 @@
   {:else}
     {@render input()}
   {/if}
-  <div
-    class="fr-messages-group"
-    id={`${id}-messages`}
-    aria-live="polite">
-  </div>
 </div>
 
 {#snippet input()}
@@ -131,6 +126,8 @@
     {type}
     {value}
     required={required && !skipHTML5Required}
+    aria-required={required || undefined}
+    aria-invalid={error ? true : undefined}
     {disabled}
     {id}
     {role}

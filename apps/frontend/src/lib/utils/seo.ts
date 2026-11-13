@@ -24,6 +24,11 @@ const homeMetadata: SeoMetadata = {
 };
 
 const staticMetadataByPath: Record<string, Omit<SeoMetadata, 'pathname'>> = {
+  '/plan-du-site': {
+    title: 'Plan du site - BoRiS',
+    description:
+      'Retrouvez les pages, les simulateurs et les articles du site BoRiS.',
+  },
   '/accessibilite': {
     title: 'Accessibilité - Boris',
     description:

@@ -38,7 +38,7 @@
 
   <Section
     title="Filtres"
-    titleElement="h3">
+    titleElement="h2">
     <Filters />
   </Section>
 

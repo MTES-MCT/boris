@@ -17,6 +17,8 @@
   </h2>
 
   <Table
+    caption="Conversion du simulateur d’acquisition"
+    firstColumnHeader
     theads={[
       'Étape',
       'Visiteurs',

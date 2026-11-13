@@ -4,6 +4,7 @@
   import { formatNumber } from '$lib/utils/formatters';
   import type { PageData } from '../../../../routes/statistiques/$types';
   import StatisticBox from './StatisticBox.svelte';
+  import AccessibleChart from '$components/common/Charts/AccessibleChart.svelte';
 
   type Props = {
     count: number;
@@ -82,15 +83,28 @@
     <b>{formatNumber(count)}</b>
     simulations d'éligibilité au BRS.
   </p>
-  <ChartProvider>
-    <LineChart
-      x={[chartLabels]}
-      y={chartYears.map((year) => {
-        return formattedData[year].map((item) => Number(item.count));
-      })}
-      name={chartYears}
-      selectedPalette="categorical"
-      unitTooltip="Nombre de simulations">
-    </LineChart>
-  </ChartProvider>
+  <AccessibleChart
+    title="Nombre de simulations d’éligibilité au BRS par mois"
+    headings={['Période', 'Nombre de simulations']}
+    rows={chartYears.flatMap((year) =>
+      formattedData[year].map((item) => [
+        new Intl.DateTimeFormat('fr-FR', {
+          month: 'long',
+          year: 'numeric',
+        }).format(new Date(Number(year), Number(item.month) - 1, 1)),
+        formatNumber(Number(item.count)),
+      ]),
+    )}>
+    <ChartProvider>
+      <LineChart
+        x={[chartLabels]}
+        y={chartYears.map((year) => {
+          return formattedData[year].map((item) => Number(item.count));
+        })}
+        name={chartYears}
+        selectedPalette="categorical"
+        unitTooltip="Nombre de simulations">
+      </LineChart>
+    </ChartProvider>
+  </AccessibleChart>
 </StatisticBox>
