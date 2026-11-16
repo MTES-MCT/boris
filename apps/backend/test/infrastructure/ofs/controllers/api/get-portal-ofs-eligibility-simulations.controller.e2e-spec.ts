@@ -7,6 +7,11 @@ import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
 import { EligibilitySimulationEntity } from 'src/infrastructure/eligibility-simulation/eligibility-simulation.entity';
 import { LocationEntity } from 'src/infrastructure/location/location.entity';
 import { DepartementEntity } from 'src/infrastructure/departement/departement.entity';
+import {
+  encryptTotpSecret,
+  totpAtStep,
+} from 'src/infrastructure/auth/two-factor-crypto';
+import { randomUUID } from 'crypto';
 import { SaveUserUseCase } from 'src/application/user/usecases/save.usecase';
 import {
   OfsEligibilitySimulationAction,
@@ -23,8 +28,11 @@ describe('PortalOfssController eligibility simulations', () => {
   let departementRepository: Repository<DepartementEntity>;
   let ofsEligibilitySimulationRepository: Repository<OfsEligibilitySimulationEntity>;
   let saveUserUsecase: SaveUserUseCase;
+  const originalKey = process.env.TWO_FACTOR_ENCRYPTION_KEY;
+  const secret = 'GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ';
 
   beforeAll(async () => {
+    process.env.TWO_FACTOR_ENCRYPTION_KEY = 'ab'.repeat(32);
     app = await setupTestingApp();
     await app.init();
 
@@ -44,6 +52,8 @@ describe('PortalOfssController eligibility simulations', () => {
   afterAll(async () => {
     await new Promise((resolve) => setImmediate(resolve));
     await app.close();
+    if (originalKey === undefined) delete process.env.TWO_FACTOR_ENCRYPTION_KEY;
+    else process.env.TWO_FACTOR_ENCRYPTION_KEY = originalKey;
   });
 
   it('returns only contact lines scoped to the requested ofs geography', async () => {
@@ -169,20 +179,28 @@ describe('PortalOfssController eligibility simulations', () => {
     const adminEmail = `admin-${Date.now()}@example.test`;
     const adminPassword = 'passwordpassword';
 
-    await saveUserUsecase.execute({
+    const admin = await saveUserUsecase.execute({
       email: adminEmail,
       password: adminPassword,
     });
 
-    const loginResponse = await request(app.getHttpServer())
-      .post('/api/portal/auth/login')
-      .send({
-        email: adminEmail,
-        password: adminPassword,
-      });
+    await dataSource.query(
+      `UPDATE "user" SET "twoFactorVersion" = $2, "twoFactorSecret" = $3 WHERE id = $1`,
+      [admin.id, randomUUID(), encryptTotpSecret(secret, admin.id)],
+    );
 
-    expect(loginResponse.status).toBe(204);
-    const cookies = loginResponse.headers['set-cookie'];
+    const agent = request.agent(app.getHttpServer());
+    const loginResponse = await agent.post('/api/portal/auth/login').send({
+      email: adminEmail,
+      password: adminPassword,
+    });
+
+    expect(loginResponse.status).toBe(200);
+    const verified = await agent
+      .post('/api/portal/auth/two-factor')
+      .send({ code: totpAtStep(secret, Math.floor(Date.now() / 30_000)) });
+    expect(verified.status).toBe(204);
+    const cookies = verified.headers['set-cookie'];
 
     const { status, body } = await request(app.getHttpServer())
       .get(
@@ -356,20 +374,28 @@ describe('PortalOfssController eligibility simulations', () => {
     const adminEmail = `admin-${Date.now()}@example.test`;
     const adminPassword = 'passwordpassword';
 
-    await saveUserUsecase.execute({
+    const admin = await saveUserUsecase.execute({
       email: adminEmail,
       password: adminPassword,
     });
 
-    const loginResponse = await request(app.getHttpServer())
-      .post('/api/portal/auth/login')
-      .send({
-        email: adminEmail,
-        password: adminPassword,
-      });
+    await dataSource.query(
+      `UPDATE "user" SET "twoFactorVersion" = $2, "twoFactorSecret" = $3 WHERE id = $1`,
+      [admin.id, randomUUID(), encryptTotpSecret(secret, admin.id)],
+    );
 
-    expect(loginResponse.status).toBe(204);
-    const cookies = loginResponse.headers['set-cookie'];
+    const agent = request.agent(app.getHttpServer());
+    const loginResponse = await agent.post('/api/portal/auth/login').send({
+      email: adminEmail,
+      password: adminPassword,
+    });
+
+    expect(loginResponse.status).toBe(200);
+    const verified = await agent
+      .post('/api/portal/auth/two-factor')
+      .send({ code: totpAtStep(secret, Math.floor(Date.now() / 30_000)) });
+    expect(verified.status).toBe(204);
+    const cookies = verified.headers['set-cookie'];
 
     const { status, body } = await request(app.getHttpServer())
       .put(

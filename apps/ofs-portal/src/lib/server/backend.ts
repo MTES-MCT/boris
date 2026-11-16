@@ -39,6 +39,7 @@ export async function backendFetch(
   event: RequestEvent,
   path: string,
   init: RequestInit = {},
+  options: { preserveSessionOnUnauthorized?: boolean } = {},
 ) {
   const headers = new Headers(init.headers);
   const cookieHeader = event.request.headers.get("cookie");
@@ -72,7 +73,7 @@ export async function backendFetch(
 
   applyBackendSetCookie(event.cookies, setCookieHeaders, event.url);
 
-  if (response.status === 401) {
+  if (response.status === 401 && !options.preserveSessionOnUnauthorized) {
     clearSessionCookie(event.cookies);
   }
 

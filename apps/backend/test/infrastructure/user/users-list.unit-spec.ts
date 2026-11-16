@@ -100,7 +100,13 @@ describe('Admin users list last login sorting', () => {
         switchToHttp: () => ({
           getRequest: () => ({
             isAuthenticated: () => authenticated,
-            user: { isActive, roles: [role] },
+            user: {
+              id: 'admin',
+              isActive,
+              roles: [role],
+              twoFactorVersion: 'v1',
+            },
+            session: { twoFactorVerified: { userId: 'admin', version: 'v1' } },
           }),
         }),
       } as ExecutionContext;

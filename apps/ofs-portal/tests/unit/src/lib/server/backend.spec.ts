@@ -22,6 +22,27 @@ afterEach(() => {
 });
 
 describe("backendFetch", () => {
+  it("preserves pending or authenticated session cookies on optional auth probes", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockImplementation(() =>
+          Promise.resolve(new Response(null, { status: 401 })),
+        ),
+    );
+    const event = requestEvent();
+    await backendFetch(
+      event,
+      "/api/portal/auth/two-factor",
+      {},
+      { preserveSessionOnUnauthorized: true },
+    );
+    expect(event.cookies.delete).not.toHaveBeenCalled();
+    await backendFetch(event, "/api/portal/auth/me");
+    expect(event.cookies.delete).toHaveBeenCalled();
+  });
+
   it("logs the backend response and correlates server errors", async () => {
     const fetchMock = vi.fn().mockResolvedValue(
       new Response(JSON.stringify({ message: "Backend unavailable" }), {

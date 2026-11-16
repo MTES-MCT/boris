@@ -13,7 +13,17 @@ export type PortalUser = {
 export function isSafePortalReturnTo(
   value: string | null | undefined,
 ): value is string {
-  return !!value && value.startsWith("/") && !value.startsWith("//");
+  if (
+    !value ||
+    !value.startsWith("/") ||
+    value.startsWith("//") ||
+    /[\\\u0000-\u001f\u007f]/.test(value)
+  ) {
+    return false;
+  }
+  return (
+    new URL(value, "https://portal.invalid").origin === "https://portal.invalid"
+  );
 }
 
 export function resolvePortalEntry(user: PortalUser): string {
@@ -36,7 +46,15 @@ export async function getPortalUser(
   event: RequestEvent,
 ): Promise<PortalUser | null> {
   try {
-    const response = await backendFetch(event, "/api/portal/auth/me");
+    // An unauthenticated session may still contain a pending 2FA challenge.
+    const response = await backendFetch(
+      event,
+      "/api/portal/auth/me",
+      {},
+      {
+        preserveSessionOnUnauthorized: true,
+      },
+    );
 
     if (response.status === 401 || response.status === 404) {
       return null;

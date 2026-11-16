@@ -42,6 +42,19 @@ export class UserEntity implements UserInterface {
   @Column({ type: 'timestamp', nullable: true })
   public lastLoginAt: Date | null;
 
+  // Only provisioning writes this value explicitly; stale general saves must not restore it.
+  @Column({ type: 'uuid', nullable: true, update: false })
+  public twoFactorVersion: string | null;
+
+  @Column({ type: 'text', nullable: true, select: false })
+  public twoFactorSecret: string | null;
+
+  @Column({ type: 'jsonb', default: () => "'[]'::jsonb", select: false })
+  public twoFactorRecoveryCodes: string[];
+
+  @Column({ type: 'bigint', nullable: true, select: false })
+  public twoFactorLastUsedStep: string | null;
+
   @CreateDateColumn()
   createdAt: Date;
 

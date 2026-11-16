@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   HttpCode,
-  Inject,
   InternalServerErrorException,
   Post,
   Req,
@@ -25,28 +24,31 @@ import { ResetPasswordDto } from '../dtos/reset-password.dto';
 import { PortalApiAuthenticatedGuard } from '../guards/portal-api-authenticated.guard';
 import { AuthRateLimitService } from '../auth-rate-limit.service';
 import { normalizeEmail } from 'src/application/user/utils/normalize-email';
-import { UserRepositoryInterface } from 'src/domain/user/user.repository.interface';
 import { ChangePasswordUsecase } from 'src/application/user/usecases/change-password.usecase';
 import { ChangePasswordDto } from '../dtos/change-password.dto';
-import { regenerateSession } from 'src/infrastructure/session/regenerate-session';
+import { TwoFactorService } from '../two-factor.service';
+import { TwoFactorCodeDto } from '../dtos/two-factor-code.dto';
 
 @ApiExcludeController()
 @Controller('/api/portal/auth')
 export class PortalAuthController {
   constructor(
     private readonly loginUsecase: LoginUsecase,
+    private readonly twoFactor: TwoFactorService,
     private readonly requestPasswordResetUsecase: RequestPasswordResetUsecase,
     private readonly resetPasswordWithTokenUsecase: ResetPasswordWithTokenUsecase,
     private readonly changePasswordUsecase: ChangePasswordUsecase,
     private readonly userSessionService: UserSessionService,
     private readonly authRateLimitService: AuthRateLimitService,
-    @Inject('UserRepositoryInterface')
-    private readonly userRepository: UserRepositoryInterface,
   ) {}
 
   @Post('/login')
   @HttpCode(204)
-  public async login(@Body() body: AdminLoginDto, @Req() req: Request) {
+  public async login(
+    @Body() body: AdminLoginDto,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     const email = normalizeEmail(body.email);
     const ip = req.ip || 'unknown';
 
@@ -71,42 +73,30 @@ export class PortalAuthController {
       throw new UnauthorizedException();
     }
 
-    await regenerateSession(req);
-
-    const session = req.session as typeof req.session & {
-      previousLoginAt?: string | null;
-    };
-
-    session.previousLoginAt = user.lastLoginAt?.toISOString() || null;
-    user.lastLoginAt = new Date();
-    await this.userRepository.save(user);
-
-    await new Promise<void>((resolve, reject) => {
-      req.logIn(user, (error) => {
-        if (error) {
-          reject(
-            error instanceof Error ? error : new Error('Failed to log in'),
-          );
-          return;
-        }
-
-        req.session.save((saveError) => {
-          if (saveError) {
-            reject(
-              saveError instanceof Error
-                ? saveError
-                : new Error('Failed to save session'),
-            );
-            return;
-          }
-
-          resolve();
-        });
-      });
-    });
+    const twoFactorRequired = await this.twoFactor.start(req, user);
 
     await this.authRateLimitService.clear(`login:email:${email}`);
     await this.authRateLimitService.clear(`login:ip:${ip}`);
+    if (twoFactorRequired) {
+      res.status(200);
+      return { twoFactorRequired: true };
+    }
+  }
+
+  @Get('/two-factor')
+  public twoFactorStatus(@Req() req: Request) {
+    if (!this.twoFactor.pending(req))
+      throw new UnauthorizedException('TWO_FACTOR_EXPIRED');
+    return { twoFactorRequired: true };
+  }
+
+  @Post('/two-factor')
+  @HttpCode(204)
+  public async verifyTwoFactor(
+    @Body() body: TwoFactorCodeDto,
+    @Req() req: Request,
+  ) {
+    await this.twoFactor.verify(req, body.code);
   }
 
   @UseGuards(PortalApiAuthenticatedGuard)
