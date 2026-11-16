@@ -11,10 +11,7 @@ declare module 'express-session' {
 }
 
 export function requiresTwoFactor(user: UserEntity): boolean {
-  if (
-    process.env.NODE_ENV === 'development' &&
-    process.env.TWO_FACTOR_DISABLED === 'true'
-  ) {
+  if (process.env.TWO_FACTOR_DISABLED === 'true') {
     return false;
   }
   return user.roles.includes(UserRole.ADMIN) || !!user.twoFactorVersion;

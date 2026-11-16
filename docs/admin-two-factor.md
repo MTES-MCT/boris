@@ -6,19 +6,23 @@ without a provisioned secret cannot log in. Existing password-only admin session
 lose access when this feature is deployed. Unenrolled OFS and commercialisateur
 accounts continue to use their existing password login.
 
-## Local development
+## Temporary bypass and gradual rollout
 
-To skip 2FA in both applications, set these variables on the backend and restart it:
+To temporarily skip 2FA in both applications, set this variable on the backend and restart it:
 
 ```dotenv
-NODE_ENV=development
 TWO_FACTOR_DISABLED=true
 ```
 
-Password authentication and role checks still apply. The bypass is off by default
-and ignored in production, test, and unspecified environments. With the bypass
-enabled, development admins do not need a provisioned secret or an encryption key
-to log in. Disabling the bypass makes password-only admin sessions require 2FA again.
+This works in every environment, including production. Password authentication and
+role checks still apply. The bypass is off by default. While enabled, admins do not
+need a provisioned secret or an encryption key to log in.
+
+For a gradual rollout, deploy with the bypass enabled, configure the encryption
+key, and provision each admin. Once everyone is ready, set
+`TWO_FACTOR_DISABLED=false` (or remove the variable) and restart the backend.
+Password-only admin sessions then lose access and admins must complete a new login
+with 2FA.
 
 ## Deployment and initial provisioning
 
@@ -49,9 +53,10 @@ to log in. Disabling the bypass makes password-only admin sessions require 2FA a
    provisioning and cannot be retrieved afterward. Avoid captured/shared terminal
    logs. Provisioning invalidates existing sessions for that account.
 
-5. Verify a login through both applications. Plan for admins to be blocked between
-   deployment and provisioning; alternatively apply the migration and provision
-   accounts before switching traffic to the new backend.
+5. Verify a login through both applications after disabling the temporary bypass.
+   Without the bypass, admins are blocked between deployment and provisioning;
+   alternatively apply the migration and provision accounts before switching
+   traffic to the new backend.
 
 ## Lost authenticator or compromised credentials
 

@@ -59,8 +59,8 @@ describe('2FA session authorization', () => {
     expect(hasCompletedTwoFactor(req(UserRole.DISTRIBUTOR, null))).toBe(true);
   });
 
-  it('allows an explicit development bypass and requires MFA again when disabled', () => {
-    process.env.NODE_ENV = 'development';
+  it('allows an explicit bypass and requires MFA again when disabled', () => {
+    process.env.NODE_ENV = 'production';
     const admin = req(UserRole.ADMIN, null);
     expect(hasCompletedTwoFactor(admin)).toBe(false);
     process.env.TWO_FACTOR_DISABLED = 'true';
@@ -70,12 +70,23 @@ describe('2FA session authorization', () => {
     expect(hasCompletedTwoFactor(admin)).toBe(false);
   });
 
-  it.each(['production', 'test', undefined])(
-    'ignores the bypass in %s',
+  it.each(['development', 'production', 'test', undefined])(
+    'honors the bypass in %s',
     (environment) => {
       if (environment === undefined) delete process.env.NODE_ENV;
       else process.env.NODE_ENV = environment;
       process.env.TWO_FACTOR_DISABLED = 'true';
+      expect(hasCompletedTwoFactor(req(UserRole.ADMIN, null))).toBe(true);
+      expect(hasCompletedTwoFactor(req(UserRole.ADMIN, 'v1'))).toBe(true);
+    },
+  );
+
+  it.each([undefined, 'false', 'TRUE', '1', ''])(
+    'keeps production MFA enforced for flag value %s',
+    (value) => {
+      process.env.NODE_ENV = 'production';
+      if (value === undefined) delete process.env.TWO_FACTOR_DISABLED;
+      else process.env.TWO_FACTOR_DISABLED = value;
       expect(hasCompletedTwoFactor(req(UserRole.ADMIN, null))).toBe(false);
       expect(hasCompletedTwoFactor(req(UserRole.ADMIN, 'v1'))).toBe(false);
     },

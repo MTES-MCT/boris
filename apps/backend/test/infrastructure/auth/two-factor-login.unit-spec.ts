@@ -343,8 +343,8 @@ describe('two-step login HTTP flows', () => {
     await agent.get('/').expect(403);
   });
 
-  it('bypasses both admin login flows only when explicitly enabled in development', async () => {
-    process.env.NODE_ENV = 'development';
+  it('bypasses both admin login flows in production until explicitly re-enabled', async () => {
+    process.env.NODE_ENV = 'production';
     process.env.TWO_FACTOR_DISABLED = 'true';
     account.twoFactorVersion = null;
     const portal = request.agent(app.getHttpServer());
