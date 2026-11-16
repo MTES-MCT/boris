@@ -49,6 +49,8 @@ describe('two-step login HTTP flows', () => {
   let account: UserEntity;
   let limits: Map<string, number>;
   const originalKey = process.env.TWO_FACTOR_ENCRYPTION_KEY;
+  const originalNodeEnv = process.env.NODE_ENV;
+  const originalDisabled = process.env.TWO_FACTOR_DISABLED;
   const secret = 'GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ';
   const recovery = '12345678-abcdefab-12345678-abcdefab';
   const publicUser = () => ({
@@ -148,6 +150,8 @@ describe('two-step login HTTP flows', () => {
   });
 
   beforeEach(() => {
+    process.env.NODE_ENV = 'test';
+    delete process.env.TWO_FACTOR_DISABLED;
     process.env.TWO_FACTOR_ENCRYPTION_KEY = 'ab'.repeat(32);
     limits = new Map();
     account = Object.assign(new UserEntity('admin@example.test', 'unused'), {
@@ -158,6 +162,13 @@ describe('two-step login HTTP flows', () => {
       ofss: [],
     });
     account.twoFactorSecret = encryptTotpSecret(secret, account.id);
+  });
+
+  afterEach(() => {
+    if (originalNodeEnv === undefined) delete process.env.NODE_ENV;
+    else process.env.NODE_ENV = originalNodeEnv;
+    if (originalDisabled === undefined) delete process.env.TWO_FACTOR_DISABLED;
+    else process.env.TWO_FACTOR_DISABLED = originalDisabled;
   });
 
   afterAll(async () => {
@@ -330,5 +341,25 @@ describe('two-step login HTTP flows', () => {
     await agent.post('/api/portal/auth/login').send(credentials).expect(204);
     await agent.get('/api/portal/auth/me').expect(200);
     await agent.get('/').expect(403);
+  });
+
+  it('bypasses both admin login flows only when explicitly enabled in development', async () => {
+    process.env.NODE_ENV = 'development';
+    process.env.TWO_FACTOR_DISABLED = 'true';
+    account.twoFactorVersion = null;
+    const portal = request.agent(app.getHttpServer());
+    await portal.post('/api/portal/auth/login').send(credentials).expect(204);
+    await portal.get('/api/portal/auth/me').expect(200);
+    const admin = request.agent(app.getHttpServer());
+    await admin
+      .post('/auth/login')
+      .type('form')
+      .send(credentials)
+      .expect(303)
+      .expect('Location', '/');
+    await admin.get('/').expect(200);
+    process.env.TWO_FACTOR_DISABLED = 'false';
+    await portal.get('/api/portal/auth/me').expect(401);
+    await admin.get('/').expect(403);
   });
 });

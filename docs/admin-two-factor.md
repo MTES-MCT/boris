@@ -6,6 +6,20 @@ without a provisioned secret cannot log in. Existing password-only admin session
 lose access when this feature is deployed. Unenrolled OFS and commercialisateur
 accounts continue to use their existing password login.
 
+## Local development
+
+To skip 2FA in both applications, set these variables on the backend and restart it:
+
+```dotenv
+NODE_ENV=development
+TWO_FACTOR_DISABLED=true
+```
+
+Password authentication and role checks still apply. The bypass is off by default
+and ignored in production, test, and unspecified environments. With the bypass
+enabled, development admins do not need a provisioned secret or an encryption key
+to log in. Disabling the bypass makes password-only admin sessions require 2FA again.
+
 ## Deployment and initial provisioning
 
 1. Generate a dedicated encryption key:
