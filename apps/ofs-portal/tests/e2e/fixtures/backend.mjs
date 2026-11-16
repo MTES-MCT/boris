@@ -21,6 +21,48 @@ http
     }
     let data;
     let status = 200;
+    // Cookie-scoped auth fixtures keep existing always-authenticated UI tests intact.
+    if (req.headers.cookie?.includes("two-factor-test=1")) {
+      const pending = req.headers.cookie.includes("boris.sid=pending");
+      const verified = req.headers.cookie.includes("boris.sid=verified");
+      if (path === "/api/portal/auth/login") {
+        if (body.email === "unprovisioned@example.test") {
+          res.writeHead(403, { "content-type": "application/json" });
+          res.end(JSON.stringify({ message: "TWO_FACTOR_NOT_CONFIGURED" }));
+          return;
+        }
+        res.setHeader(
+          "set-cookie",
+          "boris.sid=pending; Path=/; HttpOnly; SameSite=Strict",
+        );
+        res.writeHead(200, { "content-type": "application/json" });
+        res.end(JSON.stringify({ twoFactorRequired: true }));
+        return;
+      }
+      if (path === "/api/portal/auth/two-factor") {
+        if (!pending) res.writeHead(401);
+        else if (req.method === "GET") {
+          res.writeHead(200, { "content-type": "application/json" });
+          res.end(JSON.stringify({ twoFactorRequired: true }));
+          return;
+        } else if (
+          ["123456", "12345678-abcdefab-12345678-abcdefab"].includes(body.code)
+        ) {
+          res.setHeader(
+            "set-cookie",
+            "boris.sid=verified; Path=/; HttpOnly; SameSite=Strict",
+          );
+          res.writeHead(204);
+        } else res.writeHead(400);
+        res.end();
+        return;
+      }
+      if (path === "/api/portal/auth/me" && !verified) {
+        res.writeHead(401);
+        res.end();
+        return;
+      }
+    }
     if (path === "/test/reset") {
       linked = [];
       invitations = [];

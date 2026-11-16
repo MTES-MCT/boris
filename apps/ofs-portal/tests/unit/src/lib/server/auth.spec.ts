@@ -43,5 +43,8 @@ describe("portal auth helpers", () => {
     expect(isSafePortalReturnTo("/ofs/123")).toBe(true);
     expect(isSafePortalReturnTo("https://example.com")).toBe(false);
     expect(isSafePortalReturnTo("//example.com")).toBe(false);
+    expect(isSafePortalReturnTo("/\\example.com")).toBe(false);
+    expect(isSafePortalReturnTo("/\n/example.com")).toBe(false);
+    expect(isSafePortalReturnTo("/\t/example.com")).toBe(false);
   });
 });

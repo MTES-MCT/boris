@@ -68,7 +68,14 @@ describe('Portal programs HTTP access and validation', () => {
     app.use((req: Request, _res: Response, next: NextFunction) => {
       Object.assign(req, {
         isAuthenticated: () => authenticated,
-        user: { roles, ofss: attachedOfss, isActive: active },
+        user: {
+          id: 'admin',
+          roles,
+          ofss: attachedOfss,
+          isActive: active,
+          twoFactorVersion: roles.includes(UserRole.ADMIN) ? 'v1' : null,
+        },
+        session: { twoFactorVerified: { userId: 'admin', version: 'v1' } },
       });
       next();
     });

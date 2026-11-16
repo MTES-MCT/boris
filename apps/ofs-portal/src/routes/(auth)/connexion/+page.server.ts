@@ -6,6 +6,7 @@ export const load: ServerLoad = async ({ url }) => {
   return {
     returnTo: url.searchParams.get("returnTo") || "",
     resetSuccess: url.searchParams.get("reset") === "success",
+    challengeExpired: url.searchParams.has("expired"),
   };
 };
 
@@ -28,8 +29,11 @@ export const actions: Actions = {
       if (response.status === 401) {
         message = "Identifiant ou mot de passe incorrect";
       } else if (response.status === 403) {
+        const body = await response.json().catch(() => null);
         message =
-          "La connexion a été refusée. Vérifiez la configuration d'accès du portail.";
+          body?.message === "TWO_FACTOR_NOT_CONFIGURED"
+            ? "La double authentification doit être configurée. Contactez l’administration pour obtenir votre clé de configuration."
+            : "La connexion a été refusée. Vérifiez la configuration d'accès du portail.";
       } else if (response.status === 429) {
         message = "Trop de tentatives de connexion. Réessayez plus tard.";
       }
@@ -39,6 +43,13 @@ export const actions: Actions = {
         email,
         returnTo,
       });
+    }
+
+    if (response.status === 200 && (await response.json()).twoFactorRequired) {
+      const target = isSafePortalReturnTo(returnTo)
+        ? `?returnTo=${encodeURIComponent(returnTo)}`
+        : "";
+      throw redirect(303, `/double-authentification${target}`);
     }
 
     throw redirect(303, isSafePortalReturnTo(returnTo) ? returnTo : "/");

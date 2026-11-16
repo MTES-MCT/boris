@@ -1,3 +1,5 @@
+import { Request } from 'express';
+import { UserEntity } from 'src/infrastructure/user/user.entity';
 import {
   CanActivate,
   ExecutionContext,
@@ -5,14 +7,18 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { UserRole } from 'src/domain/user/user-role.enum';
+import { hasCompletedTwoFactor } from '../two-factor-session';
 
 @Injectable()
 export class PortalApiAuthenticatedGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
-    const request = context.switchToHttp().getRequest();
+    const request = context
+      .switchToHttp()
+      .getRequest<Request & { user: UserEntity }>();
 
     if (
       !request.isAuthenticated() ||
+      !hasCompletedTwoFactor(request) ||
       request.user?.isActive !== true ||
       !request.user?.roles?.some((role: UserRole) =>
         [UserRole.ADMIN, UserRole.OFS, UserRole.DISTRIBUTOR].includes(role),

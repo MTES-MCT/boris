@@ -10,6 +10,7 @@ import { SessionModule } from '../session/session.module';
 import { PortalAuthController } from './controllers/portal-auth.controller';
 import { PortalApiAuthenticatedGuard } from './guards/portal-api-authenticated.guard';
 import { RateLimitModule } from './rate-limit.module';
+import { TwoFactorService } from './two-factor.service';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { RateLimitModule } from './rate-limit.module';
     LoginUsecase,
     UserSerializer,
     PortalApiAuthenticatedGuard,
+    TwoFactorService,
   ],
   exports: [],
 })
