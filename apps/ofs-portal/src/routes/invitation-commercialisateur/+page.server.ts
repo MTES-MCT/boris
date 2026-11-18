@@ -9,7 +9,9 @@ import { fail, type Actions, type ServerLoad } from "@sveltejs/kit";
 export const load: ServerLoad = async (event) => {
   event.setHeaders({
     "cache-control": "no-store",
-    "referrer-policy": "no-referrer",
+    // Keep the Origin on same-origin form POSTs for SvelteKit's CSRF check,
+    // while withholding the invitation URL from external sites.
+    "referrer-policy": "same-origin",
   });
   const token = event.url.searchParams.get("token") || "";
   const response = await backendFetch(
