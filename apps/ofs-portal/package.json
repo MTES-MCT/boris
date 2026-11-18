@@ -15,6 +15,7 @@
     "lint": "prettier --check . && eslint .",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
+    "test:e2e:production": "playwright test --config playwright.production.config.ts",
     "generate-api-types": "openapi-typescript http://localhost:3000/api/documentation/schema/json --output src/lib/types/generated-api-types.ts"
   },
   "devDependencies": {

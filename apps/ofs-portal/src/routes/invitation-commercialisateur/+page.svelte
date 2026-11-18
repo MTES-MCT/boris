@@ -9,7 +9,7 @@
 <svelte:head
   ><title>Invitation commercialisateur - BoRiS</title><meta
     name="referrer"
-    content="no-referrer"
+    content="same-origin"
   /></svelte:head
 >
 <main class="fr-container fr-py-8w">
