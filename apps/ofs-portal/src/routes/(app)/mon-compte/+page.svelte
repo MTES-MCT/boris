@@ -28,25 +28,24 @@
     <form method="POST" action="?/name" class="fr-mt-3w">
       <h2 class="fr-h4">Votre identité</h2>
       <div class="fr-input-group">
-        <label class="fr-label" for="firstName">Prénom</label><input
+        <label class="fr-label" for="firstName">Prénom (facultatif)</label
+        ><input
           class="fr-input"
           id="firstName"
           name="firstName"
           autocomplete="given-name"
           maxlength="100"
           value={data.accountName.firstName || ""}
-          required
         />
       </div>
       <div class="fr-input-group">
-        <label class="fr-label" for="lastName">Nom</label><input
+        <label class="fr-label" for="lastName">Nom (facultatif)</label><input
           class="fr-input"
           id="lastName"
           name="lastName"
           autocomplete="family-name"
           maxlength="100"
           value={data.accountName.lastName || ""}
-          required
         />
       </div>
       <button class="fr-btn">Enregistrer mon identité</button>

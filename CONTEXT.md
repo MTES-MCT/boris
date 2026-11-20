@@ -115,7 +115,7 @@ _Avoid_: Suivi OFS, statut OFS
 
 ## Équipe OFS et invitations
 
-- A **Compte OFS** can view the active **Comptes OFS** attached to each OFS it can access, with first name, last name and email. Names are optional for existing accounts and editable under **Mon compte**; new OFS invitees supply them during acceptance.
+- A **Compte OFS** can view the active **Comptes OFS** attached to each OFS it can access, with first name, last name and email. First and last names are optional for all accounts, including invitation acceptance, and can be added, changed or cleared under **Mon compte**. The directory leaves missing names blank and always shows the email address.
 - All **Comptes OFS** retain the same portal rights and can invite colleagues by email. Invitation acceptance is required even when the address already has an OFS account; it adds membership without changing the existing password or other OFS memberships.
 - OFS colleague and commercialisateur invitations share storage and token, expiry and delivery mechanics. The invitation role determines acceptance behavior; tokens cannot be used across the two flows. Existing commercialisateur invitation URLs remain valid.
 - Invitations expire after seven days. Pending and expired invitations can be resent or cancelled. Resending renews expiry and invalidates the previous link. Accepted and cancelled invitations cannot be reused.

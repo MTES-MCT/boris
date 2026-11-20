@@ -40,7 +40,7 @@ export const actions: Actions = {
     if (!response.ok)
       return fail(response.status, {
         nameError:
-          "Indiquez votre prénom et votre nom (100 caractères maximum chacun).",
+          "Le prénom et le nom sont facultatifs (100 caractères maximum chacun).",
       });
     setFlash(event.cookies, {
       type: "success",

@@ -1,7 +1,6 @@
 import { Transform } from 'class-transformer';
 import {
   IsEmail,
-  IsNotEmpty,
   IsOptional,
   IsString,
   MaxLength,
@@ -11,14 +10,14 @@ import {
 export class AccountNameDto {
   @IsString()
   @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsNotEmpty()
+  @IsOptional()
   @MaxLength(100)
-  firstName: string;
+  firstName?: string | null;
   @IsString()
   @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsNotEmpty()
+  @IsOptional()
   @MaxLength(100)
-  lastName: string;
+  lastName?: string | null;
 }
 export class InviteOfsMemberDto {
   @IsEmail() @MaxLength(254) email: string;

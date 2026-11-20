@@ -41,16 +41,16 @@
     >
     <tbody
       >{#each data.members as member}<tr
-          ><td>{member.firstName || "Non renseigné"}</td><td
-            >{member.lastName || "Non renseigné"}</td
-          ><td><a href={`mailto:${member.email}`}>{member.email}</a></td></tr
+          ><td>{member.firstName || ""}</td><td>{member.lastName || ""}</td><td
+            ><a href={`mailto:${member.email}`}>{member.email}</a></td
+          ></tr
         >{/each}</tbody
     >
   </table>
 </div>
 {#if !data.members.length}<p>Aucun membre actif pour cet OFS.</p>{/if}
 <p class="fr-text--sm">
-  Votre nom n’est pas renseigné ? Complétez-le dans <a href="/mon-compte"
+  Vous pouvez ajouter votre prénom et votre nom dans <a href="/mon-compte"
     >Mon compte</a
   >.
 </p>

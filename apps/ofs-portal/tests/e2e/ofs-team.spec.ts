@@ -16,9 +16,9 @@ test("directory, invite, resend and cancel with support-only removal", async ({
   await expect(
     page.getByRole("link", { name: "alice@example.test" }),
   ).toBeVisible();
-  await expect(
-    page.getByRole("cell", { name: "Non renseigné", exact: true }),
-  ).toHaveCount(2);
+  await expect(page.getByRole("cell", { name: "", exact: true })).toHaveCount(
+    2,
+  );
   await expect(
     page.getByRole("button", { name: /supprimer|retirer/i }),
   ).toHaveCount(0);
@@ -45,8 +45,18 @@ test("directory, invite, resend and cancel with support-only removal", async ({
 });
 test("new OFS colleague supplies their name and password", async ({ page }) => {
   await page.goto("/invitation-ofs?token=new");
-  await page.getByLabel("Prénom", { exact: true }).fill("Camille");
-  await page.getByLabel("Nom", { exact: true }).fill("Dupont");
+  await page.getByLabel("Prénom (facultatif)", { exact: true }).fill("Camille");
+  await page.getByLabel("Nom (facultatif)", { exact: true }).fill("Dupont");
+  await page.getByLabel("Mot de passe").fill("long-password-example");
+  await page
+    .getByRole("button", { name: "Accepter et créer mon compte" })
+    .click();
+  await expect(page.getByRole("status")).toContainText(
+    "Votre compte OFS a été créé",
+  );
+});
+test("new OFS colleague can accept without a name", async ({ page }) => {
+  await page.goto("/invitation-ofs?token=new");
   await page.getByLabel("Mot de passe").fill("long-password-example");
   await page
     .getByRole("button", { name: "Accepter et créer mon compte" })
@@ -70,8 +80,8 @@ test("expired invitation cannot be accepted", async ({ page }) => {
 });
 test("account identity is editable", async ({ page }) => {
   await page.goto("/mon-compte");
-  await page.getByLabel("Prénom", { exact: true }).fill("Camille");
-  await page.getByLabel("Nom", { exact: true }).fill("Dupont");
+  await page.getByLabel("Prénom (facultatif)", { exact: true }).fill("Camille");
+  await page.getByLabel("Nom (facultatif)", { exact: true }).fill("Dupont");
   await page.getByRole("button", { name: "Enregistrer mon identité" }).click();
   await expect(
     page.getByText("Votre prénom et votre nom ont été enregistrés."),

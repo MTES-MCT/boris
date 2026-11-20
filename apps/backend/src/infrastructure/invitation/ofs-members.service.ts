@@ -172,10 +172,8 @@ export class OfsMembersService {
       const accountCreated = !user;
       if (user) this.assertOfsAccount(user);
       else {
-        const firstName = body.firstName?.trim();
-        const lastName = body.lastName?.trim();
-        if (!firstName || !lastName)
-          throw new BadRequestException('Indiquez votre prénom et votre nom.');
+        const firstName = body.firstName?.trim() || null;
+        const lastName = body.lastName?.trim() || null;
         if (!body.password || body.password.length < 12)
           throw new BadRequestException(
             'Choisissez un mot de passe de 12 caractères minimum.',
@@ -207,10 +205,17 @@ export class OfsMembersService {
     });
   }
 
-  async updateName(userId: string, firstName: string, lastName: string) {
+  async updateName(
+    userId: string,
+    firstName?: string | null,
+    lastName?: string | null,
+  ) {
     await this.dataSource
       .getRepository(UserEntity)
-      .update(userId, { firstName, lastName });
+      .update(userId, {
+        firstName: firstName?.trim() || null,
+        lastName: lastName?.trim() || null,
+      });
     return { message: 'Votre prénom et votre nom ont été enregistrés.' };
   }
 }

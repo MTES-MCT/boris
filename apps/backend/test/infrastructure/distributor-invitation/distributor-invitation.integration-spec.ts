@@ -360,14 +360,24 @@ describeDatabase(
       },
     );
 
-    it('rejects disabled accounts and requires names for new accounts', async () => {
+    it('accepts new accounts without names and allows adding and clearing names later', async () => {
       await inviteMember();
-      await expect(
-        members.accept({
-          token: tokenFromMail(),
-          password: 'long-password-example',
-        }),
-      ).rejects.toThrow('prénom');
+      await members.accept({
+        token: tokenFromMail(),
+        password: 'long-password-example',
+      });
+      let [member] = await members.members(ofs.id);
+      expect(member).toMatchObject({ firstName: null, lastName: null });
+      await members.updateName(member.id, 'Camille');
+      [member] = await members.members(ofs.id);
+      expect(member).toMatchObject({ firstName: 'Camille', lastName: null });
+      await members.updateName(member.id, '', '   ');
+      [member] = await members.members(ofs.id);
+      expect(member).toMatchObject({ firstName: null, lastName: null });
+    });
+
+    it('rejects disabled accounts even when names are omitted', async () => {
+      await inviteMember();
       await database
         .getRepository(UserEntity)
         .save(
