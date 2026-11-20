@@ -9,6 +9,7 @@ const ofss = [
 ];
 let linked = [];
 let invitations = [];
+let memberInvitations = [];
 http
   .createServer(async (req, res) => {
     const path = new URL(req.url, "http://localhost").pathname;
@@ -66,7 +67,59 @@ http
     if (path === "/test/reset") {
       linked = [];
       invitations = [];
+      memberInvitations = [];
       data = {};
+    } else if (path === "/api/portal/account-name") {
+      data = { firstName: "Alice", lastName: "Martin" };
+    } else if (/\/members$/.test(path)) {
+      data = {
+        members: [
+          {
+            id: "alice",
+            firstName: "Alice",
+            lastName: "Martin",
+            email: "alice@example.test",
+          },
+          {
+            id: "bob",
+            firstName: null,
+            lastName: null,
+            email: "bob@example.test",
+          },
+        ],
+        invitations: memberInvitations,
+      };
+    } else if (path.endsWith("/members/invitations") && req.method === "POST") {
+      memberInvitations.push({
+        id: "member-invite",
+        email: body.email,
+        status: "pending",
+        expiresAt: "2030-01-01",
+      });
+      data = { message: "Invitation envoyée, valable 7 jours." };
+    } else if (/\/members\/invitations\/[^/]+\/(resend|cancel)$/.test(path)) {
+      if (path.endsWith("cancel")) memberInvitations[0].status = "cancelled";
+      data = {
+        message: path.endsWith("cancel")
+          ? "Invitation annulée."
+          : "Invitation renvoyée, valable 7 jours. Le précédent lien est invalidé.",
+      };
+    } else if (path === "/api/portal/ofs-invitations/inspect") {
+      if (body.token === "expired") {
+        status = 400;
+        data = { message: "Cette invitation est expirée." };
+      } else
+        data = {
+          email: "colleague@example.test",
+          ofsName: "OFS Alpha",
+          existingAccount: body.token === "existing",
+        };
+    } else if (path === "/api/portal/ofs-invitations/accept") {
+      data = {
+        message: body.password
+          ? "Votre compte OFS a été créé."
+          : "Vous avez rejoint l’équipe de cet OFS.",
+      };
     } else if (path.endsWith("/distributors/search")) {
       data = /habitat/i.test(url.searchParams.get("name") || "")
         ? [{ id: "existing", name: "Habitat Solidaire" }]

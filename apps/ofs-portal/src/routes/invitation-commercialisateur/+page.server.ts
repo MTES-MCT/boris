@@ -1,9 +1,7 @@
+import { invitationError } from "$lib/server/invitations";
 import { env } from "$env/dynamic/private";
 import { backendFetch, readJson } from "$lib/server/backend";
-import {
-  invitationError,
-  type InvitationDetails,
-} from "$lib/server/distributor-invitations";
+import { type InvitationDetails } from "$lib/server/distributor-invitations";
 import { fail, type Actions, type ServerLoad } from "@sveltejs/kit";
 
 export const load: ServerLoad = async (event) => {

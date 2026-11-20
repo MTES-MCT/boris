@@ -10,6 +10,10 @@ export const load: ServerLoad = async (event) => {
 
   return {
     accountEmail: user!.email,
+    accountName: await readJson<{
+      firstName: string | null;
+      lastName: string | null;
+    }>(await backendFetch(event, "/api/portal/account-name")),
     notifications: response.ok
       ? await readJson<
           {
@@ -22,6 +26,28 @@ export const load: ServerLoad = async (event) => {
 };
 
 export const actions: Actions = {
+  name: async (event) => {
+    requirePortalUser(await getPortalUser(event), event.url.pathname);
+    const data = await event.request.formData();
+    const response = await backendFetch(event, "/api/portal/account-name", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        firstName: String(data.get("firstName") || ""),
+        lastName: String(data.get("lastName") || ""),
+      }),
+    });
+    if (!response.ok)
+      return fail(response.status, {
+        nameError:
+          "Le prénom et le nom sont facultatifs (100 caractères maximum chacun).",
+      });
+    setFlash(event.cookies, {
+      type: "success",
+      message: "Votre prénom et votre nom ont été enregistrés.",
+    });
+    throw redirect(303, "/mon-compte");
+  },
   changePassword: async (event) => {
     const user = await getPortalUser(event);
     requirePortalUser(user, `${event.url.pathname}${event.url.search}`);

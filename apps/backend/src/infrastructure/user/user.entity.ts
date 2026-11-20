@@ -21,6 +21,12 @@ export class UserEntity implements UserInterface {
   @Column({ type: 'varchar', nullable: false, unique: true })
   public email: string;
 
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  public firstName: string | null = null;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  public lastName: string | null = null;
+
   @Column({ type: 'varchar', nullable: false })
   public password: string;
 

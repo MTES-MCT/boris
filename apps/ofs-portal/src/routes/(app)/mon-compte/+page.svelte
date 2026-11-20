@@ -22,6 +22,35 @@
       </div>
     {/if}
 
+    {#if form?.nameError}<div class="fr-alert fr-alert--error" role="alert">
+        <p>{form.nameError}</p>
+      </div>{/if}
+    <form method="POST" action="?/name" class="fr-mt-3w">
+      <h2 class="fr-h4">Votre identité</h2>
+      <div class="fr-input-group">
+        <label class="fr-label" for="firstName">Prénom (facultatif)</label
+        ><input
+          class="fr-input"
+          id="firstName"
+          name="firstName"
+          autocomplete="given-name"
+          maxlength="100"
+          value={data.accountName.firstName || ""}
+        />
+      </div>
+      <div class="fr-input-group">
+        <label class="fr-label" for="lastName">Nom (facultatif)</label><input
+          class="fr-input"
+          id="lastName"
+          name="lastName"
+          autocomplete="family-name"
+          maxlength="100"
+          value={data.accountName.lastName || ""}
+        />
+      </div>
+      <button class="fr-btn">Enregistrer mon identité</button>
+    </form>
+    <h2 class="fr-h4 fr-mt-5w">Mot de passe</h2>
     <form method="POST" action="?/changePassword" class="fr-mt-3w">
       <div class="fr-input-group">
         <label class="fr-label" for="email">Adresse e-mail</label>

@@ -349,6 +349,16 @@
             <li class="fr-nav__item">
               <a
                 class="fr-nav__link"
+                href={`/ofs/${page.data.currentOfs.id}/equipe`}
+                aria-current={page.url.pathname ===
+                `/ofs/${page.data.currentOfs.id}/equipe`
+                  ? "page"
+                  : undefined}>Équipe</a
+              >
+            </li>
+            <li class="fr-nav__item">
+              <a
+                class="fr-nav__link"
                 aria-current={page.url.pathname ===
                 `/ofs/${page.data.currentOfs.id}/profil`
                   ? "page"
