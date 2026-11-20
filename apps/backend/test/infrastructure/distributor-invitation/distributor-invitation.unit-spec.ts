@@ -1,3 +1,4 @@
+import { InvitationService } from 'src/infrastructure/invitation/invitation.service';
 import {
   BadRequestException,
   ConflictException,
@@ -5,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { DataSource, EntityManager } from 'typeorm';
 import { DistributorInvitationService } from 'src/infrastructure/distributor-invitation/distributor-invitation.service';
-import { DistributorInvitationEntity } from 'src/infrastructure/distributor-invitation/distributor-invitation.entity';
+import { InvitationEntity } from 'src/infrastructure/invitation/invitation.entity';
 import { DistributorEntity } from 'src/infrastructure/distributor/distributor.entity';
 import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
 import { UserEntity } from 'src/infrastructure/user/user.entity';
@@ -15,7 +16,7 @@ import { matchDistributors } from 'src/infrastructure/distributor-invitation/dis
 describe('Commercialisateur invitations', () => {
   const ofsId = 'ofs-a';
   const token = 'a'.repeat(43);
-  let invitation: DistributorInvitationEntity;
+  let invitation: InvitationEntity;
   let user: UserEntity | null;
   let distributors: DistributorEntity[];
   let service: DistributorInvitationService;
@@ -26,7 +27,7 @@ describe('Commercialisateur invitations', () => {
   const hash = jest.fn();
 
   beforeEach(() => {
-    invitation = Object.assign(new DistributorInvitationEntity(), {
+    invitation = Object.assign(new InvitationEntity(), {
       id: 'invite-a',
       ofsId,
       name: 'Habitat Solidaire',
@@ -47,14 +48,10 @@ describe('Commercialisateur invitations', () => {
       save,
       find: jest.fn(() => Promise.resolve(distributors)),
       findOne: jest.fn((entity) =>
-        Promise.resolve(
-          entity === DistributorInvitationEntity ? invitation : user,
-        ),
+        Promise.resolve(entity === InvitationEntity ? invitation : user),
       ),
       findOneBy: jest.fn((entity) =>
-        Promise.resolve(
-          entity === DistributorInvitationEntity ? invitation : null,
-        ),
+        Promise.resolve(entity === InvitationEntity ? invitation : null),
       ),
       findOneByOrFail: jest.fn(() => Promise.resolve(distributors[0])),
     } as unknown as EntityManager;
@@ -68,7 +65,7 @@ describe('Commercialisateur invitations', () => {
     } as unknown as DataSource;
     service = new DistributorInvitationService(
       source,
-      { sendEmail },
+      new InvitationService(source, { sendEmail }),
       { hash, compare: jest.fn() },
     );
   });

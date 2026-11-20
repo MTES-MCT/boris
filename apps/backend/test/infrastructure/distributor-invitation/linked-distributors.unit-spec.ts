@@ -1,3 +1,4 @@
+import { InvitationService } from 'src/infrastructure/invitation/invitation.service';
 import { NotFoundException } from '@nestjs/common';
 import { Request } from 'express';
 import { DataSource, SelectQueryBuilder } from 'typeorm';
@@ -20,7 +21,7 @@ describe('Linked commercialisateur account emails', () => {
     ).buildMetadatas();
     service = new DistributorInvitationService(
       source,
-      { sendEmail: jest.fn() },
+      new InvitationService(source, { sendEmail: jest.fn() }),
       { hash: jest.fn(), compare: jest.fn() },
     );
   });

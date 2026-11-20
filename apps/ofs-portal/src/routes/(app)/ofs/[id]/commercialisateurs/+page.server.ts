@@ -1,6 +1,6 @@
+import { invitationError } from "$lib/server/invitations";
 import { backendFetch, readJson } from "$lib/server/backend";
 import {
-  invitationError,
   type DistributorInvitation,
   type DistributorSummary,
   type DistributorWithEmails,

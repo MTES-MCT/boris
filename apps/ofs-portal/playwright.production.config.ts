@@ -4,7 +4,7 @@ import config from "./playwright.config";
 // Exercise the production-only CSRF checks, which Vite's dev server skips.
 export default defineConfig({
   ...config,
-  testMatch: "distributor-invitations.spec.ts",
+  testMatch: ["distributor-invitations.spec.ts", "ofs-team.spec.ts"],
   workers: 1,
   metadata: { production: true },
   webServer: [

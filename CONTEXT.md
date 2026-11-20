@@ -112,3 +112,12 @@ _Avoid_: Suivi OFS, statut OFS
 - Portal programme forms require a name, HTTP(S) announcement URL, street address, city and housing type (new by default). Delivery month, INSEE commune code and commercialisateur are optional.
 - An OFS can select only a commercialisateur linked to that OFS.
 - Programme deletion sets `isDeleted` to true; deleted programmes are excluded from the portal, administration listings, public map and proximity searches. This version provides no restoration interface.
+
+## Équipe OFS et invitations
+
+- A **Compte OFS** can view the active **Comptes OFS** attached to each OFS it can access, with first name, last name and email. Names are optional for existing accounts and editable under **Mon compte**; new OFS invitees supply them during acceptance.
+- All **Comptes OFS** retain the same portal rights and can invite colleagues by email. Invitation acceptance is required even when the address already has an OFS account; it adds membership without changing the existing password or other OFS memberships.
+- OFS colleague and commercialisateur invitations share storage and token, expiry and delivery mechanics. The invitation role determines acceptance behavior; tokens cannot be used across the two flows. Existing commercialisateur invitation URLs remain valid.
+- Invitations expire after seven days. Pending and expired invitations can be resent or cancelled. Resending renews expiry and invalidates the previous link. Accepted and cancelled invitations cannot be reused.
+- OFS colleague invitations cannot create mixed roles, reactivate disabled accounts or attach administrator or commercialisateur accounts.
+- Removing OFS membership remains a platform support operation. The team page exposes no removal or account deletion action.
