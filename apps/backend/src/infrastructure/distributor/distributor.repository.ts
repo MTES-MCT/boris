@@ -1,3 +1,7 @@
+import {
+  auditedSave,
+  auditedDelete,
+} from 'src/infrastructure/audit/audited-write';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
@@ -14,7 +18,7 @@ export class DistributorRepository implements DistributorRepositoryInterface {
   ) {}
 
   public save(distributor: DistributorInterface): Promise<DistributorEntity> {
-    return this.repository.save(distributor);
+    return auditedSave(this.repository, distributor);
   }
 
   public findAll(
@@ -45,6 +49,6 @@ export class DistributorRepository implements DistributorRepositoryInterface {
   }
 
   public async delete(id: string): Promise<void> {
-    await this.repository.delete(id);
+    await auditedDelete(this.repository, id);
   }
 }

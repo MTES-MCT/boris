@@ -1,3 +1,4 @@
+import { recordAudit } from '../audit/audit.service';
 import { randomUUID } from 'crypto';
 import { DataSource } from 'typeorm';
 import { typeormConfig } from '../persistence/typeorm.config';
@@ -57,6 +58,18 @@ async function run() {
            OR json::jsonb #>> '{pendingTwoFactorEnrollmentLogin,userId}' = $1`,
         [user.id],
       );
+      await recordAudit(manager, {
+        type:
+          flag === '--reset'
+            ? 'account.two_factor_reset'
+            : 'account.two_factor_enabled',
+        targetType: 'account',
+        targetId: user.id,
+        actor: {
+          kind: 'operator',
+          ref: process.env.USER || 'two-factor:provision',
+        },
+      });
       return user;
     });
 

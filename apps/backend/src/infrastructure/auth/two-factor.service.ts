@@ -1,8 +1,10 @@
+import { AuditService, recordAudit } from '../audit/audit.service';
 import {
   BadRequestException,
   ForbiddenException,
   Inject,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
@@ -25,6 +27,7 @@ import { hasCompletedTwoFactor, requiresTwoFactor } from './two-factor-session';
 
 @Injectable()
 export class TwoFactorService {
+  private readonly logger = new Logger(TwoFactorService.name);
   constructor(
     private readonly dataSource: DataSource,
     private readonly rateLimit: AuthRateLimitService,
@@ -165,9 +168,19 @@ export class TwoFactorService {
       }
       await repository.update(user.id, {
         twoFactorSecret: pending.secret,
-        twoFactorVersion: version,
         twoFactorRecoveryCodes: recoveryCodes.map(hashRecoveryCode),
         twoFactorLastUsedStep: `${step}`,
+      });
+      // update:false prevents stale general saves from restoring an old version.
+      await manager.query(
+        'UPDATE "user" SET "twoFactorVersion" = $2 WHERE id = $1',
+        [user.id, version],
+      );
+      await recordAudit(manager, {
+        type: 'account.two_factor_enabled',
+        targetType: 'account',
+        targetId: user.id,
+        actor: { kind: 'user', id: user.id, roles: user.roles },
       });
     });
     // Binding the session to the new version invalidates other password-only sessions.
@@ -227,11 +240,14 @@ export class TwoFactorService {
         throw new BadRequestException('TWO_FACTOR_INVALID');
       }
       await repository.update(user.id, {
-        twoFactorVersion: null,
         twoFactorSecret: null,
         twoFactorRecoveryCodes: [],
         twoFactorLastUsedStep: null,
       });
+      await manager.query(
+        'UPDATE "user" SET "twoFactorVersion" = NULL WHERE id = $1',
+        [user.id],
+      );
       // Removing the credential version would otherwise restore access to old sessions.
       await manager.query(
         `DELETE FROM "session"
@@ -240,6 +256,12 @@ export class TwoFactorService {
            OR json::jsonb #>> '{pendingTwoFactorEnrollmentLogin,userId}' = $1`,
         [user.id],
       );
+      await recordAudit(manager, {
+        type: 'account.two_factor_disabled',
+        targetType: 'account',
+        targetId: user.id,
+        actor: { kind: 'user', id: user.id, roles: user.roles },
+      });
     });
   }
 
@@ -316,6 +338,12 @@ export class TwoFactorService {
               (stored) => stored !== hash,
             ),
           });
+          await recordAudit(manager, {
+            type: 'auth.recovery_code_used',
+            targetType: 'account',
+            targetId: user.id,
+            actor: { kind: 'user', id: user.id, roles: user.roles },
+          });
           return true;
         }
       }
@@ -338,24 +366,90 @@ export class TwoFactorService {
     user: UserEntity,
     version?: string,
   ) {
-    delete req.session.pendingTwoFactor;
-    delete req.session.twoFactorVerified;
-    await regenerateSession(req);
-    await new Promise<void>((resolve, reject) => {
-      req.logIn(user, (error) =>
-        error
-          ? reject(
-              error instanceof Error ? error : new Error('Failed to log in'),
-            )
-          : resolve(),
-      );
+    try {
+      delete req.session.pendingTwoFactor;
+      delete req.session.twoFactorVerified;
+      await regenerateSession(req);
+      await new Promise<void>((resolve, reject) => {
+        req.logIn(user, (error) =>
+          error
+            ? reject(
+                error instanceof Error ? error : new Error('Failed to log in'),
+              )
+            : resolve(),
+        );
+      });
+      req.session.previousLoginAt = user.lastLoginAt?.toISOString() || null;
+      if (version) req.session.twoFactorVerified = { userId: user.id, version };
+      await this.save(req);
+      await this.dataSource.transaction(async (manager) => {
+        await manager
+          .getRepository(UserEntity)
+          .update(user.id, { lastLoginAt: new Date() });
+        await recordAudit(manager, {
+          type: 'auth.login_succeeded',
+          targetType: 'account',
+          targetId: user.id,
+          actor: { kind: 'user', id: user.id, roles: user.roles },
+          metadata: {
+            method: version ? 'password_and_second_factor' : 'password',
+          },
+        });
+      });
+    } catch (error) {
+      // Never return a usable new session when its required login audit was not persisted.
+      if (req.session) {
+        // Clear serialized identity even when Passport's first save failed.
+        delete (req.session as typeof req.session & { passport?: unknown })
+          .passport;
+        delete req.session.twoFactorVerified;
+        await new Promise<void>((resolve) =>
+          req.logout((cleanupError) => {
+            if (cleanupError)
+              this.logger.error(
+                'Failed to clear Passport identity after login failure',
+              );
+            resolve();
+          }),
+        );
+        if (req.session)
+          await new Promise<void>((resolve) =>
+            req.session.destroy((cleanupError) => {
+              if (cleanupError)
+                this.logger.error(
+                  'Failed to destroy session after login failure',
+                );
+              resolve();
+            }),
+          );
+      }
+      delete req.user;
+      req.res?.clearCookie(process.env.SESSION_COOKIE_NAME || 'boris.sid', {
+        domain: process.env.SESSION_COOKIE_DOMAIN || undefined,
+        path: '/',
+      });
+      throw error;
+    }
+  }
+
+  public async recordFailure(status: number, req?: Request): Promise<void> {
+    await new AuditService(this.dataSource).attempt({
+      type: 'auth.login_failed',
+      outcome: 'denied',
+      reasonCode: `HTTP_${status}`,
+      metadata: {
+        stage: 'authentication',
+        status,
+        ...(req
+          ? {
+              method: req.method,
+              ...(typeof req.route?.path === 'string'
+                ? { route: req.route.path.slice(0, 200) }
+                : {}),
+            }
+          : {}),
+      },
     });
-    req.session.previousLoginAt = user.lastLoginAt?.toISOString() || null;
-    if (version) req.session.twoFactorVerified = { userId: user.id, version };
-    await this.dataSource
-      .getRepository(UserEntity)
-      .update(user.id, { lastLoginAt: new Date() });
-    await this.save(req);
   }
 
   private async save(req: Request) {

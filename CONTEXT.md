@@ -87,7 +87,7 @@ _Avoid_: Suivi OFS, statut OFS
 - Creating a distinct organization despite suggested matches requires explicit confirmation
 - Linking or accepting an invitation does not create a **Transmission commerciale** or grant contact visibility
 - Admins can use the same linking and invitation flow for any OFS
-- Audit trail for **Transmission commerciale** changes is deferred from the first version
+- Application audit events record **Transmission commerciale** creation, scope and active-state changes, including actor, time and selected before/after values. The audit tables also cover authentication and other important application actions; see `docs/audit-logging.md`. Audit IP collection, retention automation and separate database access infrastructure remain out of scope.
 
 ## Example dialogue
 

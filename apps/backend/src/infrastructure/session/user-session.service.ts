@@ -1,3 +1,4 @@
+import { AuditService } from '../audit/audit.service';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -26,5 +27,11 @@ export class UserSessionService {
     }
 
     await this.sessionRepository.delete(sessions.map((session) => session.id));
+    await new AuditService(this.sessionRepository.manager.connection).attempt({
+      type: 'auth.sessions_revoked',
+      targetType: 'account',
+      targetId: userId,
+      metadata: { count: sessions.length },
+    });
   }
 }

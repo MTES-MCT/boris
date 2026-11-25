@@ -1,4 +1,8 @@
 import {
+  auditedSave,
+  auditDenied,
+} from 'src/infrastructure/audit/audited-write';
+import {
   BadRequestException,
   Inject,
   Injectable,
@@ -30,6 +34,11 @@ export class InvitationService {
         user.ofss?.some((ofs) => ofs.id === id)
       )
     ) {
+      await auditDenied(
+        this.dataSource.getRepository(OfsEntity),
+        'INVITATION_OFS_SCOPE_DENIED',
+        id,
+      );
       throw new NotFoundException();
     }
     const ofs = await this.dataSource
@@ -96,7 +105,7 @@ export class InvitationService {
     const token = randomBytes(32).toString('base64url');
     invitation.tokenHash = hashResetToken(token);
     invitation.expiresAt = new Date(Date.now() + WEEK);
-    await manager.save(invitation);
+    await auditedSave(manager.getRepository(InvitationEntity), invitation);
     await this.mailer.sendEmail(
       [
         {

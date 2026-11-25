@@ -1,3 +1,8 @@
+import { recordAudit } from '../audit/audit.service';
+import {
+  auditedSave,
+  inAuditTransaction,
+} from 'src/infrastructure/audit/audited-write';
 import { InvitationService } from '../invitation/invitation.service';
 import {
   BadRequestException,
@@ -162,7 +167,7 @@ export class DistributorInvitationService {
         );
       if (action === 'cancel') {
         invitation.status = 'cancelled';
-        await manager.save(invitation);
+        await auditedSave(manager.getRepository(InvitationEntity), invitation);
         return {
           message: 'Invitation annulée. Son lien ne peut plus être utilisé.',
         };
@@ -173,7 +178,7 @@ export class DistributorInvitationService {
         await this.addLink(manager, ofs.id, user.distributor!.id);
         invitation.status = 'accepted';
         invitation.acceptedAt = new Date();
-        await manager.save(invitation);
+        await auditedSave(manager.getRepository(InvitationEntity), invitation);
         return {
           message: `Cette adresse appartient désormais à ${user.distributor!.name}. Ce commercialisateur est rattaché à votre OFS, sans création de compte ni nouvel envoi.`,
         };
@@ -253,10 +258,12 @@ export class DistributorInvitationService {
             throw new BadRequestException(
               'Choisissez un mot de passe de 12 caractères minimum.',
             );
-          distributor = await manager.save(
+          distributor = await auditedSave(
+            manager.getRepository(DistributorEntity),
             new DistributorEntity(invitation.name, '', []),
           );
-          await manager.save(
+          await auditedSave(
+            manager.getRepository(UserEntity),
             new UserEntity(
               invitation.email,
               await this.hasher.hash(body.password),
@@ -272,7 +279,7 @@ export class DistributorInvitationService {
       await this.addLink(manager, invitation.ofsId, distributor.id);
       invitation.status = 'accepted';
       invitation.acceptedAt = new Date();
-      await manager.save(invitation);
+      await auditedSave(manager.getRepository(InvitationEntity), invitation);
       return {
         distributor: summary(distributor),
         accountCreated,
@@ -311,10 +318,35 @@ export class DistributorInvitationService {
     ofsId: string,
     distributorId: string,
   ) {
-    await manager.query(
-      'INSERT INTO "ofs_distributor" ("ofsId", "distributorId") VALUES ($1, $2) ON CONFLICT DO NOTHING',
-      [ofsId, distributorId],
-    );
+    await inAuditTransaction(manager, async (transaction) => {
+      await transaction.getRepository(OfsEntity).findOneOrFail({
+        where: { id: ofsId },
+        lock: { mode: 'pessimistic_write' },
+      });
+      const previous: { distributorId: string }[] = await transaction.query(
+        'SELECT "distributorId" FROM "ofs_distributor" WHERE "ofsId" = $1',
+        [ofsId],
+      );
+      const before = previous.map((row) => row.distributorId).sort();
+      const inserted = await transaction.query(
+        'INSERT INTO "ofs_distributor" ("ofsId", "distributorId") VALUES ($1, $2) ON CONFLICT DO NOTHING RETURNING "ofsId"',
+        [ofsId, distributorId],
+      );
+      if (inserted.length)
+        await recordAudit(transaction, {
+          type: 'organization.link_changed',
+          targetType: 'ofs',
+          targetId: ofsId,
+          ofsId,
+          distributorId,
+          changes: {
+            distributorIds: {
+              before,
+              after: [...before, distributorId].sort(),
+            },
+          },
+        });
+    });
   }
 
   private async lock(manager: EntityManager) {

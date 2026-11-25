@@ -1,3 +1,5 @@
+import { AuditService } from 'src/infrastructure/audit/audit.service';
+import { DataSource } from 'typeorm';
 import {
   Controller,
   InternalServerErrorException,
@@ -13,7 +15,10 @@ import { UserEntity } from 'src/infrastructure/user/user.entity';
 @ApiExcludeController()
 @Controller('/auth')
 export class AdminLogoutController {
-  constructor(private readonly userSessionService: UserSessionService) {}
+  constructor(
+    private readonly auditDatabase: DataSource,
+    private readonly userSessionService: UserSessionService,
+  ) {}
 
   @Post('/logout')
   public async post(@Req() req: Request, @Res() res: Response): Promise<void> {
@@ -34,6 +39,15 @@ export class AdminLogoutController {
 
     await new Promise<void>((resolve) => {
       req.session.destroy(() => resolve());
+    });
+
+    await new AuditService(this.auditDatabase).attempt({
+      type: 'auth.logout',
+      targetType: 'account',
+      targetId: user?.id,
+      actor: user?.id
+        ? { kind: 'user', id: user.id, roles: user.roles }
+        : { kind: 'anonymous' },
     });
 
     res.clearCookie(cookieName, {

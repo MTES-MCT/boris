@@ -1,3 +1,8 @@
+import { APP_FILTER } from '@nestjs/core';
+import { AuditService } from 'src/infrastructure/audit/audit.service';
+import { AuditExceptionFilter } from 'src/infrastructure/audit/audit-exception.filter';
+import { auditContextMiddleware } from 'src/infrastructure/audit/audit-context';
+import { Session } from 'express-session';
 import {
   Controller,
   Get,
@@ -48,6 +53,8 @@ describe('two-step login HTTP flows', () => {
   let app: NestExpressApplication;
   let account: UserEntity;
   let limits: Map<string, number>;
+  let rejectLoginAudit = false;
+  let auditEvents: { eventType: string }[] = [];
   const revokeSessions = jest.fn().mockResolvedValue([]);
   const originalKey = process.env.TWO_FACTOR_ENCRYPTION_KEY;
   const originalNodeEnv = process.env.NODE_ENV;
@@ -88,12 +95,29 @@ describe('two-step login HTTP flows', () => {
       transaction: async <T>(
         callback: (manager: {
           getRepository: () => typeof repository;
-          query: typeof revokeSessions;
+          query: (sql: string, params: unknown[]) => Promise<unknown>;
+          queryRunner: { isTransactionActive: boolean };
+          insert: (
+            target: unknown,
+            event: { eventType: string },
+          ) => Promise<void>;
         }) => Promise<T>,
       ) =>
         callback({
           getRepository: () => repository,
-          query: revokeSessions,
+          query: (sql: string, params: unknown[]) => {
+            if (sql.startsWith('UPDATE "user" SET "twoFactorVersion"'))
+              account.twoFactorVersion = (params[1] as string) || null;
+            else return Promise.resolve(revokeSessions(sql, params));
+            return Promise.resolve();
+          },
+          queryRunner: { isTransactionActive: true },
+          insert: (_target: unknown, event: { eventType: string }) => {
+            if (rejectLoginAudit && event.eventType === 'auth.login_succeeded')
+              return Promise.reject(new Error('audit unavailable'));
+            auditEvents.push(event);
+            return Promise.resolve();
+          },
         }),
     };
     const module = await Test.createTestingModule({
@@ -104,6 +128,8 @@ describe('two-step login HTTP flows', () => {
         ProtectedAdminController,
       ],
       providers: [
+        AuditService,
+        { provide: APP_FILTER, useClass: AuditExceptionFilter },
         LocalStrategy,
         UserSerializer,
         TwoFactorService,
@@ -154,7 +180,11 @@ describe('two-step login HTTP flows', () => {
       ],
     }).compile();
     app = module.createNestApplication<NestExpressApplication>();
-    app.use(...sessionMiddlewares(database as unknown as DataSource), flash());
+    app.use(
+      auditContextMiddleware,
+      ...sessionMiddlewares(database as unknown as DataSource),
+      flash(),
+    );
     app.useGlobalPipes(createValidationPipe());
     configureViewEngine(app);
     await app.listen(0, '127.0.0.1');
@@ -165,6 +195,8 @@ describe('two-step login HTTP flows', () => {
     delete process.env.TWO_FACTOR_DISABLED;
     process.env.TWO_FACTOR_ENCRYPTION_KEY = 'ab'.repeat(32);
     limits = new Map();
+    rejectLoginAudit = false;
+    auditEvents = [];
     revokeSessions.mockClear();
     account = Object.assign(new UserEntity('admin@example.test', 'unused'), {
       id: '11111111-1111-4111-8111-111111111111',
@@ -194,6 +226,125 @@ describe('two-step login HTTP flows', () => {
     password: 'correct-password',
   };
   const otp = () => totpAtStep(secret, Math.floor(Date.now() / 30_000));
+
+  it('records login only after the second factor and leaves no authenticated session if that audit fails', async () => {
+    const agent = request.agent(app.getHttpServer());
+    await agent.post('/api/portal/auth/login').send(credentials).expect(200);
+    expect(
+      auditEvents.some((event) => event.eventType === 'auth.login_succeeded'),
+    ).toBe(false);
+    rejectLoginAudit = true;
+    await agent
+      .post('/api/portal/auth/two-factor')
+      .send({ code: otp() })
+      .expect(500);
+    rejectLoginAudit = false;
+    await agent.get('/api/portal/auth/me').expect(401);
+    await agent.get('/').expect(403);
+    expect(
+      auditEvents.some((event) => event.eventType === 'auth.login_succeeded'),
+    ).toBe(false);
+  });
+
+  it('keeps the legacy login failure redirect working after audit compensation destroys the session', async () => {
+    const agent = request.agent(app.getHttpServer());
+    await agent.post('/auth/login').type('form').send(credentials).expect(303);
+    rejectLoginAudit = true;
+    await agent
+      .post('/auth/two-factor')
+      .type('form')
+      .send({ code: otp() })
+      .expect(303)
+      .expect('Location', '/auth/login');
+    rejectLoginAudit = false;
+    await agent.get('/').expect(403);
+  });
+
+  it.each(['portal', 'legacy'])(
+    'does not authenticate after a transient Passport session save failure (%s)',
+    async (flow) => {
+      const agent = request.agent(app.getHttpServer());
+      if (flow === 'portal')
+        await agent
+          .post('/api/portal/auth/login')
+          .send(credentials)
+          .expect(200);
+      else
+        await agent
+          .post('/auth/login')
+          .type('form')
+          .send(credentials)
+          .expect(303);
+      // The original method is invoked below with its explicit session receiver.
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      const save = Session.prototype.save;
+      let failed = false;
+      const fault = jest
+        .spyOn(Session.prototype, 'save')
+        .mockImplementation(function (
+          this: Session & { passport?: { user?: string } },
+          callback,
+        ) {
+          if (!failed && this.passport?.user === account.id) {
+            failed = true;
+            callback?.(new Error('temporary session save failure'));
+            return this;
+          }
+          return save.call(this, callback);
+        });
+      try {
+        if (flow === 'portal')
+          await agent
+            .post('/api/portal/auth/two-factor')
+            .send({ code: otp() })
+            .expect(500);
+        else
+          await agent
+            .post('/auth/two-factor')
+            .type('form')
+            .send({ code: otp() })
+            .expect(303)
+            .expect('Location', '/auth/login');
+        expect(failed).toBe(true);
+        await agent.get('/api/portal/auth/me').expect(401);
+        await agent.get('/').expect(403);
+        expect(
+          auditEvents.some(
+            (event) => event.eventType === 'auth.login_succeeded',
+          ),
+        ).toBe(false);
+      } finally {
+        fault.mockRestore();
+      }
+    },
+  );
+
+  it('does not turn routine auth probes into login failures, but records a rejected login', async () => {
+    const agent = request.agent(app.getHttpServer());
+    await agent.get('/api/portal/auth/me').expect(401);
+    await agent.get('/api/portal/auth/two-factor').expect(401);
+    expect(auditEvents).toHaveLength(0);
+    await agent
+      .post('/api/portal/auth/login')
+      .send({ ...credentials, password: 'wrong' })
+      .expect(401);
+    expect(auditEvents.map((event) => event.eventType)).toEqual([
+      'auth.login_failed',
+    ]);
+  });
+
+  it('records a failed legacy OTP attempt even though the response is a redirect', async () => {
+    const agent = request.agent(app.getHttpServer());
+    await agent.post('/auth/login').type('form').send(credentials).expect(303);
+    await agent
+      .post('/auth/two-factor')
+      .type('form')
+      .send({ code: 'wrong' })
+      .expect(303);
+    expect(auditEvents.map((event) => event.eventType)).toEqual([
+      'auth.login_failed',
+    ]);
+  });
 
   it('limits unenrolled admins to portal enrollment while admin login stays blocked', async () => {
     account.twoFactorVersion = null;

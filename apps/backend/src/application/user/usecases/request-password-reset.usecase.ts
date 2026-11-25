@@ -1,3 +1,8 @@
+import { inAuditTransaction } from 'src/infrastructure/audit/audited-write';
+import {
+  AuditService,
+  recordAudit,
+} from 'src/infrastructure/audit/audit.service';
 import { Inject, Injectable } from '@nestjs/common';
 import { randomBytes } from 'crypto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -25,6 +30,9 @@ export class RequestPasswordResetUsecase {
     );
 
     if (!user || !user.isActive) {
+      await new AuditService(
+        this.resetTokenRepository.manager.connection,
+      ).record({ type: 'account.password_reset_requested' });
       return;
     }
 
@@ -32,12 +40,24 @@ export class RequestPasswordResetUsecase {
 
     const rawToken = randomBytes(32).toString('base64url');
 
-    await this.resetTokenRepository.save(
-      new UserPasswordResetTokenEntity(
-        hashResetToken(rawToken),
-        new Date(Date.now() + 1000 * 60 * 60),
-        user.id,
-      ),
+    await inAuditTransaction(
+      this.resetTokenRepository.manager,
+      async (manager) => {
+        await manager
+          .getRepository(UserPasswordResetTokenEntity)
+          .save(
+            new UserPasswordResetTokenEntity(
+              hashResetToken(rawToken),
+              new Date(Date.now() + 1000 * 60 * 60),
+              user.id,
+            ),
+          );
+        await recordAudit(manager, {
+          type: 'account.password_reset_requested',
+          targetType: 'account',
+          targetId: user.id,
+        });
+      },
     );
 
     const portalUrl = process.env.OFS_PORTAL_URL;

@@ -1,3 +1,5 @@
+import { AuditService } from 'src/infrastructure/audit/audit.service';
+import { DataSource } from 'typeorm';
 import {
   Body,
   Controller,
@@ -37,6 +39,7 @@ import { DisableTwoFactorDto } from '../dtos/disable-two-factor.dto';
 @Controller('/api/portal/auth')
 export class PortalAuthController {
   constructor(
+    private readonly auditDatabase: DataSource,
     private readonly loginUsecase: LoginUsecase,
     private readonly twoFactor: TwoFactorService,
     private readonly requestPasswordResetUsecase: RequestPasswordResetUsecase,
@@ -226,6 +229,15 @@ export class PortalAuthController {
 
     await new Promise<void>((resolve) => {
       req.session.destroy(() => resolve());
+    });
+
+    await new AuditService(this.auditDatabase).attempt({
+      type: 'auth.logout',
+      targetType: 'account',
+      targetId: user?.id,
+      actor: user?.id
+        ? { kind: 'user', id: user.id, roles: user.roles }
+        : { kind: 'anonymous' },
     });
 
     res.clearCookie(cookieName, {

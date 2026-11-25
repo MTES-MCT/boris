@@ -1,3 +1,6 @@
+import { AuditService } from 'src/infrastructure/audit/audit.service';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { OfsEntity } from 'src/infrastructure/ofs/ofs.entity';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { Server } from 'node:http';
@@ -13,10 +16,15 @@ describe('commercialisateur contact filter HTTP validation', () => {
   const repository = { findPortalContactsByDistributorScope: jest.fn() };
 
   beforeEach(async () => {
+    jest.spyOn(AuditService.prototype, 'record').mockResolvedValue(undefined);
     repository.findPortalContactsByDistributorScope.mockResolvedValue([[], 0]);
     const module = await Test.createTestingModule({
       controllers: [PortalOfssController],
       providers: [
+        {
+          provide: getRepositoryToken(OfsEntity),
+          useValue: { manager: { connection: {} } },
+        },
         { provide: EligibilitySimulationRepository, useValue: repository },
       ],
     })

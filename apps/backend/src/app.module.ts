@@ -1,3 +1,6 @@
+import { AuditModule } from './infrastructure/audit/audit.module';
+import { AuditExceptionFilter } from './infrastructure/audit/audit-exception.filter';
+import { auditContextMiddleware } from './infrastructure/audit/audit-context';
 import { InvitationModule } from './infrastructure/invitation/invitation.module';
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
@@ -30,6 +33,7 @@ import * as methodOverride from 'method-override';
 
 @Module({
   imports: [
+    AuditModule,
     SentryModule.forRoot(),
     TypeOrmModule.forRoot(typeormConfig),
     ScheduleModule.forRoot(),
@@ -87,6 +91,7 @@ import * as methodOverride from 'method-override';
       provide: APP_FILTER,
       useClass: SentryGlobalFilter,
     },
+    { provide: APP_FILTER, useClass: AuditExceptionFilter },
   ],
 })
 export class AppModule implements NestModule {
@@ -95,6 +100,7 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(
+        auditContextMiddleware,
         ...sessionMiddlewares(this.dataSource),
         flash(),
         methodOverride('_method'),
