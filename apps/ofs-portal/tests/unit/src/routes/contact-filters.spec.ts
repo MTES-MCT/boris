@@ -70,4 +70,33 @@ describe("OFS contact filters", () => {
     );
     expect(await response.text()).toBe("date,contact\n");
   });
+
+  it("forwards Excel format, filters and dates and preserves the binary download", async () => {
+    const content = new Uint8Array([80, 75, 3, 4, 0, 255, 128]);
+    const contentType =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    const disposition = 'attachment; filename="simulations.xlsx"';
+    vi.mocked(backendFetch).mockResolvedValueOnce(
+      new Response(content, {
+        headers: {
+          "content-type": contentType,
+          "content-disposition": disposition,
+        },
+      }),
+    );
+    const query =
+      "format=xlsx&location=01&contact=mart&startDate=2026-01-01&endDate=2026-11-25";
+    const event = {
+      params: { id: "ofs-1" },
+      url: new URL(`http://portal.test/ofs/ofs-1/simulations/export?${query}`),
+    };
+    const response = await GET(event as unknown as Parameters<typeof GET>[0]);
+    expect(backendFetch).toHaveBeenCalledWith(
+      event,
+      `/api/portal/ofss/ofs-1/eligibility-simulations/export?${query}`,
+    );
+    expect(response.headers.get("content-type")).toBe(contentType);
+    expect(response.headers.get("content-disposition")).toBe(disposition);
+    expect(new Uint8Array(await response.arrayBuffer())).toEqual(content);
+  });
 });

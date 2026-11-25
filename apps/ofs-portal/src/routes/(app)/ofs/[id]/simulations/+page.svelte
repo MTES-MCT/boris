@@ -91,6 +91,7 @@
   let startDate = $state("");
   let endDate = $state("");
   let exportError = $state("");
+  let exportFormat = $state("csv");
 
   $effect(() => {
     items = groupContacts(data.contacts.items);
@@ -228,7 +229,7 @@
       type="button"
       onclick={openExportDialog}
     >
-      Exporter en CSV
+      Exporter
     </button>
   </div>
 </div>
@@ -246,6 +247,19 @@
     <input type="hidden" name="location" value={data.filters.location} />
     <input type="hidden" name="contact" value={data.filters.contact} />
     <h2 class="fr-h5 fr-mb-2w" id="export-dialog-title">Exporter des lignes</h2>
+
+    <div class="fr-select-group fr-mb-2w">
+      <label class="fr-label" for="export-format">Format du fichier</label>
+      <select
+        id="export-format"
+        class="fr-select"
+        name="format"
+        bind:value={exportFormat}
+      >
+        <option value="csv">CSV (.csv)</option>
+        <option value="xlsx">Excel (.xlsx)</option>
+      </select>
+    </div>
 
     <div class="fr-input-group fr-mb-2w">
       <label class="fr-label" for="export-start-date">Date de début</label>
@@ -280,7 +294,11 @@
     {/if}
 
     <div class="export-dialog__actions">
-      <button class="fr-btn" type="submit">Télécharger le CSV</button>
+      <button class="fr-btn" type="submit">
+        {exportFormat === "xlsx"
+          ? "Télécharger le fichier Excel"
+          : "Télécharger le CSV"}
+      </button>
       <button
         class="fr-btn fr-btn--secondary"
         type="button"

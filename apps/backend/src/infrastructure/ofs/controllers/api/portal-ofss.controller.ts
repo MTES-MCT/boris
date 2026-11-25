@@ -15,6 +15,7 @@ import {
 import { ApiExcludeController } from '@nestjs/swagger';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Request, Response } from 'express';
+import { Workbook } from 'exceljs';
 import { Repository } from 'typeorm';
 import { UserRole } from 'src/domain/user/user-role.enum';
 import { PortalApiAuthenticatedGuard } from 'src/infrastructure/auth/guards/portal-api-authenticated.guard';
@@ -368,15 +369,22 @@ export class PortalOfssController {
       contact: filters.contact,
       ...validatedDates,
     });
-    const csv = this.buildCsv(lines);
+    const format = filters.format || 'csv';
+    const filename = `simulations-${ofs.id}-${validatedDates.startDate}-${validatedDates.endDate}.${format}`;
+    const content =
+      format === 'xlsx'
+        ? await this.buildExcel(lines)
+        : Buffer.from(this.buildCsv(lines), 'utf-8');
 
-    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
     res.setHeader(
-      'Content-Disposition',
-      `attachment; filename="simulations-${ofs.id}-${validatedDates.startDate}-${validatedDates.endDate}.csv"`,
+      'Content-Type',
+      format === 'xlsx'
+        ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        : 'text/csv; charset=utf-8',
     );
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
 
-    return res.send(Buffer.from(csv, 'utf-8'));
+    return res.send(content);
   }
 
   @UseGuards(PortalApiAuthenticatedGuard)
@@ -625,10 +633,10 @@ export class PortalOfssController {
     return { startDate, endDate };
   }
 
-  private buildCsv(
+  private buildExportRows(
     lines: Awaited<ReturnType<ExportPortalContactLinesUsecase['execute']>>,
   ) {
-    const rows = [
+    return [
       [
         'date',
         'contact',
@@ -660,8 +668,22 @@ export class PortalOfssController {
         line.resources?.toString() || '',
       ]),
     ];
+  }
 
-    return `${rows
+  private async buildExcel(
+    lines: Awaited<ReturnType<ExportPortalContactLinesUsecase['execute']>>,
+  ) {
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet('Simulations');
+    worksheet.addRows(this.buildExportRows(lines));
+
+    return Buffer.from(await workbook.xlsx.writeBuffer());
+  }
+
+  private buildCsv(
+    lines: Awaited<ReturnType<ExportPortalContactLinesUsecase['execute']>>,
+  ) {
+    return `${this.buildExportRows(lines)
       .map((row) => row.map((cell) => this.escapeCsvValue(cell)).join(','))
       .join('\n')}\n`;
   }

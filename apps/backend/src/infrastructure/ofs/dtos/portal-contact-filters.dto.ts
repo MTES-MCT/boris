@@ -1,4 +1,10 @@
-import { IsDateString, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+  IsDateString,
+  IsIn,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import { PaginationDTO } from 'src/infrastructure/common/dtos/pagination.dto';
 
 export class PortalContactFiltersDto extends PaginationDTO {
@@ -18,6 +24,10 @@ export class DistributorPortalContactFiltersDto extends PaginationDTO {
 }
 
 export class ExportPortalContactFiltersDto {
+  @IsOptional()
+  @IsIn(['csv', 'xlsx'])
+  public format?: 'csv' | 'xlsx';
+
   @IsOptional()
   @IsString()
   public location?: string;
