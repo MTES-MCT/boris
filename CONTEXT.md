@@ -121,3 +121,10 @@ _Avoid_: Suivi OFS, statut OFS
 - Invitations expire after seven days. Pending and expired invitations can be resent or cancelled. Resending renews expiry and invalidates the previous link. Accepted and cancelled invitations cannot be reused.
 - OFS colleague invitations cannot create mixed roles, reactivate disabled accounts or attach administrator or commercialisateur accounts.
 - Removing OFS membership remains a platform support operation. The team page exposes no removal or account deletion action.
+
+## Double authentification
+
+- Admins, **Comptes OFS** and **Comptes commercialisateur** share enrollment in the OFS portal under **Mon compte**.
+- Admins without a configured authenticator must enroll after password verification before accessing protected portal data; OFS and commercialisateur accounts opt in.
+- Enrollment requires the current password, a QR code or manual TOTP key, and a valid six-digit OTP before activation. The pending key expires after five minutes.
+- Activation displays ten single-use recovery codes once, with copy and download actions and confirmation that they have been saved. OFS and commercialisateur accounts can disable 2FA after confirming their password and a fresh OTP; all sessions and recovery codes are invalidated. Admins cannot disable 2FA, enforced both in the UI and backend. Existing authenticators cannot be replaced directly; operational recovery remains an administration support process.

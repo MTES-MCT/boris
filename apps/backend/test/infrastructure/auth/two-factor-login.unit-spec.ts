@@ -48,6 +48,7 @@ describe('two-step login HTTP flows', () => {
   let app: NestExpressApplication;
   let account: UserEntity;
   let limits: Map<string, number>;
+  const revokeSessions = jest.fn().mockResolvedValue([]);
   const originalKey = process.env.TWO_FACTOR_ENCRYPTION_KEY;
   const originalNodeEnv = process.env.NODE_ENV;
   const originalDisabled = process.env.TWO_FACTOR_DISABLED;
@@ -87,8 +88,13 @@ describe('two-step login HTTP flows', () => {
       transaction: async <T>(
         callback: (manager: {
           getRepository: () => typeof repository;
+          query: typeof revokeSessions;
         }) => Promise<T>,
-      ) => callback({ getRepository: () => repository }),
+      ) =>
+        callback({
+          getRepository: () => repository,
+          query: revokeSessions,
+        }),
     };
     const module = await Test.createTestingModule({
       imports: [PassportModule.register({ session: true })],
@@ -139,7 +145,12 @@ describe('two-step login HTTP flows', () => {
           ResetPasswordWithTokenUsecase,
           ChangePasswordUsecase,
           UserSessionService,
-        ].map((provide) => ({ provide, useValue: {} })),
+        ].map((provide) => ({
+          provide,
+          useValue: {
+            destroyAllForUserId: jest.fn().mockResolvedValue(undefined),
+          },
+        })),
       ],
     }).compile();
     app = module.createNestApplication<NestExpressApplication>();
@@ -154,6 +165,7 @@ describe('two-step login HTTP flows', () => {
     delete process.env.TWO_FACTOR_DISABLED;
     process.env.TWO_FACTOR_ENCRYPTION_KEY = 'ab'.repeat(32);
     limits = new Map();
+    revokeSessions.mockClear();
     account = Object.assign(new UserEntity('admin@example.test', 'unused'), {
       id: '11111111-1111-4111-8111-111111111111',
       twoFactorVersion: '22222222-2222-4222-8222-222222222222',
@@ -183,10 +195,16 @@ describe('two-step login HTTP flows', () => {
   };
   const otp = () => totpAtStep(secret, Math.floor(Date.now() / 30_000));
 
-  it('blocks admins without a provisioned secret on both entry points', async () => {
+  it('limits unenrolled admins to portal enrollment while admin login stays blocked', async () => {
     account.twoFactorVersion = null;
     const agent = request.agent(app.getHttpServer());
-    await agent.post('/api/portal/auth/login').send(credentials).expect(403);
+    const response = await agent
+      .post('/api/portal/auth/login')
+      .send(credentials)
+      .expect(200);
+    expect(response.body).toEqual({ enrollmentRequired: true });
+    await agent.get('/api/portal/auth/two-factor/enrollment').expect(200);
+    await agent.get('/api/portal/auth/me').expect(401);
     await agent
       .post('/auth/login')
       .type('form')
@@ -195,6 +213,195 @@ describe('two-step login HTTP flows', () => {
       .expect('Location', '/auth/login');
     await agent.get('/api/portal/auth/me').expect(401);
     await agent.get('/').expect(403);
+  });
+
+  it.each([UserRole.ADMIN, UserRole.OFS, UserRole.DISTRIBUTOR])(
+    'enrolls %s only after proof and returns recovery codes once',
+    async (role) => {
+      account.roles = [role];
+      account.twoFactorVersion = null;
+      account.twoFactorSecret = null;
+      account.ofss = [{ id: 'ofs' }] as UserEntity['ofss'];
+      account.distributor = { id: 'distributor' } as UserEntity['distributor'];
+      const agent = request.agent(app.getHttpServer());
+      await agent
+        .post('/api/portal/auth/login')
+        .send(credentials)
+        .expect(role === UserRole.ADMIN ? 200 : 204);
+      await agent
+        .post('/api/portal/auth/two-factor/enrollment')
+        .send({ currentPassword: 'wrong' })
+        .expect(401);
+      const started = await agent
+        .post('/api/portal/auth/two-factor/enrollment')
+        .send({ currentPassword: credentials.password })
+        .expect(200);
+      expect(started.body.secret).toMatch(/^[A-Z2-7]{32}$/);
+      expect(started.headers['cache-control']).toBe('no-store');
+      expect(account.twoFactorVersion).toBeNull();
+      expect(
+        (await agent.get('/api/portal/auth/two-factor/enrollment').expect(200))
+          .body.secret,
+      ).toBe(started.body.secret);
+      await agent
+        .post('/api/portal/auth/two-factor/enrollment/confirm')
+        .send({ code: 'wrong' })
+        .expect(400);
+      expect(account.twoFactorVersion).toBeNull();
+      const code = totpAtStep(
+        started.body.secret,
+        Math.floor(Date.now() / 30_000),
+      );
+      const completed = await agent
+        .post('/api/portal/auth/two-factor/enrollment/confirm')
+        .send({ code })
+        .expect(200);
+      expect(completed.body.recoveryCodes).toHaveLength(10);
+      expect(account.twoFactorRecoveryCodes).toEqual(
+        completed.body.recoveryCodes.map(hashRecoveryCode),
+      );
+      await agent.get('/api/portal/auth/me').expect(200);
+      const status = await agent
+        .get('/api/portal/auth/two-factor/enrollment')
+        .expect(200);
+      expect(status.body).toMatchObject({
+        enabled: true,
+        secret: null,
+        uri: null,
+      });
+      expect(status.body.recoveryCodes).toBeUndefined();
+      await agent
+        .post('/api/portal/auth/two-factor/enrollment/confirm')
+        .send({ code })
+        .expect(400);
+      const other = request.agent(app.getHttpServer());
+      await other.post('/api/portal/auth/login').send(credentials).expect(200);
+      await other.get('/api/portal/auth/me').expect(401);
+      await other
+        .post('/api/portal/auth/two-factor')
+        .send({ code })
+        .expect(400);
+      await other
+        .post('/api/portal/auth/two-factor')
+        .send({ code: completed.body.recoveryCodes[0] })
+        .expect(204);
+    },
+  );
+
+  it('rejects anonymous setup, expires pending secrets and never replaces enabled credentials', async () => {
+    const anonymous = request.agent(app.getHttpServer());
+    await anonymous.get('/api/portal/auth/two-factor/enrollment').expect(401);
+    await anonymous
+      .post('/api/portal/auth/two-factor/enrollment/confirm')
+      .send({ code: otp() })
+      .expect(401);
+    account.roles = [UserRole.OFS];
+    account.ofss = [{ id: 'ofs' }] as UserEntity['ofss'];
+    account.twoFactorVersion = null;
+    const agent = request.agent(app.getHttpServer());
+    await agent.post('/api/portal/auth/login').send(credentials).expect(204);
+    const begin = () =>
+      agent
+        .post('/api/portal/auth/two-factor/enrollment')
+        .send({ currentPassword: credentials.password });
+    const first = await begin().expect(200);
+    await agent
+      .post('/api/portal/auth/two-factor/enrollment/cancel')
+      .expect(204);
+    expect(
+      (await agent.get('/api/portal/auth/two-factor/enrollment')).body.secret,
+    ).toBeNull();
+    const second = await begin().expect(200);
+    expect(second.body.secret).not.toBe(first.body.secret);
+    const clock = jest
+      .spyOn(Date, 'now')
+      .mockReturnValue(Date.now() + 6 * 60_000);
+    try {
+      await agent
+        .post('/api/portal/auth/two-factor/enrollment/confirm')
+        .send({
+          code: totpAtStep(second.body.secret, Math.floor(Date.now() / 30_000)),
+        })
+        .expect(400);
+      expect(account.twoFactorVersion).toBeNull();
+    } finally {
+      clock.mockRestore();
+    }
+    account.twoFactorVersion = 'already-enabled';
+    process.env.TWO_FACTOR_DISABLED = 'true';
+    await begin().expect(400);
+    expect(account.twoFactorVersion).toBe('already-enabled');
+  });
+
+  it.each([UserRole.OFS, UserRole.DISTRIBUTOR])(
+    'allows %s to disable with a password and a fresh OTP, then requires login again',
+    async (role) => {
+      account.roles = [role];
+      account.ofss = [{ id: 'ofs' }] as UserEntity['ofss'];
+      account.distributor = { id: 'distributor' } as UserEntity['distributor'];
+      const agent = request.agent(app.getHttpServer());
+      await agent.post('/api/portal/auth/login').send(credentials).expect(200);
+      await agent
+        .post('/api/portal/auth/two-factor')
+        .send({ code: recovery })
+        .expect(204);
+      expect(
+        (await agent.get('/api/portal/auth/two-factor/enrollment')).body
+          .canDisable,
+      ).toBe(true);
+      await agent
+        .post('/api/portal/auth/two-factor/disable')
+        .send({ currentPassword: 'wrong', code: otp() })
+        .expect(401);
+      await agent
+        .post('/api/portal/auth/two-factor/disable')
+        .send({
+          currentPassword: credentials.password,
+          code: '000000' === otp() ? '111111' : '000000',
+        })
+        .expect(400);
+      expect(account.twoFactorVersion).not.toBeNull();
+      await agent
+        .post('/api/portal/auth/two-factor/disable')
+        .send({ currentPassword: credentials.password, code: otp() })
+        .expect(204);
+      expect(account.twoFactorVersion).toBeNull();
+      expect(account.twoFactorSecret).toBeNull();
+      expect(revokeSessions).toHaveBeenCalledWith(
+        expect.stringContaining('DELETE FROM "session"'),
+        [account.id],
+      );
+      expect(account.twoFactorRecoveryCodes).toEqual([]);
+      await agent.get('/api/portal/auth/me').expect(401);
+      await agent.post('/api/portal/auth/login').send(credentials).expect(204);
+      await agent.get('/api/portal/auth/me').expect(200);
+    },
+  );
+
+  it('forbids admin disable requests even during the global bypass', async () => {
+    const agent = request.agent(app.getHttpServer());
+    await agent.post('/api/portal/auth/login').send(credentials).expect(200);
+    await agent
+      .post('/api/portal/auth/two-factor')
+      .send({ code: recovery })
+      .expect(204);
+    expect(
+      (await agent.get('/api/portal/auth/two-factor/enrollment')).body
+        .canDisable,
+    ).toBe(false);
+    const disable = () =>
+      agent
+        .post('/api/portal/auth/two-factor/disable')
+        .send({ currentPassword: credentials.password, code: otp() });
+    await disable().expect(403);
+    process.env.TWO_FACTOR_DISABLED = 'true';
+    await disable().expect(403);
+    expect(account.twoFactorVersion).not.toBeNull();
+    const anonymous = request.agent(app.getHttpServer());
+    await anonymous
+      .post('/api/portal/auth/two-factor/disable')
+      .send({ currentPassword: credentials.password, code: otp() })
+      .expect(401);
   });
 
   it('requires the second step before granting portal or admin access and changes the session cookie', async () => {

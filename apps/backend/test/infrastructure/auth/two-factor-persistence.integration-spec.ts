@@ -149,6 +149,46 @@ describeDatabase('2FA PostgreSQL persistence', () => {
     },
   );
 
+  it('activates only one of two concurrent enrollment attempts', async () => {
+    await db.getRepository(UserEntity).update(user.id, {
+      twoFactorVersion: null,
+      twoFactorSecret: null,
+      twoFactorRecoveryCodes: [],
+    });
+    const enrollmentRequest = () => {
+      const req = pendingRequest();
+      delete req.session.pendingTwoFactor;
+      req.session.pendingTwoFactorEnrollmentLogin = {
+        userId: user.id,
+        expiresAt: Date.now() + 60_000,
+      };
+      return req;
+    };
+    const first = enrollmentRequest();
+    const second = enrollmentRequest();
+    const firstSetup = await service.beginEnrollment(first);
+    const secondSetup = await service.beginEnrollment(second);
+    const step = Math.floor(Date.now() / 30_000);
+    const results = await Promise.allSettled([
+      service.confirmEnrollment(first, totpAtStep(firstSetup.secret!, step)),
+      service.confirmEnrollment(second, totpAtStep(secondSetup.secret!, step)),
+    ]);
+    const successes = results.filter((result) => result.status === 'fulfilled');
+    expect(successes).toHaveLength(1);
+    expect(
+      results.filter((result) => result.status === 'rejected'),
+    ).toHaveLength(1);
+    const stored = await db
+      .getRepository(UserEntity)
+      .createQueryBuilder('user')
+      .addSelect('user.twoFactorRecoveryCodes')
+      .where('user.id = :id', { id: user.id })
+      .getOneOrFail();
+    expect(stored.twoFactorRecoveryCodes).toEqual(
+      successes[0].value.recoveryCodes.map(hashRecoveryCode),
+    );
+  });
+
   it('revokes pending and authenticated sessions while keeping other accounts intact', async () => {
     const sessions = db.getRepository(SessionEntity);
     await sessions.save([
@@ -156,6 +196,13 @@ describeDatabase('2FA PostgreSQL persistence', () => {
         id: 'pending',
         expiredAt: Date.now() + 60_000,
         json: JSON.stringify({ pendingTwoFactor: { userId: user.id } }),
+      },
+      {
+        id: 'enrollment',
+        expiredAt: Date.now() + 60_000,
+        json: JSON.stringify({
+          pendingTwoFactorEnrollmentLogin: { userId: user.id },
+        }),
       },
       {
         id: 'authenticated',

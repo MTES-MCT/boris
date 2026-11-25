@@ -9,6 +9,9 @@ export const load: ServerLoad = async (event) => {
   const response = await backendFetch(event, "/api/portal/lead-notifications");
 
   return {
+    twoFactor: await readJson<{ enabled: boolean; canDisable: boolean }>(
+      await backendFetch(event, "/api/portal/auth/two-factor/enrollment"),
+    ),
     accountEmail: user!.email,
     accountName: await readJson<{
       firstName: string | null;
@@ -26,6 +29,38 @@ export const load: ServerLoad = async (event) => {
 };
 
 export const actions: Actions = {
+  disableTwoFactor: async (event) => {
+    requirePortalUser(await getPortalUser(event), event.url.pathname);
+    const data = await event.request.formData();
+    const response = await backendFetch(
+      event,
+      "/api/portal/auth/two-factor/disable",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          currentPassword: String(data.get("currentPassword") || ""),
+          code: String(data.get("code") || ""),
+        }),
+      },
+      { preserveSessionOnUnauthorized: true },
+    );
+    if (!response.ok)
+      return fail(response.status, {
+        twoFactorError:
+          response.status === 403
+            ? "La double authentification est obligatoire pour les administrateurs."
+            : response.status === 429
+              ? "Trop de tentatives. Réessayez dans 15 minutes."
+              : "Désactivation impossible. Vérifiez votre mot de passe et utilisez un nouveau code de votre application.",
+      });
+    setFlash(event.cookies, {
+      type: "success",
+      message:
+        "La double authentification a été désactivée. Reconnectez-vous avec votre mot de passe.",
+    });
+    throw redirect(303, "/connexion");
+  },
   name: async (event) => {
     requirePortalUser(await getPortalUser(event), event.url.pathname);
     const data = await event.request.formData();

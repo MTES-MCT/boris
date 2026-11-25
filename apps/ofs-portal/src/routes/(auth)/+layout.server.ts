@@ -5,7 +5,8 @@ import { getPortalUser, resolvePortalEntry } from "$lib/server/auth";
 export const load: ServerLoad = async (event) => {
   const user = await getPortalUser(event);
 
-  if (user) {
+  // Signed-in accounts also use setup; keep recovery codes visible after activation.
+  if (user && event.url.pathname !== "/configuration-double-authentification") {
     throw redirect(303, resolvePortalEntry(user));
   }
 

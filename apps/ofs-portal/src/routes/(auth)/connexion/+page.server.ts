@@ -32,7 +32,7 @@ export const actions: Actions = {
         const body = await response.json().catch(() => null);
         message =
           body?.message === "TWO_FACTOR_NOT_CONFIGURED"
-            ? "La double authentification doit être configurée. Contactez l’administration pour obtenir votre clé de configuration."
+            ? "La double authentification doit être configurée. Connectez-vous à l’espace OFS pour configurer votre application d’authentification."
             : "La connexion a été refusée. Vérifiez la configuration d'accès du portail.";
       } else if (response.status === 429) {
         message = "Trop de tentatives de connexion. Réessayez plus tard.";
@@ -45,11 +45,15 @@ export const actions: Actions = {
       });
     }
 
-    if (response.status === 200 && (await response.json()).twoFactorRequired) {
+    if (response.status === 200) {
+      const challenge = await response.json();
       const target = isSafePortalReturnTo(returnTo)
         ? `?returnTo=${encodeURIComponent(returnTo)}`
         : "";
-      throw redirect(303, `/double-authentification${target}`);
+      throw redirect(
+        303,
+        `${challenge.enrollmentRequired ? "/configuration-double-authentification" : "/double-authentification"}${target}`,
+      );
     }
 
     throw redirect(303, isSafePortalReturnTo(returnTo) ? returnTo : "/");

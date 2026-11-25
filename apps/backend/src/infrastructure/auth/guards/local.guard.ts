@@ -52,7 +52,7 @@ export class LocalAuthGuard extends AuthGuard('local') {
       (req as RequestWithFlash).flash(
         translations.error.defaultLabel,
         e instanceof ForbiddenException
-          ? 'La double authentification doit être configurée. Contactez l’administration pour obtenir votre clé de configuration.'
+          ? 'La double authentification doit être configurée. Connectez-vous à l’espace OFS pour configurer votre application d’authentification.'
           : translations.error.login.invalidCredentials,
       );
 

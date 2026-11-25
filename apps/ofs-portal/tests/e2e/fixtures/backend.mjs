@@ -22,14 +22,123 @@ http
     }
     let data;
     let status = 200;
+    const setup = "/api/portal/auth/two-factor/enrollment";
+    const enabled = req.headers.cookie?.includes("setup-enabled=1");
+    const setupPending = req.headers.cookie?.includes("setup-pending=1");
+    const enrollmentLogin = req.headers.cookie?.includes(
+      "boris.sid=enrollment",
+    );
+    if (path === "/api/portal/auth/two-factor/disable") {
+      if (!req.headers.cookie?.includes("setup-non-admin=1")) {
+        res.writeHead(403);
+        res.end();
+        return;
+      }
+      if (
+        body.currentPassword !== "correct-password" ||
+        body.code !== "654321"
+      ) {
+        res.writeHead(400);
+        res.end();
+        return;
+      }
+      res.setHeader("set-cookie", [
+        "setup-enabled=; Path=/; Max-Age=0",
+        "boris.sid=; Path=/; Max-Age=0",
+        "setup-signed-out=1; Path=/; HttpOnly",
+      ]);
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+    if (
+      path === "/api/portal/auth/me" &&
+      req.headers.cookie?.includes("setup-signed-out=1")
+    ) {
+      res.writeHead(401);
+      res.end();
+      return;
+    }
+    if (path.startsWith(setup)) {
+      if (
+        req.headers.cookie?.includes("two-factor-test=1") &&
+        !enrollmentLogin &&
+        !req.headers.cookie?.includes("boris.sid=verified")
+      ) {
+        res.writeHead(401);
+        res.end();
+        return;
+      }
+      const secret = "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ";
+      if (path === setup && req.method === "POST") {
+        if (body.currentPassword !== "correct-password") {
+          res.writeHead(401);
+          res.end();
+          return;
+        }
+        res.setHeader(
+          "set-cookie",
+          "setup-pending=1; Path=/; HttpOnly; SameSite=Strict",
+        );
+        data = {
+          enabled: false,
+          secret,
+          uri: `otpauth://totp/BoRiS:test?secret=${secret}&issuer=BoRiS`,
+          email: "test@example.test",
+        };
+      } else if (path.endsWith("/confirm")) {
+        if (!setupPending || body.code !== "123456") {
+          res.writeHead(400);
+          res.end(JSON.stringify({ message: "TWO_FACTOR_INVALID" }));
+          return;
+        }
+        res.setHeader("set-cookie", [
+          "setup-enabled=1; Path=/; HttpOnly; SameSite=Strict",
+          "boris.sid=verified; Path=/; HttpOnly; SameSite=Strict",
+        ]);
+        data = {
+          recoveryCodes: Array.from(
+            { length: 10 },
+            (_, i) =>
+              `${String(i).padStart(8, "0")}-abcdefab-12345678-abcdefab`,
+          ),
+        };
+      } else if (path.endsWith("/cancel")) {
+        res.setHeader("set-cookie", "setup-pending=; Path=/; Max-Age=0");
+        res.writeHead(204);
+        res.end();
+        return;
+      } else
+        data = {
+          enabled: !!enabled,
+          canDisable:
+            !!enabled && req.headers.cookie?.includes("setup-non-admin=1"),
+          secret: setupPending && !enabled ? secret : null,
+          uri:
+            setupPending && !enabled
+              ? `otpauth://totp/BoRiS:test?secret=${secret}&issuer=BoRiS`
+              : null,
+          email: "test@example.test",
+        };
+      res.writeHead(200, {
+        "content-type": "application/json",
+        "cache-control": "no-store",
+      });
+      res.end(JSON.stringify(data));
+      return;
+    }
     // Cookie-scoped auth fixtures keep existing always-authenticated UI tests intact.
     if (req.headers.cookie?.includes("two-factor-test=1")) {
       const pending = req.headers.cookie.includes("boris.sid=pending");
       const verified = req.headers.cookie.includes("boris.sid=verified");
       if (path === "/api/portal/auth/login") {
         if (body.email === "unprovisioned@example.test") {
-          res.writeHead(403, { "content-type": "application/json" });
-          res.end(JSON.stringify({ message: "TWO_FACTOR_NOT_CONFIGURED" }));
+          res.setHeader(
+            "set-cookie",
+            "boris.sid=enrollment; Path=/; HttpOnly; SameSite=Strict",
+          );
+          res.writeHead(200, { "content-type": "application/json" });
+          res.end(JSON.stringify({ enrollmentRequired: true }));
           return;
         }
         res.setHeader(
