@@ -8,7 +8,11 @@ describe('UserSessionService', () => {
       where: jest.fn().mockReturnThis(),
       getMany: jest
         .fn()
-        .mockResolvedValue([{ id: 'authenticated' }, { id: 'pending' }]),
+        .mockResolvedValue([
+          { id: 'authenticated' },
+          { id: 'pending' },
+          { id: 'enrollment' },
+        ]),
     };
     const repository = {
       createQueryBuilder: () => query,
@@ -21,10 +25,12 @@ describe('UserSessionService', () => {
     const [sql, params] = query.where.mock.calls[0];
     expect(sql).toContain("'{passport,user}'");
     expect(sql).toContain("'{pendingTwoFactor,userId}'");
+    expect(sql).toContain("'{pendingTwoFactorEnrollmentLogin,userId}'");
     expect(params).toEqual({ userId: 'admin-id' });
     expect(repository.delete).toHaveBeenCalledWith([
       'authenticated',
       'pending',
+      'enrollment',
     ]);
   });
 });

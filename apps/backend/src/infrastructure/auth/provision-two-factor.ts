@@ -53,7 +53,8 @@ async function run() {
       await manager.query(
         `DELETE FROM "session"
         WHERE json::jsonb #>> '{passport,user}' = $1
-           OR json::jsonb #>> '{pendingTwoFactor,userId}' = $1`,
+           OR json::jsonb #>> '{pendingTwoFactor,userId}' = $1
+           OR json::jsonb #>> '{pendingTwoFactorEnrollmentLogin,userId}' = $1`,
         [user.id],
       );
       return user;

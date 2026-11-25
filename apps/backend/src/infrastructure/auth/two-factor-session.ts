@@ -4,6 +4,8 @@ import { UserEntity } from '../user/user.entity';
 
 declare module 'express-session' {
   interface SessionData {
+    pendingTwoFactorEnrollmentLogin?: { userId: string; expiresAt: number };
+    twoFactorEnrollment?: { userId: string; secret: string; expiresAt: number };
     pendingTwoFactor?: { userId: string; version: string; expiresAt: number };
     twoFactorVerified?: { userId: string; version: string };
     previousLoginAt?: string | null;

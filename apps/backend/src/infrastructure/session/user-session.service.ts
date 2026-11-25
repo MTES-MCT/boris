@@ -15,7 +15,8 @@ export class UserSessionService {
       .createQueryBuilder('session')
       .where(
         `(session.json::jsonb #>> '{passport,user}' = :userId
-          OR session.json::jsonb #>> '{pendingTwoFactor,userId}' = :userId)`,
+          OR session.json::jsonb #>> '{pendingTwoFactor,userId}' = :userId
+          OR session.json::jsonb #>> '{pendingTwoFactorEnrollmentLogin,userId}' = :userId)`,
         { userId },
       )
       .getMany();

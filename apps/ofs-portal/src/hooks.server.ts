@@ -33,6 +33,11 @@ export const handle: Handle = async ({ event, resolve }) => {
   try {
     const response = await resolve(event);
 
+    if (event.url.pathname === "/configuration-double-authentification") {
+      response.headers.set("cache-control", "no-store");
+      response.headers.set("referrer-policy", "no-referrer");
+    }
+
     if (response.status >= 500) {
       console.error(
         JSON.stringify({

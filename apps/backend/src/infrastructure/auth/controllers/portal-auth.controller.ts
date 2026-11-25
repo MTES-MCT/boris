@@ -3,6 +3,8 @@ import {
   Controller,
   Get,
   HttpCode,
+  Header,
+  ForbiddenException,
   InternalServerErrorException,
   Post,
   Req,
@@ -28,6 +30,8 @@ import { ChangePasswordUsecase } from 'src/application/user/usecases/change-pass
 import { ChangePasswordDto } from '../dtos/change-password.dto';
 import { TwoFactorService } from '../two-factor.service';
 import { TwoFactorCodeDto } from '../dtos/two-factor-code.dto';
+import { EnrollmentPasswordDto } from '../dtos/enrollment-password.dto';
+import { DisableTwoFactorDto } from '../dtos/disable-two-factor.dto';
 
 @ApiExcludeController()
 @Controller('/api/portal/auth')
@@ -73,13 +77,15 @@ export class PortalAuthController {
       throw new UnauthorizedException();
     }
 
-    const twoFactorRequired = await this.twoFactor.start(req, user);
+    const twoFactorRequired = await this.twoFactor.start(req, user, true);
 
     await this.authRateLimitService.clear(`login:email:${email}`);
     await this.authRateLimitService.clear(`login:ip:${ip}`);
     if (twoFactorRequired) {
       res.status(200);
-      return { twoFactorRequired: true };
+      return req.session.pendingTwoFactorEnrollmentLogin
+        ? { enrollmentRequired: true }
+        : { twoFactorRequired: true };
     }
   }
 
@@ -97,6 +103,73 @@ export class PortalAuthController {
     @Req() req: Request,
   ) {
     await this.twoFactor.verify(req, body.code);
+  }
+
+  @Get('/two-factor/enrollment')
+  @Header('Cache-Control', 'no-store')
+  public enrollmentStatus(@Req() req: Request) {
+    return this.twoFactor.enrollmentStatus(req);
+  }
+
+  @Post('/two-factor/enrollment')
+  @HttpCode(200)
+  @Header('Cache-Control', 'no-store')
+  public async beginEnrollment(
+    @Req() req: Request,
+    @Body() body: EnrollmentPasswordDto,
+  ) {
+    const user = await this.twoFactor.enrollmentUser(req);
+    await this.authRateLimitService.consume(
+      `enrollment-password:${user.id}`,
+      5,
+      15 * 60_000,
+    );
+    await this.loginUsecase.execute({
+      email: user.email,
+      password: body.currentPassword,
+    });
+    return this.twoFactor.beginEnrollment(req);
+  }
+
+  @Post('/two-factor/enrollment/confirm')
+  @HttpCode(200)
+  @Header('Cache-Control', 'no-store')
+  public confirmEnrollment(
+    @Req() req: Request,
+    @Body() body: TwoFactorCodeDto,
+  ) {
+    return this.twoFactor.confirmEnrollment(req, body.code);
+  }
+
+  @Post('/two-factor/enrollment/cancel')
+  @HttpCode(204)
+  public cancelEnrollment(@Req() req: Request) {
+    return this.twoFactor.cancelEnrollment(req);
+  }
+
+  @UseGuards(PortalApiAuthenticatedGuard)
+  @Post('/two-factor/disable')
+  @HttpCode(204)
+  public async disableTwoFactor(
+    @Req() req: Request,
+    @Body() body: DisableTwoFactorDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const user = req.user as UserEntity;
+    if (user.roles.includes(UserRole.ADMIN)) {
+      throw new ForbiddenException('TWO_FACTOR_REQUIRED_FOR_ADMIN');
+    }
+    await this.authRateLimitService.consume(
+      `disable-password:${user.id}`,
+      5,
+      15 * 60_000,
+    );
+    const authenticated = await this.loginUsecase.execute({
+      email: user.email,
+      password: body.currentPassword,
+    });
+    await this.twoFactor.disable(req, authenticated, body.code);
+    await this.logout(req, res);
   }
 
   @UseGuards(PortalApiAuthenticatedGuard)

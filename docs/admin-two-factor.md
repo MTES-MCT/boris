@@ -2,7 +2,9 @@
 
 Admins must complete email/password login followed by an authenticator code or
 single-use recovery code on both the administration and the OFS portal. Admins
-without a provisioned secret cannot log in. Existing password-only admin sessions
+without a provisioned secret complete enrollment in the OFS portal after their
+password is verified; they cannot access portal data until an OTP is confirmed.
+The administration login directs unconfigured admins to use the OFS portal. Existing password-only admin sessions
 lose access when this feature is deployed. Unenrolled OFS and commercialisateur
 accounts continue to use their existing password login.
 
@@ -22,7 +24,34 @@ For a gradual rollout, deploy with the bypass enabled, configure the encryption
 key, and provision each admin. Once everyone is ready, set
 `TWO_FACTOR_DISABLED=false` (or remove the variable) and restart the backend.
 Password-only admin sessions then lose access and admins must complete a new login
-with 2FA.
+with 2FA. While the bypass is enabled, users can enroll from Mon compte themselves.
+
+## Enrollment in the OFS portal
+
+All portal roles (admin, compte OFS and compte commercialisateur) can configure
+2FA under **Mon compte → Double authentification**. Unenrolled admins are directed
+to the same setup screen after password login on the portal. Other roles opt in.
+
+1. Confirm the current password.
+2. Scan the locally generated QR code with an authenticator or password manager,
+   or copy the Base32 setup key and choose time-based codes (TOTP).
+3. Enter a six-digit OTP to activate 2FA. The pending key expires after five
+   minutes, is stored encrypted in the server session, and survives reloads.
+   Cancelling does not activate 2FA.
+4. Copy or download the ten recovery codes and confirm they have been saved.
+   Codes are shown only in the successful activation response, never retrieved
+   later. Reloading or leaving this screen discards the displayed codes.
+
+Setup requires `TWO_FACTOR_ENCRYPTION_KEY` even while the temporary login bypass
+is enabled. Activation rotates the current session, binds it to the credential
+version and invalidates other password-only sessions once the bypass is disabled.
+The first OTP is consumed during setup and cannot be reused for login. Setup cannot
+replace an existing authenticator; lost access still requires the operational
+reset below. OFS and commercialisateur accounts can disable 2FA under Mon compte
+by confirming their current password and a fresh authenticator OTP. Disabling
+atomically deletes the authenticator, recovery codes and all account sessions,
+then requires a new password login. Admins cannot disable 2FA; the API enforces
+this even while the global login bypass is enabled. Resetting a password also revokes pending enrollment logins.
 
 ## Deployment and initial provisioning
 
@@ -39,8 +68,9 @@ with 2FA.
 3. Build the backend and apply migrations using the project's normal deployment
    process (`npm run build --workspace=@boris/backend`, then
    `npm run migration:migrate --workspace=@boris/backend`).
-4. Provision each existing admin from the repository root, against the intended
-   database with the same encryption key as the backend:
+4. Admins can enroll through the OFS portal. For operational CLI provisioning,
+   run from the repository root against the intended database with the same
+   encryption key as the backend:
 
    ```sh
    npm run two-factor:provision --workspace=@boris/backend -- admin@example.fr
@@ -54,9 +84,9 @@ with 2FA.
    logs. Provisioning invalidates existing sessions for that account.
 
 5. Verify a login through both applications after disabling the temporary bypass.
-   Without the bypass, admins are blocked between deployment and provisioning;
-   alternatively apply the migration and provision accounts before switching
-   traffic to the new backend.
+   Without the bypass, unconfigured admins must enroll through the OFS portal
+   before accessing either application. The CLI remains available for operational
+   provisioning and resets.
 
 ## Lost authenticator or compromised credentials
 
@@ -69,9 +99,9 @@ npm run two-factor:provision --workspace=@boris/backend -- admin@example.fr --re
 
 The old authenticator, unused recovery codes, authenticated sessions and pending
 logins are invalidated. Share the new credentials privately. A password reset
-does not disable or bypass 2FA. Newly created/promoted admins also need provisioning.
+does not disable or bypass 2FA. Newly created/promoted admins can enroll through the OFS portal.
 
-## Security and future enrollment
+## Security
 
 - Authenticator secrets use AES-256-GCM, with a fresh nonce and the user ID as
   authenticated data. Secret, recovery-hash and replay-counter columns are excluded
@@ -88,11 +118,9 @@ does not disable or bypass 2FA. Newly created/promoted admins also need provisio
 - Verification allows five attempts per account and twenty per IP per fifteen
   minutes. Successful verification clears those counters; starting another
   password login does not. Password login retains its existing limits.
-- Enrollment UI, QR rendering, recovery-code regeneration UI, and OFS opt-in
-  suggestions are deferred. The policy already requires 2FA for admins or enrolled
-  accounts, so future OFS enrollment can reuse verification. Enrollment must show
-  a QR code/manual key, verify a generated code before activation, and display
-  recovery codes once. The CLI currently provisions only active admins.
+- Enrollment is available through the OFS portal for all three roles. Recovery-code
+  regeneration remains deferred. Disabling is restricted to non-admin accounts. The CLI provisions
+  active admins for operational recovery.
 
 The TOTP implementation is checked against the published SHA-1 test vectors in
 [RFC 6238](https://www.rfc-editor.org/rfc/rfc6238.html#appendix-B).

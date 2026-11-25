@@ -50,6 +50,83 @@
       </div>
       <button class="fr-btn">Enregistrer mon identité</button>
     </form>
+    <section class="fr-mt-5w" aria-labelledby="two-factor-title">
+      <h2 id="two-factor-title" class="fr-h4">Double authentification</h2>
+      {#if data.twoFactor.enabled}
+        <p class="fr-badge fr-badge--success">Activée</p>
+        <p>
+          Votre compte est protégé par un code de votre application
+          d’authentification à chaque connexion.
+        </p>
+        {#if data.twoFactor.canDisable}
+          <details class="fr-mt-2w" open={!!form?.twoFactorError}>
+            <summary class="fr-link"
+              >Désactiver la double authentification</summary
+            >
+            <p class="fr-mt-2w">
+              Votre compte sera protégé uniquement par votre mot de passe.
+              Toutes vos sessions seront fermées et vos codes de récupération
+              seront invalidés.
+            </p>
+            {#if form?.twoFactorError}<div
+                class="fr-alert fr-alert--error fr-mb-2w"
+                role="alert"
+              >
+                <p>{form.twoFactorError}</p>
+              </div>{/if}
+            <form method="POST" action="?/disableTwoFactor">
+              <div class="fr-input-group">
+                <label class="fr-label" for="disable-password"
+                  >Mot de passe actuel pour désactiver la double
+                  authentification</label
+                ><input
+                  class="fr-input"
+                  id="disable-password"
+                  name="currentPassword"
+                  type="password"
+                  autocomplete="current-password"
+                  required
+                />
+              </div>
+              <div class="fr-input-group">
+                <label class="fr-label" for="disable-code"
+                  >Code de vérification<span class="fr-hint-text"
+                    >Utilisez un nouveau code à 6 chiffres de votre application.</span
+                  ></label
+                ><input
+                  class="fr-input"
+                  id="disable-code"
+                  name="code"
+                  inputmode="numeric"
+                  autocomplete="one-time-code"
+                  pattern={"[0-9]{6}"}
+                  maxlength="6"
+                  required
+                />
+              </div>
+              <button class="fr-btn fr-btn--secondary"
+                >Confirmer la désactivation</button
+              >
+            </form>
+          </details>
+        {:else}
+          <p class="fr-hint-text">
+            La double authentification est obligatoire pour les administrateurs
+            et ne peut pas être désactivée.
+          </p>
+        {/if}
+      {:else}
+        <p>
+          Protégez votre compte avec un code à usage unique généré par votre
+          gestionnaire de mots de passe ou votre application d’authentification.
+        </p>
+        <a
+          class="fr-btn fr-btn--secondary"
+          href="/configuration-double-authentification"
+          >Activer la double authentification</a
+        >
+      {/if}
+    </section>
     <h2 class="fr-h4 fr-mt-5w">Mot de passe</h2>
     <form method="POST" action="?/changePassword" class="fr-mt-3w">
       <div class="fr-input-group">
