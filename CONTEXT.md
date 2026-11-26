@@ -128,3 +128,11 @@ _Avoid_: Suivi OFS, statut OFS
 - Admins without a configured authenticator must enroll after password verification before accessing protected portal data; OFS and commercialisateur accounts opt in.
 - Enrollment requires the current password, a QR code or manual TOTP key, and a valid six-digit OTP before activation. The pending key expires after five minutes.
 - Activation displays ten single-use recovery codes once, with copy and download actions and confirmation that they have been saved. OFS and commercialisateur accounts can disable 2FA after confirming their password and a fresh OTP; all sessions and recovery codes are invalidated. Admins cannot disable 2FA, enforced both in the UI and backend. Existing authenticators cannot be replaced directly; operational recovery remains an administration support process.
+
+## Accès API aux contacts
+
+- Each portal account owns its API keys and can create, list and delete only its own keys under **Mon compte → Accès API**. Only a hash is stored; the full key is returned once at creation. Metadata includes name, masked prefix, creation time and last successful use.
+- User API keys authorize only `GET /api/v1/leads` via `Authorization: Bearer …`. They are separate from the internal `API_KEY` credential and from portal sessions.
+- Every call rechecks the owner's active status, role and current memberships. OFS and administrator accounts must select `ofsId`; commercialisateur accounts receive only current active transmissions and can optionally filter by `ofsId`.
+- External API pagination counts contact lines, each identified by `(ofsId, simulationId, locationId)`, with at most 150 lines per page. Unlike the OFS portal's simulation pagination, the API pages lines. Limits are 120 calls per minute per key.
+- Key creation/deletion and contact releases are audited without storing raw keys. The portal API access page contains the endpoint, authentication, pagination, example response and error documentation.

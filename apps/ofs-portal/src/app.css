@@ -1,0 +1,3 @@
+/* Utilities only: keep the DSFR base styles. */
+@import "tailwindcss/theme.css";
+@import "tailwindcss/utilities.css" source("./");

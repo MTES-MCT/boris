@@ -6,6 +6,8 @@ import { AuditEventEntity } from './audit-event.entity';
 import { AuditEventResourceEntity } from './audit-event-resource.entity';
 
 export const EVENT_TYPES = [
+  'api_key.created',
+  'api_key.deleted',
   'auth.login_succeeded',
   'auth.login_failed',
   'auth.rate_limited',

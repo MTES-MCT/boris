@@ -1,6 +1,7 @@
 <script lang="ts">
   import '@gouvfr/dsfr/dist/dsfr.min.css';
   import '@gouvfr/dsfr/dist/utility/icons/icons.min.css';
+  import '../app.css';
   import { onMount } from 'svelte';
 
   let { data, children } = $props();
