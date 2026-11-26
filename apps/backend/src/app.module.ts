@@ -1,3 +1,4 @@
+import { LeadsApiModule } from './infrastructure/leads-api/leads-api.module';
 import { AuditModule } from './infrastructure/audit/audit.module';
 import { AuditExceptionFilter } from './infrastructure/audit/audit-exception.filter';
 import { auditContextMiddleware } from './infrastructure/audit/audit-context';
@@ -34,6 +35,7 @@ import * as methodOverride from 'method-override';
 @Module({
   imports: [
     AuditModule,
+    LeadsApiModule,
     SentryModule.forRoot(),
     TypeOrmModule.forRoot(typeormConfig),
     ScheduleModule.forRoot(),
@@ -63,6 +65,7 @@ import * as methodOverride from 'method-override';
           paths: [
             'req.headers["x-api-key"]',
             'req.headers.cookie',
+            'req.headers.authorization',
             'res.headers["set-cookie"]',
           ],
           censor: '***',

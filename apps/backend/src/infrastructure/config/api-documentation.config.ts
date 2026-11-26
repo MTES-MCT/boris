@@ -10,6 +10,7 @@ export function configureApiDocumentation(app: NestExpressApplication) {
     .setTitle('Boris API')
     .setDescription('Documentation API de Boris')
     .setVersion('1.0.0')
+    .addBearerAuth({ type: 'http', scheme: 'bearer' }, 'Leads API key')
     .addApiKey(
       {
         type: 'apiKey',

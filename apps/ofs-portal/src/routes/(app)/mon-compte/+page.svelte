@@ -9,6 +9,9 @@
 <div class="fr-grid-row fr-grid-row--center">
   <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
     <h1 class="fr-h3">Mon compte</h1>
+    <a class="fr-btn fr-btn--secondary fr-mb-3w" href="/acces-api"
+      >Gérer mes clés API</a
+    >
 
     {#if form?.message}
       <div class="fr-alert fr-alert--error fr-mb-3w">

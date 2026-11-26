@@ -590,6 +590,39 @@ export class EligibilitySimulationRepository
     return query;
   }
 
+  // External API pagination counts contact lines, including each OFS transmission.
+  public async findApiContactLines(
+    pagination: PaginationProps,
+    scope:
+      | PortalEligibilitySimulationContactFilters
+      | DistributorPortalContactFilters,
+  ): Promise<[PortalEligibilitySimulationContactResult[], number]> {
+    const distributor = 'distributorId' in scope;
+    const query = distributor
+      ? this.createDistributorPortalContactsQuery(scope)
+      : this.createPortalContactsQuery(scope);
+    if (!query) return [[], 0];
+    const count = await query
+      .clone()
+      .select('COUNT(*)', 'count')
+      .getRawOne<{ count: string }>();
+    query
+      .orderBy(
+        'COALESCE(eligibility_simulation."landbotDate", eligibility_simulation."createdAt")',
+        'DESC',
+      )
+      .addOrderBy('eligibility_simulation.id', 'DESC')
+      .addOrderBy('location.id', 'DESC');
+    if (distributor) query.addOrderBy('ofs.id', 'ASC');
+    query
+      .offset((pagination.page - 1) * pagination.pageSize)
+      .limit(pagination.pageSize);
+    return [
+      await query.getRawMany<PortalEligibilitySimulationContactResult>(),
+      Number(count?.count || 0),
+    ];
+  }
+
   public async findPortalContactsByOfsScope(
     pagination: PaginationProps,
     filters: PortalEligibilitySimulationContactFilters,

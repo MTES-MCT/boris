@@ -7,6 +7,7 @@ const ofss = [
     name: `OFS Other ${i}`,
   })),
 ];
+let apiKeys = [];
 let linked = [];
 let invitations = [];
 let memberInvitations = [];
@@ -174,10 +175,31 @@ http
       }
     }
     if (path === "/test/reset") {
+      apiKeys = [];
       linked = [];
       invitations = [];
       memberInvitations = [];
       data = {};
+    } else if (path === "/api/portal/api-keys") {
+      if (req.method === "POST") {
+        const key = {
+          id: "11111111-1111-4111-8111-111111111111",
+          name: body.name,
+          prefix: "boris_live_0123456789ab",
+          createdAt: new Date().toISOString(),
+          lastUsedAt: null,
+        };
+        apiKeys.push(key);
+        data = { ...key, token: `boris_live_${"a".repeat(64)}` };
+        status = 201;
+      } else data = apiKeys;
+    } else if (
+      path.startsWith("/api/portal/api-keys/") &&
+      req.method === "DELETE"
+    ) {
+      apiKeys = apiKeys.filter((key) => key.id !== path.split("/").at(-1));
+      data = {};
+      status = 204;
     } else if (path === "/api/portal/account-name") {
       data = { firstName: "Alice", lastName: "Martin" };
     } else if (/\/members$/.test(path)) {

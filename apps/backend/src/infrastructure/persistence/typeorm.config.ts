@@ -1,3 +1,4 @@
+import { UserApiKeyEntity } from '../leads-api/user-api-key.entity';
 import { AuditEventEntity } from '../audit/audit-event.entity';
 import { AuditEventResourceEntity } from '../audit/audit-event-resource.entity';
 import { InvitationEntity } from '../invitation/invitation.entity';
@@ -33,6 +34,7 @@ export const typeormConfig: DataSourceOptions = {
   password: process.env.POSTGRES_PASSWORD,
   database: !test ? process.env.POSTGRES_DB : `${process.env.POSTGRES_DB}-test`,
   entities: [
+    UserApiKeyEntity,
     AuditEventEntity,
     AuditEventResourceEntity,
     InvitationEntity,
