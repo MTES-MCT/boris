@@ -53,7 +53,16 @@ export class AdminLoginController {
           ? '/'
           : process.env.OFS_PORTAL_URL || '/',
       );
-    } catch {
+    } catch (error) {
+      const status =
+        error instanceof Error && 'getStatus' in error
+          ? (error as { getStatus(): number }).getStatus()
+          : 500;
+      if (status !== 429) await this.twoFactor.recordFailure(status, req);
+      if (!req.session) {
+        res.redirect(303, '/auth/login');
+        return;
+      }
       req.flash(
         'Erreur',
         'Code invalide, déjà utilisé ou trop de tentatives. Réessayez plus tard ou recommencez la connexion.',

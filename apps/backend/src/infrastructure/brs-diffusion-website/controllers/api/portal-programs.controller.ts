@@ -1,4 +1,8 @@
 import {
+  auditedUpdate,
+  auditDenied,
+} from 'src/infrastructure/audit/audited-write';
+import {
   BadRequestException,
   Body,
   Controller,
@@ -99,7 +103,8 @@ export class PortalProgramsController {
   ) {
     await this.findOfs(ofsId, req.user as UserEntity);
     await this.findProgram(ofsId, id);
-    await this.programsRepository.update(
+    await auditedUpdate(
+      this.programsRepository,
       { id, ofs: { id: ofsId }, isDeleted: false },
       { isDeleted: true },
     );
@@ -112,6 +117,7 @@ export class PortalProgramsController {
       (!user.roles.includes(UserRole.OFS) ||
         !user.ofss.some((ofs) => ofs.id === id))
     ) {
+      await auditDenied(this.ofsRepository, 'PROGRAMME_OFS_SCOPE_DENIED', id);
       throw new NotFoundException();
     }
     const ofs = await this.ofsRepository.findOne({
@@ -127,7 +133,10 @@ export class PortalProgramsController {
       where: { id, ofs: { id: ofsId }, isDeleted: false },
       relations: ['distributor'],
     });
-    if (!program) throw new NotFoundException();
+    if (!program) {
+      await auditDenied(this.programsRepository, 'PROGRAMME_SCOPE_DENIED', id);
+      throw new NotFoundException();
+    }
     return program;
   }
 

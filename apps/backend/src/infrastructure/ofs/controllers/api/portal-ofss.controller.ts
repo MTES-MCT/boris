@@ -1,3 +1,13 @@
+import { PortalEligibilitySimulationContactResult } from 'src/domain/eligibility-simulation/eligibility-simulation.repository.interface';
+import { PortalContactLineView } from 'src/application/eligibility-simulation/views/portal-contact-line.view';
+import {
+  AuditService,
+  AuditEventType,
+} from 'src/infrastructure/audit/audit.service';
+import {
+  auditedSave,
+  auditDenied,
+} from 'src/infrastructure/audit/audited-write';
 import {
   BadRequestException,
   Body,
@@ -42,6 +52,8 @@ import {
   CreateCommercialTransmissionDto,
   UpdateCommercialTransmissionDto,
 } from '../../dtos/commercial-transmission.dto';
+
+type ExportContactLine = Omit<PortalContactLineView, 'isNew' | 'ofs'>;
 
 @ApiExcludeController()
 @Controller('/api/portal/ofss')
@@ -144,7 +156,7 @@ export class PortalOfssController {
     });
 
     return this.serializeTransmission(
-      await this.commercialTransmissionRepository.save(transmission),
+      await auditedSave(this.commercialTransmissionRepository, transmission),
     );
   }
 
@@ -164,6 +176,12 @@ export class PortalOfssController {
     });
 
     if (!transmission) {
+      await auditDenied(
+        this.ofsRepository,
+        'TRANSMISSION_SCOPE_DENIED',
+        transmissionId,
+        'commercial_transmission',
+      );
       throw new NotFoundException();
     }
 
@@ -174,7 +192,7 @@ export class PortalOfssController {
     }
 
     return this.serializeTransmission(
-      await this.commercialTransmissionRepository.save(transmission),
+      await auditedSave(this.commercialTransmissionRepository, transmission),
     );
   }
 
@@ -182,7 +200,7 @@ export class PortalOfssController {
   @Get('/commercialisateur/ofss')
   public async distributorOfss(@Req() req: Request) {
     const user = req.user as UserEntity;
-    const distributorId = this.requireDistributor(user).id;
+    const distributorId = (await this.requireDistributor(user)).id;
     const transmissions = await this.commercialTransmissionRepository.find({
       where: { distributorId, isActive: true },
       relations: ['ofs'],
@@ -210,15 +228,22 @@ export class PortalOfssController {
     @Query() filters: DistributorPortalContactFiltersDto,
     @Req() req: Request,
   ) {
-    const distributorId = this.requireDistributor(req.user as UserEntity).id;
+    const distributorId = (
+      await this.requireDistributor(req.user as UserEntity)
+    ).id;
 
-    return this.findDistributorPortalContactLines(
+    const result = await this.findDistributorPortalContactLines(
       {
         page: filters.page || 1,
         pageSize: filters.pageSize || 20,
       },
       { distributorId, ofsId: filters.ofsId },
     );
+    await this.auditContacts(result.items, 'contacts.released', {
+      distributorId,
+      ofsId: filters.ofsId,
+    });
+    return result;
   }
 
   @UseGuards(PortalApiAuthenticatedGuard)
@@ -230,23 +255,54 @@ export class PortalOfssController {
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    const distributorId = this.requireDistributor(req.user as UserEntity).id;
+    const distributorId = (
+      await this.requireDistributor(req.user as UserEntity)
+    ).id;
     const validatedDates = this.validateExportDates(startDate, endDate);
-    const lines =
-      await this.eligibilitySimulationRepository.findAllPortalContactsByDistributorScope(
-        { distributorId, ofsId, ...validatedDates },
+    const audit = new AuditService(this.ofsRepository.manager.connection);
+    await audit.record({
+      type: 'contacts.export_requested',
+      targetType: 'contacts',
+      ofsId,
+      distributorId,
+      metadata: { format: 'csv', ...validatedDates },
+    });
+    try {
+      const lines =
+        await this.eligibilitySimulationRepository.findAllPortalContactsByDistributorScope(
+          { distributorId, ofsId, ...validatedDates },
+        );
+      const csv = this.buildCsv(
+        lines.map((line) => this.toPortalContactLineForCsv(line)),
       );
-    const csv = this.buildCsv(
-      lines.map((line) => this.toPortalContactLineForCsv(line)),
-    );
 
-    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-    res.setHeader(
-      'Content-Disposition',
-      `attachment; filename="transmissions-commerciales-${validatedDates.startDate}-${validatedDates.endDate}.csv"`,
-    );
+      await this.auditContacts(
+        lines,
+        'contacts.export_released',
+        { distributorId, ofsId },
+        'csv',
+        validatedDates,
+      );
 
-    return res.send(Buffer.from(csv, 'utf-8'));
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+      res.setHeader(
+        'Content-Disposition',
+        `attachment; filename="transmissions-commerciales-${validatedDates.startDate}-${validatedDates.endDate}.csv"`,
+      );
+
+      return res.send(Buffer.from(csv, 'utf-8'));
+    } catch (error) {
+      await audit.attempt({
+        type: 'contacts.export_failed',
+        outcome: 'failed',
+        targetType: 'contacts',
+        ofsId,
+        distributorId,
+        reasonCode: 'EXPORT_FAILED',
+        metadata: { format: 'csv' },
+      });
+      throw error;
+    }
   }
 
   @UseGuards(PortalApiAuthenticatedGuard)
@@ -256,7 +312,9 @@ export class PortalOfssController {
     @Body() body: UpdatePortalSimulationMetadataDto,
     @Req() req: Request,
   ) {
-    const distributorId = this.requireDistributor(req.user as UserEntity).id;
+    const distributorId = (
+      await this.requireDistributor(req.user as UserEntity)
+    ).id;
     const isAccessible =
       await this.eligibilitySimulationRepository.hasPortalContactInDistributorScope(
         simulationId,
@@ -264,6 +322,12 @@ export class PortalOfssController {
       );
 
     if (!isAccessible) {
+      await auditDenied(
+        this.ofsRepository,
+        'CONTACT_SCOPE_DENIED',
+        simulationId,
+        'eligibility_simulation',
+      );
       throw new NotFoundException();
     }
 
@@ -282,8 +346,10 @@ export class PortalOfssController {
     metadata.action = body.action ?? null;
     metadata.status = body.status ?? null;
 
-    const saved =
-      await this.distributorEligibilitySimulationRepository.save(metadata);
+    const saved = await auditedSave(
+      this.distributorEligibilitySimulationRepository,
+      metadata,
+    );
 
     return {
       simulationId: saved.eligibilitySimulationId,
@@ -332,7 +398,7 @@ export class PortalOfssController {
       previousLoginAt?: string | null;
     };
 
-    return this.findPortalContactLinesUsecase.execute(
+    const result = await this.findPortalContactLinesUsecase.execute(
       {
         page: pagination.page || 1,
         pageSize: pagination.pageSize || 20,
@@ -347,6 +413,10 @@ export class PortalOfssController {
           : null,
       },
     );
+    await this.auditContacts(result.items, 'contacts.released', {
+      ofsId: ofs.id,
+    });
+    return result;
   }
 
   @UseGuards(PortalApiAuthenticatedGuard)
@@ -362,29 +432,59 @@ export class PortalOfssController {
     const user = req.user as UserEntity;
     const ofs = await this.findAccessibleOfs(id, user);
     const validatedDates = this.validateExportDates(startDate, endDate);
-    const lines = await this.exportPortalContactLinesUsecase.execute({
+    const audit = new AuditService(this.ofsRepository.manager.connection);
+    await audit.record({
+      type: 'contacts.export_requested',
+      targetType: 'contacts',
       ofsId: ofs.id,
-      departementIds: ofs.departements.map((departement) => departement.id),
-      location: filters.location,
-      contact: filters.contact,
-      ...validatedDates,
+      metadata: { format: filters.format || 'csv', ...validatedDates },
     });
-    const format = filters.format || 'csv';
-    const filename = `simulations-${ofs.id}-${validatedDates.startDate}-${validatedDates.endDate}.${format}`;
-    const content =
-      format === 'xlsx'
-        ? await this.buildExcel(lines)
-        : Buffer.from(this.buildCsv(lines), 'utf-8');
+    try {
+      const lines = await this.exportPortalContactLinesUsecase.execute({
+        ofsId: ofs.id,
+        departementIds: ofs.departements.map((departement) => departement.id),
+        location: filters.location,
+        contact: filters.contact,
+        ...validatedDates,
+      });
+      const format = filters.format || 'csv';
+      const filename = `simulations-${ofs.id}-${validatedDates.startDate}-${validatedDates.endDate}.${format}`;
+      const content =
+        format === 'xlsx'
+          ? await this.buildExcel(lines)
+          : Buffer.from(this.buildCsv(lines), 'utf-8');
 
-    res.setHeader(
-      'Content-Type',
-      format === 'xlsx'
-        ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        : 'text/csv; charset=utf-8',
-    );
-    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      await this.auditContacts(
+        lines,
+        'contacts.export_released',
+        { ofsId: ofs.id },
+        format,
+        validatedDates,
+      );
 
-    return res.send(content);
+      res.setHeader(
+        'Content-Type',
+        format === 'xlsx'
+          ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          : 'text/csv; charset=utf-8',
+      );
+      res.setHeader(
+        'Content-Disposition',
+        `attachment; filename="${filename}"`,
+      );
+
+      return res.send(content);
+    } catch (error) {
+      await audit.attempt({
+        type: 'contacts.export_failed',
+        outcome: 'failed',
+        targetType: 'contacts',
+        ofsId: ofs.id,
+        reasonCode: 'EXPORT_FAILED',
+        metadata: { format: filters.format || 'csv' },
+      });
+      throw error;
+    }
   }
 
   @UseGuards(PortalApiAuthenticatedGuard)
@@ -409,6 +509,12 @@ export class PortalOfssController {
       );
 
     if (!isAccessible) {
+      await auditDenied(
+        this.ofsRepository,
+        'CONTACT_SCOPE_DENIED',
+        simulationId,
+        'eligibility_simulation',
+      );
       throw new NotFoundException();
     }
 
@@ -429,7 +535,10 @@ export class PortalOfssController {
     metadata.action = body.action ?? null;
     metadata.status = body.status ?? null;
 
-    const saved = await this.ofsEligibilitySimulationRepository.save(metadata);
+    const saved = await auditedSave(
+      this.ofsEligibilitySimulationRepository,
+      metadata,
+    );
 
     return {
       simulationId: saved.eligibilitySimulationId,
@@ -452,7 +561,7 @@ export class PortalOfssController {
     ofs.phone = body.phone || null;
     ofs.websiteUrl = body.websiteUrl || null;
 
-    const updated = await this.ofsRepository.save(ofs);
+    const updated = await auditedSave(this.ofsRepository, ofs);
 
     return {
       id: updated.id,
@@ -476,6 +585,37 @@ export class PortalOfssController {
     };
   }
 
+  private async auditContacts(
+    lines: {
+      locationId: string;
+      simulationId: string;
+      ofsId?: string | null;
+      ofs?: { id: string } | null;
+    }[],
+    type: AuditEventType,
+    scope: { ofsId?: string; distributorId?: string },
+    format?: string,
+    dates?: { startDate: string; endDate: string },
+  ) {
+    await new AuditService(this.ofsRepository.manager.connection).record({
+      type,
+      targetType: 'contacts',
+      ...scope,
+      metadata: {
+        count: lines.length,
+        ...(format ? { format } : {}),
+        ...dates,
+      },
+      resources: lines.map((line) => ({
+        resourceType: 'contact_line',
+        resourceId: line.locationId,
+        simulationId: line.simulationId,
+        ofsId: line.ofsId || line.ofs?.id || scope.ofsId,
+        distributorId: scope.distributorId,
+      })),
+    });
+  }
+
   private async findAccessibleOfs(
     id: string,
     user: UserEntity,
@@ -494,14 +634,18 @@ export class PortalOfssController {
     }
 
     if (!user.ofss.some((accessibleOfs) => accessibleOfs.id === id)) {
+      await auditDenied(this.ofsRepository, 'OFS_SCOPE_DENIED', id);
       throw new NotFoundException();
     }
 
     return ofs;
   }
 
-  private requireDistributor(user: UserEntity): DistributorEntity {
+  private async requireDistributor(
+    user: UserEntity,
+  ): Promise<DistributorEntity> {
     if (!user.roles.includes(UserRole.DISTRIBUTOR) || !user.distributor) {
+      await auditDenied(this.ofsRepository, 'DISTRIBUTOR_ROLE_REQUIRED');
       throw new NotFoundException();
     }
 
@@ -529,7 +673,9 @@ export class PortalOfssController {
     };
   }
 
-  private toPortalContactLineForCsv(line: any) {
+  private toPortalContactLineForCsv(
+    line: PortalEligibilitySimulationContactResult,
+  ) {
     return {
       ...line,
       submittedAt: new Date(line.submittedAt),
@@ -633,9 +779,7 @@ export class PortalOfssController {
     return { startDate, endDate };
   }
 
-  private buildExportRows(
-    lines: Awaited<ReturnType<ExportPortalContactLinesUsecase['execute']>>,
-  ) {
+  private buildExportRows(lines: ExportContactLine[]) {
     return [
       [
         'date',
@@ -670,9 +814,7 @@ export class PortalOfssController {
     ];
   }
 
-  private async buildExcel(
-    lines: Awaited<ReturnType<ExportPortalContactLinesUsecase['execute']>>,
-  ) {
+  private async buildExcel(lines: ExportContactLine[]) {
     const workbook = new Workbook();
     const worksheet = workbook.addWorksheet('Simulations');
     worksheet.addRows(this.buildExportRows(lines));
@@ -680,9 +822,7 @@ export class PortalOfssController {
     return Buffer.from(await workbook.xlsx.writeBuffer());
   }
 
-  private buildCsv(
-    lines: Awaited<ReturnType<ExportPortalContactLinesUsecase['execute']>>,
-  ) {
+  private buildCsv(lines: ExportContactLine[]) {
     return `${this.buildExportRows(lines)
       .map((row) => row.map((cell) => this.escapeCsvValue(cell)).join(','))
       .join('\n')}\n`;

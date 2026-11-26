@@ -154,6 +154,11 @@ export class InstantLeadNotificationWorker
               await this.store.complete(delivery, 'cancelled');
               continue;
             }
+            await this.store.auditDelivery(
+              delivery,
+              'attempted',
+              recipient.ofsId,
+            );
             await this.mailer.sendEmail(
               [
                 {
@@ -169,8 +174,14 @@ export class InstantLeadNotificationWorker
               `Vous avez 1 nouvelle piste pour ${recipient.ofsName}`,
               templateId,
             );
+            await this.store.auditDelivery(
+              delivery,
+              'accepted',
+              recipient.ofsId,
+            );
             await this.store.complete(delivery, 'sent');
           } catch {
+            await this.store.auditDelivery(delivery, 'failed');
             await this.store.retry(delivery);
             this.logger.error(
               `Lead notification delivery ${delivery.id} failed (attempt ${delivery.attempts})`,

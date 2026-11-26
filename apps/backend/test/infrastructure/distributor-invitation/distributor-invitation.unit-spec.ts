@@ -1,3 +1,27 @@
+jest.mock('src/infrastructure/audit/audit.service', () => ({
+  ...jest.requireActual('src/infrastructure/audit/audit.service'),
+  recordAudit: async () => {},
+}));
+
+// Persistence helpers are exercised against PostgreSQL in audit.integration-spec.ts.
+// These tests keep their existing repository/controller doubles at the boundary.
+jest.mock('src/infrastructure/audit/audited-write', () => ({
+  auditedSave: (
+    repository: { save(value: unknown): unknown },
+    value: unknown,
+  ) => repository.save(value),
+  auditedUpdate: (
+    repository: { update(...args: unknown[]): unknown },
+    ...args: unknown[]
+  ) => repository.update(...args),
+  auditedDelete: (
+    repository: { delete(value: unknown): unknown },
+    value: unknown,
+  ) => repository.delete(value),
+  auditDenied: async () => {},
+  inAuditTransaction: (manager: unknown, work: (manager: unknown) => unknown) =>
+    work(manager),
+}));
 import { InvitationService } from 'src/infrastructure/invitation/invitation.service';
 import {
   BadRequestException,
@@ -46,6 +70,10 @@ describe('Commercialisateur invitations', () => {
     manager = {
       query,
       save,
+      getRepository: () => ({
+        save,
+        findOneOrFail: () => Promise.resolve({ id: ofsId }),
+      }),
       find: jest.fn(() => Promise.resolve(distributors)),
       findOne: jest.fn((entity) =>
         Promise.resolve(entity === InvitationEntity ? invitation : user),

@@ -1,3 +1,7 @@
+import {
+  auditedSave,
+  auditedDelete,
+} from 'src/infrastructure/audit/audited-write';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -17,7 +21,7 @@ export class OfsRepository implements OfsRepositoryInterface {
   ) {}
 
   public save(ofs: OfsInterface): Promise<OfsEntity> {
-    return this.repository.save(ofs);
+    return auditedSave(this.repository, ofs);
   }
 
   public findAll(
@@ -59,6 +63,6 @@ export class OfsRepository implements OfsRepositoryInterface {
   }
 
   public async delete(id: string): Promise<void> {
-    await this.repository.delete(id);
+    await auditedDelete(this.repository, id);
   }
 }

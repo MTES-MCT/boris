@@ -1,3 +1,4 @@
+import { AuditService } from 'src/infrastructure/audit/audit.service';
 import { Workbook } from 'exceljs';
 import { Request, Response } from 'express';
 import { validateSync } from 'class-validator';
@@ -50,6 +51,8 @@ describe('PortalOfssController OFS export formats', () => {
   const line = Object.assign(
     new PortalContactLineView({} as PortalContactLineView),
     {
+      locationId: '11111111-1111-4111-8111-111111111111',
+      simulationId: '22222222-2222-4222-8222-222222222222',
       submittedAt: new Date('2026-11-24T12:00:00.000Z'),
       fullName: 'Émilie, "Martin"',
       email: 'emilie@example.test',
@@ -67,14 +70,21 @@ describe('PortalOfssController OFS export formats', () => {
   );
   let controller: PortalOfssController;
   let execute: jest.Mock;
+  let record: jest.SpyInstance;
   let response: Response;
   let setHeader: jest.Mock;
   const req = { user: { roles: [], ofss: [ofs] } } as unknown as Request;
 
   beforeEach(() => {
+    record = jest
+      .spyOn(AuditService.prototype, 'record')
+      .mockResolvedValue(undefined);
     execute = jest.fn().mockResolvedValue([line]);
     controller = Object.assign(Object.create(PortalOfssController.prototype), {
-      ofsRepository: { findOne: jest.fn().mockResolvedValue(ofs) },
+      ofsRepository: {
+        manager: { connection: {} },
+        findOne: jest.fn().mockResolvedValue(ofs),
+      },
       exportPortalContactLinesUsecase: { execute },
     });
     setHeader = jest.fn();
@@ -92,6 +102,37 @@ describe('PortalOfssController OFS export formats', () => {
     );
     return (response.send as jest.Mock).mock.calls[0][0] as Buffer;
   }
+
+  it('records the exact exported references without copying household values', async () => {
+    await exportLines();
+    expect(record).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        type: 'contacts.export_released',
+        ofsId: ofs.id,
+        resources: [
+          {
+            resourceType: 'contact_line',
+            resourceId: line.locationId,
+            simulationId: line.simulationId,
+            ofsId: ofs.id,
+            distributorId: undefined,
+          },
+        ],
+      }),
+    );
+    const event = record.mock.calls[1][0];
+    expect(JSON.stringify(event)).not.toContain('emilie@example.test');
+    expect(JSON.stringify(event)).not.toContain('Émilie');
+  });
+
+  it('does not release an export if its audit write fails', async () => {
+    record = jest
+      .spyOn(AuditService.prototype, 'record')
+      .mockResolvedValueOnce(undefined)
+      .mockRejectedValueOnce(new Error('audit unavailable'));
+    await expect(exportLines()).rejects.toThrow('audit unavailable');
+    expect(response.send).not.toHaveBeenCalled();
+  });
 
   it('keeps CSV as the default with the existing content and filters', async () => {
     const content = await exportLines();

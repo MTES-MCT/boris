@@ -1,3 +1,4 @@
+import { AuditService } from '../../audit/audit.service';
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 
@@ -150,6 +151,22 @@ export class InstantLeadNotificationStore {
       [id],
     );
     return rows[0];
+  }
+
+  public async auditDelivery(
+    delivery: LeadNotificationDelivery,
+    outcome: 'attempted' | 'accepted' | 'failed',
+    ofsId?: string,
+  ): Promise<void> {
+    await new AuditService(this.dataSource).attempt({
+      type: `notification.delivery_${outcome}`,
+      outcome: outcome === 'failed' ? 'failed' : 'succeeded',
+      actor: { kind: 'service', ref: 'instant-lead-notifications' },
+      targetType: 'notification_delivery',
+      targetId: delivery.id,
+      ofsId,
+      metadata: { jobId: delivery.eventId, attempts: delivery.attempts },
+    });
   }
 
   public async complete(

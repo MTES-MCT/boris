@@ -13,6 +13,7 @@ const delivery = {
 describe('InstantLeadNotificationWorker', () => {
   let worker: InstantLeadNotificationWorker;
   const store = {
+    auditDelivery: jest.fn(),
     claimEvent: jest.fn(),
     resolveEvent: jest.fn(),
     retryEvent: jest.fn(),

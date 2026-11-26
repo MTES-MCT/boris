@@ -1,3 +1,8 @@
+import { recordAudit } from '../audit/audit.service';
+import {
+  auditedSave,
+  auditedUpdate,
+} from 'src/infrastructure/audit/audited-write';
 import {
   BadRequestException,
   ConflictException,
@@ -121,7 +126,7 @@ export class OfsMembersService {
         );
       if (action === 'cancel') {
         invitation.status = 'cancelled';
-        await manager.save(invitation);
+        await auditedSave(manager.getRepository(InvitationEntity), invitation);
         return {
           message: 'Invitation annulée. Son lien ne peut plus être utilisé.',
         };
@@ -187,15 +192,33 @@ export class OfsMembersService {
         );
         user.firstName = firstName;
         user.lastName = lastName;
-        user = await manager.save(user);
+        user = await auditedSave(manager.getRepository(UserEntity), user);
       }
-      await manager.query(
-        'INSERT INTO "user_ofs" ("userId", "ofsId") VALUES ($1, $2) ON CONFLICT DO NOTHING',
+      const inserted = await manager.query(
+        'INSERT INTO "user_ofs" ("userId", "ofsId") VALUES ($1, $2) ON CONFLICT DO NOTHING RETURNING "userId"',
         [user.id, invitation.ofsId],
       );
+      if (inserted.length)
+        await recordAudit(manager, {
+          type: 'account.membership_changed',
+          targetType: 'account',
+          targetId: user.id,
+          ofsId: invitation.ofsId,
+          changes: {
+            ofsIds: {
+              before: user.ofss?.map((ofs) => ofs.id).sort() || [],
+              after: [
+                ...new Set([
+                  ...(user.ofss?.map((ofs) => ofs.id) || []),
+                  invitation.ofsId,
+                ]),
+              ].sort(),
+            },
+          },
+        });
       invitation.status = 'accepted';
       invitation.acceptedAt = new Date();
-      await manager.save(invitation);
+      await auditedSave(manager.getRepository(InvitationEntity), invitation);
       return {
         accountCreated,
         message: accountCreated
@@ -210,12 +233,10 @@ export class OfsMembersService {
     firstName?: string | null,
     lastName?: string | null,
   ) {
-    await this.dataSource
-      .getRepository(UserEntity)
-      .update(userId, {
-        firstName: firstName?.trim() || null,
-        lastName: lastName?.trim() || null,
-      });
+    await auditedUpdate(this.dataSource.getRepository(UserEntity), userId, {
+      firstName: firstName?.trim() || null,
+      lastName: lastName?.trim() || null,
+    });
     return { message: 'Votre prénom et votre nom ont été enregistrés.' };
   }
 }

@@ -1,4 +1,8 @@
 import {
+  auditedSave,
+  auditedDelete,
+} from 'src/infrastructure/audit/audited-write';
+import {
   BadRequestException,
   Body,
   Controller,
@@ -86,7 +90,7 @@ export class PortalLeadNotificationsController {
         const frequency = notification.frequency;
 
         if (frequency === 'none') {
-          await this.preferenceRepository.delete({
+          await auditedDelete(this.preferenceRepository, {
             userId: user.id,
             ofsId: notification.ofsId,
           });
@@ -116,7 +120,7 @@ export class PortalLeadNotificationsController {
         }
 
         preference.frequency = frequency;
-        await this.preferenceRepository.save(preference);
+        await auditedSave(this.preferenceRepository, preference);
       }),
     );
 

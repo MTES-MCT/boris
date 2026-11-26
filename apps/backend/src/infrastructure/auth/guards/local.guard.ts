@@ -47,7 +47,16 @@ export class LocalAuthGuard extends AuthGuard('local') {
 
       return true;
     } catch (e) {
+      const status =
+        e instanceof Error && 'getStatus' in e
+          ? (e as { getStatus(): number }).getStatus()
+          : 500;
+      if (status !== 429) await this.twoFactor.recordFailure(status, req);
       const res: Response = context.switchToHttp().getResponse();
+      if (!req.session) {
+        res.redirect(303, '/auth/login');
+        return false;
+      }
 
       (req as RequestWithFlash).flash(
         translations.error.defaultLabel,

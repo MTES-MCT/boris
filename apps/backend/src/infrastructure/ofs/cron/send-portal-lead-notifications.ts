@@ -1,3 +1,4 @@
+import { AuditService } from '../../audit/audit.service';
 import { Inject, Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -55,21 +56,51 @@ export class SendPortalLeadNotificationsCron {
 
       const subject = `Vous avez ${count} nouvelle${count > 1 ? 's' : ''} piste${count > 1 ? 's' : ''} pour ${preference.ofs.name}`;
 
-      await this.mailerService.sendEmail(
-        [
-          {
-            email: preference.user.email,
-            name: preference.user.email,
-            params: {
-              count,
-              ofsName: preference.ofs.name,
-              dashboardUrl: `${portalUrl.replace(/\/$/, '')}/ofs/${preference.ofsId}`,
-            },
-          },
-        ],
-        subject,
-        templateId,
+      const audit = new AuditService(
+        this.preferenceRepository.manager.connection,
       );
+      const event = {
+        actor: {
+          kind: 'service' as const,
+          ref: 'scheduled-lead-notifications',
+        },
+        targetType: 'account',
+        targetId: preference.userId,
+        ofsId: preference.ofsId,
+        metadata: { count, method: preference.frequency, ...window },
+      };
+      await audit.attempt({
+        ...event,
+        type: 'notification.delivery_attempted',
+      });
+      try {
+        await this.mailerService.sendEmail(
+          [
+            {
+              email: preference.user.email,
+              name: preference.user.email,
+              params: {
+                count,
+                ofsName: preference.ofs.name,
+                dashboardUrl: `${portalUrl.replace(/\/$/, '')}/ofs/${preference.ofsId}`,
+              },
+            },
+          ],
+          subject,
+          templateId,
+        );
+        await audit.attempt({
+          ...event,
+          type: 'notification.delivery_accepted',
+        });
+      } catch (error) {
+        await audit.attempt({
+          ...event,
+          type: 'notification.delivery_failed',
+          outcome: 'failed',
+        });
+        throw error;
+      }
     }
   }
 

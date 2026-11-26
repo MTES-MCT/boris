@@ -1,3 +1,4 @@
+import { AuditService } from '../audit/audit.service';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { createHash } from 'crypto';
 import { DataSource } from 'typeorm';
@@ -29,6 +30,11 @@ export class AuthRateLimitService {
     );
 
     if (Number(rows[0]?.count) > limit) {
+      await new AuditService(this.dataSource).attempt({
+        type: 'auth.rate_limited',
+        outcome: 'denied',
+        reasonCode: 'RATE_LIMIT_EXCEEDED',
+      });
       throw new HttpException(
         'Too many requests',
         HttpStatus.TOO_MANY_REQUESTS,

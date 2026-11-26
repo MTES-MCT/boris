@@ -1,3 +1,7 @@
+import {
+  auditedSave,
+  auditedUpdate,
+} from 'src/infrastructure/audit/audited-write';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { BrsDiffusionWebsiteRepositoryInterface } from 'src/domain/brs-diffusion-website/brs-diffusion-website.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -21,12 +25,13 @@ export class BrsDiffusionWebsiteRepository
     brsDiffusionWebsite: BrsDiffusionWebsiteEntity,
   ): Promise<BrsDiffusionWebsiteEntity> {
     if (!brsDiffusionWebsite.id) {
-      return this.repository.save(brsDiffusionWebsite);
+      return auditedSave(this.repository, brsDiffusionWebsite);
     }
 
     // An edit may finish geocoding after another request deleted the programme.
     // Update only active rows and never write the deletion flag from a stale entity.
-    const result = await this.repository.update(
+    const result = await auditedUpdate(
+      this.repository,
       { id: brsDiffusionWebsite.id, isDeleted: false },
       {
         source: brsDiffusionWebsite.source,
@@ -89,7 +94,7 @@ export class BrsDiffusionWebsiteRepository
   }
 
   public async delete(id: string): Promise<void> {
-    await this.repository.update(id, { isDeleted: true });
+    await auditedUpdate(this.repository, id, { isDeleted: true });
   }
 
   public async findAllByLocation(

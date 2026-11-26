@@ -150,8 +150,11 @@ describeDatabase('2FA PostgreSQL persistence', () => {
   );
 
   it('activates only one of two concurrent enrollment attempts', async () => {
+    await db.query(
+      'UPDATE "user" SET "twoFactorVersion" = NULL WHERE id = $1',
+      [user.id],
+    );
     await db.getRepository(UserEntity).update(user.id, {
-      twoFactorVersion: null,
       twoFactorSecret: null,
       twoFactorRecoveryCodes: [],
     });

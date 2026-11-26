@@ -1,3 +1,4 @@
+import { auditedSave } from 'src/infrastructure/audit/audited-write';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -17,7 +18,7 @@ export class UserRepository implements UserRepositoryInterface {
   ) {}
 
   public async save(user: UserEntity): Promise<UserEntity> {
-    return this.repository.save(user);
+    return auditedSave(this.repository, user);
   }
 
   public async findOneByEmail(email: string): Promise<UserEntity | null> {
